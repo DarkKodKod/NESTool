@@ -1,0 +1,8 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+	<!-- TOML specification here: https://github.com/toml-lang/toml#user-content-example -->
+	<system:String x:Key="configurationFileName">config</system:String>
+	<system:String x:Key="projectFileName">nes.proj</system:String>
+	<system:String x:Key="applicationTitle">NES Tool</system:String>
+</ResourceDictionary>

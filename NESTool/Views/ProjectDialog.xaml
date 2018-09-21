@@ -1,0 +1,67 @@
+﻿<Window x:Class="NESTool.Views.ProjectDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:NESTool.ViewModels"
+		xmlns:cv="clr-namespace:NESTool.Converters"
+        mc:Ignorable="d"
+		x:Name="ProjectDialogView"
+        Title="New Project" Height="185.88" Width="463.635" 
+		Loaded="Window_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+	<Window.Resources>
+		<cv:CreateProjectParametersConverter x:Key="createProjectParametersConverter"/>
+	</Window.Resources>
+	<Window.DataContext>
+		<vm:ProjectDialogViewModel />
+	</Window.DataContext>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="30"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="30"/>
+		</Grid.ColumnDefinitions>
+		<Label Grid.Row="1" Grid.Column="1" Content="Project name" HorizontalAlignment="Left" VerticalAlignment="Center" />
+		<DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True">
+			<TextBox x:Name="tbProjName" DockPanel.Dock="Right" Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged}" 
+					 Height="23" TextWrapping="NoWrap" VerticalAlignment="Center" Width="auto"/>
+		</DockPanel>
+		<Label Grid.Row="3" Grid.Column="1" Content="Location" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+		<DockPanel Grid.Row="4" Grid.Column="1" LastChildFill="True">
+			<Button DockPanel.Dock="Right" HorizontalAlignment="Right" 
+					VerticalAlignment="Center" Width="30" Content="..." 
+					Command="{Binding BrowseFolderCommand}" CommandParameter="{Binding ElementName=tbPath, Path=Text}"/>
+			<TextBox x:Name="tbPath" Height="23" Text="{Binding FolderPath, UpdateSourceTrigger=PropertyChanged}" 
+					 TextWrapping="NoWrap" VerticalAlignment="Center" Width="auto"/>
+		</DockPanel>
+		<Grid Grid.Row="5" Grid.Column="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="100"/>
+				<ColumnDefinition Width="120"/>
+			</Grid.ColumnDefinitions>
+			<Button Grid.Column="1" Margin="10" Content="Cancel" 
+					HorizontalAlignment="center" VerticalAlignment="center" Width="75" 
+					IsCancel="True"/>
+			<Button Grid.Column="2" Content="Create project" 
+					HorizontalAlignment="center" VerticalAlignment="center" Width="100" 
+					Command="{Binding CreateProjectCommand}" Click="OnClickOK">
+				<Button.CommandParameter>
+					<MultiBinding Converter="{StaticResource createProjectParametersConverter}">
+						<Binding Path="Text" ElementName="tbPath"/>
+						<Binding Path="Text" ElementName="tbProjName"/>
+					</MultiBinding>
+				</Button.CommandParameter>
+			</Button>
+		</Grid>
+	</Grid>
+</Window>

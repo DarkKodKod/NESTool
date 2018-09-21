@@ -1,0 +1,4 @@
+/.vs/*
+/NESTool/bin/*
+/NESTool/obj/*
+/NESTool/NESTool.csproj.user
