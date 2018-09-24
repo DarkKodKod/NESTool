@@ -103,6 +103,7 @@
     <Compile Include="Commands\LoadConfigsCommand.cs" />
     <Compile Include="Commands\OpenProjectPropertiesCommand.cs" />
     <Compile Include="Commands\ShowAboutDialogCommand.cs" />
+    <Compile Include="Commands\ViewHelpCommand.cs" />
     <Compile Include="Converters\CreateProjectParametersConverter.cs" />
     <Compile Include="Enums\CommonEnums.cs" />
     <Compile Include="Models\RecentProjectModel.cs" />

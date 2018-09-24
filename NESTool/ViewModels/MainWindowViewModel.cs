@@ -23,6 +23,7 @@ namespace NESTool.ViewModels
         public ShowAboutDialogCommand ShowAboutDialogCommand { get; } = new ShowAboutDialogCommand();
         public BuildProjectCommand BuildProjectCommand { get; } = new BuildProjectCommand();
         public OpenProjectPropertiesCommand OpenProjectPropertiesCommand { get; } = new OpenProjectPropertiesCommand();
+        public ViewHelpCommand ViewHelpCommand { get; } = new ViewHelpCommand();
 
         private const string _projectNameKey = "applicationTitle";
 

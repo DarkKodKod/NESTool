@@ -56,20 +56,12 @@
 				<MenuItem Header="_Exit" InputGestureText="Alt+F4"/>
 			</MenuItem>
 			<MenuItem Header="_Project">
-				<MenuItem InputGestureText="Ctrl+B" Command="{Binding BuildProjectCommand}" CommandParameter="{Binding ProjectName}">
-					<MenuItem.Header>
-						<AccessText Text="{Binding ProjectName, StringFormat='_Build \{0\}'}"/>
-					</MenuItem.Header>
-				</MenuItem>
+				<MenuItem Header="_Build Project" InputGestureText="Ctrl+B" Command="{Binding BuildProjectCommand}" CommandParameter="{Binding ProjectName}"/>
 				<Separator/>
-				<MenuItem Command="{Binding OpenProjectPropertiesCommand}" CommandParameter="{Binding ProjectName}">
-					<MenuItem.Header>
-						<AccessText Text="{Binding ProjectName, StringFormat='\{0\} _Properties...'}"/>
-					</MenuItem.Header>
-				</MenuItem>
+				<MenuItem Header="Project _Properties..." Command="{Binding OpenProjectPropertiesCommand}" CommandParameter="{Binding ProjectName}"/>
 			</MenuItem>
 			<MenuItem Header="_Help">
-				<MenuItem Header="_View Help" />
+				<MenuItem Header="_View Help" Command="{Binding ViewHelpCommand}" />
 				<Separator />
 				<MenuItem Header="_About" Command="{Binding ShowAboutDialogCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
 			</MenuItem>
