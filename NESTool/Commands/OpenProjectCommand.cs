@@ -85,6 +85,20 @@ namespace NESTool.Commands
             }
 
             SignalManager.Get<OpenProjectSuccessSignal>().Dispatch(new ProjectOpenVO() { Items = projectItems, ProjectName = projectName });
+
+            UpdateConfigurations(directoryPath);
+        }
+
+        private void UpdateConfigurations(string projectFullPath)
+        {
+            var model = ModelManager.Get<NESToolConfigurationModel>();
+
+            // Update the recent projects also with the new project path
+            model.InsertToRecentProjects(projectFullPath);
+
+            SignalManager.Get<UpdateRecentProjectsSignal>().Dispatch(model.RecentProjects);
+
+            model.Save();
         }
     }
 }

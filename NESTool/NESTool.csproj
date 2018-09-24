@@ -98,11 +98,14 @@
     <Compile Include="Architecture\Utils\Utils.cs" />
     <Compile Include="Architecture\ViewModel\ViewModel.cs" />
     <Compile Include="Commands\BrowseFolderCommand.cs" />
+    <Compile Include="Commands\BuildProjectCommand.cs" />
     <Compile Include="Commands\CreateProjectCommand.cs" />
     <Compile Include="Commands\LoadConfigsCommand.cs" />
+    <Compile Include="Commands\OpenProjectPropertiesCommand.cs" />
     <Compile Include="Commands\ShowAboutDialogCommand.cs" />
     <Compile Include="Converters\CreateProjectParametersConverter.cs" />
     <Compile Include="Enums\CommonEnums.cs" />
+    <Compile Include="Models\RecentProjectModel.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\CharacterViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />

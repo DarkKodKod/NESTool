@@ -84,12 +84,10 @@ namespace NESTool.Commands
 
         private void UpdateConfigurations(string projectFullPath)
         {
-            // Make this new project the default project
             var model = ModelManager.Get<NESToolConfigurationModel>();
-            model.DefaultProjectPath = projectFullPath;
 
-            // Update the recent projects also with the new project path
-            model.InsertToRecentProjects(projectFullPath);
+            // Make this new project the default project
+            model.DefaultProjectPath = projectFullPath;
 
             model.Save();
         }

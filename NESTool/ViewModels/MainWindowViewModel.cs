@@ -21,12 +21,36 @@ namespace NESTool.ViewModels
         public SaveCommand SaveCommand { get; } = new SaveCommand();
         public LoadConfigsCommand LoadConfigsCommand { get; } = new LoadConfigsCommand();
         public ShowAboutDialogCommand ShowAboutDialogCommand { get; } = new ShowAboutDialogCommand();
+        public BuildProjectCommand BuildProjectCommand { get; } = new BuildProjectCommand();
+        public OpenProjectPropertiesCommand OpenProjectPropertiesCommand { get; } = new OpenProjectPropertiesCommand();
 
         private const string _projectNameKey = "applicationTitle";
 
-        private List<ProjectItem> _projectItems;
         private string _title;
-        
+        private string _projectName;
+        private List<ProjectItem> _projectItems;
+        private List<RecentProjectModel> _recentProjects = new List<RecentProjectModel>();
+
+        public string ProjectName
+        {
+            get { return _projectName; }
+            set
+            {
+                _projectName = value;
+                OnPropertyChanged("ProjectName");
+            }
+        }
+
+        public List<RecentProjectModel> RecentProjects
+        {
+            get { return _recentProjects; }
+            set
+            {
+                _recentProjects = value;
+                OnPropertyChanged("RecentProjects");
+            }
+        }
+
         public List<ProjectItem> ProjectItems
         {
             get { return _projectItems; }
@@ -56,6 +80,8 @@ namespace NESTool.ViewModels
             SignalManager.Get<SaveAllSuccessSignal>().AddListener(SaveAllSuccess);
             SignalManager.Get<SaveSuccessSignal>().AddListener(SaveSuccess);
             SignalManager.Get<LoadConfigSuccessSignal>().AddListener(LoadConfigSuccess);
+            SignalManager.Get<UpdateRecentProjectsSignal>().AddListener(UpdateRecentProjects);
+            SignalManager.Get<BuildProjectSuccessSignal>().AddListener(BuildProjectSuccess);
         }
 
         ~MainWindowViewModel()
@@ -67,6 +93,8 @@ namespace NESTool.ViewModels
             SignalManager.Get<SaveAllSuccessSignal>().RemoveListener(SaveAllSuccess);
             SignalManager.Get<SaveSuccessSignal>().RemoveListener(SaveSuccess);
             SignalManager.Get<LoadConfigSuccessSignal>().RemoveListener(LoadConfigSuccess);
+            SignalManager.Get<UpdateRecentProjectsSignal>().RemoveListener(UpdateRecentProjects);
+            SignalManager.Get<BuildProjectSuccessSignal>().RemoveListener(BuildProjectSuccess);
         }
 
         private void LoadConfigSuccess()
@@ -85,9 +113,31 @@ namespace NESTool.ViewModels
             }
         }
 
-        private void CloseProjectSuccess()
+        private void UpdateRecentProjects(string[] recentProjects)
         {
-            //
+            var list = new List<RecentProjectModel>();
+
+            int index = 1;
+
+            foreach (var project in recentProjects)
+            {
+                if (!string.IsNullOrEmpty(project))
+                {
+                    // Extract the name of the folder as our project name
+                    int startIndex = project.LastIndexOf("\\");
+                    var projectName = project.Substring(startIndex + 1, project.Length - startIndex - 1);
+
+                    list.Add(new RecentProjectModel()
+                    {
+                        Path = project,
+                        DisplayName = $"_{ index } {projectName} ({project})"
+                    });
+
+                    index++;
+                }
+            }
+
+            RecentProjects = list;
         }
 
         private void OpenProjectSuccess(ProjectOpenVO vo)
@@ -95,6 +145,8 @@ namespace NESTool.ViewModels
             ProjectItems = vo.Items;
 
             var projectName = (string)Application.Current.FindResource(_projectNameKey);
+
+            ProjectName = vo.ProjectName;
 
             Title = $"{ vo.ProjectName } - { projectName }";
         }
@@ -115,6 +167,16 @@ namespace NESTool.ViewModels
         }
 
         private void SaveSuccess()
+        {
+            //
+        }
+
+        private void CloseProjectSuccess()
+        {
+            ProjectName = "";
+        }
+
+        private void BuildProjectSuccess()
         {
             //
         }

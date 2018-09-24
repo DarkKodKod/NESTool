@@ -14,6 +14,8 @@ namespace NESTool.Signals
     public class SaveAllSuccessSignal : Signal { }
     public class ExitSuccessSignal : Signal { }
     public class LoadConfigSuccessSignal : Signal { }
+    public class UpdateRecentProjectsSignal : Signal<string[]> { }
+    public class BuildProjectSuccessSignal : Signal { }
 
     // ProjectDialogViewModel
     public class CreateProjectSuccessSignal : Signal<string> { }

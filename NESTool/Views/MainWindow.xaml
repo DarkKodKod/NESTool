@@ -15,8 +15,11 @@
     </Window.DataContext>
     <Window.InputBindings>
 		<KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding SaveCommand}" />
-		<KeyBinding Key="N" Modifiers="Ctrl+Shift" 
-					Command="{Binding NewProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
+		<KeyBinding Key="S" Modifiers="Ctrl+Shift" Command="{Binding SaveAllCommand}" />
+		<KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NewFileCommand}" />
+		<KeyBinding Key="N" Modifiers="Ctrl+Shift" Command="{Binding NewProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
+		<KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding OpenProjectCommand}" />
+		<KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding BuildProjectCommand}" />
 	</Window.InputBindings>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -29,39 +32,41 @@
 				<MenuItem Header="_New">
 					<MenuItem Header="New _Project" InputGestureText="Ctrl+Shift+N" 
 							  Command="{Binding NewProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
-					<MenuItem Header="New _File" InputGestureText="Ctrl+N" />
+					<MenuItem Header="New _File" InputGestureText="Ctrl+N" Command="{Binding NewFileCommand}" />
 				</MenuItem>
 				<MenuItem Header="_Open">
-					<MenuItem Header="Open _Project" />
+					<MenuItem Header="Open _Project" Command="{Binding OpenProjectCommand}" InputGestureText="Ctrl+O"/>
 				</MenuItem>
 				<Separator />
-				<MenuItem Header="Close _Project" />
+				<MenuItem Header="Close _Project" Command="{Binding CloseProjectCommand}" />
 				<Separator />
-				<MenuItem Header="_Save" InputGestureText="Ctrl+S"/>
-				<MenuItem Header="Save _All" InputGestureText="Ctrl+Shift+S"/>
+				<MenuItem Header="_Save" InputGestureText="Ctrl+S" Command="{Binding SaveCommand}"/>
+				<MenuItem Header="Save _All" InputGestureText="Ctrl+Shift+S" Command="{Binding SaveAllCommand}"/>
 				<Separator />
-				<MenuItem Header="_Recent Projects">
-					<MenuItem Header="_1 Gato (C:/Projects/Gato/Gato.nesproj)" />
-					<MenuItem Header="_2 Gato (C:/Projects/Gato2/Gato.nesproj)" />
-					<MenuItem Header="_3 Gato (C:/Projects/Gato3/Gato.nesproj)" />
+				<MenuItem Header="_Recent Projects" ItemsSource="{Binding RecentProjects}">
+					<MenuItem.ItemContainerStyle>
+						<Style TargetType="{x:Type MenuItem}">
+							<Setter Property="Header" Value="{Binding DisplayName}"/>
+							<Setter Property="Command" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.OpenProjectCommand}" />
+							<Setter Property="CommandParameter" Value="{Binding Path}" />
+						</Style>
+					</MenuItem.ItemContainerStyle>
 				</MenuItem>
 				<Separator />
 				<MenuItem Header="_Exit" InputGestureText="Alt+F4"/>
 			</MenuItem>
-			<MenuItem Header="_Edit">
-
-			</MenuItem>
-			<MenuItem Header="_View">
-
-			</MenuItem>
 			<MenuItem Header="_Project">
-
-			</MenuItem>
-			<MenuItem Header="_Build">
-
-			</MenuItem>
-			<MenuItem Header="_Tools">
-
+				<MenuItem InputGestureText="Ctrl+B" Command="{Binding BuildProjectCommand}" CommandParameter="{Binding ProjectName}">
+					<MenuItem.Header>
+						<AccessText Text="{Binding ProjectName, StringFormat='_Build \{0\}'}"/>
+					</MenuItem.Header>
+				</MenuItem>
+				<Separator/>
+				<MenuItem Command="{Binding OpenProjectPropertiesCommand}" CommandParameter="{Binding ProjectName}">
+					<MenuItem.Header>
+						<AccessText Text="{Binding ProjectName, StringFormat='\{0\} _Properties...'}"/>
+					</MenuItem.Header>
+				</MenuItem>
 			</MenuItem>
 			<MenuItem Header="_Help">
 				<MenuItem Header="_View Help" />
