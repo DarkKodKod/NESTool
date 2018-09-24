@@ -66,7 +66,7 @@
 			<MenuItem Header="_Help">
 				<MenuItem Header="_View Help" />
 				<Separator />
-				<MenuItem Header="_About" />
+				<MenuItem Header="_About" Command="{Binding ShowAboutDialogCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
 			</MenuItem>
 		</Menu>
 		<ToolBarTray DockPanel.Dock="Top">

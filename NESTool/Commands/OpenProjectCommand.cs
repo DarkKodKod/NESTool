@@ -4,6 +4,7 @@ using NESTool.Architecture.Signals;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.ViewModels;
+using NESTool.VOs;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
@@ -28,9 +29,9 @@ namespace NESTool.Commands
             else
             {
                 // Check if the project file exists in the folder before open the project
-                var projectName = (string)Application.Current.FindResource(_projectFileNameKey);
+                var projectFileName = (string)Application.Current.FindResource(_projectFileNameKey);
 
-                path = Path.Combine(path, projectName);
+                path = Path.Combine(path, projectFileName);
 
                 if (File.Exists(path))
                 {
@@ -49,18 +50,22 @@ namespace NESTool.Commands
             if (!string.IsNullOrWhiteSpace(path))
             {
                 // Check if the project file exists in the folder before open the project
-                var projectName = (string)Application.Current.FindResource(_projectFileNameKey);
+                var projectFileName = (string)Application.Current.FindResource(_projectFileNameKey);
 
-                string fullPath = Path.Combine(path, projectName);
+                string fullPath = Path.Combine(path, projectFileName);
 
                 if (File.Exists(fullPath))
                 {
-                    LoadProject(path, fullPath);
+                    // Extract the name of the folder as our project name
+                    int startIndex = path.LastIndexOf("\\");
+                    var projectName = path.Substring(startIndex + 1, path.Length - startIndex - 1);
+
+                    LoadProject(path, fullPath, projectName);
                 }
             }
         }
 
-        private void LoadProject(string directoryPath, string projectFullPath)
+        private void LoadProject(string directoryPath, string projectFullPath, string projectName)
         {
             var projectModel = ModelManager.Get<ProjectModel>();
 
@@ -79,7 +84,7 @@ namespace NESTool.Commands
                 projectItems.Add(new ProjectItem(directory.Name));
             }
 
-            SignalManager.Get<OpenProjectSuccessSignal>().Dispatch(projectItems);
+            SignalManager.Get<OpenProjectSuccessSignal>().Dispatch(new ProjectOpenVO() { Items = projectItems, ProjectName = projectName });
         }
     }
 }

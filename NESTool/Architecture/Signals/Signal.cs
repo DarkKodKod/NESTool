@@ -1,5 +1,4 @@
-﻿
-namespace NESTool.Architecture.Signals
+﻿namespace NESTool.Architecture.Signals
 {
     public class Signal : ISignal
     {

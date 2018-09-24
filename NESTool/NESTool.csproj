@@ -100,18 +100,44 @@
     <Compile Include="Commands\BrowseFolderCommand.cs" />
     <Compile Include="Commands\CreateProjectCommand.cs" />
     <Compile Include="Commands\LoadConfigsCommand.cs" />
+    <Compile Include="Commands\ShowAboutDialogCommand.cs" />
     <Compile Include="Converters\CreateProjectParametersConverter.cs" />
     <Compile Include="Enums\CommonEnums.cs" />
+    <Compile Include="ViewModels\AboutDialogViewModel.cs" />
+    <Compile Include="ViewModels\CharacterViewModel.cs" />
+    <Compile Include="ViewModels\MapViewModel.cs" />
     <Compile Include="ViewModels\ProjectItem.cs" />
     <Compile Include="ViewModels\ProjectDialogViewModel.cs" />
+    <Compile Include="ViewModels\TileSetViewModel.cs" />
+    <Compile Include="Views\AboutDialog.xaml.cs">
+      <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Character.xaml.cs">
+      <DependentUpon>Character.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Map.xaml.cs">
+      <DependentUpon>Map.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ProjectDialog.xaml.cs">
       <DependentUpon>ProjectDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TileSet.xaml.cs">
+      <DependentUpon>TileSet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VOs\ProjectOpenVO.cs" />
     <Page Include="Definitions\Configuration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Style_Dark.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AboutDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Character.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -138,7 +164,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\Map.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ProjectDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TileSet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

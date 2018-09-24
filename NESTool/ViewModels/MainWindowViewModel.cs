@@ -4,7 +4,7 @@ using NESTool.Architecture.ViewModel;
 using NESTool.Commands;
 using NESTool.Models;
 using NESTool.Signals;
-using System;
+using NESTool.VOs;
 using System.Collections.Generic;
 using System.Windows;
 
@@ -20,6 +20,9 @@ namespace NESTool.ViewModels
         public SaveAllCommand SaveAllCommand { get; } = new SaveAllCommand();
         public SaveCommand SaveCommand { get; } = new SaveCommand();
         public LoadConfigsCommand LoadConfigsCommand { get; } = new LoadConfigsCommand();
+        public ShowAboutDialogCommand ShowAboutDialogCommand { get; } = new ShowAboutDialogCommand();
+
+        private const string _projectNameKey = "applicationTitle";
 
         private List<ProjectItem> _projectItems;
         private string _title;
@@ -87,9 +90,13 @@ namespace NESTool.ViewModels
             //
         }
 
-        private void OpenProjectSuccess(List<ProjectItem> list)
+        private void OpenProjectSuccess(ProjectOpenVO vo)
         {
-            ProjectItems = list;
+            ProjectItems = vo.Items;
+
+            var projectName = (string)Application.Current.FindResource(_projectNameKey);
+
+            Title = $"{ vo.ProjectName } - { projectName }";
         }
 
         private void ExitSuccess()

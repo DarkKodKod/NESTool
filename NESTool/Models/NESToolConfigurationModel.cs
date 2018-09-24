@@ -9,7 +9,11 @@ namespace NESTool.Models
     {
         private const int MaxRencetProjectsCount = 9;
 
-        public string DefaultProjectPath { get; set; }
+        public string DefaultProjectPath
+        {
+            get { return _defaultProjectPath; }
+            set { _defaultProjectPath = value; }
+        }
 
         public string[] RecentProjects
         {
@@ -18,12 +22,18 @@ namespace NESTool.Models
         }
 
         private string[] _recentProjects = new string[MaxRencetProjectsCount];
+        private string _defaultProjectPath = "";
 
         private const string _configfileNameKey = "configurationFileName";
         private readonly string _configFileName = "";
 
         public NESToolConfigurationModel()
         {
+            for (int i = 0; i < _recentProjects.Length; ++i)
+            {
+                _recentProjects[i] = "";
+            }
+
             _configFileName = @".\"+ (string)Application.Current.FindResource(_configfileNameKey) + Toml.FileExtension;
         }
 

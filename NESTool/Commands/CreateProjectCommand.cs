@@ -64,18 +64,22 @@ namespace NESTool.Commands
         {
             Directory.CreateDirectory(projectFullPath);
 
-            var projectName = (string)Application.Current.FindResource(_projectFileNameKey);
+            var projectFileName = (string)Application.Current.FindResource(_projectFileNameKey);
 
-            projectFullPath = Path.Combine(projectFullPath, projectName);
+            string fullPathToProjectFile = Path.Combine(projectFullPath, projectFileName);
 
-            File.Create(projectFullPath).Dispose();
+            File.Create(fullPathToProjectFile).Dispose();
+
+            Directory.CreateDirectory(Path.Combine(projectFullPath, "Characters"));
+            Directory.CreateDirectory(Path.Combine(projectFullPath, "Maps"));
+            Directory.CreateDirectory(Path.Combine(projectFullPath, "TileSets"));
 
             var model = ModelManager.Get<ProjectModel>();
 
             // In case there is already a model loaded, we want to reset it to its default state
             model.Reset();
 
-            model.Save(projectFullPath);
+            model.Save(fullPathToProjectFile);
         }
 
         private void UpdateConfigurations(string projectFullPath)

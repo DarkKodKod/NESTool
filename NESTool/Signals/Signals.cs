@@ -1,6 +1,5 @@
 ﻿using NESTool.Architecture.Signals;
-using NESTool.ViewModels;
-using System.Collections.Generic;
+using NESTool.VOs;
 
 namespace NESTool.Signals
 {
@@ -9,7 +8,7 @@ namespace NESTool.Signals
 
     // MainWindowViewModel
     public class NewFileSuccessSignal : Signal { }
-    public class OpenProjectSuccessSignal : Signal<List<ProjectItem>> { }
+    public class OpenProjectSuccessSignal : Signal<ProjectOpenVO> { }
     public class CloseProjectSuccessSignal : Signal { }
     public class SaveSuccessSignal : Signal { }
     public class SaveAllSuccessSignal : Signal { }

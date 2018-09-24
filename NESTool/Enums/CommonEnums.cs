@@ -1,5 +1,4 @@
-﻿
-namespace NESTool.Enums
+﻿namespace NESTool.Enums
 {
     public enum SpriteSize
     {
