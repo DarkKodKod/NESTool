@@ -100,6 +100,10 @@ namespace NESTool.ViewModels
 
         private void LoadConfigSuccess()
         {
+            var model = ModelManager.Get<NESToolConfigurationModel>();
+
+            UpdateRecentProjects(model.RecentProjects);
+
             LoadDefaultProject();
         }
 

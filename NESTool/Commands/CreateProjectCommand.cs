@@ -70,6 +70,7 @@ namespace NESTool.Commands
 
             File.Create(fullPathToProjectFile).Dispose();
 
+            Directory.CreateDirectory(Path.Combine(projectFullPath, "Banks"));
             Directory.CreateDirectory(Path.Combine(projectFullPath, "Characters"));
             Directory.CreateDirectory(Path.Combine(projectFullPath, "Maps"));
             Directory.CreateDirectory(Path.Combine(projectFullPath, "TileSets"));

@@ -53,7 +53,7 @@
 					</MenuItem.ItemContainerStyle>
 				</MenuItem>
 				<Separator />
-				<MenuItem Header="_Exit" InputGestureText="Alt+F4"/>
+				<MenuItem Header="_Exit" InputGestureText="Alt+F4" Command="{Binding ExitCommand}"/>
 			</MenuItem>
 			<MenuItem Header="_Project">
 				<MenuItem Header="_Build Project" InputGestureText="Ctrl+B" Command="{Binding BuildProjectCommand}" CommandParameter="{Binding ProjectName}"/>
