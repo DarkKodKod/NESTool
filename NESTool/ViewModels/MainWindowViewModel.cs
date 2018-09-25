@@ -83,6 +83,9 @@ namespace NESTool.ViewModels
             SignalManager.Get<LoadConfigSuccessSignal>().AddListener(LoadConfigSuccess);
             SignalManager.Get<UpdateRecentProjectsSignal>().AddListener(UpdateRecentProjects);
             SignalManager.Get<BuildProjectSuccessSignal>().AddListener(BuildProjectSuccess);
+            SignalManager.Get<ProjectItemExpandedSignal>().AddListener(OnProjectItemExpanded);
+            SignalManager.Get<ProjectItemSelectedSignal>().AddListener(OnProjectItemSelected);
+            SignalManager.Get<WindowGetFocusSignal>().AddListener(OnWindowGetFocus);
         }
 
         ~MainWindowViewModel()
@@ -96,6 +99,9 @@ namespace NESTool.ViewModels
             SignalManager.Get<LoadConfigSuccessSignal>().RemoveListener(LoadConfigSuccess);
             SignalManager.Get<UpdateRecentProjectsSignal>().RemoveListener(UpdateRecentProjects);
             SignalManager.Get<BuildProjectSuccessSignal>().RemoveListener(BuildProjectSuccess);
+            SignalManager.Get<ProjectItemExpandedSignal>().RemoveListener(OnProjectItemExpanded);
+            SignalManager.Get<ProjectItemSelectedSignal>().RemoveListener(OnProjectItemSelected);
+            SignalManager.Get<WindowGetFocusSignal>().RemoveListener(OnWindowGetFocus);
         }
 
         private void LoadConfigSuccess()
@@ -170,6 +176,21 @@ namespace NESTool.ViewModels
         private void ExitSuccess()
         {
             Application.Current.Shutdown();
+        }
+
+        private void OnWindowGetFocus()
+        {
+            //
+        }
+
+        private void OnProjectItemSelected(ProjectItem item)
+        {
+            //
+        }
+
+        private void OnProjectItemExpanded(ProjectItem item)
+        {
+            //
         }
 
         private void NewFileSuccess()

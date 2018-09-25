@@ -1,14 +1,19 @@
-﻿using NESTool.Architecture.ViewModel;
+﻿using NESTool.Architecture.Signals;
+using NESTool.Architecture.ViewModel;
+using NESTool.Enums;
+using NESTool.Signals;
 
 namespace NESTool.ViewModels
 {
     public class ProjectItem : ViewModel
     {
-        public ProjectItem(string displayName)
+        public ProjectItem(string displayName, ProjectItemType type)
         {
             DisplayName = displayName;
+            Type = type;
         }
 
+        public ProjectItemType Type { get; set; }
         public string DisplayName { get; set; }
 
         private bool _isSelected;
@@ -67,14 +72,8 @@ namespace NESTool.ViewModels
             }
         }
 
-        private void OnExpandedItem()
-        {
+        private void OnExpandedItem() => SignalManager.Get<ProjectItemExpandedSignal>().Dispatch(this);
 
-        }
-
-        private void OnSelectedItemChanged()
-        {
-            // Raise event / do other things
-        }
+        private void OnSelectedItemChanged() => SignalManager.Get<ProjectItemSelectedSignal>().Dispatch(this);
     }
 }

@@ -29,6 +29,9 @@
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadConfigsCommand}"/>
         </i:EventTrigger>
+		<i:EventTrigger EventName="Activated">
+			<i:InvokeCommandAction Command="{Binding WindowsGetFocusCommand}"/>
+		</i:EventTrigger>
     </i:Interaction.Triggers>
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">

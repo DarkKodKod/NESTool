@@ -1,6 +1,7 @@
 ﻿using NESTool.Architecture.Commands;
 using NESTool.Architecture.Model;
 using NESTool.Architecture.Signals;
+using NESTool.Enums;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.ViewModels;
@@ -99,7 +100,7 @@ namespace NESTool.Commands
 
             foreach (DirectoryInfo directory in directories)
             {
-                projectItems.Add(new ProjectItem(directory.Name));
+                projectItems.Add(new ProjectItem(directory.Name, ProjectItemType.Folder));
             }
 
             SignalManager.Get<OpenProjectSuccessSignal>().Dispatch(new ProjectOpenVO() { Items = projectItems, ProjectName = projectName });
