@@ -55,10 +55,7 @@ namespace NESTool.ViewModels
             SignalManager.Get<BrowseFolderSuccessSignal>().RemoveListener(BrowseFolderSuccess);
         }
         
-        private void BrowseFolderSuccess(string folderPath)
-        {
-            FolderPath = folderPath;
-        }
+        private void BrowseFolderSuccess(string folderPath) => FolderPath = folderPath;
 
         private void CreateProjectSuccess(string projectFullPath)
         {
