@@ -90,6 +90,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Architecture\Commands\Command.cs" />
+    <Compile Include="FileSystem\FileSystemManager.cs" />
     <Compile Include="History\HistoryManager.cs" />
     <Compile Include="Meta\IMetaItem.cs" />
     <Compile Include="Models\MetaItemModel.cs" />
@@ -242,7 +243,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="FileSystem\" />
     <Folder Include="Images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
