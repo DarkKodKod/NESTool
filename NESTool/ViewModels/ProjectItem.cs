@@ -8,16 +8,19 @@ namespace NESTool.ViewModels
 {
     public class ProjectItem : ViewModel
     {
-        public ProjectItem(string displayName, ProjectItemType type)
+        public ProjectItem(string displayName, string fullPath, ProjectItemType type)
         {
             Items = new ObservableCollection<ProjectItem>();
 
             DisplayName = displayName;
+            FullPath = fullPath;
             Type = type;
         }
 
         public ProjectItemType Type { get; set; }
+        public ProjectItemType Group { get; set; }
         public string DisplayName { get; set; }
+        public string FullPath { get; set; }
         public ObservableCollection<ProjectItem> Items { get; set; }
 
         private bool _isSelected;

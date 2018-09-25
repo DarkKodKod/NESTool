@@ -9,4 +9,8 @@
 	<system:String x:Key="folderCharacters">Characters</system:String>
 	<system:String x:Key="folderMaps">Maps</system:String>
 	<system:String x:Key="folderTileSets">TileSets</system:String>
+    <system:String x:Key="extensionBanks">.bank</system:String>
+    <system:String x:Key="extensionCharacters">.char</system:String>
+    <system:String x:Key="extensionMaps">.map</system:String>
+    <system:String x:Key="extensionTileSets">.tileset</system:String>
 </ResourceDictionary>

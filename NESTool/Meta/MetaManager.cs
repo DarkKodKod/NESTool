@@ -1,6 +1,7 @@
-﻿using Nett;
+﻿using NESTool.Models;
+using Nett;
 
-namespace NESTool.Architecture.Meta
+namespace NESTool.Meta
 {
     public static class MetaManager
     {

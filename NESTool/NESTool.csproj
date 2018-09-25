@@ -90,9 +90,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Architecture\Commands\Command.cs" />
-    <Compile Include="Architecture\Meta\IMetaItem.cs" />
-    <Compile Include="Architecture\Meta\MetaItemModel.cs" />
-    <Compile Include="Architecture\Meta\MetaManager.cs" />
+    <Compile Include="Meta\IMetaItem.cs" />
+    <Compile Include="Models\MetaItemModel.cs" />
+    <Compile Include="Meta\MetaManager.cs" />
     <Compile Include="Architecture\Model\IModel.cs" />
     <Compile Include="Architecture\Model\ModelManager.cs" />
     <Compile Include="Architecture\Signals\ISignal.cs" />
@@ -241,7 +241,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Architecture\History\" />
+    <Folder Include="FileSystem\" />
+    <Folder Include="History\" />
     <Folder Include="Images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

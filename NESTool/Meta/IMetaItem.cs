@@ -1,4 +1,4 @@
-﻿namespace NESTool.Architecture.Meta
+﻿namespace NESTool.Meta
 {
     public interface IMetaItem
     {

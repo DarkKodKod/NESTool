@@ -1,6 +1,6 @@
 ﻿using NESTool.Architecture.Model;
 
-namespace NESTool.Architecture.Meta
+namespace NESTool.Models
 {
     public class MetaItemModel : IModel
     {

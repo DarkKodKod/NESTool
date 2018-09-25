@@ -12,6 +12,10 @@ namespace NESTool.Utils
         private const string _folderCharactersKey = "folderCharacters";
         private const string _folderMapsKey = "folderMaps";
         private const string _folderTileSetsKey = "folderTileSets";
+        private const string _extensionBanksKey = "extensionBanks";
+        private const string _extensionCharactersKey = "extensionCharacters";
+        private const string _extensionMapsKey = "extensionMaps";
+        private const string _extensionTileSetsKey = "extensionTileSets";
 
         public static bool ValidFileName(string fileName)
         {
@@ -25,14 +29,17 @@ namespace NESTool.Utils
 
         public static ProjectItemType GetItemType(string extension)
         {
-            switch (extension)
-            {
-                case ".bank": return ProjectItemType.Bank;
-                case ".char": return ProjectItemType.Character;
-                case ".map": return ProjectItemType.Map;
-                case ".tileset": return ProjectItemType.TileSet;
-                default: return ProjectItemType.None;
-            }
+            var extensionBanks = (string)Application.Current.FindResource(_extensionBanksKey);
+            var extensionCharacters = (string)Application.Current.FindResource(_extensionCharactersKey);
+            var extensionMaps = (string)Application.Current.FindResource(_extensionMapsKey);
+            var extensionTileSets = (string)Application.Current.FindResource(_extensionTileSetsKey);
+
+            if (extension == extensionBanks) return ProjectItemType.Bank;
+            if (extension == extensionCharacters) return ProjectItemType.Character;
+            if (extension == extensionMaps) return ProjectItemType.Map;
+            if (extension == extensionTileSets) return ProjectItemType.TileSet;
+            
+            return ProjectItemType.None;
         }
 
         public static string GetFolderExtension(string folderName)
@@ -42,10 +49,15 @@ namespace NESTool.Utils
             var folderMaps = (string)Application.Current.FindResource(_folderMapsKey);
             var folderTileSets = (string)Application.Current.FindResource(_folderTileSetsKey);
 
-            if (folderName == folderBanks) return ".bank";
-            if (folderName == folderCharacters) return ".char";
-            if (folderName == folderMaps) return ".map";
-            if (folderName == folderTileSets) return ".tileset";
+            var extensionBanks = (string)Application.Current.FindResource(_extensionBanksKey);
+            var extensionCharacters = (string)Application.Current.FindResource(_extensionCharactersKey);
+            var extensionMaps = (string)Application.Current.FindResource(_extensionMapsKey);
+            var extensionTileSets = (string)Application.Current.FindResource(_extensionTileSetsKey);
+
+            if (folderName == folderBanks) return extensionBanks;
+            if (folderName == folderCharacters) return extensionCharacters;
+            if (folderName == folderMaps) return extensionMaps;
+            if (folderName == folderTileSets) return extensionTileSets;
 
             return string.Empty;
         }

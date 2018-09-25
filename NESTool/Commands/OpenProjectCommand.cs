@@ -101,7 +101,7 @@ namespace NESTool.Commands
 
             foreach (DirectoryInfo directory in directories)
             {
-                var item = new ProjectItem(directory.Name, ProjectItemType.Folder);
+                var item = new ProjectItem(directory.Name, directory.FullName, ProjectItemType.Folder);
 
                 string ext = Util.GetFolderExtension(directory.Name);
 
@@ -110,11 +110,15 @@ namespace NESTool.Commands
                     continue;
                 }
 
+                item.Group = Util.GetItemType(ext);
+
                 FileInfo[] Files = directory.GetFiles($"*{ext}");
                 
                 foreach (FileInfo file in Files)
                 {
-                    item.Items.Add(new ProjectItem(file.Name, Util.GetItemType(ext)));
+                    var displayName = Path.GetFileNameWithoutExtension(file.Name);
+
+                    item.Items.Add(new ProjectItem(displayName, file.FullName, Util.GetItemType(ext)));
                 }
 
                 projectItems.Add(item);
