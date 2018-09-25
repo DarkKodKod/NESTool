@@ -156,6 +156,17 @@ namespace NESTool.ViewModels
             Title = $"{ vo.ProjectName } - { projectName }";
         }
 
+        private void CloseProjectSuccess()
+        {
+            ProjectItems = null;
+
+            var projectName = (string)Application.Current.FindResource(_projectNameKey);
+
+            ProjectName = "";
+
+            Title = $"{ projectName }";
+        }
+
         private void ExitSuccess()
         {
             Application.Current.Shutdown();
@@ -174,11 +185,6 @@ namespace NESTool.ViewModels
         private void SaveSuccess()
         {
             //
-        }
-
-        private void CloseProjectSuccess()
-        {
-            ProjectName = "";
         }
 
         private void BuildProjectSuccess()

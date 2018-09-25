@@ -104,7 +104,7 @@
     <Compile Include="Commands\OpenProjectPropertiesCommand.cs" />
     <Compile Include="Commands\ShowAboutDialogCommand.cs" />
     <Compile Include="Commands\ViewHelpCommand.cs" />
-    <Compile Include="Converters\CreateProjectParametersConverter.cs" />
+    <Compile Include="Converters\ParametersConverter.cs" />
     <Compile Include="Enums\CommonEnums.cs" />
     <Compile Include="Models\RecentProjectModel.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
@@ -112,6 +112,7 @@
     <Compile Include="ViewModels\MapViewModel.cs" />
     <Compile Include="ViewModels\ProjectItem.cs" />
     <Compile Include="ViewModels\ProjectDialogViewModel.cs" />
+    <Compile Include="ViewModels\ProjectPropertiesDialogViewModel.cs" />
     <Compile Include="ViewModels\TileSetViewModel.cs" />
     <Compile Include="Views\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
@@ -124,6 +125,9 @@
     </Compile>
     <Compile Include="Views\ProjectDialog.xaml.cs">
       <DependentUpon>ProjectDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectPropertiesDialog.xaml.cs">
+      <DependentUpon>ProjectPropertiesDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TileSet.xaml.cs">
       <DependentUpon>TileSet.xaml</DependentUpon>
@@ -173,6 +177,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ProjectDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProjectPropertiesDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

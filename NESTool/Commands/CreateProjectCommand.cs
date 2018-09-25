@@ -11,6 +11,10 @@ namespace NESTool.Commands
     public class CreateProjectCommand : Command
     {
         private const string _projectFileNameKey = "projectFileName";
+        private const string _folderBanksKey = "folderBanks";
+        private const string _folderCharactersKey = "folderCharacters";
+        private const string _folderMapsKey = "folderMaps";
+        private const string _folderTileSetsKey = "folderTileSets";
 
         public override bool CanExecute(object parameter)
         {
@@ -66,14 +70,19 @@ namespace NESTool.Commands
 
             var projectFileName = (string)Application.Current.FindResource(_projectFileNameKey);
 
+            var folderBanks = (string)Application.Current.FindResource(_folderBanksKey);
+            var folderCharacters = (string)Application.Current.FindResource(_folderCharactersKey);
+            var folderMaps = (string)Application.Current.FindResource(_folderMapsKey);
+            var folderTileSets = (string)Application.Current.FindResource(_folderTileSetsKey);
+
             string fullPathToProjectFile = Path.Combine(projectFullPath, projectFileName);
 
             File.Create(fullPathToProjectFile).Dispose();
 
-            Directory.CreateDirectory(Path.Combine(projectFullPath, "Banks"));
-            Directory.CreateDirectory(Path.Combine(projectFullPath, "Characters"));
-            Directory.CreateDirectory(Path.Combine(projectFullPath, "Maps"));
-            Directory.CreateDirectory(Path.Combine(projectFullPath, "TileSets"));
+            Directory.CreateDirectory(Path.Combine(projectFullPath, folderBanks));
+            Directory.CreateDirectory(Path.Combine(projectFullPath, folderCharacters));
+            Directory.CreateDirectory(Path.Combine(projectFullPath, folderMaps));
+            Directory.CreateDirectory(Path.Combine(projectFullPath, folderTileSets));
 
             var model = ModelManager.Get<ProjectModel>();
 

@@ -10,7 +10,7 @@
         Title="New Project" Height="185.88" Width="463.635" 
 		Loaded="Window_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
 	<Window.Resources>
-		<cv:CreateProjectParametersConverter x:Key="createProjectParametersConverter"/>
+		<cv:ParametersConverter x:Key="parametersConverter"/>
 	</Window.Resources>
 	<Window.DataContext>
 		<vm:ProjectDialogViewModel />
@@ -56,7 +56,7 @@
 					HorizontalAlignment="center" VerticalAlignment="center" Width="100" 
 					Command="{Binding CreateProjectCommand}" Click="OnClickOK">
 				<Button.CommandParameter>
-					<MultiBinding Converter="{StaticResource createProjectParametersConverter}">
+					<MultiBinding Converter="{StaticResource parametersConverter}">
 						<Binding Path="Text" ElementName="tbPath"/>
 						<Binding Path="Text" ElementName="tbProjName"/>
 					</MultiBinding>

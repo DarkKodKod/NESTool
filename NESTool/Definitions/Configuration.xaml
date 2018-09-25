@@ -5,4 +5,8 @@
 	<system:String x:Key="configurationFileName">config</system:String>
 	<system:String x:Key="projectFileName">nes.proj</system:String>
 	<system:String x:Key="applicationTitle">NES Tool</system:String>
+	<system:String x:Key="folderBanks">Banks</system:String>
+	<system:String x:Key="folderCharacters">Characters</system:String>
+	<system:String x:Key="folderMaps">Maps</system:String>
+	<system:String x:Key="folderTileSets">TileSets</system:String>
 </ResourceDictionary>

@@ -1,6 +1,6 @@
 ﻿using NESTool.Architecture.Commands;
-using NESTool.Architecture.Signals;
-using NESTool.Signals;
+using NESTool.Views;
+using System.Windows;
 
 namespace NESTool.Commands
 {
@@ -8,7 +8,14 @@ namespace NESTool.Commands
     {
         public override bool CanExecute(object parameter)
         {
-            var projectName = parameter as string;
+            if (parameter == null)
+            {
+                return false;
+            }
+
+            var values = (object[])parameter;
+            var window = (Window)values[0];
+            var projectName = (string)values[1];
 
             if (string.IsNullOrEmpty(projectName))
             {
@@ -20,7 +27,13 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            SignalManager.Get<BuildProjectSuccessSignal>().Dispatch();
+            var values = (object[])parameter;
+            var window = (Window)values[0];
+            var projectName = (string)values[1];
+
+            ProjectPropertiesDialog dialog = new ProjectPropertiesDialog();
+            dialog.Owner = window;
+            dialog.ShowDialog();
         }
     }
 }

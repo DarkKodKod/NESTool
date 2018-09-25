@@ -4,12 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:NESTool.ViewModels"
+		xmlns:cv="clr-namespace:NESTool.Converters"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Height="617.748" Width="939.57" 
 		x:Name="MainWindowView"
 		Title="{Binding Title}"
 		WindowStartupLocation="CenterScreen">
+	<Window.Resources>
+		<cv:ParametersConverter x:Key="parametersConverter"/>
+	</Window.Resources>
     <Window.DataContext >
         <vm:MainWindowViewModel />
     </Window.DataContext>
@@ -38,7 +42,7 @@
 					<MenuItem Header="Open _Project" Command="{Binding OpenProjectCommand}" InputGestureText="Ctrl+O"/>
 				</MenuItem>
 				<Separator />
-				<MenuItem Header="Close _Project" Command="{Binding CloseProjectCommand}" />
+				<MenuItem Header="Close _Project" Command="{Binding CloseProjectCommand}" CommandParameter="{Binding ProjectName}" />
 				<Separator />
 				<MenuItem Header="_Save" InputGestureText="Ctrl+S" Command="{Binding SaveCommand}"/>
 				<MenuItem Header="Save _All" InputGestureText="Ctrl+Shift+S" Command="{Binding SaveAllCommand}"/>
@@ -58,7 +62,14 @@
 			<MenuItem Header="_Project">
 				<MenuItem Header="_Build Project" InputGestureText="Ctrl+B" Command="{Binding BuildProjectCommand}" CommandParameter="{Binding ProjectName}"/>
 				<Separator/>
-				<MenuItem Header="Project _Properties..." Command="{Binding OpenProjectPropertiesCommand}" CommandParameter="{Binding ProjectName}"/>
+				<MenuItem Header="Project _Properties..." Command="{Binding OpenProjectPropertiesCommand}">
+					<MenuItem.CommandParameter>
+						<MultiBinding Converter="{StaticResource parametersConverter}">
+							<Binding ElementName="MainWindowView"/>
+							<Binding ElementName="MainWindowView" Path="DataContext.ProjectName"/>
+						</MultiBinding>
+					</MenuItem.CommandParameter>
+				</MenuItem>
 			</MenuItem>
 			<MenuItem Header="_Help">
 				<MenuItem Header="_View Help" Command="{Binding ViewHelpCommand}" />
@@ -68,17 +79,26 @@
 		</Menu>
 		<ToolBarTray DockPanel.Dock="Top">
 			<ToolBar x:Name="File">
-				<Button Content="New" ToolTip="Hola 1" ToolBar.OverflowMode="AsNeeded">
+				<Button Content="New Project" ToolTip="New Project" ToolBar.OverflowMode="AsNeeded" Command="{Binding NewProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}">
 				</Button>
-				<Button Content="Save" ToolTip="Hola 2" ToolBar.OverflowMode="AsNeeded" Command="{Binding SaveCommand}">
+				<Button Content="New File" ToolTip="New File" ToolBar.OverflowMode="AsNeeded" Command="{Binding NewFileCommand}">
 				</Button>
-				<Button Content="Save All" ToolTip="Hola 3" ToolBar.OverflowMode="AsNeeded" Command="{Binding SaveAllCommand}">
+				<Button Content="Open Project" ToolTip="Open Project" ToolBar.OverflowMode="AsNeeded" Command="{Binding OpenProjectCommand}">
+				</Button>
+				<Separator/>
+				<Button Content="Save" ToolTip="Save" ToolBar.OverflowMode="AsNeeded" Command="{Binding SaveCommand}">
+				</Button>
+				<Button Content="Save All" ToolTip="Save All" ToolBar.OverflowMode="AsNeeded" Command="{Binding SaveAllCommand}">
+				</Button>
+			</ToolBar>
+			<ToolBar x:Name="Project">
+				<Button Content="Build Project" ToolTip="Build Project" ToolBar.OverflowMode="AsNeeded" Command="{Binding BuildProjectCommand}">
 				</Button>
 			</ToolBar>
 		</ToolBarTray>
 		<StatusBar DockPanel.Dock="Bottom">
 			<StatusBarItem>
-				<TextBlock>Gato</TextBlock>
+				<TextBlock>Pre Alpha Version</TextBlock>
 			</StatusBarItem>
 		</StatusBar>
 		<Grid>

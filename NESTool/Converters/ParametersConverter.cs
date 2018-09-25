@@ -4,7 +4,7 @@ using System.Windows.Data;
 
 namespace NESTool.Converters
 {
-    public class CreateProjectParametersConverter : IMultiValueConverter
+    public class ParametersConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
