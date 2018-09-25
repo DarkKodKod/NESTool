@@ -2,6 +2,7 @@
 using NESTool.Architecture.ViewModel;
 using NESTool.Enums;
 using NESTool.Signals;
+using System.Collections.ObjectModel;
 
 namespace NESTool.ViewModels
 {
@@ -9,12 +10,15 @@ namespace NESTool.ViewModels
     {
         public ProjectItem(string displayName, ProjectItemType type)
         {
+            Items = new ObservableCollection<ProjectItem>();
+
             DisplayName = displayName;
             Type = type;
         }
 
         public ProjectItemType Type { get; set; }
         public string DisplayName { get; set; }
+        public ObservableCollection<ProjectItem> Items { get; set; }
 
         private bool _isSelected;
         private bool _isExpanded;

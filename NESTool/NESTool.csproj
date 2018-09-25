@@ -90,12 +90,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Architecture\Commands\Command.cs" />
+    <Compile Include="Architecture\Meta\IMetaItem.cs" />
+    <Compile Include="Architecture\Meta\MetaItemModel.cs" />
+    <Compile Include="Architecture\Meta\MetaManager.cs" />
     <Compile Include="Architecture\Model\IModel.cs" />
     <Compile Include="Architecture\Model\ModelManager.cs" />
     <Compile Include="Architecture\Signals\ISignal.cs" />
     <Compile Include="Architecture\Signals\Signal.cs" />
     <Compile Include="Architecture\Signals\SignalManager.cs" />
-    <Compile Include="Architecture\Utils\Utils.cs" />
+    <Compile Include="Utils\Utils.cs" />
     <Compile Include="Architecture\ViewModel\ViewModel.cs" />
     <Compile Include="Commands\BrowseFolderCommand.cs" />
     <Compile Include="Commands\BuildProjectCommand.cs" />
@@ -104,10 +107,12 @@
     <Compile Include="Commands\OpenProjectPropertiesCommand.cs" />
     <Compile Include="Commands\ShowAboutDialogCommand.cs" />
     <Compile Include="Commands\ViewHelpCommand.cs" />
+    <Compile Include="Commands\WindowsGetFocusCommand.cs" />
     <Compile Include="Converters\ParametersConverter.cs" />
     <Compile Include="Enums\CommonEnums.cs" />
     <Compile Include="Models\RecentProjectModel.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
+    <Compile Include="ViewModels\BanksViewModel.cs" />
     <Compile Include="ViewModels\CharacterViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
     <Compile Include="ViewModels\ProjectItem.cs" />
@@ -116,6 +121,9 @@
     <Compile Include="ViewModels\TileSetViewModel.cs" />
     <Compile Include="Views\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Banks.xaml.cs">
+      <DependentUpon>Banks.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Character.xaml.cs">
       <DependentUpon>Character.xaml</DependentUpon>
@@ -142,6 +150,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AboutDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Banks.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -229,6 +241,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Architecture\History\" />
     <Folder Include="Images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

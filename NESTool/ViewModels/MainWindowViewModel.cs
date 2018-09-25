@@ -117,10 +117,13 @@ namespace NESTool.ViewModels
         {
             var config = ModelManager.Get<NESToolConfigurationModel>();
 
-            var openProjectCommand = new OpenProjectCommand();
-            if (openProjectCommand.CanExecute(config.DefaultProjectPath))
+            if (!string.IsNullOrEmpty(config.DefaultProjectPath))
             {
-                openProjectCommand.Execute(config.DefaultProjectPath);
+                var openProjectCommand = new OpenProjectCommand();
+                if (openProjectCommand.CanExecute(config.DefaultProjectPath))
+                {
+                    openProjectCommand.Execute(config.DefaultProjectPath);
+                }
             }
         }
 

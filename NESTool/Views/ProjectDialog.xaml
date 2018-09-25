@@ -17,7 +17,7 @@
 	</Window.DataContext>
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition/>
+			<RowDefinition Height="10"/>
 			<RowDefinition Height="auto"/>
 			<RowDefinition Height="auto"/>
 			<RowDefinition Height="auto"/>
@@ -26,9 +26,9 @@
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="30"/>
+			<ColumnDefinition Width="10"/>
 			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="30"/>
+			<ColumnDefinition Width="10"/>
 		</Grid.ColumnDefinitions>
 		<Label Grid.Row="1" Grid.Column="1" Content="Project name" HorizontalAlignment="Left" VerticalAlignment="Center" />
 		<DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True">

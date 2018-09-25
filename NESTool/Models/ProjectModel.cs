@@ -6,9 +6,34 @@ namespace NESTool.Models
 {
     public class ProjectModel : IModel
     {
-        public SpriteSize SpriteSize { get; set; }
-        public string Name { get; set; }
+        public SpriteSize SpriteSize
+        {
+            get { return _spriteSize; }
+            set
+            {
+                if (_spriteSize != value)
+                {
+                    _spriteSize = value;
+                    Save();
+                }
+            }
+        }
 
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    Save();
+                }
+            }
+        }
+
+        private string _name;
+        private SpriteSize _spriteSize;
         private string _projectPath;
 
         public void Reset()
@@ -35,6 +60,16 @@ namespace NESTool.Models
         public void Save(string path)
         {
             _projectPath = path;
+
+            Save();
+        }
+
+        private void Save()
+        {
+            if (string.IsNullOrEmpty(_projectPath))
+            {
+                return;
+            }
 
             Toml.WriteFile(this, _projectPath);
         }

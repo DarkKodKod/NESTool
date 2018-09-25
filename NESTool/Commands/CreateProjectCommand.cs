@@ -59,8 +59,6 @@ namespace NESTool.Commands
 
             CreateProject(projectFullPath);
 
-            UpdateConfigurations(projectFullPath);
-
             SignalManager.Get<CreateProjectSuccessSignal>().Dispatch(projectFullPath);
         }
 
@@ -90,16 +88,6 @@ namespace NESTool.Commands
             model.Reset();
 
             model.Save(fullPathToProjectFile);
-        }
-
-        private void UpdateConfigurations(string projectFullPath)
-        {
-            var model = ModelManager.Get<NESToolConfigurationModel>();
-
-            // Make this new project the default project
-            model.DefaultProjectPath = projectFullPath;
-
-            model.Save();
         }
     }
 }

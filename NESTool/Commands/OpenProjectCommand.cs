@@ -4,6 +4,7 @@ using NESTool.Architecture.Signals;
 using NESTool.Enums;
 using NESTool.Models;
 using NESTool.Signals;
+using NESTool.Utils;
 using NESTool.ViewModels;
 using NESTool.VOs;
 using System.Collections.Generic;
@@ -100,7 +101,23 @@ namespace NESTool.Commands
 
             foreach (DirectoryInfo directory in directories)
             {
-                projectItems.Add(new ProjectItem(directory.Name, ProjectItemType.Folder));
+                var item = new ProjectItem(directory.Name, ProjectItemType.Folder);
+
+                string ext = Util.GetFolderExtension(directory.Name);
+
+                if (ext == string.Empty)
+                {
+                    continue;
+                }
+
+                FileInfo[] Files = directory.GetFiles($"*{ext}");
+                
+                foreach (FileInfo file in Files)
+                {
+                    item.Items.Add(new ProjectItem(file.Name, Util.GetItemType(ext)));
+                }
+
+                projectItems.Add(item);
             }
 
             SignalManager.Get<OpenProjectSuccessSignal>().Dispatch(new ProjectOpenVO() { Items = projectItems, ProjectName = projectName });
@@ -114,6 +131,9 @@ namespace NESTool.Commands
 
             // Update the recent projects also with the new project path
             model.InsertToRecentProjects(projectFullPath);
+
+            // Make this new project the default project
+            model.DefaultProjectPath = projectFullPath;
 
             SignalManager.Get<UpdateRecentProjectsSignal>().Dispatch(model.RecentProjects);
 

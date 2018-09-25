@@ -23,4 +23,15 @@ namespace NESTool.Signals
 
     // ProjectDialogViewModel
     public class CreateProjectSuccessSignal : Signal<string> { }
+
+    // ProjectPropertiesViewModel
+    public class SaveConfiguratioSuccessSignal : Signal { }
+
+    // TileSetViewModel
+
+    // BanksViewModel
+
+    // CharacterViewModel
+
+    // MapViewModel
 }

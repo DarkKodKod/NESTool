@@ -2,7 +2,7 @@
 using NESTool.Signals;
 using NESTool.Architecture.Signals;
 using NESTool.Architecture.ViewModel;
-using NESTool.Architecture.Utils;
+using NESTool.Utils;
 
 namespace NESTool.ViewModels
 {
@@ -16,7 +16,7 @@ namespace NESTool.ViewModels
             get { return _projectName; }
             set
             {
-                if (Utils.ValidFileName(value))
+                if (Util.ValidFileName(value))
                 {
                     _projectName = value;
                     _previousValidName = value;

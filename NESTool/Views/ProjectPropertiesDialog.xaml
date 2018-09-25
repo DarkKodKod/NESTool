@@ -5,25 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:vm="clr-namespace:NESTool.ViewModels"
         mc:Ignorable="d"
-        Title="Project properties" Height="270" Width="423"
+        Title="Project properties" Height="291" Width="423"
 		Loaded="Window_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
 	<Window.DataContext>
 		<vm:ProjectPropertiesDialogViewModel />
 	</Window.DataContext>
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition/>
-			<RowDefinition Height="auto"/>
-			<RowDefinition Height="auto"/>
-			<RowDefinition Height="auto"/>
-			<RowDefinition Height="auto"/>
+			<RowDefinition Height="10"/>
+			<RowDefinition Height="200"/>
 			<RowDefinition Height="auto"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="30"/>
+			<ColumnDefinition Width="10"/>
 			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="30"/>
+			<ColumnDefinition Width="10"/>
 		</Grid.ColumnDefinitions>
+		<Button Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="2" Margin="10" Content="Close" IsCancel="True" Width="100"/>
 	</Grid>
 </Window>
