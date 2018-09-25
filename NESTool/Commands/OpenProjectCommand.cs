@@ -21,7 +21,7 @@ namespace NESTool.Commands
 
             bool pathIsNull = string.IsNullOrWhiteSpace(path);
 
-            // when path is empty we can open open project dialog
+            // It is ok for the path to be null, that means we want to open the folder dialog to find the project path
             if (pathIsNull)
             {
                 return true;
@@ -62,6 +62,24 @@ namespace NESTool.Commands
 
                     LoadProject(path, fullPath, projectName);
                 }
+            }
+            else
+            {
+                // We want to capture the brow folder signal to open the project
+                SignalManager.Get<BrowseFolderSuccessSignal>().AddListener(BrowseFolderSuccess);
+
+                BrowseFolderCommand browseFolder = new BrowseFolderCommand();
+                browseFolder.Execute(null);
+
+                SignalManager.Get<BrowseFolderSuccessSignal>().RemoveListener(BrowseFolderSuccess);
+            }
+        }
+
+        private void BrowseFolderSuccess(string path)
+        {
+            if (CanExecute(path))
+            {
+                Execute(path);
             }
         }
 
