@@ -99,21 +99,53 @@ namespace NESTool.Commands
 
             List<ProjectItem> projectItems = new List<ProjectItem>();
 
+            ScanDirectories(directories, ref projectItems);
+
+            SignalManager.Get<OpenProjectSuccessSignal>().Dispatch(new ProjectOpenVO() { Items = projectItems, ProjectName = projectName });
+
+            UpdateConfigurations(directoryPath);
+        }
+
+        private void ScanDirectories(DirectoryInfo[] directories, ref List<ProjectItem> projectItems, string extension = "")
+        {
             foreach (DirectoryInfo directory in directories)
             {
                 var item = new ProjectFolder(directory.Name, directory.FullName, ProjectItemType.Folder);
 
-                string ext = Util.GetFolderExtension(directory.Name);
+                string ext = "";
 
-                if (ext == string.Empty)
+                if (extension == string.Empty)
                 {
-                    continue;
+                    ext = Util.GetFolderExtension(directory.Name);
+                    
+                    item.Root = true;
+                }
+                else
+                {
+                    ext = extension;
+
+                    item.Root = false;
                 }
 
                 item.Group = Util.GetItemType(ext);
 
+                // Check if it was some folders inside
+                DirectoryInfo[] subFolders = directory.GetDirectories();
+                if (subFolders.Length > 0)
+                {
+                    List<ProjectItem> subItems = new List<ProjectItem>();
+
+                    ScanDirectories(subFolders, ref subItems, ext);
+
+                    foreach (var element in subItems)
+                    {
+                        item.Items.Add(element);
+                    }
+                }
+
+                // Check files
                 FileInfo[] Files = directory.GetFiles($"*{ext}");
-                
+
                 foreach (FileInfo file in Files)
                 {
                     var displayName = Path.GetFileNameWithoutExtension(file.Name);
@@ -123,10 +155,6 @@ namespace NESTool.Commands
 
                 projectItems.Add(item);
             }
-
-            SignalManager.Get<OpenProjectSuccessSignal>().Dispatch(new ProjectOpenVO() { Items = projectItems, ProjectName = projectName });
-
-            UpdateConfigurations(directoryPath);
         }
 
         private void UpdateConfigurations(string projectFullPath)

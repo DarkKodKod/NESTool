@@ -109,7 +109,7 @@
 		<Grid>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="3"/>
-				<ColumnDefinition MinWidth="100" Width="200"/>
+				<ColumnDefinition MinWidth="100" Width="250"/>
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="3"/>
 			</Grid.ColumnDefinitions>
@@ -119,10 +119,17 @@
 						<MenuItem Header="Create Folder"/>
 						<MenuItem Header="Create New Element"/>
 						<Separator/>
+						<MenuItem Header="Cut"/>
+						<MenuItem Header="Copy"/>
+						<MenuItem Header="Paste"/>
 						<MenuItem Header="Delete"/>
+						<MenuItem Header="Rename"/>
 					</ContextMenu>
 					<ContextMenu x:Key="ItemPopup">
+						<MenuItem Header="Cut"/>
+						<MenuItem Header="Copy"/>
 						<MenuItem Header="Delete"/>
+						<MenuItem Header="Rename"/>
 					</ContextMenu>
 					<HierarchicalDataTemplate DataType="{x:Type pi:ProjectFolder}" ItemsSource="{Binding Items}">
 						<StackPanel Orientation="Horizontal">
