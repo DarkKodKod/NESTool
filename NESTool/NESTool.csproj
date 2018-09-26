@@ -117,7 +117,8 @@
     <Compile Include="ViewModels\BanksViewModel.cs" />
     <Compile Include="ViewModels\CharacterViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
-    <Compile Include="ViewModels\ProjectItem.cs" />
+    <Compile Include="ViewModels\ProjectItems\ProjectFolder.cs" />
+    <Compile Include="ViewModels\ProjectItems\ProjectItem.cs" />
     <Compile Include="ViewModels\ProjectDialogViewModel.cs" />
     <Compile Include="ViewModels\ProjectPropertiesDialogViewModel.cs" />
     <Compile Include="ViewModels\TileSetViewModel.cs" />
@@ -244,6 +245,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\closed_folder.png" />
+    <Resource Include="Resources\open_folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\bank.png" />
+    <Resource Include="Resources\character.png" />
+    <Resource Include="Resources\map.png" />
+    <Resource Include="Resources\tileset.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

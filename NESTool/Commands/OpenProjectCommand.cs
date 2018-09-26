@@ -5,7 +5,7 @@ using NESTool.Enums;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
-using NESTool.ViewModels;
+using NESTool.ViewModels.ProjectItems;
 using NESTool.VOs;
 using System.Collections.Generic;
 using System.IO;
@@ -101,7 +101,7 @@ namespace NESTool.Commands
 
             foreach (DirectoryInfo directory in directories)
             {
-                var item = new ProjectItem(directory.Name, directory.FullName, ProjectItemType.Folder);
+                var item = new ProjectFolder(directory.Name, directory.FullName, ProjectItemType.Folder);
 
                 string ext = Util.GetFolderExtension(directory.Name);
 

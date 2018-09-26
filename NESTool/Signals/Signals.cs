@@ -1,5 +1,5 @@
 ﻿using NESTool.Architecture.Signals;
-using NESTool.ViewModels;
+using NESTool.ViewModels.ProjectItems;
 using NESTool.VOs;
 
 namespace NESTool.Signals

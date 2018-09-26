@@ -4,6 +4,7 @@ using NESTool.Architecture.ViewModel;
 using NESTool.Commands;
 using NESTool.Models;
 using NESTool.Signals;
+using NESTool.ViewModels.ProjectItems;
 using NESTool.VOs;
 using System.Collections.Generic;
 using System.Windows;

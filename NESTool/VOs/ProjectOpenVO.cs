@@ -1,4 +1,4 @@
-﻿using NESTool.ViewModels;
+﻿using NESTool.ViewModels.ProjectItems;
 using System.Collections.Generic;
 
 namespace NESTool.VOs

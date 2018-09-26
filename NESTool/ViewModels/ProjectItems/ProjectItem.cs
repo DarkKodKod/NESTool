@@ -4,7 +4,7 @@ using NESTool.Enums;
 using NESTool.Signals;
 using System.Collections.ObjectModel;
 
-namespace NESTool.ViewModels
+namespace NESTool.ViewModels.ProjectItems
 {
     public class ProjectItem : ViewModel
     {
@@ -18,7 +18,6 @@ namespace NESTool.ViewModels
         }
 
         public ProjectItemType Type { get; set; }
-        public ProjectItemType Group { get; set; }
         public string DisplayName { get; set; }
         public string FullPath { get; set; }
         public ObservableCollection<ProjectItem> Items { get; set; }
