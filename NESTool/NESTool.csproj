@@ -90,6 +90,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Architecture\Commands\Command.cs" />
+    <Compile Include="Commands\CopyElementCommand.cs" />
+    <Compile Include="Commands\CreateFolderCommand.cs" />
+    <Compile Include="Commands\CreateNewElementCommand.cs" />
+    <Compile Include="Commands\CutElementCommand.cs" />
+    <Compile Include="Commands\DeleteElementCommand.cs" />
+    <Compile Include="Commands\DuplicateElementCommand.cs" />
+    <Compile Include="Commands\PasteElementCommand.cs" />
+    <Compile Include="Commands\RenameElementCommand.cs" />
     <Compile Include="FileSystem\FileSystemManager.cs" />
     <Compile Include="History\HistoryManager.cs" />
     <Compile Include="Meta\IMetaItem.cs" />

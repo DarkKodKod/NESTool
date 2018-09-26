@@ -26,7 +26,12 @@
 		<KeyBinding Key="N" Modifiers="Ctrl+Shift" Command="{Binding NewProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
 		<KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding OpenProjectCommand}" />
 		<KeyBinding Key="B" Modifiers="Ctrl" Command="{Binding BuildProjectCommand}" />
-	</Window.InputBindings>
+        <KeyBinding Key="X" Modifiers="Ctrl" Command="{Binding CutElementCommand}" />
+        <KeyBinding Key="C" Modifiers="Ctrl" Command="{Binding CopyElementCommand}" />
+        <KeyBinding Key="V" Modifiers="Ctrl" Command="{Binding PasteElementCommand}" />
+        <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding DuplicateElementCommand}" />
+        <KeyBinding Key="Delete" Command="{Binding DeleteElementCommand}" />
+    </Window.InputBindings>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadConfigsCommand}"/>
@@ -64,6 +69,13 @@
 				<Separator />
 				<MenuItem Header="_Exit" InputGestureText="Alt+F4" Command="{Binding ExitCommand}"/>
 			</MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="Cu_t" InputGestureText="Ctrl+X" Command="{Binding CutElementCommand}"/>
+                <MenuItem Header="_Copy" InputGestureText="Ctrl+C" Command="{Binding CopyElementCommand}"/>
+                <MenuItem Header="_Paste" InputGestureText="Ctrl+V" Command="{Binding PasteElementCommand}"/>
+                <MenuItem Header="Duplicat_e" InputGestureText="Ctrl+D" Command="{Binding DuplicateElementCommand}"/>
+                <MenuItem Header="_Delete" InputGestureText="Delete" Command="{Binding DeleteElementCommand}"/>
+            </MenuItem>
 			<MenuItem Header="_Project">
 				<MenuItem Header="_Build Project" InputGestureText="Ctrl+B" Command="{Binding BuildProjectCommand}" CommandParameter="{Binding ProjectName}"/>
 				<Separator/>
@@ -115,21 +127,21 @@
 			</Grid.ColumnDefinitions>
 			<TreeView Grid.Column="1" ItemsSource="{Binding ProjectItems}" PreviewMouseRightButtonDown="TreeView_PreviewMouseRightButtonDown">
 				<TreeView.Resources>
-					<ContextMenu x:Key="FolderPopup">
-						<MenuItem Header="Create Folder"/>
-						<MenuItem Header="Create New Element"/>
+                    <ContextMenu x:Key="FolderPopup">
+                        <MenuItem Header="Create Folder" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.CreateFolderCommand}"/>
+                        <MenuItem Header="Create New Element" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.CreateNewElementCommand}"/>
 						<Separator/>
-						<MenuItem Header="Cut"/>
-						<MenuItem Header="Copy"/>
-						<MenuItem Header="Paste"/>
-						<MenuItem Header="Delete"/>
-						<MenuItem Header="Rename"/>
+                        <MenuItem Header="Cut" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.CutElementCommand}" />
+                        <MenuItem Header="Copy" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.CopyElementCommand}"/>
+                        <MenuItem Header="Paste" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.PasteElementCommand}"/>
+                        <MenuItem Header="Delete" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.DeleteElementCommand}" />
+                        <MenuItem Header="Rename" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.RenameElementCommand}" />
 					</ContextMenu>
 					<ContextMenu x:Key="ItemPopup">
-						<MenuItem Header="Cut"/>
-						<MenuItem Header="Copy"/>
-						<MenuItem Header="Delete"/>
-						<MenuItem Header="Rename"/>
+                        <MenuItem Header="Cut" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.CutElementCommand}" />
+                        <MenuItem Header="Copy" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.CopyElementCommand}" />
+                        <MenuItem Header="Delete" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.DeleteElementCommand}" />
+                        <MenuItem Header="Rename" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.RenameElementCommand}" />
 					</ContextMenu>
 					<HierarchicalDataTemplate DataType="{x:Type pi:ProjectFolder}" ItemsSource="{Binding Items}">
 						<StackPanel Orientation="Horizontal">

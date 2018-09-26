@@ -25,6 +25,14 @@ namespace NESTool.ViewModels
         public BuildProjectCommand BuildProjectCommand { get; } = new BuildProjectCommand();
         public OpenProjectPropertiesCommand OpenProjectPropertiesCommand { get; } = new OpenProjectPropertiesCommand();
         public ViewHelpCommand ViewHelpCommand { get; } = new ViewHelpCommand();
+        public CutElementCommand CutElementCommand { get; } = new CutElementCommand();
+        public CopyElementCommand CopyElementCommand { get; } = new CopyElementCommand();
+        public PasteElementCommand PasteElementCommand { get; } = new PasteElementCommand();
+        public DuplicateElementCommand DuplicateElementCommand { get; } = new DuplicateElementCommand();
+        public DeleteElementCommand DeleteElementCommand { get; } = new DeleteElementCommand();
+        public RenameElementCommand RenameElementCommand { get; } = new RenameElementCommand();
+        public CreateNewElementCommand CreateNewElementCommand { get; } = new CreateNewElementCommand();
+        public CreateFolderCommand CreateFolderCommand { get; } = new CreateFolderCommand();
 
         private const string _projectNameKey = "applicationTitle";
 
