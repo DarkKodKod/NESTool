@@ -113,20 +113,17 @@
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="3"/>
 			</Grid.ColumnDefinitions>
-			<TreeView Grid.Column="1" ItemsSource="{Binding ProjectItems}">
-				<TreeView.ItemContainerStyle>
-					<Style TargetType="{x:Type TreeViewItem}">
-						<Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-						<Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-						<Setter Property="FontWeight" Value="Normal" />
-						<Style.Triggers>
-							<Trigger Property="IsSelected" Value="True">
-								<Setter Property="FontWeight" Value="Bold" />
-							</Trigger>
-						</Style.Triggers>
-					</Style>
-				</TreeView.ItemContainerStyle>
+			<TreeView Grid.Column="1" ItemsSource="{Binding ProjectItems}" PreviewMouseRightButtonDown="TreeView_PreviewMouseRightButtonDown">
 				<TreeView.Resources>
+					<ContextMenu x:Key="FolderPopup">
+						<MenuItem Header="Create Folder"/>
+						<MenuItem Header="Create New Element"/>
+						<Separator/>
+						<MenuItem Header="Delete"/>
+					</ContextMenu>
+					<ContextMenu x:Key="ItemPopup">
+						<MenuItem Header="Delete"/>
+					</ContextMenu>
 					<HierarchicalDataTemplate DataType="{x:Type pi:ProjectFolder}" ItemsSource="{Binding Items}">
 						<StackPanel Orientation="Horizontal">
 							<Image x:Name="folderImage" Source="/Resources/closed_folder.png" Margin="0,0,5,0" />
@@ -159,6 +156,33 @@
 						</DataTemplate.Triggers>
 					</HierarchicalDataTemplate>
 				</TreeView.Resources>
+				<TreeView.ItemContainerStyle>
+					<Style TargetType="{x:Type TreeViewItem}">
+						<Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+						<Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+						<Setter Property="FontWeight" Value="Normal" />
+						<Style.Triggers>
+							<Trigger Property="IsSelected" Value="True">
+								<Setter Property="FontWeight" Value="Bold" />
+							</Trigger>
+							<DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Folder}">
+								<Setter Property="ContextMenu" Value="{StaticResource FolderPopup}"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Character}">
+								<Setter Property="ContextMenu" Value="{StaticResource ItemPopup}"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Bank}">
+								<Setter Property="ContextMenu" Value="{StaticResource ItemPopup}"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Map}">
+								<Setter Property="ContextMenu" Value="{StaticResource ItemPopup}"/>
+							</DataTrigger>
+							<DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.TileSet}">
+								<Setter Property="ContextMenu" Value="{StaticResource ItemPopup}"/>
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</TreeView.ItemContainerStyle>
 			</TreeView>
 			<GridSplitter Grid.Column="1" Width="5" />
 			<Frame Grid.Column="2" />

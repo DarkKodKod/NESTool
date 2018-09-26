@@ -8,6 +8,7 @@ namespace NESTool.ViewModels.ProjectItems
         {
         }
 
+        public bool Root { get; set; }
         public ProjectItemType Group { get; set; }
     }
 }

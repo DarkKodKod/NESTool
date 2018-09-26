@@ -1,6 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Input;
 
 namespace NESTool
 {
@@ -33,6 +36,27 @@ namespace NESTool
             if (SystemParameters.MenuDropAlignment && _menuDropAlignmentField != null)
             {
                 _menuDropAlignmentField.SetValue(null, false);
+            }
+        }
+
+        static TreeViewItem VisualUpwardSearch(DependencyObject source)
+        {
+            while (source != null && !(source is TreeViewItem))
+            {
+                source = VisualTreeHelper.GetParent(source);
+            }
+
+            return source as TreeViewItem;
+        }
+
+        private void TreeView_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            TreeViewItem treeViewItem = VisualUpwardSearch(e.OriginalSource as DependencyObject);
+
+            if (treeViewItem != null)
+            {
+                treeViewItem.Focus();
+                e.Handled = true;
             }
         }
     }
