@@ -8,7 +8,8 @@
 		xmlns:cv="clr-namespace:NESTool.Converters"
 		xmlns:enum="clr-namespace:NESTool.Enums"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        mc:Ignorable="d"
+		xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.Net45"
+		mc:Ignorable="d"
         Height="617.748" Width="939.57" 
 		x:Name="MainWindowView"
 		Title="{Binding Title}"
@@ -48,9 +49,7 @@
 							  Command="{Binding NewProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
 					<MenuItem Header="New _File" InputGestureText="Ctrl+N" Command="{Binding NewFileCommand}" />
 				</MenuItem>
-				<MenuItem Header="_Open">
-					<MenuItem Header="Open _Project" Command="{Binding OpenProjectCommand}" InputGestureText="Ctrl+O"/>
-				</MenuItem>
+				<MenuItem Header="_Open Project" Command="{Binding OpenProjectCommand}" InputGestureText="Ctrl+O"/>
 				<Separator />
 				<MenuItem Header="Close _Project" Command="{Binding CloseProjectCommand}" CommandParameter="{Binding ProjectName}" />
 				<Separator />
@@ -125,7 +124,21 @@
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="3"/>
 			</Grid.ColumnDefinitions>
-			<TreeView Grid.Column="1" ItemsSource="{Binding ProjectItems}" PreviewMouseRightButtonDown="TreeView_PreviewMouseRightButtonDown">
+			<TreeView Grid.Column="1" ItemsSource="{Binding ProjectItems}" PreviewMouseRightButtonDown="TreeView_PreviewMouseRightButtonDown" AllowDrop="True">
+				<i:Interaction.Triggers>
+					<i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+						<cmd:EventToCommand Command="{Binding PreviewMouseLeftButtonDownCommand}" PassEventArgsToCommand="True" />
+					</i:EventTrigger>
+					<i:EventTrigger EventName="PreviewMouseMove">
+						<cmd:EventToCommand Command="{Binding PreviewMouseMoveCommand, Mode=OneWay}" PassEventArgsToCommand="True" />
+					</i:EventTrigger>
+					<i:EventTrigger EventName="Drop">
+						<cmd:EventToCommand Command="{Binding DropCommand}" PassEventArgsToCommand="True" />
+					</i:EventTrigger>
+					<i:EventTrigger EventName="DragEnter">
+						<cmd:EventToCommand Command="{Binding DragEnterCommand}" PassEventArgsToCommand="True" />
+					</i:EventTrigger>
+				</i:Interaction.Triggers>
 				<TreeView.Resources>
                     <ContextMenu x:Key="FolderPopup">
                         <MenuItem Header="Create Folder" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.CreateFolderCommand}"/>

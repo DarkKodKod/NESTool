@@ -1,6 +1,7 @@
 ﻿using NESTool.Architecture.Signals;
 using NESTool.ViewModels.ProjectItems;
 using NESTool.VOs;
+using System.Windows;
 
 namespace NESTool.Signals
 {
@@ -20,6 +21,8 @@ namespace NESTool.Signals
     public class BuildProjectSuccessSignal : Signal { }
     public class ProjectItemExpandedSignal : Signal<ProjectItem> { }
     public class ProjectItemSelectedSignal : Signal<ProjectItem> { }
+    public class MouseLeftButtonDownSignal : Signal<Point> { }
+    public class MouseMoveSignal : Signal<MouseMoveVO> { }
 
     // ProjectDialogViewModel
     public class CreateProjectSuccessSignal : Signal<string> { }

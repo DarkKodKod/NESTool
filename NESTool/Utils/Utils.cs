@@ -1,6 +1,7 @@
 ﻿using NESTool.Enums;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Media;
 
 namespace NESTool.Utils
 {
@@ -60,6 +61,20 @@ namespace NESTool.Utils
             if (folderName == folderTileSets) return extensionTileSets;
 
             return string.Empty;
+        }
+
+        public static T FindAncestor<T>(DependencyObject current) where T : DependencyObject
+        {
+            do
+            {
+                if (current is T)
+                {
+                    return (T)current;
+                }
+                current = VisualTreeHelper.GetParent(current);
+            }
+            while (current != null);
+            return null;
         }
     }
 }

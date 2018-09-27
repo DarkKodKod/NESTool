@@ -15,7 +15,7 @@ namespace NESTool.Commands
                 return false;
             }
 
-            return true;
+            return false;
         }
 
         public override void Execute(object parameter)

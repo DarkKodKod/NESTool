@@ -4,10 +4,14 @@ using NESTool.Architecture.ViewModel;
 using NESTool.Commands;
 using NESTool.Models;
 using NESTool.Signals;
+using NESTool.Utils;
 using NESTool.ViewModels.ProjectItems;
 using NESTool.VOs;
+using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace NESTool.ViewModels
 {
@@ -33,6 +37,10 @@ namespace NESTool.ViewModels
         public RenameElementCommand RenameElementCommand { get; } = new RenameElementCommand();
         public CreateNewElementCommand CreateNewElementCommand { get; } = new CreateNewElementCommand();
         public CreateFolderCommand CreateFolderCommand { get; } = new CreateFolderCommand();
+        public PreviewMouseLeftButtonDownCommand PreviewMouseLeftButtonDownCommand { get; } = new PreviewMouseLeftButtonDownCommand();
+        public PreviewMouseMoveCommand PreviewMouseMoveCommand { get; } = new PreviewMouseMoveCommand();
+        public DragEnterCommand DragEnterCommand { get; } = new DragEnterCommand();
+        public DropCommand DropCommand { get; } = new DropCommand();
 
         private const string _projectNameKey = "applicationTitle";
 
@@ -40,6 +48,7 @@ namespace NESTool.ViewModels
         private string _projectName;
         private List<ProjectItem> _projectItems;
         private List<RecentProjectModel> _recentProjects = new List<RecentProjectModel>();
+        private Point _startPoint;
 
         public string ProjectName
         {
@@ -95,6 +104,8 @@ namespace NESTool.ViewModels
             SignalManager.Get<ProjectItemExpandedSignal>().AddListener(OnProjectItemExpanded);
             SignalManager.Get<ProjectItemSelectedSignal>().AddListener(OnProjectItemSelected);
             SignalManager.Get<WindowGetFocusSignal>().AddListener(OnWindowGetFocus);
+            SignalManager.Get<MouseLeftButtonDownSignal>().AddListener(OnMouseLeftButtonDown);
+            SignalManager.Get<MouseMoveSignal>().AddListener(OnMouseMove);
         }
 
         ~MainWindowViewModel()
@@ -111,6 +122,8 @@ namespace NESTool.ViewModels
             SignalManager.Get<ProjectItemExpandedSignal>().RemoveListener(OnProjectItemExpanded);
             SignalManager.Get<ProjectItemSelectedSignal>().RemoveListener(OnProjectItemSelected);
             SignalManager.Get<WindowGetFocusSignal>().RemoveListener(OnWindowGetFocus);
+            SignalManager.Get<MouseLeftButtonDownSignal>().RemoveListener(OnMouseLeftButtonDown);
+            SignalManager.Get<MouseMoveSignal>().RemoveListener(OnMouseMove);
         }
 
         private void LoadConfigSuccess()
@@ -188,6 +201,39 @@ namespace NESTool.ViewModels
         private void ExitSuccess()
         {
             Application.Current.Shutdown();
+        }
+
+        private void OnMouseLeftButtonDown(Point point)
+        {
+            _startPoint = point;
+        }
+
+        private void OnMouseMove(MouseMoveVO vo)
+        {
+            var diff = _startPoint - vo.Position;
+
+            if (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance || Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+            {
+                var treeView = vo.Sender as TreeView;
+
+                var treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)vo.OriginalSource);
+
+                if (treeView == null || treeViewItem == null)
+                {
+                    return;
+                }   
+
+                var folderViewModel = treeView.SelectedItem as ProjectItem;
+
+                if (folderViewModel == null)
+                {
+                    return;
+                }   
+
+                var dragData = new DataObject(folderViewModel);
+
+                DragDrop.DoDragDrop(treeViewItem, dragData, DragDropEffects.Move);
+            }
         }
 
         private void OnWindowGetFocus()
