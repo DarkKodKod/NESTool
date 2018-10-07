@@ -55,7 +55,11 @@
 				<Separator />
 				<MenuItem Header="_Save" InputGestureText="Ctrl+S" Command="{Binding SaveCommand}"/>
 				<MenuItem Header="Save _All" InputGestureText="Ctrl+Shift+S" Command="{Binding SaveAllCommand}"/>
-				<Separator />
+                <Separator />
+                <MenuItem Header="_Import">
+                    <MenuItem Header="_Image" Command="{Binding ImportImage}" />
+                </MenuItem>
+                <Separator />
 				<MenuItem Header="_Recent Projects" ItemsSource="{Binding RecentProjects}">
 					<MenuItem.ItemContainerStyle>
 						<Style TargetType="{x:Type MenuItem}">

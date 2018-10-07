@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace NESTool.ViewModels
 {
@@ -41,6 +40,7 @@ namespace NESTool.ViewModels
         public PreviewMouseMoveCommand PreviewMouseMoveCommand { get; } = new PreviewMouseMoveCommand();
         public DragEnterCommand DragEnterCommand { get; } = new DragEnterCommand();
         public DropCommand DropCommand { get; } = new DropCommand();
+        public ImportImageCommand ImportImageCommand { get; } = new ImportImageCommand();
 
         private const string _projectNameKey = "applicationTitle";
 

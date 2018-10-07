@@ -113,6 +113,7 @@
     <Compile Include="Commands\DragEnterCommand.cs" />
     <Compile Include="Commands\DropCommand.cs" />
     <Compile Include="Commands\DuplicateElementCommand.cs" />
+    <Compile Include="Commands\ImportImageCommand.cs" />
     <Compile Include="Commands\PasteElementCommand.cs" />
     <Compile Include="Commands\PreviewMouseLeftButtonDownCommand.cs" />
     <Compile Include="Commands\PreviewMouseMoveCommand.cs" />
