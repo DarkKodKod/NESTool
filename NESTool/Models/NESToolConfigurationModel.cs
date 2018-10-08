@@ -7,7 +7,11 @@ namespace NESTool.Models
 {
     public class NESToolConfigurationModel : IModel
     {
-        private const int MaxRencetProjectsCount = 9;
+        public int MaxRencetProjectsCount
+        {
+            get { return _maxRencetProjectsCount; }
+            set { _maxRencetProjectsCount = value; }
+        }
 
         public string DefaultProjectPath
         {
@@ -21,14 +25,17 @@ namespace NESTool.Models
             set { _recentProjects = value; }
         }
 
-        private string[] _recentProjects = new string[MaxRencetProjectsCount];
+        private string[] _recentProjects;
         private string _defaultProjectPath = "";
+        private int _maxRencetProjectsCount = 9;
 
         private const string _configfileNameKey = "configurationFileName";
         private readonly string _configFileName = "";
 
         public NESToolConfigurationModel()
         {
+            _recentProjects = new string[MaxRencetProjectsCount];
+
             for (int i = 0; i < _recentProjects.Length; ++i)
             {
                 _recentProjects[i] = "";
@@ -41,6 +48,7 @@ namespace NESTool.Models
         {
             DefaultProjectPath = copy.DefaultProjectPath;
             RecentProjects = copy.RecentProjects;
+            MaxRencetProjectsCount = copy.MaxRencetProjectsCount;
         }
 
         public void Load()

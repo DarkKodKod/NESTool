@@ -105,6 +105,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Architecture\Commands\Command.cs" />
+    <Compile Include="Architecture\Managers\AManager.cs" />
     <Compile Include="Commands\CopyElementCommand.cs" />
     <Compile Include="Commands\CreateFolderCommand.cs" />
     <Compile Include="Commands\CreateNewElementCommand.cs" />
