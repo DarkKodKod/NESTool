@@ -14,15 +14,32 @@
 	</Window.DataContext>
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="200"/>
-			<RowDefinition Height="30"/>
+			<RowDefinition Height="10"/>
 			<RowDefinition Height="*"/>
+			<RowDefinition Height="auto"/>
+			<RowDefinition Height="10"/>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="30"/>
+			<ColumnDefinition Width="10"/>
 			<ColumnDefinition Width="*"/>
-			<ColumnDefinition Width="30"/>
+			<ColumnDefinition Width="10"/>
 		</Grid.ColumnDefinitions>
-		<Button Width="100" Grid.Row="1" IsCancel="True" Grid.Column="1" Content="Ok" />
+		<StackPanel Grid.Column="1" Grid.Row="1" Width="auto">
+			<Label FontSize="48" FontWeight="Bold" HorizontalAlignment="Center">NESTool</Label>
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,10">
+				<StackPanel.Resources>
+					<Style TargetType="{x:Type TextBlock}">
+						<Setter Property="Margin" Value="2,0,2,0"/>
+					</Style>
+				</StackPanel.Resources>
+				<TextBlock>Version:</TextBlock>
+				<TextBlock Text="{Binding Version}" />
+			</StackPanel>
+			<TextBlock HorizontalAlignment="Center">
+				<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/DarkKodKod/NESTool">https://github.com/DarkKodKod/NESTool</Hyperlink>
+			</TextBlock>
+			<Label HorizontalAlignment="Center">By Felipe Reinaud</Label>
+		</StackPanel>
+		<Button Width="100" Grid.Row="2" Grid.Column="1" IsCancel="True" Content="Ok" />
 	</Grid>
 </Window>
