@@ -41,6 +41,7 @@ namespace NESTool.ViewModels
         public DragEnterCommand DragEnterCommand { get; } = new DragEnterCommand();
         public DropCommand DropCommand { get; } = new DropCommand();
         public ImportImageCommand ImportImageCommand { get; } = new ImportImageCommand();
+        public WindowsGetFocusCommand WindowsGetFocusCommand { get; } = new WindowsGetFocusCommand();
 
         private const string _projectNameKey = "applicationTitle";
 

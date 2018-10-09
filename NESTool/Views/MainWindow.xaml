@@ -12,7 +12,7 @@
 		mc:Ignorable="d"
         Height="617.748" Width="939.57" 
 		x:Name="MainWindowView"
-		Title="{Binding Title}"
+		Title="{Binding Title, Mode=OneWay}"
 		WindowStartupLocation="CenterScreen">
 	<Window.Resources>
 		<cv:ParametersConverter x:Key="parametersConverter"/>
@@ -57,7 +57,7 @@
 				<MenuItem Header="Save _All" InputGestureText="Ctrl+Shift+S" Command="{Binding SaveAllCommand}"/>
                 <Separator />
                 <MenuItem Header="_Import">
-                    <MenuItem Header="_Image" Command="{Binding ImportImage}" />
+                    <MenuItem Header="_Image" Command="{Binding ImportImageCommand}" />
                 </MenuItem>
                 <Separator />
 				<MenuItem Header="_Recent Projects" ItemsSource="{Binding RecentProjects}">
@@ -195,7 +195,6 @@
 				<TreeView.ItemContainerStyle>
 					<Style TargetType="{x:Type TreeViewItem}">
 						<Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-						<Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
 						<Setter Property="FontWeight" Value="Normal" />
 						<Style.Triggers>
 							<Trigger Property="IsSelected" Value="True">

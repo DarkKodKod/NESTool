@@ -23,26 +23,7 @@ namespace NESTool.ViewModels.ProjectItems
         public ObservableCollection<ProjectItem> Items { get; set; }
 
         private bool _isSelected;
-        private bool _isExpanded;
         private object _selectedItem = null;
-
-        private bool IsExpanded
-        {
-            get
-            {
-                return _isExpanded;
-            }
-            set
-            {
-                if (value != _isExpanded)
-                {
-                    _isExpanded = value;
-                    OnPropertyChanged("IsExpanded");
-
-                    OnExpandedItem();
-                }
-            }
-        }
 
         public bool IsSelected
         {
