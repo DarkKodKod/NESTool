@@ -45,7 +45,7 @@ namespace NESTool.ViewModels
 
         private const string _projectNameKey = "applicationTitle";
 
-        private string _title;
+        private string _title = "";
         private string _projectName;
         private List<ProjectItem> _projectItems;
         private List<RecentProjectModel> _recentProjects = new List<RecentProjectModel>();
