@@ -110,6 +110,8 @@
     <Compile Include="Commands\CutElementCommand.cs" />
     <Compile Include="Commands\DeleteElementCommand.cs" />
     <Compile Include="Commands\DragEnterCommand.cs" />
+    <Compile Include="Commands\DragLeaveCommand.cs" />
+    <Compile Include="Commands\DragOverCommand.cs" />
     <Compile Include="Commands\DropCommand.cs" />
     <Compile Include="Commands\DuplicateElementCommand.cs" />
     <Compile Include="Commands\ImportImageCommand.cs" />
@@ -123,6 +125,7 @@
     <Compile Include="Meta\IMetaItem.cs" />
     <Compile Include="Models\MetaItemModel.cs" />
     <Compile Include="Meta\MetaManager.cs" />
+    <Compile Include="Utils\Adorners\TreeViewInsertAdorner.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Commands\BrowseFolderCommand.cs" />
     <Compile Include="Commands\BuildProjectCommand.cs" />
@@ -132,7 +135,7 @@
     <Compile Include="Commands\ShowAboutDialogCommand.cs" />
     <Compile Include="Commands\ViewHelpCommand.cs" />
     <Compile Include="Commands\WindowsGetFocusCommand.cs" />
-    <Compile Include="Converters\ParametersConverter.cs" />
+    <Compile Include="Utils\Converters\ParametersConverter.cs" />
     <Compile Include="Enums\CommonEnums.cs" />
     <Compile Include="Models\RecentProjectModel.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />

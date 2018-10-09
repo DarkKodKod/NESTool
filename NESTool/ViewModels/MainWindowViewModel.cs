@@ -5,12 +5,14 @@ using NESTool.Commands;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
+using NESTool.Utils.Adorners;
 using NESTool.ViewModels.ProjectItems;
 using NESTool.VOs;
 using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace NESTool.ViewModels
 {
@@ -39,6 +41,8 @@ namespace NESTool.ViewModels
         public PreviewMouseLeftButtonDownCommand PreviewMouseLeftButtonDownCommand { get; } = new PreviewMouseLeftButtonDownCommand();
         public PreviewMouseMoveCommand PreviewMouseMoveCommand { get; } = new PreviewMouseMoveCommand();
         public DragEnterCommand DragEnterCommand { get; } = new DragEnterCommand();
+        public DragOverCommand DragOverCommand { get; } = new DragOverCommand();
+        public DragLeaveCommand DragLeaveCommand { get; } = new DragLeaveCommand();
         public DropCommand DropCommand { get; } = new DropCommand();
         public ImportImageCommand ImportImageCommand { get; } = new ImportImageCommand();
         public WindowsGetFocusCommand WindowsGetFocusCommand { get; } = new WindowsGetFocusCommand();
@@ -50,6 +54,7 @@ namespace NESTool.ViewModels
         private List<ProjectItem> _projectItems;
         private List<RecentProjectModel> _recentProjects = new List<RecentProjectModel>();
         private Point _startPoint;
+        private TreeViewInsertAdorner _insertAdorner;
 
         public string ProjectName
         {
@@ -107,6 +112,9 @@ namespace NESTool.ViewModels
             SignalManager.Get<WindowGetFocusSignal>().AddListener(OnWindowGetFocus);
             SignalManager.Get<MouseLeftButtonDownSignal>().AddListener(OnMouseLeftButtonDown);
             SignalManager.Get<MouseMoveSignal>().AddListener(OnMouseMove);
+            SignalManager.Get<UpdateInsertAdornerSignal>().AddListener(OnUpdateInsertAdorner);
+            SignalManager.Get<InitializeInsertAdornerSignal>().AddListener(OnInitializeInsertAdorner);
+            SignalManager.Get<DetachAdornersSignal>().AddListener(OnDetachAdorners);
         }
 
         ~MainWindowViewModel()
@@ -125,6 +133,9 @@ namespace NESTool.ViewModels
             SignalManager.Get<WindowGetFocusSignal>().RemoveListener(OnWindowGetFocus);
             SignalManager.Get<MouseLeftButtonDownSignal>().RemoveListener(OnMouseLeftButtonDown);
             SignalManager.Get<MouseMoveSignal>().RemoveListener(OnMouseMove);
+            SignalManager.Get<UpdateInsertAdornerSignal>().RemoveListener(OnUpdateInsertAdorner);
+            SignalManager.Get<InitializeInsertAdornerSignal>().RemoveListener(OnInitializeInsertAdorner);
+            SignalManager.Get<DetachAdornersSignal>().RemoveListener(OnDetachAdorners);
         }
 
         private void LoadConfigSuccess()
@@ -234,6 +245,42 @@ namespace NESTool.ViewModels
                 var dragData = new DataObject(folderViewModel);
 
                 DragDrop.DoDragDrop(treeViewItem, dragData, DragDropEffects.Move);
+            }
+        }
+
+        private void OnInitializeInsertAdorner(TreeViewItem control, DragEventArgs eventArgs)
+        {
+            if (_insertAdorner != null)
+            {
+                return;
+            }
+
+            UIElement itemContainer = Util.GetItemContainerFromPoint(control, eventArgs.GetPosition(control));
+
+            if (itemContainer != null)
+            {
+                var adornerLayer = AdornerLayer.GetAdornerLayer(control);
+                var point = Util.IsPointInTopHalf(control, eventArgs);
+
+                _insertAdorner = new TreeViewInsertAdorner(point, itemContainer, adornerLayer);
+            }
+        }
+
+        private void OnUpdateInsertAdorner(TreeViewItem control, DragEventArgs eventArgs)
+        {
+            if (_insertAdorner != null)
+            {
+                _insertAdorner.IsTopHalf = Util.IsPointInTopHalf(control, eventArgs);
+                _insertAdorner.InvalidateVisual();
+            }
+        }
+
+        private void OnDetachAdorners()
+        {
+            if (_insertAdorner != null)
+            {
+                _insertAdorner.Destroy();
+                _insertAdorner = null;
             }
         }
 

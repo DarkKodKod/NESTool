@@ -1,4 +1,6 @@
 ﻿using ArchitectureLibrary.Commands;
+using ArchitectureLibrary.Signals;
+using NESTool.Signals;
 using NESTool.Utils;
 using NESTool.ViewModels.ProjectItems;
 using System.Windows;
@@ -10,11 +12,11 @@ namespace NESTool.Commands
     {
         public override bool CanExecute(object parameter)
         {
-            var mouseEvent = parameter as DragEventArgs;
+            var dragEvent = parameter as DragEventArgs;
 
-            if (mouseEvent.Data.GetDataPresent(typeof(ProjectFolder)))
+            if (dragEvent.Data.GetDataPresent(typeof(ProjectFolder)))
             {
-                var folder = mouseEvent.Data.GetData(typeof(ProjectFolder)) as ProjectFolder;
+                var folder = dragEvent.Data.GetData(typeof(ProjectFolder)) as ProjectFolder;
 
                 if (folder.Root)
                 {
@@ -27,13 +29,13 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            var mouseEvent = parameter as DragEventArgs;
+            var dragEvent = parameter as DragEventArgs;
 
-            if (mouseEvent.Data.GetDataPresent(typeof(ProjectItem)))
+            if (dragEvent.Data.GetDataPresent(typeof(ProjectItem)))
             {
-                var folderViewModel = mouseEvent.Data.GetData(typeof(ProjectItem)) as ProjectItem;
+                var folderViewModel = dragEvent.Data.GetData(typeof(ProjectItem)) as ProjectItem;
 
-                var treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)mouseEvent.OriginalSource);
+                var treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)dragEvent.OriginalSource);
 
                 if (treeViewItem == null)
                 {
@@ -45,10 +47,14 @@ namespace NESTool.Commands
                 if (dropTarget == null || folderViewModel == null)
                 {
                     return;
-                }   
+                }
 
                 //folderViewModel.Parent = dropTarget;
             }
+
+            SignalManager.Get<DetachAdornersSignal>().Dispatch();
+
+            dragEvent.Handled = true;
         }
     }
 }

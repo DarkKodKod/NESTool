@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:NESTool.ViewModels"
 		xmlns:pi="clr-namespace:NESTool.ViewModels.ProjectItems"
-		xmlns:cv="clr-namespace:NESTool.Converters"
+		xmlns:cv="clr-namespace:NESTool.Utils.Converters"
 		xmlns:enum="clr-namespace:NESTool.Enums"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 		xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.Net45"
@@ -138,6 +138,12 @@
 					</i:EventTrigger>
 					<i:EventTrigger EventName="Drop">
 						<cmd:EventToCommand Command="{Binding DropCommand}" PassEventArgsToCommand="True" />
+					</i:EventTrigger>
+					<i:EventTrigger EventName="DragOver">
+						<cmd:EventToCommand Command="{Binding DragOverCommand}" PassEventArgsToCommand="True" />
+					</i:EventTrigger>
+					<i:EventTrigger EventName="DragLeave">
+						<cmd:EventToCommand Command="{Binding DragLeaveCommand}" PassEventArgsToCommand="True" />
 					</i:EventTrigger>
 					<i:EventTrigger EventName="DragEnter">
 						<cmd:EventToCommand Command="{Binding DragEnterCommand}" PassEventArgsToCommand="True" />

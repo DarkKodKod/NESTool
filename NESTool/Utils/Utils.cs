@@ -1,6 +1,7 @@
 ﻿using NESTool.Enums;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace NESTool.Utils
@@ -74,6 +75,39 @@ namespace NESTool.Utils
                 current = VisualTreeHelper.GetParent(current);
             }
             while (current != null);
+            return null;
+        }
+
+        public static bool IsPointInTopHalf(ItemsControl itemsControl, DragEventArgs e)
+        {
+            UIElement selectedItemContainer = GetItemContainerFromPoint(itemsControl, e.GetPosition(itemsControl));
+            Point relativePosition = e.GetPosition(selectedItemContainer);
+
+            return relativePosition.Y < ((FrameworkElement)selectedItemContainer).ActualHeight / 2;
+        }
+
+        public static UIElement GetItemContainerFromPoint(ItemsControl itemsControl, Point p)
+        {
+            UIElement element = itemsControl.InputHitTest(p) as UIElement;
+            while (element != null)
+            {
+                if (element == itemsControl)
+                {
+                    return element;
+                }
+
+                object data = itemsControl.ItemContainerGenerator.ItemFromContainer(element);
+
+                if (data != DependencyProperty.UnsetValue)
+                {
+                    return element;
+                }
+                else
+                {
+                    element = VisualTreeHelper.GetParent(element) as UIElement;
+                }
+            }
+
             return null;
         }
     }

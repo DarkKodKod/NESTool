@@ -2,6 +2,7 @@
 using NESTool.ViewModels.ProjectItems;
 using NESTool.VOs;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace NESTool.Signals
 {
@@ -23,6 +24,9 @@ namespace NESTool.Signals
     public class ProjectItemSelectedSignal : Signal<ProjectItem> { }
     public class MouseLeftButtonDownSignal : Signal<Point> { }
     public class MouseMoveSignal : Signal<MouseMoveVO> { }
+    public class UpdateInsertAdornerSignal : Signal<TreeViewItem, DragEventArgs> { }
+    public class InitializeInsertAdornerSignal : Signal<TreeViewItem, DragEventArgs> { }
+    public class DetachAdornersSignal : Signal { }
 
     // ProjectDialogViewModel
     public class CreateProjectSuccessSignal : Signal<string> { }

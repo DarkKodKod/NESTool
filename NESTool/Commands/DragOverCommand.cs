@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace NESTool.Commands
 {
-    public class DragEnterCommand : Command
+    public class DragOverCommand : Command
     {
         public override void Execute(object parameter)
         {
@@ -17,9 +17,7 @@ namespace NESTool.Commands
 
             if (treeViewItem != null)
             {
-                dragEvent.Effects = DragDropEffects.Move;
-
-                SignalManager.Get<InitializeInsertAdornerSignal>().Dispatch(treeViewItem, dragEvent);
+                SignalManager.Get<UpdateInsertAdornerSignal>().Dispatch(treeViewItem, dragEvent);
             }
 
             dragEvent.Handled = true;
