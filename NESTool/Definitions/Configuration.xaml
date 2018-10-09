@@ -13,4 +13,6 @@
     <system:String x:Key="extensionCharacters">.char</system:String>
     <system:String x:Key="extensionMaps">.map</system:String>
     <system:String x:Key="extensionTileSets">.tileset</system:String>
+	<system:Int32 x:Key="projectVersion">1</system:Int32>
+	<system:Int32 x:Key="toolVersion">1</system:Int32>
 </ResourceDictionary>

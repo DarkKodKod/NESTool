@@ -7,6 +7,7 @@ namespace NESTool.Models
 {
     public class NESToolConfigurationModel : IModel
     {
+        public int Version { get; set; }
         public int MaxRencetProjectsCount { get; set; } = 9;
         public string DefaultProjectPath { get; set; } = "";
         public int WindowSizeX { get; set; }
@@ -15,7 +16,9 @@ namespace NESTool.Models
         public string[] RecentProjects { get; set; }
 
         private const string _configfileNameKey = "configurationFileName";
+        private const string _toolVersionKey = "toolVersion";
         private readonly string _configFileName = "";
+        private readonly int _toolVersion = 0;
 
         public NESToolConfigurationModel()
         {
@@ -27,10 +30,12 @@ namespace NESTool.Models
             }
 
             _configFileName = @".\"+ (string)Application.Current.FindResource(_configfileNameKey) + Toml.FileExtension;
+            _toolVersion = (int)Application.Current.FindResource(_toolVersionKey);
         }
 
         public void Copy(NESToolConfigurationModel copy)
         {
+            Version = copy.Version;
             DefaultProjectPath = copy.DefaultProjectPath;
             RecentProjects = copy.RecentProjects;
             MaxRencetProjectsCount = copy.MaxRencetProjectsCount;

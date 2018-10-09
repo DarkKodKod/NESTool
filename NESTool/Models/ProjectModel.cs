@@ -1,5 +1,6 @@
 ﻿using NESTool.Architecture.Model;
 using Nett;
+using System.Windows;
 
 namespace NESTool.Models
 {
@@ -19,10 +20,18 @@ namespace NESTool.Models
             }
         }
 
+        public int Version { get; set; }
         public string Name { get; set; } = "";
         public INESHeader Header { get; set; } = new INESHeader();
 
         private string _projectPath;
+        private const string _projectVersionKey = "projectVersion";
+        private readonly int _projectVersion = 0;
+
+        public ProjectModel()
+        {
+            _projectVersion = (int)Application.Current.FindResource(_projectVersionKey);
+        }
 
         public void Reset()
         {
@@ -35,6 +44,7 @@ namespace NESTool.Models
         public void Copy(ProjectModel copy)
         {
             Name = copy.Name;
+            Version = copy.Version;
 
             Header.INesMapper = copy.Header.INesMapper;
             Header.CHRSize = copy.Header.CHRSize;
