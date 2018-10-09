@@ -1,5 +1,5 @@
-﻿using NESTool.Architecture.Signals;
-using NESTool.Architecture.ViewModel;
+﻿using ArchitectureLibrary.Signals;
+using ArchitectureLibrary.ViewModel;
 using NESTool.Enums;
 using NESTool.Signals;
 using System.Collections.ObjectModel;

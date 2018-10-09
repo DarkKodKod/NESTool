@@ -1,4 +1,4 @@
-﻿using NESTool.Architecture.Signals;
+﻿using ArchitectureLibrary.Signals;
 using NESTool.ViewModels.ProjectItems;
 using NESTool.VOs;
 using System.Windows;

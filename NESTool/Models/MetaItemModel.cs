@@ -1,4 +1,4 @@
-﻿using NESTool.Architecture.Model;
+﻿using ArchitectureLibrary.Model;
 
 namespace NESTool.Models
 {

@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2019
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NESTool", "NESTool\NESTool.csproj", "{53AFCE71-E574-49E4-ABCA-39CA1926A1AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchitectureLibrary", "ArchitectureLibrary\ArchitectureLibrary.csproj", "{2D202BB4-F395-491A-889E-A3FEBDDAFF45}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{53AFCE71-E574-49E4-ABCA-39CA1926A1AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53AFCE71-E574-49E4-ABCA-39CA1926A1AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{53AFCE71-E574-49E4-ABCA-39CA1926A1AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D202BB4-F395-491A-889E-A3FEBDDAFF45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D202BB4-F395-491A-889E-A3FEBDDAFF45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D202BB4-F395-491A-889E-A3FEBDDAFF45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D202BB4-F395-491A-889E-A3FEBDDAFF45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

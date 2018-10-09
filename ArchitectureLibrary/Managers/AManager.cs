@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NESTool.Architecture.Managers
+namespace ArchitectureLibrary.Managers
 {
     public abstract class AManager<TInterface> where TInterface : class
     {

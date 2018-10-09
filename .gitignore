@@ -2,3 +2,5 @@
 /NESTool/bin/*
 /NESTool/obj/*
 /NESTool/NESTool.csproj.user
+/ArchitectureLibrary/bin/*
+/ArchitectureLibrary/obj/*

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace NESTool.Architecture.Commands
+namespace ArchitectureLibrary.Commands
 {
     public class Command : ICommand
     {

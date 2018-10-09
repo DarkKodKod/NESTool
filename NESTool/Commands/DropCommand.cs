@@ -1,4 +1,4 @@
-﻿using NESTool.Architecture.Commands;
+﻿using ArchitectureLibrary.Commands;
 using NESTool.Utils;
 using NESTool.ViewModels.ProjectItems;
 using System.Windows;

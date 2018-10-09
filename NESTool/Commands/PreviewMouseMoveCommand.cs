@@ -1,5 +1,5 @@
-﻿using NESTool.Architecture.Commands;
-using NESTool.Architecture.Signals;
+﻿using ArchitectureLibrary.Commands;
+using ArchitectureLibrary.Signals;
 using NESTool.Signals;
 using NESTool.VOs;
 using System.Windows.Input;

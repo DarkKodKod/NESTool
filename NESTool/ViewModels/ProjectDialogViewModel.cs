@@ -1,7 +1,7 @@
-﻿using NESTool.Commands;
+﻿using ArchitectureLibrary.Signals;
+using ArchitectureLibrary.ViewModel;
+using NESTool.Commands;
 using NESTool.Signals;
-using NESTool.Architecture.Signals;
-using NESTool.Architecture.ViewModel;
 using NESTool.Utils;
 
 namespace NESTool.ViewModels

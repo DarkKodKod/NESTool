@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace NESTool.Architecture.ViewModel
+namespace ArchitectureLibrary.ViewModel
 {
     public class ViewModel : INotifyPropertyChanged
     {

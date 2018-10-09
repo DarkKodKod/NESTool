@@ -1,4 +1,4 @@
-﻿using NESTool.Architecture.Commands;
+﻿using ArchitectureLibrary.Commands;
 using System.Diagnostics;
 
 namespace NESTool.Commands

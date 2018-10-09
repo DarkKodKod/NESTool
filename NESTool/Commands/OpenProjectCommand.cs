@@ -1,6 +1,6 @@
-﻿using NESTool.Architecture.Commands;
-using NESTool.Architecture.Model;
-using NESTool.Architecture.Signals;
+﻿using ArchitectureLibrary.Commands;
+using ArchitectureLibrary.Model;
+using ArchitectureLibrary.Signals;
 using NESTool.Enums;
 using NESTool.Models;
 using NESTool.Signals;

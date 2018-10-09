@@ -1,4 +1,4 @@
-﻿namespace NESTool.Architecture.Signals
+﻿namespace ArchitectureLibrary.Signals
 {
     public delegate void Dispatcher();
     public delegate void Dispatcher<T1>(T1 t1);

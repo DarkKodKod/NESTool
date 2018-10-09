@@ -1,4 +1,4 @@
-﻿namespace NESTool.Architecture.Model
+﻿namespace ArchitectureLibrary.Model
 {
     public interface IModel
     {

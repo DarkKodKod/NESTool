@@ -1,4 +1,4 @@
-﻿using NESTool.Architecture.ViewModel;
+﻿using ArchitectureLibrary.ViewModel;
 
 namespace NESTool.ViewModels
 {
