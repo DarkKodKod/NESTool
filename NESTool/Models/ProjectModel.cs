@@ -5,104 +5,23 @@ namespace NESTool.Models
 {
     public class ProjectModel : IModel
     {
-        public int INesMapper
+        public class INESHeader
         {
-            get { return _iNesmapper; }
-            set
+            public int INesMapper { get; set; }
+            public int CHRSize { get; set; }
+            public int PRGSize { get; set; }
+
+            public void Reset()
             {
-                if (_iNesmapper != value)
-                {
-                    _iNesmapper = value;
-                    Save();
-                }
+                INesMapper = 0;
+                CHRSize = 0;
+                PRGSize = 0;
             }
         }
 
-        public int CHRSize
-        {
-            get { return _chrSize; }
-            set
-            {
-                if (_chrSize != value)
-                {
-                    _chrSize = value;
-                    Save();
-                }
-            }
-        }
+        public string Name { get; set; } = "";
+        public INESHeader Header { get; set; } = new INESHeader();
 
-        public int PRGSize
-        {
-            get { return _prgSize; }
-            set
-            {
-                if (_prgSize != value)
-                {
-                    _prgSize = value;
-                    Save();
-                }
-            }
-        }
-
-        public int WindowSizeX
-        {
-            get { return _windowSizeX; }
-            set
-            {
-                if (_windowSizeX != value)
-                {
-                    _windowSizeX = value;
-                    Save();
-                }
-            }
-        }
-
-        public int WindowSizeY
-        {
-            get { return _windowSizeY; }
-            set
-            {
-                if (_windowSizeY != value)
-                {
-                    _windowSizeY = value;
-                    Save();
-                }
-            }
-        }
-
-        public bool FullScreen
-        {
-            get { return _fullScreen; }
-            set
-            {
-                if (_fullScreen != value)
-                {
-                    _fullScreen = value;
-                    Save();
-                }
-            }
-        }
-
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                if (_name != value)
-                {
-                    _name = value;
-                    Save();
-                }
-            }
-        }
-
-        private int _iNesmapper;
-        private int _chrSize;
-        private int _prgSize;
-        private bool _fullScreen;
-        private int _windowSizeX;
-        private int _windowSizeY;
-        private string _name = "";
         private string _projectPath;
 
         public void Reset()
@@ -110,17 +29,16 @@ namespace NESTool.Models
             _projectPath = "";
 
             Name = "";
+            Header.Reset();
         }
 
         public void Copy(ProjectModel copy)
         {
             Name = copy.Name;
-            WindowSizeX = copy.WindowSizeX;
-            WindowSizeY = copy.WindowSizeY;
-            FullScreen = copy.FullScreen;
-            INesMapper = copy.INesMapper;
-            CHRSize = copy.CHRSize;
-            PRGSize = copy.PRGSize;
+
+            Header.INesMapper = copy.Header.INesMapper;
+            Header.CHRSize = copy.Header.CHRSize;
+            Header.PRGSize = copy.Header.PRGSize;
         }
 
         public void Load(string path)

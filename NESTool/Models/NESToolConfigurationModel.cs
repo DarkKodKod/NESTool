@@ -7,38 +7,23 @@ namespace NESTool.Models
 {
     public class NESToolConfigurationModel : IModel
     {
-        public int MaxRencetProjectsCount
-        {
-            get { return _maxRencetProjectsCount; }
-            set { _maxRencetProjectsCount = value; }
-        }
-
-        public string DefaultProjectPath
-        {
-            get { return _defaultProjectPath; }
-            set { _defaultProjectPath = value; }
-        }
-
-        public string[] RecentProjects
-        {
-            get { return _recentProjects; }
-            set { _recentProjects = value; }
-        }
-
-        private string[] _recentProjects;
-        private string _defaultProjectPath = "";
-        private int _maxRencetProjectsCount = 9;
+        public int MaxRencetProjectsCount { get; set; } = 9;
+        public string DefaultProjectPath { get; set; } = "";
+        public int WindowSizeX { get; set; }
+        public int WindowSizeY { get; set; }
+        public bool FullScreen { get; set; }
+        public string[] RecentProjects { get; set; }
 
         private const string _configfileNameKey = "configurationFileName";
         private readonly string _configFileName = "";
 
         public NESToolConfigurationModel()
         {
-            _recentProjects = new string[MaxRencetProjectsCount];
+            RecentProjects = new string[MaxRencetProjectsCount];
 
-            for (int i = 0; i < _recentProjects.Length; ++i)
+            for (int i = 0; i < RecentProjects.Length; ++i)
             {
-                _recentProjects[i] = "";
+                RecentProjects[i] = "";
             }
 
             _configFileName = @".\"+ (string)Application.Current.FindResource(_configfileNameKey) + Toml.FileExtension;
@@ -49,6 +34,9 @@ namespace NESTool.Models
             DefaultProjectPath = copy.DefaultProjectPath;
             RecentProjects = copy.RecentProjects;
             MaxRencetProjectsCount = copy.MaxRencetProjectsCount;
+            WindowSizeX = copy.WindowSizeX;
+            WindowSizeY = copy.WindowSizeY;
+            FullScreen = copy.FullScreen;
         }
 
         public void Load()
