@@ -20,9 +20,9 @@ namespace NESTool.Signals
     public class LoadConfigSuccessSignal : Signal { }
     public class UpdateRecentProjectsSignal : Signal<string[]> { }
     public class BuildProjectSuccessSignal : Signal { }
-    public class ProjectItemExpandedSignal : Signal<ProjectItem> { }
     public class ProjectItemSelectedSignal : Signal<ProjectItem> { }
     public class MouseLeftButtonDownSignal : Signal<Point> { }
+    public class MouseLeftButtonUpSignal : Signal { }
     public class MouseMoveSignal : Signal<MouseMoveVO> { }
     public class UpdateInsertAdornerSignal : Signal<TreeViewItem, DragEventArgs> { }
     public class InitializeInsertAdornerSignal : Signal<TreeViewItem, DragEventArgs> { }

@@ -59,8 +59,6 @@ namespace NESTool.ViewModels.ProjectItems
             }
         }
 
-        private void OnExpandedItem() => SignalManager.Get<ProjectItemExpandedSignal>().Dispatch(this);
-
         private void OnSelectedItemChanged() => SignalManager.Get<ProjectItemSelectedSignal>().Dispatch(this);
     }
 }

@@ -39,6 +39,7 @@ namespace NESTool.ViewModels
         public CreateNewElementCommand CreateNewElementCommand { get; } = new CreateNewElementCommand();
         public CreateFolderCommand CreateFolderCommand { get; } = new CreateFolderCommand();
         public PreviewMouseLeftButtonDownCommand PreviewMouseLeftButtonDownCommand { get; } = new PreviewMouseLeftButtonDownCommand();
+        public PreviewMouseLeftButtonUpCommand PreviewMouseLeftButtonUpCommand { get; } = new PreviewMouseLeftButtonUpCommand();
         public PreviewMouseMoveCommand PreviewMouseMoveCommand { get; } = new PreviewMouseMoveCommand();
         public DragEnterCommand DragEnterCommand { get; } = new DragEnterCommand();
         public DragOverCommand DragOverCommand { get; } = new DragOverCommand();
@@ -46,6 +47,7 @@ namespace NESTool.ViewModels
         public DropCommand DropCommand { get; } = new DropCommand();
         public ImportImageCommand ImportImageCommand { get; } = new ImportImageCommand();
         public WindowsGetFocusCommand WindowsGetFocusCommand { get; } = new WindowsGetFocusCommand();
+        public QueryContinueDragCommand QueryContinueDragCommand { get; } = new QueryContinueDragCommand();
 
         private const string _projectNameKey = "applicationTitle";
 
@@ -53,8 +55,12 @@ namespace NESTool.ViewModels
         private string _projectName;
         private List<ProjectItem> _projectItems;
         private List<RecentProjectModel> _recentProjects = new List<RecentProjectModel>();
+
+        #region Drag & Drop
         private Point _startPoint;
         private TreeViewInsertAdorner _insertAdorner;
+        private bool _isDragging = false;
+        #endregion
 
         public string ProjectName
         {
@@ -107,35 +113,14 @@ namespace NESTool.ViewModels
             SignalManager.Get<LoadConfigSuccessSignal>().AddListener(LoadConfigSuccess);
             SignalManager.Get<UpdateRecentProjectsSignal>().AddListener(UpdateRecentProjects);
             SignalManager.Get<BuildProjectSuccessSignal>().AddListener(BuildProjectSuccess);
-            SignalManager.Get<ProjectItemExpandedSignal>().AddListener(OnProjectItemExpanded);
             SignalManager.Get<ProjectItemSelectedSignal>().AddListener(OnProjectItemSelected);
             SignalManager.Get<WindowGetFocusSignal>().AddListener(OnWindowGetFocus);
             SignalManager.Get<MouseLeftButtonDownSignal>().AddListener(OnMouseLeftButtonDown);
+            SignalManager.Get<MouseLeftButtonUpSignal>().AddListener(OnMouseLeftButtonUp);
             SignalManager.Get<MouseMoveSignal>().AddListener(OnMouseMove);
             SignalManager.Get<UpdateInsertAdornerSignal>().AddListener(OnUpdateInsertAdorner);
             SignalManager.Get<InitializeInsertAdornerSignal>().AddListener(OnInitializeInsertAdorner);
             SignalManager.Get<DetachAdornersSignal>().AddListener(OnDetachAdorners);
-        }
-
-        ~MainWindowViewModel()
-        {
-            SignalManager.Get<OpenProjectSuccessSignal>().RemoveListener(OpenProjectSuccess);
-            SignalManager.Get<CloseProjectSuccessSignal>().RemoveListener(CloseProjectSuccess);
-            SignalManager.Get<ExitSuccessSignal>().RemoveListener(ExitSuccess);
-            SignalManager.Get<NewFileSuccessSignal>().RemoveListener(NewFileSuccess);
-            SignalManager.Get<SaveAllSuccessSignal>().RemoveListener(SaveAllSuccess);
-            SignalManager.Get<SaveSuccessSignal>().RemoveListener(SaveSuccess);
-            SignalManager.Get<LoadConfigSuccessSignal>().RemoveListener(LoadConfigSuccess);
-            SignalManager.Get<UpdateRecentProjectsSignal>().RemoveListener(UpdateRecentProjects);
-            SignalManager.Get<BuildProjectSuccessSignal>().RemoveListener(BuildProjectSuccess);
-            SignalManager.Get<ProjectItemExpandedSignal>().RemoveListener(OnProjectItemExpanded);
-            SignalManager.Get<ProjectItemSelectedSignal>().RemoveListener(OnProjectItemSelected);
-            SignalManager.Get<WindowGetFocusSignal>().RemoveListener(OnWindowGetFocus);
-            SignalManager.Get<MouseLeftButtonDownSignal>().RemoveListener(OnMouseLeftButtonDown);
-            SignalManager.Get<MouseMoveSignal>().RemoveListener(OnMouseMove);
-            SignalManager.Get<UpdateInsertAdornerSignal>().RemoveListener(OnUpdateInsertAdorner);
-            SignalManager.Get<InitializeInsertAdornerSignal>().RemoveListener(OnInitializeInsertAdorner);
-            SignalManager.Get<DetachAdornersSignal>().RemoveListener(OnDetachAdorners);
         }
 
         private void LoadConfigSuccess()
@@ -218,13 +203,20 @@ namespace NESTool.ViewModels
         private void OnMouseLeftButtonDown(Point point)
         {
             _startPoint = point;
+
+            _isDragging = false;
+        }
+
+        private void OnMouseLeftButtonUp()
+        {
+            _isDragging = false;
         }
 
         private void OnMouseMove(MouseMoveVO vo)
         {
             var diff = _startPoint - vo.Position;
 
-            if (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance || Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
+            if ((_isDragging == false) && Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
             {
                 var treeView = vo.Sender as TreeView;
 
@@ -245,6 +237,8 @@ namespace NESTool.ViewModels
                 var dragData = new DataObject(folderViewModel);
 
                 DragDrop.DoDragDrop(treeViewItem, dragData, DragDropEffects.Move);
+
+                _isDragging = true;
             }
         }
 
@@ -277,6 +271,8 @@ namespace NESTool.ViewModels
 
         private void OnDetachAdorners()
         {
+            _isDragging = false;
+
             if (_insertAdorner != null)
             {
                 _insertAdorner.Destroy();
@@ -290,11 +286,6 @@ namespace NESTool.ViewModels
         }
 
         private void OnProjectItemSelected(ProjectItem item)
-        {
-            //
-        }
-
-        private void OnProjectItemExpanded(ProjectItem item)
         {
             //
         }

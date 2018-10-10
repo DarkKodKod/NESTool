@@ -133,20 +133,26 @@
 					<i:EventTrigger EventName="PreviewMouseLeftButtonDown">
 						<cmd:EventToCommand Command="{Binding PreviewMouseLeftButtonDownCommand}" PassEventArgsToCommand="True" />
 					</i:EventTrigger>
+					<i:EventTrigger EventName="PreviewMouseLeftButtonUp">
+						<cmd:EventToCommand Command="{Binding PreviewMouseLeftButtonUpCommand}" PassEventArgsToCommand="True" />
+					</i:EventTrigger>
 					<i:EventTrigger EventName="PreviewMouseMove">
 						<cmd:EventToCommand Command="{Binding PreviewMouseMoveCommand, Mode=OneWay}" PassEventArgsToCommand="True" />
 					</i:EventTrigger>
-					<i:EventTrigger EventName="Drop">
+					<i:EventTrigger EventName="PreviewDrop">
 						<cmd:EventToCommand Command="{Binding DropCommand}" PassEventArgsToCommand="True" />
 					</i:EventTrigger>
-					<i:EventTrigger EventName="DragOver">
+					<i:EventTrigger EventName="PreviewDragOver">
 						<cmd:EventToCommand Command="{Binding DragOverCommand}" PassEventArgsToCommand="True" />
 					</i:EventTrigger>
 					<i:EventTrigger EventName="DragLeave">
 						<cmd:EventToCommand Command="{Binding DragLeaveCommand}" PassEventArgsToCommand="True" />
 					</i:EventTrigger>
-					<i:EventTrigger EventName="DragEnter">
+					<i:EventTrigger EventName="PreviewDragEnter">
 						<cmd:EventToCommand Command="{Binding DragEnterCommand}" PassEventArgsToCommand="True" />
+					</i:EventTrigger>
+					<i:EventTrigger EventName="PreviewQueryContinueDrag">
+						<cmd:EventToCommand Command="{Binding QueryContinueDragCommand}" PassEventArgsToCommand="True" />
 					</i:EventTrigger>
 				</i:Interaction.Triggers>
 				<TreeView.Resources>

@@ -12,6 +12,8 @@ namespace NESTool.Commands
     {
         public override bool CanExecute(object parameter)
         {
+            SignalManager.Get<DetachAdornersSignal>().Dispatch();
+
             var dragEvent = parameter as DragEventArgs;
 
             if (dragEvent.Data.GetDataPresent(typeof(ProjectFolder)))
@@ -30,6 +32,8 @@ namespace NESTool.Commands
         public override void Execute(object parameter)
         {
             var dragEvent = parameter as DragEventArgs;
+
+            dragEvent.Handled = true;
 
             if (dragEvent.Data.GetDataPresent(typeof(ProjectItem)))
             {
@@ -52,9 +56,7 @@ namespace NESTool.Commands
                 //folderViewModel.Parent = dropTarget;
             }
 
-            SignalManager.Get<DetachAdornersSignal>().Dispatch();
-
-            dragEvent.Handled = true;
+            dragEvent.Effects = DragDropEffects.None;
         }
     }
 }
