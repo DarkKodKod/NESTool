@@ -19,7 +19,7 @@ namespace NESTool.Commands
             {
                 dragEvent.Effects = DragDropEffects.Move;
 
-                SignalManager.Get<InitializeInsertAdornerSignal>().Dispatch(treeViewItem, dragEvent);
+                SignalManager.Get<InitializeAdornersSignal>().Dispatch(treeViewItem, dragEvent);
             }
 
             dragEvent.Handled = true;

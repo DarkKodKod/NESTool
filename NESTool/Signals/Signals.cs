@@ -24,8 +24,8 @@ namespace NESTool.Signals
     public class MouseLeftButtonDownSignal : Signal<Point> { }
     public class MouseLeftButtonUpSignal : Signal { }
     public class MouseMoveSignal : Signal<MouseMoveVO> { }
-    public class UpdateInsertAdornerSignal : Signal<TreeViewItem, DragEventArgs> { }
-    public class InitializeInsertAdornerSignal : Signal<TreeViewItem, DragEventArgs> { }
+    public class UpdateAdornersSignal : Signal<TreeViewItem, DragEventArgs> { }
+    public class InitializeAdornersSignal : Signal<TreeViewItem, DragEventArgs> { }
     public class DetachAdornersSignal : Signal { }
 
     // ProjectDialogViewModel

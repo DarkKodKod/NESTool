@@ -3,6 +3,10 @@ using ArchitectureLibrary.ViewModel;
 using NESTool.Enums;
 using NESTool.Signals;
 using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Media;
 
 namespace NESTool.ViewModels.ProjectItems
 {
@@ -57,6 +61,31 @@ namespace NESTool.ViewModels.ProjectItems
                     OnSelectedItemChanged();
                 }
             }
+        }
+
+        public DataTemplate GetHeaderTemplate()
+        {
+            //create the data template
+            DataTemplate dataTemplate = new DataTemplate();
+
+            //create stack pane;
+            FrameworkElementFactory stackPanel = new FrameworkElementFactory(typeof(StackPanel));
+            stackPanel.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
+            stackPanel.SetValue(StackPanel.BackgroundProperty, new SolidColorBrush(Colors.Black));
+
+            // create text
+            FrameworkElementFactory label = new FrameworkElementFactory(typeof(TextBlock));
+            label.SetBinding(TextBlock.TextProperty, new Binding() { Path = new PropertyPath("DisplayName") });
+            label.SetValue(TextBlock.MarginProperty, new Thickness(2));
+            label.SetValue(TextBlock.FontWeightProperty, FontWeights.Bold);
+            label.SetValue(TextBlock.ToolTipProperty, new Binding());
+            label.SetValue(TextBlock.ForegroundProperty, new SolidColorBrush(Colors.White));
+            stackPanel.AppendChild(label);
+
+            //set the visual tree of the data template
+            dataTemplate.VisualTree = stackPanel;
+
+            return dataTemplate;
         }
 
         private void OnSelectedItemChanged() => SignalManager.Get<ProjectItemSelectedSignal>().Dispatch(this);

@@ -17,7 +17,7 @@ namespace NESTool.Commands
 
             if (treeViewItem != null)
             {
-                SignalManager.Get<UpdateInsertAdornerSignal>().Dispatch(treeViewItem, dragEvent);
+                SignalManager.Get<UpdateAdornersSignal>().Dispatch(treeViewItem, dragEvent);
             }
 
             dragEvent.Handled = true;

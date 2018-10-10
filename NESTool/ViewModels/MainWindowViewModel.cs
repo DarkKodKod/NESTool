@@ -59,6 +59,7 @@ namespace NESTool.ViewModels
         #region Drag & Drop
         private Point _startPoint;
         private TreeViewInsertAdorner _insertAdorner;
+        private TreeViewDragAdorner _dragAdorner;
         private bool _isDragging = false;
         #endregion
 
@@ -118,8 +119,8 @@ namespace NESTool.ViewModels
             SignalManager.Get<MouseLeftButtonDownSignal>().AddListener(OnMouseLeftButtonDown);
             SignalManager.Get<MouseLeftButtonUpSignal>().AddListener(OnMouseLeftButtonUp);
             SignalManager.Get<MouseMoveSignal>().AddListener(OnMouseMove);
-            SignalManager.Get<UpdateInsertAdornerSignal>().AddListener(OnUpdateInsertAdorner);
-            SignalManager.Get<InitializeInsertAdornerSignal>().AddListener(OnInitializeInsertAdorner);
+            SignalManager.Get<UpdateAdornersSignal>().AddListener(OnUpdateAdorners);
+            SignalManager.Get<InitializeAdornersSignal>().AddListener(OnInitializeAdorners);
             SignalManager.Get<DetachAdornersSignal>().AddListener(OnDetachAdorners);
         }
 
@@ -242,30 +243,57 @@ namespace NESTool.ViewModels
             }
         }
 
-        private void OnInitializeInsertAdorner(TreeViewItem control, DragEventArgs eventArgs)
+        private void OnInitializeAdorners(TreeViewItem control, DragEventArgs eventArgs)
         {
-            if (_insertAdorner != null)
-            {
-                return;
-            }
-
-            UIElement itemContainer = Util.GetItemContainerFromPoint(control, eventArgs.GetPosition(control));
-
-            if (itemContainer != null)
+            if (_dragAdorner == null)
             {
                 var adornerLayer = AdornerLayer.GetAdornerLayer(control);
-                var point = Util.IsPointInTopHalf(control, eventArgs);
 
-                _insertAdorner = new TreeViewInsertAdorner(point, itemContainer, adornerLayer);
+                Point startPosition = eventArgs.GetPosition(control);
+
+                if (eventArgs.Data.GetDataPresent(typeof(ProjectFolder)))
+                {
+                    object data = eventArgs.Data.GetData(typeof(ProjectFolder));
+
+                    _dragAdorner = new TreeViewDragAdorner(data, (data as ProjectFolder).GetHeaderTemplate(), control, adornerLayer);
+                }
+                else
+                {
+                    object data = eventArgs.Data.GetData(typeof(ProjectItem));
+
+                    _dragAdorner = new TreeViewDragAdorner(data, (data as ProjectItem).GetHeaderTemplate(), control, adornerLayer);
+                }
+
+                _dragAdorner.UpdatePosition(startPosition.X, startPosition.Y);
+            }
+
+            if (_insertAdorner == null)
+            {
+                UIElement itemContainer = Util.GetItemContainerFromPoint(control, eventArgs.GetPosition(control));
+
+                if (itemContainer != null)
+                {
+                    var adornerLayer = AdornerLayer.GetAdornerLayer(control);
+                    var point = Util.IsPointInTopHalf(control, eventArgs);
+
+                    _insertAdorner = new TreeViewInsertAdorner(point, itemContainer, adornerLayer);
+                }
             }
         }
 
-        private void OnUpdateInsertAdorner(TreeViewItem control, DragEventArgs eventArgs)
+        private void OnUpdateAdorners(TreeViewItem control, DragEventArgs eventArgs)
         {
             if (_insertAdorner != null)
             {
                 _insertAdorner.IsTopHalf = Util.IsPointInTopHalf(control, eventArgs);
                 _insertAdorner.InvalidateVisual();
+            }
+
+            if (_dragAdorner != null)
+            {
+                var currentPosition = eventArgs.GetPosition(control);
+
+                _dragAdorner.UpdatePosition(currentPosition.X, currentPosition.Y);
             }
         }
 
@@ -277,6 +305,12 @@ namespace NESTool.ViewModels
             {
                 _insertAdorner.Destroy();
                 _insertAdorner = null;
+            }
+
+            if (_dragAdorner != null)
+            {
+                _dragAdorner.Destroy();
+                _dragAdorner = null;
             }
         }
 
