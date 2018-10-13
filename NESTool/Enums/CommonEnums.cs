@@ -6,6 +6,12 @@
         s8x16   = 1
     }
 
+    public enum FrameTiming
+    {
+        NTSC = 0,
+        PAL = 1
+    }
+
     public enum ProjectItemType
     {
         None        = 0,
