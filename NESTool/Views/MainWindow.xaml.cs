@@ -4,15 +4,39 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Input;
+using ArchitectureLibrary.Signals;
+using NESTool.Signals;
+using System.Runtime.InteropServices;
+using System;
+using System.Windows.Interop;
 
 namespace NESTool
 {
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    internal struct MonitorInfoEx
+    {
+        public int cbSize;
+        public Rect rcMonitor;
+        public Rect rcWork;
+        public UInt32 dwFlags;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)] public string szDeviceName;
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
         private readonly FieldInfo _menuDropAlignmentField;
+
+        [DllImport("user32.dll")]
+        public static extern bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
+
+        [DllImport("User32")]
+        public static extern IntPtr MonitorFromWindow(IntPtr hWnd, int dwFlags);
+
+        [DllImport("user32", EntryPoint = "GetMonitorInfo", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern bool GetMonitorInfoEx(IntPtr hMonitor, ref MonitorInfoEx lpmi);
 
         public MainWindow()
         {
@@ -58,6 +82,31 @@ namespace NESTool
                 treeViewItem.Focus();
                 e.Handled = true;
             }
+        }
+
+        private void MainWindowView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Window window = Window.GetWindow(this);
+            var wih = new WindowInteropHelper(window);
+            IntPtr hWnd = wih.Handle;
+
+            const int MONITOR_DEFAULTTOPRIMARY = 1;
+            var mi = new MonitorInfoEx();
+            mi.cbSize = Marshal.SizeOf(mi);
+            GetMonitorInfoEx(MonitorFromWindow(hWnd, MONITOR_DEFAULTTOPRIMARY), ref mi);
+
+            Rect appBounds = new Rect();
+            GetWindowRect(hWnd, out appBounds);
+
+            double windowHeight = appBounds.Right - appBounds.Left;
+            double windowWidth = appBounds.Bottom - appBounds.Top;
+
+            double monitorHeight = mi.rcMonitor.Right - mi.rcMonitor.Left;
+            double monitorWidth = mi.rcMonitor.Bottom - mi.rcMonitor.Top;
+
+            bool fullScreen = !((windowHeight == monitorHeight) && (windowWidth == monitorWidth));
+
+            SignalManager.Get<SizeChangedSingal>().Dispatch(e, fullScreen);
         }
     }
 }

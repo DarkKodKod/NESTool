@@ -13,7 +13,8 @@
         Height="617.748" Width="939.57" 
 		x:Name="MainWindowView"
 		Title="{Binding Title, Mode=OneWay}"
-		WindowStartupLocation="CenterScreen">
+		WindowStartupLocation="CenterScreen" 
+        FrameworkElement.SizeChanged="MainWindowView_SizeChanged">
 	<Window.Resources>
 		<cv:ParametersConverter x:Key="parametersConverter"/>
 	</Window.Resources>

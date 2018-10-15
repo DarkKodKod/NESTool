@@ -55,6 +55,7 @@ namespace NESTool.ViewModels
         private string _projectName;
         private List<ProjectItem> _projectItems;
         private List<RecentProjectModel> _recentProjects = new List<RecentProjectModel>();
+        private bool? _isFullscreen = null;
 
         #region Drag & Drop
         private Point _startPoint;
@@ -122,6 +123,7 @@ namespace NESTool.ViewModels
             SignalManager.Get<UpdateAdornersSignal>().AddListener(OnUpdateAdorners);
             SignalManager.Get<InitializeAdornersSignal>().AddListener(OnInitializeAdorners);
             SignalManager.Get<DetachAdornersSignal>().AddListener(OnDetachAdorners);
+            SignalManager.Get<SizeChangedSingal>().AddListener(OnSizeChanged);
         }
 
         private void LoadConfigSuccess()
@@ -311,6 +313,39 @@ namespace NESTool.ViewModels
             {
                 _dragAdorner.Destroy();
                 _dragAdorner = null;
+            }
+        }
+
+        private void OnSizeChanged(SizeChangedEventArgs args, bool fullscreen)
+        {
+            bool changed = false;
+
+            if (args.HeightChanged)
+            {
+                ModelManager.Get<NESToolConfigurationModel>().WindowSizeY = (int)args.NewSize.Height;
+
+                changed = true;
+            }
+
+            if (args.WidthChanged)
+            {
+                ModelManager.Get<NESToolConfigurationModel>().WindowSizeX = (int)args.NewSize.Width;
+
+                changed = true;
+            }
+
+            if (_isFullscreen != fullscreen)
+            {
+                _isFullscreen = fullscreen;
+
+                ModelManager.Get<NESToolConfigurationModel>().FullScreen = fullscreen;
+
+                changed = true;
+            }
+
+            if (changed)
+            {
+                ModelManager.Get<NESToolConfigurationModel>().Save();
             }
         }
 

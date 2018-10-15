@@ -10,15 +10,17 @@ namespace NESTool.Models
         public int Version { get; set; }
         public int MaxRencetProjectsCount { get; set; } = 9;
         public string DefaultProjectPath { get; set; } = "";
-        public int WindowSizeX { get; set; }
-        public int WindowSizeY { get; set; }
-        public bool FullScreen { get; set; }
+        public int WindowSizeX { get; set; } = 940;
+        public int WindowSizeY { get; set; } = 618;
+        public bool FullScreen { get; set; } = false;
         public string[] RecentProjects { get; set; }
 
         private const string _configfileNameKey = "configurationFileName";
         private const string _toolVersionKey = "toolVersion";
         private readonly string _configFileName = "";
         private readonly int _toolVersion = 0;
+
+        private bool _loaded = false;
 
         public NESToolConfigurationModel()
         {
@@ -56,10 +58,17 @@ namespace NESTool.Models
             {
                 Save();
             }
+
+            _loaded = true;
         }
 
         public void Save()
         {
+            if (!_loaded)
+            {
+                return;
+            }
+
             Toml.WriteFile(this, _configFileName);
         }
 

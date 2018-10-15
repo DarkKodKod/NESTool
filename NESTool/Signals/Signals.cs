@@ -27,6 +27,7 @@ namespace NESTool.Signals
     public class UpdateAdornersSignal : Signal<TreeViewItem, DragEventArgs> { }
     public class InitializeAdornersSignal : Signal<TreeViewItem, DragEventArgs> { }
     public class DetachAdornersSignal : Signal { }
+    public class SizeChangedSingal : Signal<SizeChangedEventArgs, bool> { }
 
     // ProjectDialogViewModel
     public class CreateProjectSuccessSignal : Signal<string> { }
