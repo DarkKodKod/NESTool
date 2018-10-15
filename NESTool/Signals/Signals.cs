@@ -8,6 +8,7 @@ namespace NESTool.Signals
 {
     // Generics
     public class BrowseFolderSuccessSignal : Signal<string> { }
+    public class SetUpWindowPropertiesSignal : Signal<WindowVO> { }
 
     // MainWindowViewModel
     public class WindowGetFocusSignal : Signal { }

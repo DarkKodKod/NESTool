@@ -1,4 +1,7 @@
 ﻿using ArchitectureLibrary.Model;
+using ArchitectureLibrary.Signals;
+using NESTool.Signals;
+using NESTool.VOs;
 using Nett;
 using System.IO;
 using System.Windows;
@@ -58,6 +61,10 @@ namespace NESTool.Models
             {
                 Save();
             }
+
+            var vo = new WindowVO() { SizeX = WindowSizeX, SizeY = WindowSizeY, IsFullScreen = FullScreen };
+
+            SignalManager.Get<SetUpWindowPropertiesSignal>().Dispatch(vo);
 
             _loaded = true;
         }

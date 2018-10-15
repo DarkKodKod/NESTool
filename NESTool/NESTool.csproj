@@ -173,6 +173,7 @@
     </Compile>
     <Compile Include="VOs\MouseMoveVO.cs" />
     <Compile Include="VOs\ProjectOpenVO.cs" />
+    <Compile Include="VOs\WindowVO.cs" />
     <Page Include="Definitions\Configuration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

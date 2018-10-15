@@ -9,6 +9,7 @@ using NESTool.Signals;
 using System.Runtime.InteropServices;
 using System;
 using System.Windows.Interop;
+using NESTool.VOs;
 
 namespace NESTool
 {
@@ -48,6 +49,8 @@ namespace NESTool
 
             EnsureStandardPopupAlignment();
             SystemParameters.StaticPropertyChanged += SystemParameters_StaticPropertyChanged;
+
+            SignalManager.Get<SetUpWindowPropertiesSignal>().AddListener(OnSetUpWindowProperties);
         }
 
         private void SystemParameters_StaticPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -107,6 +110,27 @@ namespace NESTool
             bool fullScreen = !((windowHeight == monitorHeight) && (windowWidth == monitorWidth));
 
             SignalManager.Get<SizeChangedSingal>().Dispatch(e, fullScreen);
+        }
+
+        private void CenterWindowOnScreen()
+        {
+            double screenWidth = SystemParameters.PrimaryScreenWidth;
+            double screenHeight = SystemParameters.PrimaryScreenHeight;
+            double windowWidth = this.Width;
+            double windowHeight = this.Height;
+
+            Left = (screenWidth / 2) - (windowWidth / 2);
+            Top = (screenHeight / 2) - (windowHeight / 2);
+        }
+
+        private void OnSetUpWindowProperties(WindowVO vo)
+        {
+            WindowState = vo.IsFullScreen ? WindowState.Maximized : WindowState.Normal;
+
+            Height = vo.SizeY;
+            Width = vo.SizeX;
+
+            CenterWindowOnScreen();
         }
     }
 }
