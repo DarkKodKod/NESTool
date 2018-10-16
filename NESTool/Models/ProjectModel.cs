@@ -30,6 +30,10 @@ namespace NESTool.Models
         public int Version { get; set; }
         public string Name { get; set; } = "";
         public INESHeader Header { get; set; } = new INESHeader();
+        /// <summary>
+        /// Run-length encoding
+        /// </summary>
+        public bool RLECompression { get; set; } = false;
 
         private string _projectPath;
         private const string _projectVersionKey = "projectVersion";
@@ -45,6 +49,7 @@ namespace NESTool.Models
             _projectPath = "";
 
             Name = "";
+            RLECompression = false;
             Header.Reset();
         }
 
@@ -52,6 +57,7 @@ namespace NESTool.Models
         {
             Name = copy.Name;
             Version = copy.Version;
+            RLECompression = copy.RLECompression;
 
             Header.INesMapper = copy.Header.INesMapper;
             Header.CHRSize = copy.Header.CHRSize;
