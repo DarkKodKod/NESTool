@@ -210,7 +210,6 @@
     </Compile>
     <Compile Include="Commands\CloseProjectCommand.cs" />
     <Compile Include="Commands\ExitCommand.cs" />
-    <Compile Include="Commands\NewFileCommand.cs" />
     <Compile Include="Commands\NewProjectCommand.cs" />
     <Compile Include="Commands\OpenProjectCommand.cs" />
     <Compile Include="Commands\SaveAllCommand.cs" />

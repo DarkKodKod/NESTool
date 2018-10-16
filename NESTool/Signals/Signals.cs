@@ -12,7 +12,6 @@ namespace NESTool.Signals
 
     // MainWindowViewModel
     public class WindowGetFocusSignal : Signal { }
-    public class NewFileSuccessSignal : Signal { }
     public class OpenProjectSuccessSignal : Signal<ProjectOpenVO> { }
     public class CloseProjectSuccessSignal : Signal { }
     public class SaveSuccessSignal : Signal { }

@@ -21,7 +21,6 @@ namespace NESTool.ViewModels
         public OpenProjectCommand OpenProjectCommand { get; } = new OpenProjectCommand();
         public CloseProjectCommand CloseProjectCommand { get; } = new CloseProjectCommand();
         public ExitCommand ExitCommand { get; } = new ExitCommand();
-        public NewFileCommand NewFileCommand { get; } = new NewFileCommand();
         public NewProjectCommand NewProjectCommand { get; } = new NewProjectCommand();
         public SaveAllCommand SaveAllCommand { get; } = new SaveAllCommand();
         public SaveCommand SaveCommand { get; } = new SaveCommand();
@@ -110,7 +109,6 @@ namespace NESTool.ViewModels
             SignalManager.Get<OpenProjectSuccessSignal>().AddListener(OpenProjectSuccess);
             SignalManager.Get<CloseProjectSuccessSignal>().AddListener(OnCloseProjectSuccess);
             SignalManager.Get<ExitSuccessSignal>().AddListener(OnExitSuccess);
-            SignalManager.Get<NewFileSuccessSignal>().AddListener(OnNewFileSuccess);
             SignalManager.Get<SaveAllSuccessSignal>().AddListener(OnSaveAllSuccess);
             SignalManager.Get<SaveSuccessSignal>().AddListener(OnSaveSuccess);
             SignalManager.Get<LoadConfigSuccessSignal>().AddListener(OnLoadConfigSuccess);
@@ -376,11 +374,6 @@ namespace NESTool.ViewModels
         }
 
         private void OnProjectItemSelected(ProjectItem item)
-        {
-            //
-        }
-
-        private void OnNewFileSuccess()
         {
             //
         }
