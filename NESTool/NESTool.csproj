@@ -132,6 +132,7 @@
     <Compile Include="Meta\MetaManager.cs" />
     <Compile Include="Utils\Adorners\TreeViewDragAdorner.cs" />
     <Compile Include="Utils\Adorners\TreeViewInsertAdorner.cs" />
+    <Compile Include="Utils\Converters\EnumMatchToBooleanConverter.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Commands\BrowseFolderCommand.cs" />
     <Compile Include="Commands\BuildProjectCommand.cs" />

@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NESTool.Views"
 		xmlns:vm="clr-namespace:NESTool.ViewModels"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         mc:Ignorable="d"
         Title="About NESTool" Height="272.16" Width="372.868"
 		ResizeMode="NoResize"
@@ -39,7 +41,10 @@
 				<Hyperlink Command="{Binding OpenLinkCommand}" CommandParameter="https://github.com/DarkKodKod/NESTool">https://github.com/DarkKodKod/NESTool</Hyperlink>
 			</TextBlock>
 			<Label HorizontalAlignment="Center">By Felipe Reinaud</Label>
-		</StackPanel>
+            <TextBlock HorizontalAlignment="Center">
+				<Hyperlink NavigateUri="mailto:freinaud@gmail.com">freinaud@gmail.com</Hyperlink>
+            </TextBlock>
+        </StackPanel>
 		<Button Width="100" Grid.Row="2" Grid.Column="1" IsCancel="True" Content="Ok" />
 	</Grid>
 </Window>
