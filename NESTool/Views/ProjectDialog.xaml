@@ -8,7 +8,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
 		x:Name="ProjectDialogView"
-        Title="New Project" Height="185.88" Width="463.635" 
+        Title="New Project" Height="287.88" Width="463.635" 
 		Loaded="Window_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
 	<Window.Resources>
 		<cv:ParametersConverter x:Key="parametersConverter"/>
@@ -28,7 +28,8 @@
 			<RowDefinition Height="auto"/>
 			<RowDefinition Height="auto"/>
 			<RowDefinition Height="auto"/>
-			<RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
@@ -49,7 +50,29 @@
 			<TextBox x:Name="tbPath" Height="23" Text="{Binding FolderPath, UpdateSourceTrigger=PropertyChanged}" 
 					 TextWrapping="NoWrap" VerticalAlignment="Center" Width="auto"/>
 		</DockPanel>
-		<Grid Grid.Row="5" Grid.Column="1">
+        <Grid Grid.Row="5" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Mapper:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <ComboBox x:Name="cbMapper" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" ItemsSource="{Binding Mappers}" 
+                DisplayMemberPath="Name"
+                SelectedValuePath="Id"
+                SelectedValue="{Binding Path=SelectedMapper}"/>
+            <Label Content="PRG Size:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBox x:Name="tbPRGSize" Grid.Column="1" Grid.Row="2" Height="23" Width="120" VerticalAlignment="Top" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="{Binding PRGSize}"/>
+            <Label Content="CHR Size:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <TextBox x:Name="tbCHRSize" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23" Width="120" TextWrapping="NoWrap" Text="{Binding CHRSize}"/>
+        </Grid>
+		<Grid Grid.Row="6" Grid.Column="1">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*"/>
 				<ColumnDefinition Width="100"/>
@@ -65,7 +88,10 @@
 					<MultiBinding Converter="{StaticResource parametersConverter}">
 						<Binding Path="Text" ElementName="tbPath"/>
 						<Binding Path="Text" ElementName="tbProjName"/>
-					</MultiBinding>
+                        <Binding Path="Text" ElementName="tbPRGSize"/>
+                        <Binding Path="Text" ElementName="tbCHRSize"/>
+                        <Binding Path="SelectedValue" ElementName="cbMapper"/>
+                    </MultiBinding>
 				</Button.CommandParameter>
 			</Button>
 		</Grid>

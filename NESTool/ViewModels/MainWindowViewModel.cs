@@ -126,6 +126,7 @@ namespace NESTool.ViewModels
             SignalManager.Get<DetachAdornersSignal>().AddListener(OnDetachAdorners);
             SignalManager.Get<SizeChangedSingal>().AddListener(OnSizeChanged);
             SignalManager.Get<LoadMappersSuccessSignal>().AddListener(OnLoadMappersSuccess);
+            SignalManager.Get<CreateProjectSuccessSignal>().AddListener(OnCreateProjectSuccess);
         }
 
         private void OnLoadConfigSuccess()
@@ -148,6 +149,16 @@ namespace NESTool.ViewModels
                 {
                     openProjectCommand.Execute(config.DefaultProjectPath);
                 }
+            }
+        }
+
+        private void OnCreateProjectSuccess(string projectFullPath)
+        {
+            // After creating the project now it is time to open it
+            var openProjectCommand = new OpenProjectCommand();
+            if (openProjectCommand.CanExecute(projectFullPath))
+            {
+                openProjectCommand.Execute(projectFullPath);
             }
         }
 

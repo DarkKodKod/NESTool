@@ -1,7 +1,8 @@
-﻿using System;
+﻿using ArchitectureLibrary.Model;
 using ArchitectureLibrary.Signals;
 using ArchitectureLibrary.ViewModel;
 using NESTool.Commands;
+using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
 
@@ -13,6 +14,7 @@ namespace NESTool.ViewModels
         public BrowseFolderCommand BrowseFolderCommand { get; } = new BrowseFolderCommand();
         public ClosedNewProjectCommand ClosedNewProjectCommand { get; } = new ClosedNewProjectCommand();
 
+        #region get/set
         public string ProjectName
         {
             get { return _projectName; }
@@ -41,34 +43,72 @@ namespace NESTool.ViewModels
             }
         }
 
+        public MapperModel[] Mappers
+        {
+            get { return _mappers; }
+            set
+            {
+                _mappers = value;
+                OnPropertyChanged("Mappers");
+            }
+        }
+
+        public int SelectedMapper
+        {
+            get { return _selectedMapper; }
+            set
+            {
+                _selectedMapper = value;
+                OnPropertyChanged("SelectedMapper");
+            }
+        }
+
+        public int CHRSize
+        {
+            get { return _chrSize; }
+            set
+            {
+                _chrSize = value;
+                OnPropertyChanged("CHRSize");
+            }
+        }
+
+        public int PRGSize
+        {
+            get { return _prgSize; }
+            set
+            {
+                _prgSize = value;
+                OnPropertyChanged("PRGSize");
+            }
+        }
+        #endregion
+
         private string _previousValidName;
         private string _projectName;
         private string _folderPath;
+        private int _chrSize = 0;
+        private int _prgSize = 0;
+        private MapperModel[] _mappers;
+        private int _selectedMapper;
 
         public ProjectDialogViewModel()
         {
-            SignalManager.Get<CreateProjectSuccessSignal>().AddListener(CreateProjectSuccess);
+            var mappers = ModelManager.Get<MappersModel>();
+
+            Mappers = mappers.Mappers;
+            SelectedMapper = mappers.Mappers[0].Id;
+
             SignalManager.Get<BrowseFolderSuccessSignal>().AddListener(BrowseFolderSuccess);
             SignalManager.Get<ClosedNewProjectSignal>().AddListener(OnClosedNewProject);
         }
 
         private void OnClosedNewProject()
         {
-            SignalManager.Get<CreateProjectSuccessSignal>().RemoveListener(CreateProjectSuccess);
             SignalManager.Get<BrowseFolderSuccessSignal>().RemoveListener(BrowseFolderSuccess);
             SignalManager.Get<ClosedNewProjectSignal>().RemoveListener(OnClosedNewProject);
         }
 
         private void BrowseFolderSuccess(string folderPath) => FolderPath = folderPath;
-
-        private void CreateProjectSuccess(string projectFullPath)
-        {
-            // After creating the project now it is time to open it
-            var openProjectCommand = new OpenProjectCommand();
-            if (openProjectCommand.CanExecute(projectFullPath))
-            {
-                openProjectCommand.Execute(projectFullPath);
-            }
-        }
     }
 }

@@ -3,6 +3,7 @@ using ArchitectureLibrary.Model;
 using ArchitectureLibrary.Signals;
 using NESTool.Models;
 using NESTool.Signals;
+using System;
 using System.IO;
 using System.Windows;
 
@@ -55,14 +56,18 @@ namespace NESTool.Commands
             var path = (string)values[0];
             var projectName = (string)values[1];
 
+            Int32.TryParse((string)values[2], out int prgSize);
+            Int32.TryParse((string)values[3], out int chrSize);
+            var mapperId = (int)values[4];
+
             var projectFullPath = Path.Combine(path, projectName);
 
-            CreateProject(projectFullPath);
+            CreateProject(projectFullPath, prgSize, chrSize, mapperId);
 
             SignalManager.Get<CreateProjectSuccessSignal>().Dispatch(projectFullPath);
         }
 
-        private void CreateProject(string projectFullPath)
+        private void CreateProject(string projectFullPath, int prgSize, int chrSize, int mapperIndex)
         {
             Directory.CreateDirectory(projectFullPath);
 
@@ -86,6 +91,10 @@ namespace NESTool.Commands
 
             // In case there is already a model loaded, we want to reset it to its default state
             model.Reset();
+
+            model.Header.CHRSize = chrSize;
+            model.Header.PRGSize = prgSize;
+            model.Header.INesMapper = mapperIndex;
 
             model.Save(fullPathToProjectFile);
         }

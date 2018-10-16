@@ -30,10 +30,10 @@ namespace NESTool.Signals
     public class DetachAdornersSignal : Signal { }
     public class SizeChangedSingal : Signal<SizeChangedEventArgs, bool> { }
     public class LoadMappersSuccessSignal : Signal { }
+    public class CreateProjectSuccessSignal : Signal<string> { }
 
     // ProjectDialogViewModel
     public class ClosedNewProjectSignal : Signal { }
-    public class CreateProjectSuccessSignal : Signal<string> { }
 
     // ProjectPropertiesViewModel
     public class ClosedProjectPropertiesSignal : Signal { }
