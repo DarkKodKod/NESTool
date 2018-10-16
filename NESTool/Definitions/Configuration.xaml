@@ -15,4 +15,7 @@
     <system:String x:Key="extensionTileSets">.tileset</system:String>
 	<system:Int32 x:Key="projectVersion">1</system:Int32>
 	<system:Int32 x:Key="toolVersion">1</system:Int32>
+    <system:String x:Key="mappersFileName">mappers</system:String>
+    <system:Int32 x:Key="mappersVersion">1</system:Int32>
+    <system:Int32 x:Key="supportedMappers">2</system:Int32>
 </ResourceDictionary>

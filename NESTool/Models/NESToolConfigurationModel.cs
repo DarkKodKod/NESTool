@@ -64,6 +64,7 @@ namespace NESTool.Models
 
             var vo = new WindowVO() { SizeX = WindowSizeX, SizeY = WindowSizeY, IsFullScreen = FullScreen };
 
+            SignalManager.Get<LoadConfigSuccessSignal>().Dispatch();
             SignalManager.Get<SetUpWindowPropertiesSignal>().Dispatch(vo);
 
             _loaded = true;

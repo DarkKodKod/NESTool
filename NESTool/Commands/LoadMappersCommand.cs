@@ -4,11 +4,11 @@ using NESTool.Models;
 
 namespace NESTool.Commands
 {
-    public class LoadConfigsCommand : Command
+    public class LoadMappersCommand : Command
     {
         public override void Execute(object parameter)
         {
-            ModelManager.Get<NESToolConfigurationModel>().Load();
+            ModelManager.Get<MappersModel>().Load();
         }
     }
 }

@@ -48,6 +48,7 @@ namespace NESTool.ViewModels
         public ImportImageCommand ImportImageCommand { get; } = new ImportImageCommand();
         public WindowsGetFocusCommand WindowsGetFocusCommand { get; } = new WindowsGetFocusCommand();
         public QueryContinueDragCommand QueryContinueDragCommand { get; } = new QueryContinueDragCommand();
+        public LoadMappersCommand LoadMappersCommand { get; } = new LoadMappersCommand();
 
         private const string _projectNameKey = "applicationTitle";
 
@@ -107,14 +108,14 @@ namespace NESTool.ViewModels
         public MainWindowViewModel()
         {
             SignalManager.Get<OpenProjectSuccessSignal>().AddListener(OpenProjectSuccess);
-            SignalManager.Get<CloseProjectSuccessSignal>().AddListener(CloseProjectSuccess);
-            SignalManager.Get<ExitSuccessSignal>().AddListener(ExitSuccess);
-            SignalManager.Get<NewFileSuccessSignal>().AddListener(NewFileSuccess);
-            SignalManager.Get<SaveAllSuccessSignal>().AddListener(SaveAllSuccess);
-            SignalManager.Get<SaveSuccessSignal>().AddListener(SaveSuccess);
-            SignalManager.Get<LoadConfigSuccessSignal>().AddListener(LoadConfigSuccess);
-            SignalManager.Get<UpdateRecentProjectsSignal>().AddListener(UpdateRecentProjects);
-            SignalManager.Get<BuildProjectSuccessSignal>().AddListener(BuildProjectSuccess);
+            SignalManager.Get<CloseProjectSuccessSignal>().AddListener(OnCloseProjectSuccess);
+            SignalManager.Get<ExitSuccessSignal>().AddListener(OnExitSuccess);
+            SignalManager.Get<NewFileSuccessSignal>().AddListener(OnNewFileSuccess);
+            SignalManager.Get<SaveAllSuccessSignal>().AddListener(OnSaveAllSuccess);
+            SignalManager.Get<SaveSuccessSignal>().AddListener(OnSaveSuccess);
+            SignalManager.Get<LoadConfigSuccessSignal>().AddListener(OnLoadConfigSuccess);
+            SignalManager.Get<UpdateRecentProjectsSignal>().AddListener(OnUpdateRecentProjects);
+            SignalManager.Get<BuildProjectSuccessSignal>().AddListener(OnBuildProjectSuccess);
             SignalManager.Get<ProjectItemSelectedSignal>().AddListener(OnProjectItemSelected);
             SignalManager.Get<WindowGetFocusSignal>().AddListener(OnWindowGetFocus);
             SignalManager.Get<MouseLeftButtonDownSignal>().AddListener(OnMouseLeftButtonDown);
@@ -124,13 +125,14 @@ namespace NESTool.ViewModels
             SignalManager.Get<InitializeAdornersSignal>().AddListener(OnInitializeAdorners);
             SignalManager.Get<DetachAdornersSignal>().AddListener(OnDetachAdorners);
             SignalManager.Get<SizeChangedSingal>().AddListener(OnSizeChanged);
+            SignalManager.Get<LoadMappersSuccessSignal>().AddListener(OnLoadMappersSuccess);
         }
 
-        private void LoadConfigSuccess()
+        private void OnLoadConfigSuccess()
         {
             var model = ModelManager.Get<NESToolConfigurationModel>();
 
-            UpdateRecentProjects(model.RecentProjects);
+            OnUpdateRecentProjects(model.RecentProjects);
 
             LoadDefaultProject();
         }
@@ -149,7 +151,7 @@ namespace NESTool.ViewModels
             }
         }
 
-        private void UpdateRecentProjects(string[] recentProjects)
+        private void OnUpdateRecentProjects(string[] recentProjects)
         {
             var list = new List<RecentProjectModel>();
 
@@ -187,7 +189,7 @@ namespace NESTool.ViewModels
             Title = $"{ vo.ProjectName } - { projectName }";
         }
 
-        private void CloseProjectSuccess()
+        private void OnCloseProjectSuccess()
         {
             ProjectItems = null;
 
@@ -198,7 +200,7 @@ namespace NESTool.ViewModels
             Title = $"{ projectName }";
         }
 
-        private void ExitSuccess()
+        private void OnExitSuccess()
         {
             Application.Current.Shutdown();
         }
@@ -349,6 +351,11 @@ namespace NESTool.ViewModels
             }
         }
 
+        private void OnLoadMappersSuccess()
+        {
+            //
+        }
+
         private void OnWindowGetFocus()
         {
             //
@@ -359,22 +366,22 @@ namespace NESTool.ViewModels
             //
         }
 
-        private void NewFileSuccess()
+        private void OnNewFileSuccess()
         {
             //
         }
 
-        private void SaveAllSuccess()
+        private void OnSaveAllSuccess()
         {
             //
         }
 
-        private void SaveSuccess()
+        private void OnSaveSuccess()
         {
             //
         }
 
-        private void BuildProjectSuccess()
+        private void OnBuildProjectSuccess()
         {
             //
         }

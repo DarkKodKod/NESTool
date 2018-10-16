@@ -37,6 +37,7 @@
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadConfigsCommand}"/>
+            <i:InvokeCommandAction Command="{Binding LoadMappersCommand}"/>
         </i:EventTrigger>
 		<i:EventTrigger EventName="Activated">
 			<i:InvokeCommandAction Command="{Binding WindowsGetFocusCommand}"/>

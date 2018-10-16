@@ -161,15 +161,18 @@ namespace NESTool.Commands
         {
             var model = ModelManager.Get<NESToolConfigurationModel>();
 
-            // Update the recent projects also with the new project path
-            model.InsertToRecentProjects(projectFullPath);
+            if (model.DefaultProjectPath != projectFullPath)
+            {
+                // Update the recent projects also with the new project path
+                model.InsertToRecentProjects(projectFullPath);
 
-            // Make this new project the default project
-            model.DefaultProjectPath = projectFullPath;
+                // Make this new project the default project
+                model.DefaultProjectPath = projectFullPath;
+
+                model.Save();
+            }
 
             SignalManager.Get<UpdateRecentProjectsSignal>().Dispatch(model.RecentProjects);
-
-            model.Save();
         }
     }
 }
