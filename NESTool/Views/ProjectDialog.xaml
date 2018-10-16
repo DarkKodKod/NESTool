@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:NESTool.ViewModels"
 		xmlns:cv="clr-namespace:NESTool.Utils.Converters"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
 		x:Name="ProjectDialogView"
         Title="New Project" Height="185.88" Width="463.635" 
@@ -15,7 +16,12 @@
 	<Window.DataContext>
 		<vm:ProjectDialogViewModel />
 	</Window.DataContext>
-	<Grid>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding ClosedNewProjectCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="10"/>
 			<RowDefinition Height="auto"/>

@@ -187,6 +187,9 @@ namespace NESTool.ViewModels
             ProjectName = vo.ProjectName;
 
             Title = $"{ vo.ProjectName } - { projectName }";
+
+            var project = ModelManager.Get<ProjectModel>();
+            project.Name = vo.ProjectName;
         }
 
         private void OnCloseProjectSuccess()

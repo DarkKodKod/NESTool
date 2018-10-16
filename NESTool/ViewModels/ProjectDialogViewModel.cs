@@ -1,4 +1,5 @@
-﻿using ArchitectureLibrary.Signals;
+﻿using System;
+using ArchitectureLibrary.Signals;
 using ArchitectureLibrary.ViewModel;
 using NESTool.Commands;
 using NESTool.Signals;
@@ -10,6 +11,7 @@ namespace NESTool.ViewModels
     {
         public CreateProjectCommand CreateProjectCommand { get; } = new CreateProjectCommand();
         public BrowseFolderCommand BrowseFolderCommand { get; } = new BrowseFolderCommand();
+        public ClosedNewProjectCommand ClosedNewProjectCommand { get; } = new ClosedNewProjectCommand();
 
         public string ProjectName
         {
@@ -47,14 +49,16 @@ namespace NESTool.ViewModels
         {
             SignalManager.Get<CreateProjectSuccessSignal>().AddListener(CreateProjectSuccess);
             SignalManager.Get<BrowseFolderSuccessSignal>().AddListener(BrowseFolderSuccess);
+            SignalManager.Get<ClosedNewProjectSignal>().AddListener(OnClosedNewProject);
         }
 
-        ~ProjectDialogViewModel()
+        private void OnClosedNewProject()
         {
             SignalManager.Get<CreateProjectSuccessSignal>().RemoveListener(CreateProjectSuccess);
             SignalManager.Get<BrowseFolderSuccessSignal>().RemoveListener(BrowseFolderSuccess);
+            SignalManager.Get<ClosedNewProjectSignal>().RemoveListener(OnClosedNewProject);
         }
-        
+
         private void BrowseFolderSuccess(string folderPath) => FolderPath = folderPath;
 
         private void CreateProjectSuccess(string projectFullPath)

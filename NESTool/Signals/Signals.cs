@@ -32,10 +32,11 @@ namespace NESTool.Signals
     public class LoadMappersSuccessSignal : Signal { }
 
     // ProjectDialogViewModel
+    public class ClosedNewProjectSignal : Signal { }
     public class CreateProjectSuccessSignal : Signal<string> { }
 
     // ProjectPropertiesViewModel
-    public class SaveConfiguratioSuccessSignal : Signal { }
+    public class ClosedProjectPropertiesSignal : Signal { }
 
     // TileSetViewModel
 

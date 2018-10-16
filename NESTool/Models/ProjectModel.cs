@@ -81,7 +81,7 @@ namespace NESTool.Models
             Save();
         }
 
-        private void Save()
+        public void Save()
         {
             if (string.IsNullOrEmpty(_projectPath))
             {
