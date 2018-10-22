@@ -124,7 +124,9 @@
     <Compile Include="Commands\PreviewMouseLeftButtonUpCommand.cs" />
     <Compile Include="Commands\PreviewMouseMoveCommand.cs" />
     <Compile Include="Commands\QueryContinueDragCommand.cs" />
+    <Compile Include="Commands\RedoCommand.cs" />
     <Compile Include="Commands\RenameElementCommand.cs" />
+    <Compile Include="Commands\UndoCommand.cs" />
     <Compile Include="FileSystem\FileSystemManager.cs" />
     <Compile Include="History\HistoryManager.cs" />
     <Compile Include="Meta\IMetaItem.cs" />
@@ -278,7 +280,15 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\copy.png" />
+    <Resource Include="Resources\cut.png" />
+    <Resource Include="Resources\delete.png" />
+    <Resource Include="Resources\duplicate.png" />
+    <Resource Include="Resources\paste.png" />
+    <Resource Include="Resources\redo.png" />
+    <Resource Include="Resources\undo.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\closed_folder.png" />
     <Resource Include="Resources\open_folder.png" />
@@ -294,6 +304,15 @@
       <Project>{2d202bb4-f395-491a-889e-a3febddaff45}</Project>
       <Name>ArchitectureLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\build.png" />
+    <Resource Include="Resources\close_project.png" />
+    <Resource Include="Resources\help.png" />
+    <Resource Include="Resources\new_project.png" />
+    <Resource Include="Resources\open_project.png" />
+    <Resource Include="Resources\save.png" />
+    <Resource Include="Resources\save_all.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />

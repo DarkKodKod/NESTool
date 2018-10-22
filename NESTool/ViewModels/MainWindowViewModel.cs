@@ -48,6 +48,8 @@ namespace NESTool.ViewModels
         public WindowsGetFocusCommand WindowsGetFocusCommand { get; } = new WindowsGetFocusCommand();
         public QueryContinueDragCommand QueryContinueDragCommand { get; } = new QueryContinueDragCommand();
         public LoadMappersCommand LoadMappersCommand { get; } = new LoadMappersCommand();
+        public UndoCommand UndoCommand { get; } = new UndoCommand();
+        public RedoCommand RedoCommand { get; } = new RedoCommand();
 
         private const string _projectNameKey = "applicationTitle";
 

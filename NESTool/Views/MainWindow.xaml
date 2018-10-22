@@ -32,6 +32,8 @@
         <KeyBinding Key="V" Modifiers="Ctrl" Command="{Binding PasteElementCommand}" />
         <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding DuplicateElementCommand}" />
         <KeyBinding Key="Delete" Command="{Binding DeleteElementCommand}" />
+        <KeyBinding Key="Z" Modifiers="Ctrl" Command="{Binding UndoCommand}" />
+        <KeyBinding Key="Y" Modifiers="Ctrl" Command="{Binding RedoCommand}" />
     </Window.InputBindings>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -45,13 +47,83 @@
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="_File">
-                <MenuItem Header="_New Project" Command="{Binding NewProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}" InputGestureText="Ctrl+Shift+N"/>
-				<MenuItem Header="_Open Project" Command="{Binding OpenProjectCommand}" InputGestureText="Ctrl+O"/>
-				<Separator />
-				<MenuItem Header="Close _Project" Command="{Binding CloseProjectCommand}" CommandParameter="{Binding ProjectName}" />
-				<Separator />
-				<MenuItem Header="_Save" InputGestureText="Ctrl+S" Command="{Binding SaveCommand}"/>
-				<MenuItem Header="Save _All" InputGestureText="Ctrl+Shift+S" Command="{Binding SaveAllCommand}"/>
+                <MenuItem Header="_New Project" Command="{Binding NewProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}" InputGestureText="Ctrl+Shift+N">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="/resources/new_project.png">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Open Project" Command="{Binding OpenProjectCommand}" InputGestureText="Ctrl+O">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="/resources/open_project.png">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Close _Project" Command="{Binding CloseProjectCommand}" CommandParameter="{Binding ProjectName}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="/resources/close_project.png">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="_Save" InputGestureText="Ctrl+S" Command="{Binding SaveCommand}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="/resources/save.png">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Save _All" InputGestureText="Ctrl+Shift+S" Command="{Binding SaveAllCommand}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="/resources/save_all.png">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator />
                 <MenuItem Header="_Import">
                     <MenuItem Header="_Image" Command="{Binding ImportImageCommand}" />
@@ -70,15 +142,130 @@
 				<MenuItem Header="_Exit" InputGestureText="Alt+F4" Command="{Binding ExitCommand}"/>
 			</MenuItem>
             <MenuItem Header="_Edit">
-                <MenuItem Header="Cu_t" InputGestureText="Ctrl+X" Command="{Binding CutElementCommand}"/>
-                <MenuItem Header="_Copy" InputGestureText="Ctrl+C" Command="{Binding CopyElementCommand}"/>
-                <MenuItem Header="_Paste" InputGestureText="Ctrl+V" Command="{Binding PasteElementCommand}"/>
-                <MenuItem Header="Duplicat_e" InputGestureText="Ctrl+D" Command="{Binding DuplicateElementCommand}"/>
-                <MenuItem Header="_Delete" InputGestureText="Delete" Command="{Binding DeleteElementCommand}"/>
+                <MenuItem Header="_Undo" InputGestureText="Ctrl+Z" Command="{Binding UndoCommand}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="/resources/undo.png">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Redo" InputGestureText="Ctrl+Y" Command="{Binding RedoCommand}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="/resources/redo.png">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Cu_t" InputGestureText="Ctrl+X" Command="{Binding CutElementCommand}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="/resources/cut.png">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Copy" InputGestureText="Ctrl+C" Command="{Binding CopyElementCommand}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="/resources/copy.png">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Paste" InputGestureText="Ctrl+V" Command="{Binding PasteElementCommand}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="/resources/paste.png">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Duplicat_e" InputGestureText="Ctrl+D" Command="{Binding DuplicateElementCommand}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="/resources/duplicate.png">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="_Delete" InputGestureText="Delete" Command="{Binding DeleteElementCommand}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="/resources/delete.png">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </MenuItem.Icon>
+                </MenuItem>
             </MenuItem>
 			<MenuItem Header="_Project">
-				<MenuItem Header="_Build Project" InputGestureText="Ctrl+B" Command="{Binding BuildProjectCommand}" CommandParameter="{Binding ProjectName}"/>
-				<Separator/>
+                <MenuItem Header="_Build Project" InputGestureText="Ctrl+B" Command="{Binding BuildProjectCommand}" CommandParameter="{Binding ProjectName}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="/resources/build.png">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
 				<MenuItem Header="Project _Properties..." Command="{Binding OpenProjectPropertiesCommand}">
 					<MenuItem.CommandParameter>
 						<MultiBinding Converter="{StaticResource parametersConverter}">
@@ -89,25 +276,122 @@
 				</MenuItem>
 			</MenuItem>
 			<MenuItem Header="_Help">
-				<MenuItem Header="_View Help" Command="{Binding ViewHelpCommand}" />
-				<Separator />
+                <MenuItem Header="_View Help" Command="{Binding ViewHelpCommand}">
+                    <MenuItem.Icon>
+                        <Image Width="16" Height="16" Source="/resources/help.png">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
 				<MenuItem Header="_About" Command="{Binding ShowAboutDialogCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
 			</MenuItem>
 		</Menu>
 		<ToolBarTray DockPanel.Dock="Top">
 			<ToolBar x:Name="File">
-				<Button Content="New Project" ToolTip="New Project" ToolBar.OverflowMode="AsNeeded" Command="{Binding NewProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}">
+				<Button ToolTip="New Project" ToolBar.OverflowMode="AsNeeded" Command="{Binding NewProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}">
+                    <Image Width="16" Height="16" Source="/resources/new_project.png">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.5" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
 				</Button>
-				<Button Content="Open Project" ToolTip="Open Project" ToolBar.OverflowMode="AsNeeded" Command="{Binding OpenProjectCommand}">
+				<Button ToolTip="Open Project" ToolBar.OverflowMode="AsNeeded" Command="{Binding OpenProjectCommand}">
+                    <Image Width="16" Height="16" Source="/resources/open_project.png">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.5" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
 				</Button>
 				<Separator/>
-				<Button Content="Save" ToolTip="Save" ToolBar.OverflowMode="AsNeeded" Command="{Binding SaveCommand}">
+				<Button ToolTip="Save" ToolBar.OverflowMode="AsNeeded" Command="{Binding SaveCommand}">
+                    <Image Width="16" Height="16" Source="/resources/save.png">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.5" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
 				</Button>
-				<Button Content="Save All" ToolTip="Save All" ToolBar.OverflowMode="AsNeeded" Command="{Binding SaveAllCommand}">
+				<Button ToolTip="Save All" ToolBar.OverflowMode="AsNeeded" Command="{Binding SaveAllCommand}">
+                    <Image Width="16" Height="16" Source="/resources/save_all.png">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.5" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
 				</Button>
 			</ToolBar>
+            <ToolBar x:Name="Edit">
+                <Button ToolTip="Undo" ToolBar.OverflowMode="AsNeeded" Command="{Binding UndoCommand}">
+                    <Image Width="16" Height="16" Source="/resources/undo.png">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.5" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
+                <Button ToolTip="Redo" ToolBar.OverflowMode="AsNeeded" Command="{Binding UndoCommand}">
+                    <Image Width="16" Height="16" Source="/resources/redo.png">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.5" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
+            </ToolBar>
 			<ToolBar x:Name="Project">
-				<Button Content="Build Project" ToolTip="Build Project" ToolBar.OverflowMode="AsNeeded" Command="{Binding BuildProjectCommand}">
+				<Button ToolTip="Build Project" ToolBar.OverflowMode="AsNeeded" Command="{Binding BuildProjectCommand}">
+                    <Image Width="16" Height="16" Source="/resources/build.png">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" Value="0.5" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
 				</Button>
 			</ToolBar>
 		</ToolBarTray>
