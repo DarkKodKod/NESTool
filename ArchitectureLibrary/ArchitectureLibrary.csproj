@@ -40,12 +40,14 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
     <Reference Include="WriteableBitmapEx.Wpf, Version=1.5.0.0, Culture=neutral, PublicKeyToken=50375ca6144f1c69, processorArchitecture=MSIL">
       <HintPath>..\packages\WriteableBitmapEx.1.5.1.0\lib\net40\WriteableBitmapEx.Wpf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="FXs\GrayscaleEffect.cs" />
     <Compile Include="Managers\AManager.cs" />
     <Compile Include="Model\IModel.cs" />
     <Compile Include="Model\ModelManager.cs" />
@@ -53,10 +55,20 @@
     <Compile Include="Signals\ISignal.cs" />
     <Compile Include="Signals\Signal.cs" />
     <Compile Include="Signals\SignalManager.cs" />
+    <Compile Include="Utils\Global.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="FXs\Shaders\GrayscaleEffect.ps" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FXs\Shaders\GrayscaleEffect.fx" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>"$(ProjectDir)Tools\fxc.exe" /T ps_2_0 /E main /Fo"$(ProjectDir)FXs\Shaders\GrayscaleEffect.ps" "$(ProjectDir)FXs\Shaders\GrayscaleEffect.fx"</PreBuildEvent>
+  </PropertyGroup>
 </Project>

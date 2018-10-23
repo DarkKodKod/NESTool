@@ -9,7 +9,8 @@
 		xmlns:enum="clr-namespace:NESTool.Enums"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
 		xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.Net45"
-		mc:Ignorable="d"
+        xmlns:fx="clr-namespace:ArchitectureLibrary.FXs;assembly=ArchitectureLibrary"
+        mc:Ignorable="d"
         Height="617.748" Width="939.57" 
 		x:Name="MainWindowView"
 		Title="{Binding Title, Mode=OneWay}"
@@ -54,7 +55,12 @@
                                 <Style TargetType="Image">
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Opacity" Value="0.5" />
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <fx:GrayscaleEffect />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Opacity" Value="0.5"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -69,7 +75,12 @@
                                 <Style TargetType="Image">
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Opacity" Value="0.5" />
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <fx:GrayscaleEffect />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Opacity" Value="0.5"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -85,7 +96,12 @@
                                 <Style TargetType="Image">
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Opacity" Value="0.5" />
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <fx:GrayscaleEffect />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Opacity" Value="0.5"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -101,7 +117,12 @@
                                 <Style TargetType="Image">
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Opacity" Value="0.5" />
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <fx:GrayscaleEffect />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Opacity" Value="0.5"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -116,7 +137,12 @@
                                 <Style TargetType="Image">
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Opacity" Value="0.5" />
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <fx:GrayscaleEffect />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Opacity" Value="0.5"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -149,7 +175,12 @@
                                 <Style TargetType="Image">
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Opacity" Value="0.5" />
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <fx:GrayscaleEffect />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Opacity" Value="0.5"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -164,7 +195,12 @@
                                 <Style TargetType="Image">
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Opacity" Value="0.5" />
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <fx:GrayscaleEffect />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Opacity" Value="0.5"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -180,7 +216,12 @@
                                 <Style TargetType="Image">
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Opacity" Value="0.5" />
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <fx:GrayscaleEffect />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Opacity" Value="0.5"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -195,7 +236,12 @@
                                 <Style TargetType="Image">
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Opacity" Value="0.5" />
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <fx:GrayscaleEffect />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Opacity" Value="0.5"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -210,7 +256,12 @@
                                 <Style TargetType="Image">
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Opacity" Value="0.5" />
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <fx:GrayscaleEffect />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Opacity" Value="0.5"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -225,7 +276,12 @@
                                 <Style TargetType="Image">
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Opacity" Value="0.5" />
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <fx:GrayscaleEffect />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Opacity" Value="0.5"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -240,7 +296,12 @@
                                 <Style TargetType="Image">
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Opacity" Value="0.5" />
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <fx:GrayscaleEffect />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Opacity" Value="0.5"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -257,7 +318,12 @@
                                 <Style TargetType="Image">
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Opacity" Value="0.5" />
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <fx:GrayscaleEffect />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Opacity" Value="0.5"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -283,7 +349,12 @@
                                 <Style TargetType="Image">
                                     <Style.Triggers>
                                         <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Opacity" Value="0.5" />
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <fx:GrayscaleEffect />
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="Opacity" Value="0.5"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -303,7 +374,12 @@
                             <Style TargetType="Image">
                                 <Style.Triggers>
                                     <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Opacity" Value="0.5" />
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <fx:GrayscaleEffect />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Opacity" Value="0.5"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
@@ -316,7 +392,12 @@
                             <Style TargetType="Image">
                                 <Style.Triggers>
                                     <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Opacity" Value="0.5" />
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <fx:GrayscaleEffect />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Opacity" Value="0.5"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
@@ -330,7 +411,12 @@
                             <Style TargetType="Image">
                                 <Style.Triggers>
                                     <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Opacity" Value="0.5" />
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <fx:GrayscaleEffect />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Opacity" Value="0.5"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
@@ -343,7 +429,12 @@
                             <Style TargetType="Image">
                                 <Style.Triggers>
                                     <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Opacity" Value="0.5" />
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <fx:GrayscaleEffect />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Opacity" Value="0.5"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
@@ -358,7 +449,12 @@
                             <Style TargetType="Image">
                                 <Style.Triggers>
                                     <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Opacity" Value="0.5" />
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <fx:GrayscaleEffect />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Opacity" Value="0.5"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
@@ -371,7 +467,12 @@
                             <Style TargetType="Image">
                                 <Style.Triggers>
                                     <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Opacity" Value="0.5" />
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <fx:GrayscaleEffect />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Opacity" Value="0.5"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
@@ -386,7 +487,12 @@
                             <Style TargetType="Image">
                                 <Style.Triggers>
                                     <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Opacity" Value="0.5" />
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <fx:GrayscaleEffect />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Opacity" Value="0.5"/>
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
