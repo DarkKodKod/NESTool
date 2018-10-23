@@ -69,6 +69,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>"$(ProjectDir)Tools\fxc.exe" /T ps_2_0 /E main /Fo"$(ProjectDir)FXs\Shaders\GrayscaleEffect.ps" "$(ProjectDir)FXs\Shaders\GrayscaleEffect.fx"</PreBuildEvent>
+    <PreBuildEvent>"$(SolutionDir)Tools\fxc.exe" /T ps_2_0 /E main /Fo"$(ProjectDir)FXs\Shaders\GrayscaleEffect.ps" "$(ProjectDir)FXs\Shaders\GrayscaleEffect.fx"</PreBuildEvent>
   </PropertyGroup>
 </Project>
