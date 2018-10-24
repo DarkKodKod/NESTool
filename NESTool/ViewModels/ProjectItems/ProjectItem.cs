@@ -46,6 +46,11 @@ namespace NESTool.ViewModels.ProjectItems
                     {
                         SelectedItem = this;
                     }
+                    else
+                    {
+                        _selectedItem = null;
+                        OnUnSelectItemChanged();
+                    }
                 }
             }
         }
@@ -88,6 +93,7 @@ namespace NESTool.ViewModels.ProjectItems
             return dataTemplate;
         }
 
+        private void OnUnSelectItemChanged() => SignalManager.Get<ProjectItemUnselectedSignal>().Dispatch(this);
         private void OnSelectedItemChanged() => SignalManager.Get<ProjectItemSelectedSignal>().Dispatch(this);
     }
 }

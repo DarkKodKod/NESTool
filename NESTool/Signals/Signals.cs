@@ -21,6 +21,7 @@ namespace NESTool.Signals
     public class UpdateRecentProjectsSignal : Signal<string[]> { }
     public class BuildProjectSuccessSignal : Signal { }
     public class ProjectItemSelectedSignal : Signal<ProjectItem> { }
+    public class ProjectItemUnselectedSignal : Signal<ProjectItem> { }
     public class MouseLeftButtonDownSignal : Signal<Point> { }
     public class MouseLeftButtonUpSignal : Signal { }
     public class MouseMoveSignal : Signal<MouseMoveVO> { }

@@ -19,5 +19,9 @@ namespace ArchitectureLibrary.Commands
         public virtual void Execute(object parameter)
         {
         }
+
+        public virtual void Deactivate()
+        {
+        }
     }
 }
