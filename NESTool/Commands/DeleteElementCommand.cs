@@ -43,7 +43,12 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            //
+            if (ItemSeleceted == null)
+            {
+                return;
+            }
+
+            SignalManager.Get<DeleteFileSignal>().Dispatch(ItemSeleceted);
         }
 
         private void OnProjectItemSelected(ProjectItem item)

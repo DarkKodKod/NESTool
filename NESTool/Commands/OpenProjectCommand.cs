@@ -106,7 +106,7 @@ namespace NESTool.Commands
             UpdateConfigurations(directoryPath);
         }
 
-        private void ScanDirectories(DirectoryInfo[] directories, ref List<ProjectItem> projectItems, string extension = "")
+        private void ScanDirectories(DirectoryInfo[] directories, ref List<ProjectItem> projectItems, ProjectItem parent = null, string extension = "")
         {
             foreach (DirectoryInfo directory in directories)
             {
@@ -117,13 +117,15 @@ namespace NESTool.Commands
                 if (extension == string.Empty)
                 {
                     ext = Util.GetFolderExtension(directory.Name);
-                    
+
+                    item.Parent = null;
                     item.Root = true;
                 }
                 else
                 {
                     ext = extension;
 
+                    item.Parent = parent;
                     item.Root = false;
                 }
 
@@ -135,7 +137,7 @@ namespace NESTool.Commands
                 {
                     List<ProjectItem> subItems = new List<ProjectItem>();
 
-                    ScanDirectories(subFolders, ref subItems, ext);
+                    ScanDirectories(subFolders, ref subItems, item, ext);
 
                     foreach (var element in subItems)
                     {
@@ -150,7 +152,11 @@ namespace NESTool.Commands
                 {
                     var displayName = Path.GetFileNameWithoutExtension(file.Name);
 
-                    item.Items.Add(new ProjectItem(displayName, file.FullName, Util.GetItemType(ext)));
+                    var fileItem = new ProjectItem(displayName, file.FullName, Util.GetItemType(ext));
+
+                    fileItem.Parent = item;
+
+                    item.Items.Add(fileItem);
                 }
 
                 projectItems.Add(item);

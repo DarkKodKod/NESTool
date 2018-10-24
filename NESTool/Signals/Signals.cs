@@ -10,6 +10,15 @@ namespace NESTool.Signals
     public class BrowseFolderSuccessSignal : Signal<string> { }
     public class SetUpWindowPropertiesSignal : Signal<WindowVO> { }
 
+    // Meta file system
+    public class CreateMetaFileSignal : Signal { }
+    public class RegisterMetaFileSignal : Signal { }
+
+    // File system
+    public class RegisterFileSignal : Signal { }
+    public class RegisterFolderSignal : Signal { }
+    public class DeleteFileSignal : Signal<ProjectItem> { }
+
     // MainWindowViewModel
     public class WindowGetFocusSignal : Signal { }
     public class OpenProjectSuccessSignal : Signal<ProjectOpenVO> { }

@@ -10,6 +10,7 @@ using NESTool.ViewModels.ProjectItems;
 using NESTool.VOs;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -127,6 +128,45 @@ namespace NESTool.ViewModels
             SignalManager.Get<SizeChangedSingal>().AddListener(OnSizeChanged);
             SignalManager.Get<LoadMappersSuccessSignal>().AddListener(OnLoadMappersSuccess);
             SignalManager.Get<CreateProjectSuccessSignal>().AddListener(OnCreateProjectSuccess);
+            SignalManager.Get<DeleteFileSignal>().AddListener(OnDeleteFile);
+        }
+
+        private void OnDeleteFile(ProjectItem item)
+        {
+            ProjectItem FindInItemsAndDelete(ICollection<ProjectItem> items, ProjectItem[] aPath, int index)
+            {
+                bool res = items.Contains(aPath[index]);
+
+                if (res == true && index > 0)
+                {
+                    return FindInItemsAndDelete(aPath[index].Items, aPath, index-1);
+                }
+
+                var copy = aPath[index];
+
+                aPath[index].Parent.Items.Remove(aPath[index]);
+
+                return copy;
+            }
+
+            // Collect the chain of parents for later use
+            List<ProjectItem> path = new List<ProjectItem>() { item };
+
+            var parent = item.Parent;
+
+            while (parent != null)
+            {
+                path.Add(parent);
+
+                parent = parent.Parent;
+            }
+
+            var matchItem = FindInItemsAndDelete(_projectItems, path.ToArray(), path.ToArray().Length - 1);
+
+            if (matchItem != null)
+            {
+                OnPropertyChanged("ProjectItems");
+            }
         }
 
         private void OnLoadConfigSuccess()

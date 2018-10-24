@@ -24,6 +24,7 @@ namespace NESTool.ViewModels.ProjectItems
         public ProjectItemType Type { get; set; }
         public string DisplayName { get; set; }
         public string FullPath { get; set; }
+        public ProjectItem Parent = null;
         public ObservableCollection<ProjectItem> Items { get; set; }
 
         private bool _isSelected;
