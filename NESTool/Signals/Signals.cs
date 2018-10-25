@@ -18,6 +18,10 @@ namespace NESTool.Signals
     public class RegisterFileSignal : Signal { }
     public class RegisterFolderSignal : Signal { }
     public class DeleteFileSignal : Signal<ProjectItem> { }
+    public class RenameFileSignal : Signal { }
+    public class CreateFileSignal : Signal { }
+    public class MoveFileSignal : Signal { }
+    public class DuplicateFileSignal : Signal { }
 
     // MainWindowViewModel
     public class WindowGetFocusSignal : Signal { }
