@@ -53,6 +53,9 @@
   <PropertyGroup>
     <StartupObject>NESTool.App</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>nestool.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="GalaSoft.MvvmLight, Version=4.1.26.30523, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Portable.MvvmLightLibs.4.1.26\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
@@ -313,6 +316,9 @@
     <Resource Include="Resources\open_project.png" />
     <Resource Include="Resources\save.png" />
     <Resource Include="Resources\save_all.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="nestool.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
