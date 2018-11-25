@@ -1,6 +1,9 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
+using NESTool.Utils;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace NESTool.Commands
@@ -11,7 +14,9 @@ namespace NESTool.Commands
         {
             var mouseEvent = parameter as MouseButtonEventArgs;
 
-            var position = mouseEvent.GetPosition(null);
+            TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)mouseEvent.OriginalSource);
+
+            var position = mouseEvent.GetPosition(treeViewItem);
 
             SignalManager.Get<MouseLeftButtonDownSignal>().Dispatch(position);
         }

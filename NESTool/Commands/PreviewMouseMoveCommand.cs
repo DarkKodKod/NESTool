@@ -1,7 +1,10 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
+using NESTool.Utils;
 using NESTool.VOs;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace NESTool.Commands
@@ -14,10 +17,14 @@ namespace NESTool.Commands
 
             if (mouseEvent.LeftButton == MouseButtonState.Pressed)
             {
-                MouseMoveVO vo = new MouseMoveVO();
-                vo.Position = mouseEvent.GetPosition(null);
-                vo.OriginalSource = mouseEvent.OriginalSource;
-                vo.Sender = mouseEvent.Source;
+                TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)mouseEvent.OriginalSource);
+
+                MouseMoveVO vo = new MouseMoveVO
+                {
+                    Position = mouseEvent.GetPosition(treeViewItem),
+                    OriginalSource = mouseEvent.OriginalSource,
+                    Sender = mouseEvent.Source
+                };
 
                 SignalManager.Get<MouseMoveSignal>().Dispatch(vo);
             }

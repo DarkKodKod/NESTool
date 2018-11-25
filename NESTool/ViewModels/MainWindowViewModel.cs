@@ -10,7 +10,6 @@ using NESTool.ViewModels.ProjectItems;
 using NESTool.VOs;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -129,26 +128,68 @@ namespace NESTool.ViewModels
             SignalManager.Get<LoadMappersSuccessSignal>().AddListener(OnLoadMappersSuccess);
             SignalManager.Get<CreateProjectSuccessSignal>().AddListener(OnCreateProjectSuccess);
             SignalManager.Get<DeleteFileSignal>().AddListener(OnDeleteFile);
+            SignalManager.Get<CutFileSignal>().AddListener(OnCutFile);
+            SignalManager.Get<CopyFileSignal>().AddListener(OnCopyFile);
+            SignalManager.Get<PasteFileSignal>().AddListener(OnPasteFile);
+            SignalManager.Get<DuplicateFileSignal>().AddListener(OnDuplicateFile);
+            SignalManager.Get<RenameFileSignal>().AddListener(OnRenameFile);
+            SignalManager.Get<CreateFolderSignal>().AddListener(OnCreateFolder);
+            SignalManager.Get<CreateNewElementSignal>().AddListener(OnCreateNewElement);
+        }
+
+        private enum FileAction
+        {
+            Delete = 0
+        }
+
+        private ProjectItem FindInItemsAndExecuteAction(ICollection<ProjectItem> items, ProjectItem[] aPath, int index, FileAction action)
+        {
+            bool res = items.Contains(aPath[index]);
+
+            if (res == true && index > 0)
+            {
+                return FindInItemsAndExecuteAction(aPath[index].Items, aPath, index - 1, action);
+            }
+
+            var copy = aPath[index];
+
+            switch (action)
+            {
+                case FileAction.Delete:
+                    aPath[index].Parent.Items.Remove(aPath[index]);
+                    break;
+            }
+
+            return copy;
+        }
+
+        private void OnCopyFile(ProjectItem item)
+        {
+            //
+        }
+
+        private void OnPasteFile(ProjectItem item)
+        {
+            //
+        }
+
+        private void OnDuplicateFile(ProjectItem item)
+        {
+            //
+        }
+
+        private void OnRenameFile(ProjectItem item)
+        {
+            //
+        }
+
+        private void OnCutFile(ProjectItem item)
+        {
+            //
         }
 
         private void OnDeleteFile(ProjectItem item)
         {
-            ProjectItem FindInItemsAndDelete(ICollection<ProjectItem> items, ProjectItem[] aPath, int index)
-            {
-                bool res = items.Contains(aPath[index]);
-
-                if (res == true && index > 0)
-                {
-                    return FindInItemsAndDelete(aPath[index].Items, aPath, index-1);
-                }
-
-                var copy = aPath[index];
-
-                aPath[index].Parent.Items.Remove(aPath[index]);
-
-                return copy;
-            }
-
             // Collect the chain of parents for later use
             List<ProjectItem> path = new List<ProjectItem>() { item };
 
@@ -161,12 +202,22 @@ namespace NESTool.ViewModels
                 parent = parent.Parent;
             }
 
-            var matchItem = FindInItemsAndDelete(_projectItems, path.ToArray(), path.ToArray().Length - 1);
+            var matchItem = FindInItemsAndExecuteAction(_projectItems, path.ToArray(), path.ToArray().Length - 1, FileAction.Delete);
 
             if (matchItem != null)
             {
                 OnPropertyChanged("ProjectItems");
             }
+        }
+
+        private void OnCreateFolder(ProjectItem item)
+        {
+            //
+        }
+
+        private void OnCreateNewElement(ProjectItem item)
+        {
+            //
         }
 
         private void OnLoadConfigSuccess()
