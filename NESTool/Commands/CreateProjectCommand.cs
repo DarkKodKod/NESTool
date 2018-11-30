@@ -56,8 +56,8 @@ namespace NESTool.Commands
             var path = (string)values[0];
             var projectName = (string)values[1];
 
-            Int32.TryParse((string)values[2], out int prgSize);
-            Int32.TryParse((string)values[3], out int chrSize);
+            var prgSize = (int)values[2];
+            var chrSize = (int)values[3];
             var mapperId = (int)values[4];
 
             var projectFullPath = Path.Combine(path, projectName);

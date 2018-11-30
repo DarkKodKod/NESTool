@@ -6,5 +6,7 @@ namespace NESTool.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int[] PRG { get; set; }
+        public int[] CHR { get; set; }
     }
 }

@@ -165,27 +165,27 @@ namespace NESTool.ViewModels
 
         private void OnCopyFile(ProjectItem item)
         {
-            //
+            OnPropertyChanged("ProjectItems");
         }
 
         private void OnPasteFile(ProjectItem item)
         {
-            //
+            OnPropertyChanged("ProjectItems");
         }
 
         private void OnDuplicateFile(ProjectItem item)
         {
-            //
+            OnPropertyChanged("ProjectItems");
         }
 
         private void OnRenameFile(ProjectItem item)
         {
-            //
+            OnPropertyChanged("ProjectItems");
         }
 
         private void OnCutFile(ProjectItem item)
         {
-            //
+            OnPropertyChanged("ProjectItems");
         }
 
         private void OnDeleteFile(ProjectItem item)
@@ -212,12 +212,12 @@ namespace NESTool.ViewModels
 
         private void OnCreateFolder(ProjectItem item)
         {
-            //
+            OnPropertyChanged("ProjectItems");
         }
 
         private void OnCreateNewElement(ProjectItem item)
         {
-            //
+            OnPropertyChanged("ProjectItems");
         }
 
         private void OnLoadConfigSuccess()

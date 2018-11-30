@@ -68,9 +68,11 @@
                 SelectedValuePath="Id"
                 SelectedValue="{Binding Path=SelectedMapper}"/>
             <Label Content="PRG Size:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="tbPRGSize" Grid.Column="1" Grid.Row="2" Height="23" Width="120" VerticalAlignment="Top" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="{Binding PRGSize}"/>
+            <ComboBox x:Name="cbPRGSize" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" ItemsSource="{Binding PRGSizes}"
+                SelectedIndex="{Binding Path=SelectedCHRSize}"/>
             <Label Content="CHR Size:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox x:Name="tbCHRSize" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23" Width="120" TextWrapping="NoWrap" Text="{Binding CHRSize}"/>
+            <ComboBox x:Name="cbCHRSize" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" ItemsSource="{Binding CHRSizes}"
+                SelectedIndex="{Binding Path=SelectedPRGSize}"/>
         </Grid>
 		<Grid Grid.Row="6" Grid.Column="1">
 			<Grid.ColumnDefinitions>
@@ -88,8 +90,8 @@
 					<MultiBinding Converter="{StaticResource parametersConverter}">
 						<Binding Path="Text" ElementName="tbPath"/>
 						<Binding Path="Text" ElementName="tbProjName"/>
-                        <Binding Path="Text" ElementName="tbPRGSize"/>
-                        <Binding Path="Text" ElementName="tbCHRSize"/>
+                        <Binding Path="SelectedValue" ElementName="cbPRGSize"/>
+                        <Binding Path="SelectedValue" ElementName="cbCHRSize"/>
                         <Binding Path="SelectedValue" ElementName="cbMapper"/>
                     </MultiBinding>
 				</Button.CommandParameter>

@@ -1,5 +1,6 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
+using NESTool.Clipboard;
 using NESTool.Signals;
 using NESTool.ViewModels.ProjectItems;
 
@@ -23,6 +24,11 @@ namespace NESTool.Commands
 
         public override bool CanExecute(object parameter)
         {
+            if (ClipBoardManager.IsEmpty())
+            {
+                return false;
+            }
+
             if (ItemSeleceted != null && ItemSeleceted is ProjectFolder)
             {
                 return true;

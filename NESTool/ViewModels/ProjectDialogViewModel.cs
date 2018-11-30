@@ -63,23 +63,43 @@ namespace NESTool.ViewModels
             }
         }
 
-        public int CHRSize
+        public int[] CHRSizes
         {
-            get { return _chrSize; }
+            get { return _chrSizes; }
             set
             {
-                _chrSize = value;
-                OnPropertyChanged("CHRSize");
+                _chrSizes = value;
+                OnPropertyChanged("CHRSizes");
             }
         }
 
-        public int PRGSize
+        public int SelectedCHRSize
         {
-            get { return _prgSize; }
+            get { return _selectedCHRSize; }
             set
             {
-                _prgSize = value;
-                OnPropertyChanged("PRGSize");
+                _selectedCHRSize = value;
+                OnPropertyChanged("SelectedCHRSize");
+            }
+        }
+
+        public int[] PRGSizes
+        {
+            get { return _prgSizes; }
+            set
+            {
+                _prgSizes = value;
+                OnPropertyChanged("PRGSizes");
+            }
+        }
+
+        public int SelectedPRGSize
+        {
+            get { return _selectedPRGSize; }
+            set
+            {
+                _selectedPRGSize = value;
+                OnPropertyChanged("SelectedPRGSize");
             }
         }
         #endregion
@@ -87,10 +107,12 @@ namespace NESTool.ViewModels
         private string _previousValidName;
         private string _projectName;
         private string _folderPath;
-        private int _chrSize = 0;
-        private int _prgSize = 0;
+        private int[] _chrSizes;
+        private int[] _prgSizes;
         private MapperModel[] _mappers;
         private int _selectedMapper;
+        private int _selectedCHRSize;
+        private int _selectedPRGSize;
 
         public ProjectDialogViewModel()
         {
@@ -98,6 +120,10 @@ namespace NESTool.ViewModels
 
             Mappers = mappers.Mappers;
             SelectedMapper = mappers.Mappers[0].Id;
+            CHRSizes = mappers.Mappers[0].CHR;
+            SelectedCHRSize = 0;
+            PRGSizes = mappers.Mappers[0].PRG;
+            SelectedPRGSize = 0;
 
             SignalManager.Get<BrowseFolderSuccessSignal>().AddListener(BrowseFolderSuccess);
             SignalManager.Get<ClosedNewProjectSignal>().AddListener(OnClosedNewProject);

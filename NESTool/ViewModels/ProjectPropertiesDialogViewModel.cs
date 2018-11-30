@@ -1,5 +1,4 @@
-﻿using System;
-using ArchitectureLibrary.Model;
+﻿using ArchitectureLibrary.Model;
 using ArchitectureLibrary.Signals;
 using ArchitectureLibrary.ViewModel;
 using NESTool.Commands;
@@ -13,6 +12,7 @@ namespace NESTool.ViewModels
     {
         public ClosedProjectPropertiesCommand ClosedProjectPropertiesCommand { get; } = new ClosedProjectPropertiesCommand();
 
+        #region get/set
         public bool Battery
         {
             get { return _battery; }
@@ -25,25 +25,45 @@ namespace NESTool.ViewModels
             }
         }
 
-        public int CHRSize
+        public int[] CHRSizes
         {
-            get { return _chrSize; }
+            get { return _chrSizes; }
             set
             {
-                _chrSize = value;
-                OnPropertyChanged("CHRSize");
+                _chrSizes = value;
+                OnPropertyChanged("CHRSizes");
+            }
+        }
+
+        public int SelectedCHRSize
+        {
+            get { return _selectedCHRSize; }
+            set
+            {
+                _selectedCHRSize = value;
+                OnPropertyChanged("SelectedCHRSize");
 
                 _changed = true;
             }
         }
 
-        public int PRGSize
+        public int[] PRGSizes
         {
-            get { return _prgSize; }
+            get { return _prgSizes; }
             set
             {
-                _prgSize = value;
-                OnPropertyChanged("PRGSize");
+                _prgSizes = value;
+                OnPropertyChanged("PRGSizes");
+            }
+        }
+
+        public int SelectedPRGSize
+        {
+            get { return _selectedPRGSize; }
+            set
+            {
+                _selectedPRGSize = value;
+                OnPropertyChanged("SelectedPRGSize");
 
                 _changed = true;
             }
@@ -96,14 +116,17 @@ namespace NESTool.ViewModels
                 _changed = true;
             }
         }
+        #endregion
 
         private bool _battery;
         private FrameTiming _frameTiming;
         private SpriteSize _spriteSize;
-        private int _chrSize;
-        private int _prgSize;
+        private int[] _chrSizes;
+        private int[] _prgSizes;
         private MapperModel[] _mappers;
         private int _selectedMapper;
+        private int _selectedCHRSize;
+        private int _selectedPRGSize;
         private bool _changed;
 
         public ProjectPropertiesDialogViewModel()
@@ -127,8 +150,8 @@ namespace NESTool.ViewModels
                 var project = ModelManager.Get<ProjectModel>();
 
                 project.Header.INesMapper = SelectedMapper;
-                project.Header.CHRSize = CHRSize;
-                project.Header.PRGSize = PRGSize;
+                project.Header.CHRSize = SelectedCHRSize;
+                project.Header.PRGSize = SelectedPRGSize;
                 project.Header.FrameTiming = FrameTiming;
                 project.Header.SpriteSize = SpriteSize;
                 project.Header.Battery = Battery;
@@ -142,10 +165,13 @@ namespace NESTool.ViewModels
         private void ReadProjectData()
         {
             var project = ModelManager.Get<ProjectModel>();
+            var mappers = ModelManager.Get<MappersModel>();
 
             SelectedMapper = project.Header.INesMapper;
-            CHRSize = project.Header.CHRSize;
-            PRGSize = project.Header.PRGSize;
+            CHRSizes = mappers.Mappers[SelectedMapper].CHR;
+            PRGSizes = mappers.Mappers[SelectedMapper].PRG;
+            SelectedCHRSize = project.Header.CHRSize;
+            SelectedPRGSize = project.Header.PRGSize;
             FrameTiming = project.Header.FrameTiming;
             SpriteSize = project.Header.SpriteSize;
             Battery = project.Header.Battery;

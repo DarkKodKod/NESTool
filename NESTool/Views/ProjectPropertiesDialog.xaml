@@ -51,9 +51,11 @@
                       SelectedValuePath="Id"
                       SelectedValue="{Binding Path=SelectedMapper}"/>
             <Label Content="PRG Size:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox Grid.Column="1" Grid.Row="2" Height="23" Width="120" VerticalAlignment="Top" HorizontalAlignment="Left" TextWrapping="NoWrap" Text="{Binding PRGSize}"/>
+            <ComboBox Grid.Column="1" Grid.Row="2" Height="23" HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding PRGSizes}" Width="120"
+                      SelectedValue="{Binding Path=SelectedPRGSize}"/>
             <Label Content="CHR Size:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBox Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Height="23" Width="120" TextWrapping="NoWrap" Text="{Binding CHRSize}"/>
+            <ComboBox Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding CHRSizes}" Width="120"
+                      SelectedValue="{Binding Path=SelectedCHRSize}"/>
         </Grid>
         <StackPanel Grid.Column="2" Grid.Row="1">
             <GroupBox Header="Sprite Size" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="10">

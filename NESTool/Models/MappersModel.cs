@@ -13,18 +13,15 @@ namespace NESTool.Models
 
         private const string _mappersfileNameKey = "mappersFileName";
         private const string _versionKey = "mappersVersion";
-        private const string _supportedMappersKey = "supportedMappers";
         private readonly string _configFileName = "";
         private readonly int _version = 0;
-        private readonly int _supportedMappers = 0;
 
         public MappersModel()
         {
             _configFileName = @".\" + (string)Application.Current.FindResource(_mappersfileNameKey) + Toml.FileExtension;
             _version = (int)Application.Current.FindResource(_versionKey);
-            _supportedMappers = (int)Application.Current.FindResource(_supportedMappersKey);
 
-            Mappers = new MapperModel[_supportedMappers];
+            Mappers = new MapperModel[1];
         }
 
         public void Copy(MappersModel copy)
@@ -42,7 +39,7 @@ namespace NESTool.Models
             }
             else
             {
-                Save();
+                CreateAndLoadDefault();
             }
 
             SignalManager.Get<LoadMappersSuccessSignal>().Dispatch();
@@ -50,13 +47,19 @@ namespace NESTool.Models
 
         private void LoadDefaultMappers()
         {
-            Mappers[0] = new MapperModel() { Id = 0, Name = "None" };
-            Mappers[1] = new MapperModel() { Id = 4, Name = "MMC3" };
+            Mappers[0] = new MapperModel() {
+                Id = 0,
+                Name = "None",
+                PRG = new int[]{ 16, 32 },
+                CHR = new int[]{ 8 }
+            };
         }
 
-        private void Save()
+        private void CreateAndLoadDefault()
         {
             LoadDefaultMappers();
+
+            File.Create(_configFileName).Dispose();
 
             Toml.WriteFile(this, _configFileName);
         }
