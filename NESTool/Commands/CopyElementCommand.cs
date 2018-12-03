@@ -1,5 +1,6 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
+using NESTool.Clipboard;
 using NESTool.Signals;
 using NESTool.ViewModels.ProjectItems;
 
@@ -48,7 +49,7 @@ namespace NESTool.Commands
                 return;
             }
 
-            SignalManager.Get<CopyFileSignal>().Dispatch(ItemSeleceted);
+            ClipboardManager.CopyToClipboard(parameter);
         }
 
         private void OnProjectItemSelected(ProjectItem item)

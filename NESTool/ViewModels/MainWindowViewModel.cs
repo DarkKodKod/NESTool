@@ -129,7 +129,6 @@ namespace NESTool.ViewModels
             SignalManager.Get<CreateProjectSuccessSignal>().AddListener(OnCreateProjectSuccess);
             SignalManager.Get<DeleteFileSignal>().AddListener(OnDeleteFile);
             SignalManager.Get<CutFileSignal>().AddListener(OnCutFile);
-            SignalManager.Get<CopyFileSignal>().AddListener(OnCopyFile);
             SignalManager.Get<PasteFileSignal>().AddListener(OnPasteFile);
             SignalManager.Get<DuplicateFileSignal>().AddListener(OnDuplicateFile);
             SignalManager.Get<RenameFileSignal>().AddListener(OnRenameFile);
@@ -161,11 +160,6 @@ namespace NESTool.ViewModels
             }
 
             return copy;
-        }
-
-        private void OnCopyFile(ProjectItem item)
-        {
-            OnPropertyChanged("ProjectItems");
         }
 
         private void OnPasteFile(ProjectItem item)

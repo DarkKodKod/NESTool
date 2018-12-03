@@ -24,7 +24,7 @@ namespace NESTool.Commands
 
         public override bool CanExecute(object parameter)
         {
-            if (ClipBoardManager.IsEmpty())
+            if (ClipboardManager.IsEmpty())
             {
                 return false;
             }
