@@ -22,8 +22,10 @@ namespace NESTool.Clipboard
             return typeConverter.ConvertFromString(_data);
         }
 
-        public static void CopyToClipboard(Type type, object obj)
+        public static void CopyToClipboard(object obj)
         {
+            Type type = obj.GetType();
+
             TypeConverter typeConverter = TypeDescriptor.GetConverter(type);
             _data = typeConverter.ConvertToString(obj);
         }

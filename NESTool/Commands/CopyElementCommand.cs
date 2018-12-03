@@ -49,7 +49,7 @@ namespace NESTool.Commands
                 return;
             }
 
-            ClipboardManager.CopyToClipboard(parameter);
+            ClipboardManager.CopyToClipboard(ItemSeleceted);
         }
 
         private void OnProjectItemSelected(ProjectItem item)
