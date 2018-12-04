@@ -46,7 +46,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClipBoard\ClipboardData.cs" />
     <Compile Include="ClipBoard\ClipboardManager.cs" />
+    <Compile Include="ClipBoard\IClipboardable.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="FXs\GrayscaleEffect.cs" />
     <Compile Include="Managers\AManager.cs" />

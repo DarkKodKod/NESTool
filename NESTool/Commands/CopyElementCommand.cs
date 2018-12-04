@@ -46,7 +46,7 @@ namespace NESTool.Commands
                 return;
             }
 
-            ClipboardManager.CopyToClipboard(ItemSeleceted);
+            ClipboardManager.SetData(ItemSeleceted);
         }
 
         private void OnProjectItemSelected(ProjectItem item)

@@ -130,6 +130,7 @@
     <Compile Include="Commands\RedoCommand.cs" />
     <Compile Include="Commands\RenameElementCommand.cs" />
     <Compile Include="Commands\UndoCommand.cs" />
+    <Compile Include="CustomTypeConverter\ProjectItemTypeConverter.cs" />
     <Compile Include="FileSystem\FileSystemManager.cs" />
     <Compile Include="History\HistoryManager.cs" />
     <Compile Include="Meta\IMetaItem.cs" />
