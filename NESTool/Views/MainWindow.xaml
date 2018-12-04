@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:NESTool.ViewModels"
-		xmlns:pi="clr-namespace:NESTool.ViewModels.ProjectItems"
 		xmlns:cv="clr-namespace:NESTool.Utils.Converters"
 		xmlns:enum="clr-namespace:NESTool.Enums"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
@@ -690,24 +689,13 @@
                         </MenuItem>
                         <MenuItem Header="Rename" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.RenameElementCommand}" />
 					</ContextMenu>
-					<HierarchicalDataTemplate DataType="{x:Type pi:ProjectFolder}" ItemsSource="{Binding Items}">
-						<StackPanel Orientation="Horizontal">
-							<Image x:Name="folderImage" Source="/Resources/closed_folder.png" Margin="0,0,5,0" />
-							<TextBlock Text="{Binding DisplayName}"/>
-						</StackPanel>
-						<DataTemplate.Triggers>
-							<DataTrigger Binding="{Binding IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type TreeViewItem}}}" Value="True">
-								<Setter Property="Source" TargetName="folderImage" Value="/Resources/open_folder.png" />
-							</DataTrigger>
-						</DataTemplate.Triggers>
-					</HierarchicalDataTemplate>
-					<HierarchicalDataTemplate DataType="{x:Type pi:ProjectItem}" ItemsSource="{Binding Items}">
+					<HierarchicalDataTemplate DataType="{x:Type vm:ProjectItem}" ItemsSource="{Binding Items}">
 						<StackPanel Orientation="Horizontal">
 							<Image x:Name="itemImage" Source="/Resources/closed_folder.png" Margin="0,0,5,0" />
 							<TextBlock Text="{Binding DisplayName}"/>
 						</StackPanel>
 						<DataTemplate.Triggers>
-							<DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Character}">
+                            <DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Character}">
 								<Setter Property="Source" TargetName="itemImage" Value="/Resources/character.png" />
 							</DataTrigger>
 							<DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Bank}">
@@ -719,6 +707,12 @@
 							<DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.TileSet}">
 								<Setter Property="Source" TargetName="itemImage" Value="/Resources/tileset.png" />
 							</DataTrigger>
+                            <DataTrigger Binding="{Binding IsFolder}" Value="True">
+                                <Setter Property="Source" TargetName="itemImage" Value="/Resources/closed_folder.png" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type TreeViewItem}}}" Value="True">
+                                <Setter Property="Source" TargetName="itemImage" Value="/Resources/open_folder.png" />
+                            </DataTrigger>
 						</DataTemplate.Triggers>
 					</HierarchicalDataTemplate>
 				</TreeView.Resources>
@@ -730,7 +724,7 @@
 							<Trigger Property="IsSelected" Value="True">
 								<Setter Property="FontWeight" Value="Bold" />
 							</Trigger>
-							<DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Folder}">
+                            <DataTrigger Binding="{Binding IsFolder}" Value="True">
 								<Setter Property="ContextMenu" Value="{StaticResource FolderPopup}"/>
 							</DataTrigger>
 							<DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Character}">

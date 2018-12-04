@@ -2,7 +2,7 @@
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
 using NESTool.Utils;
-using NESTool.ViewModels.ProjectItems;
+using NESTool.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -16,14 +16,11 @@ namespace NESTool.Commands
 
             var dragEvent = parameter as DragEventArgs;
 
-            if (dragEvent.Data.GetDataPresent(typeof(ProjectFolder)))
-            {
-                var folder = dragEvent.Data.GetData(typeof(ProjectFolder)) as ProjectFolder;
+            var item = dragEvent.Data.GetData(typeof(ProjectItem)) as ProjectItem;
 
-                if (folder.Root)
-                {
-                    return false;
-                }
+            if (item.Root)
+            {
+                return false;
             }
 
             return true;

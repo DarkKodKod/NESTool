@@ -1,7 +1,7 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
-using NESTool.ViewModels.ProjectItems;
+using NESTool.ViewModels;
 
 namespace NESTool.Commands
 {
@@ -23,9 +23,14 @@ namespace NESTool.Commands
 
         public override bool CanExecute(object parameter)
         {
-            if (ItemSeleceted != null && ItemSeleceted is ProjectFolder)
+            if (ItemSeleceted != null)
             {
-                return true;
+                var item = ItemSeleceted as ProjectItem;
+
+                if (item.IsFolder)
+                {
+                    return true;
+                }
             }
 
             return false;

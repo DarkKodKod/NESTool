@@ -15,10 +15,9 @@
     public enum ProjectItemType
     {
         None        = 0,
-        Folder      = 1,
-        Bank        = 2,
-        Character   = 3,
-        Map         = 4,
-        TileSet     = 5
+        Bank        = 1,
+        Character   = 2,
+        Map         = 3,
+        TileSet     = 4
     }
 }

@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace NESTool.ViewModels.ProjectItems
+namespace NESTool.ViewModels
 {
     public class ProjectItem : ViewModel
     {
@@ -24,6 +24,8 @@ namespace NESTool.ViewModels.ProjectItems
         public ProjectItemType Type { get; set; }
         public string DisplayName { get; set; }
         public string FullPath { get; set; }
+        public bool Root { get; set; }
+        public bool IsFolder { get; set; }
         public ProjectItem Parent = null;
         public ObservableCollection<ProjectItem> Items { get; set; }
 

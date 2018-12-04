@@ -6,7 +6,6 @@ using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
 using NESTool.Utils.Adorners;
-using NESTool.ViewModels.ProjectItems;
 using NESTool.VOs;
 using System;
 using System.Collections.Generic;
@@ -354,18 +353,9 @@ namespace NESTool.ViewModels
 
                 Point startPosition = eventArgs.GetPosition(control);
 
-                if (eventArgs.Data.GetDataPresent(typeof(ProjectFolder)))
-                {
-                    object data = eventArgs.Data.GetData(typeof(ProjectFolder));
+                object data = eventArgs.Data.GetData(typeof(ProjectItem));
 
-                    _dragAdorner = new TreeViewDragAdorner(data, (data as ProjectFolder).GetHeaderTemplate(), control, adornerLayer);
-                }
-                else
-                {
-                    object data = eventArgs.Data.GetData(typeof(ProjectItem));
-
-                    _dragAdorner = new TreeViewDragAdorner(data, (data as ProjectItem).GetHeaderTemplate(), control, adornerLayer);
-                }
+                _dragAdorner = new TreeViewDragAdorner(data, (data as ProjectItem).GetHeaderTemplate(), control, adornerLayer);
 
                 _dragAdorner.UpdatePosition(startPosition.X, startPosition.Y);
             }

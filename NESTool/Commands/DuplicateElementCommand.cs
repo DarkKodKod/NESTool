@@ -1,7 +1,7 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
-using NESTool.ViewModels.ProjectItems;
+using NESTool.ViewModels;
 
 namespace NESTool.Commands
 {
@@ -28,14 +28,11 @@ namespace NESTool.Commands
                 return false;
             }
 
-            if (ItemSeleceted is ProjectFolder)
-            {
-                var folder = ItemSeleceted as ProjectFolder;
+            var item = ItemSeleceted as ProjectItem;
 
-                if (folder.Root)
-                {
-                    return false;
-                }
+            if (item.Root)
+            {
+                return false;
             }
 
             return true;

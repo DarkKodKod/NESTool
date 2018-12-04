@@ -1,8 +1,8 @@
-﻿using ArchitectureLibrary.Commands;
+﻿using ArchitectureLibrary.Clipboard;
+using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
-using NESTool.Clipboard;
 using NESTool.Signals;
-using NESTool.ViewModels.ProjectItems;
+using NESTool.ViewModels;
 
 namespace NESTool.Commands
 {
@@ -29,9 +29,14 @@ namespace NESTool.Commands
                 return false;
             }
 
-            if (ItemSeleceted != null && ItemSeleceted is ProjectFolder)
+            if (ItemSeleceted != null)
             {
-                return true;
+                var item = ItemSeleceted as ProjectItem;
+
+                if (item.IsFolder)
+                {
+                    return true;
+                }
             }
 
             return false;

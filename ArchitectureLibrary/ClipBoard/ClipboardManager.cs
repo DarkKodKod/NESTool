@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace NESTool.Clipboard
+namespace ArchitectureLibrary.Clipboard
 {
     public static class ClipboardManager
     {
