@@ -28,7 +28,7 @@ namespace NESTool.ViewModels
 
         public ProjectItem(string content)
         {
-
+            // todo: parse text
         }
 
         public ProjectItemType Type { get; set; }

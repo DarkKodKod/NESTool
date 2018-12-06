@@ -44,12 +44,12 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            if (ItemSeleceted == null)
-            {
-                return;
-            }
+            var newItem = ClipboardManager.GetData() as ProjectItem;
 
-            SignalManager.Get<PasteFileSignal>().Dispatch(ItemSeleceted);
+            if (newItem != null)
+            {
+                SignalManager.Get<PasteFileSignal>().Dispatch(ItemSeleceted, newItem);
+            }
         }
 
         private void OnProjectItemSelected(ProjectItem item)

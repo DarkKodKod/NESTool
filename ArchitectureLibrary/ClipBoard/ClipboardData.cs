@@ -2,18 +2,22 @@
 {
     public class ClipboardData
     {
-        public string AssemblyType { get; set; } = "";
         public string Content { get; set; } = "";
+        public string Assembly { get; set; } = "";
+        public string Type { get; set; } = "";
 
         public void Clear()
         {
-            AssemblyType = "";
+            Assembly = "";
+            Type = "";
             Content = "";
         }
 
         public bool IsEmpty()
         {
-            return string.IsNullOrEmpty(AssemblyType) && string.IsNullOrEmpty(Content);
+            return string.IsNullOrEmpty(Assembly) 
+                && string.IsNullOrEmpty(Type)
+                && string.IsNullOrEmpty(Content);
         }
     }
 }

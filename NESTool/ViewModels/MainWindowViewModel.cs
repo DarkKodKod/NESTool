@@ -135,34 +135,28 @@ namespace NESTool.ViewModels
             SignalManager.Get<CreateNewElementSignal>().AddListener(OnCreateNewElement);
         }
 
-        private enum FileAction
-        {
-            Delete = 0
-        }
-
-        private ProjectItem FindInItemsAndExecuteAction(ICollection<ProjectItem> items, ProjectItem[] aPath, int index, FileAction action)
+        private ProjectItem FindInItemsAndDelete(ICollection<ProjectItem> items, ProjectItem[] aPath, int index)
         {
             bool res = items.Contains(aPath[index]);
 
             if (res == true && index > 0)
             {
-                return FindInItemsAndExecuteAction(aPath[index].Items, aPath, index - 1, action);
+                return FindInItemsAndDelete(aPath[index].Items, aPath, index - 1);
             }
 
             var copy = aPath[index];
 
-            switch (action)
-            {
-                case FileAction.Delete:
-                    aPath[index].Parent.Items.Remove(aPath[index]);
-                    break;
-            }
+            aPath[index].Parent.Items.Remove(aPath[index]);
 
             return copy;
         }
 
-        private void OnPasteFile(ProjectItem item)
+        private void OnPasteFile(ProjectItem parent, ProjectItem newItem)
         {
+            newItem.Parent = parent;
+
+            parent.Items.Add(newItem);
+
             OnPropertyChanged("ProjectItems");
         }
 
@@ -195,7 +189,7 @@ namespace NESTool.ViewModels
                 parent = parent.Parent;
             }
 
-            var matchItem = FindInItemsAndExecuteAction(_projectItems, path.ToArray(), path.ToArray().Length - 1, FileAction.Delete);
+            var matchItem = FindInItemsAndDelete(_projectItems, path.ToArray(), path.ToArray().Length - 1);
 
             if (matchItem != null)
             {

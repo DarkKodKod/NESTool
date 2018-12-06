@@ -14,7 +14,7 @@ namespace ArchitectureLibrary.Clipboard
                 return null;
             }
 
-            Type type = Type.GetType(_data.AssemblyType);
+            Type type = Type.GetType(_data.Type + ", " + _data.Assembly);
 
             TypeConverter typeConverter = TypeDescriptor.GetConverter(type);
             return typeConverter.ConvertFromString(_data.Content);
@@ -25,7 +25,8 @@ namespace ArchitectureLibrary.Clipboard
             Type type = obj.GetType();
 
             TypeConverter typeConverter = TypeDescriptor.GetConverter(type);
-            _data.AssemblyType = typeConverter.ConvertToString(obj);
+            _data.Assembly = type.Assembly.FullName.ToString();
+            _data.Type = typeConverter.ConvertToString(obj);
             _data.Content = obj.GetContent();
         }
 

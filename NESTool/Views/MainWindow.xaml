@@ -710,9 +710,15 @@
                             <DataTrigger Binding="{Binding IsFolder}" Value="True">
                                 <Setter Property="Source" TargetName="itemImage" Value="/Resources/closed_folder.png" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type TreeViewItem}}}" Value="True">
-                                <Setter Property="Source" TargetName="itemImage" Value="/Resources/open_folder.png" />
-                            </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding IsFolder}" Value="True"/>
+                                    <Condition Binding="{Binding IsExpanded, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type TreeViewItem}}}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="Source" TargetName="itemImage" Value="/Resources/open_folder.png" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
 						</DataTemplate.Triggers>
 					</HierarchicalDataTemplate>
 				</TreeView.Resources>
@@ -724,9 +730,6 @@
 							<Trigger Property="IsSelected" Value="True">
 								<Setter Property="FontWeight" Value="Bold" />
 							</Trigger>
-                            <DataTrigger Binding="{Binding IsFolder}" Value="True">
-								<Setter Property="ContextMenu" Value="{StaticResource FolderPopup}"/>
-							</DataTrigger>
 							<DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Character}">
 								<Setter Property="ContextMenu" Value="{StaticResource ItemPopup}"/>
 							</DataTrigger>
@@ -739,7 +742,10 @@
 							<DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.TileSet}">
 								<Setter Property="ContextMenu" Value="{StaticResource ItemPopup}"/>
 							</DataTrigger>
-						</Style.Triggers>
+                            <DataTrigger Binding="{Binding IsFolder}" Value="True">
+                                <Setter Property="ContextMenu" Value="{StaticResource FolderPopup}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
 					</Style>
 				</TreeView.ItemContainerStyle>
 			</TreeView>
