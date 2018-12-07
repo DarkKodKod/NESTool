@@ -110,7 +110,11 @@ namespace NESTool.Commands
         {
             foreach (DirectoryInfo directory in directories)
             {
-                var item = new ProjectItem(directory.Name, directory.FullName, ProjectItemType.None);
+                var item = new ProjectItem()
+                {
+                    DisplayName = directory.Name,
+                    FullPath = directory.FullName
+                };
 
                 string ext = "";
 
@@ -153,7 +157,12 @@ namespace NESTool.Commands
                 {
                     var displayName = Path.GetFileNameWithoutExtension(file.Name);
 
-                    var fileItem = new ProjectItem(displayName, file.FullName, Util.GetItemType(ext));
+                    var fileItem = new ProjectItem()
+                    {
+                        DisplayName = displayName,
+                        FullPath = file.FullName,
+                        Type = Util.GetItemType(ext)
+                    };
 
                     fileItem.Parent = item;
 
