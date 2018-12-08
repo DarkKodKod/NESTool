@@ -7,7 +7,7 @@
 		xmlns:cv="clr-namespace:NESTool.Utils.Converters"
 		xmlns:enum="clr-namespace:NESTool.Enums"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-		xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.Net45"
+		xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         xmlns:fx="clr-namespace:ArchitectureLibrary.FXs;assembly=ArchitectureLibrary"
         mc:Ignorable="d"
         Height="617.748" Width="939.57" 
