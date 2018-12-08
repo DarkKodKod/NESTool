@@ -14,10 +14,12 @@ namespace NESTool.Utils
         private const string _folderCharactersKey = "folderCharacters";
         private const string _folderMapsKey = "folderMaps";
         private const string _folderTileSetsKey = "folderTileSets";
+        private const string _folderPatternTablesKey = "folderPatternTables";
         private const string _extensionBanksKey = "extensionBanks";
         private const string _extensionCharactersKey = "extensionCharacters";
         private const string _extensionMapsKey = "extensionMaps";
         private const string _extensionTileSetsKey = "extensionTileSets";
+        private const string _extensionPatternTablesKey = "extensionPatternTables";
 
         public static bool ValidFileName(string fileName)
         {
@@ -35,11 +37,13 @@ namespace NESTool.Utils
             var extensionCharacters = (string)Application.Current.FindResource(_extensionCharactersKey);
             var extensionMaps = (string)Application.Current.FindResource(_extensionMapsKey);
             var extensionTileSets = (string)Application.Current.FindResource(_extensionTileSetsKey);
+            var extensionPatternTable = (string)Application.Current.FindResource(_extensionPatternTablesKey);
 
             if (extension == extensionBanks) return ProjectItemType.Bank;
             if (extension == extensionCharacters) return ProjectItemType.Character;
             if (extension == extensionMaps) return ProjectItemType.Map;
             if (extension == extensionTileSets) return ProjectItemType.TileSet;
+            if (extension == extensionPatternTable) return ProjectItemType.PatternTable;
             
             return ProjectItemType.None;
         }
@@ -50,16 +54,19 @@ namespace NESTool.Utils
             var folderCharacters = (string)Application.Current.FindResource(_folderCharactersKey);
             var folderMaps = (string)Application.Current.FindResource(_folderMapsKey);
             var folderTileSets = (string)Application.Current.FindResource(_folderTileSetsKey);
+            var folderPatternTables = (string)Application.Current.FindResource(_folderPatternTablesKey);
 
             var extensionBanks = (string)Application.Current.FindResource(_extensionBanksKey);
             var extensionCharacters = (string)Application.Current.FindResource(_extensionCharactersKey);
             var extensionMaps = (string)Application.Current.FindResource(_extensionMapsKey);
             var extensionTileSets = (string)Application.Current.FindResource(_extensionTileSetsKey);
+            var extensionPatternTables = (string)Application.Current.FindResource(_extensionPatternTablesKey);
 
             if (folderName == folderBanks) return extensionBanks;
             if (folderName == folderCharacters) return extensionCharacters;
             if (folderName == folderMaps) return extensionMaps;
             if (folderName == folderTileSets) return extensionTileSets;
+            if (folderName == folderPatternTables) return extensionPatternTables;
 
             return string.Empty;
         }

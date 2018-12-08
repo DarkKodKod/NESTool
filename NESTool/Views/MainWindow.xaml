@@ -698,7 +698,10 @@
                             <DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Character}">
 								<Setter Property="Source" TargetName="itemImage" Value="/Resources/character.png" />
 							</DataTrigger>
-							<DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Bank}">
+                            <DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.PatternTable}">
+                                <Setter Property="Source" TargetName="itemImage" Value="/Resources/pattern_table.png" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Bank}">
 								<Setter Property="Source" TargetName="itemImage" Value="/Resources/Bank.png" />
 							</DataTrigger>
 							<DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Map}">
@@ -736,7 +739,10 @@
 							<DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Bank}">
 								<Setter Property="ContextMenu" Value="{StaticResource ItemPopup}"/>
 							</DataTrigger>
-							<DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Map}">
+                            <DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.PatternTable}">
+                                <Setter Property="ContextMenu" Value="{StaticResource ItemPopup}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Map}">
 								<Setter Property="ContextMenu" Value="{StaticResource ItemPopup}"/>
 							</DataTrigger>
 							<DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.TileSet}">

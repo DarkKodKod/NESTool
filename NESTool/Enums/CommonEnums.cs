@@ -14,10 +14,11 @@
 
     public enum ProjectItemType
     {
-        None        = 0,
-        Bank        = 1,
-        Character   = 2,
-        Map         = 3,
-        TileSet     = 4
+        None            = 0,
+        Bank            = 1,
+        Character       = 2,
+        Map             = 3,
+        TileSet         = 4,
+        PatternTable    = 5
     }
 }
