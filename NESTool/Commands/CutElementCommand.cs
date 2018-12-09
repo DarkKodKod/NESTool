@@ -1,4 +1,5 @@
-﻿using ArchitectureLibrary.Commands;
+﻿using ArchitectureLibrary.Clipboard;
+using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
 using NESTool.ViewModels;
@@ -44,6 +45,8 @@ namespace NESTool.Commands
             {
                 return;
             }
+
+            ClipboardManager.SetData(ItemSeleceted);
 
             SignalManager.Get<CutFileSignal>().Dispatch(ItemSeleceted);
         }

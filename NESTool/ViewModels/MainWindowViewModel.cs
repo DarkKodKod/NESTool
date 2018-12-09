@@ -17,6 +17,7 @@ namespace NESTool.ViewModels
 {
     public class MainWindowViewModel : ViewModel
     {
+        #region Commands
         public OpenProjectCommand OpenProjectCommand { get; } = new OpenProjectCommand();
         public CloseProjectCommand CloseProjectCommand { get; } = new CloseProjectCommand();
         public ExitCommand ExitCommand { get; } = new ExitCommand();
@@ -49,6 +50,7 @@ namespace NESTool.ViewModels
         public LoadMappersCommand LoadMappersCommand { get; } = new LoadMappersCommand();
         public UndoCommand UndoCommand { get; } = new UndoCommand();
         public RedoCommand RedoCommand { get; } = new RedoCommand();
+        #endregion
 
         private const string _projectNameKey = "applicationTitle";
 
@@ -65,6 +67,7 @@ namespace NESTool.ViewModels
         private bool _isDragging = false;
         #endregion
 
+        #region get/set
         public string ProjectName
         {
             get { return _projectName; }
@@ -104,9 +107,11 @@ namespace NESTool.ViewModels
                 OnPropertyChanged("Title");
             }
         }
+        #endregion
 
         public MainWindowViewModel()
         {
+            #region Signals
             SignalManager.Get<OpenProjectSuccessSignal>().AddListener(OpenProjectSuccess);
             SignalManager.Get<CloseProjectSuccessSignal>().AddListener(OnCloseProjectSuccess);
             SignalManager.Get<ExitSuccessSignal>().AddListener(OnExitSuccess);
@@ -133,8 +138,10 @@ namespace NESTool.ViewModels
             SignalManager.Get<RenameFileSignal>().AddListener(OnRenameFile);
             SignalManager.Get<CreateFolderSignal>().AddListener(OnCreateFolder);
             SignalManager.Get<CreateNewElementSignal>().AddListener(OnCreateNewElement);
+            #endregion
         }
 
+        #region Signal methods
         private ProjectItem FindInItemsAndDelete(ICollection<ProjectItem> items, ProjectItem[] aPath, int index)
         {
             bool res = items.Contains(aPath[index]);
@@ -172,10 +179,15 @@ namespace NESTool.ViewModels
 
         private void OnCutFile(ProjectItem item)
         {
-            OnPropertyChanged("ProjectItems");
+            DeleteItemFromTheList(item);
         }
 
         private void OnDeleteFile(ProjectItem item)
+        {
+            DeleteItemFromTheList(item);
+        }
+
+        private void DeleteItemFromTheList(ProjectItem item)
         {
             // Collect the chain of parents for later use
             List<ProjectItem> path = new List<ProjectItem>() { item };
@@ -463,5 +475,6 @@ namespace NESTool.ViewModels
         {
             //
         }
+        #endregion
     }
 }

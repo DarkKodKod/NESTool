@@ -8,6 +8,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -160,14 +161,68 @@ namespace NESTool.ViewModels
 
                         if (value != "null")
                         {
-                            for (int i = 0; i < int.Parse(value); ++i)
+                            found = content.IndexOf(";", index);
+
+                            string braketsContent = content.Substring(found + 1, content.Length - found - 1);
+
+                            StringReader reader = new StringReader(braketsContent);
+
+                            int intChar = 0;
+                            int countOpenBrakets = 0;
+                            int countObjectsCreated = 0;
+
+                            StringBuilder sb = new StringBuilder();
+
+                            while ((intChar = reader.Read()) != -1)
                             {
-                                var itm = new ProjectItem();//ParseAndCreateObject("");
-                                itm.Parent = item;
-                                itm.Type = item.Type;
-                                itm.DisplayName = "Placeholder";
-                                item.Items.Add(itm);
+                                bool includeChar = true;
+                                char chr = Convert.ToChar(intChar);
+
+                                if (chr == '{')
+                                {
+                                    if (countOpenBrakets == 0)
+                                    {
+                                        includeChar = false;
+                                    }
+
+                                    countOpenBrakets++;
+                                }
+
+                                if (chr == '}')
+                                {
+                                    string gato = sb.ToString();
+
+                                    countOpenBrakets--;
+
+                                    if (countOpenBrakets == 0)
+                                    {
+                                        includeChar = false;
+                                    }
+
+                                    // last braket?
+                                    if (countOpenBrakets == 0)
+                                    {
+                                        var itm = ParseAndCreateObject(sb.ToString());
+                                        itm.Parent = item;
+                                        item.Items.Add(itm);
+
+                                        sb.Clear();
+
+                                        countObjectsCreated++;
+                                    }
+                                }
+
+                                if (includeChar)
+                                {
+                                    sb.Append(chr);
+                                }
                             }
+
+                            if (countObjectsCreated != Convert.ToInt32(value))
+                            {
+                                return null;
+                            }
+
                             found = content.Length;
                         }
                         break;
