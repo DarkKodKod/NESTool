@@ -24,22 +24,12 @@ namespace NESTool.Commands
 
         public override bool CanExecute(object parameter)
         {
-            if (ClipboardManager.IsEmpty())
+            if (ClipboardManager.IsEmpty() || ItemSeleceted == null)
             {
                 return false;
             }
 
-            if (ItemSeleceted != null)
-            {
-                var item = ItemSeleceted as ProjectItem;
-
-                if (item.IsFolder)
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return true;
         }
 
         public override void Execute(object parameter)

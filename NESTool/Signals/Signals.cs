@@ -20,7 +20,6 @@ namespace NESTool.Signals
     public class DeleteFileSignal : Signal<ProjectItem> { }
     public class CutFileSignal : Signal<ProjectItem> { }
     public class PasteFileSignal : Signal<ProjectItem, ProjectItem> { }
-    public class DuplicateFileSignal : Signal<ProjectItem> { }
     public class RenameFileSignal : Signal<ProjectItem> { }
     public class CreateFolderSignal : Signal<ProjectItem> { }
     public class CreateNewElementSignal : Signal<ProjectItem> { }

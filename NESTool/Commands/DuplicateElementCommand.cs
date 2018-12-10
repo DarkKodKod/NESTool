@@ -30,7 +30,7 @@ namespace NESTool.Commands
 
             var item = ItemSeleceted as ProjectItem;
 
-            if (item.Root)
+            if (item.Root || item.IsFolder)
             {
                 return false;
             }
@@ -45,7 +45,9 @@ namespace NESTool.Commands
                 return;
             }
 
-            SignalManager.Get<CutFileSignal>().Dispatch(ItemSeleceted);
+            ProjectItem newItem = new ProjectItem(ItemSeleceted.GetContent());
+
+            SignalManager.Get<PasteFileSignal>().Dispatch(ItemSeleceted, newItem);
         }
 
         private void OnProjectItemSelected(ProjectItem item)
