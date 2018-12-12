@@ -135,8 +135,6 @@ namespace NESTool.ViewModels
             SignalManager.Get<CutFileSignal>().AddListener(OnCutFile);
             SignalManager.Get<PasteFileSignal>().AddListener(OnPasteFile);
             SignalManager.Get<RenameFileSignal>().AddListener(OnRenameFile);
-            SignalManager.Get<CreateFolderSignal>().AddListener(OnCreateFolder);
-            SignalManager.Get<CreateNewElementSignal>().AddListener(OnCreateNewElement);
             #endregion
         }
 
@@ -208,16 +206,6 @@ namespace NESTool.ViewModels
             {
                 OnPropertyChanged("ProjectItems");
             }
-        }
-
-        private void OnCreateFolder(ProjectItem item)
-        {
-            OnPropertyChanged("ProjectItems");
-        }
-
-        private void OnCreateNewElement(ProjectItem item)
-        {
-            OnPropertyChanged("ProjectItems");
         }
 
         private void OnLoadConfigSuccess()

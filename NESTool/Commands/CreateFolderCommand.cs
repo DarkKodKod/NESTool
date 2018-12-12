@@ -2,6 +2,8 @@
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
 using NESTool.ViewModels;
+using System.Collections.ObjectModel;
+using System.IO;
 
 namespace NESTool.Commands
 {
@@ -43,7 +45,22 @@ namespace NESTool.Commands
                 return;
             }
 
-            SignalManager.Get<CreateFolderSignal>().Dispatch(ItemSeleceted);
+            string name = "New folder";
+
+            ProjectItem newFolder = new ProjectItem()
+            {
+                DisplayName = name,
+                FullPath = Path.Combine(ItemSeleceted.FullPath, name),
+                IsFolder = true,
+                Items = new ObservableCollection<ProjectItem>(),
+                Parent = ItemSeleceted,
+                Root = false,
+                Type = ItemSeleceted.Type
+            };
+
+            ItemSeleceted.Items.Add(newFolder);
+
+            SignalManager.Get<CreateNewElementSignal>().Dispatch(newFolder);
         }
 
         private void OnProjectItemSelected(ProjectItem item)

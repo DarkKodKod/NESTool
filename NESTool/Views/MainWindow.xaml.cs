@@ -10,6 +10,9 @@ using System.Runtime.InteropServices;
 using System;
 using System.Windows.Interop;
 using NESTool.VOs;
+using NESTool.ViewModels;
+using NESTool.Utils;
+using System.Collections.Generic;
 
 namespace NESTool
 {
@@ -51,6 +54,7 @@ namespace NESTool
             SystemParameters.StaticPropertyChanged += SystemParameters_StaticPropertyChanged;
 
             SignalManager.Get<SetUpWindowPropertiesSignal>().AddListener(OnSetUpWindowProperties);
+            SignalManager.Get<CreateNewElementSignal>().AddListener(OnCreateNewElement);
         }
 
         private void SystemParameters_StaticPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -131,6 +135,59 @@ namespace NESTool
             Width = vo.SizeX;
 
             CenterWindowOnScreen();
+        }
+
+        private void OnCreateNewElement(ProjectItem newItem)
+        {
+            TreeViewItem parentItem = (TreeViewItem)(tvProjectItems.ItemContainerGenerator.ContainerFromItem(newItem.Parent));
+
+            if (parentItem != null)
+            {
+                parentItem.IsExpanded = true;
+            }
+            else
+            {
+                var nodes = (IEnumerable<ProjectItem>)tvProjectItems.ItemsSource;
+                if (nodes == null) return;
+
+                var queue = new Stack<ProjectItem>();
+                queue.Push(newItem);
+
+                var parent = newItem.Parent;
+
+                while (parent != null)
+                {
+                    queue.Push(parent);
+                    parent = parent.Parent;
+                }
+
+                var generator = tvProjectItems.ItemContainerGenerator;
+
+                while (queue.Count > 0)
+                {
+                    var dequeue = queue.Pop();
+
+                    tvProjectItems.UpdateLayout();
+
+                    var treeViewItem = (TreeViewItem)generator.ContainerFromItem(dequeue);
+
+                    treeViewItem.IsExpanded = true;
+                        
+                    generator = treeViewItem.ItemContainerGenerator;
+                }
+            }
+        }
+
+        private void StackPanel_Loaded(object sender, RoutedEventArgs e)
+        {
+            StackPanel stackPanel = (StackPanel)sender;
+
+            ProjectItem item = stackPanel.DataContext as ProjectItem;
+            if (item != null && !item.IsLoaded)
+            {
+                item.IsLoaded = true;
+                item.IsSelected = true;
+            }
         }
     }
 }

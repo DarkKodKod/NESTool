@@ -7,7 +7,6 @@ using NESTool.Signals;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -76,6 +75,8 @@ namespace NESTool.ViewModels
         private bool _isSelected;
         private object _selectedItem = null;
 
+        public bool IsLoaded { get; set; } = false;
+
         public bool IsSelected
         {
             get
@@ -118,6 +119,8 @@ namespace NESTool.ViewModels
         private ProjectItem ParseAndCreateObject(string content)
         {
             ProjectItem item = new ProjectItem();
+
+            item.IsLoaded = true;
 
             int index = 0;
             int found = 0;

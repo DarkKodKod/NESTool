@@ -29,6 +29,13 @@ namespace NESTool.Commands
                 return false;
             }
 
+            // Only is possible the paste element if is in a place with the same type
+            ProjectItem clipbr = ClipboardManager.GetData() as ProjectItem;
+            if (clipbr != null && clipbr.Type != ItemSeleceted.Type)
+            {
+                return false;
+            }
+
             return true;
         }
 
