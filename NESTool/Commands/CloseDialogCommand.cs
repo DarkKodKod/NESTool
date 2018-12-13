@@ -4,11 +4,11 @@ using NESTool.Signals;
 
 namespace NESTool.Commands
 {
-    public class ClosedProjectPropertiesCommand : Command
+    public class CloseDialogCommand : Command
     {
         public override void Execute(object parameter)
         {
-            SignalManager.Get<ClosedProjectPropertiesSignal>().Dispatch();
+            SignalManager.Get<CloseDialogSignal>().Dispatch();
         }
     }
 }

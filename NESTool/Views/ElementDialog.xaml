@@ -4,77 +4,33 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:NESTool.ViewModels"
-		xmlns:cv="clr-namespace:NESTool.Utils.Converters"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
 		x:Name="ElementDialogView"
         Title="New Element" Height="287.88" Width="463.635" 
 		Loaded="Window_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
-    <Window.Resources>
-        <cv:ParametersConverter x:Key="parametersConverter"/>
-    </Window.Resources>
     <Window.DataContext>
         <vm:ElementDialogViewModel />
     </Window.DataContext>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
-            <i:InvokeCommandAction Command="{Binding ClosedNewProjectCommand}"/>
+            <i:InvokeCommandAction Command="{Binding CloseDialogCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="1" Grid.Column="1" Content="Project name" HorizontalAlignment="Left" VerticalAlignment="Center" />
-        <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True">
-            <TextBox x:Name="tbProjName" DockPanel.Dock="Right" Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged}" 
-					 Height="23" TextWrapping="NoWrap" VerticalAlignment="Center" Width="auto"/>
-        </DockPanel>
-        <Label Grid.Row="3" Grid.Column="1" Content="Location" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <DockPanel Grid.Row="4" Grid.Column="1" LastChildFill="True">
-            <Button DockPanel.Dock="Right" HorizontalAlignment="Right" 
-					VerticalAlignment="Center" Width="30" Content="..." 
-					Command="{Binding BrowseFolderCommand}" CommandParameter="{Binding ElementName=tbPath, Path=Text}"/>
-            <TextBox x:Name="tbPath" Height="23" Text="{Binding FolderPath, UpdateSourceTrigger=PropertyChanged}" 
-					 TextWrapping="NoWrap" VerticalAlignment="Center" Width="auto"/>
-        </DockPanel>
-        <Grid Grid.Row="5" Grid.Column="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Label Content="Mapper:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <ComboBox x:Name="cbMapper" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" ItemsSource="{Binding Mappers}" 
-                DisplayMemberPath="Name"
-                SelectedValuePath="Id"
-                SelectedValue="{Binding Path=SelectedMapper}"/>
-            <Label Content="PRG Size:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <ComboBox x:Name="cbPRGSize" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" ItemsSource="{Binding PRGSizes}"
-                SelectedIndex="{Binding Path=SelectedCHRSize}"/>
-            <Label Content="CHR Size:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <ComboBox x:Name="cbCHRSize" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" ItemsSource="{Binding CHRSizes}"
-                SelectedIndex="{Binding Path=SelectedPRGSize}"/>
-        </Grid>
-        <Grid Grid.Row="6" Grid.Column="1">
+        <ListView Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+        </ListView>
+        <Grid Grid.Row="3" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="100"/>
@@ -83,19 +39,9 @@
             <Button Grid.Column="1" Margin="10" Content="Cancel" 
 					HorizontalAlignment="center" VerticalAlignment="center" Width="75" 
 					IsCancel="True"/>
-            <Button Grid.Column="2" Content="Create project" 
+            <Button Grid.Column="2" Content="Create Element" 
 					HorizontalAlignment="center" VerticalAlignment="center" Width="100" 
-					Command="{Binding CreateProjectCommand}" Click="OnClickOK">
-                <Button.CommandParameter>
-                    <MultiBinding Converter="{StaticResource parametersConverter}">
-                        <Binding Path="Text" ElementName="tbPath"/>
-                        <Binding Path="Text" ElementName="tbProjName"/>
-                        <Binding Path="SelectedValue" ElementName="cbPRGSize"/>
-                        <Binding Path="SelectedValue" ElementName="cbCHRSize"/>
-                        <Binding Path="SelectedValue" ElementName="cbMapper"/>
-                    </MultiBinding>
-                </Button.CommandParameter>
-            </Button>
+					Command="{Binding CreateElementCommand}" Click="OnClickOK"/>
         </Grid>
     </Grid>
 </Window>

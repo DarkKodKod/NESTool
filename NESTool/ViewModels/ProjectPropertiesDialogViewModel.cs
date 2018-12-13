@@ -10,7 +10,7 @@ namespace NESTool.ViewModels
 {
     public class ProjectPropertiesDialogViewModel : ViewModel
     {
-        public ClosedProjectPropertiesCommand ClosedProjectPropertiesCommand { get; } = new ClosedProjectPropertiesCommand();
+        public CloseDialogCommand CloseDialogCommand { get; } = new CloseDialogCommand();
 
         #region get/set
         public bool Battery
@@ -137,12 +137,12 @@ namespace NESTool.ViewModels
 
             ReadProjectData();
 
-            SignalManager.Get<ClosedProjectPropertiesSignal>().AddListener(OnClosedProjectProperties);
+            SignalManager.Get<CloseDialogSignal>().AddListener(OnCloseDialog);
 
             _changed = false;
         }
 
-        private void OnClosedProjectProperties()
+        private void OnCloseDialog()
         {
             if (_changed == true)
             {
@@ -159,7 +159,7 @@ namespace NESTool.ViewModels
                 project.Save();
             }
 
-            SignalManager.Get<ClosedProjectPropertiesSignal>().RemoveListener(OnClosedProjectProperties);
+            SignalManager.Get<CloseDialogSignal>().RemoveListener(OnCloseDialog);
         }
 
         private void ReadProjectData()

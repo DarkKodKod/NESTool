@@ -12,7 +12,7 @@ namespace NESTool.ViewModels
     {
         public CreateProjectCommand CreateProjectCommand { get; } = new CreateProjectCommand();
         public BrowseFolderCommand BrowseFolderCommand { get; } = new BrowseFolderCommand();
-        public ClosedNewProjectCommand ClosedNewProjectCommand { get; } = new ClosedNewProjectCommand();
+        public CloseDialogCommand CloseDialogCommand { get; } = new CloseDialogCommand();
 
         #region get/set
         public string ProjectName
@@ -126,13 +126,13 @@ namespace NESTool.ViewModels
             SelectedPRGSize = 0;
 
             SignalManager.Get<BrowseFolderSuccessSignal>().AddListener(BrowseFolderSuccess);
-            SignalManager.Get<ClosedNewProjectSignal>().AddListener(OnClosedNewProject);
+            SignalManager.Get<CloseDialogSignal>().AddListener(OnCloseDialog);
         }
 
-        private void OnClosedNewProject()
+        private void OnCloseDialog()
         {
             SignalManager.Get<BrowseFolderSuccessSignal>().RemoveListener(BrowseFolderSuccess);
-            SignalManager.Get<ClosedNewProjectSignal>().RemoveListener(OnClosedNewProject);
+            SignalManager.Get<CloseDialogSignal>().RemoveListener(OnCloseDialog);
         }
 
         private void BrowseFolderSuccess(string folderPath) => FolderPath = folderPath;

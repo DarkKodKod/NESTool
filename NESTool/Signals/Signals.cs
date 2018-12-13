@@ -9,6 +9,7 @@ namespace NESTool.Signals
     // Generics
     public class BrowseFolderSuccessSignal : Signal<string> { }
     public class SetUpWindowPropertiesSignal : Signal<WindowVO> { }
+    public class CloseDialogSignal : Signal { }
 
     // Meta file system
     public class CreateMetaFileSignal : Signal { }
@@ -45,12 +46,6 @@ namespace NESTool.Signals
     public class SizeChangedSingal : Signal<SizeChangedEventArgs, bool> { }
     public class LoadMappersSuccessSignal : Signal { }
     public class CreateProjectSuccessSignal : Signal<string> { }
-
-    // ProjectDialogViewModel
-    public class ClosedNewProjectSignal : Signal { }
-
-    // ProjectPropertiesViewModel
-    public class ClosedProjectPropertiesSignal : Signal { }
 
     // TileSetViewModel
 

@@ -112,9 +112,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\ClosedNewProjectCommand.cs" />
-    <Compile Include="Commands\ClosedProjectPropertiesCommand.cs" />
+    <Compile Include="Commands\CloseDialogCommand.cs" />
     <Compile Include="Commands\CopyElementCommand.cs" />
+    <Compile Include="Commands\CreateElementCommand.cs" />
     <Compile Include="Commands\CreateFolderCommand.cs" />
     <Compile Include="Commands\CreateNewElementCommand.cs" />
     <Compile Include="Commands\CutElementCommand.cs" />

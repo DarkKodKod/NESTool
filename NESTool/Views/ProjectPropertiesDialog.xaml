@@ -17,7 +17,7 @@
     </Window.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
-            <i:InvokeCommandAction Command="{Binding ClosedProjectPropertiesCommand}"/>
+            <i:InvokeCommandAction Command="{Binding CloseDialogCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
