@@ -24,6 +24,7 @@
     <Window.InputBindings>
 		<KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding SaveCommand}" />
 		<KeyBinding Key="S" Modifiers="Ctrl+Shift" Command="{Binding SaveAllCommand}" />
+        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NewElementCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
 		<KeyBinding Key="N" Modifiers="Ctrl+Shift" Command="{Binding NewProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
 		<KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding OpenProjectCommand}" />
 		<KeyBinding Key="F5" Command="{Binding BuildProjectCommand}" />
@@ -47,25 +48,47 @@
 	<DockPanel>
 		<Menu DockPanel.Dock="Top">
 			<MenuItem Header="_File">
-                <MenuItem Header="_New Project" Command="{Binding NewProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}" InputGestureText="Ctrl+Shift+N">
-                    <MenuItem.Icon>
-                        <Image Width="16" Height="16" Source="/resources/new_project.png">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Effect">
-                                                <Setter.Value>
-                                                    <fx:GrayscaleEffect />
-                                                </Setter.Value>
-                                            </Setter>
-                                            <Setter Property="Opacity" Value="0.5"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                    </MenuItem.Icon>
+                <MenuItem Header="_New">
+                    <MenuItem Header="New _Project" Command="{Binding NewProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}" InputGestureText="Ctrl+Shift+N">
+                        <MenuItem.Icon>
+                            <Image Width="16" Height="16" Source="/resources/new_project.png">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Effect">
+                                                    <Setter.Value>
+                                                        <fx:GrayscaleEffect />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="Opacity" Value="0.5"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="New _Element" Command="{Binding NewElementCommand}" CommandParameter="{Binding ElementName=MainWindowView}" InputGestureText="Ctrl+N">
+                        <MenuItem.Icon>
+                            <Image Width="16" Height="16" Source="/resources/new_element.png">
+                                <Image.Style>
+                                    <Style TargetType="Image">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Effect">
+                                                    <Setter.Value>
+                                                        <fx:GrayscaleEffect />
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="Opacity" Value="0.5"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Image.Style>
+                            </Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Open Project" Command="{Binding OpenProjectCommand}" InputGestureText="Ctrl+O">
                     <MenuItem.Icon>

@@ -126,6 +126,7 @@
     <Compile Include="Commands\DuplicateElementCommand.cs" />
     <Compile Include="Commands\ImportImageCommand.cs" />
     <Compile Include="Commands\LoadMappersCommand.cs" />
+    <Compile Include="Commands\NewElementCommand.cs" />
     <Compile Include="Commands\OpenLinkCommand.cs" />
     <Compile Include="Commands\PasteElementCommand.cs" />
     <Compile Include="Commands\PreviewMouseLeftButtonDownCommand.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\BanksViewModel.cs" />
     <Compile Include="ViewModels\CharacterViewModel.cs" />
+    <Compile Include="ViewModels\ElementDialogViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
     <Compile Include="ViewModels\ProjectItem.cs" />
     <Compile Include="ViewModels\ProjectDialogViewModel.cs" />
@@ -174,6 +176,9 @@
     </Compile>
     <Compile Include="Views\Character.xaml.cs">
       <DependentUpon>Character.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ElementDialog.xaml.cs">
+      <DependentUpon>ElementDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Map.xaml.cs">
       <DependentUpon>Map.xaml</DependentUpon>
@@ -207,6 +212,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Character.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ElementDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -327,6 +336,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\pattern_table.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\new_element.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

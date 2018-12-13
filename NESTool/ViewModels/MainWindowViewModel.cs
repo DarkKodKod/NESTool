@@ -22,6 +22,7 @@ namespace NESTool.ViewModels
         public CloseProjectCommand CloseProjectCommand { get; } = new CloseProjectCommand();
         public ExitCommand ExitCommand { get; } = new ExitCommand();
         public NewProjectCommand NewProjectCommand { get; } = new NewProjectCommand();
+        public NewElementCommand NewElementCommand { get; } = new NewElementCommand();
         public SaveAllCommand SaveAllCommand { get; } = new SaveAllCommand();
         public SaveCommand SaveCommand { get; } = new SaveCommand();
         public LoadConfigsCommand LoadConfigsCommand { get; } = new LoadConfigsCommand();
