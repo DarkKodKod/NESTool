@@ -565,7 +565,7 @@
 				<TreeView.Resources>
                     <ContextMenu x:Key="FolderPopup">
                         <MenuItem Header="Create Folder" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.CreateFolderCommand}"/>
-                        <MenuItem Header="Create New Element" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.CreateNewElementCommand}"/>
+                        <MenuItem Header="Create New Element" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.CreateElementFromMenuCommand}"/>
 						<Separator/>
                         <MenuItem Header="Cut" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.CutElementCommand}">
                             <MenuItem.Icon>

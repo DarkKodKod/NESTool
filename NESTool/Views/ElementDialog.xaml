@@ -32,6 +32,7 @@
                   HorizontalAlignment="Stretch" 
                   VerticalAlignment="Stretch" 
                   SelectionMode="Single"
+                  SelectedValue="{Binding SelectedType}"
                   ItemsSource="{Binding ElementTypes}">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -59,7 +60,7 @@
 					IsCancel="True"/>
             <Button Grid.Column="2" Content="Create Element" 
 					HorizontalAlignment="center" VerticalAlignment="center" Width="100" 
-					Command="{Binding CreateElementCommand}" Click="OnClickOK"/>
+					Command="{Binding CreateElementCommand}" CommandParameter="{Binding SelectedType}" Click="OnClickOK"/>
         </Grid>
     </Grid>
 </Window>

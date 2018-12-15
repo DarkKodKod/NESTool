@@ -52,7 +52,6 @@ namespace NESTool.Commands
                 DisplayName = name,
                 FullPath = Path.Combine(ItemSeleceted.FullPath, name),
                 IsFolder = true,
-                Items = new ObservableCollection<ProjectItem>(),
                 Parent = ItemSeleceted,
                 Root = false,
                 Type = ItemSeleceted.Type

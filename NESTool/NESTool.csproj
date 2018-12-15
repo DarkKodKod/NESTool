@@ -115,8 +115,8 @@
     <Compile Include="Commands\CloseDialogCommand.cs" />
     <Compile Include="Commands\CopyElementCommand.cs" />
     <Compile Include="Commands\CreateElementCommand.cs" />
+    <Compile Include="Commands\CreateElementFromMenuCommand.cs" />
     <Compile Include="Commands\CreateFolderCommand.cs" />
-    <Compile Include="Commands\CreateNewElementCommand.cs" />
     <Compile Include="Commands\CutElementCommand.cs" />
     <Compile Include="Commands\DeleteElementCommand.cs" />
     <Compile Include="Commands\DragEnterCommand.cs" />

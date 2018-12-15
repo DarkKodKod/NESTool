@@ -2,14 +2,15 @@
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
 using NESTool.ViewModels;
+using System.IO;
 
 namespace NESTool.Commands
 {
-    public class CreateNewElementCommand : Command
+    public class CreateElementFromMenuCommand : Command
     {
         private ProjectItem ItemSeleceted = null;
 
-        public CreateNewElementCommand()
+        public CreateElementFromMenuCommand()
         {
             SignalManager.Get<ProjectItemSelectedSignal>().AddListener(OnProjectItemSelected);
             SignalManager.Get<ProjectItemUnselectedSignal>().AddListener(OnProjectItemUnselected);
@@ -43,7 +44,21 @@ namespace NESTool.Commands
                 return;
             }
 
-            SignalManager.Get<CreateNewElementSignal>().Dispatch(ItemSeleceted);
+            string name = "New Element";
+
+            ProjectItem newElement = new ProjectItem()
+            {
+                DisplayName = name,
+                FullPath = Path.Combine(ItemSeleceted.FullPath, name),
+                IsFolder = false,
+                Parent = ItemSeleceted,
+                Root = false,
+                Type = ItemSeleceted.Type
+            };
+
+            ItemSeleceted.Items.Add(newElement);
+
+            SignalManager.Get<CreateNewElementSignal>().Dispatch(newElement);
         }
 
         private void OnProjectItemSelected(ProjectItem item)

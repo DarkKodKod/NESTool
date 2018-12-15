@@ -20,11 +20,23 @@ namespace NESTool.ViewModels
 
         public List<ElementTypeModel> ElementTypes { get; set; } = new List<ElementTypeModel>();
 
+        public ElementTypeModel SelectedType
+        {
+            get { return _selectedType; }
+            set
+            {
+                _selectedType = value;
+                OnPropertyChanged("SelectedType");
+            }
+        }
+
         private const string _folderBanksKey = "folderBanks";
         private const string _folderCharactersKey = "folderCharacters";
         private const string _folderMapsKey = "folderMaps";
         private const string _folderTileSetsKey = "folderTileSets";
         private const string _folderPatternTablesKey = "folderPatternTables";
+
+        private ElementTypeModel _selectedType;
 
         public ElementDialogViewModel()
         {

@@ -36,8 +36,8 @@ namespace NESTool.ViewModels
         public DuplicateElementCommand DuplicateElementCommand { get; } = new DuplicateElementCommand();
         public DeleteElementCommand DeleteElementCommand { get; } = new DeleteElementCommand();
         public RenameElementCommand RenameElementCommand { get; } = new RenameElementCommand();
-        public CreateNewElementCommand CreateNewElementCommand { get; } = new CreateNewElementCommand();
         public CreateFolderCommand CreateFolderCommand { get; } = new CreateFolderCommand();
+        public CreateElementFromMenuCommand CreateElementFromMenuCommand { get; } = new CreateElementFromMenuCommand();
         public PreviewMouseLeftButtonDownCommand PreviewMouseLeftButtonDownCommand { get; } = new PreviewMouseLeftButtonDownCommand();
         public PreviewMouseLeftButtonUpCommand PreviewMouseLeftButtonUpCommand { get; } = new PreviewMouseLeftButtonUpCommand();
         public PreviewMouseMoveCommand PreviewMouseMoveCommand { get; } = new PreviewMouseMoveCommand();
