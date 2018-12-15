@@ -35,7 +35,9 @@ namespace NESTool.Models
         /// </summary>
         public bool RLECompression { get; set; } = false;
 
-        private string _projectPath;
+        [TomlIgnore] public string ProjectFilePath { get; set; }
+        [TomlIgnore] public string ProjectPath { get; set; }
+
         private const string _projectVersionKey = "projectVersion";
         private readonly int _projectVersion = 0;
 
@@ -46,8 +48,8 @@ namespace NESTool.Models
 
         public void Reset()
         {
-            _projectPath = "";
-
+            ProjectFilePath = "";
+            ProjectPath = "";
             Name = "";
             RLECompression = false;
             Header.Reset();
@@ -67,28 +69,29 @@ namespace NESTool.Models
             Header.Battery = copy.Header.Battery;
         }
 
-        public void Load(string path)
+        public void Load(string path, string filePath)
         {
-            _projectPath = path;
+            ProjectPath = path;
+            ProjectFilePath = filePath;
 
-            Copy(Toml.ReadFile<ProjectModel>(_projectPath));
+            Copy(Toml.ReadFile<ProjectModel>(ProjectFilePath));
         }
 
         public void Save(string path)
         {
-            _projectPath = path;
+            ProjectFilePath = path;
 
             Save();
         }
 
         public void Save()
         {
-            if (string.IsNullOrEmpty(_projectPath))
+            if (string.IsNullOrEmpty(ProjectFilePath))
             {
                 return;
             }
 
-            Toml.WriteFile(this, _projectPath);
+            Toml.WriteFile(this, ProjectFilePath);
         }
     }
 }

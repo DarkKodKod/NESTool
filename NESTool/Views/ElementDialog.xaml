@@ -7,7 +7,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
 		x:Name="ElementDialogView"
-        Title="New Element" Height="287.88" Width="463.635" 
+        Title="New Element" Height="360.682" Width="355.07" 
 		Loaded="Window_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Window.DataContext>
         <vm:ElementDialogViewModel />
@@ -28,7 +28,25 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
-        <ListView Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <ListView Grid.Row="1" Grid.Column="1" 
+                  HorizontalAlignment="Stretch" 
+                  VerticalAlignment="Stretch" 
+                  SelectionMode="Single"
+                  ItemsSource="{Binding ElementTypes}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <WrapPanel Margin="10, 10, 0, 0">
+                        <WrapPanel.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Margin" Value="10,0" />
+                                <Setter Property="Padding" Value="10,10" />
+                            </Style>
+                        </WrapPanel.Resources>
+                        <Image Source="{Binding Image}" Width="32" Height="32"/>
+                        <TextBlock Text="{Binding Name}"/>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
         <Grid Grid.Row="3" Grid.Column="1">
             <Grid.ColumnDefinitions>

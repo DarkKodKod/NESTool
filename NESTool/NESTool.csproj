@@ -140,6 +140,7 @@
     <Compile Include="FileSystem\FileSystemManager.cs" />
     <Compile Include="History\HistoryManager.cs" />
     <Compile Include="Meta\IMetaItem.cs" />
+    <Compile Include="Models\ElementTypeModel.cs" />
     <Compile Include="Models\MapperModel.cs" />
     <Compile Include="Models\MappersModel.cs" />
     <Compile Include="Models\MetaItemModel.cs" />

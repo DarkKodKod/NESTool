@@ -1,7 +1,6 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Model;
 using ArchitectureLibrary.Signals;
-using NESTool.Enums;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
@@ -90,7 +89,7 @@ namespace NESTool.Commands
             var projectModel = ModelManager.Get<ProjectModel>();
 
             // load project configuration file
-            projectModel.Load(projectFullPath);
+            projectModel.Load(directoryPath, projectFullPath);
 
             // load project folder
             DirectoryInfo d = new DirectoryInfo(directoryPath);
