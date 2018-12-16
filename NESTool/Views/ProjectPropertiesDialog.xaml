@@ -8,6 +8,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="Project properties" Height="271" Width="357"
+        ShowInTaskbar="False"
 		ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Window.DataContext>
         <vm:ProjectPropertiesDialogViewModel />

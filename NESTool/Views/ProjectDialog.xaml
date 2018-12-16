@@ -8,8 +8,9 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
 		x:Name="ProjectDialogView"
+        ShowInTaskbar="False"
         Title="New Project" Height="287.88" Width="463.635" 
-		Loaded="Window_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+		ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
 	<Window.Resources>
 		<cv:ParametersConverter x:Key="parametersConverter"/>
 	</Window.Resources>

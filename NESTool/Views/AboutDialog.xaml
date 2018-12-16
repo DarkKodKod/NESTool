@@ -8,6 +8,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         mc:Ignorable="d"
+        ShowInTaskbar="False"
         Title="About NESTool" Height="272.16" Width="372.868"
 		ResizeMode="NoResize"
 		WindowStartupLocation="CenterOwner">

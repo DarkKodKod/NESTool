@@ -160,6 +160,7 @@
     <Compile Include="Utils\Converters\ParametersConverter.cs" />
     <Compile Include="Enums\CommonEnums.cs" />
     <Compile Include="Models\RecentProjectModel.cs" />
+    <Compile Include="Utils\WindowUtility.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\BanksViewModel.cs" />
     <Compile Include="ViewModels\CharacterViewModel.cs" />

@@ -7,8 +7,9 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
 		x:Name="ElementDialogView"
+        ShowInTaskbar="False"
         Title="New Element" Height="360.682" Width="355.07" 
-		Loaded="Window_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+		ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Window.DataContext>
         <vm:ElementDialogViewModel />
     </Window.DataContext>
