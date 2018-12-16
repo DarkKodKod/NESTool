@@ -22,6 +22,7 @@ namespace NESTool.Signals
     public class CutFileSignal : Signal<ProjectItem> { }
     public class PasteFileSignal : Signal<ProjectItem, ProjectItem> { }
     public class RenameFileSignal : Signal<ProjectItem> { }
+    public class FindAndCreateElementSignal : Signal<ProjectItem> { }
     public class CreateNewElementSignal : Signal<ProjectItem> { }
     public class MoveFileSignal : Signal { }
 

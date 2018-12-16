@@ -121,7 +121,6 @@ namespace NESTool.ViewModels
             SignalManager.Get<LoadConfigSuccessSignal>().AddListener(OnLoadConfigSuccess);
             SignalManager.Get<UpdateRecentProjectsSignal>().AddListener(OnUpdateRecentProjects);
             SignalManager.Get<BuildProjectSuccessSignal>().AddListener(OnBuildProjectSuccess);
-            SignalManager.Get<ProjectItemSelectedSignal>().AddListener(OnProjectItemSelected);
             SignalManager.Get<WindowGetFocusSignal>().AddListener(OnWindowGetFocus);
             SignalManager.Get<MouseLeftButtonDownSignal>().AddListener(OnMouseLeftButtonDown);
             SignalManager.Get<MouseLeftButtonUpSignal>().AddListener(OnMouseLeftButtonUp);
@@ -136,6 +135,7 @@ namespace NESTool.ViewModels
             SignalManager.Get<CutFileSignal>().AddListener(OnCutFile);
             SignalManager.Get<PasteFileSignal>().AddListener(OnPasteFile);
             SignalManager.Get<RenameFileSignal>().AddListener(OnRenameFile);
+            SignalManager.Get<FindAndCreateElementSignal>().AddListener(OnFindAndCreateElement);
             #endregion
         }
 
@@ -436,17 +436,29 @@ namespace NESTool.ViewModels
             }
         }
 
+        private void OnFindAndCreateElement(ProjectItem newElement)
+        {
+            foreach (var item in ProjectItems)
+            {
+                if (item.Root == true && item.Type == newElement.Type)
+                {
+                    newElement.Parent = item;
+
+                    item.Items.Add(newElement);
+
+                    SignalManager.Get<CreateNewElementSignal>().Dispatch(newElement);
+
+                    break;
+                }
+            }
+        }
+
         private void OnLoadMappersSuccess()
         {
             //
         }
 
         private void OnWindowGetFocus()
-        {
-            //
-        }
-
-        private void OnProjectItemSelected(ProjectItem item)
         {
             //
         }
