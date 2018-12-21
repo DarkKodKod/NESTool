@@ -182,11 +182,56 @@ namespace NESTool
         {
             StackPanel stackPanel = (StackPanel)sender;
 
-            ProjectItem item = stackPanel.DataContext as ProjectItem;
-            if (item != null && !item.IsLoaded)
+            if (stackPanel.DataContext is ProjectItem item && !item.IsLoaded)
             {
                 item.IsLoaded = true;
                 item.IsSelected = true;
+            }
+        }
+
+        private void EditableTextBox_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var tb = sender as TextBox;
+            if (tb.IsVisible)
+            {
+                tb.Focus();
+                tb.SelectAll();
+
+                if (tb.DataContext is ProjectItem item)
+                {
+                    // back up - for possible cancelling
+                    item.OldValue = tb.Text;
+                }
+            }
+        }
+
+        private void EditableTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            var tb = sender as TextBox;
+
+            if (tb.DataContext is ProjectItem item)
+            {
+                item.IsInEditMode = false;
+            }   
+        }
+
+        private void EditableTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            var tb = sender as TextBox;
+
+            if (tb.DataContext is ProjectItem item)
+            {
+                if (e.Key == Key.Enter)
+                {
+                    item.IsInEditMode = false;
+                }
+
+                if (e.Key == Key.Escape)
+                {
+                    tb.Text = item.OldValue;
+
+                    item.IsInEditMode = false;
+                }
             }
         }
     }

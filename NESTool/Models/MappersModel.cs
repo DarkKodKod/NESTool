@@ -1,6 +1,4 @@
 ﻿using ArchitectureLibrary.Model;
-using ArchitectureLibrary.Signals;
-using NESTool.Signals;
 using Nett;
 using System.IO;
 using System.Windows;
@@ -41,8 +39,6 @@ namespace NESTool.Models
             {
                 CreateAndLoadDefault();
             }
-
-            SignalManager.Get<LoadMappersSuccessSignal>().Dispatch();
         }
 
         private void LoadDefaultMappers()

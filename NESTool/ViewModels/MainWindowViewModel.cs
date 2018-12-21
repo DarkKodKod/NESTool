@@ -116,12 +116,8 @@ namespace NESTool.ViewModels
             SignalManager.Get<OpenProjectSuccessSignal>().AddListener(OpenProjectSuccess);
             SignalManager.Get<CloseProjectSuccessSignal>().AddListener(OnCloseProjectSuccess);
             SignalManager.Get<ExitSuccessSignal>().AddListener(OnExitSuccess);
-            SignalManager.Get<SaveAllSuccessSignal>().AddListener(OnSaveAllSuccess);
-            SignalManager.Get<SaveSuccessSignal>().AddListener(OnSaveSuccess);
             SignalManager.Get<LoadConfigSuccessSignal>().AddListener(OnLoadConfigSuccess);
             SignalManager.Get<UpdateRecentProjectsSignal>().AddListener(OnUpdateRecentProjects);
-            SignalManager.Get<BuildProjectSuccessSignal>().AddListener(OnBuildProjectSuccess);
-            SignalManager.Get<WindowGetFocusSignal>().AddListener(OnWindowGetFocus);
             SignalManager.Get<MouseLeftButtonDownSignal>().AddListener(OnMouseLeftButtonDown);
             SignalManager.Get<MouseLeftButtonUpSignal>().AddListener(OnMouseLeftButtonUp);
             SignalManager.Get<MouseMoveSignal>().AddListener(OnMouseMove);
@@ -129,12 +125,10 @@ namespace NESTool.ViewModels
             SignalManager.Get<InitializeAdornersSignal>().AddListener(OnInitializeAdorners);
             SignalManager.Get<DetachAdornersSignal>().AddListener(OnDetachAdorners);
             SignalManager.Get<SizeChangedSingal>().AddListener(OnSizeChanged);
-            SignalManager.Get<LoadMappersSuccessSignal>().AddListener(OnLoadMappersSuccess);
             SignalManager.Get<CreateProjectSuccessSignal>().AddListener(OnCreateProjectSuccess);
             SignalManager.Get<DeleteFileSignal>().AddListener(OnDeleteFile);
             SignalManager.Get<CutFileSignal>().AddListener(OnCutFile);
             SignalManager.Get<PasteFileSignal>().AddListener(OnPasteFile);
-            SignalManager.Get<RenameFileSignal>().AddListener(OnRenameFile);
             SignalManager.Get<FindAndCreateElementSignal>().AddListener(OnFindAndCreateElement);
             #endregion
         }
@@ -169,11 +163,6 @@ namespace NESTool.ViewModels
                 item.Parent.Items.Add(newItem);
             }
 
-            OnPropertyChanged("ProjectItems");
-        }
-
-        private void OnRenameFile(ProjectItem item)
-        {
             OnPropertyChanged("ProjectItems");
         }
 
@@ -451,31 +440,6 @@ namespace NESTool.ViewModels
                     break;
                 }
             }
-        }
-
-        private void OnLoadMappersSuccess()
-        {
-            //
-        }
-
-        private void OnWindowGetFocus()
-        {
-            //
-        }
-
-        private void OnSaveAllSuccess()
-        {
-            //
-        }
-
-        private void OnSaveSuccess()
-        {
-            //
-        }
-
-        private void OnBuildProjectSuccess()
-        {
-            //
         }
         #endregion
     }

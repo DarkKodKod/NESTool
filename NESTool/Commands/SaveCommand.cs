@@ -1,6 +1,4 @@
 ﻿using ArchitectureLibrary.Commands;
-using ArchitectureLibrary.Signals;
-using NESTool.Signals;
 
 namespace NESTool.Commands
 {
@@ -13,7 +11,7 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            SignalManager.Get<SaveSuccessSignal>().Dispatch();
+            //
         }
     }
 }

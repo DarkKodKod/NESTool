@@ -28,9 +28,7 @@ namespace NESTool.Commands
                 return false;
             }
 
-            var item = ItemSeleceted as ProjectItem;
-
-            if (item.Root)
+            if (ItemSeleceted.Root)
             {
                 return false;
             }
@@ -45,7 +43,7 @@ namespace NESTool.Commands
                 return;
             }
 
-            SignalManager.Get<RenameFileSignal>().Dispatch(ItemSeleceted);
+            ItemSeleceted.IsInEditMode = true;
         }
 
         private void OnProjectItemSelected(ProjectItem item)

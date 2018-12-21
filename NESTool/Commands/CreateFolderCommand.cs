@@ -27,9 +27,7 @@ namespace NESTool.Commands
         {
             if (ItemSeleceted != null)
             {
-                var item = ItemSeleceted as ProjectItem;
-
-                if (item.IsFolder)
+                if (ItemSeleceted.IsFolder)
                 {
                     return true;
                 }

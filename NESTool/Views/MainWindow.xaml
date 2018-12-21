@@ -34,6 +34,7 @@
         <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding DuplicateElementCommand}" />
         <KeyBinding Key="Delete" Command="{Binding DeleteElementCommand}" />
         <KeyBinding Key="Z" Modifiers="Ctrl" Command="{Binding UndoCommand}" />
+        <KeyBinding Key="F2" Command="{Binding RenameElementCommand}" />
         <KeyBinding Key="Y" Modifiers="Ctrl" Command="{Binding RedoCommand}" />
     </Window.InputBindings>
     <i:Interaction.Triggers>
@@ -713,10 +714,15 @@
                         <MenuItem Header="Rename" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.RenameElementCommand}" />
 					</ContextMenu>
 					<HierarchicalDataTemplate DataType="{x:Type vm:ProjectItem}" ItemsSource="{Binding Items}">
-						<StackPanel Orientation="Horizontal" Loaded="StackPanel_Loaded">
+                        <StackPanel Orientation="Horizontal" Loaded="StackPanel_Loaded">
 							<Image x:Name="itemImage" Source="/Resources/closed_folder.png" Margin="0,0,5,0" />
-							<TextBlock Text="{Binding DisplayName}"/>
-						</StackPanel>
+                            <TextBlock x:Name="txtDisplayName" Text="{Binding DisplayName}"/>
+                            <TextBox x:Name="editableTextBox" Visibility="Collapsed" MinWidth="100" 
+                                     Text="{Binding DisplayName, UpdateSourceTrigger=LostFocus}"
+                                     IsVisibleChanged="EditableTextBox_IsVisibleChanged"
+                                     LostFocus="EditableTextBox_LostFocus"
+                                     KeyDown="EditableTextBox_KeyDown"/>
+                        </StackPanel>
 						<DataTemplate.Triggers>
                             <DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Character}">
 								<Setter Property="Source" TargetName="itemImage" Value="/Resources/character.png" />
@@ -736,6 +742,17 @@
                             <DataTrigger Binding="{Binding IsFolder}" Value="True">
                                 <Setter Property="Source" TargetName="itemImage" Value="/Resources/closed_folder.png" />
                             </DataTrigger>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Root}" Value="False"/>
+                                    <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}}" Value="True"/>
+                                    <Condition Binding="{Binding IsInEditMode}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="Visibility" TargetName="editableTextBox" Value="Visible" />
+                                    <Setter Property="Visibility" TargetName="txtDisplayName" Value="Collapsed" />
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding IsFolder}" Value="True"/>

@@ -1,6 +1,4 @@
 ﻿using ArchitectureLibrary.Commands;
-using ArchitectureLibrary.Signals;
-using NESTool.Signals;
 
 namespace NESTool.Commands
 {
@@ -8,7 +6,7 @@ namespace NESTool.Commands
     {
         public override void Execute(object parameter)
         {
-            SignalManager.Get<WindowGetFocusSignal>().Dispatch();
+            // Todo: Scan for new foldes and files to be included or removed
         }
     }
 }

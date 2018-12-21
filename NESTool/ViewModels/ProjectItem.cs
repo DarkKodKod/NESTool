@@ -30,12 +30,12 @@ namespace NESTool.ViewModels
         }
 
         public ProjectItemType Type { get; set; }
-        public string DisplayName { get; set; } = "";
         public string FullPath { get; set; } = "";
         public bool Root { get; set; } = false;
         public bool IsFolder { get; set; } = false;
         public ProjectItem Parent = null;
         public ObservableCollection<ProjectItem> Items { get; set; }
+        public string OldValue { get; set; } = "";
 
         virtual public string GetContent()
         {
@@ -74,6 +74,8 @@ namespace NESTool.ViewModels
 
         private bool _isSelected;
         private object _selectedItem = null;
+        private bool _isInEditMode;
+        private string _displayName = "";
 
         public bool IsLoaded { get; set; } = false;
 
@@ -99,6 +101,34 @@ namespace NESTool.ViewModels
                         _selectedItem = null;
                         OnUnSelectItemChanged();
                     }
+                }
+            }
+        }
+
+        public string DisplayName
+        {
+            get { return _displayName; }
+            set
+            {
+                if (_displayName != value)
+                {
+                    _displayName = value;
+
+                    OnPropertyChanged("DisplayName");
+                }
+            }
+        }
+
+        public bool IsInEditMode
+        {
+            get { return _isInEditMode; }
+            set
+            {
+                if (_isInEditMode != value)
+                {
+                    _isInEditMode = value;
+
+                    OnPropertyChanged("IsInEditMode");
                 }
             }
         }

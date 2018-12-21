@@ -29,9 +29,7 @@ namespace NESTool.Commands
                 return false;
             }
 
-            var item = ItemSeleceted as ProjectItem;
-
-            if (item.Root)
+            if (ItemSeleceted.Root)
             {
                 return false;
             }
