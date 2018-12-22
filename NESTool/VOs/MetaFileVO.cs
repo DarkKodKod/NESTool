@@ -1,10 +1,9 @@
 ﻿using NESTool.Enums;
 
-namespace NESTool.Models
+namespace NESTool.VOs
 {
-    public class MetaItemModel
+    public class MetaFileVO
     {
-        public string GUID { get; set; }
         public string Name { get; set; }
         public string Path { get; set; }
         public ProjectItemType Type { get; set; }

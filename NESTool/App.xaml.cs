@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using NESTool.Meta;
+using System.Windows;
 
 namespace NESTool
 {
@@ -7,5 +8,12 @@ namespace NESTool
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            // Initialization important components
+            MetaManager.Instance.Initialize();
+        }
     }
 }

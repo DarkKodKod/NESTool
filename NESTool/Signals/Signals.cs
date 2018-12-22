@@ -12,8 +12,7 @@ namespace NESTool.Signals
     public class CloseDialogSignal : Signal { }
 
     // Meta file system
-    public class CreateMetaFileSignal : Signal { }
-    public class RegisterMetaFileSignal : Signal { }
+    public class CreateMetaFileSignal : Signal<MetaFileVO> { }
 
     // File system
     public class RegisterFileSignal : Signal { }

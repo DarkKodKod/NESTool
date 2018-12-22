@@ -2,7 +2,6 @@
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
 using NESTool.ViewModels;
-using System.Collections.ObjectModel;
 using System.IO;
 
 namespace NESTool.Commands

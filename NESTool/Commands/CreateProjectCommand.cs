@@ -3,6 +3,7 @@ using ArchitectureLibrary.Model;
 using ArchitectureLibrary.Signals;
 using NESTool.Models;
 using NESTool.Signals;
+using NESTool.VOs;
 using System;
 using System.IO;
 using System.Windows;
@@ -68,6 +69,17 @@ namespace NESTool.Commands
             SignalManager.Get<CreateProjectSuccessSignal>().Dispatch(projectFullPath);
         }
 
+        private void CreateDirectory(string name, string projectFullPath)
+        {
+            string folderPath = Path.Combine(projectFullPath, name);
+
+            Directory.CreateDirectory(folderPath);
+
+            var data = new MetaFileVO() { Name = name, Path = projectFullPath };
+
+            SignalManager.Get<CreateMetaFileSignal>().Dispatch(data);
+        }
+
         private void CreateProject(string projectFullPath, int prgSize, int chrSize, int mapperIndex)
         {
             Directory.CreateDirectory(projectFullPath);
@@ -84,11 +96,11 @@ namespace NESTool.Commands
 
             File.Create(fullPathToProjectFile).Dispose();
 
-            Directory.CreateDirectory(Path.Combine(projectFullPath, folderBanks));
-            Directory.CreateDirectory(Path.Combine(projectFullPath, folderCharacters));
-            Directory.CreateDirectory(Path.Combine(projectFullPath, folderMaps));
-            Directory.CreateDirectory(Path.Combine(projectFullPath, folderTileSets));
-            Directory.CreateDirectory(Path.Combine(projectFullPath, folderPatternTables));
+            CreateDirectory(folderBanks, projectFullPath);
+            CreateDirectory(folderCharacters, projectFullPath);
+            CreateDirectory(folderMaps, projectFullPath);
+            CreateDirectory(folderTileSets, projectFullPath);
+            CreateDirectory(folderPatternTables, projectFullPath);
 
             var model = ModelManager.Get<ProjectModel>();
 
