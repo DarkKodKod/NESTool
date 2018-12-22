@@ -140,11 +140,16 @@
     <Compile Include="FileSystem\FileSystemManager.cs" />
     <Compile Include="History\HistoryManager.cs" />
     <Compile Include="Meta\IMetaItem.cs" />
+    <Compile Include="Models\BankModel.cs" />
+    <Compile Include="Models\CharacterModel.cs" />
     <Compile Include="Models\ElementTypeModel.cs" />
+    <Compile Include="Models\MapModel.cs" />
     <Compile Include="Models\MapperModel.cs" />
     <Compile Include="Models\MappersModel.cs" />
     <Compile Include="Models\MetaItemModel.cs" />
     <Compile Include="Meta\MetaManager.cs" />
+    <Compile Include="Models\PatternTableModel.cs" />
+    <Compile Include="Models\TileSetModel.cs" />
     <Compile Include="Utils\Adorners\TreeViewDragAdorner.cs" />
     <Compile Include="Utils\Adorners\TreeViewInsertAdorner.cs" />
     <Compile Include="Utils\Converters\EnumMatchToBooleanConverter.cs" />
@@ -166,6 +171,7 @@
     <Compile Include="ViewModels\CharacterViewModel.cs" />
     <Compile Include="ViewModels\ElementDialogViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
+    <Compile Include="ViewModels\PatternTableViewModel.cs" />
     <Compile Include="ViewModels\ProjectItem.cs" />
     <Compile Include="ViewModels\ProjectDialogViewModel.cs" />
     <Compile Include="ViewModels\ProjectPropertiesDialogViewModel.cs" />
@@ -184,6 +190,9 @@
     </Compile>
     <Compile Include="Views\Map.xaml.cs">
       <DependentUpon>Map.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PatternTable.xaml.cs">
+      <DependentUpon>PatternTable.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProjectDialog.xaml.cs">
       <DependentUpon>ProjectDialog.xaml</DependentUpon>
@@ -245,6 +254,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Map.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PatternTable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
