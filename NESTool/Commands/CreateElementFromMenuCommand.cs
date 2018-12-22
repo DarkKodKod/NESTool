@@ -2,6 +2,7 @@
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
 using NESTool.ViewModels;
+using NESTool.VOs;
 using System.IO;
 
 namespace NESTool.Commands
@@ -57,6 +58,15 @@ namespace NESTool.Commands
             ItemSeleceted.Items.Add(newElement);
 
             SignalManager.Get<CreateNewElementSignal>().Dispatch(newElement);
+
+            CreateFiles(name, ItemSeleceted.FullPath);
+        }
+
+        private void CreateFiles(string name, string path)
+        {
+            var data = new MetaFileVO() { Name = name, Path = path };
+
+            SignalManager.Get<CreateMetaFileSignal>().Dispatch(data);
         }
 
         private void OnProjectItemSelected(ProjectItem item)

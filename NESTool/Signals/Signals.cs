@@ -13,6 +13,9 @@ namespace NESTool.Signals
 
     // Meta file system
     public class CreateMetaFileSignal : Signal<MetaFileVO> { }
+    public class DeleteMetaFileSignal : Signal { }
+    public class MoveMetaFileSignal : Signal { }
+    public class RenameMetaFileSignal : Signal { }
 
     // File system
     public class RegisterFileSignal : Signal { }

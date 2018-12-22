@@ -11,8 +11,8 @@ using System;
 using System.Windows.Interop;
 using NESTool.VOs;
 using NESTool.ViewModels;
-using NESTool.Utils;
 using System.Collections.Generic;
+using NESTool.Commands;
 
 namespace NESTool
 {
@@ -147,10 +147,13 @@ namespace NESTool
             }
             else
             {
-                var nodes = (IEnumerable<ProjectItem>)tvProjectItems.ItemsSource;
-                if (nodes == null) return;
+                IEnumerable<ProjectItem> nodes = (IEnumerable<ProjectItem>)tvProjectItems.ItemsSource;
+                if (nodes == null)
+                {
+                    return;
+                }   
 
-                var queue = new Stack<ProjectItem>();
+                Stack<ProjectItem> queue = new Stack<ProjectItem>();
                 queue.Push(newItem);
 
                 var parent = newItem.Parent;
@@ -161,7 +164,7 @@ namespace NESTool
                     parent = parent.Parent;
                 }
 
-                var generator = tvProjectItems.ItemContainerGenerator;
+                ItemContainerGenerator generator = tvProjectItems.ItemContainerGenerator;
 
                 while (queue.Count > 0)
                 {
@@ -186,12 +189,17 @@ namespace NESTool
             {
                 item.IsLoaded = true;
                 item.IsSelected = true;
+
+                using (var command = new RenameElementCommand())
+                {
+                    command.Execute(item);
+                }
             }
         }
 
         private void EditableTextBox_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            var tb = sender as TextBox;
+            TextBox tb = sender as TextBox;
             if (tb.IsVisible)
             {
                 tb.Focus();
@@ -207,7 +215,7 @@ namespace NESTool
 
         private void EditableTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            var tb = sender as TextBox;
+            TextBox tb = sender as TextBox;
 
             if (tb.DataContext is ProjectItem item)
             {
@@ -217,7 +225,7 @@ namespace NESTool
 
         private void EditableTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            var tb = sender as TextBox;
+            TextBox tb = sender as TextBox;
 
             if (tb.DataContext is ProjectItem item)
             {

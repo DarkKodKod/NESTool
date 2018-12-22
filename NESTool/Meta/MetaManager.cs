@@ -13,9 +13,16 @@ namespace NESTool.Meta
 
         private const string FileExtension = ".meta";
 
+        private MetaManager()
+        {
+        }
+
         public void Initialize()
         {
             SignalManager.Get<CreateMetaFileSignal>().AddListener(OnCreateMetaFile);
+            SignalManager.Get<DeleteMetaFileSignal>().AddListener(OnDeleteMetaFile);
+            SignalManager.Get<MoveMetaFileSignal>().AddListener(OnDeleteMetaFile);
+            SignalManager.Get<RenameMetaFileSignal>().AddListener(OnDeleteMetaFile);
         }
 
         private void OnCreateMetaFile(MetaFileVO vo)
@@ -37,17 +44,17 @@ namespace NESTool.Meta
             Toml.WriteFile(model, metaFilePath);
         }
 
-        public void DeleteMetaFile(string filePath)
+        public void OnDeleteMetaFile()
         {
             // todo
         }
 
-        public void MoveMetaFile(string filePath)
+        public void OnMoveMetaFile()
         {
             // todo
         }
 
-        public void RenameMetaFile(string filePath)
+        public void OnRenameMetaFile()
         {
             // todo
         }

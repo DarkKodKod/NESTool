@@ -3,6 +3,7 @@ using ArchitectureLibrary.Signals;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.ViewModels;
+using NESTool.VOs;
 using System.IO;
 
 namespace NESTool.Commands
@@ -30,6 +31,15 @@ namespace NESTool.Commands
             };
 
             SignalManager.Get<FindAndCreateElementSignal>().Dispatch(newElement);
+
+            CreateFiles(name, element.Path);
+        }
+
+        private void CreateFiles(string name, string path)
+        {
+            var data = new MetaFileVO() { Name = name, Path = path };
+
+            SignalManager.Get<CreateMetaFileSignal>().Dispatch(data);
         }
     }
 }

@@ -38,6 +38,11 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
+            if (parameter is ProjectItem)
+            {
+                ItemSeleceted = parameter as ProjectItem;
+            }
+
             if (ItemSeleceted == null)
             {
                 return;
