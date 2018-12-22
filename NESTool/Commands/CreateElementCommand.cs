@@ -32,14 +32,16 @@ namespace NESTool.Commands
 
             SignalManager.Get<FindAndCreateElementSignal>().Dispatch(newElement);
 
-            CreateFiles(name, element.Path);
+            CreateFilesOrDirectory(name, element.Path);
         }
 
-        private void CreateFiles(string name, string path)
+        private void CreateFilesOrDirectory(string name, string path)
         {
-            var data = new MetaFileVO() { Name = name, Path = path };
+            var data = new FileHandleVO() { Name = name, Path = path };
 
             SignalManager.Get<CreateMetaFileSignal>().Dispatch(data);
+
+            SignalManager.Get<CreateFileSignal>().Dispatch();
         }
     }
 }

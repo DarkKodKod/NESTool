@@ -59,14 +59,16 @@ namespace NESTool.Commands
 
             SignalManager.Get<CreateNewElementSignal>().Dispatch(newElement);
 
-            CreateFiles(name, ItemSeleceted.FullPath);
+            CreateFilesOrDirectory(name, ItemSeleceted.FullPath);
         }
 
-        private void CreateFiles(string name, string path)
+        private void CreateFilesOrDirectory(string name, string path)
         {
-            var data = new MetaFileVO() { Name = name, Path = path };
+            var data = new FileHandleVO() { Name = name, Path = path };
 
             SignalManager.Get<CreateMetaFileSignal>().Dispatch(data);
+
+            SignalManager.Get<CreateFileSignal>().Dispatch();
         }
 
         private void OnProjectItemSelected(ProjectItem item)

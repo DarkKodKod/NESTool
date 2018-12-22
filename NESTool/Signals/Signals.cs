@@ -12,20 +12,22 @@ namespace NESTool.Signals
     public class CloseDialogSignal : Signal { }
 
     // Meta file system
-    public class CreateMetaFileSignal : Signal<MetaFileVO> { }
+    public class CreateMetaFileSignal : Signal<FileHandleVO> { }
     public class DeleteMetaFileSignal : Signal { }
     public class MoveMetaFileSignal : Signal { }
     public class RenameMetaFileSignal : Signal { }
 
     // File system
-    public class RegisterFileSignal : Signal { }
-    public class RegisterFolderSignal : Signal { }
-    public class DeleteFileSignal : Signal<ProjectItem> { }
-    public class CutFileSignal : Signal<ProjectItem> { }
-    public class PasteFileSignal : Signal<ProjectItem, ProjectItem> { }
+    public class CreateFileSignal : Signal { }
+
+    // Edit
+    public class PasteElementSignal : Signal<ProjectItem, ProjectItem> { }
+    public class CutElementSignal : Signal<ProjectItem> { }
+    public class DeleteElementSignal : Signal<ProjectItem> { }
     public class FindAndCreateElementSignal : Signal<ProjectItem> { }
     public class CreateNewElementSignal : Signal<ProjectItem> { }
-    public class MoveFileSignal : Signal { }
+
+    //CreateFileSignal
 
     // MainWindowViewModel
     public class OpenProjectSuccessSignal : Signal<ProjectOpenVO> { }

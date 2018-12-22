@@ -45,7 +45,7 @@ namespace NESTool.Commands
 
             ProjectItem newItem = new ProjectItem(ItemSeleceted.GetContent());
 
-            SignalManager.Get<PasteFileSignal>().Dispatch(ItemSeleceted, newItem);
+            SignalManager.Get<PasteElementSignal>().Dispatch(ItemSeleceted, newItem);
         }
 
         private void OnProjectItemSelected(ProjectItem item)

@@ -75,7 +75,7 @@ namespace NESTool.Commands
 
             Directory.CreateDirectory(folderPath);
 
-            var data = new MetaFileVO() { Name = name, Path = projectFullPath };
+            var data = new FileHandleVO() { Name = name, Path = projectFullPath };
 
             SignalManager.Get<CreateMetaFileSignal>().Dispatch(data);
         }

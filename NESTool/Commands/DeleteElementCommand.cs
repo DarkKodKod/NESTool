@@ -43,7 +43,7 @@ namespace NESTool.Commands
                 return;
             }
 
-            SignalManager.Get<DeleteFileSignal>().Dispatch(ItemSeleceted);
+            SignalManager.Get<DeleteElementSignal>().Dispatch(ItemSeleceted);
         }
 
         private void OnProjectItemSelected(ProjectItem item)

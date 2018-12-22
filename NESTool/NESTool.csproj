@@ -203,7 +203,7 @@
     <Compile Include="Views\TileSet.xaml.cs">
       <DependentUpon>TileSet.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VOs\MetaFileVO.cs" />
+    <Compile Include="VOs\FileHandleVO.cs" />
     <Compile Include="VOs\MouseMoveVO.cs" />
     <Compile Include="VOs\ProjectOpenVO.cs" />
     <Compile Include="VOs\WindowVO.cs" />

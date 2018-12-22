@@ -45,7 +45,7 @@ namespace NESTool.Commands
 
             if (newItem != null)
             {
-                SignalManager.Get<PasteFileSignal>().Dispatch(ItemSeleceted, newItem);
+                SignalManager.Get<PasteElementSignal>().Dispatch(ItemSeleceted, newItem);
             }
         }
 

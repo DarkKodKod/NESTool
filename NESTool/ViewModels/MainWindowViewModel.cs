@@ -126,9 +126,9 @@ namespace NESTool.ViewModels
             SignalManager.Get<DetachAdornersSignal>().AddListener(OnDetachAdorners);
             SignalManager.Get<SizeChangedSingal>().AddListener(OnSizeChanged);
             SignalManager.Get<CreateProjectSuccessSignal>().AddListener(OnCreateProjectSuccess);
-            SignalManager.Get<DeleteFileSignal>().AddListener(OnDeleteFile);
-            SignalManager.Get<CutFileSignal>().AddListener(OnCutFile);
-            SignalManager.Get<PasteFileSignal>().AddListener(OnPasteFile);
+            SignalManager.Get<DeleteElementSignal>().AddListener(OnDeleteElement);
+            SignalManager.Get<CutElementSignal>().AddListener(OnCutElement);
+            SignalManager.Get<PasteElementSignal>().AddListener(OnPasteElement);
             SignalManager.Get<FindAndCreateElementSignal>().AddListener(OnFindAndCreateElement);
             #endregion
         }
@@ -150,7 +150,7 @@ namespace NESTool.ViewModels
             return copy;
         }
 
-        private void OnPasteFile(ProjectItem item, ProjectItem newItem)
+        private void OnPasteElement(ProjectItem item, ProjectItem newItem)
         {
             if (item.IsFolder)
             {
@@ -166,12 +166,12 @@ namespace NESTool.ViewModels
             OnPropertyChanged("ProjectItems");
         }
 
-        private void OnCutFile(ProjectItem item)
+        private void OnCutElement(ProjectItem item)
         {
             DeleteItemFromTheList(item);
         }
 
-        private void OnDeleteFile(ProjectItem item)
+        private void OnDeleteElement(ProjectItem item)
         {
             DeleteItemFromTheList(item);
         }

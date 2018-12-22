@@ -46,7 +46,7 @@ namespace NESTool.Commands
 
             ClipboardManager.SetData(ItemSeleceted);
 
-            SignalManager.Get<CutFileSignal>().Dispatch(ItemSeleceted);
+            SignalManager.Get<CutElementSignal>().Dispatch(ItemSeleceted);
         }
 
         private void OnProjectItemSelected(ProjectItem item)

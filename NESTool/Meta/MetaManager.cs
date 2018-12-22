@@ -25,7 +25,7 @@ namespace NESTool.Meta
             SignalManager.Get<RenameMetaFileSignal>().AddListener(OnDeleteMetaFile);
         }
 
-        private void OnCreateMetaFile(MetaFileVO vo)
+        private void OnCreateMetaFile(FileHandleVO vo)
         {
             var model = new MetaItemModel()
             {

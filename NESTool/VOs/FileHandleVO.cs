@@ -2,7 +2,7 @@
 
 namespace NESTool.VOs
 {
-    public class MetaFileVO
+    public class FileHandleVO
     {
         public string Name { get; set; }
         public string Path { get; set; }
