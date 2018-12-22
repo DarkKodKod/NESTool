@@ -11,14 +11,11 @@ namespace NESTool.Signals
     public class SetUpWindowPropertiesSignal : Signal<WindowVO> { }
     public class CloseDialogSignal : Signal { }
 
-    // Meta file system
-    public class CreateMetaFileSignal : Signal<FileHandleVO> { }
-    public class DeleteMetaFileSignal : Signal { }
-    public class MoveMetaFileSignal : Signal { }
-    public class RenameMetaFileSignal : Signal { }
-
     // File system
-    public class CreateFileSignal : Signal { }
+    public class CreateFileSignal : Signal<FileHandleVO> { }
+    public class DeleteFileSignal : Signal<FileHandleVO> { }
+    public class MoveFileSignal : Signal<FileHandleVO> { }
+    public class RenameFileSignal : Signal<FileHandleVO> { }
 
     // Edit
     public class PasteElementSignal : Signal<ProjectItem, ProjectItem> { }

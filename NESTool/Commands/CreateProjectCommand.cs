@@ -75,9 +75,18 @@ namespace NESTool.Commands
 
             Directory.CreateDirectory(folderPath);
 
-            var data = new FileHandleVO() { Name = name, Path = projectFullPath };
+            var data = new FileHandleVO()
+            {
+                Name = name,
+                Path = projectFullPath,
+                Model = new MetaFileModel()
+                {
+                    Path = projectFullPath,
+                    Name = name
+                }
+            };
 
-            SignalManager.Get<CreateMetaFileSignal>().Dispatch(data);
+            SignalManager.Get<CreateFileSignal>().Dispatch(data);
         }
 
         private void CreateProject(string projectFullPath, int prgSize, int chrSize, int mapperIndex)

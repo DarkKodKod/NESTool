@@ -1,5 +1,6 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
+using NESTool.Models;
 using NESTool.Signals;
 using NESTool.ViewModels;
 using NESTool.VOs;
@@ -64,11 +65,18 @@ namespace NESTool.Commands
 
         private void CreateFilesOrDirectory(string name, string path)
         {
-            var data = new FileHandleVO() { Name = name, Path = path };
+            var data = new FileHandleVO()
+            {
+                Name = name,
+                Path = path,
+                Model = new MetaFileModel()
+                {
+                    Path = path,
+                    Name = name
+                }
+            };
 
-            SignalManager.Get<CreateMetaFileSignal>().Dispatch(data);
-
-            SignalManager.Get<CreateFileSignal>().Dispatch();
+            SignalManager.Get<CreateFileSignal>().Dispatch(data);
         }
 
         private void OnProjectItemSelected(ProjectItem item)

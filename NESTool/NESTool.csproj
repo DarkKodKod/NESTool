@@ -139,15 +139,14 @@
     <Compile Include="CustomTypeConverter\ProjectItemTypeConverter.cs" />
     <Compile Include="FileSystem\FileSystemManager.cs" />
     <Compile Include="History\HistoryManager.cs" />
-    <Compile Include="Meta\IMetaItem.cs" />
+    <Compile Include="Models\AFileModel.cs" />
     <Compile Include="Models\BankModel.cs" />
     <Compile Include="Models\CharacterModel.cs" />
     <Compile Include="Models\ElementTypeModel.cs" />
     <Compile Include="Models\MapModel.cs" />
     <Compile Include="Models\MapperModel.cs" />
     <Compile Include="Models\MappersModel.cs" />
-    <Compile Include="Models\MetaItemModel.cs" />
-    <Compile Include="Meta\MetaManager.cs" />
+    <Compile Include="Models\MetaFileModel.cs" />
     <Compile Include="Models\PatternTableModel.cs" />
     <Compile Include="Models\TileSetModel.cs" />
     <Compile Include="Utils\Adorners\TreeViewDragAdorner.cs" />

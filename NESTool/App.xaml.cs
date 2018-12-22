@@ -1,4 +1,4 @@
-﻿using NESTool.Meta;
+﻿using NESTool.FileSystem;
 using System.Windows;
 
 namespace NESTool
@@ -13,7 +13,7 @@ namespace NESTool
             base.OnStartup(e);
 
             // Initialization important components
-            MetaManager.Instance.Initialize();
+            FileSystemManager.Instance.Initialize();
         }
     }
 }

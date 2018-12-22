@@ -1,4 +1,4 @@
-﻿using NESTool.Enums;
+﻿using NESTool.Models;
 
 namespace NESTool.VOs
 {
@@ -6,6 +6,6 @@ namespace NESTool.VOs
     {
         public string Name { get; set; }
         public string Path { get; set; }
-        public ProjectItemType Type { get; set; }
+        public AFileModel Model { get; set; }
     }
 }
