@@ -1,48 +1,38 @@
-﻿using ArchitectureLibrary.Signals;
+﻿using NESTool.Enums;
 using NESTool.Models;
-using NESTool.Signals;
-using NESTool.VOs;
+using NESTool.Utils;
 using Nett;
 using System.IO;
 
 namespace NESTool.FileSystem
 {
-    public sealed class FileSystemManager
+    public static class FileSystemManager
     {
-        public static FileSystemManager Instance { get; } = new FileSystemManager();
-
-        private FileSystemManager()
+        public static void CreateFolder(string name, string path)
         {
+            string folderPath = Path.Combine(path, name);
+
+            Directory.CreateDirectory(folderPath);
+
+            CreateMetaFile(name, path, new MetaFileModel());
         }
 
-        public void Initialize()
+        public static void CreateFile(string name, string path, ProjectItemType type)
         {
-            SignalManager.Get<CreateFileSignal>().AddListener(OnCreateMetaFile);
-            SignalManager.Get<DeleteFileSignal>().AddListener(OnDeleteMetaFile);
-            SignalManager.Get<MoveFileSignal>().AddListener(OnMoveMetaFile);
-            SignalManager.Get<RenameFileSignal>().AddListener(OnRenameMetaFile);
+            AFileModel model = Util.FileModelFactory(type);
+
+            string filePath = Path.Combine(path, name + model.FileExtension);
+
+            Toml.WriteFile(model, filePath);
+
+            CreateMetaFile(name, path, new MetaFileModel());
         }
 
-        private void OnCreateMetaFile(FileHandleVO vo)
+        private static void CreateMetaFile(string name, string path, AFileModel model)
         {
-            string metaFilePath = Path.Combine(vo.Path, vo.Name + vo.Model.FileExtension);
+            string filePath = Path.Combine(path, name + model.FileExtension);
 
-            Toml.WriteFile(vo.Model, metaFilePath);
-        }
-
-        public void OnDeleteMetaFile(FileHandleVO vo)
-        {
-            // todo
-        }
-
-        public void OnMoveMetaFile(FileHandleVO vo)
-        {
-            // todo
-        }
-
-        public void OnRenameMetaFile(FileHandleVO vo)
-        {
-            // todo
+            Toml.WriteFile(model, filePath);
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
+using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.ViewModels;
-using NESTool.VOs;
 using System.IO;
 
 namespace NESTool.Commands
@@ -32,23 +32,7 @@ namespace NESTool.Commands
 
             SignalManager.Get<FindAndCreateElementSignal>().Dispatch(newElement);
 
-            CreateFilesOrDirectory(name, element.Path);
-        }
-
-        private void CreateFilesOrDirectory(string name, string path)
-        {
-            var data = new FileHandleVO()
-            {
-                Name = name,
-                Path = path,
-                Model = new MetaFileModel()
-                {
-                    Path = path,
-                    Name = name
-                }
-            };
-
-            SignalManager.Get<CreateFileSignal>().Dispatch(data);
+            FileSystemManager.CreateFile(name, element.Path, element.Type);
         }
     }
 }

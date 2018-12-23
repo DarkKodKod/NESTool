@@ -1,27 +1,11 @@
 ﻿using ArchitectureLibrary.Clipboard;
-using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
-using NESTool.ViewModels;
 
 namespace NESTool.Commands
 {
-    public class CutElementCommand : Command
+    public class CutElementCommand : ItemSelectedCommand
     {
-        private ProjectItem ItemSeleceted = null;
-
-        public CutElementCommand()
-        {
-            SignalManager.Get<ProjectItemSelectedSignal>().AddListener(OnProjectItemSelected);
-            SignalManager.Get<ProjectItemUnselectedSignal>().AddListener(OnProjectItemUnselected);
-        }
-
-        public override void Deactivate()
-        {
-            SignalManager.Get<ProjectItemSelectedSignal>().RemoveListener(OnProjectItemSelected);
-            SignalManager.Get<ProjectItemUnselectedSignal>().RemoveListener(OnProjectItemUnselected);
-        }
-
         public override bool CanExecute(object parameter)
         {
             if (ItemSeleceted == null)
@@ -47,16 +31,6 @@ namespace NESTool.Commands
             ClipboardManager.SetData(ItemSeleceted);
 
             SignalManager.Get<CutElementSignal>().Dispatch(ItemSeleceted);
-        }
-
-        private void OnProjectItemSelected(ProjectItem item)
-        {
-            ItemSeleceted = item;
-        }
-
-        private void OnProjectItemUnselected(ProjectItem item)
-        {
-            ItemSeleceted = null;
         }
     }
 }

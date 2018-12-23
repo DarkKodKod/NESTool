@@ -28,7 +28,5 @@ namespace NESTool.Models
         }
 
         public string GUID { get; set; }
-        public string Name { get; set; }
-        public string Path { get; set; }
     }
 }

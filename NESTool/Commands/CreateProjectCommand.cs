@@ -1,10 +1,9 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Model;
 using ArchitectureLibrary.Signals;
+using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
-using NESTool.VOs;
-using System;
 using System.IO;
 using System.Windows;
 
@@ -69,26 +68,6 @@ namespace NESTool.Commands
             SignalManager.Get<CreateProjectSuccessSignal>().Dispatch(projectFullPath);
         }
 
-        private void CreateDirectory(string name, string projectFullPath)
-        {
-            string folderPath = Path.Combine(projectFullPath, name);
-
-            Directory.CreateDirectory(folderPath);
-
-            var data = new FileHandleVO()
-            {
-                Name = name,
-                Path = projectFullPath,
-                Model = new MetaFileModel()
-                {
-                    Path = projectFullPath,
-                    Name = name
-                }
-            };
-
-            SignalManager.Get<CreateFileSignal>().Dispatch(data);
-        }
-
         private void CreateProject(string projectFullPath, int prgSize, int chrSize, int mapperIndex)
         {
             Directory.CreateDirectory(projectFullPath);
@@ -105,11 +84,11 @@ namespace NESTool.Commands
 
             File.Create(fullPathToProjectFile).Dispose();
 
-            CreateDirectory(folderBanks, projectFullPath);
-            CreateDirectory(folderCharacters, projectFullPath);
-            CreateDirectory(folderMaps, projectFullPath);
-            CreateDirectory(folderTileSets, projectFullPath);
-            CreateDirectory(folderPatternTables, projectFullPath);
+            FileSystemManager.CreateFolder(folderBanks, projectFullPath);
+            FileSystemManager.CreateFolder(folderCharacters, projectFullPath);
+            FileSystemManager.CreateFolder(folderMaps, projectFullPath);
+            FileSystemManager.CreateFolder(folderTileSets, projectFullPath);
+            FileSystemManager.CreateFolder(folderPatternTables, projectFullPath);
 
             var model = ModelManager.Get<ProjectModel>();
 

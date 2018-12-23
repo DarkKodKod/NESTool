@@ -1,29 +1,13 @@
-﻿using ArchitectureLibrary.Commands;
-using ArchitectureLibrary.Signals;
-using NESTool.Models;
+﻿using ArchitectureLibrary.Signals;
+using NESTool.FileSystem;
 using NESTool.Signals;
 using NESTool.ViewModels;
-using NESTool.VOs;
 using System.IO;
 
 namespace NESTool.Commands
 {
-    public class CreateElementFromMenuCommand : Command
+    public class CreateElementFromMenuCommand : ItemSelectedCommand
     {
-        private ProjectItem ItemSeleceted = null;
-
-        public CreateElementFromMenuCommand()
-        {
-            SignalManager.Get<ProjectItemSelectedSignal>().AddListener(OnProjectItemSelected);
-            SignalManager.Get<ProjectItemUnselectedSignal>().AddListener(OnProjectItemUnselected);
-        }
-
-        public override void Deactivate()
-        {
-            SignalManager.Get<ProjectItemSelectedSignal>().RemoveListener(OnProjectItemSelected);
-            SignalManager.Get<ProjectItemUnselectedSignal>().RemoveListener(OnProjectItemUnselected);
-        }
-
         public override bool CanExecute(object parameter)
         {
             if (ItemSeleceted != null)
@@ -60,33 +44,7 @@ namespace NESTool.Commands
 
             SignalManager.Get<CreateNewElementSignal>().Dispatch(newElement);
 
-            CreateFilesOrDirectory(name, ItemSeleceted.FullPath);
-        }
-
-        private void CreateFilesOrDirectory(string name, string path)
-        {
-            var data = new FileHandleVO()
-            {
-                Name = name,
-                Path = path,
-                Model = new MetaFileModel()
-                {
-                    Path = path,
-                    Name = name
-                }
-            };
-
-            SignalManager.Get<CreateFileSignal>().Dispatch(data);
-        }
-
-        private void OnProjectItemSelected(ProjectItem item)
-        {
-            ItemSeleceted = item;
-        }
-
-        private void OnProjectItemUnselected(ProjectItem item)
-        {
-            ItemSeleceted = null;
+            FileSystemManager.CreateFile(name, ItemSeleceted.FullPath, ItemSeleceted.Type);
         }
     }
 }

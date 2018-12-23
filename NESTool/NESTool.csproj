@@ -125,6 +125,7 @@
     <Compile Include="Commands\DropCommand.cs" />
     <Compile Include="Commands\DuplicateElementCommand.cs" />
     <Compile Include="Commands\ImportImageCommand.cs" />
+    <Compile Include="Commands\ItemSelectedCommand.cs" />
     <Compile Include="Commands\LoadMappersCommand.cs" />
     <Compile Include="Commands\NewElementCommand.cs" />
     <Compile Include="Commands\OpenLinkCommand.cs" />
@@ -202,7 +203,6 @@
     <Compile Include="Views\TileSet.xaml.cs">
       <DependentUpon>TileSet.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VOs\FileHandleVO.cs" />
     <Compile Include="VOs\MouseMoveVO.cs" />
     <Compile Include="VOs\ProjectOpenVO.cs" />
     <Compile Include="VOs\WindowVO.cs" />

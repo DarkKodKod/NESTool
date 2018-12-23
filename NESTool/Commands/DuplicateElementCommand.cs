@@ -1,26 +1,11 @@
-﻿using ArchitectureLibrary.Commands;
-using ArchitectureLibrary.Signals;
+﻿using ArchitectureLibrary.Signals;
 using NESTool.Signals;
 using NESTool.ViewModels;
 
 namespace NESTool.Commands
 {
-    public class DuplicateElementCommand : Command
+    public class DuplicateElementCommand : ItemSelectedCommand
     {
-        private ProjectItem ItemSeleceted = null;
-
-        public DuplicateElementCommand()
-        {
-            SignalManager.Get<ProjectItemSelectedSignal>().AddListener(OnProjectItemSelected);
-            SignalManager.Get<ProjectItemUnselectedSignal>().AddListener(OnProjectItemUnselected);
-        }
-
-        public override void Deactivate()
-        {
-            SignalManager.Get<ProjectItemSelectedSignal>().RemoveListener(OnProjectItemSelected);
-            SignalManager.Get<ProjectItemUnselectedSignal>().RemoveListener(OnProjectItemUnselected);
-        }
-
         public override bool CanExecute(object parameter)
         {
             if (ItemSeleceted == null)
@@ -46,16 +31,6 @@ namespace NESTool.Commands
             ProjectItem newItem = new ProjectItem(ItemSeleceted.GetContent());
 
             SignalManager.Get<PasteElementSignal>().Dispatch(ItemSeleceted, newItem);
-        }
-
-        private void OnProjectItemSelected(ProjectItem item)
-        {
-            ItemSeleceted = item;
-        }
-
-        private void OnProjectItemUnselected(ProjectItem item)
-        {
-            ItemSeleceted = null;
         }
     }
 }

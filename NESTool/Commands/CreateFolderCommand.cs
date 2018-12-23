@@ -1,27 +1,13 @@
-﻿using ArchitectureLibrary.Commands;
-using ArchitectureLibrary.Signals;
+﻿using ArchitectureLibrary.Signals;
+using NESTool.FileSystem;
 using NESTool.Signals;
 using NESTool.ViewModels;
 using System.IO;
 
 namespace NESTool.Commands
 {
-    public class CreateFolderCommand : Command
+    public class CreateFolderCommand : ItemSelectedCommand
     {
-        private ProjectItem ItemSeleceted = null;
-
-        public CreateFolderCommand()
-        {
-            SignalManager.Get<ProjectItemSelectedSignal>().AddListener(OnProjectItemSelected);
-            SignalManager.Get<ProjectItemUnselectedSignal>().AddListener(OnProjectItemUnselected);
-        }
-
-        public override void Deactivate()
-        {
-            SignalManager.Get<ProjectItemSelectedSignal>().RemoveListener(OnProjectItemSelected);
-            SignalManager.Get<ProjectItemUnselectedSignal>().RemoveListener(OnProjectItemUnselected);
-        }
-
         public override bool CanExecute(object parameter)
         {
             if (ItemSeleceted != null)
@@ -57,16 +43,8 @@ namespace NESTool.Commands
             ItemSeleceted.Items.Add(newFolder);
 
             SignalManager.Get<CreateNewElementSignal>().Dispatch(newFolder);
-        }
 
-        private void OnProjectItemSelected(ProjectItem item)
-        {
-            ItemSeleceted = item;
-        }
-
-        private void OnProjectItemUnselected(ProjectItem item)
-        {
-            ItemSeleceted = null;
+            FileSystemManager.CreateFolder(name, ItemSeleceted.FullPath);
         }
     }
 }

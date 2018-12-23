@@ -1,4 +1,5 @@
 ﻿using NESTool.Enums;
+using NESTool.Models;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,6 +30,19 @@ namespace NESTool.Utils
             }
 
             return _regex != null ? _regex.IsMatch(fileName) : false;
+        }
+
+        public static AFileModel FileModelFactory(ProjectItemType type)
+        {
+            switch (type)
+            {
+                case ProjectItemType.Bank: return new BankModel();
+                case ProjectItemType.Character: return new CharacterModel();
+                case ProjectItemType.Map: return new MapModel();
+                case ProjectItemType.TileSet: return new TileSetModel();
+                case ProjectItemType.PatternTable: return new PatternTableModel();
+                default: return null;
+            }
         }
 
         public static ProjectItemType GetItemType(string extension)
