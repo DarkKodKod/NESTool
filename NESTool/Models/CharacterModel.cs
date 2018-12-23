@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Nett;
+using System.Windows;
 
 namespace NESTool.Models
 {
@@ -6,6 +7,7 @@ namespace NESTool.Models
     {
         private const string _extensionKey = "extensionCharacters";
 
+        [TomlIgnore]
         public override string FileExtension
         {
             get

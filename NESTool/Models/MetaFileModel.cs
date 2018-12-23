@@ -1,4 +1,4 @@
-﻿using NESTool.Enums;
+﻿using Nett;
 using System;
 using System.Windows;
 
@@ -8,6 +8,7 @@ namespace NESTool.Models
     {
         private const string _extensionKey = "extensionMetaFile";
 
+        [TomlIgnore]
         public override string FileExtension
         {
             get
