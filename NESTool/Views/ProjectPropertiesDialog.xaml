@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:vm="clr-namespace:NESTool.ViewModels"
         xmlns:cv="clr-namespace:NESTool.Utils.Converters"
+        xmlns:enum="clr-namespace:NESTool.Enums"
+        xmlns:ex="clr-namespace:NESTool.Utils.Extensions"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         Title="Project properties" Height="271" Width="357"
@@ -44,6 +46,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label Content="Mapper:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
@@ -57,6 +60,9 @@
             <Label Content="CHR Size:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             <ComboBox Grid.Column="1" Grid.Row="3" Height="23" HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding CHRSizes}" Width="120"
                       SelectedValue="{Binding Path=SelectedCHRSize}"/>
+            <Label Content="Mirroring:" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <ComboBox Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="120" ItemsSource="{Binding Source={ex:EnumBindingSource {x:Type enum:MirroringType}}}"
+                      SelectedItem="{Binding Path=SelectedMirroring}"/>
         </Grid>
         <StackPanel Grid.Column="2" Grid.Row="1">
             <GroupBox Header="Sprite Size" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="10">

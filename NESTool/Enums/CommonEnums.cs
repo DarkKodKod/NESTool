@@ -8,8 +8,15 @@
 
     public enum FrameTiming
     {
-        NTSC = 0,
-        PAL = 1
+        NTSC    = 0,
+        PAL     = 1
+    }
+
+    public enum MirroringType
+    {
+        Vertical    = 0,
+        Horizontal  = 1,
+        FourScreens = 2
     }
 
     public enum ProjectItemType
