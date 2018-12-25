@@ -3,6 +3,7 @@ using ArchitectureLibrary.Signals;
 using ArchitectureLibrary.ViewModel;
 using NESTool.CustomTypeConverter;
 using NESTool.Enums;
+using NESTool.Models;
 using NESTool.Signals;
 using System;
 using System.Collections.ObjectModel;
@@ -31,11 +32,13 @@ namespace NESTool.ViewModels
 
         public ProjectItemType Type { get; set; }
         public string FullPath { get; set; } = "";
+        public string ParentFolder { get; set; } = "";
         public bool Root { get; set; } = false;
         public bool IsFolder { get; set; } = false;
         public ProjectItem Parent = null;
         public ObservableCollection<ProjectItem> Items { get; set; }
         public string OldValue { get; set; } = "";
+        public FileHandler FileHandler { get; set; }
 
         virtual public string GetContent()
         {
@@ -49,6 +52,8 @@ namespace NESTool.ViewModels
             sb.Append("IsFolder:" + (IsFolder ? "true" : "false"));
             sb.Append(";");
             sb.Append("FullPath:" + FullPath);
+            sb.Append(";");
+            sb.Append("ParentFolder:" + ParentFolder);
             sb.Append(";");
             sb.Append("Items:");
 
@@ -188,6 +193,9 @@ namespace NESTool.ViewModels
                         break;
                     case "FullPath":
                         item.FullPath = value;
+                        break;
+                    case "ParentFolder":
+                        item.ParentFolder = value;
                         break;
                     case "Items":
                         Items = new ObservableCollection<ProjectItem>();

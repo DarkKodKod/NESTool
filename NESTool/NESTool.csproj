@@ -138,12 +138,13 @@
     <Compile Include="Commands\RenameElementCommand.cs" />
     <Compile Include="Commands\UndoCommand.cs" />
     <Compile Include="CustomTypeConverter\ProjectItemTypeConverter.cs" />
-    <Compile Include="FileSystem\FileSystemManager.cs" />
+    <Compile Include="FileSystem\ProjectItemFileSystem.cs" />
     <Compile Include="History\HistoryManager.cs" />
     <Compile Include="Models\AFileModel.cs" />
     <Compile Include="Models\BankModel.cs" />
     <Compile Include="Models\CharacterModel.cs" />
     <Compile Include="Models\ElementTypeModel.cs" />
+    <Compile Include="Models\FileHandler.cs" />
     <Compile Include="Models\MapModel.cs" />
     <Compile Include="Models\MapperModel.cs" />
     <Compile Include="Models\MappersModel.cs" />

@@ -1,4 +1,5 @@
 ﻿using ArchitectureLibrary.Signals;
+using NESTool.FileSystem;
 using NESTool.Signals;
 
 namespace NESTool.Commands
@@ -26,6 +27,8 @@ namespace NESTool.Commands
             {
                 return;
             }
+
+            ProjectItemFileSystem.DeteFile(ItemSeleceted.FileHandler);
 
             SignalManager.Get<DeleteElementSignal>().Dispatch(ItemSeleceted);
         }

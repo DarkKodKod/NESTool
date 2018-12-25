@@ -84,11 +84,11 @@ namespace NESTool.Commands
 
             File.Create(fullPathToProjectFile).Dispose();
 
-            FileSystemManager.CreateFolder(folderBanks, projectFullPath);
-            FileSystemManager.CreateFolder(folderCharacters, projectFullPath);
-            FileSystemManager.CreateFolder(folderMaps, projectFullPath);
-            FileSystemManager.CreateFolder(folderTileSets, projectFullPath);
-            FileSystemManager.CreateFolder(folderPatternTables, projectFullPath);
+            ProjectItemFileSystem.CreateFolder(folderBanks, projectFullPath);
+            ProjectItemFileSystem.CreateFolder(folderCharacters, projectFullPath);
+            ProjectItemFileSystem.CreateFolder(folderMaps, projectFullPath);
+            ProjectItemFileSystem.CreateFolder(folderTileSets, projectFullPath);
+            ProjectItemFileSystem.CreateFolder(folderPatternTables, projectFullPath);
 
             var model = ModelManager.Get<ProjectModel>();
 

@@ -44,7 +44,7 @@ namespace NESTool.Commands
 
             SignalManager.Get<CreateNewElementSignal>().Dispatch(newFolder);
 
-            FileSystemManager.CreateFolder(name, ItemSeleceted.FullPath);
+            ProjectItemFileSystem.CreateFolder(name, ItemSeleceted.FullPath);
         }
     }
 }

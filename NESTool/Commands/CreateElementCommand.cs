@@ -32,7 +32,7 @@ namespace NESTool.Commands
 
             SignalManager.Get<FindAndCreateElementSignal>().Dispatch(newElement);
 
-            FileSystemManager.CreateFile(name, element.Path, element.Type);
+            ProjectItemFileSystem.CreateFile(name, element.Path, element.Type);
         }
     }
 }

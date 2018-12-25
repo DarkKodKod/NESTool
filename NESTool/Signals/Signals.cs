@@ -18,6 +18,9 @@ namespace NESTool.Signals
     public class FindAndCreateElementSignal : Signal<ProjectItem> { }
     public class CreateNewElementSignal : Signal<ProjectItem> { }
 
+    // FileSystem
+    public class RegisterFileHandlerSignal : Signal<ProjectItem> { }
+
     // MainWindowViewModel
     public class OpenProjectSuccessSignal : Signal<ProjectOpenVO> { }
     public class CloseProjectSuccessSignal : Signal { }
