@@ -37,6 +37,7 @@ namespace NESTool.Commands
                 IsFolder = false,
                 Parent = ItemSeleceted,
                 Root = false,
+                ParentFolder = ItemSeleceted.FullPath,
                 Type = ItemSeleceted.Type
             };
 
@@ -44,7 +45,7 @@ namespace NESTool.Commands
 
             SignalManager.Get<CreateNewElementSignal>().Dispatch(newElement);
 
-            ProjectItemFileSystem.CreateFile(name, ItemSeleceted.FullPath, ItemSeleceted.Type);
+            ProjectItemFileSystem.CreateFileElement(ref newElement);
         }
     }
 }

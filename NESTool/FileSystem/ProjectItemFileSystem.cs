@@ -5,7 +5,6 @@ using NESTool.Signals;
 using NESTool.Utils;
 using NESTool.ViewModels;
 using Nett;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
@@ -16,6 +15,7 @@ namespace NESTool.FileSystem
     {
         private const string _metaExtensionKey = "extensionMetaFile";
 
+        private static string _metaExtension = "";
         private static Dictionary<string, FileHandler> FileStructure = new Dictionary<string, FileHandler>();
 
         public static  void Initialize()
@@ -25,28 +25,29 @@ namespace NESTool.FileSystem
 
         private static string GetMetaExtension()
         {
-            return (string)Application.Current.FindResource(_metaExtensionKey);
+            if (string.IsNullOrEmpty(_metaExtension))
+            {
+                _metaExtension = (string)Application.Current.FindResource(_metaExtensionKey);
+            }
+
+            return _metaExtension;
         }
             
         private static void OnRegisterFileHandler(ProjectItem item)
         {
-            FileHandler handler = new FileHandler();
-            handler.Name = item.DisplayName;
-            handler.Path = item.ParentFolder;
-
-            item.FileHandler = handler;
+            item.FileHandler = new FileHandler() { Name = item.DisplayName, Path = item.ParentFolder };
 
             if (!item.IsFolder)
             {
-                RegisterItemFile(item, handler);
+                RegisterItemFile(ref item);
             }
 
-            RegisterMetaFile(item, handler);
+            RegisterMetaFile(ref item);
 
-            FileStructure.Add(item.FileHandler.Meta.GUID, handler);
+            FileStructure.Add(item.FileHandler.Meta.GUID, item.FileHandler);
         }
 
-        private static void RegisterItemFile(ProjectItem item, FileHandler handler)
+        private static void RegisterItemFile(ref ProjectItem item)
         {
             AFileModel model = Util.FileModelFactory(item.Type);
 
@@ -75,7 +76,7 @@ namespace NESTool.FileSystem
             }
         }
 
-        private static void RegisterMetaFile(ProjectItem item, FileHandler handler)
+        private static void RegisterMetaFile(ref ProjectItem item)
         {
             string metaPath = Path.Combine(item.ParentFolder, item.DisplayName + GetMetaExtension());
 
@@ -89,26 +90,32 @@ namespace NESTool.FileSystem
             }
         }
 
-        public static void CreateFolder(string name, string path)
+        public static void CreateFileElement(ref ProjectItem item)
         {
-            string folderPath = Path.Combine(path, name);
+            item.FileHandler = new FileHandler() { Name = item.DisplayName, Path = item.ParentFolder };
 
-            Directory.CreateDirectory(folderPath);
+            if (!item.IsFolder)
+            {
+                AFileModel model = Util.FileModelFactory(item.Type);
 
-            CreateMetaFile(name, path);
-        }
+                string filePath = Path.Combine(item.ParentFolder, item.DisplayName + model.FileExtension);
 
-        public static void CreateFile(string name, string path, ProjectItemType type)
-        {
-            AFileModel model = Util.FileModelFactory(type);
+                Toml.WriteFile(model, filePath);
 
-            string filePath = Path.Combine(path, name + model.FileExtension);
+                item.FileHandler.FileModel = model;
+            }
+            else
+            {
+                string folderPath = Path.Combine(item.ParentFolder, item.DisplayName);
 
-            Toml.WriteFile(model, filePath);
+                Directory.CreateDirectory(folderPath);
+            }
 
-            CreateMetaFile(name, path);
+            MetaFileModel metaModel = CreateMetaFile(item.DisplayName, item.ParentFolder);
 
-            //FileStructure.Add(file.Meta.GUID, file);
+            item.FileHandler.Meta = metaModel;
+
+            FileStructure.Add(item.FileHandler.Meta.GUID, item.FileHandler);
         }
 
         private static MetaFileModel CreateMetaFile(string name, string path)
@@ -122,21 +129,43 @@ namespace NESTool.FileSystem
             return model;
         }
 
-        public static void DeteFile(FileHandler filePtr)
+        public static void DeteFile(FileHandler fileHandler)
         {
-            if (FileStructure.TryGetValue(filePtr.Meta.GUID, out FileHandler outFile))
+            if (fileHandler.Meta == null)
             {
-                string metaPath = Path.Combine(filePtr.Path, filePtr.Name + filePtr.Meta.FileExtension);
-                string itemPath = Path.Combine(filePtr.Path, filePtr.Name + filePtr.FileModel.FileExtension);
+                return;
+            }
+
+            if (FileStructure.TryGetValue(fileHandler.Meta.GUID, out FileHandler outFile))
+            {
+                string metaPath = Path.Combine(fileHandler.Path, fileHandler.Name + fileHandler.Meta.FileExtension);
 
                 if (File.Exists(metaPath))
                 {
                     File.Delete(metaPath);
                 }
-                if (File.Exists(itemPath))
+
+                if (fileHandler.FileModel != null)
                 {
-                    File.Delete(itemPath);
+                    string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name + fileHandler.FileModel.FileExtension);
+
+                    if (File.Exists(itemPath))
+                    {
+                        File.Delete(itemPath);
+                    }
                 }
+                else
+                {
+                    // Is a folder
+                    string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name);
+
+                    if (Directory.Exists(itemPath))
+                    {
+                        Directory.Delete(itemPath);
+                    }
+                }
+
+                FileStructure.Remove(fileHandler.Meta.GUID);
             }
         }
     }

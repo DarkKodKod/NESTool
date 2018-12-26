@@ -27,12 +27,13 @@ namespace NESTool.Commands
                 FullPath = Path.Combine(element.Path, name),
                 IsFolder = false,
                 Root = false,
+                ParentFolder = element.Path,
                 Type = element.Type
             };
 
             SignalManager.Get<FindAndCreateElementSignal>().Dispatch(newElement);
 
-            ProjectItemFileSystem.CreateFile(name, element.Path, element.Type);
+            ProjectItemFileSystem.CreateFileElement(ref newElement);
         }
     }
 }
