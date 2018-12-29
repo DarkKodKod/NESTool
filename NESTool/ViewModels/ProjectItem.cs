@@ -117,9 +117,16 @@ namespace NESTool.ViewModels
             {
                 if (_displayName != value)
                 {
+                    bool changedName = !string.IsNullOrEmpty(_displayName);
+
                     _displayName = value;
 
                     OnPropertyChanged("DisplayName");
+
+                    if (changedName)
+                    {
+                        SignalManager.Get<RenameFileSignal>().Dispatch(this);
+                    }
                 }
             }
         }

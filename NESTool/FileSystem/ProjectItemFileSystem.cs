@@ -21,6 +21,7 @@ namespace NESTool.FileSystem
         public static  void Initialize()
         {
             SignalManager.Get<RegisterFileHandlerSignal>().AddListener(OnRegisterFileHandler);
+            SignalManager.Get<RenameFileSignal>().AddListener(OnRenameFile);
         }
 
         private static string GetMetaExtension()
@@ -32,7 +33,52 @@ namespace NESTool.FileSystem
 
             return _metaExtension;
         }
-            
+
+        private static void OnRenameFile(ProjectItem item)
+        {
+            FileHandler fileHandler = item.FileHandler;
+
+            if (fileHandler.Meta == null)
+            {
+                return;
+            }
+
+            if (FileStructure.TryGetValue(fileHandler.Meta.GUID, out FileHandler outFile))
+            {
+                string metaPath = Path.Combine(fileHandler.Path, fileHandler.Name + fileHandler.Meta.FileExtension);
+                string metaNewPath = Path.Combine(fileHandler.Path, item.DisplayName + fileHandler.Meta.FileExtension);
+
+                if (File.Exists(metaPath))
+                {
+                    File.Move(metaPath, metaNewPath);
+                }
+
+                if (fileHandler.FileModel != null)
+                {
+                    string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name + fileHandler.FileModel.FileExtension);
+                    string itemNewPath = Path.Combine(fileHandler.Path, item.DisplayName + fileHandler.FileModel.FileExtension);
+
+                    if (File.Exists(itemPath))
+                    {
+                        File.Move(itemPath, itemNewPath);
+                    }
+                }
+                else
+                {
+                    // Is a folder
+                    string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name);
+                    string itemNewPath = Path.Combine(fileHandler.Path, item.DisplayName);
+
+                    if (Directory.Exists(itemPath))
+                    {
+                        Directory.Move(itemPath, itemNewPath);
+                    }
+                }
+            }
+
+            fileHandler.Name = item.DisplayName;
+        }
+
         private static void OnRegisterFileHandler(ProjectItem item)
         {
             item.FileHandler = new FileHandler() { Name = item.DisplayName, Path = item.ParentFolder };

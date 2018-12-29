@@ -20,6 +20,7 @@ namespace NESTool.Signals
 
     // FileSystem
     public class RegisterFileHandlerSignal : Signal<ProjectItem> { }
+    public class RenameFileSignal : Signal<ProjectItem> { }
 
     // MainWindowViewModel
     public class OpenProjectSuccessSignal : Signal<ProjectOpenVO> { }
