@@ -93,6 +93,44 @@ namespace NESTool.FileSystem
             FileStructure.Add(item.FileHandler.Meta.GUID, item.FileHandler);
         }
 
+        public static string GetValidFolderName(string path, string name)
+        {
+            int counter = 1;
+            string outName = name;
+
+            string folderPath = Path.Combine(path, name);
+
+            while (Directory.Exists(folderPath))
+            {
+                outName = name + "_" + counter;
+
+                folderPath = Path.Combine(path, outName);
+
+                counter++;
+            }
+
+            return outName;
+        }
+
+        public static string GetValidFileName(string path, string name, string extension)
+        {
+            int counter = 1;
+            string outName = name;
+
+            string filePath = Path.Combine(path, name + extension);
+
+            while (File.Exists(filePath))
+            {
+                outName = name + "_" + counter;
+
+                filePath = Path.Combine(path, outName + extension);
+
+                counter++;
+            }
+
+            return outName;
+        }
+
         private static void RegisterItemFile(ref ProjectItem item)
         {
             AFileModel model = Util.FileModelFactory(item.Type);

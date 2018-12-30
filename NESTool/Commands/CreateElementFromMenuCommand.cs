@@ -1,13 +1,24 @@
 ﻿using ArchitectureLibrary.Signals;
 using NESTool.FileSystem;
 using NESTool.Signals;
+using NESTool.Utils;
 using NESTool.ViewModels;
 using System.IO;
+using System.Windows;
 
 namespace NESTool.Commands
 {
     public class CreateElementFromMenuCommand : ItemSelectedCommand
     {
+        private const string _fileNameKey = "NewElementName";
+
+        private readonly string _newFileName;
+
+        public CreateElementFromMenuCommand()
+        {
+            _newFileName = (string)Application.Current.FindResource(_fileNameKey);
+        }
+
         public override bool CanExecute(object parameter)
         {
             if (ItemSeleceted != null)
@@ -28,7 +39,10 @@ namespace NESTool.Commands
                 return;
             }
 
-            string name = "New Element";
+            string name = ProjectItemFileSystem.GetValidFileName(
+                ItemSeleceted.FullPath, 
+                _newFileName, 
+                Util.GetExtensionByType(ItemSeleceted.Type));
 
             ProjectItem newElement = new ProjectItem()
             {

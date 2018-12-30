@@ -62,6 +62,25 @@ namespace NESTool.Utils
             return ProjectItemType.None;
         }
 
+        public static string GetExtensionByType(ProjectItemType type)
+        {
+            var extensionBanks = (string)Application.Current.FindResource(_extensionBanksKey);
+            var extensionCharacters = (string)Application.Current.FindResource(_extensionCharactersKey);
+            var extensionMaps = (string)Application.Current.FindResource(_extensionMapsKey);
+            var extensionTileSets = (string)Application.Current.FindResource(_extensionTileSetsKey);
+            var extensionPatternTable = (string)Application.Current.FindResource(_extensionPatternTablesKey);
+
+            switch (type)
+            {
+                case ProjectItemType.Bank: return extensionBanks;
+                case ProjectItemType.Character: return extensionCharacters;
+                case ProjectItemType.Map: return extensionMaps;
+                case ProjectItemType.TileSet: return extensionTileSets;
+                case ProjectItemType.PatternTable: return extensionPatternTable;
+                default: return string.Empty;
+            }
+        }
+
         public static string GetFolderExtension(string folderName)
         {
             var folderBanks = (string)Application.Current.FindResource(_folderBanksKey);

@@ -3,11 +3,21 @@ using NESTool.FileSystem;
 using NESTool.Signals;
 using NESTool.ViewModels;
 using System.IO;
+using System.Windows;
 
 namespace NESTool.Commands
 {
     public class CreateFolderCommand : ItemSelectedCommand
     {
+        private const string _folderNameKey = "NewFolderName";
+
+        private readonly string _newFolderName;
+
+        public CreateFolderCommand()
+        {
+            _newFolderName = (string)Application.Current.FindResource(_folderNameKey);
+        }
+
         public override bool CanExecute(object parameter)
         {
             if (ItemSeleceted != null)
@@ -28,7 +38,7 @@ namespace NESTool.Commands
                 return;
             }
 
-            string name = "New folder";
+            string name = ProjectItemFileSystem.GetValidFolderName(ItemSeleceted.FullPath, _newFolderName);
 
             ProjectItem newFolder = new ProjectItem()
             {
