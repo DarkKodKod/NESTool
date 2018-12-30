@@ -181,7 +181,9 @@ namespace NESTool.ViewModels
             // Collect the chain of parents for later use
             List<ProjectItem> path = new List<ProjectItem>() { item };
 
-            var parent = item.Parent;
+            ProjectItem originalParent = item.Parent;
+
+            ProjectItem parent = item.Parent;
 
             while (parent != null)
             {
@@ -190,11 +192,13 @@ namespace NESTool.ViewModels
                 parent = parent.Parent;
             }
 
-            var matchItem = FindInItemsAndDelete(_projectItems, path.ToArray(), path.ToArray().Length - 1);
+            ProjectItem matchItem = FindInItemsAndDelete(_projectItems, path.ToArray(), path.ToArray().Length - 1);
 
             if (matchItem != null)
             {
                 OnPropertyChanged("ProjectItems");
+
+                SignalManager.Get<UpdateFolderSignal>().Dispatch(originalParent);
             }
         }
 

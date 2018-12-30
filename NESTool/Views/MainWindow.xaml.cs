@@ -55,6 +55,7 @@ namespace NESTool
 
             SignalManager.Get<SetUpWindowPropertiesSignal>().AddListener(OnSetUpWindowProperties);
             SignalManager.Get<CreateNewElementSignal>().AddListener(OnCreateNewElement);
+            SignalManager.Get<UpdateFolderSignal>().AddListener(OnUpdateFolder);
         }
 
         private void SystemParameters_StaticPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -135,6 +136,19 @@ namespace NESTool
             Width = vo.SizeX;
 
             CenterWindowOnScreen();
+        }
+
+        private void OnUpdateFolder(ProjectItem item)
+        {
+            TreeViewItem treeItem = (TreeViewItem)(tvProjectItems.ItemContainerGenerator.ContainerFromItem(item));
+
+            if (treeItem != null)
+            {
+                if (item.Items.Count == 0)
+                {
+                    treeItem.IsExpanded = false;
+                }
+            }
         }
 
         private void OnCreateNewElement(ProjectItem newItem)

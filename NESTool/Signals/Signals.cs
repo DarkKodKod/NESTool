@@ -23,6 +23,7 @@ namespace NESTool.Signals
     public class RenameFileSignal : Signal<ProjectItem> { }
 
     // MainWindowViewModel
+    public class UpdateFolderSignal : Signal<ProjectItem> { }
     public class OpenProjectSuccessSignal : Signal<ProjectOpenVO> { }
     public class CloseProjectSuccessSignal : Signal { }
     public class ExitSuccessSignal : Signal { }
