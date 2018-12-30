@@ -13,7 +13,6 @@ namespace NESTool.Signals
 
     // Edit
     public class PasteElementSignal : Signal<ProjectItem, ProjectItem> { }
-    public class CutElementSignal : Signal<ProjectItem> { }
     public class DeleteElementSignal : Signal<ProjectItem> { }
     public class FindAndCreateElementSignal : Signal<ProjectItem> { }
     public class CreateNewElementSignal : Signal<ProjectItem> { }

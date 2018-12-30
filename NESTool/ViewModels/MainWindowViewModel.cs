@@ -30,7 +30,6 @@ namespace NESTool.ViewModels
         public BuildProjectCommand BuildProjectCommand { get; } = new BuildProjectCommand();
         public OpenProjectPropertiesCommand OpenProjectPropertiesCommand { get; } = new OpenProjectPropertiesCommand();
         public ViewHelpCommand ViewHelpCommand { get; } = new ViewHelpCommand();
-        public CutElementCommand CutElementCommand { get; } = new CutElementCommand();
         public CopyElementCommand CopyElementCommand { get; } = new CopyElementCommand();
         public PasteElementCommand PasteElementCommand { get; } = new PasteElementCommand();
         public DuplicateElementCommand DuplicateElementCommand { get; } = new DuplicateElementCommand();
@@ -127,7 +126,6 @@ namespace NESTool.ViewModels
             SignalManager.Get<SizeChangedSingal>().AddListener(OnSizeChanged);
             SignalManager.Get<CreateProjectSuccessSignal>().AddListener(OnCreateProjectSuccess);
             SignalManager.Get<DeleteElementSignal>().AddListener(OnDeleteElement);
-            SignalManager.Get<CutElementSignal>().AddListener(OnCutElement);
             SignalManager.Get<PasteElementSignal>().AddListener(OnPasteElement);
             SignalManager.Get<FindAndCreateElementSignal>().AddListener(OnFindAndCreateElement);
             #endregion
@@ -164,11 +162,6 @@ namespace NESTool.ViewModels
             }
 
             OnPropertyChanged("ProjectItems");
-        }
-
-        private void OnCutElement(ProjectItem item)
-        {
-            DeleteItemFromTheList(item);
         }
 
         private void OnDeleteElement(ProjectItem item)

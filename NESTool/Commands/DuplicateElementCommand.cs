@@ -32,7 +32,7 @@ namespace NESTool.Commands
 
             ProjectItem newItem = new ProjectItem(ItemSeleceted.GetContent());
 
-             string name = ProjectItemFileSystem.GetValidFileName(
+            string name = ProjectItemFileSystem.GetValidFileName(
                 newItem.ParentFolder, 
                 newItem.DisplayName, 
                 Util.GetExtensionByType(ItemSeleceted.Type));
