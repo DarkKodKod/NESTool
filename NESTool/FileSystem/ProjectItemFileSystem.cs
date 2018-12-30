@@ -36,12 +36,12 @@ namespace NESTool.FileSystem
 
         private static void OnRenameFile(ProjectItem item)
         {
-            FileHandler fileHandler = item.FileHandler;
-
-            if (fileHandler.Meta == null)
+            if (item.FileHandler == null || item.FileHandler.Meta == null)
             {
                 return;
             }
+
+            FileHandler fileHandler = item.FileHandler;
 
             if (FileStructure.TryGetValue(fileHandler.Meta.GUID, out FileHandler outFile))
             {

@@ -1,5 +1,7 @@
 ﻿using ArchitectureLibrary.Signals;
+using NESTool.FileSystem;
 using NESTool.Signals;
+using NESTool.Utils;
 using NESTool.ViewModels;
 
 namespace NESTool.Commands
@@ -30,7 +32,16 @@ namespace NESTool.Commands
 
             ProjectItem newItem = new ProjectItem(ItemSeleceted.GetContent());
 
+             string name = ProjectItemFileSystem.GetValidFileName(
+                newItem.ParentFolder, 
+                newItem.DisplayName, 
+                Util.GetExtensionByType(ItemSeleceted.Type));
+
+            newItem.DisplayName = name;
+
             SignalManager.Get<PasteElementSignal>().Dispatch(ItemSeleceted, newItem);
+
+            ProjectItemFileSystem.CreateFileElement(ref newItem);
         }
     }
 }

@@ -34,7 +34,7 @@
         <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding DuplicateElementCommand}" />
         <KeyBinding Key="Delete" Command="{Binding DeleteElementCommand}" />
         <KeyBinding Key="Z" Modifiers="Ctrl" Command="{Binding UndoCommand}" />
-        <KeyBinding Key="F2" Command="{Binding RenameElementCommand}" />
+        <KeyBinding Key="F2" Command="{Binding EnableRenameElementCommand}" />
         <KeyBinding Key="Y" Modifiers="Ctrl" Command="{Binding RedoCommand}" />
     </Window.InputBindings>
     <i:Interaction.Triggers>
@@ -648,7 +648,7 @@
                                 </Image>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Rename" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.RenameElementCommand}" />
+                        <MenuItem Header="Rename" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.EnableRenameElementCommand}" />
 					</ContextMenu>
 					<ContextMenu x:Key="ItemPopup">
                         <MenuItem Header="Cut" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.CutElementCommand}">
@@ -711,7 +711,7 @@
                                 </Image>
                             </MenuItem.Icon>
                         </MenuItem>
-                        <MenuItem Header="Rename" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.RenameElementCommand}" />
+                        <MenuItem Header="Rename" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.EnableRenameElementCommand}" />
 					</ContextMenu>
 					<HierarchicalDataTemplate DataType="{x:Type vm:ProjectItem}" ItemsSource="{Binding Items}">
                         <StackPanel Orientation="Horizontal" Loaded="StackPanel_Loaded">

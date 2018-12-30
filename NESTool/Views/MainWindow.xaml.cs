@@ -204,7 +204,7 @@ namespace NESTool
                 item.IsLoaded = true;
                 item.IsSelected = true;
 
-                using (var command = new RenameElementCommand())
+                using (var command = new EnableRenameElementCommand())
                 {
                     command.Execute(item);
                 }

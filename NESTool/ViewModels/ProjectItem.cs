@@ -3,8 +3,10 @@ using ArchitectureLibrary.Signals;
 using ArchitectureLibrary.ViewModel;
 using NESTool.CustomTypeConverter;
 using NESTool.Enums;
+using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
+using NESTool.Utils;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -119,7 +121,21 @@ namespace NESTool.ViewModels
                 {
                     bool changedName = !string.IsNullOrEmpty(_displayName);
 
-                    _displayName = value;
+                    string validName = value;
+
+                    if (changedName)
+                    {
+                        if (IsFolder)
+                        {
+                            validName = ProjectItemFileSystem.GetValidFolderName(ParentFolder, value);
+                        }
+                        else
+                        {
+                            validName = ProjectItemFileSystem.GetValidFileName(ParentFolder, value, Util.GetExtensionByType(Type));
+                        }
+                    }
+
+                    _displayName = validName;
 
                     OnPropertyChanged("DisplayName");
 
@@ -315,6 +331,7 @@ namespace NESTool.ViewModels
             Root = item.Root;
             IsFolder = item.IsFolder;
             Parent = item.Parent;
+            ParentFolder = item.ParentFolder;
             Items = new ObservableCollection<ProjectItem>(item.Items);
         }   
 

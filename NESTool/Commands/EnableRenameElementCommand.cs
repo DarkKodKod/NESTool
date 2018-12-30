@@ -2,7 +2,7 @@
 
 namespace NESTool.Commands
 {
-    public class RenameElementCommand : ItemSelectedCommand
+    public class EnableRenameElementCommand : ItemSelectedCommand
     {
         public override bool CanExecute(object parameter)
         {
