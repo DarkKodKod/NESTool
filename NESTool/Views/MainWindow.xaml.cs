@@ -149,11 +149,15 @@ namespace NESTool
                     treeItem.IsExpanded = false;
                 }
             }
+            else
+            {
+                UpdateTreeLayout(item);
+            }
         }
 
-        private void OnCreateNewElement(ProjectItem newItem)
+        private void OnCreateNewElement(ProjectItem item)
         {
-            TreeViewItem parentItem = (TreeViewItem)(tvProjectItems.ItemContainerGenerator.ContainerFromItem(newItem.Parent));
+            TreeViewItem parentItem = (TreeViewItem)(tvProjectItems.ItemContainerGenerator.ContainerFromItem(item.Parent));
 
             if (parentItem != null)
             {
@@ -161,37 +165,44 @@ namespace NESTool
             }
             else
             {
-                IEnumerable<ProjectItem> nodes = (IEnumerable<ProjectItem>)tvProjectItems.ItemsSource;
-                if (nodes == null)
-                {
-                    return;
-                }   
+                UpdateTreeLayout(item);
+            }
+        }
 
-                Stack<ProjectItem> queue = new Stack<ProjectItem>();
-                queue.Push(newItem);
+        private void UpdateTreeLayout(ProjectItem item)
+        {
+            IEnumerable<ProjectItem> nodes = (IEnumerable<ProjectItem>)tvProjectItems.ItemsSource;
+            if (nodes == null)
+            {
+                return;
+            }
 
-                var parent = newItem.Parent;
+            Stack<ProjectItem> queue = new Stack<ProjectItem>();
+            queue.Push(item);
 
-                while (parent != null)
-                {
-                    queue.Push(parent);
-                    parent = parent.Parent;
-                }
+            var parent = item.Parent;
 
-                ItemContainerGenerator generator = tvProjectItems.ItemContainerGenerator;
+            while (parent != null)
+            {
+                queue.Push(parent);
+                parent = parent.Parent;
+            }
 
-                while (queue.Count > 0)
-                {
-                    var dequeue = queue.Pop();
+            ItemContainerGenerator generator = tvProjectItems.ItemContainerGenerator;
 
-                    tvProjectItems.UpdateLayout();
+            while (queue.Count > 0)
+            {
+                var dequeue = queue.Pop();
 
-                    var treeViewItem = (TreeViewItem)generator.ContainerFromItem(dequeue);
+                tvProjectItems.UpdateLayout();
 
-                    treeViewItem.IsExpanded = true;
-                        
-                    generator = treeViewItem.ItemContainerGenerator;
-                }
+                var treeViewItem = (TreeViewItem)generator.ContainerFromItem(dequeue);
+
+                bool areThereMoreElement = queue.Count > 0 || item.Items.Count > 0;
+
+                treeViewItem.IsExpanded = areThereMoreElement;
+
+                generator = treeViewItem.ItemContainerGenerator;
             }
         }
 

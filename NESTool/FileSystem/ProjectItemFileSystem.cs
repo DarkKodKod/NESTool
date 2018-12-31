@@ -213,7 +213,7 @@ namespace NESTool.FileSystem
             return model;
         }
 
-        public static void DeteFile(FileHandler fileHandler)
+        public static void DeteElement(FileHandler fileHandler)
         {
             if (fileHandler.Meta == null)
             {

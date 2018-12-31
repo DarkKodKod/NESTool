@@ -28,7 +28,7 @@ namespace NESTool.Commands
                 return;
             }
 
-            ProjectItemFileSystem.DeteFile(ItemSelected.FileHandler);
+            ProjectItemFileSystem.DeteElement(ItemSelected.FileHandler);
 
             SignalManager.Get<DeleteElementSignal>().Dispatch(ItemSelected);
         }
