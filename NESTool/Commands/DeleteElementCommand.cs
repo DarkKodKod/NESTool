@@ -8,12 +8,12 @@ namespace NESTool.Commands
     {
         public override bool CanExecute(object parameter)
         {
-            if (ItemSeleceted == null)
+            if (ItemSelected == null)
             {
                 return false;
             }
 
-            if (ItemSeleceted.Root)
+            if (ItemSelected.Root)
             {
                 return false;
             }
@@ -23,14 +23,14 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            if (ItemSeleceted == null)
+            if (ItemSelected == null)
             {
                 return;
             }
 
-            ProjectItemFileSystem.DeteFile(ItemSeleceted.FileHandler);
+            ProjectItemFileSystem.DeteFile(ItemSelected.FileHandler);
 
-            SignalManager.Get<DeleteElementSignal>().Dispatch(ItemSeleceted);
+            SignalManager.Get<DeleteElementSignal>().Dispatch(ItemSelected);
         }
     }
 }

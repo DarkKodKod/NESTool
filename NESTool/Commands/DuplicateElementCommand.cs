@@ -10,12 +10,12 @@ namespace NESTool.Commands
     {
         public override bool CanExecute(object parameter)
         {
-            if (ItemSeleceted == null)
+            if (ItemSelected == null)
             {
                 return false;
             }
 
-            if (ItemSeleceted.Root || ItemSeleceted.IsFolder)
+            if (ItemSelected.Root || ItemSelected.IsFolder)
             {
                 return false;
             }
@@ -25,21 +25,21 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            if (ItemSeleceted == null)
+            if (ItemSelected == null || ItemSelected.FileHandler == null)
             {
                 return;
             }
 
-            ProjectItem newItem = new ProjectItem(ItemSeleceted.GetContent());
+            ProjectItem newItem = new ProjectItem(ItemSelected.GetContent());
 
             string name = ProjectItemFileSystem.GetValidFileName(
-                newItem.ParentFolder, 
+                ItemSelected.FileHandler.Path, 
                 newItem.DisplayName, 
-                Util.GetExtensionByType(ItemSeleceted.Type));
+                Util.GetExtensionByType(ItemSelected.Type));
 
             newItem.DisplayName = name;
 
-            SignalManager.Get<PasteElementSignal>().Dispatch(ItemSeleceted, newItem);
+            SignalManager.Get<PasteElementSignal>().Dispatch(ItemSelected, newItem);
 
             ProjectItemFileSystem.CreateFileElement(ref newItem);
         }

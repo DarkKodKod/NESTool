@@ -33,7 +33,6 @@ namespace NESTool.ViewModels
         }
 
         public ProjectItemType Type { get; set; }
-        public string FullPath { get; set; } = "";
         public string ParentFolder { get; set; } = "";
         public bool Root { get; set; } = false;
         public bool IsFolder { get; set; } = false;
@@ -52,8 +51,6 @@ namespace NESTool.ViewModels
             sb.Append("Root:" + (Root ? "true" : "false"));
             sb.Append(";");
             sb.Append("IsFolder:" + (IsFolder ? "true" : "false"));
-            sb.Append(";");
-            sb.Append("FullPath:" + FullPath);
             sb.Append(";");
             sb.Append("ParentFolder:" + ParentFolder);
             sb.Append(";");
@@ -214,9 +211,6 @@ namespace NESTool.ViewModels
                     case "IsFolder":
                         item.IsFolder = value == "true";
                         break;
-                    case "FullPath":
-                        item.FullPath = value;
-                        break;
                     case "ParentFolder":
                         item.ParentFolder = value;
                         break;
@@ -327,7 +321,6 @@ namespace NESTool.ViewModels
         {
             Type = item.Type;
             DisplayName = item.DisplayName;
-            FullPath = item.FullPath;
             Root = item.Root;
             IsFolder = item.IsFolder;
             Parent = item.Parent;

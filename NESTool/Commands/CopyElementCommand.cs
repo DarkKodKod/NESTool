@@ -6,12 +6,12 @@ namespace NESTool.Commands
     {
         public override bool CanExecute(object parameter)
         {
-            if (ItemSeleceted == null)
+            if (ItemSelected == null)
             {
                 return false;
             }
 
-            if (ItemSeleceted.Root)
+            if (ItemSelected.Root)
             {
                 return false;
             }
@@ -21,7 +21,7 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            ClipboardManager.SetData(ItemSeleceted);
+            ClipboardManager.SetData(ItemSelected);
         }
     }
 }

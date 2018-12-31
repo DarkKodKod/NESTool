@@ -21,9 +21,9 @@ namespace NESTool.Commands
 
         public override bool CanExecute(object parameter)
         {
-            if (ItemSeleceted != null)
+            if (ItemSelected != null)
             {
-                if (ItemSeleceted.IsFolder)
+                if (ItemSelected.IsFolder)
                 {
                     return true;
                 }
@@ -34,28 +34,29 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            if (ItemSeleceted == null)
+            if (ItemSelected == null || ItemSelected.FileHandler == null)
             {
                 return;
             }
 
+            string path = Path.Combine(ItemSelected.FileHandler.Path, ItemSelected.FileHandler.Name);
+
             string name = ProjectItemFileSystem.GetValidFileName(
-                ItemSeleceted.FullPath, 
+                path, 
                 _newFileName, 
-                Util.GetExtensionByType(ItemSeleceted.Type));
+                Util.GetExtensionByType(ItemSelected.Type));
 
             ProjectItem newElement = new ProjectItem()
             {
                 DisplayName = name,
-                FullPath = Path.Combine(ItemSeleceted.FullPath, name),
                 IsFolder = false,
-                Parent = ItemSeleceted,
+                Parent = ItemSelected,
                 Root = false,
-                ParentFolder = ItemSeleceted.FullPath,
-                Type = ItemSeleceted.Type
+                ParentFolder = path,
+                Type = ItemSelected.Type
             };
 
-            ItemSeleceted.Items.Add(newElement);
+            ItemSelected.Items.Add(newElement);
 
             SignalManager.Get<CreateNewElementSignal>().Dispatch(newElement);
 

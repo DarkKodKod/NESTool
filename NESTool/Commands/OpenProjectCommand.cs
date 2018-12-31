@@ -112,7 +112,6 @@ namespace NESTool.Commands
                 var item = new ProjectItem()
                 {
                     DisplayName = directory.Name,
-                    FullPath = directory.FullName,
                     IsLoaded = true
                 };
 
@@ -163,7 +162,6 @@ namespace NESTool.Commands
                     var fileItem = new ProjectItem()
                     {
                         DisplayName = displayName,
-                        FullPath = file.FullName,
                         ParentFolder = directory.FullName,
                         Type = Util.GetItemType(ext),
                         IsLoaded = true

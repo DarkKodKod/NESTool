@@ -6,12 +6,12 @@ namespace NESTool.Commands
     {
         public override bool CanExecute(object parameter)
         {
-            if (ItemSeleceted == null)
+            if (ItemSelected == null)
             {
                 return false;
             }
 
-            if (ItemSeleceted.Root)
+            if (ItemSelected.Root)
             {
                 return false;
             }
@@ -23,15 +23,15 @@ namespace NESTool.Commands
         {
             if (parameter is ProjectItem)
             {
-                ItemSeleceted = parameter as ProjectItem;
+                ItemSelected = parameter as ProjectItem;
             }
 
-            if (ItemSeleceted == null)
+            if (ItemSelected == null)
             {
                 return;
             }
 
-            ItemSeleceted.IsInEditMode = true;
+            ItemSelected.IsInEditMode = true;
         }
     }
 }

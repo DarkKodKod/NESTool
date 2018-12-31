@@ -5,7 +5,6 @@ using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
 using NESTool.ViewModels;
-using System.IO;
 using System.Windows;
 
 namespace NESTool.Commands
@@ -38,7 +37,6 @@ namespace NESTool.Commands
             ProjectItem newElement = new ProjectItem()
             {
                 DisplayName = name,
-                FullPath = Path.Combine(element.Path, name),
                 IsFolder = false,
                 Root = false,
                 ParentFolder = element.Path,

@@ -12,14 +12,13 @@ namespace NESTool.Commands
     {
         public override bool CanExecute(object parameter)
         {
-            if (ClipboardManager.IsEmpty() || ItemSeleceted == null)
+            if (ClipboardManager.IsEmpty() || ItemSelected == null)
             {
                 return false;
             }
 
             // Only is possible the paste element if is in a place with the same type
-            ProjectItem clipbr = ClipboardManager.GetData() as ProjectItem;
-            if (clipbr != null && clipbr.Type != ItemSeleceted.Type)
+            if (ClipboardManager.GetData() is ProjectItem clipbr && clipbr.Type != ItemSelected.Type)
             {
                 return false;
             }
@@ -29,40 +28,41 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
+            if (ItemSelected.FileHandler == null)
+            {
+                return;
+            }
+
             if (ClipboardManager.GetData() is ProjectItem newItem)
             {
-                string newItemPath;
-                string name;
+                string newItemPath = string.Empty;
+                string name = string.Empty;
 
-                if (ItemSeleceted.IsFolder)
+                if (ItemSelected.IsFolder)
                 {
-                    newItemPath = ItemSeleceted.FullPath;
+                    newItemPath = Path.Combine(ItemSelected.FileHandler.Path, ItemSelected.FileHandler.Name);
                 }
                 else
                 {
-                    newItemPath = ItemSeleceted.ParentFolder;
+                    newItemPath = ItemSelected.ParentFolder;
                 }
 
                 if (newItem.IsFolder)
                 {
                     name = ProjectItemFileSystem.GetValidFolderName(newItemPath, newItem.DisplayName);
-
-                    newItem.FullPath = Path.Combine(newItemPath, name);
                 }
                 else
                 {
-                    string extension = Util.GetExtensionByType(ItemSeleceted.Type);
+                    string extension = Util.GetExtensionByType(ItemSelected.Type);
 
                     name = ProjectItemFileSystem.GetValidFileName(newItemPath, newItem.DisplayName, extension);
-
-                    newItem.FullPath = Path.Combine(newItemPath, name + extension);
                 }
 
                 newItem.DisplayName = name;
                 newItem.ParentFolder = newItemPath;
                 newItem.IsLoaded = true;
 
-                SignalManager.Get<PasteElementSignal>().Dispatch(ItemSeleceted, newItem);
+                SignalManager.Get<PasteElementSignal>().Dispatch(ItemSelected, newItem);
 
                 ProjectItemFileSystem.CreateFileElement(ref newItem);
             }
