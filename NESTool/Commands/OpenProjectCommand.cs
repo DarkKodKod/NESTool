@@ -134,9 +134,10 @@ namespace NESTool.Commands
 
                 item.Type = Util.GetItemType(ext);
                 item.IsFolder = true;
-                item.ParentFolder = directory.Parent.FullName;
 
-                SignalManager.Get<RegisterFileHandlerSignal>().Dispatch(item);
+                DirectoryInfo parentFolder = Directory.GetParent(directory.FullName);
+
+                SignalManager.Get<RegisterFileHandlerSignal>().Dispatch(item, parentFolder.FullName);
 
                 // Check if it was some folders inside
                 DirectoryInfo[] subFolders = directory.GetDirectories();
@@ -162,7 +163,6 @@ namespace NESTool.Commands
                     var fileItem = new ProjectItem()
                     {
                         DisplayName = displayName,
-                        ParentFolder = directory.FullName,
                         Type = Util.GetItemType(ext),
                         IsLoaded = true
                     };
@@ -171,7 +171,7 @@ namespace NESTool.Commands
 
                     item.Items.Add(fileItem);
 
-                    SignalManager.Get<RegisterFileHandlerSignal>().Dispatch(fileItem);
+                    SignalManager.Get<RegisterFileHandlerSignal>().Dispatch(fileItem, file.DirectoryName);
                 }
 
                 projectItems.Add(item);

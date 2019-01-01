@@ -41,7 +41,7 @@ namespace NESTool.Commands
 
             SignalManager.Get<PasteElementSignal>().Dispatch(ItemSelected, newItem);
 
-            ProjectItemFileSystem.CreateFileElement(ref newItem);
+            ProjectItemFileSystem.CreateFileElement(newItem, ItemSelected.FileHandler.Path, name);
         }
     }
 }

@@ -79,18 +79,20 @@ namespace NESTool.FileSystem
             fileHandler.Name = item.DisplayName;
         }
 
-        private static void OnRegisterFileHandler(ProjectItem item)
+        private static void OnRegisterFileHandler(ProjectItem item, string path)
         {
-            item.FileHandler = new FileHandler() { Name = item.DisplayName, Path = item.ParentFolder };
+            FileHandler fileHandler = new FileHandler() { Name = item.DisplayName, Path = path };
+
+            item.FileHandler = fileHandler;
 
             if (!item.IsFolder)
             {
-                RegisterItemFile(ref item);
+                RegisterItemFile(ref fileHandler, item.Type);
             }
 
-            RegisterMetaFile(ref item);
+            RegisterMetaFile(ref fileHandler);
 
-            FileStructure.Add(item.FileHandler.Meta.GUID, item.FileHandler);
+            FileStructure.Add(fileHandler.Meta.GUID, fileHandler);
         }
 
         public static string GetValidFolderName(string path, string name)
@@ -131,58 +133,58 @@ namespace NESTool.FileSystem
             return outName;
         }
 
-        private static void RegisterItemFile(ref ProjectItem item)
+        private static void RegisterItemFile(ref FileHandler fileHandler, ProjectItemType type)
         {
-            AFileModel model = Util.FileModelFactory(item.Type);
+            AFileModel model = Util.FileModelFactory(type);
 
-            string itemPath = Path.Combine(item.ParentFolder, item.DisplayName + model.FileExtension);
+            string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name + model.FileExtension);
 
             if (File.Exists(itemPath))
             {
-                switch (item.Type)
+                switch (type)
                 {
                     case ProjectItemType.Bank:
-                        item.FileHandler.FileModel = Toml.ReadFile<BankModel>(itemPath);
+                        fileHandler.FileModel = Toml.ReadFile<BankModel>(itemPath);
                         break;
                     case ProjectItemType.Character:
-                        item.FileHandler.FileModel = Toml.ReadFile<CharacterModel>(itemPath);
+                        fileHandler.FileModel = Toml.ReadFile<CharacterModel>(itemPath);
                         break;
                     case ProjectItemType.Map:
-                        item.FileHandler.FileModel = Toml.ReadFile<MapModel>(itemPath);
+                        fileHandler.FileModel = Toml.ReadFile<MapModel>(itemPath);
                         break;
                     case ProjectItemType.TileSet:
-                        item.FileHandler.FileModel = Toml.ReadFile<TileSetModel>(itemPath);
+                        fileHandler.FileModel = Toml.ReadFile<TileSetModel>(itemPath);
                         break;
                     case ProjectItemType.PatternTable:
-                        item.FileHandler.FileModel = Toml.ReadFile<PatternTableModel>(itemPath);
+                        fileHandler.FileModel = Toml.ReadFile<PatternTableModel>(itemPath);
                         break;
                 }
             }
         }
 
-        private static void RegisterMetaFile(ref ProjectItem item)
+        private static void RegisterMetaFile(ref FileHandler fileHandler)
         {
-            string metaPath = Path.Combine(item.ParentFolder, item.DisplayName + GetMetaExtension());
+            string metaPath = Path.Combine(fileHandler.Path, fileHandler.Name + GetMetaExtension());
 
             if (File.Exists(metaPath))
             {
-                item.FileHandler.Meta = Toml.ReadFile<MetaFileModel>(metaPath);
+                fileHandler.Meta = Toml.ReadFile<MetaFileModel>(metaPath);
             }
             else
             {
-                item.FileHandler.Meta = CreateMetaFile(item.DisplayName, item.ParentFolder);
+                fileHandler.Meta = CreateMetaFile(fileHandler.Name, fileHandler.Path);
             }
         }
 
-        public static void CreateFileElement(ref ProjectItem item)
+        public static void CreateFileElement(ProjectItem item, string path, string name)
         {
-            item.FileHandler = new FileHandler() { Name = item.DisplayName, Path = item.ParentFolder };
+            item.FileHandler = new FileHandler() { Name = name, Path = path };
 
             if (!item.IsFolder)
             {
                 AFileModel model = Util.FileModelFactory(item.Type);
 
-                string filePath = Path.Combine(item.ParentFolder, item.DisplayName + model.FileExtension);
+                string filePath = Path.Combine(path, name + model.FileExtension);
 
                 Toml.WriteFile(model, filePath);
 
@@ -190,12 +192,12 @@ namespace NESTool.FileSystem
             }
             else
             {
-                string folderPath = Path.Combine(item.ParentFolder, item.DisplayName);
+                string folderPath = Path.Combine(path, name);
 
                 Directory.CreateDirectory(folderPath);
             }
 
-            MetaFileModel metaModel = CreateMetaFile(item.DisplayName, item.ParentFolder);
+            MetaFileModel metaModel = CreateMetaFile(name, path);
 
             item.FileHandler.Meta = metaModel;
 

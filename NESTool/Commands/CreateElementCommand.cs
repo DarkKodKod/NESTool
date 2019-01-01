@@ -39,13 +39,12 @@ namespace NESTool.Commands
                 DisplayName = name,
                 IsFolder = false,
                 Root = false,
-                ParentFolder = element.Path,
                 Type = element.Type
             };
 
             SignalManager.Get<FindAndCreateElementSignal>().Dispatch(newElement);
 
-            ProjectItemFileSystem.CreateFileElement(ref newElement);
+            ProjectItemFileSystem.CreateFileElement(newElement, element.Path, name);
         }
     }
 }

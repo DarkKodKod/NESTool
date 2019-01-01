@@ -33,7 +33,6 @@ namespace NESTool.ViewModels
         }
 
         public ProjectItemType Type { get; set; }
-        public string ParentFolder { get; set; } = "";
         public bool Root { get; set; } = false;
         public bool IsFolder { get; set; } = false;
         public ProjectItem Parent = null;
@@ -51,8 +50,6 @@ namespace NESTool.ViewModels
             sb.Append("Root:" + (Root ? "true" : "false"));
             sb.Append(";");
             sb.Append("IsFolder:" + (IsFolder ? "true" : "false"));
-            sb.Append(";");
-            sb.Append("ParentFolder:" + ParentFolder);
             sb.Append(";");
             sb.Append("Items:");
 
@@ -118,21 +115,7 @@ namespace NESTool.ViewModels
                 {
                     bool changedName = !string.IsNullOrEmpty(_displayName);
 
-                    string validName = value;
-
-                    if (changedName)
-                    {
-                        if (IsFolder)
-                        {
-                            validName = ProjectItemFileSystem.GetValidFolderName(ParentFolder, value);
-                        }
-                        else
-                        {
-                            validName = ProjectItemFileSystem.GetValidFileName(ParentFolder, value, Util.GetExtensionByType(Type));
-                        }
-                    }
-
-                    _displayName = validName;
+                    _displayName = value;
 
                     OnPropertyChanged("DisplayName");
 
@@ -210,9 +193,6 @@ namespace NESTool.ViewModels
                         break;
                     case "IsFolder":
                         item.IsFolder = value == "true";
-                        break;
-                    case "ParentFolder":
-                        item.ParentFolder = value;
                         break;
                     case "Items":
                         Items = new ObservableCollection<ProjectItem>();
@@ -324,7 +304,6 @@ namespace NESTool.ViewModels
             Root = item.Root;
             IsFolder = item.IsFolder;
             Parent = item.Parent;
-            ParentFolder = item.ParentFolder;
             Items = new ObservableCollection<ProjectItem>(item.Items);
         }   
 

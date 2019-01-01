@@ -18,7 +18,7 @@ namespace NESTool.Signals
     public class CreateNewElementSignal : Signal<ProjectItem> { }
 
     // FileSystem
-    public class RegisterFileHandlerSignal : Signal<ProjectItem> { }
+    public class RegisterFileHandlerSignal : Signal<ProjectItem, string> { }
     public class RenameFileSignal : Signal<ProjectItem> { }
 
     // MainWindowViewModel

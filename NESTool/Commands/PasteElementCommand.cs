@@ -44,7 +44,7 @@ namespace NESTool.Commands
                 }
                 else
                 {
-                    newItemPath = ItemSelected.ParentFolder;
+                    newItemPath = ItemSelected.FileHandler.Path;
                 }
 
                 if (newItem.IsFolder)
@@ -59,12 +59,11 @@ namespace NESTool.Commands
                 }
 
                 newItem.DisplayName = name;
-                newItem.ParentFolder = newItemPath;
                 newItem.IsLoaded = true;
 
                 SignalManager.Get<PasteElementSignal>().Dispatch(ItemSelected, newItem);
 
-                ProjectItemFileSystem.CreateFileElement(ref newItem);
+                ProjectItemFileSystem.CreateFileElement(newItem, newItemPath, name);
             }
         }
     }
