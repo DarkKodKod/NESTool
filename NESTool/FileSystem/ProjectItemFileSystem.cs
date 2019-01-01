@@ -213,7 +213,24 @@ namespace NESTool.FileSystem
             return model;
         }
 
-        public static void DeteElement(FileHandler fileHandler)
+        private static void DeleteFolders(ProjectItem item)
+        {
+            foreach (ProjectItem itm in item.Items)
+            {
+                if (itm.IsFolder)
+                {
+                    DeleteFolders(itm);
+                }
+                else
+                {
+                    DeleteElement(itm.FileHandler);
+                }
+            }
+            
+            DeleteElement(item.FileHandler);
+        }
+
+        private static void DeleteElement(FileHandler fileHandler)
         {
             if (fileHandler.Meta == null)
             {
@@ -245,11 +262,24 @@ namespace NESTool.FileSystem
 
                     if (Directory.Exists(itemPath))
                     {
-                        Directory.Delete(itemPath);
+                        Directory.Delete(itemPath, true);
                     }
                 }
 
                 FileStructure.Remove(fileHandler.Meta.GUID);
+            }
+        }
+
+        // todo: when deleting a folder we have to iterate all the sub folders deleting everything!
+        public static void DeteElement(ProjectItem item)
+        {
+            if (item.IsFolder)
+            {
+                DeleteFolders(item);
+            }
+            else
+            {
+                DeleteElement(item.FileHandler);
             }
         }
     }
