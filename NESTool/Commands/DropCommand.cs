@@ -43,7 +43,7 @@ namespace NESTool.Commands
                     return;
                 }
 
-                var dropTarget = treeViewItem.Header as ProjectItem;
+                ProjectItem dropTarget = treeViewItem.Header as ProjectItem;
 
                 if (dropTarget == null || folderViewModel == null)
                 {
