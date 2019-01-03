@@ -14,11 +14,11 @@ namespace NESTool.Commands
         {
             SignalManager.Get<DetachAdornersSignal>().Dispatch();
 
-            var dragEvent = parameter as DragEventArgs;
+            DragEventArgs dragEvent = parameter as DragEventArgs;
 
-            var item = dragEvent.Data.GetData(typeof(ProjectItem)) as ProjectItem;
+            ProjectItem item = dragEvent.Data.GetData(typeof(ProjectItem)) as ProjectItem;
 
-            if (item.Root)
+            if (item.IsRoot)
             {
                 return false;
             }
@@ -28,15 +28,15 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            var dragEvent = parameter as DragEventArgs;
+            DragEventArgs dragEvent = parameter as DragEventArgs;
 
             dragEvent.Handled = true;
 
             if (dragEvent.Data.GetDataPresent(typeof(ProjectItem)))
             {
-                var folderViewModel = dragEvent.Data.GetData(typeof(ProjectItem)) as ProjectItem;
+                ProjectItem folderViewModel = dragEvent.Data.GetData(typeof(ProjectItem)) as ProjectItem;
 
-                var treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)dragEvent.OriginalSource);
+                TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)dragEvent.OriginalSource);
 
                 if (treeViewItem == null)
                 {

@@ -3,10 +3,8 @@ using ArchitectureLibrary.Signals;
 using ArchitectureLibrary.ViewModel;
 using NESTool.CustomTypeConverter;
 using NESTool.Enums;
-using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
-using NESTool.Utils;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -33,7 +31,7 @@ namespace NESTool.ViewModels
         }
 
         public ProjectItemType Type { get; set; }
-        public bool Root { get; set; } = false;
+        public bool IsRoot { get; set; } = false;
         public bool IsFolder { get; set; } = false;
         public ProjectItem Parent = null;
         public ObservableCollection<ProjectItem> Items { get; set; }
@@ -47,7 +45,7 @@ namespace NESTool.ViewModels
             sb.Append(";");
             sb.Append("DisplayName:" + DisplayName);
             sb.Append(";");
-            sb.Append("Root:" + (Root ? "true" : "false"));
+            sb.Append("IsRoot:" + (IsRoot ? "true" : "false"));
             sb.Append(";");
             sb.Append("IsFolder:" + (IsFolder ? "true" : "false"));
             sb.Append(";");
@@ -62,7 +60,7 @@ namespace NESTool.ViewModels
             {
                 sb.Append(Items.Count.ToString());
                 sb.Append(";");
-                foreach (var item in Items)
+                foreach (ProjectItem item in Items)
                 {
                     sb.Append("{");
                     sb.Append(item.GetContent());
@@ -188,8 +186,8 @@ namespace NESTool.ViewModels
                     case "DisplayName":
                         item.DisplayName = value;
                         break;
-                    case "Root":
-                        item.Root = value == "true";
+                    case "IsRoot":
+                        item.IsRoot = value == "true";
                         break;
                     case "IsFolder":
                         item.IsFolder = value == "true";
@@ -240,7 +238,7 @@ namespace NESTool.ViewModels
                                     // last braket?
                                     if (countOpenBrakets == 0)
                                     {
-                                        var itm = ParseAndCreateObject(sb.ToString());
+                                        ProjectItem itm = ParseAndCreateObject(sb.ToString());
                                         itm.Parent = item;
                                         item.Items.Add(itm);
 
@@ -301,7 +299,7 @@ namespace NESTool.ViewModels
         {
             Type = item.Type;
             DisplayName = item.DisplayName;
-            Root = item.Root;
+            IsRoot = item.IsRoot;
             IsFolder = item.IsFolder;
             Parent = item.Parent;
             Items = new ObservableCollection<ProjectItem>(item.Items);

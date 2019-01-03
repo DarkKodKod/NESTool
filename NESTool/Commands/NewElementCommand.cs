@@ -22,7 +22,7 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            var window = parameter as Window;
+            Window window = parameter as Window;
 
             ElementDialog dialog = new ElementDialog();
             dialog.Owner = window;

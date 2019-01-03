@@ -116,7 +116,7 @@ namespace NESTool.ViewModels
 
         public ProjectDialogViewModel()
         {
-            var mappers = ModelManager.Get<MappersModel>();
+            MappersModel mappers = ModelManager.Get<MappersModel>();
 
             Mappers = mappers.Mappers;
             SelectedMapper = mappers.Mappers[0].Id;

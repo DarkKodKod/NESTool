@@ -9,7 +9,7 @@ namespace NESTool.Commands
     {
         public override void Execute(object parameter)
         {
-            var dragEvent = parameter as QueryContinueDragEventArgs;
+            QueryContinueDragEventArgs dragEvent = parameter as QueryContinueDragEventArgs;
 
             if (dragEvent.EscapePressed)
             {

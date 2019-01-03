@@ -141,7 +141,7 @@ namespace NESTool.ViewModels
                 return FindInItemsAndDelete(aPath[index].Items, aPath, index - 1);
             }
 
-            var copy = aPath[index];
+            ProjectItem copy = aPath[index];
 
             aPath[index].Parent.Items.Remove(aPath[index]);
 
@@ -197,7 +197,7 @@ namespace NESTool.ViewModels
 
         private void OnLoadConfigSuccess()
         {
-            var model = ModelManager.Get<NESToolConfigurationModel>();
+            NESToolConfigurationModel model = ModelManager.Get<NESToolConfigurationModel>();
 
             OnUpdateRecentProjects(model.RecentProjects);
 
@@ -206,11 +206,11 @@ namespace NESTool.ViewModels
 
         private void LoadDefaultProject()
         {
-            var config = ModelManager.Get<NESToolConfigurationModel>();
+            NESToolConfigurationModel config = ModelManager.Get<NESToolConfigurationModel>();
 
             if (!string.IsNullOrEmpty(config.DefaultProjectPath))
             {
-                var openProjectCommand = new OpenProjectCommand();
+                OpenProjectCommand openProjectCommand = new OpenProjectCommand();
                 if (openProjectCommand.CanExecute(config.DefaultProjectPath))
                 {
                     openProjectCommand.Execute(config.DefaultProjectPath);
@@ -221,7 +221,7 @@ namespace NESTool.ViewModels
         private void OnCreateProjectSuccess(string projectFullPath)
         {
             // After creating the project now it is time to open it
-            var openProjectCommand = new OpenProjectCommand();
+            OpenProjectCommand openProjectCommand = new OpenProjectCommand();
             if (openProjectCommand.CanExecute(projectFullPath))
             {
                 openProjectCommand.Execute(projectFullPath);
@@ -230,17 +230,17 @@ namespace NESTool.ViewModels
 
         private void OnUpdateRecentProjects(string[] recentProjects)
         {
-            var list = new List<RecentProjectModel>();
+            List<RecentProjectModel> list = new List<RecentProjectModel>();
 
             int index = 1;
 
-            foreach (var project in recentProjects)
+            foreach (string project in recentProjects)
             {
                 if (!string.IsNullOrEmpty(project))
                 {
                     // Extract the name of the folder as our project name
                     int startIndex = project.LastIndexOf("\\");
-                    var projectName = project.Substring(startIndex + 1, project.Length - startIndex - 1);
+                    string projectName = project.Substring(startIndex + 1, project.Length - startIndex - 1);
 
                     list.Add(new RecentProjectModel()
                     {
@@ -259,13 +259,13 @@ namespace NESTool.ViewModels
         {
             ProjectItems = vo.Items;
 
-            var projectName = (string)Application.Current.FindResource(_projectNameKey);
+            string projectName = (string)Application.Current.FindResource(_projectNameKey);
 
             ProjectName = vo.ProjectName;
 
             Title = $"{ vo.ProjectName } - { projectName }";
 
-            var project = ModelManager.Get<ProjectModel>();
+            ProjectModel project = ModelManager.Get<ProjectModel>();
             project.Name = vo.ProjectName;
         }
 
@@ -273,7 +273,7 @@ namespace NESTool.ViewModels
         {
             ProjectItems = null;
 
-            var projectName = (string)Application.Current.FindResource(_projectNameKey);
+            string projectName = (string)Application.Current.FindResource(_projectNameKey);
 
             ProjectName = "";
 
@@ -299,27 +299,27 @@ namespace NESTool.ViewModels
 
         private void OnMouseMove(MouseMoveVO vo)
         {
-            var diff = _startPoint - vo.Position;
+            Vector diff = _startPoint - vo.Position;
 
             if ((_isDragging == false) && Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
             {
-                var treeView = vo.Sender as TreeView;
+                TreeView treeView = vo.Sender as TreeView;
 
-                var treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)vo.OriginalSource);
+                TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)vo.OriginalSource);
 
                 if (treeView == null || treeViewItem == null)
                 {
                     return;
-                }   
+                }
 
-                var folderViewModel = treeView.SelectedItem as ProjectItem;
+                ProjectItem projectItem = treeView.SelectedItem as ProjectItem;
 
-                if (folderViewModel == null)
+                if (projectItem == null || projectItem.IsRoot)
                 {
                     return;
-                }   
+                }
 
-                var dragData = new DataObject(folderViewModel);
+                DataObject dragData = new DataObject(projectItem);
 
                 DragDrop.DoDragDrop(treeViewItem, dragData, DragDropEffects.Move);
 
@@ -331,7 +331,7 @@ namespace NESTool.ViewModels
         {
             if (_dragAdorner == null)
             {
-                var adornerLayer = AdornerLayer.GetAdornerLayer(control);
+                AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(control);
 
                 Point startPosition = eventArgs.GetPosition(control);
 
@@ -348,10 +348,10 @@ namespace NESTool.ViewModels
 
                 if (itemContainer != null)
                 {
-                    var adornerLayer = AdornerLayer.GetAdornerLayer(control);
-                    var point = Util.IsPointInTopHalf(control, eventArgs);
+                    AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(control);
+                    bool isTopHalf = Util.IsPointInTopHalf(control, eventArgs);
 
-                    _insertAdorner = new TreeViewInsertAdorner(point, itemContainer, adornerLayer);
+                    _insertAdorner = new TreeViewInsertAdorner(isTopHalf, itemContainer, adornerLayer);
                 }
             }
         }
@@ -366,7 +366,7 @@ namespace NESTool.ViewModels
 
             if (_dragAdorner != null)
             {
-                var currentPosition = eventArgs.GetPosition(control);
+                Point currentPosition = eventArgs.GetPosition(control);
 
                 _dragAdorner.UpdatePosition(currentPosition.X, currentPosition.Y);
             }
@@ -424,9 +424,9 @@ namespace NESTool.ViewModels
 
         private void OnFindAndCreateElement(ProjectItem newElement)
         {
-            foreach (var item in ProjectItems)
+            foreach (ProjectItem item in ProjectItems)
             {
-                if (item.Root == true && item.Type == newElement.Type)
+                if (item.IsRoot == true && item.Type == newElement.Type)
                 {
                     newElement.Parent = item;
 

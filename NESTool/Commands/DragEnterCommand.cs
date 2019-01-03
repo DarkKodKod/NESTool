@@ -34,7 +34,7 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            var dragEvent = parameter as DragEventArgs;
+            DragEventArgs dragEvent = parameter as DragEventArgs;
 
             TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)dragEvent.OriginalSource);
 

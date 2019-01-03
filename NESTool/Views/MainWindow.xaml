@@ -683,7 +683,7 @@
                             </DataTrigger>
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Root}" Value="False"/>
+                                    <Condition Binding="{Binding IsRoot}" Value="False"/>
                                     <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type TreeViewItem}}}" Value="True"/>
                                     <Condition Binding="{Binding IsInEditMode}" Value="True"/>
                                 </MultiDataTrigger.Conditions>

@@ -144,7 +144,7 @@ namespace NESTool.ViewModels
 
         public ProjectPropertiesDialogViewModel()
         {
-            var mappers = ModelManager.Get<MappersModel>();
+            MappersModel mappers = ModelManager.Get<MappersModel>();
 
             Mappers = mappers.Mappers;
 
@@ -160,7 +160,7 @@ namespace NESTool.ViewModels
             if (_changed == true)
             {
                 // Save all changes
-                var project = ModelManager.Get<ProjectModel>();
+                ProjectModel project = ModelManager.Get<ProjectModel>();
 
                 project.Header.INesMapper = SelectedMapper;
                 project.Header.CHRSize = SelectedCHRSize;
@@ -178,8 +178,8 @@ namespace NESTool.ViewModels
 
         private void ReadProjectData()
         {
-            var project = ModelManager.Get<ProjectModel>();
-            var mappers = ModelManager.Get<MappersModel>();
+            ProjectModel project = ModelManager.Get<ProjectModel>();
+            MappersModel mappers = ModelManager.Get<MappersModel>();
 
             SelectedMapper = project.Header.INesMapper;
             CHRSizes = mappers.Mappers[SelectedMapper].CHR;

@@ -52,13 +52,13 @@ namespace NESTool.ViewModels
 
         private void InitializeElements()
         {
-            var projectModel = ModelManager.Get<ProjectModel>();
+            ProjectModel projectModel = ModelManager.Get<ProjectModel>();
 
-            var banks = (string)Application.Current.FindResource(_folderBanksKey);
-            var characters = (string)Application.Current.FindResource(_folderCharactersKey);
-            var maps = (string)Application.Current.FindResource(_folderMapsKey);
-            var tileSets = (string)Application.Current.FindResource(_folderTileSetsKey);
-            var patternTables = (string)Application.Current.FindResource(_folderPatternTablesKey);
+            string banks = (string)Application.Current.FindResource(_folderBanksKey);
+            string characters = (string)Application.Current.FindResource(_folderCharactersKey);
+            string maps = (string)Application.Current.FindResource(_folderMapsKey);
+            string tileSets = (string)Application.Current.FindResource(_folderTileSetsKey);
+            string patternTables = (string)Application.Current.FindResource(_folderPatternTablesKey);
 
             ElementTypes.Add(new ElementTypeModel()
             {

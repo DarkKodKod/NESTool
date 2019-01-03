@@ -13,9 +13,9 @@ namespace NESTool.Commands
                 return false;
             }
 
-            var values = (object[])parameter;
-            var window = (Window)values[0];
-            var projectName = (string)values[1];
+            object[] values = (object[])parameter;
+            Window window = (Window)values[0];
+            string projectName = (string)values[1];
 
             if (string.IsNullOrEmpty(projectName))
             {
@@ -27,9 +27,9 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            var values = (object[])parameter;
-            var window = (Window)values[0];
-            var projectName = (string)values[1];
+            object[] values = (object[])parameter;
+            Window window = (Window)values[0];
+            string projectName = (string)values[1];
 
             ProjectPropertiesDialog dialog = new ProjectPropertiesDialog();
             dialog.Owner = window;

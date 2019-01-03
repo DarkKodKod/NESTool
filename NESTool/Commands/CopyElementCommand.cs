@@ -11,7 +11,7 @@ namespace NESTool.Commands
                 return false;
             }
 
-            if (ItemSelected.Root)
+            if (ItemSelected.IsRoot)
             {
                 return false;
             }

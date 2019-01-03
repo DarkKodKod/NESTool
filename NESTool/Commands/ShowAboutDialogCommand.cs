@@ -8,7 +8,7 @@ namespace NESTool.Commands
     {
         public override void Execute(object parameter)
         {
-            var window = parameter as Window;
+            Window window = parameter as Window;
 
             AboutDialog dialog = new AboutDialog();
             dialog.Owner = window;

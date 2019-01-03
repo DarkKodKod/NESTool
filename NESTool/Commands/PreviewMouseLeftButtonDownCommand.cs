@@ -12,11 +12,11 @@ namespace NESTool.Commands
     {
         public override void Execute(object parameter)
         {
-            var mouseEvent = parameter as MouseButtonEventArgs;
+            MouseButtonEventArgs mouseEvent = parameter as MouseButtonEventArgs;
 
             TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)mouseEvent.OriginalSource);
 
-            var position = mouseEvent.GetPosition(treeViewItem);
+            Point position = mouseEvent.GetPosition(treeViewItem);
 
             SignalManager.Get<MouseLeftButtonDownSignal>().Dispatch(position);
         }

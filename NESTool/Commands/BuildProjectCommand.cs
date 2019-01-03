@@ -6,7 +6,7 @@ namespace NESTool.Commands
     {
         public override bool CanExecute(object parameter)
         {
-            var projectName = parameter as string;
+            string projectName = parameter as string;
 
             if (string.IsNullOrEmpty(projectName))
             {

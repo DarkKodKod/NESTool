@@ -9,7 +9,7 @@ namespace NESTool.Commands
     {
         public override void Execute(object parameter)
         {
-            var dragEvent = parameter as DragEventArgs;
+            DragEventArgs dragEvent = parameter as DragEventArgs;
 
             SignalManager.Get<DetachAdornersSignal>().Dispatch();
             

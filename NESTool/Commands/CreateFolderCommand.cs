@@ -47,7 +47,7 @@ namespace NESTool.Commands
                 DisplayName = name,
                 IsFolder = true,
                 Parent = ItemSelected,
-                Root = false,
+                IsRoot = false,
                 Type = ItemSelected.Type
             };
 

@@ -13,7 +13,7 @@ namespace NESTool.Commands
     {
         public override void Execute(object parameter)
         {
-            var mouseEvent = parameter as MouseEventArgs;
+            MouseEventArgs mouseEvent = parameter as MouseEventArgs;
 
             if (mouseEvent.LeftButton == MouseButtonState.Pressed)
             {

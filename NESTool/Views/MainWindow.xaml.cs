@@ -95,11 +95,11 @@ namespace NESTool
         private void MainWindowView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Window window = Window.GetWindow(this);
-            var wih = new WindowInteropHelper(window);
+            WindowInteropHelper wih = new WindowInteropHelper(window);
             IntPtr hWnd = wih.Handle;
 
             const int MONITOR_DEFAULTTOPRIMARY = 1;
-            var mi = new MonitorInfoEx();
+            MonitorInfoEx mi = new MonitorInfoEx();
             mi.cbSize = Marshal.SizeOf(mi);
             GetMonitorInfoEx(MonitorFromWindow(hWnd, MONITOR_DEFAULTTOPRIMARY), ref mi);
 
@@ -180,7 +180,7 @@ namespace NESTool
             Stack<ProjectItem> queue = new Stack<ProjectItem>();
             queue.Push(item);
 
-            var parent = item.Parent;
+            ProjectItem parent = item.Parent;
 
             while (parent != null)
             {
@@ -192,11 +192,11 @@ namespace NESTool
 
             while (queue.Count > 0)
             {
-                var dequeue = queue.Pop();
+                ProjectItem dequeue = queue.Pop();
 
                 tvProjectItems.UpdateLayout();
 
-                var treeViewItem = (TreeViewItem)generator.ContainerFromItem(dequeue);
+                TreeViewItem treeViewItem = (TreeViewItem)generator.ContainerFromItem(dequeue);
 
                 bool areThereMoreElement = queue.Count > 0 || item.Items.Count > 0;
 
@@ -215,7 +215,7 @@ namespace NESTool
                 item.IsLoaded = true;
                 item.IsSelected = true;
 
-                using (var command = new EnableRenameElementCommand())
+                using (EnableRenameElementCommand command = new EnableRenameElementCommand())
                 {
                     command.Execute(item);
                 }

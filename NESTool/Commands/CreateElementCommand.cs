@@ -38,7 +38,7 @@ namespace NESTool.Commands
             {
                 DisplayName = name,
                 IsFolder = false,
-                Root = false,
+                IsRoot = false,
                 Type = element.Type
             };
 

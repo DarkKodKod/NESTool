@@ -9,7 +9,7 @@ namespace NESTool.Commands
     {
         public override void Execute(object parameter)
         {
-            var dialog = new CommonOpenFileDialog();
+            CommonOpenFileDialog dialog = new CommonOpenFileDialog();
             dialog.Title = "Select folder";
             dialog.IsFolderPicker = true;
             dialog.InitialDirectory = parameter as string;

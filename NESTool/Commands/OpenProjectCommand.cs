@@ -30,7 +30,7 @@ namespace NESTool.Commands
             else
             {
                 // Check if the project file exists in the folder before open the project
-                var projectFileName = (string)Application.Current.FindResource(_projectFileNameKey);
+                string projectFileName = (string)Application.Current.FindResource(_projectFileNameKey);
 
                 path = Path.Combine(path, projectFileName);
 
@@ -51,7 +51,7 @@ namespace NESTool.Commands
             if (!string.IsNullOrWhiteSpace(path))
             {
                 // Check if the project file exists in the folder before open the project
-                var projectFileName = (string)Application.Current.FindResource(_projectFileNameKey);
+                string projectFileName = (string)Application.Current.FindResource(_projectFileNameKey);
 
                 string fullPath = Path.Combine(path, projectFileName);
 
@@ -59,7 +59,7 @@ namespace NESTool.Commands
                 {
                     // Extract the name of the folder as our project name
                     int startIndex = path.LastIndexOf("\\");
-                    var projectName = path.Substring(startIndex + 1, path.Length - startIndex - 1);
+                    string projectName = path.Substring(startIndex + 1, path.Length - startIndex - 1);
 
                     LoadProject(path, fullPath, projectName);
                 }
@@ -86,7 +86,7 @@ namespace NESTool.Commands
 
         private void LoadProject(string directoryPath, string projectFullPath, string projectName)
         {
-            var projectModel = ModelManager.Get<ProjectModel>();
+            ProjectModel projectModel = ModelManager.Get<ProjectModel>();
 
             // load project configuration file
             projectModel.Load(directoryPath, projectFullPath);
@@ -109,7 +109,7 @@ namespace NESTool.Commands
         {
             foreach (DirectoryInfo directory in directories)
             {
-                var item = new ProjectItem()
+                ProjectItem item = new ProjectItem()
                 {
                     DisplayName = directory.Name,
                     IsLoaded = true
@@ -122,14 +122,14 @@ namespace NESTool.Commands
                     ext = Util.GetFolderExtension(directory.Name);
 
                     item.Parent = null;
-                    item.Root = true;
+                    item.IsRoot = true;
                 }
                 else
                 {
                     ext = extension;
 
                     item.Parent = parent;
-                    item.Root = false;
+                    item.IsRoot = false;
                 }
 
                 item.Type = Util.GetItemType(ext);
@@ -147,7 +147,7 @@ namespace NESTool.Commands
 
                     ScanDirectories(subFolders, ref subItems, item, ext);
 
-                    foreach (var element in subItems)
+                    foreach (ProjectItem element in subItems)
                     {
                         item.Items.Add(element);
                     }
@@ -158,9 +158,9 @@ namespace NESTool.Commands
 
                 foreach (FileInfo file in Files)
                 {
-                    var displayName = Path.GetFileNameWithoutExtension(file.Name);
+                    string displayName = Path.GetFileNameWithoutExtension(file.Name);
 
-                    var fileItem = new ProjectItem()
+                    ProjectItem fileItem = new ProjectItem()
                     {
                         DisplayName = displayName,
                         Type = Util.GetItemType(ext),
@@ -180,7 +180,7 @@ namespace NESTool.Commands
 
         private void UpdateConfigurations(string projectFullPath)
         {
-            var model = ModelManager.Get<NESToolConfigurationModel>();
+            NESToolConfigurationModel model = ModelManager.Get<NESToolConfigurationModel>();
 
             if (model.DefaultProjectPath != projectFullPath)
             {

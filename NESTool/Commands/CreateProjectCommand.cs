@@ -1,7 +1,6 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Model;
 using ArchitectureLibrary.Signals;
-using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
 using System.IO;
@@ -25,9 +24,9 @@ namespace NESTool.Commands
                 return false;
             }
 
-            var values = (object[])parameter;
-            var path = (string)values[0];
-            var projectName = (string)values[1];
+            object[] values = (object[])parameter;
+            string path = (string)values[0];
+            string projectName = (string)values[1];
 
             // It is needed the name of the project to continue
             if (string.IsNullOrEmpty(projectName))
@@ -53,15 +52,15 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            var values = (object[])parameter;
-            var path = (string)values[0];
-            var projectName = (string)values[1];
+            object[] values = (object[])parameter;
+            string path = (string)values[0];
+            string projectName = (string)values[1];
 
-            var prgSize = (int)values[2];
-            var chrSize = (int)values[3];
-            var mapperId = (int)values[4];
+            int prgSize = (int)values[2];
+            int chrSize = (int)values[3];
+            int mapperId = (int)values[4];
 
-            var projectFullPath = Path.Combine(path, projectName);
+            string projectFullPath = Path.Combine(path, projectName);
 
             CreateProject(projectFullPath, prgSize, chrSize, mapperId);
 
@@ -72,13 +71,13 @@ namespace NESTool.Commands
         {
             Directory.CreateDirectory(projectFullPath);
 
-            var projectFileName = (string)Application.Current.FindResource(_projectFileNameKey);
+            string projectFileName = (string)Application.Current.FindResource(_projectFileNameKey);
 
-            var folderBanks = (string)Application.Current.FindResource(_folderBanksKey);
-            var folderCharacters = (string)Application.Current.FindResource(_folderCharactersKey);
-            var folderMaps = (string)Application.Current.FindResource(_folderMapsKey);
-            var folderTileSets = (string)Application.Current.FindResource(_folderTileSetsKey);
-            var folderPatternTables = (string)Application.Current.FindResource(_folderPatternTablesKey);
+            string folderBanks = (string)Application.Current.FindResource(_folderBanksKey);
+            string folderCharacters = (string)Application.Current.FindResource(_folderCharactersKey);
+            string folderMaps = (string)Application.Current.FindResource(_folderMapsKey);
+            string folderTileSets = (string)Application.Current.FindResource(_folderTileSetsKey);
+            string folderPatternTables = (string)Application.Current.FindResource(_folderPatternTablesKey);
 
             string fullPathToProjectFile = Path.Combine(projectFullPath, projectFileName);
 
@@ -90,7 +89,7 @@ namespace NESTool.Commands
             Directory.CreateDirectory(Path.Combine(projectFullPath, folderTileSets));
             Directory.CreateDirectory(Path.Combine(projectFullPath, folderPatternTables));
 
-            var model = ModelManager.Get<ProjectModel>();
+            ProjectModel model = ModelManager.Get<ProjectModel>();
 
             // In case there is already a model loaded, we want to reset it to its default state
             model.Reset();

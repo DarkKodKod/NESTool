@@ -62,7 +62,7 @@ namespace NESTool.Models
                 Save();
             }
 
-            var vo = new WindowVO() { SizeX = WindowSizeX, SizeY = WindowSizeY, IsFullScreen = FullScreen };
+            WindowVO vo = new WindowVO() { SizeX = WindowSizeX, SizeY = WindowSizeY, IsFullScreen = FullScreen };
 
             SignalManager.Get<LoadConfigSuccessSignal>().Dispatch();
             SignalManager.Get<SetUpWindowPropertiesSignal>().Dispatch(vo);
@@ -87,9 +87,9 @@ namespace NESTool.Models
         /// <param name="projectFullPath"></param>
         public void InsertToRecentProjects(string projectFullPath)
         {
-            var tmpArray = RecentProjects;
+            string[] tmpArray = RecentProjects;
 
-            var newArray = new string[MaxRencetProjectsCount];
+            string[] newArray = new string[MaxRencetProjectsCount];
             newArray[0] = projectFullPath;
 
             int count = 1;
