@@ -50,6 +50,9 @@ namespace NESTool.Commands
                     return;
                 }
 
+                // It is important to deselect the dragged object to select it again when the whole process finishes
+                draggingObject.IsSelected = false;
+
                 string name = string.Empty;
                 string destinationFolder = string.Empty;
 
@@ -60,6 +63,11 @@ namespace NESTool.Commands
                 else
                 {
                     destinationFolder = dropTarget.FileHandler.Path;
+                }
+
+                if (destinationFolder == draggingObject.FileHandler.Path)
+                {
+                    return;
                 }
 
                 if (draggingObject.IsFolder)

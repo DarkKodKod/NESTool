@@ -457,6 +457,8 @@ namespace NESTool.ViewModels
                 SignalManager.Get<UpdateFolderSignal>().Dispatch(targetElement.Parent);
             }
 
+            draggedElement.IsSelected = true;
+
             OnPropertyChanged("ProjectItems");
         }
         #endregion
