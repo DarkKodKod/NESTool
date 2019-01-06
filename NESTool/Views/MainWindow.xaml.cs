@@ -13,6 +13,7 @@ using NESTool.VOs;
 using NESTool.ViewModels;
 using System.Collections.Generic;
 using NESTool.Commands;
+using NESTool.Utils;
 
 namespace NESTool
 {
@@ -266,6 +267,20 @@ namespace NESTool
                     item.IsInEditMode = false;
                 }
             }
+        }
+
+        private void EditableTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+
+            string previousText = tb.Text;
+
+            if (tb.SelectedText.Length > 0)
+            {
+                previousText = tb.Text.Replace(tb.SelectedText, string.Empty);
+            }
+
+            e.Handled = !Util.ValidFileName(previousText + e.Text);
         }
     }
 }

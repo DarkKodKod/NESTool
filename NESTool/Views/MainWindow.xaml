@@ -659,6 +659,7 @@
                             <TextBox x:Name="editableTextBox" Visibility="Collapsed" MinWidth="100" 
                                      Text="{Binding DisplayName, UpdateSourceTrigger=LostFocus}"
                                      IsVisibleChanged="EditableTextBox_IsVisibleChanged"
+                                     PreviewTextInput="EditableTextBox_PreviewTextInput"
                                      LostFocus="EditableTextBox_LostFocus"
                                      KeyDown="EditableTextBox_KeyDown"/>
                         </StackPanel>
