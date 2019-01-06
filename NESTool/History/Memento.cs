@@ -1,6 +1,7 @@
 ﻿namespace NESTool.History
 {
-    public static class HistoryManager
+    public class Memento
     {
+        
     }
 }
