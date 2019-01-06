@@ -73,6 +73,8 @@ namespace NESTool.FileSystem
                     if (Directory.Exists(itemPath))
                     {
                         Directory.Move(itemPath, itemNewPath);
+
+                        UpdatePath(item, itemNewPath);
                     }
                 }
             }
@@ -260,20 +262,47 @@ namespace NESTool.FileSystem
                 destFolder = Path.Combine(targetElement.FileHandler.Path);
             }
 
-            string fileName = draggedElement.FileHandler.Name + draggedElement.FileHandler.FileModel.FileExtension;
             string metaName = draggedElement.FileHandler.Name + draggedElement.FileHandler.Meta.FileExtension;
-
-            string originalFile = Path.Combine(draggedElement.FileHandler.Path, fileName);
-            string destinationFile = Path.Combine(destFolder, fileName);
 
             string originalMeta = Path.Combine(draggedElement.FileHandler.Path, metaName);
             string destinationMeta = Path.Combine(destFolder, metaName);
 
+            File.Move(originalMeta, destinationMeta);
+
+            if (draggedElement.IsFolder)
+            {
+                string originalPath = Path.Combine(draggedElement.FileHandler.Path, draggedElement.FileHandler.Name);
+                string destinationPath = Path.Combine(destFolder, draggedElement.FileHandler.Name);
+
+                Directory.Move(originalPath, destinationPath);
+
+                UpdatePath(draggedElement, destinationPath);
+            }
+            else
+            {
+                string fileName = draggedElement.FileHandler.Name + draggedElement.FileHandler.FileModel.FileExtension;
+
+                string originalFile = Path.Combine(draggedElement.FileHandler.Path, fileName);
+                string destinationFile = Path.Combine(destFolder, fileName);
+
+                File.Move(originalFile, destinationFile);
+            }
+
             draggedElement.FileHandler.Path = destFolder;
             draggedElement.FileHandler.Name = draggedElement.DisplayName;
+        }
 
-            File.Move(originalFile, destinationFile);
-            File.Move(originalMeta, destinationMeta);
+        private static void UpdatePath(ProjectItem rootElement, string destinationPath)
+        {
+            foreach (ProjectItem item in rootElement.Items)
+            {
+                item.FileHandler.Path = destinationPath;
+
+                if (item.IsFolder)
+                {
+                    UpdatePath(item, Path.Combine(destinationPath, item.DisplayName));
+                }
+            }
         }
 
         private static void DeleteFolders(ProjectItem item)

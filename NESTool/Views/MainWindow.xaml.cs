@@ -14,6 +14,7 @@ using NESTool.ViewModels;
 using System.Collections.Generic;
 using NESTool.Commands;
 using NESTool.Utils;
+using NESTool.FileSystem;
 
 namespace NESTool
 {
@@ -258,6 +259,22 @@ namespace NESTool
                 if (e.Key == Key.Enter)
                 {
                     item.IsInEditMode = false;
+
+                    string name = tb.Text;
+
+                    // now check if the name is not already taken
+                    if (item.IsFolder)
+                    {
+                        name = ProjectItemFileSystem.GetValidFolderName(item.FileHandler.Path, tb.Text);
+                    }
+                    else
+                    {
+                        string extension = Util.GetExtensionByType(item.Type);
+
+                        name = ProjectItemFileSystem.GetValidFileName(item.FileHandler.Path, tb.Text, extension);
+                    }
+
+                    tb.Text = name;
                 }
 
                 if (e.Key == Key.Escape)
