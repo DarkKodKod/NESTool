@@ -46,7 +46,7 @@ namespace NESTool.Commands
             {
                 if (treeViewItem.DataContext is ProjectItem element)
                 {
-                    if (element.IsFolder && !treeViewItem.IsExpanded)
+                    if (element.IsFolder && element.Items.Count > 0 && !treeViewItem.IsExpanded)
                     {
                         if (_folderId != element.FileHandler.Meta.GUID)
                         {

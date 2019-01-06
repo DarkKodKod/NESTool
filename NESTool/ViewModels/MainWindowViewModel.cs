@@ -128,6 +128,7 @@ namespace NESTool.ViewModels
             SignalManager.Get<DeleteElementSignal>().AddListener(OnDeleteElement);
             SignalManager.Get<PasteElementSignal>().AddListener(OnPasteElement);
             SignalManager.Get<FindAndCreateElementSignal>().AddListener(OnFindAndCreateElement);
+            SignalManager.Get<DropElementSignal>().AddListener(OnDropElement);
             #endregion
         }
 
@@ -303,18 +304,14 @@ namespace NESTool.ViewModels
 
             if ((_isDragging == false) && Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
             {
-                TreeView treeView = vo.Sender as TreeView;
-
                 TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)vo.OriginalSource);
 
-                if (treeView == null || treeViewItem == null)
+                if (!(vo.Sender is TreeView treeView) || treeViewItem == null)
                 {
                     return;
                 }
 
-                ProjectItem projectItem = treeView.SelectedItem as ProjectItem;
-
-                if (projectItem == null || projectItem.IsRoot)
+                if (!(treeView.SelectedItem is ProjectItem projectItem) || projectItem.IsRoot)
                 {
                     return;
                 }
@@ -437,6 +434,30 @@ namespace NESTool.ViewModels
                     break;
                 }
             }
+        }
+
+        private void OnDropElement(ProjectItem targetElement, ProjectItem draggedElement)
+        {
+            draggedElement.Parent.Items.Remove(draggedElement);
+
+            SignalManager.Get<UpdateFolderSignal>().Dispatch(draggedElement.Parent);
+
+            if (targetElement.IsFolder)
+            {
+                draggedElement.Parent = targetElement;
+                targetElement.Items.Add(draggedElement);
+
+                SignalManager.Get<UpdateFolderSignal>().Dispatch(targetElement);
+            }
+            else
+            {
+                draggedElement.Parent = targetElement.Parent;
+                targetElement.Parent.Items.Add(draggedElement);
+
+                SignalManager.Get<UpdateFolderSignal>().Dispatch(targetElement.Parent);
+            }
+
+            OnPropertyChanged("ProjectItems");
         }
         #endregion
     }

@@ -22,6 +22,7 @@ namespace NESTool.FileSystem
         {
             SignalManager.Get<RegisterFileHandlerSignal>().AddListener(OnRegisterFileHandler);
             SignalManager.Get<RenameFileSignal>().AddListener(OnRenameFile);
+            SignalManager.Get<MoveElementSignal>().AddListener(OnMoveElement);
         }
 
         private static string GetMetaExtension()
@@ -244,6 +245,35 @@ namespace NESTool.FileSystem
             Toml.WriteFile(model, filePath);
 
             return model;
+        }
+
+        private static void OnMoveElement(ProjectItem targetElement, ProjectItem draggedElement)
+        {
+            string destFolder = string.Empty;
+
+            if (targetElement.IsFolder)
+            {
+                destFolder = Path.Combine(targetElement.FileHandler.Path, targetElement.FileHandler.Name);
+            }
+            else
+            {
+                destFolder = Path.Combine(targetElement.FileHandler.Path);
+            }
+
+            string fileName = draggedElement.FileHandler.Name + draggedElement.FileHandler.FileModel.FileExtension;
+            string metaName = draggedElement.FileHandler.Name + draggedElement.FileHandler.Meta.FileExtension;
+
+            string originalFile = Path.Combine(draggedElement.FileHandler.Path, fileName);
+            string destinationFile = Path.Combine(destFolder, fileName);
+
+            string originalMeta = Path.Combine(draggedElement.FileHandler.Path, metaName);
+            string destinationMeta = Path.Combine(destFolder, metaName);
+
+            draggedElement.FileHandler.Path = destFolder;
+            draggedElement.FileHandler.Name = draggedElement.DisplayName;
+
+            File.Move(originalFile, destinationFile);
+            File.Move(originalMeta, destinationMeta);
         }
 
         private static void DeleteFolders(ProjectItem item)

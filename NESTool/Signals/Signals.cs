@@ -13,6 +13,7 @@ namespace NESTool.Signals
 
     // Edit
     public class PasteElementSignal : Signal<ProjectItem, ProjectItem> { }
+    public class MoveElementSignal : Signal<ProjectItem, ProjectItem> { }
     public class DeleteElementSignal : Signal<ProjectItem> { }
     public class FindAndCreateElementSignal : Signal<ProjectItem> { }
     public class CreateNewElementSignal : Signal<ProjectItem> { }
@@ -38,4 +39,5 @@ namespace NESTool.Signals
     public class DetachAdornersSignal : Signal { }
     public class SizeChangedSingal : Signal<SizeChangedEventArgs, bool> { }
     public class CreateProjectSuccessSignal : Signal<string> { }
+    public class DropElementSignal : Signal<ProjectItem, ProjectItem> { }
 }

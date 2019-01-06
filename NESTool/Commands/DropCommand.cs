@@ -1,8 +1,10 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
+using NESTool.FileSystem;
 using NESTool.Signals;
 using NESTool.Utils;
 using NESTool.ViewModels;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -34,7 +36,7 @@ namespace NESTool.Commands
 
             if (dragEvent.Data.GetDataPresent(typeof(ProjectItem)))
             {
-                ProjectItem folderViewModel = dragEvent.Data.GetData(typeof(ProjectItem)) as ProjectItem;
+                ProjectItem draggingObject = dragEvent.Data.GetData(typeof(ProjectItem)) as ProjectItem;
 
                 TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)dragEvent.OriginalSource);
 
@@ -43,14 +45,38 @@ namespace NESTool.Commands
                     return;
                 }
 
-                ProjectItem dropTarget = treeViewItem.Header as ProjectItem;
-
-                if (dropTarget == null || folderViewModel == null)
+                if (!(treeViewItem.Header is ProjectItem dropTarget) || draggingObject == null)
                 {
                     return;
                 }
 
-                //folderViewModel.Parent = dropTarget;
+                string name = string.Empty;
+                string destinationFolder = string.Empty;
+
+                if (dropTarget.IsFolder)
+                {
+                    destinationFolder = Path.Combine(dropTarget.FileHandler.Path, dropTarget.FileHandler.Name);
+                }
+                else
+                {
+                    destinationFolder = dropTarget.FileHandler.Path;
+                }
+
+                if (draggingObject.IsFolder)
+                {
+                    name = ProjectItemFileSystem.GetValidFolderName(destinationFolder, draggingObject.DisplayName);
+                }
+                else
+                {
+                    string extension = Util.GetExtensionByType(draggingObject.Type);
+
+                    name = ProjectItemFileSystem.GetValidFileName(destinationFolder, draggingObject.DisplayName, extension);
+                }
+
+                draggingObject.DisplayName = name;
+
+                SignalManager.Get<DropElementSignal>().Dispatch(dropTarget, draggingObject);
+                SignalManager.Get<MoveElementSignal>().Dispatch(dropTarget, draggingObject);
             }
 
             dragEvent.Effects = DragDropEffects.None;
