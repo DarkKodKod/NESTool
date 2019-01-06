@@ -123,7 +123,7 @@ namespace NESTool.ViewModels
             SignalManager.Get<UpdateAdornersSignal>().AddListener(OnUpdateAdorners);
             SignalManager.Get<InitializeAdornersSignal>().AddListener(OnInitializeAdorners);
             SignalManager.Get<DetachAdornersSignal>().AddListener(OnDetachAdorners);
-            SignalManager.Get<SizeChangedSingal>().AddListener(OnSizeChanged);
+            SignalManager.Get<SizeChangedSignal>().AddListener(OnSizeChanged);
             SignalManager.Get<CreateProjectSuccessSignal>().AddListener(OnCreateProjectSuccess);
             SignalManager.Get<DeleteElementSignal>().AddListener(OnDeleteElement);
             SignalManager.Get<PasteElementSignal>().AddListener(OnPasteElement);

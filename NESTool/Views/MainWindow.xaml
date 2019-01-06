@@ -463,7 +463,7 @@
                         </Image.Style>
                     </Image>
                 </Button>
-                <Button ToolTip="Redo" ToolBar.OverflowMode="AsNeeded" Command="{Binding UndoCommand}">
+                <Button ToolTip="Redo" ToolBar.OverflowMode="AsNeeded" Command="{Binding RedoCommand}">
                     <Image Width="16" Height="16" Source="/resources/redo.png">
                         <Image.Style>
                             <Style TargetType="Image">

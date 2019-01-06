@@ -141,9 +141,12 @@
     <Compile Include="Commands\UndoCommand.cs" />
     <Compile Include="CustomTypeConverter\ProjectItemTypeConverter.cs" />
     <Compile Include="FileSystem\ProjectItemFileSystem.cs" />
+    <Compile Include="History\HistoryActions\DeleteProjectItemHistoryAction.cs" />
     <Compile Include="History\Caretaker.cs" />
-    <Compile Include="History\IUndoRedo.cs" />
+    <Compile Include="History\HistoryActions\IHistoryAction.cs" />
+    <Compile Include="History\HistoryManager.cs" />
     <Compile Include="History\Memento.cs" />
+    <Compile Include="History\Originator.cs" />
     <Compile Include="Models\AFileModel.cs" />
     <Compile Include="Models\BankModel.cs" />
     <Compile Include="Models\CharacterModel.cs" />

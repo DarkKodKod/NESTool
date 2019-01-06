@@ -1,4 +1,5 @@
 ﻿using ArchitectureLibrary.Signals;
+using NESTool.History.HistoryActions;
 using NESTool.ViewModels;
 using NESTool.VOs;
 using System.Windows;
@@ -37,7 +38,10 @@ namespace NESTool.Signals
     public class UpdateAdornersSignal : Signal<TreeViewItem, DragEventArgs> { }
     public class InitializeAdornersSignal : Signal<TreeViewItem, DragEventArgs> { }
     public class DetachAdornersSignal : Signal { }
-    public class SizeChangedSingal : Signal<SizeChangedEventArgs, bool> { }
+    public class SizeChangedSignal : Signal<SizeChangedEventArgs, bool> { }
     public class CreateProjectSuccessSignal : Signal<string> { }
     public class DropElementSignal : Signal<ProjectItem, ProjectItem> { }
+
+    // History
+    public class RegisterHistoryActionSignal : Signal<IHistoryAction> { }
 }

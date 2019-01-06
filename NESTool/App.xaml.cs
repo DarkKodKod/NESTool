@@ -1,4 +1,5 @@
 ﻿using NESTool.FileSystem;
+using NESTool.History;
 using System.Windows;
 
 namespace NESTool
@@ -13,6 +14,7 @@ namespace NESTool
             base.OnStartup(e);
 
             ProjectItemFileSystem.Initialize();
+            HistoryManager.Initialize();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ArchitectureLibrary.Signals;
 using NESTool.FileSystem;
+using NESTool.History.HistoryActions;
 using NESTool.Signals;
 
 namespace NESTool.Commands
@@ -31,6 +32,8 @@ namespace NESTool.Commands
             ProjectItemFileSystem.DeteElement(ItemSelected);
 
             SignalManager.Get<DeleteElementSignal>().Dispatch(ItemSelected);
+
+            SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(new DeleteProjectItemHitoryAction(ItemSelected.FileHandler.Path));
         }
     }
 }

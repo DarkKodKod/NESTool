@@ -9,11 +9,13 @@ namespace NESTool.History
 
         public Memento GetUndoMemento()
         {
-            if (_undoStack.Count >= 2)
+            if (_undoStack.Count > 0)
             {
-                _redoStack.Push(_undoStack.Pop());
+                Memento memento = _undoStack.Pop();
 
-                return _undoStack.Peek();
+                _redoStack.Push(memento);
+
+                return memento;
             }
             else
             {
@@ -23,7 +25,7 @@ namespace NESTool.History
 
         public Memento GetRedoMemento()
         {
-            if (_redoStack.Count != 0)
+            if (_redoStack.Count > 0)
             {
                 Memento m = _redoStack.Pop();
                 _undoStack.Push(m);
@@ -46,7 +48,7 @@ namespace NESTool.History
 
         public bool IsUndoPossible()
         {
-            if (_undoStack.Count >= 2)
+            if (_undoStack.Count > 0)
             {
                 return true;
             }
@@ -58,7 +60,7 @@ namespace NESTool.History
 
         public bool IsRedoPossible()
         {
-            if (_redoStack.Count != 0)
+            if (_redoStack.Count > 0)
             {
                 return true;
             }

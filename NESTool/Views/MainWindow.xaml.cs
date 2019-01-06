@@ -116,7 +116,7 @@ namespace NESTool
 
             bool fullScreen = !((windowHeight == monitorHeight) && (windowWidth == monitorWidth));
 
-            SignalManager.Get<SizeChangedSingal>().Dispatch(e, fullScreen);
+            SignalManager.Get<SizeChangedSignal>().Dispatch(e, fullScreen);
         }
 
         private void CenterWindowOnScreen()
@@ -262,19 +262,22 @@ namespace NESTool
 
                     string name = tb.Text;
 
-                    // now check if the name is not already taken
-                    if (item.IsFolder)
+                    if (name != item.DisplayName)
                     {
-                        name = ProjectItemFileSystem.GetValidFolderName(item.FileHandler.Path, tb.Text);
-                    }
-                    else
-                    {
-                        string extension = Util.GetExtensionByType(item.Type);
+                        // now check if the name is not already taken
+                        if (item.IsFolder)
+                        {
+                            name = ProjectItemFileSystem.GetValidFolderName(item.FileHandler.Path, tb.Text);
+                        }
+                        else
+                        {
+                            string extension = Util.GetExtensionByType(item.Type);
 
-                        name = ProjectItemFileSystem.GetValidFileName(item.FileHandler.Path, tb.Text, extension);
-                    }
+                            name = ProjectItemFileSystem.GetValidFileName(item.FileHandler.Path, tb.Text, extension);
+                        }
 
-                    tb.Text = name;
+                        tb.Text = name;
+                    }
                 }
 
                 if (e.Key == Key.Escape)
