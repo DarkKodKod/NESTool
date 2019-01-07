@@ -141,9 +141,15 @@
     <Compile Include="Commands\UndoCommand.cs" />
     <Compile Include="CustomTypeConverter\ProjectItemTypeConverter.cs" />
     <Compile Include="FileSystem\ProjectItemFileSystem.cs" />
+    <Compile Include="History\HistoryActions\CreateNewElementHistoryAction.cs" />
+    <Compile Include="History\HistoryActions\CreateNewFolderHistoryAction.cs" />
     <Compile Include="History\HistoryActions\DeleteProjectItemHistoryAction.cs" />
     <Compile Include="History\Caretaker.cs" />
+    <Compile Include="History\HistoryActions\DuplicateProjectItemHistoryAction.cs" />
     <Compile Include="History\HistoryActions\IHistoryAction.cs" />
+    <Compile Include="History\HistoryActions\MoveProjectItemHistoryAction.cs" />
+    <Compile Include="History\HistoryActions\PasteProjectItemHistoryAction.cs" />
+    <Compile Include="History\HistoryActions\RenameProjectItemHistoryAction.cs" />
     <Compile Include="History\HistoryManager.cs" />
     <Compile Include="History\Memento.cs" />
     <Compile Include="History\Originator.cs" />

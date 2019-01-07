@@ -1,22 +1,31 @@
-﻿namespace NESTool.History.HistoryActions
+﻿using ArchitectureLibrary.Signals;
+using NESTool.FileSystem;
+using NESTool.Signals;
+using NESTool.ViewModels;
+
+namespace NESTool.History.HistoryActions
 {
     public class DeleteProjectItemHitoryAction : IHistoryAction
     {
-        private readonly string _path = string.Empty;
+        private readonly ProjectItem _item;
 
-        public DeleteProjectItemHitoryAction(string path)
+        public DeleteProjectItemHitoryAction(ProjectItem item)
         {
-            _path = path;
+            _item = item;
         }
 
         public void Redo()
         {
-            // Delete file from path _path;
+            ProjectItemFileSystem.DeteElement(_item);
+
+            SignalManager.Get<DeleteElementSignal>().Dispatch(_item);
         }
 
         public void Undo()
         {
-            // Restore deleted file from path _path
+            SignalManager.Get<PasteElementSignal>().Dispatch(_item.Parent, _item);
+
+            ProjectItemFileSystem.CreateElement(_item, _item.FileHandler.Path, _item.DisplayName);
         }
     }
 }

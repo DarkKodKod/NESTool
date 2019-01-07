@@ -29,11 +29,11 @@ namespace NESTool.Commands
                 return;
             }
 
+            SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(new DeleteProjectItemHitoryAction(ItemSelected));
+
             ProjectItemFileSystem.DeteElement(ItemSelected);
 
             SignalManager.Get<DeleteElementSignal>().Dispatch(ItemSelected);
-
-            SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(new DeleteProjectItemHitoryAction(ItemSelected.FileHandler.Path));
         }
     }
 }
