@@ -1,6 +1,7 @@
-﻿using NESTool.ViewModels;
+﻿using ArchitectureLibrary.History;
+using NESTool.ViewModels;
 
-namespace NESTool.History.HistoryActions
+namespace NESTool.HistoryActions
 {
     public class RenameProjectItemHistoryAction : IHistoryAction
     {

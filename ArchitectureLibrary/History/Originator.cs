@@ -1,6 +1,4 @@
-﻿using NESTool.History.HistoryActions;
-
-namespace NESTool.History
+﻿namespace ArchitectureLibrary.History
 {
     public class Originator
     {

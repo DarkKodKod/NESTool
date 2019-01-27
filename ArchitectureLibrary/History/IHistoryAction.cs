@@ -1,4 +1,4 @@
-﻿namespace NESTool.History.HistoryActions
+﻿namespace ArchitectureLibrary.History
 {
     public interface IHistoryAction
     {

@@ -1,5 +1,5 @@
-﻿using NESTool.FileSystem;
-using NESTool.History;
+﻿using ArchitectureLibrary.History;
+using NESTool.FileSystem;
 using System.Windows;
 
 namespace NESTool

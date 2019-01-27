@@ -1,6 +1,7 @@
-﻿using ArchitectureLibrary.Signals;
+﻿using ArchitectureLibrary.History.Signals;
+using ArchitectureLibrary.Signals;
 using NESTool.FileSystem;
-using NESTool.History.HistoryActions;
+using NESTool.HistoryActions;
 using NESTool.Signals;
 using NESTool.Utils;
 using NESTool.ViewModels;

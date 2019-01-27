@@ -51,6 +51,12 @@
     <Compile Include="ClipBoard\IClipboardable.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="FXs\GrayscaleEffect.cs" />
+    <Compile Include="History\Caretaker.cs" />
+    <Compile Include="History\HistoryManager.cs" />
+    <Compile Include="History\IHistoryAction.cs" />
+    <Compile Include="History\Memento.cs" />
+    <Compile Include="History\Originator.cs" />
+    <Compile Include="History\Signals\Signals.cs" />
     <Compile Include="Managers\AManager.cs" />
     <Compile Include="Model\IModel.cs" />
     <Compile Include="Model\ModelManager.cs" />

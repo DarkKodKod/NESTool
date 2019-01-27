@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NESTool.History
+namespace ArchitectureLibrary.History
 {
     public class Caretaker
     {

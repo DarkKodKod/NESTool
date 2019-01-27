@@ -1,5 +1,5 @@
 ﻿using ArchitectureLibrary.Commands;
-using NESTool.History;
+using ArchitectureLibrary.History;
 
 namespace NESTool.Commands
 {

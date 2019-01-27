@@ -1,15 +1,16 @@
-﻿using ArchitectureLibrary.Signals;
+﻿using ArchitectureLibrary.History;
+using ArchitectureLibrary.Signals;
 using NESTool.FileSystem;
 using NESTool.Signals;
 using NESTool.ViewModels;
 
-namespace NESTool.History.HistoryActions
+namespace NESTool.HistoryActions
 {
-    public class DuplicateProjectItemHistoryAction : IHistoryAction
+    public class PasteProjectItemHistoryAction : IHistoryAction
     {
         private readonly ProjectItem _item;
 
-        public DuplicateProjectItemHistoryAction(ProjectItem item)
+        public PasteProjectItemHistoryAction(ProjectItem item)
         {
             _item = item;
         }

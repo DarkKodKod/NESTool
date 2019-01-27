@@ -1,5 +1,4 @@
 ﻿using ArchitectureLibrary.Signals;
-using NESTool.History.HistoryActions;
 using NESTool.ViewModels;
 using NESTool.VOs;
 using System.Windows;
@@ -41,7 +40,4 @@ namespace NESTool.Signals
     public class SizeChangedSignal : Signal<SizeChangedEventArgs, bool> { }
     public class CreateProjectSuccessSignal : Signal<string> { }
     public class DropElementSignal : Signal<ProjectItem, ProjectItem> { }
-
-    // History
-    public class RegisterHistoryActionSignal : Signal<IHistoryAction> { }
 }

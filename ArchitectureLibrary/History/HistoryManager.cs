@@ -1,8 +1,7 @@
-﻿using ArchitectureLibrary.Signals;
-using NESTool.History.HistoryActions;
-using NESTool.Signals;
+﻿using ArchitectureLibrary.History.Signals;
+using ArchitectureLibrary.Signals;
 
-namespace NESTool.History
+namespace ArchitectureLibrary.History
 {
     public static class HistoryManager
     {

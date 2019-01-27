@@ -1,9 +1,10 @@
-﻿using ArchitectureLibrary.Signals;
+﻿using ArchitectureLibrary.History;
+using ArchitectureLibrary.Signals;
 using NESTool.FileSystem;
 using NESTool.Signals;
 using NESTool.ViewModels;
 
-namespace NESTool.History.HistoryActions
+namespace NESTool.HistoryActions
 {
     public class DeleteProjectItemHitoryAction : IHistoryAction
     {
