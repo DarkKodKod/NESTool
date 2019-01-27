@@ -1,6 +1,7 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
 using NESTool.FileSystem;
+using NESTool.History.HistoryActions;
 using NESTool.Signals;
 using NESTool.Utils;
 using NESTool.ViewModels;
@@ -85,6 +86,8 @@ namespace NESTool.Commands
 
                 SignalManager.Get<DropElementSignal>().Dispatch(dropTarget, draggingObject);
                 SignalManager.Get<MoveElementSignal>().Dispatch(dropTarget, draggingObject);
+
+                SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(new MoveProjectItemHistoryAction(draggingObject));
             }
 
             dragEvent.Effects = DragDropEffects.None;

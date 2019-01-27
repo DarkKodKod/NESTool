@@ -1,5 +1,6 @@
 ﻿using ArchitectureLibrary.Signals;
 using NESTool.FileSystem;
+using NESTool.History.HistoryActions;
 using NESTool.Signals;
 using NESTool.Utils;
 using NESTool.ViewModels;
@@ -38,6 +39,8 @@ namespace NESTool.Commands
                 Util.GetExtensionByType(ItemSelected.Type));
 
             newItem.DisplayName = name;
+
+            SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(new DuplicateProjectItemHistoryAction(newItem));
 
             SignalManager.Get<PasteElementSignal>().Dispatch(ItemSelected, newItem);
 

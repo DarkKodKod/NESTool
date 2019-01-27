@@ -1,6 +1,7 @@
 ﻿using ArchitectureLibrary.Clipboard;
 using ArchitectureLibrary.Signals;
 using NESTool.FileSystem;
+using NESTool.History.HistoryActions;
 using NESTool.Signals;
 using NESTool.Utils;
 using NESTool.ViewModels;
@@ -60,6 +61,8 @@ namespace NESTool.Commands
 
                 newItem.DisplayName = name;
                 newItem.IsLoaded = true;
+
+                SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(new PasteProjectItemHistoryAction(newItem));
 
                 SignalManager.Get<PasteElementSignal>().Dispatch(ItemSelected, newItem);
 
