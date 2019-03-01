@@ -1,8 +1,10 @@
 ﻿using ArchitectureLibrary.Clipboard;
+using ArchitectureLibrary.History.Signals;
 using ArchitectureLibrary.Signals;
 using ArchitectureLibrary.ViewModel;
 using NESTool.CustomTypeConverter;
 using NESTool.Enums;
+using NESTool.HistoryActions;
 using NESTool.Models;
 using NESTool.Signals;
 using System;
@@ -37,6 +39,7 @@ namespace NESTool.ViewModels
         public ObservableCollection<ProjectItem> Items { get; set; }
         public string OldValue { get; set; } = "";
         public FileHandler FileHandler { get; set; }
+        public bool RenamedFromAction { private get; set; } = false;
 
         virtual public string GetContent()
         {
@@ -113,12 +116,23 @@ namespace NESTool.ViewModels
                 {
                     bool changedName = !string.IsNullOrEmpty(_displayName);
 
+                    string oldName = _displayName;
+
                     _displayName = value;
 
                     OnPropertyChanged("DisplayName");
 
                     if (changedName)
                     {
+                        if (!RenamedFromAction)
+                        {
+                            SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(new RenameProjectItemHistoryAction(this, oldName));
+                        }
+                        else
+                        {
+                            RenamedFromAction = false;
+                        }
+
                         SignalManager.Get<RenameFileSignal>().Dispatch(this);
                     }
                 }

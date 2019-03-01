@@ -142,7 +142,6 @@
     <Compile Include="CustomTypeConverter\ProjectItemTypeConverter.cs" />
     <Compile Include="FileSystem\ProjectItemFileSystem.cs" />
     <Compile Include="HistoryActions\CreateNewElementHistoryAction.cs" />
-    <Compile Include="HistoryActions\CreateNewFolderHistoryAction.cs" />
     <Compile Include="HistoryActions\DeleteProjectItemHistoryAction.cs" />
     <Compile Include="HistoryActions\DuplicateProjectItemHistoryAction.cs" />
     <Compile Include="HistoryActions\MoveProjectItemHistoryAction.cs" />

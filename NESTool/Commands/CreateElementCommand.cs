@@ -1,6 +1,8 @@
 ﻿using ArchitectureLibrary.Commands;
+using ArchitectureLibrary.History.Signals;
 using ArchitectureLibrary.Signals;
 using NESTool.FileSystem;
+using NESTool.HistoryActions;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
@@ -41,6 +43,8 @@ namespace NESTool.Commands
                 IsRoot = false,
                 Type = element.Type
             };
+
+            SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(new CreateNewElementHistoryAction(newElement));
 
             SignalManager.Get<FindAndCreateElementSignal>().Dispatch(newElement);
 
