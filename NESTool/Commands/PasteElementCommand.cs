@@ -60,6 +60,7 @@ namespace NESTool.Commands
                     name = ProjectItemFileSystem.GetValidFileName(newItemPath, newItem.DisplayName, extension);
                 }
 
+                newItem.RenamedFromAction = true;
                 newItem.DisplayName = name;
                 newItem.IsLoaded = true;
 

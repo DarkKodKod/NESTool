@@ -83,12 +83,17 @@ namespace NESTool.Commands
                     name = ProjectItemFileSystem.GetValidFileName(destinationFolder, draggingObject.DisplayName, extension);
                 }
 
+                string oldName = draggingObject.DisplayName;
+
+                draggingObject.RenamedFromAction = true;
                 draggingObject.DisplayName = name;
+
+                SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(
+                    new MoveProjectItemHistoryAction(dropTarget, draggingObject, draggingObject.Parent, name, oldName)
+                    );
 
                 SignalManager.Get<DropElementSignal>().Dispatch(dropTarget, draggingObject);
                 SignalManager.Get<MoveElementSignal>().Dispatch(dropTarget, draggingObject);
-
-                SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(new MoveProjectItemHistoryAction(draggingObject));
             }
 
             dragEvent.Effects = DragDropEffects.None;

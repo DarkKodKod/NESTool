@@ -1,6 +1,4 @@
 ﻿using ArchitectureLibrary.History;
-using ArchitectureLibrary.Signals;
-using NESTool.Signals;
 using NESTool.ViewModels;
 
 namespace NESTool.HistoryActions

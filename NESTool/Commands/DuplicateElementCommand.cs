@@ -39,6 +39,7 @@ namespace NESTool.Commands
                 newItem.DisplayName, 
                 Util.GetExtensionByType(ItemSelected.Type));
 
+            newItem.RenamedFromAction = true;
             newItem.DisplayName = name;
 
             SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(new DuplicateProjectItemHistoryAction(newItem));

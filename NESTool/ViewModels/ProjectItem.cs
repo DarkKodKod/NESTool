@@ -128,14 +128,12 @@ namespace NESTool.ViewModels
                         {
                             SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(new RenameProjectItemHistoryAction(this, oldName));
                         }
-                        else
-                        {
-                            RenamedFromAction = false;
-                        }
 
                         SignalManager.Get<RenameFileSignal>().Dispatch(this);
                     }
                 }
+
+                RenamedFromAction = false;
             }
         }
 
