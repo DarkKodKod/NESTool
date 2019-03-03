@@ -142,6 +142,36 @@
             <param name="configureMapping">The configuration lambda.</param>
             <returns>Fluent configuration builder continuation object.</returns>
         </member>
+        <member name="T:Nett.TomlObjectFactory.Result`1">
+            <summary>
+            Result object of a factory operation. Foundation for the fluent API that allows to construct
+            complex object Graphs via <see cref="T:Nett.TomlObjectFactory"/> methods.
+            </summary>
+            <typeparam name="T">The type of TOML object that was created/updated</typeparam>
+        </member>
+        <member name="P:Nett.TomlObjectFactory.Result`1.And">
+            <summary>
+            Gets the table owning the added/updated TOML object.
+            </summary>
+        </member>
+        <member name="P:Nett.TomlObjectFactory.Result`1.Owner">
+            <summary>
+            Gets the table owning the added/updated TOML object.
+            </summary>
+        </member>
+        <member name="P:Nett.TomlObjectFactory.Result`1.Added">
+            <summary>
+            Gets the object that was added/updated.
+            </summary>
+        </member>
+        <member name="M:Nett.TomlObjectFactory.Result`1.ConfigureAdded(System.Action{`0})">
+            <summary>
+            Allows further modification of the added/updated object via a user defined <see cref="T:System.Action`1"/>.
+            </summary>
+            <param name="configure">Action configuration action</param>
+            <returns>Gets <b>this</b> - fluent API continuation.</returns>
+            <exception cref="T:System.ArgumentNullException">Throw if <paramref name="configure"/> is <b>null</b></exception>
+        </member>
         <member name="T:Nett.ITableCombiner">
             <summary>
             Interface representing a built TOML table combine operation.
