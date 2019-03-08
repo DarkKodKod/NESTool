@@ -50,6 +50,7 @@ namespace NESTool.ViewModels
         public LoadMappersCommand LoadMappersCommand { get; } = new LoadMappersCommand();
         public UndoCommand UndoCommand { get; } = new UndoCommand();
         public RedoCommand RedoCommand { get; } = new RedoCommand();
+        public TreeviewSelectedItemChangedCommand TreeviewSelectedItemChangedCommand { get; } = new TreeviewSelectedItemChangedCommand();
         #endregion
 
         private const string _projectNameKey = "applicationTitle";

@@ -138,6 +138,7 @@
     <Compile Include="Commands\QueryContinueDragCommand.cs" />
     <Compile Include="Commands\RedoCommand.cs" />
     <Compile Include="Commands\EnableRenameElementCommand.cs" />
+    <Compile Include="Commands\TreeviewSelectedItemChanged.cs" />
     <Compile Include="Commands\UndoCommand.cs" />
     <Compile Include="CustomTypeConverter\ProjectItemTypeConverter.cs" />
     <Compile Include="FileSystem\ProjectItemFileSystem.cs" />

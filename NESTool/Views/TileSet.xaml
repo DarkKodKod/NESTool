@@ -10,7 +10,7 @@
 	<UserControl.DataContext>
 		<vm:TileSetViewModel />
 	</UserControl.DataContext>
-	<Grid Background="LightGray">
+	<Grid Background="#FFB67272">
             
     </Grid>
 </UserControl>

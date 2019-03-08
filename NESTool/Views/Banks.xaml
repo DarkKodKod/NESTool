@@ -10,7 +10,7 @@
 	<UserControl.DataContext>
 		<vm:BanksViewModel />
 	</UserControl.DataContext>
-    <Grid Background="LightGray">
+    <Grid Background="#FF96CB49">
             
     </Grid>
 </UserControl>

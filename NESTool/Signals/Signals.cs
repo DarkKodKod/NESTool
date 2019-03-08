@@ -40,4 +40,5 @@ namespace NESTool.Signals
     public class SizeChangedSignal : Signal<SizeChangedEventArgs, bool> { }
     public class CreateProjectSuccessSignal : Signal<string> { }
     public class DropElementSignal : Signal<ProjectItem, ProjectItem> { }
+    public class LoadProjectItemSignal : Signal<ProjectItem> { }
 }

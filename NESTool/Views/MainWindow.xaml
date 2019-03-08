@@ -541,7 +541,10 @@
 					<i:EventTrigger EventName="PreviewQueryContinueDrag">
 						<cmd:EventToCommand Command="{Binding QueryContinueDragCommand}" PassEventArgsToCommand="True" />
 					</i:EventTrigger>
-				</i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectedItemChanged">
+                        <cmd:EventToCommand Command="{Binding TreeviewSelectedItemChangedCommand}" PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
 				<TreeView.Resources>
                     <ContextMenu x:Key="FolderPopup">
                         <MenuItem Header="Create Folder" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.CreateFolderCommand}"/>
@@ -735,8 +738,11 @@
 					</Style>
 				</TreeView.ItemContainerStyle>
 			</TreeView>
-			<GridSplitter Grid.Column="1" Width="5" />
-			<Frame Grid.Column="2" />
-		</Grid>
+            <GridSplitter Grid.Column="1" Width="5" />
+            <DockPanel x:Name="dpItemPanel" Grid.Column="2"
+                           Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}"
+                           Height="{Binding ActualHeight, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}"
+                           LastChildFill="True"/>
+        </Grid>
 	</DockPanel>
 </Window>

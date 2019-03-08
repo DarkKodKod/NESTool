@@ -10,7 +10,7 @@
 	<UserControl.DataContext>
 		<vm:MapViewModel />
 	</UserControl.DataContext>
-	<Grid Background="LightGray">
+	<Grid Background="#FF412670">
             
     </Grid>
 </UserControl>

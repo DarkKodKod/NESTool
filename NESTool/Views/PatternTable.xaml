@@ -10,7 +10,7 @@
     <UserControl.DataContext>
         <vm:PatternTableViewModel />
     </UserControl.DataContext>
-    <Grid Background="LightGray">
+    <Grid Background="#FF53684B">
 
     </Grid>
 </UserControl>

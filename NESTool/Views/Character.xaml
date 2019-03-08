@@ -10,7 +10,7 @@
 	<UserControl.DataContext>
 		<vm:CharacterViewModel />
 	</UserControl.DataContext>
-	<Grid Background="LightGray">
+	<Grid Background="#FF6C2344">
             
     </Grid>
 </UserControl>

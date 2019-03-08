@@ -15,6 +15,8 @@ using System.Collections.Generic;
 using NESTool.Commands;
 using NESTool.Utils;
 using NESTool.FileSystem;
+using NESTool.Views;
+using NESTool.Enums;
 
 namespace NESTool
 {
@@ -33,6 +35,8 @@ namespace NESTool
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ProjectItemType _currentViewType = ProjectItemType.None;
+
         private readonly FieldInfo _menuDropAlignmentField;
 
         [DllImport("user32.dll")]
@@ -58,11 +62,54 @@ namespace NESTool
             SignalManager.Get<SetUpWindowPropertiesSignal>().AddListener(OnSetUpWindowProperties);
             SignalManager.Get<CreateNewElementSignal>().AddListener(OnCreateNewElement);
             SignalManager.Get<UpdateFolderSignal>().AddListener(OnUpdateFolder);
+            SignalManager.Get<LoadProjectItemSignal>().AddListener(OnLoadProjectItem);
+            SignalManager.Get<DeleteElementSignal>().AddListener(OnDeleteElement);
         }
 
         private void SystemParameters_StaticPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             EnsureStandardPopupAlignment();
+        }
+
+        private void OnLoadProjectItem(ProjectItem item)
+        {
+            if (item.IsRoot || item.IsFolder)
+            {
+                return;
+            }
+
+            if (_currentViewType != item.Type)
+            {
+                dpItemPanel.Children.Clear();
+
+                UserControl view = null;
+
+                switch (item.Type)
+                {
+                    case ProjectItemType.Bank: view = new Banks(); break;
+                    case ProjectItemType.Character: view = new Character(); break;
+                    case ProjectItemType.Map: view = new Map(); break;
+                    case ProjectItemType.TileSet: view = new TileSet(); break;
+                    case ProjectItemType.PatternTable: view = new PatternTable(); break;
+                }
+
+                if (view != null)
+                {
+                    dpItemPanel.Children.Add(view);
+                }
+
+                _currentViewType = item.Type;
+            }
+        }
+
+        private void OnDeleteElement(ProjectItem item)
+        {
+            if (_currentViewType == item.Type)
+            {
+                dpItemPanel.Children.Clear();
+
+                _currentViewType = ProjectItemType.None;
+            }
         }
 
         private void EnsureStandardPopupAlignment()
