@@ -20,5 +20,7 @@ namespace NESTool.Models
                 return _fileExtension;
             }
         }
+
+        public string Image { get; set; }
     }
 }

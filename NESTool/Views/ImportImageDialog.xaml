@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         x:Name="ImportImageDialogView"
         ShowInTaskbar="False"
-        Title="Import Image" Height="256" Width="498"
+        Title="Import Image" Height="145.117" Width="498"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <cv:ParametersConverter x:Key="parametersConverter"/>
@@ -61,7 +61,7 @@
 					IsCancel="True"/>
             <Button Grid.Column="2" Content="Continue" 
 					HorizontalAlignment="center" VerticalAlignment="center" Width="100" 
-					Command="{Binding ImportImageCommand}" Click="OnClickOK"/>
+					Command="{Binding ImportImageCommand}" CommandParameter="{Binding ElementName=tbPath, Path=Text}" Click="OnClickOK"/>
         </Grid>
     </Grid>
 </Window>

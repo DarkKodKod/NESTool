@@ -24,9 +24,7 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            ElementTypeModel element = parameter as ElementTypeModel;
-
-            if (element == null)
+            if (!(parameter is ElementTypeModel element))
             {
                 return;
             }

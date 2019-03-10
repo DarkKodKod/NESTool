@@ -9,6 +9,7 @@ namespace NESTool.ViewModels
     {
         public BrowseFileCommand BrowseFileCommand { get; } = new BrowseFileCommand();
         public CloseDialogCommand CloseDialogCommand { get; } = new CloseDialogCommand();
+        public ImportImageCommand ImportImageCommand { get; } = new ImportImageCommand();
 
         #region get/set
         public string FilePath
