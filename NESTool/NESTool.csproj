@@ -127,6 +127,7 @@
     <Compile Include="Commands\DropCommand.cs" />
     <Compile Include="Commands\DuplicateElementCommand.cs" />
     <Compile Include="Commands\ImportImageCommand.cs" />
+    <Compile Include="Commands\OpenImportImageDialogCommand.cs" />
     <Compile Include="Commands\ItemSelectedCommand.cs" />
     <Compile Include="Commands\LoadMappersCommand.cs" />
     <Compile Include="Commands\NewElementCommand.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="ViewModels\BanksViewModel.cs" />
     <Compile Include="ViewModels\CharacterViewModel.cs" />
     <Compile Include="ViewModels\ElementDialogViewModel.cs" />
+    <Compile Include="ViewModels\ImportImageDialogViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
     <Compile Include="ViewModels\PatternTableViewModel.cs" />
     <Compile Include="ViewModels\ProjectItem.cs" />
@@ -197,6 +199,9 @@
     </Compile>
     <Compile Include="Views\ElementDialog.xaml.cs">
       <DependentUpon>ElementDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportImageDialog.xaml.cs">
+      <DependentUpon>ImportImageDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Map.xaml.cs">
       <DependentUpon>Map.xaml</DependentUpon>
@@ -237,6 +242,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ElementDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ImportImageDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

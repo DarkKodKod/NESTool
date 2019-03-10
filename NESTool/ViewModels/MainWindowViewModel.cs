@@ -44,7 +44,7 @@ namespace NESTool.ViewModels
         public DragOverCommand DragOverCommand { get; } = new DragOverCommand();
         public DragLeaveCommand DragLeaveCommand { get; } = new DragLeaveCommand();
         public DropCommand DropCommand { get; } = new DropCommand();
-        public ImportImageCommand ImportImageCommand { get; } = new ImportImageCommand();
+        public OpenImportImageDialogCommand OpenImportImageDialogCommand { get; } = new OpenImportImageDialogCommand();
         public WindowsGetFocusCommand WindowsGetFocusCommand { get; } = new WindowsGetFocusCommand();
         public QueryContinueDragCommand QueryContinueDragCommand { get; } = new QueryContinueDragCommand();
         public LoadMappersCommand LoadMappersCommand { get; } = new LoadMappersCommand();

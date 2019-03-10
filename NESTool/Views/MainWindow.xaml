@@ -174,7 +174,7 @@
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="_Import">
-                    <MenuItem Header="_Image" Command="{Binding ImportImageCommand}" />
+                    <MenuItem Header="_Image" Command="{Binding OpenImportImageDialogCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
                 </MenuItem>
                 <Separator />
 				<MenuItem Header="_Recent Projects" ItemsSource="{Binding RecentProjects}">
