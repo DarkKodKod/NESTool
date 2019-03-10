@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Globalization;
 
-namespace NESTool.CustomTypeConverter
+namespace NESTool.Utils.CustomTypeConverter
 {
     public class ProjectItemTypeConverter : TypeConverter
     {

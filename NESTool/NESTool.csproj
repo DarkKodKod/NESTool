@@ -115,6 +115,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\BrowseFileCommand.cs" />
     <Compile Include="Commands\CloseDialogCommand.cs" />
     <Compile Include="Commands\CopyElementCommand.cs" />
     <Compile Include="Commands\CreateElementCommand.cs" />
@@ -141,7 +142,7 @@
     <Compile Include="Commands\EnableRenameElementCommand.cs" />
     <Compile Include="Commands\TreeviewSelectedItemChanged.cs" />
     <Compile Include="Commands\UndoCommand.cs" />
-    <Compile Include="CustomTypeConverter\ProjectItemTypeConverter.cs" />
+    <Compile Include="Utils\CustomTypeConverter\ProjectItemTypeConverter.cs" />
     <Compile Include="FileSystem\ProjectItemFileSystem.cs" />
     <Compile Include="HistoryActions\CreateNewElementHistoryAction.cs" />
     <Compile Include="HistoryActions\DeleteProjectItemHistoryAction.cs" />

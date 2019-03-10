@@ -35,6 +35,7 @@
         <KeyBinding Key="Z" Modifiers="Ctrl" Command="{Binding UndoCommand}" />
         <KeyBinding Key="F2" Command="{Binding EnableRenameElementCommand}" />
         <KeyBinding Key="Y" Modifiers="Ctrl" Command="{Binding RedoCommand}" />
+        <KeyBinding Key="I" Modifiers="Ctrl" Command="{Binding OpenImportImageDialogCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
     </Window.InputBindings>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -174,7 +175,7 @@
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="_Import">
-                    <MenuItem Header="_Image" Command="{Binding OpenImportImageDialogCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
+                    <MenuItem Header="_Image" InputGestureText="Ctrl+I" Command="{Binding OpenImportImageDialogCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
                 </MenuItem>
                 <Separator />
 				<MenuItem Header="_Recent Projects" ItemsSource="{Binding RecentProjects}">

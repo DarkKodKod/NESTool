@@ -2,7 +2,7 @@
 using ArchitectureLibrary.History.Signals;
 using ArchitectureLibrary.Signals;
 using ArchitectureLibrary.ViewModel;
-using NESTool.CustomTypeConverter;
+using NESTool.Utils.CustomTypeConverter;
 using NESTool.Enums;
 using NESTool.HistoryActions;
 using NESTool.Models;

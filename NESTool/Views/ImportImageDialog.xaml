@@ -4,12 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:NESTool.ViewModels"
+        xmlns:cv="clr-namespace:NESTool.Utils.Converters"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         x:Name="ImportImageDialogView"
         ShowInTaskbar="False"
         Title="Import Image" Height="256" Width="498"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <cv:ParametersConverter x:Key="parametersConverter"/>
+    </Window.Resources>
     <Window.DataContext>
         <vm:ImportImageDialogViewModel />
     </Window.DataContext>
@@ -21,14 +25,31 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
+        <Label Grid.Row="1" Grid.Column="1" Content="Location" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True">
+            <Button DockPanel.Dock="Right" HorizontalAlignment="Right" 
+					VerticalAlignment="Center" Width="30" Content="..." 
+					Command="{Binding BrowseFileCommand}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource parametersConverter}">
+                        <Binding Path="Text" ElementName="tbPath"/>
+                        <Binding Path="Filters"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+            <TextBox x:Name="tbPath" Height="23" Text="{Binding FilePath, UpdateSourceTrigger=PropertyChanged}" 
+					 TextWrapping="NoWrap" VerticalAlignment="Center" Width="auto"/>
+        </DockPanel>
         <Grid Grid.Row="3" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
