@@ -1,0 +1,10 @@
+﻿<UserControl x:Class="ColorPalette.ColorPaletteItem"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+            xmlns:local="clr-namespace:ColorPalette"
+            mc:Ignorable="d" 
+            Loaded="ColorPaletteItem_Loaded" >
+    <Rectangle Height="10" Name="rect" Stroke="Black" Width="10" />
+</UserControl>

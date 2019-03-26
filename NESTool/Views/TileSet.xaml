@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NESTool.Views"
+             xmlns:my="clr-namespace:ColorPalette;assembly=ColorPalette"
              mc:Ignorable="d" 
 			 xmlns:vm="clr-namespace:NESTool.ViewModels"
              d:DesignHeight="460.5" d:DesignWidth="515">
@@ -11,6 +12,13 @@
 		<vm:TileSetViewModel />
 	</UserControl.DataContext>
     <Grid Background="LightGray">
-            
+        <my:ColorPaletteControl Name="ColorPalette1" 
+                          PaletteHeight="200" PaletteWidth="720" 
+                          CellHeight="20" CellWidth="20" 
+                          Width="747" Height="161"
+                          Hover="ColorPalette1_Hover"/>
+        <Canvas Height="100" Margin="35,0,0,38" Name="Canvas1"
+                VerticalAlignment="Bottom" HorizontalAlignment="Left" 
+                Width="100" Background="DarkGray"/>
     </Grid>
 </UserControl>
