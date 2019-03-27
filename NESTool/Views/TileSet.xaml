@@ -7,18 +7,53 @@
              xmlns:my="clr-namespace:ColorPalette;assembly=ColorPalette"
              mc:Ignorable="d" 
 			 xmlns:vm="clr-namespace:NESTool.ViewModels"
-             d:DesignHeight="460.5" d:DesignWidth="515">
+             d:DesignHeight="560" d:DesignWidth="850">
 	<UserControl.DataContext>
 		<vm:TileSetViewModel />
 	</UserControl.DataContext>
     <Grid Background="LightGray">
-        <my:ColorPaletteControl Name="ColorPalette1" 
-                          PaletteHeight="200" PaletteWidth="720" 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="350"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer HorizontalAlignment="Stretch" Grid.Column="0"
+                      VerticalAlignment="Stretch" 
+                      VerticalScrollBarVisibility="Auto" 
+                      HorizontalScrollBarVisibility="Auto">
+            <Canvas HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Stretch"
+                    Background="DarkGray">
+            </Canvas>
+        </ScrollViewer>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="330"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Canvas HorizontalAlignment="Stretch" Grid.Row="0" Margin="10"
+                    VerticalAlignment="Stretch" Background="DarkGray"
+                    Width="300" Height="300">
+            </Canvas>
+            <my:ColorPaletteControl Name="ColorPalette1" Grid.Row="1"
+                          PaletteHeight="85" PaletteWidth="325" 
                           CellHeight="20" CellWidth="20" 
-                          Width="747" Height="161"
-                          Hover="ColorPalette1_Hover"/>
-        <Canvas Height="100" Margin="35,0,0,38" Name="Canvas1"
-                VerticalAlignment="Bottom" HorizontalAlignment="Left" 
-                Width="100" Background="DarkGray"/>
+                          Width="326" Height="86"
+                          VerticalAlignment="Top"
+                          Hover="ColorPalette1_Hover"
+                          Select="ColorPalette1_Select" />
+            <Border x:Name="mask" BorderThickness="3" BorderBrush="Black"
+                    CornerRadius="30" Grid.Row="1" Width="50" Height="50"
+                    Margin="0,0,0,61"
+                    Panel.ZIndex="-1"
+                    Background="DarkGray">
+                <Canvas Background="AliceBlue">
+                    <Canvas.OpacityMask>
+                        <VisualBrush Visual="{Binding ElementName=mask}" />
+                    </Canvas.OpacityMask>
+                </Canvas>
+            </Border>
+            <Button Grid.Row="2" Margin="20">Save</Button>
+        </Grid>
     </Grid>
 </UserControl>

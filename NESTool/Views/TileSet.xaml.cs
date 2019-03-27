@@ -1,18 +1,7 @@
 ﻿using ColorPalette;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace NESTool.Views
 {
@@ -21,6 +10,8 @@ namespace NESTool.Views
     /// </summary>
     public partial class TileSet : UserControl
     {
+        private Color _selectedColor = new Color();
+
         public TileSet()
         {
             InitializeComponent();
@@ -32,16 +23,43 @@ namespace NESTool.Views
             {
                 if (args.C == new Color())
                 {
-                    Canvas1.Background = Brushes.DarkGray;
+                    if (_selectedColor != new Color())
+                    {
+                        SolidColorBrush scb = new SolidColorBrush
+                        {
+                            Color = _selectedColor
+                        };
 
-                    SolidColorBrush scb = Canvas1.Background as SolidColorBrush;
+                        mask.Background = scb;
+                    }
+                    else
+                    {
+                        mask.Background = Brushes.DarkGray;
+                    }
                 }
                 else
                 {
-                    SolidColorBrush scb = new SolidColorBrush();
-                    scb.Color = args.C;
-                    Canvas1.Background = scb;
+                    SolidColorBrush scb = new SolidColorBrush
+                    {
+                        Color = args.C
+                    };
+                    mask.Background = scb;
                 }
+            }
+        }
+
+        private void ColorPalette1_Select(object sender, RoutedEventArgs e)
+        {
+            if (e is PaletteEventArgs args)
+            {
+                SolidColorBrush scb = new SolidColorBrush
+                {
+                    Color = args.C
+                };
+
+                _selectedColor = args.C;
+
+                mask.Background = scb;
             }
         }
     }

@@ -12,3 +12,4 @@ C:\Proyectos\NESTool\ColorPaletteControl\ColorPalette\obj\Debug\ColorPalette.csp
 C:\Proyectos\NESTool\ColorPaletteControl\ColorPalette\obj\Debug\ColorPalette.csproj.CoreCompileInputs.cache
 C:\Proyectos\NESTool\ColorPaletteControl\ColorPalette\obj\Debug\ColorPalette.dll
 C:\Proyectos\NESTool\ColorPaletteControl\ColorPalette\obj\Debug\ColorPalette.pdb
+C:\Proyectos\NESTool\ColorPaletteControl\ColorPalette\obj\Debug\ColorPalette.csprojAssemblyReference.cache
