@@ -9,6 +9,8 @@ using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
 using NESTool.ViewModels;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Windows;
 
@@ -18,7 +20,7 @@ namespace NESTool.Commands
     {
         private const string _folderTileSetsKey = "folderTileSets";
 
-        public override void Execute(object parameter)
+        public override async void Execute(object parameter)
         {
             string filePath = parameter as string;
 
@@ -33,6 +35,17 @@ namespace NESTool.Commands
                 tileSet.Image = filePath;
 
                 // todo. link the new image in the tileset element
+
+
+                var quantizer = new PaletteQuantizer();
+                quantizer.FileName = filePath;
+                quantizer.ColorCount = PaletteQuantizer.EColor.Color4;
+                quantizer.ColorCache = PaletteQuantizer.EColorCache.OctreeSearch;
+                Image gato = await quantizer.Convert();
+                ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+                gato.Save(Path.Combine(projectModel.ProjectPath, "gato.png"), ImageFormat.Png);
+
+
 
                 item.FileHandler.Save();
             }

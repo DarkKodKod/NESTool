@@ -143,7 +143,7 @@
     <Compile Include="Commands\EnableRenameElementCommand.cs" />
     <Compile Include="Commands\TreeviewSelectedItemChanged.cs" />
     <Compile Include="Commands\UndoCommand.cs" />
-    <Compile Include="Utils\ColorQuantizer.cs" />
+    <Compile Include="Utils\PaletteQuantizer.cs" />
     <Compile Include="Utils\CustomTypeConverter\ProjectItemTypeConverter.cs" />
     <Compile Include="FileSystem\ProjectItemFileSystem.cs" />
     <Compile Include="HistoryActions\CreateNewElementHistoryAction.cs" />
@@ -360,6 +360,10 @@
     <ProjectReference Include="..\ColorPaletteControl\ColorPalette\ColorPalette.csproj">
       <Project>{6a4e4554-1518-4dc3-9a1c-b41c0e31bfec}</Project>
       <Name>ColorPalette</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PaletteQuantizerLibrary\PaletteQuantizerLibrary.csproj">
+      <Project>{37DCDA26-34C9-489E-800B-0957FAC221E4}</Project>
+      <Name>PaletteQuantizerLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
