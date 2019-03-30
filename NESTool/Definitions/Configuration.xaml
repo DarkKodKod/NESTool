@@ -10,6 +10,7 @@
     <system:String x:Key="folderPatternTables">PatternTables</system:String>
 	<system:String x:Key="folderMaps">Maps</system:String>
 	<system:String x:Key="folderTileSets">TileSets</system:String>
+    <system:String x:Key="folderImages">Images</system:String>
     <system:String x:Key="extensionBanks">.bank</system:String>
     <system:String x:Key="extensionCharacters">.char</system:String>
     <system:String x:Key="extensionPatternTables">.table</system:String>

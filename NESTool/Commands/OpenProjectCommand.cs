@@ -15,6 +15,7 @@ namespace NESTool.Commands
     public class OpenProjectCommand : Command
     {
         private const string _projectFileNameKey = "projectFileName";
+        private const string _folderImagesKey = "folderImages";
 
         public override bool CanExecute(object parameter)
         {
@@ -107,8 +108,15 @@ namespace NESTool.Commands
 
         private void ScanDirectories(DirectoryInfo[] directories, ref List<ProjectItem> projectItems, ProjectItem parent = null, string extension = "")
         {
+            string imagesFolder = (string)Application.Current.FindResource(_folderImagesKey);
+
             foreach (DirectoryInfo directory in directories)
             {
+                if (directory.Name == imagesFolder)
+                {
+                    continue;
+                }
+
                 ProjectItem item = new ProjectItem()
                 {
                     DisplayName = directory.Name,

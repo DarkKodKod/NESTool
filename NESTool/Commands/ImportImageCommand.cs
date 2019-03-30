@@ -19,8 +19,9 @@ namespace NESTool.Commands
     public class ImportImageCommand : Command
     {
         private const string _folderTileSetsKey = "folderTileSets";
+        private const string _folderImagesKey = "folderImages";
 
-        public override async void Execute(object parameter)
+        public override void Execute(object parameter)
         {
             string filePath = parameter as string;
 
@@ -30,25 +31,41 @@ namespace NESTool.Commands
 
             if (item.FileHandler.FileModel is TileSetModel tileSet)
             {
-                // todo. create dictory for the new image output file
-
-                tileSet.Image = filePath;
-
-                // todo. link the new image in the tileset element
-
-
-                var quantizer = new PaletteQuantizer();
-                quantizer.FileName = filePath;
-                quantizer.ColorCache = PaletteQuantizer.EColorCache.OctreeSearch;
-                quantizer.Method = PaletteQuantizer.EMethod.NESQuantizer;
-                Image gato = await quantizer.Convert();
-                ProjectModel projectModel = ModelManager.Get<ProjectModel>();
-                gato.Save(Path.Combine(projectModel.ProjectPath, "gato.png"), ImageFormat.Png);
-
-
-
-                item.FileHandler.Save();
+                ProcessImage(item, tileSet, filePath);
             }
+        }
+
+        private async void ProcessImage(ProjectItem item, TileSetModel tileSet, string filePath)
+        {
+            string imagesFolder = (string)Application.Current.FindResource(_folderImagesKey);
+
+            ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+
+            string imageFolderPath = Path.Combine(projectModel.ProjectPath, imagesFolder);
+
+            if (!Directory.Exists(imageFolderPath))
+            {
+                Directory.CreateDirectory(imageFolderPath);
+            }
+
+            var quantizer = new PaletteQuantizer
+            {
+                InputFileName = filePath,
+                ColorCache = PaletteQuantizer.EColorCache.OctreeSearch,
+                Method = PaletteQuantizer.EMethod.NESQuantizer
+            };
+
+            string outputImagePath = Path.Combine(imageFolderPath, Path.GetFileNameWithoutExtension(filePath) + ".bmp");
+
+            tileSet.ImagePath = outputImagePath;
+
+            item.FileHandler.Save();
+
+            Image outputImage = await quantizer.Convert();
+
+            outputImage.Save(outputImagePath, ImageFormat.Bmp);
+
+            SignalManager.Get<UpdateTileSetImageSignal>().Dispatch();
         }
 
         private ProjectItem CreateTileSetElement(string name)

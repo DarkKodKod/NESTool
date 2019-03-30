@@ -145,7 +145,7 @@ namespace NESTool.Utils
                 new NESQuantizer()
             };
 
-        public string FileName { get; set; }
+        public string InputFileName { get; set; }
         public EColor ColorCount { get; set; } = EColor.Color256;
         public EParallel Parallel { get; set; } = EParallel.Parallel8;
         public EMethod Method { get; set; } = EMethod.HSLDistictSelection;
@@ -166,7 +166,7 @@ namespace NESTool.Utils
             int colorCount = GetColorCount();
 
             // disables all the controls and starts running
-            sourceImage = Image.FromFile(FileName);
+            sourceImage = Image.FromFile(InputFileName);
 
             // quantization process
             Task quantization = Task.Factory.StartNew(() =>

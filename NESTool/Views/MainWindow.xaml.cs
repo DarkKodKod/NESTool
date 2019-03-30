@@ -96,6 +96,13 @@ namespace NESTool
                 if (view != null)
                 {
                     dpItemPanel.Children.Add(view);
+
+                    if (view.DataContext is ItemViewModel viewModel)
+                    {
+                        viewModel.ProjectItem = item;
+
+                        viewModel.OnActivate();
+                    }
                 }
 
                 _currentViewType = item.Type;

@@ -20,9 +20,10 @@
                       VerticalAlignment="Stretch" 
                       VerticalScrollBarVisibility="Auto" 
                       HorizontalScrollBarVisibility="Auto">
-            <Canvas HorizontalAlignment="Stretch" 
+            <Canvas x:Name="cvsImage" HorizontalAlignment="Stretch" 
                     VerticalAlignment="Stretch"
                     Background="DarkGray">
+                <Image Source="{Binding ImagePath, Mode=TwoWay}" Stretch="Uniform" />
             </Canvas>
         </ScrollViewer>
         <Grid Grid.Column="1">

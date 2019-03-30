@@ -2,7 +2,7 @@
 
 namespace NESTool.ViewModels
 {
-    public class MapViewModel : ViewModel
+    public class MapViewModel : ItemViewModel
     {
     }
 }

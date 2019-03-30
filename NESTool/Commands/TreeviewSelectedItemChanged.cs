@@ -12,9 +12,7 @@ namespace NESTool.Commands
         {
             RoutedPropertyChangedEventArgs<object> selectedItemChangedEvent = parameter as RoutedPropertyChangedEventArgs<object>;
 
-            ProjectItem item = selectedItemChangedEvent.NewValue as ProjectItem;
-
-            if (item != null)
+            if (selectedItemChangedEvent.NewValue is ProjectItem item)
             {
                 SignalManager.Get<LoadProjectItemSignal>().Dispatch(item);
             }

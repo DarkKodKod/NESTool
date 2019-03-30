@@ -2,7 +2,7 @@
 
 namespace NESTool.ViewModels
 {
-    public class CharacterViewModel : ViewModel
+    public class CharacterViewModel : ItemViewModel
     {
     }
 }

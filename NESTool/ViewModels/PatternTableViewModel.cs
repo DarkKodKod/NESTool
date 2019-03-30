@@ -2,7 +2,7 @@
 
 namespace NESTool.ViewModels
 {
-    public class PatternTableViewModel : ViewModel
+    public class PatternTableViewModel : ItemViewModel
     {
     }
 }

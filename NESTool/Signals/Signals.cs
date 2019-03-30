@@ -42,4 +42,7 @@ namespace NESTool.Signals
     public class CreateProjectSuccessSignal : Signal<string> { }
     public class DropElementSignal : Signal<ProjectItem, ProjectItem> { }
     public class LoadProjectItemSignal : Signal<ProjectItem> { }
+
+    // TileSet
+    public class UpdateTileSetImageSignal : Signal { }
 }

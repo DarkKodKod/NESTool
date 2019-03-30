@@ -21,6 +21,6 @@ namespace NESTool.Models
             }
         }
 
-        public string Image { get; set; }
+        public string ImagePath { get; set; }
     }
 }

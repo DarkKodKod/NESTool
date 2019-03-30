@@ -2,7 +2,7 @@
 
 namespace NESTool.ViewModels
 {
-    public class BanksViewModel : ViewModel
+    public class BanksViewModel : ItemViewModel
     {
     }
 }
