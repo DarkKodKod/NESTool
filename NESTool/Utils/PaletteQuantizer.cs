@@ -59,7 +59,8 @@ namespace NESTool.Utils
             OctreeQuantization = 4,
             WusColorQuantizer = 5,
             NeuQuantQuantizer = 6,
-            OptimalPalette = 7
+            OptimalPalette = 7,
+            NESQuantizer = 8
         }
 
         public enum EDitherer
@@ -140,7 +141,8 @@ namespace NESTool.Utils
                 new OctreeQuantizer(),
                 new WuColorQuantizer(),
                 new NeuralColorQuantizer(),
-                new OptimalPaletteQuantizer()
+                new OptimalPaletteQuantizer(),
+                new NESQuantizer()
             };
 
         public string FileName { get; set; }
@@ -177,8 +179,8 @@ namespace NESTool.Utils
                 // detects error and color count
                 int originalColorCount = activeQuantizer.GetColorCount();
 
-                // retrieves a PNG image based on our HSB-quantized one
-                GetConvertedImage(targetImage, ImageFormat.Png, out int newPngSize);
+                // retrieves a BMP image based on our HSB-quantized one
+                GetConvertedImage(targetImage, ImageFormat.Bmp, out int newBmpSize);
 
             }, uiScheduler);
 
@@ -232,6 +234,11 @@ namespace NESTool.Utils
                 Method == EMethod.OptimalPalette)
             {
                 ColorCount = EColor.Color256;
+            }
+
+            if (Method == EMethod.NESQuantizer)
+            {
+                ColorCount = EColor.Color64;
             }
         }
 

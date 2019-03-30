@@ -39,8 +39,8 @@ namespace NESTool.Commands
 
                 var quantizer = new PaletteQuantizer();
                 quantizer.FileName = filePath;
-                quantizer.ColorCount = PaletteQuantizer.EColor.Color4;
                 quantizer.ColorCache = PaletteQuantizer.EColorCache.OctreeSearch;
+                quantizer.Method = PaletteQuantizer.EMethod.NESQuantizer;
                 Image gato = await quantizer.Convert();
                 ProjectModel projectModel = ModelManager.Get<ProjectModel>();
                 gato.Save(Path.Combine(projectModel.ProjectPath, "gato.png"), ImageFormat.Png);

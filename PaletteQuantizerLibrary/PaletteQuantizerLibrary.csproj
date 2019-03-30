@@ -103,6 +103,7 @@
     <Compile Include="Quantizers\IColorQuantizer.cs" />
     <Compile Include="Quantizers\MedianCut\MedianCutCube.cs" />
     <Compile Include="Quantizers\MedianCut\MedianCutQuantizer.cs" />
+    <Compile Include="Quantizers\NES\NESQuantizer.cs" />
     <Compile Include="Quantizers\NeuQuant\NeuralColorQuantizer.cs" />
     <Compile Include="Quantizers\Octree\OctreeNode.cs" />
     <Compile Include="Quantizers\Octree\OctreeQuantizer.cs" />
