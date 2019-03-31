@@ -55,13 +55,15 @@ namespace NESTool.Commands
                 Method = PaletteQuantizer.EMethod.NESQuantizer
             };
 
+            Image outputImage = await quantizer.Convert();
+
             string outputImagePath = Path.Combine(imageFolderPath, Path.GetFileNameWithoutExtension(filePath) + ".bmp");
 
             tileSet.ImagePath = outputImagePath;
+            tileSet.ImageWidth = outputImage.Width;
+            tileSet.ImageHeight = outputImage.Height;
 
             item.FileHandler.Save();
-
-            Image outputImage = await quantizer.Convert();
 
             outputImage.Save(outputImagePath, ImageFormat.Bmp);
 

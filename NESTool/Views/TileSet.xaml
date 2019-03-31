@@ -16,14 +16,15 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="350"/>
         </Grid.ColumnDefinitions>
-        <ScrollViewer HorizontalAlignment="Stretch" Grid.Column="0"
-                      VerticalAlignment="Stretch" 
+        <ScrollViewer Grid.Column="0"
+                      Background="DarkGray"
                       VerticalScrollBarVisibility="Auto" 
                       HorizontalScrollBarVisibility="Auto">
-            <Canvas x:Name="cvsImage" HorizontalAlignment="Stretch" 
-                    VerticalAlignment="Stretch"
-                    Background="DarkGray">
-                <Image Source="{Binding ImagePath, Mode=TwoWay}" Stretch="Uniform" />
+            <Canvas x:Name="cvsImage"
+                    Width="{Binding ActualWidth}" 
+                    Height="{Binding ActualHeight}">
+                <Image Source="{Binding ImagePath, Mode=TwoWay}" 
+                       Stretch="None" />
             </Canvas>
         </ScrollViewer>
         <Grid Grid.Column="1">
@@ -32,10 +33,12 @@
                 <RowDefinition Height="110"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Canvas HorizontalAlignment="Stretch" Grid.Row="0" Margin="10"
+            <Border BorderThickness="3" BorderBrush="Black" Margin="20,10,20,10">
+                <Canvas HorizontalAlignment="Stretch" Grid.Row="0" 
                     VerticalAlignment="Stretch" Background="DarkGray"
                     Width="300" Height="300">
-            </Canvas>
+                </Canvas>
+            </Border>
             <my:ColorPaletteControl Name="ColorPalette1" Grid.Row="1"
                           PaletteHeight="85" PaletteWidth="325" 
                           CellHeight="20" CellWidth="20" 
@@ -54,7 +57,7 @@
                     </Canvas.OpacityMask>
                 </Canvas>
             </Border>
-            <Button Grid.Row="2" Margin="20">Save</Button>
+            <Button VerticalAlignment="Bottom" Grid.Row="2" Margin="20" Height="23">Save</Button>
         </Grid>
     </Grid>
 </UserControl>

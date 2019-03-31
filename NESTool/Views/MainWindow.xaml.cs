@@ -78,35 +78,32 @@ namespace NESTool
                 return;
             }
 
-            if (_currentViewType != item.Type)
+            dpItemPanel.Children.Clear();
+
+            UserControl view = null;
+
+            switch (item.Type)
             {
-                dpItemPanel.Children.Clear();
-
-                UserControl view = null;
-
-                switch (item.Type)
-                {
-                    case ProjectItemType.Bank: view = new Banks(); break;
-                    case ProjectItemType.Character: view = new Character(); break;
-                    case ProjectItemType.Map: view = new Map(); break;
-                    case ProjectItemType.TileSet: view = new TileSet(); break;
-                    case ProjectItemType.PatternTable: view = new PatternTable(); break;
-                }
-
-                if (view != null)
-                {
-                    dpItemPanel.Children.Add(view);
-
-                    if (view.DataContext is ItemViewModel viewModel)
-                    {
-                        viewModel.ProjectItem = item;
-
-                        viewModel.OnActivate();
-                    }
-                }
-
-                _currentViewType = item.Type;
+                case ProjectItemType.Bank: view = new Banks(); break;
+                case ProjectItemType.Character: view = new Character(); break;
+                case ProjectItemType.Map: view = new Map(); break;
+                case ProjectItemType.TileSet: view = new TileSet(); break;
+                case ProjectItemType.PatternTable: view = new PatternTable(); break;
             }
+
+            if (view != null)
+            {
+                dpItemPanel.Children.Add(view);
+
+                if (view.DataContext is ItemViewModel viewModel)
+                {
+                    viewModel.ProjectItem = item;
+
+                    viewModel.OnActivate();
+                }
+            }
+
+            _currentViewType = item.Type;
         }
 
         private void OnDeleteElement(ProjectItem item)

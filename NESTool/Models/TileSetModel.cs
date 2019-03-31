@@ -22,5 +22,7 @@ namespace NESTool.Models
         }
 
         public string ImagePath { get; set; }
+        public int ImageWidth { get; set; }
+        public int ImageHeight { get; set; }
     }
 }

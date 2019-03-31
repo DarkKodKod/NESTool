@@ -8,6 +8,8 @@ namespace NESTool.ViewModels
     public class TileSetViewModel : ItemViewModel
     {
         private string _imagePath;
+        private int _actualWidth;
+        private int _actualHeight;
 
         public TileSetModel GetModel()
         {
@@ -30,6 +32,34 @@ namespace NESTool.ViewModels
                 _imagePath = value;
 
                 OnPropertyChanged("ImagePath");
+            }
+        }
+
+        public int ActualHeight
+        {
+            get
+            {
+                return _actualHeight;
+            }
+            set
+            {
+                _actualHeight = value;
+
+                OnPropertyChanged("ActualHeight");
+            }
+        }
+
+        public int ActualWidth
+        {
+            get
+            {
+                return _actualWidth;
+            }
+            set
+            {
+                _actualWidth = value;
+
+                OnPropertyChanged("ActualWidth");
             }
         }
 
@@ -60,6 +90,8 @@ namespace NESTool.ViewModels
             if (File.Exists(GetModel().ImagePath))
             {
                 ImagePath = GetModel().ImagePath;
+                ActualWidth = GetModel().ImageWidth;
+                ActualHeight = GetModel().ImageHeight;
             }
         }
     }
