@@ -2,10 +2,8 @@
 
 namespace NESTool.VOs
 {
-    public class MouseMoveVO
+    public class MouseMoveVO : EventVO
     {
         public Point Position { get; set; }
-        public object OriginalSource { get; set; }
-        public object Sender { get; set; }
     }
 }

@@ -1,4 +1,7 @@
-﻿using ColorPalette;
+﻿using ArchitectureLibrary.Signals;
+using ColorPalette;
+using NESTool.Signals;
+using NESTool.VOs;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -15,6 +18,24 @@ namespace NESTool.Views
         public TileSet()
         {
             InitializeComponent();
+
+            SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
+        }
+
+        private void OnMouseWheel(MouseWheelVO vo)
+        {
+            const double ScaleRate = 1.1;
+
+            if (vo.Delta > 0)
+            {
+                scaleCanvas.ScaleX *= ScaleRate;
+                scaleCanvas.ScaleY *= ScaleRate;
+            }
+            else
+            {
+                scaleCanvas.ScaleX /= ScaleRate;
+                scaleCanvas.ScaleY /= ScaleRate;
+            }
         }
 
         private void ColorPalette1_Hover(object sender, RoutedEventArgs e)

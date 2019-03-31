@@ -45,4 +45,5 @@ namespace NESTool.Signals
 
     // TileSet
     public class UpdateTileSetImageSignal : Signal { }
+    public class MouseWheelSignal : Signal<MouseWheelVO> { }
 }

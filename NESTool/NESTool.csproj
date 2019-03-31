@@ -138,6 +138,7 @@
     <Compile Include="Commands\PreviewMouseLeftButtonDownCommand.cs" />
     <Compile Include="Commands\PreviewMouseLeftButtonUpCommand.cs" />
     <Compile Include="Commands\PreviewMouseMoveCommand.cs" />
+    <Compile Include="Commands\PreviewMouseWheelCommand.cs" />
     <Compile Include="Commands\QueryContinueDragCommand.cs" />
     <Compile Include="Commands\RedoCommand.cs" />
     <Compile Include="Commands\EnableRenameElementCommand.cs" />
@@ -222,7 +223,9 @@
     <Compile Include="Views\TileSet.xaml.cs">
       <DependentUpon>TileSet.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VOs\EventVO.cs" />
     <Compile Include="VOs\MouseMoveVO.cs" />
+    <Compile Include="VOs\MouseWheelVO.cs" />
     <Compile Include="VOs\ProjectOpenVO.cs" />
     <Compile Include="VOs\WindowVO.cs" />
     <Page Include="Definitions\Configuration.xaml">

@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              xmlns:local="clr-namespace:NESTool.Views"
              xmlns:my="clr-namespace:ColorPalette;assembly=ColorPalette"
              mc:Ignorable="d" 
@@ -20,11 +22,22 @@
                       Background="DarkGray"
                       VerticalScrollBarVisibility="Auto" 
                       HorizontalScrollBarVisibility="Auto">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewMouseWheel">
+                    <cmd:EventToCommand Command="{Binding PreviewMouseWheelCommand}" PassEventArgsToCommand="True" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <Canvas x:Name="cvsImage"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
                     Width="{Binding ActualWidth}" 
                     Height="{Binding ActualHeight}">
+                <Canvas.RenderTransform>
+                    <ScaleTransform x:Name="scaleCanvas" />
+                </Canvas.RenderTransform>
                 <Image Source="{Binding ImagePath, Mode=TwoWay}" 
-                       Stretch="None" />
+                       RenderOptions.BitmapScalingMode="NearestNeighbor"
+                       Stretch="None"/>
             </Canvas>
         </ScrollViewer>
         <Grid Grid.Column="1">
