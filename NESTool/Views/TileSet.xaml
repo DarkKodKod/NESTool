@@ -38,6 +38,18 @@
                 <Image Source="{Binding ImagePath, Mode=TwoWay}" 
                        RenderOptions.BitmapScalingMode="NearestNeighbor"
                        Stretch="None"/>
+                <Border>
+                    <Border.Background>
+                        <VisualBrush TileMode="Tile"
+                                     Viewport="0,0,8,8" ViewportUnits="Absolute" 
+                                     Viewbox="0,0,8,8" ViewboxUnits="Absolute">
+                            <VisualBrush.Visual>
+                                <Rectangle Stroke="Magenta" StrokeThickness="0.1" Height="100" Width="100"/>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Border.Background>
+                    <Canvas Width="10000" Height="10000"/>
+                </Border>
             </Canvas>
         </ScrollViewer>
         <Grid Grid.Column="1">
