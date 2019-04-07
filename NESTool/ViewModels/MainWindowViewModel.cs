@@ -51,6 +51,8 @@ namespace NESTool.ViewModels
         public UndoCommand UndoCommand { get; } = new UndoCommand();
         public RedoCommand RedoCommand { get; } = new RedoCommand();
         public TreeviewSelectedItemChangedCommand TreeviewSelectedItemChangedCommand { get; } = new TreeviewSelectedItemChangedCommand();
+        public ShowGridCommand ShowGridCommand { get; } = new ShowGridCommand();
+        public HideGridCommand HideGridCommand { get; } = new HideGridCommand();
         #endregion
 
         private const string _projectNameKey = "applicationTitle";

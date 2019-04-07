@@ -46,7 +46,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </Image>
-                <Border>
+                <Border Visibility="{Binding GridVisibility}">
                     <Border.Background>
                         <VisualBrush TileMode="Tile"
                                      Viewport="0,0,8,8" ViewportUnits="Absolute" 

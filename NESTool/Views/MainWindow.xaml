@@ -503,7 +503,35 @@
                     </Image>
 				</Button>
 			</ToolBar>
-		</ToolBarTray>
+            <ToolBar x:Name="tbrTileSet">
+                <ToggleButton ToolTip="Show/Hide Grid" ToolBar.OverflowMode="AsNeeded">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <cmd:EventToCommand Command="{Binding ShowGridCommand}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="Unchecked">
+                            <cmd:EventToCommand Command="{Binding HideGridCommand}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Image Width="16" Height="16" Source="/resources/showgrid.png">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <fx:GrayscaleEffect />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </ToggleButton>
+            </ToolBar>
+        </ToolBarTray>
 		<StatusBar DockPanel.Dock="Bottom">
 			<StatusBarItem>
 				<TextBlock>Pre Alpha Version</TextBlock>

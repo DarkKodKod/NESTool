@@ -11,6 +11,8 @@ namespace NESTool.Signals
     public class BrowseFileSuccessSignal : Signal<string> { }
     public class SetUpWindowPropertiesSignal : Signal<WindowVO> { }
     public class CloseDialogSignal : Signal { }
+    public class ShowGridSignal : Signal { }
+    public class HideGridSignal : Signal { }
 
     // Edit
     public class PasteElementSignal : Signal<ProjectItem, ProjectItem> { }

@@ -4,6 +4,7 @@ using NESTool.Models;
 using NESTool.Signals;
 using NESTool.VOs;
 using System.IO;
+using System.Windows;
 
 namespace NESTool.ViewModels
 {
@@ -12,6 +13,7 @@ namespace NESTool.ViewModels
         private string _imagePath;
         private double _actualWidth;
         private double _actualHeight;
+        private Visibility _gridVisibility = Visibility.Visible;
 
         #region Commands
         public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
@@ -29,6 +31,20 @@ namespace NESTool.ViewModels
         }
 
         #region get/set
+        public Visibility GridVisibility
+        {
+            get
+            {
+                return _gridVisibility;
+            }
+            set
+            {
+                _gridVisibility = value;
+
+                OnPropertyChanged("GridVisibility");
+            }
+        }
+
         public string ImagePath
         {
             get
@@ -77,7 +93,19 @@ namespace NESTool.ViewModels
             #region Signals
             SignalManager.Get<UpdateTileSetImageSignal>().AddListener(OnUpdateTileSetImage);
             SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
+            SignalManager.Get<ShowGridSignal>().AddListener(OnShowGrid);
+            SignalManager.Get<HideGridSignal>().AddListener(OnHideGrid);
             #endregion
+        }
+
+        private void OnHideGrid()
+        {
+            GridVisibility = Visibility.Hidden;
+        }
+
+        private void OnShowGrid()
+        {
+            GridVisibility = Visibility.Visible;
         }
 
         private void OnMouseWheel(MouseWheelVO vo)

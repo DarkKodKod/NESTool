@@ -64,6 +64,9 @@ namespace NESTool
             SignalManager.Get<UpdateFolderSignal>().AddListener(OnUpdateFolder);
             SignalManager.Get<LoadProjectItemSignal>().AddListener(OnLoadProjectItem);
             SignalManager.Get<DeleteElementSignal>().AddListener(OnDeleteElement);
+
+            // Initialize visibility statte of the toolbars
+            tbrTileSet.Visibility = Visibility.Hidden;
         }
 
         private void SystemParameters_StaticPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -82,12 +85,17 @@ namespace NESTool
 
             UserControl view = null;
 
+            tbrTileSet.Visibility = Visibility.Hidden;
+
             switch (item.Type)
             {
                 case ProjectItemType.Bank: view = new Banks(); break;
                 case ProjectItemType.Character: view = new Character(); break;
                 case ProjectItemType.Map: view = new Map(); break;
-                case ProjectItemType.TileSet: view = new TileSet(); break;
+                case ProjectItemType.TileSet:
+                    tbrTileSet.Visibility = Visibility.Visible;
+                    view = new TileSet();
+                    break;
                 case ProjectItemType.PatternTable: view = new PatternTable(); break;
             }
 
