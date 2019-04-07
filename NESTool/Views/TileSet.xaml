@@ -6,6 +6,7 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              xmlns:local="clr-namespace:NESTool.Views"
+             xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
              xmlns:my="clr-namespace:ColorPalette;assembly=ColorPalette"
              mc:Ignorable="d" 
 			 xmlns:vm="clr-namespace:NESTool.ViewModels"
@@ -36,8 +37,15 @@
                     <ScaleTransform x:Name="scaleCanvas" />
                 </Canvas.RenderTransform>
                 <Image Source="{Binding ImagePath, Mode=TwoWay}" 
+                       x:Name="imgBig"
                        RenderOptions.BitmapScalingMode="NearestNeighbor"
-                       Stretch="None"/>
+                       Stretch="None">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDown">
+                            <cmd:EventToCommand Command="{Binding ImageMouseDownCommand}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Image>
                 <Border>
                     <Border.Background>
                         <VisualBrush TileMode="Tile"
@@ -48,7 +56,12 @@
                             </VisualBrush.Visual>
                         </VisualBrush>
                     </Border.Background>
-                    <Canvas Width="10000" Height="10000"/>
+                    <Canvas x:Name="cvsBigGrid" Width="10000" Height="10000" 
+                            Background="Transparent">
+                        <i:Interaction.Behaviors>
+                            <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgBig}"/>
+                        </i:Interaction.Behaviors>
+                    </Canvas>
                 </Border>
             </Canvas>
         </ScrollViewer>
@@ -58,10 +71,25 @@
                 <RowDefinition Height="110"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Border BorderThickness="3" BorderBrush="Black" Margin="20,10,20,10">
-                <Canvas HorizontalAlignment="Stretch" Grid.Row="0" 
-                    VerticalAlignment="Stretch" Background="DarkGray"
-                    Width="300" Height="300">
+            <Border BorderThickness="3" BorderBrush="Black" Margin="20,13,23,10">
+                <Canvas HorizontalAlignment="Left" Grid.Row="0" 
+                    VerticalAlignment="Top" Background="DarkGray"
+                    Width="64" Height="64">
+                    <Canvas.RenderTransform>
+                        <ScaleTransform ScaleX="4.7" ScaleY="4.7" />
+                    </Canvas.RenderTransform>
+                    <Border>
+                        <Border.Background>
+                            <VisualBrush TileMode="Tile"
+                                     Viewport="0,0,8,8" ViewportUnits="Absolute" 
+                                     Viewbox="0,0,8,8" ViewboxUnits="Absolute">
+                                <VisualBrush.Visual>
+                                    <Rectangle Stroke="Magenta" StrokeThickness="0.1" Height="100" Width="100"/>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Border.Background>
+                        <Canvas Width="64" Height="64"/>
+                    </Border>
                 </Canvas>
             </Border>
             <my:ColorPaletteControl Name="ColorPalette1" Grid.Row="1"

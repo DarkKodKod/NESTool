@@ -15,6 +15,7 @@ namespace NESTool.ViewModels
 
         #region Commands
         public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
+        public ImageMouseDownCommand ImageMouseDownCommand { get; } = new ImageMouseDownCommand();
         #endregion
 
         public TileSetModel GetModel()
@@ -27,6 +28,7 @@ namespace NESTool.ViewModels
             return null;
         }
 
+        #region get/set
         public string ImagePath
         {
             get
@@ -68,6 +70,7 @@ namespace NESTool.ViewModels
                 OnPropertyChanged("ActualWidth");
             }
         }
+        #endregion
 
         public TileSetViewModel()
         {

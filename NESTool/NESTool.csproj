@@ -128,6 +128,7 @@
     <Compile Include="Commands\DragOverCommand.cs" />
     <Compile Include="Commands\DropCommand.cs" />
     <Compile Include="Commands\DuplicateElementCommand.cs" />
+    <Compile Include="Commands\ImageMouseDownCommand.cs" />
     <Compile Include="Commands\ImportImageCommand.cs" />
     <Compile Include="Commands\OpenImportImageDialogCommand.cs" />
     <Compile Include="Commands\ItemSelectedCommand.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Commands\EnableRenameElementCommand.cs" />
     <Compile Include="Commands\TreeviewSelectedItemChanged.cs" />
     <Compile Include="Commands\UndoCommand.cs" />
+    <Compile Include="Utils\Behaviors\RedirectRoutedEventBehavior.cs" />
     <Compile Include="Utils\PaletteQuantizer.cs" />
     <Compile Include="Utils\CustomTypeConverter\ProjectItemTypeConverter.cs" />
     <Compile Include="FileSystem\ProjectItemFileSystem.cs" />
