@@ -59,8 +59,10 @@ namespace ColorPalette
 
             SelectedColor = scb.Color;
 
-            PaletteEventArgs newEventArgs = new PaletteEventArgs(this, SelectedColor);
-            newEventArgs.RoutedEvent = ColorPaletteSelect;
+            PaletteEventArgs newEventArgs = new PaletteEventArgs(this, SelectedColor)
+            {
+                RoutedEvent = ColorPaletteSelect
+            };
             RaiseEvent(newEventArgs);
         }
 
@@ -72,15 +74,19 @@ namespace ColorPalette
 
             CurrentColor = scb.Color;
 
-            PaletteEventArgs newEventArgs = new PaletteEventArgs(this, CurrentColor);
-            newEventArgs.RoutedEvent = ColorPaletteMouseMove;
+            PaletteEventArgs newEventArgs = new PaletteEventArgs(this, CurrentColor)
+            {
+                RoutedEvent = ColorPaletteMouseMove
+            };
             RaiseEvent(newEventArgs);
         }
 
         private void WrapPanel1_MouseLeave(object sender, MouseEventArgs e)
         {
-            PaletteEventArgs newEventArgs = new PaletteEventArgs(this, new Color());
-            newEventArgs.RoutedEvent = ColorPaletteMouseMove;
+            PaletteEventArgs newEventArgs = new PaletteEventArgs(this, new Color())
+            {
+                RoutedEvent = ColorPaletteMouseMove
+            };
             RaiseEvent(newEventArgs);
         }
 
@@ -122,7 +128,6 @@ namespace ColorPalette
                 };
 
                 WrapPanel1.Children.Add(cpi);
-                
             }
         }
     }

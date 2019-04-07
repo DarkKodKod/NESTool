@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NESTool", "NESTool\NESTool.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchitectureLibrary", "ArchitectureLibrary\ArchitectureLibrary.csproj", "{2D202BB4-F395-491A-889E-A3FEBDDAFF45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorPalette", "ColorPaletteControl\ColorPalette\ColorPalette.csproj", "{6A4E4554-1518-4DC3-9A1C-B41C0E31BFEC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ColorPalette", "ColorPalette\ColorPalette.csproj", "{6A4E4554-1518-4DC3-9A1C-B41C0E31BFEC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaletteQuantizerLibrary", "PaletteQuantizerLibrary\PaletteQuantizerLibrary.csproj", "{37DCDA26-34C9-489E-800B-0957FAC221E4}"
 EndProject

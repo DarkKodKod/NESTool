@@ -1,0 +1,15 @@
+C:\Proyectos\NESTool\ColorPalette\bin\Release\ColorPalette.dll
+C:\Proyectos\NESTool\ColorPalette\bin\Release\ColorPalette.pdb
+C:\Proyectos\NESTool\ColorPalette\obj\Release\ColorPalette.csprojAssemblyReference.cache
+C:\Proyectos\NESTool\ColorPalette\obj\Release\ColorPaletteControl.baml
+C:\Proyectos\NESTool\ColorPalette\obj\Release\ColorPaletteControl.g.cs
+C:\Proyectos\NESTool\ColorPalette\obj\Release\ColorPaletteItem.g.cs
+C:\Proyectos\NESTool\ColorPalette\obj\Release\ColorPalette_MarkupCompile.cache
+C:\Proyectos\NESTool\ColorPalette\obj\Release\ColorPalette_MarkupCompile.lref
+C:\Proyectos\NESTool\ColorPalette\obj\Release\ColorPaletteItem.baml
+C:\Proyectos\NESTool\ColorPalette\obj\Release\ColorPalette.g.resources
+C:\Proyectos\NESTool\ColorPalette\obj\Release\ColorPalette.Properties.Resources.resources
+C:\Proyectos\NESTool\ColorPalette\obj\Release\ColorPalette.csproj.GenerateResource.cache
+C:\Proyectos\NESTool\ColorPalette\obj\Release\ColorPalette.csproj.CoreCompileInputs.cache
+C:\Proyectos\NESTool\ColorPalette\obj\Release\ColorPalette.dll
+C:\Proyectos\NESTool\ColorPalette\obj\Release\ColorPalette.pdb

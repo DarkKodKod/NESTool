@@ -363,7 +363,7 @@
       <Project>{2d202bb4-f395-491a-889e-a3febddaff45}</Project>
       <Name>ArchitectureLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ColorPaletteControl\ColorPalette\ColorPalette.csproj">
+    <ProjectReference Include="..\ColorPalette\ColorPalette.csproj">
       <Project>{6a4e4554-1518-4dc3-9a1c-b41c0e31bfec}</Project>
       <Name>ColorPalette</Name>
     </ProjectReference>

@@ -1,0 +1,6 @@
+C:\Proyectos\NESTool\PaletteQuantizerLibrary\bin\Release\PaletteQuantizerLibrary.dll
+C:\Proyectos\NESTool\PaletteQuantizerLibrary\bin\Release\PaletteQuantizerLibrary.pdb
+C:\Proyectos\NESTool\PaletteQuantizerLibrary\obj\Release\PaletteQuantizerLibrary.csprojAssemblyReference.cache
+C:\Proyectos\NESTool\PaletteQuantizerLibrary\obj\Release\PaletteQuantizerLibrary.csproj.CoreCompileInputs.cache
+C:\Proyectos\NESTool\PaletteQuantizerLibrary\obj\Release\PaletteQuantizerLibrary.dll
+C:\Proyectos\NESTool\PaletteQuantizerLibrary\obj\Release\PaletteQuantizerLibrary.pdb
