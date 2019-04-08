@@ -57,7 +57,7 @@ namespace NESTool.Commands
 
             Image outputImage = await quantizer.Convert();
 
-            string outputImagePath = Path.Combine(imageFolderPath, Path.GetFileNameWithoutExtension(filePath) + ".bmp");
+            string outputImagePath = Path.Combine(imageFolderPath, item.DisplayName + ".bmp");
 
             tileSet.ImagePath = outputImagePath;
             tileSet.ImageWidth = outputImage.Width;

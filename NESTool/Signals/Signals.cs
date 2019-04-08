@@ -3,6 +3,7 @@ using NESTool.ViewModels;
 using NESTool.VOs;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace NESTool.Signals
 {
@@ -48,4 +49,5 @@ namespace NESTool.Signals
     // TileSet
     public class UpdateTileSetImageSignal : Signal { }
     public class MouseWheelSignal : Signal<MouseWheelVO> { }
+    public class OutputSelectedQuadrantSignal : Signal<WriteableBitmap> { }
 }

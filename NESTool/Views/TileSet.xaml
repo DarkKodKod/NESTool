@@ -78,6 +78,13 @@
                     <Canvas.RenderTransform>
                         <ScaleTransform ScaleX="4.7" ScaleY="4.7" />
                     </Canvas.RenderTransform>
+                    <Image Source="{Binding CroppedImage, Mode=TwoWay}" 
+                           x:Name="imgSmall"
+                           RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           Width="64"
+                           Height="64"
+                           Stretch="UniformToFill">
+                    </Image>
                     <Border>
                         <Border.Background>
                             <VisualBrush TileMode="Tile"

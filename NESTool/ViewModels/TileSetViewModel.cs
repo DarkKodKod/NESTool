@@ -5,6 +5,7 @@ using NESTool.Signals;
 using NESTool.VOs;
 using System.IO;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace NESTool.ViewModels
 {
@@ -14,6 +15,7 @@ namespace NESTool.ViewModels
         private double _actualWidth;
         private double _actualHeight;
         private Visibility _gridVisibility = Visibility.Visible;
+        private WriteableBitmap _croppedImage;
 
         #region Commands
         public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
@@ -42,6 +44,20 @@ namespace NESTool.ViewModels
                 _gridVisibility = value;
 
                 OnPropertyChanged("GridVisibility");
+            }
+        }
+
+        public WriteableBitmap CroppedImage
+        {
+            get
+            {
+                return _croppedImage;
+            }
+            set
+            {
+                _croppedImage = value;
+
+                OnPropertyChanged("CroppedImage");
             }
         }
 
@@ -95,7 +111,13 @@ namespace NESTool.ViewModels
             SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
             SignalManager.Get<ShowGridSignal>().AddListener(OnShowGrid);
             SignalManager.Get<HideGridSignal>().AddListener(OnHideGrid);
+            SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
             #endregion
+        }
+
+        private void OnOutputSelectedQuadrant(WriteableBitmap bitmap)
+        {
+            CroppedImage = bitmap;
         }
 
         private void OnHideGrid()
