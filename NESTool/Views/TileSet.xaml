@@ -84,6 +84,11 @@
                            Width="64"
                            Height="64"
                            Stretch="UniformToFill">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <cmd:EventToCommand Command="{Binding CroppedImageMouseDownCommand}" PassEventArgsToCommand="True" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                     </Image>
                     <Border>
                         <Border.Background>
@@ -95,7 +100,11 @@
                                 </VisualBrush.Visual>
                             </VisualBrush>
                         </Border.Background>
-                        <Canvas Width="64" Height="64"/>
+                        <Canvas Width="64" Height="64" Background="Transparent">
+                            <i:Interaction.Behaviors>
+                                <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgSmall}"/>
+                            </i:Interaction.Behaviors>
+                        </Canvas>
                     </Border>
                 </Canvas>
             </Border>
@@ -104,8 +113,13 @@
                           CellHeight="20" CellWidth="20" 
                           Width="326" Height="86"
                           VerticalAlignment="Top"
-                          Hover="ColorPalette1_Hover"
-                          Select="ColorPalette1_Select" />
+                          Hover="ColorPalette1_Hover">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Select">
+                        <cmd:EventToCommand Command="{Binding ColorPaletteSelectCommand}" PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </my:ColorPaletteControl>
             <Border x:Name="mask" BorderThickness="3" BorderBrush="Black"
                     CornerRadius="30" Grid.Row="1" Width="50" Height="50"
                     Panel.ZIndex="-1"

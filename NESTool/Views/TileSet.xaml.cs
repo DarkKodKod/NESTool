@@ -20,6 +20,19 @@ namespace NESTool.Views
             InitializeComponent();
 
             SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
+            SignalManager.Get<ColorPalleteSelectSignal>().AddListener(OnColorPalleteSelect);
+        }
+
+        private void OnColorPalleteSelect(Color color)
+        {
+            SolidColorBrush scb = new SolidColorBrush
+            {
+                Color = color
+            };
+
+            _selectedColor = color;
+
+            mask.Background = scb;
         }
 
         private void OnMouseWheel(MouseWheelVO vo)
@@ -66,21 +79,6 @@ namespace NESTool.Views
                     };
                     mask.Background = scb;
                 }
-            }
-        }
-
-        private void ColorPalette1_Select(object sender, RoutedEventArgs e)
-        {
-            if (e is PaletteEventArgs args)
-            {
-                SolidColorBrush scb = new SolidColorBrush
-                {
-                    Color = args.C
-                };
-
-                _selectedColor = args.C;
-
-                mask.Background = scb;
             }
         }
     }

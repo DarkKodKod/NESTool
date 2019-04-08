@@ -5,6 +5,7 @@ using NESTool.Signals;
 using NESTool.VOs;
 using System.IO;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace NESTool.ViewModels
@@ -16,10 +17,13 @@ namespace NESTool.ViewModels
         private double _actualHeight;
         private Visibility _gridVisibility = Visibility.Visible;
         private WriteableBitmap _croppedImage;
+        private Color _color = Color.FromArgb(0, 255, 255, 255);
 
         #region Commands
         public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
         public ImageMouseDownCommand ImageMouseDownCommand { get; } = new ImageMouseDownCommand();
+        public CroppedImageMouseDownCommand CroppedImageMouseDownCommand { get; } = new CroppedImageMouseDownCommand();
+        public ColorPaletteSelectCommand ColorPaletteSelectCommand { get; } = new ColorPaletteSelectCommand();
         #endregion
 
         public TileSetModel GetModel()
@@ -112,7 +116,26 @@ namespace NESTool.ViewModels
             SignalManager.Get<ShowGridSignal>().AddListener(OnShowGrid);
             SignalManager.Get<HideGridSignal>().AddListener(OnHideGrid);
             SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
+            SignalManager.Get<SelectedPixelSignal>().AddListener(OnSelectedPixel);
+            SignalManager.Get<ColorPalleteSelectSignal>().AddListener(OnColorPalleteSelect);
             #endregion
+        }
+
+        private void OnColorPalleteSelect(Color color)
+        {
+            _color = color;
+        }
+
+        private void OnSelectedPixel(WriteableBitmap bitmap, Point point)
+        {
+            if (_color == Color.FromArgb(0, 255, 255, 255))
+            {
+                return;
+            }
+
+            bitmap.SetPixel((int)point.X, (int)point.Y, _color);
+
+            CroppedImage = bitmap;
         }
 
         private void OnOutputSelectedQuadrant(WriteableBitmap bitmap)

@@ -118,10 +118,12 @@
     </ApplicationDefinition>
     <Compile Include="Commands\BrowseFileCommand.cs" />
     <Compile Include="Commands\CloseDialogCommand.cs" />
+    <Compile Include="Commands\ColorPaletteSelectCommand.cs" />
     <Compile Include="Commands\CopyElementCommand.cs" />
     <Compile Include="Commands\CreateElementCommand.cs" />
     <Compile Include="Commands\CreateElementFromMenuCommand.cs" />
     <Compile Include="Commands\CreateFolderCommand.cs" />
+    <Compile Include="Commands\CroppedImageMouseDownCommand.cs" />
     <Compile Include="Commands\DeleteElementCommand.cs" />
     <Compile Include="Commands\DragEnterCommand.cs" />
     <Compile Include="Commands\DragLeaveCommand.cs" />
