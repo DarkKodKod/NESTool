@@ -50,7 +50,8 @@ namespace NESTool.Signals
     // TileSet
     public class UpdateTileSetImageSignal : Signal { }
     public class MouseWheelSignal : Signal<MouseWheelVO> { }
-    public class OutputSelectedQuadrantSignal : Signal<WriteableBitmap> { }
+    public class OutputSelectedQuadrantSignal : Signal<WriteableBitmap, Point> { }
     public class SelectedPixelSignal : Signal<WriteableBitmap, Point> { }
     public class ColorPalleteSelectSignal : Signal<Color> { }
+    public class SavedPixelChangesSignal : Signal { }
 }

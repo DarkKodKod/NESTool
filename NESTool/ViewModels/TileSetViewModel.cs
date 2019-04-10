@@ -18,12 +18,15 @@ namespace NESTool.ViewModels
         private Visibility _gridVisibility = Visibility.Visible;
         private WriteableBitmap _croppedImage;
         private Color _color = Color.FromArgb(0, 255, 255, 255);
+        private bool _pixelsChanged = false;
+        private Point _croppedPoint;
 
         #region Commands
         public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
         public ImageMouseDownCommand ImageMouseDownCommand { get; } = new ImageMouseDownCommand();
         public CroppedImageMouseDownCommand CroppedImageMouseDownCommand { get; } = new CroppedImageMouseDownCommand();
         public ColorPaletteSelectCommand ColorPaletteSelectCommand { get; } = new ColorPaletteSelectCommand();
+        public SaveTileSetChangesCommand SaveTileSetChangesCommand { get; } = new SaveTileSetChangesCommand();
         #endregion
 
         public TileSetModel GetModel()
@@ -37,6 +40,34 @@ namespace NESTool.ViewModels
         }
 
         #region get/set
+        public Point CroppedPoint
+        {
+            get
+            {
+                return _croppedPoint;
+            }
+            set
+            {
+                _croppedPoint = value;
+
+                OnPropertyChanged("CroppedPoint");
+            }
+        }
+
+        public bool PixelsChanged
+        {
+            get
+            {
+                return _pixelsChanged;
+            }
+            set
+            {
+                _pixelsChanged = value;
+
+                OnPropertyChanged("PixelsChanged");
+            }
+        }
+
         public Visibility GridVisibility
         {
             get
@@ -118,7 +149,15 @@ namespace NESTool.ViewModels
             SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
             SignalManager.Get<SelectedPixelSignal>().AddListener(OnSelectedPixel);
             SignalManager.Get<ColorPalleteSelectSignal>().AddListener(OnColorPalleteSelect);
+            SignalManager.Get<SavedPixelChangesSignal>().AddListener(OnSavedPixelChanges);
             #endregion
+        }
+
+        private void OnSavedPixelChanges()
+        {
+            PixelsChanged = false;
+
+            UpdateImage();
         }
 
         private void OnColorPalleteSelect(Color color)
@@ -136,10 +175,13 @@ namespace NESTool.ViewModels
             bitmap.SetPixel((int)point.X, (int)point.Y, _color);
 
             CroppedImage = bitmap;
+
+            PixelsChanged = true;
         }
 
-        private void OnOutputSelectedQuadrant(WriteableBitmap bitmap)
+        private void OnOutputSelectedQuadrant(WriteableBitmap bitmap, Point point)
         {
+            CroppedPoint = point;
             CroppedImage = bitmap;
         }
 

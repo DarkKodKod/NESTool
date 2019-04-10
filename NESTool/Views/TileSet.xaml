@@ -7,11 +7,15 @@
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              xmlns:local="clr-namespace:NESTool.Views"
              xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
+             xmlns:cv="clr-namespace:NESTool.Utils.Converters"
              xmlns:my="clr-namespace:ColorPalette;assembly=ColorPalette"
              mc:Ignorable="d" 
 			 xmlns:vm="clr-namespace:NESTool.ViewModels"
              d:DesignHeight="560" d:DesignWidth="850">
-	<UserControl.DataContext>
+    <UserControl.Resources>
+        <cv:ParametersConverter x:Key="parametersConverter"/>
+    </UserControl.Resources>
+    <UserControl.DataContext>
 		<vm:TileSetViewModel />
 	</UserControl.DataContext>
     <Grid Background="LightGray">
@@ -131,7 +135,21 @@
                     </Canvas.OpacityMask>
                 </Canvas>
             </Border>
-            <Button VerticalAlignment="Bottom" Grid.Row="2" Margin="20" Height="23">Save</Button>
+            <Button VerticalAlignment="Bottom" 
+                    Grid.Row="2" 
+                    Margin="20" 
+                    Height="23"
+                    Content="Save"
+                    Command="{Binding SaveTileSetChangesCommand}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource parametersConverter}">
+                        <Binding Path="PixelsChanged" />
+                        <Binding Path="ImagePath" />
+                        <Binding Path="CroppedImage" />
+                        <Binding Path="CroppedPoint" />
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
         </Grid>
     </Grid>
 </UserControl>

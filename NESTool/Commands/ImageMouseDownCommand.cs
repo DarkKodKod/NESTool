@@ -26,8 +26,6 @@ namespace NESTool.Commands
         {
             WriteableBitmap writeableBmp = BitmapFactory.New((int)Math.Ceiling(image.ActualWidth), (int)Math.Ceiling(image.ActualHeight));
 
-            WriteableBitmap cropper;
-
             using (writeableBmp.GetBitmapContext())
             {
                 writeableBmp = BitmapFactory.ConvertToPbgra32Format(image.Source as BitmapSource);
@@ -35,10 +33,10 @@ namespace NESTool.Commands
                 int x = (int)Math.Floor(point.X / 8) * 8;
                 int y = (int)Math.Floor(point.Y / 8) * 8;
 
-                cropper = writeableBmp.Crop(x, y, 8, 8);
-            }
+                WriteableBitmap cropper = writeableBmp.Crop(x, y, 8, 8);
 
-            SignalManager.Get<OutputSelectedQuadrantSignal>().Dispatch(cropper);
+                SignalManager.Get<OutputSelectedQuadrantSignal>().Dispatch(cropper, new System.Windows.Point(x, y));
+            }
         }
     }
 }
