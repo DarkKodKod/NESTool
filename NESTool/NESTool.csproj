@@ -346,18 +346,26 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+	<Resource Include="nestool.ico" />
     <Resource Include="Resources\copy.png" />
     <Resource Include="Resources\delete.png" />
     <Resource Include="Resources\duplicate.png" />
     <Resource Include="Resources\paste.png" />
     <Resource Include="Resources\redo.png" />
     <Resource Include="Resources\undo.png" />
-  </ItemGroup>
-  <ItemGroup>
+	<Resource Include="Resources\build.png" />
+    <Resource Include="Resources\close_project.png" />
+    <Resource Include="Resources\help.png" />
+    <Resource Include="Resources\new_project.png" />
+    <Resource Include="Resources\open_project.png" />
+    <Resource Include="Resources\save.png" />
+    <Resource Include="Resources\save_all.png" />
+	<Resource Include="Resources\pattern_table.png" />
+	<Resource Include="Resources\new_element.png" />
+	<Resource Include="Resources\showgrid.png" />
+	<Resource Include="Resources\left_arrow.png" />
     <Resource Include="Resources\closed_folder.png" />
     <Resource Include="Resources\open_folder.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\bank.png" />
     <Resource Include="Resources\character.png" />
     <Resource Include="Resources\map.png" />
@@ -376,30 +384,6 @@
       <Project>{37DCDA26-34C9-489E-800B-0957FAC221E4}</Project>
       <Name>PaletteQuantizerLibrary</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\build.png" />
-    <Resource Include="Resources\close_project.png" />
-    <Resource Include="Resources\help.png" />
-    <Resource Include="Resources\new_project.png" />
-    <Resource Include="Resources\open_project.png" />
-    <Resource Include="Resources\save.png" />
-    <Resource Include="Resources\save_all.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="nestool.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\pattern_table.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\new_element.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\showgrid.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\left_arrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
