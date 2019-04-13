@@ -1,10 +1,8 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
-using System;
 using System.IO;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace NESTool.Commands
@@ -36,25 +34,22 @@ namespace NESTool.Commands
             string imagePath = (string)values[1];
             WriteableBitmap wp = (WriteableBitmap)values[2];
             Point croppedPoint = (Point)values[3];
+            BitmapSource imgSource = (BitmapSource)values[4];
 
-            BitmapImage bitmap = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
+            Merge(wp, imgSource, croppedPoint, imagePath);
+        }
 
-            //FormatConvertedBitmap newFormatedBitmapSource = new FormatConvertedBitmap();
-            //newFormatedBitmapSource.BeginInit();
-            //newFormatedBitmapSource.Source = bitmap;
-            //newFormatedBitmapSource.DestinationFormat = PixelFormats.Rgb24;
-            //newFormatedBitmapSource.EndInit();
+        private void Merge(WriteableBitmap croppedImage, BitmapSource originalImage, Point croppedPoint, string outputPath)
+        {
+            BitmapImage srcImage = ConvertWriteableBitmapToBitmapImage(croppedImage);
 
-            WriteableBitmap writeableBitmap = new WriteableBitmap(bitmap);
+            originalImage = new FormatConvertedBitmap(originalImage, srcImage.Format, null, 0);
 
-            BitmapImage srcImage = ConvertWriteableBitmapToBitmapImage(wp);
-
-            var cImage = writeableBitmap.Clone();
+            WriteableBitmap cImage = new WriteableBitmap(originalImage);
 
             Chubs_BitBltMerge(ref cImage, (int)croppedPoint.X, (int)croppedPoint.Y, ref srcImage);
 
-            //SaveFile(imagePath, cImage);
-            SaveFile("C:\\Proyectos\\MontezumaNES\\Montezuma\\Images\\gato.bmp", cImage);
+            SaveFile(outputPath, cImage);
 
             SignalManager.Get<SavedPixelChangesSignal>().Dispatch();
         }
@@ -104,27 +99,22 @@ namespace NESTool.Commands
             src.CopyPixels(src_buffer, src_stride, 0);
 
             // copy the dest image into a byte buffer
-//            int dest_stride = src.PixelWidth * (dest.Format.BitsPerPixel >> 3);
-//            byte[] dest_buffer = new byte[(src.PixelWidth * src.PixelHeight) << 2];
-            byte[] dest_buffer = new byte[(src.PixelWidth * src.PixelHeight) * dest.BackBufferStride];
-//            dest.CopyPixels(new Int32Rect(nXDest, nYDest, src.PixelWidth, src.PixelHeight), dest_buffer, dest_stride, 0);
+            int dest_stride = src.PixelWidth * (dest.Format.BitsPerPixel >> 3);
+            byte[] dest_buffer = new byte[(src.PixelWidth * src.PixelHeight) << 2];
+            dest.CopyPixels(new Int32Rect(nXDest, nYDest, src.PixelWidth, src.PixelHeight), dest_buffer, dest_stride, 0);
 
             // do merge (could be made faster through parallelization)
             for (int i = 0; i < src_buffer.Length; i = i + 4)
             {
-                //float src_alpha = ((float)src_buffer[i + 3] / 255);
-                //dest_buffer[i + 0] = (byte)((src_buffer[i + 0] * src_alpha) + dest_buffer[i + 0] * (1.0 - src_alpha));
-                //dest_buffer[i + 1] = (byte)((src_buffer[i + 1] * src_alpha) + dest_buffer[i + 1] * (1.0 - src_alpha));
-                //dest_buffer[i + 2] = (byte)((src_buffer[i + 2] * src_alpha) + dest_buffer[i + 2] * (1.0 - src_alpha));
-                dest_buffer[i + 0] = 0;
-                dest_buffer[i + 1] = 0;
-                dest_buffer[i + 2] = 0;
+                float src_alpha = ((float)src_buffer[i + 3] / 255);
+                dest_buffer[i + 0] = (byte)((src_buffer[i + 0] * src_alpha) + dest_buffer[i + 0] * (1.0 - src_alpha));
+                dest_buffer[i + 1] = (byte)((src_buffer[i + 1] * src_alpha) + dest_buffer[i + 1] * (1.0 - src_alpha));
+                dest_buffer[i + 2] = (byte)((src_buffer[i + 2] * src_alpha) + dest_buffer[i + 2] * (1.0 - src_alpha));
                 dest_buffer[i + 3] = 255;
             }
 
             // copy dest buffer back to the dest WriteableBitmap
-            //dest.WritePixels(new Int32Rect(nXDest, nYDest, src.PixelWidth, src.PixelHeight), dest_buffer, dest_stride, 0);
-            dest.WritePixels(new Int32Rect(nXDest, nYDest, src.PixelWidth, src.PixelHeight), dest_buffer, dest.BackBufferStride, 0);
+            dest.WritePixels(new Int32Rect(nXDest, nYDest, src.PixelWidth, src.PixelHeight), dest_buffer, dest_stride, 0);
         }
     }
 }

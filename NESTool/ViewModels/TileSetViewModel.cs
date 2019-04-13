@@ -3,6 +3,7 @@ using NESTool.Commands;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.VOs;
+using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
@@ -13,6 +14,7 @@ namespace NESTool.ViewModels
     public class TileSetViewModel : ItemViewModel
     {
         private string _imagePath;
+        private ImageSource _imgSource;
         private double _actualWidth;
         private double _actualHeight;
         private Visibility _gridVisibility = Visibility.Visible;
@@ -93,6 +95,20 @@ namespace NESTool.ViewModels
                 _croppedImage = value;
 
                 OnPropertyChanged("CroppedImage");
+            }
+        }
+
+        public ImageSource ImgSource
+        {
+            get
+            {
+                return _imgSource;
+            }
+            set
+            {
+                _imgSource = value;
+
+                OnPropertyChanged("ImgSource");
             }
         }
 
@@ -230,9 +246,22 @@ namespace NESTool.ViewModels
 
             if (File.Exists(GetModel().ImagePath))
             {
+                ImgSource = null;
+
                 ImagePath = GetModel().ImagePath;
                 ActualWidth = GetModel().ImageWidth;
                 ActualHeight = GetModel().ImageHeight;
+
+                BitmapImage bmImage = new BitmapImage();
+
+                bmImage.BeginInit();
+                bmImage.CacheOption = BitmapCacheOption.OnLoad;
+                bmImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                bmImage.UriSource = new Uri(GetModel().ImagePath, UriKind.Absolute);
+                bmImage.EndInit();
+                bmImage.Freeze();
+
+                ImgSource = bmImage;
             }
         }
     }
