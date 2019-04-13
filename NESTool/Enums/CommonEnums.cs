@@ -28,4 +28,10 @@
         TileSet         = 4,
         PatternTable    = 5
     }
+
+    public enum PatternTableType
+    {
+        Background = 0,
+        Characters = 1
+    }
 }
