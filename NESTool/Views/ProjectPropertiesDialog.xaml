@@ -50,7 +50,8 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label Content="Mapper:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <ComboBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" ItemsSource="{Binding Mappers}" 
+            <ComboBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" 
+                      ItemsSource="{Binding Mappers}" 
                       DisplayMemberPath="Name"
                       SelectedValuePath="Id"
                       SelectedValue="{Binding Path=SelectedMapper}"/>

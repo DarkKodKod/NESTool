@@ -99,7 +99,11 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Row="0">
-                    <ComboBox Width="200"></ComboBox>
+                    <ComboBox Width="200"
+                              ItemsSource="{Binding TileSets}" 
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="Id"
+                              SelectedValue="{Binding Path=SelectedTileSet}"/>
                 </StackPanel>
                 <ScrollViewer Grid.Row="2"
                               Background="DarkGray"

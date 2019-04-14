@@ -150,6 +150,7 @@
     <Compile Include="Commands\ShowGridCommand.cs" />
     <Compile Include="Commands\TreeviewSelectedItemChanged.cs" />
     <Compile Include="Commands\UndoCommand.cs" />
+    <Compile Include="FileSystem\ProjectFiles.cs" />
     <Compile Include="Utils\Behaviors\RedirectRoutedEventBehavior.cs" />
     <Compile Include="Utils\PaletteQuantizer.cs" />
     <Compile Include="Utils\CustomTypeConverter\ProjectItemTypeConverter.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="VOs\MouseMoveVO.cs" />
     <Compile Include="VOs\MouseWheelVO.cs" />
     <Compile Include="VOs\ProjectOpenVO.cs" />
+    <Compile Include="VOs\FileModelVO.cs" />
     <Compile Include="VOs\WindowVO.cs" />
     <Page Include="Definitions\Configuration.xaml">
       <SubType>Designer</SubType>
@@ -346,24 +348,24 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-	<Resource Include="nestool.ico" />
+    <Resource Include="nestool.ico" />
     <Resource Include="Resources\copy.png" />
     <Resource Include="Resources\delete.png" />
     <Resource Include="Resources\duplicate.png" />
     <Resource Include="Resources\paste.png" />
     <Resource Include="Resources\redo.png" />
     <Resource Include="Resources\undo.png" />
-	<Resource Include="Resources\build.png" />
+    <Resource Include="Resources\build.png" />
     <Resource Include="Resources\close_project.png" />
     <Resource Include="Resources\help.png" />
     <Resource Include="Resources\new_project.png" />
     <Resource Include="Resources\open_project.png" />
     <Resource Include="Resources\save.png" />
     <Resource Include="Resources\save_all.png" />
-	<Resource Include="Resources\pattern_table.png" />
-	<Resource Include="Resources\new_element.png" />
-	<Resource Include="Resources\showgrid.png" />
-	<Resource Include="Resources\left_arrow.png" />
+    <Resource Include="Resources\pattern_table.png" />
+    <Resource Include="Resources\new_element.png" />
+    <Resource Include="Resources\showgrid.png" />
+    <Resource Include="Resources\left_arrow.png" />
     <Resource Include="Resources\closed_folder.png" />
     <Resource Include="Resources\open_folder.png" />
     <Resource Include="Resources\bank.png" />

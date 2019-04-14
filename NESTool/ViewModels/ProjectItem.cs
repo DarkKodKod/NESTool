@@ -37,7 +37,7 @@ namespace NESTool.ViewModels
         public bool IsFolder { get; set; } = false;
         public ProjectItem Parent = null;
         public ObservableCollection<ProjectItem> Items { get; set; }
-        public string OldValue { get; set; } = "";
+        public string OldCaptionValue { get; set; } = "";
         public FileHandler FileHandler { get; set; }
         public bool RenamedFromAction { private get; set; } = false;
 

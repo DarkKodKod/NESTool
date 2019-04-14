@@ -2,6 +2,7 @@
 using ArchitectureLibrary.Signals;
 using NESTool.Commands;
 using NESTool.Enums;
+using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.VOs;
@@ -18,6 +19,8 @@ namespace NESTool.ViewModels
         private PatternTableType _selectedPatternTableType = PatternTableType.Characters;
         private WriteableBitmap _croppedImage;
         private string _projectGridSize;
+        private FileModelVO[] _tileSets;
+        private int _selectedTileSet;
 
         #region Commands
         public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
@@ -110,6 +113,28 @@ namespace NESTool.ViewModels
                 OnPropertyChanged("CroppedImage");
             }
         }
+
+        public FileModelVO[] TileSets
+        {
+            get { return _tileSets; }
+            set
+            {
+                _tileSets = value;
+
+                OnPropertyChanged("TileSets");
+            }
+        }
+
+        public int SelectedTileSet
+        {
+            get { return _selectedTileSet; }
+            set
+            {
+                _selectedTileSet = value;
+
+                OnPropertyChanged("SelectedTileSet");
+            }
+        }
         #endregion
 
         public PatternTableViewModel()
@@ -137,6 +162,8 @@ namespace NESTool.ViewModels
                 case SpriteSize.s8x8: ProjectGridSize = "8x8"; break;
                 case SpriteSize.s8x16: ProjectGridSize = "8x16"; break;
             }
+
+            TileSets = ProjectFiles.GetModels<TileSetModel>().ToArray();
         }
 
         public override void OnActivate()

@@ -294,7 +294,7 @@ namespace NESTool
                 if (tb.DataContext is ProjectItem item)
                 {
                     // back up - for possible cancelling
-                    item.OldValue = tb.Text;
+                    item.OldCaptionValue = tb.Text;
                 }
             }
         }
@@ -341,7 +341,7 @@ namespace NESTool
 
                 if (e.Key == Key.Escape)
                 {
-                    tb.Text = item.OldValue;
+                    tb.Text = item.OldCaptionValue;
 
                     item.IsInEditMode = false;
                 }

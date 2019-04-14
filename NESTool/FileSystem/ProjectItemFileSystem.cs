@@ -5,34 +5,17 @@ using NESTool.Signals;
 using NESTool.Utils;
 using NESTool.ViewModels;
 using Nett;
-using System.Collections.Generic;
 using System.IO;
-using System.Windows;
 
 namespace NESTool.FileSystem
 {
     public static class ProjectItemFileSystem
     {
-        private const string _metaExtensionKey = "extensionMetaFile";
-
-        private static string _metaExtension = "";
-        private static Dictionary<string, FileHandler> FileStructure = new Dictionary<string, FileHandler>();
-
         public static  void Initialize()
         {
             SignalManager.Get<RegisterFileHandlerSignal>().AddListener(OnRegisterFileHandler);
             SignalManager.Get<RenameFileSignal>().AddListener(OnRenameFile);
             SignalManager.Get<MoveElementSignal>().AddListener(OnMoveElement);
-        }
-
-        private static string GetMetaExtension()
-        {
-            if (string.IsNullOrEmpty(_metaExtension))
-            {
-                _metaExtension = (string)Application.Current.FindResource(_metaExtensionKey);
-            }
-
-            return _metaExtension;
         }
 
         private static void OnRenameFile(ProjectItem item)
@@ -44,7 +27,7 @@ namespace NESTool.FileSystem
 
             FileHandler fileHandler = item.FileHandler;
 
-            if (FileStructure.TryGetValue(fileHandler.Meta.GUID, out FileHandler outFile))
+            if (ProjectFiles.Handlers.TryGetValue(fileHandler.Meta.GUID, out FileHandler outFile))
             {
                 string metaPath = Path.Combine(fileHandler.Path, fileHandler.Name + fileHandler.Meta.FileExtension);
                 string metaNewPath = Path.Combine(fileHandler.Path, item.DisplayName + fileHandler.Meta.FileExtension);
@@ -95,7 +78,7 @@ namespace NESTool.FileSystem
 
             RegisterMetaFile(ref fileHandler);
 
-            FileStructure.Add(fileHandler.Meta.GUID, fileHandler);
+            ProjectFiles.Handlers.Add(fileHandler.Meta.GUID, fileHandler);
         }
 
         public static string GetValidFolderName(string path, string name)
@@ -167,7 +150,7 @@ namespace NESTool.FileSystem
 
         private static void RegisterMetaFile(ref FileHandler fileHandler)
         {
-            string metaPath = Path.Combine(fileHandler.Path, fileHandler.Name + GetMetaExtension());
+            string metaPath = Path.Combine(fileHandler.Path, fileHandler.Name + Util.GetMetaExtension());
 
             if (File.Exists(metaPath))
             {
@@ -235,7 +218,7 @@ namespace NESTool.FileSystem
 
             item.FileHandler.Meta = metaModel;
 
-            FileStructure.Add(item.FileHandler.Meta.GUID, item.FileHandler);
+            ProjectFiles.Handlers.Add(item.FileHandler.Meta.GUID, item.FileHandler);
         }
 
         private static MetaFileModel CreateMetaFile(string name, string path)
@@ -329,7 +312,7 @@ namespace NESTool.FileSystem
                 return;
             }
 
-            if (FileStructure.TryGetValue(fileHandler.Meta.GUID, out FileHandler outFile))
+            if (ProjectFiles.Handlers.TryGetValue(fileHandler.Meta.GUID, out FileHandler outFile))
             {
                 string metaPath = Path.Combine(fileHandler.Path, fileHandler.Name + fileHandler.Meta.FileExtension);
 
@@ -358,7 +341,7 @@ namespace NESTool.FileSystem
                     }
                 }
 
-                FileStructure.Remove(fileHandler.Meta.GUID);
+                ProjectFiles.Handlers.Remove(fileHandler.Meta.GUID);
             }
         }
 
