@@ -24,6 +24,11 @@ namespace NESTool.Commands
 
         private void ProcessImage(Image image, System.Windows.Point point)
         {
+            if (image.ActualWidth == 0 || image.ActualHeight == 0)
+            {
+                return;
+            }
+
             WriteableBitmap writeableBmp = BitmapFactory.New((int)Math.Ceiling(image.ActualWidth), (int)Math.Ceiling(image.ActualHeight));
 
             using (writeableBmp.GetBitmapContext())
