@@ -147,6 +147,7 @@
     <Compile Include="Commands\RedoCommand.cs" />
     <Compile Include="Commands\EnableRenameElementCommand.cs" />
     <Compile Include="Commands\SaveTileSetChangesCommand.cs" />
+    <Compile Include="Commands\TileSetSelectionChangedCommand.cs" />
     <Compile Include="Commands\ShowGridCommand.cs" />
     <Compile Include="Commands\TreeviewSelectedItemChanged.cs" />
     <Compile Include="Commands\UndoCommand.cs" />

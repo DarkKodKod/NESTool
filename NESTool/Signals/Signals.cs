@@ -55,4 +55,7 @@ namespace NESTool.Signals
     public class SelectedPixelSignal : Signal<WriteableBitmap, Point> { }
     public class ColorPalleteSelectSignal : Signal<Color> { }
     public class SavedPixelChangesSignal : Signal { }
+
+    // PatternTable
+    public class TileSetSelectionChangedSignal : Signal<FileModelVO> { }
 }

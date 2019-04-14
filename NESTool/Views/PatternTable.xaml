@@ -103,7 +103,13 @@
                               ItemsSource="{Binding TileSets}" 
                               DisplayMemberPath="Name"
                               SelectedValuePath="Id"
-                              SelectedValue="{Binding Path=SelectedTileSet}"/>
+                              SelectedValue="{Binding Path=SelectedTileSet}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <cmd:EventToCommand Command="{Binding TileSetSelectionChangedCommand}" PassEventArgsToCommand="True" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
                 </StackPanel>
                 <ScrollViewer Grid.Row="2"
                               Background="DarkGray"
@@ -115,17 +121,17 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <Canvas x:Name="cvsImage"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Width="{Binding ActualWidth}" 
-                    Height="{Binding ActualHeight}">
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Width="{Binding ActualWidth}" 
+                            Height="{Binding ActualHeight}">
                         <Canvas.RenderTransform>
                             <ScaleTransform x:Name="scaleCanvas" />
                         </Canvas.RenderTransform>
                         <Image Source="{Binding ImgSource}" 
-                       x:Name="imgBig"
-                       RenderOptions.BitmapScalingMode="NearestNeighbor"
-                       Stretch="None">
+                               x:Name="imgBig"
+                               RenderOptions.BitmapScalingMode="NearestNeighbor"
+                               Stretch="None">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseDown">
                                     <cmd:EventToCommand Command="{Binding ImageMouseDownCommand}" PassEventArgsToCommand="True" />

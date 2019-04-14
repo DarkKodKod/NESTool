@@ -6,7 +6,10 @@ using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.VOs;
+using System;
+using System.IO;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace NESTool.ViewModels
@@ -21,10 +24,12 @@ namespace NESTool.ViewModels
         private string _projectGridSize;
         private FileModelVO[] _tileSets;
         private int _selectedTileSet;
+        private ImageSource _imgSource;
 
         #region Commands
         public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
         public ImageMouseDownCommand ImageMouseDownCommand { get; } = new ImageMouseDownCommand();
+        public TileSetSelectionChangedCommand TileSetSelectionChangedCommand { get; } = new TileSetSelectionChangedCommand();
         #endregion
 
         #region get/set
@@ -55,6 +60,20 @@ namespace NESTool.ViewModels
 
                     Save();
                 }
+            }
+        }
+
+        public ImageSource ImgSource
+        {
+            get
+            {
+                return _imgSource;
+            }
+            set
+            {
+                _imgSource = value;
+
+                OnPropertyChanged("ImgSource");
             }
         }
 
@@ -145,7 +164,13 @@ namespace NESTool.ViewModels
             SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
             SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
             SignalManager.Get<ProjectConfigurationSavedSignal>().AddListener(OnProjectConfigurationSaved);
+            SignalManager.Get<TileSetSelectionChangedSignal>().AddListener(OnTileSetSelectionChanged);
             #endregion
+        }
+
+        private void OnTileSetSelectionChanged(FileModelVO fileModel)
+        {
+            LoadTileSetImage();
         }
 
         private void OnProjectConfigurationSaved()
@@ -172,6 +197,37 @@ namespace NESTool.ViewModels
             if (model != null)
             {
                 SelectedPatternTableType = model.PatternTableType;
+            }
+
+            LoadTileSetImage();
+        }
+
+        private void LoadTileSetImage()
+        {
+            if (TileSets.Length == 0)
+            {
+                return;
+            }
+
+            TileSetModel model = TileSets[SelectedTileSet].Model as TileSetModel;
+
+            if (File.Exists(model.ImagePath))
+            {
+                ImgSource = null;
+
+                ActualWidth = model.ImageWidth;
+                ActualHeight = model.ImageHeight;
+
+                BitmapImage bmImage = new BitmapImage();
+
+                bmImage.BeginInit();
+                bmImage.CacheOption = BitmapCacheOption.OnLoad;
+                bmImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                bmImage.UriSource = new Uri(model.ImagePath, UriKind.Absolute);
+                bmImage.EndInit();
+                bmImage.Freeze();
+
+                ImgSource = bmImage;
             }
         }
 
