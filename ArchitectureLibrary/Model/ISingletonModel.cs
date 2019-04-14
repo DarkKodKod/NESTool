@@ -1,6 +1,6 @@
 ﻿namespace ArchitectureLibrary.Model
 {
-    public interface IModel
+    public interface ISingletonModel
     {
     }
 }

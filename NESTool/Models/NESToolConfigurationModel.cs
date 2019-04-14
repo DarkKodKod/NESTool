@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace NESTool.Models
 {
-    public class NESToolConfigurationModel : IModel
+    public class NESToolConfigurationModel : ISingletonModel
     {
         public int Version { get; set; }
         public int MaxRencetProjectsCount { get; set; } = 9;

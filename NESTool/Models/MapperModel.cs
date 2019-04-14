@@ -2,7 +2,7 @@
 
 namespace NESTool.Models
 {
-    public class MapperModel : IModel
+    public class MapperModel : ISingletonModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

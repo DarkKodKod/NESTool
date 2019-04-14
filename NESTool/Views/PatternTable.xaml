@@ -6,6 +6,8 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              xmlns:local="clr-namespace:NESTool.Views"
+             xmlns:ex="clr-namespace:NESTool.Utils.Extensions"
+             xmlns:enum="clr-namespace:NESTool.Enums"
              xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
              xmlns:vm="clr-namespace:NESTool.ViewModels"
              mc:Ignorable="d" 
@@ -46,7 +48,9 @@
                                    Text="{Binding ProjectGridSize}">
                         </TextBlock>
                     </Border>
-                    <ComboBox Margin="10,0,0,0" Width="200"></ComboBox>
+                    <ComboBox Margin="10,0,0,0" Width="200"
+                              ItemsSource="{Binding Source={ex:EnumBindingSource {x:Type enum:PatternTableType}}}"
+                              SelectedItem="{Binding Path=SelectedPatternTableType}"/>
                     <RadioButton GroupName="Grouped" Margin="10,0,0,0" IsChecked="True">Compact</RadioButton>
                     <RadioButton GroupName="Grouped" Margin="10,0,0,0">Free form</RadioButton>
                 </StackPanel>

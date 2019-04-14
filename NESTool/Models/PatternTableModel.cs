@@ -1,4 +1,5 @@
-﻿using Nett;
+﻿using NESTool.Enums;
+using Nett;
 using System.Windows;
 
 namespace NESTool.Models
@@ -20,5 +21,7 @@ namespace NESTool.Models
                 return _fileExtension;
             }
         }
+
+        public PatternTableType PatternTableType { get; set; }
     }
 }

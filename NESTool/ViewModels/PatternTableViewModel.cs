@@ -1,5 +1,8 @@
-﻿using ArchitectureLibrary.Signals;
+﻿using ArchitectureLibrary.Model;
+using ArchitectureLibrary.Signals;
 using NESTool.Commands;
+using NESTool.Enums;
+using NESTool.Models;
 using NESTool.Signals;
 using NESTool.VOs;
 using System.Windows;
@@ -12,7 +15,9 @@ namespace NESTool.ViewModels
         private double _actualWidth;
         private double _actualHeight;
         private Point _croppedPoint;
+        private PatternTableType _selectedPatternTableType = PatternTableType.Characters;
         private WriteableBitmap _croppedImage;
+        private string _projectGridSize;
 
         #region Commands
         public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
@@ -20,7 +25,35 @@ namespace NESTool.ViewModels
         #endregion
 
         #region get/set
-        public string ProjectGridSize { get; set; } = "8x8";
+        public string ProjectGridSize
+        {
+            get
+            {
+                return _projectGridSize;
+            }
+            set
+            {
+                _projectGridSize = value;
+
+                OnPropertyChanged("ProjectGridSize");
+            }
+        }
+
+        public PatternTableType SelectedPatternTableType
+        {
+            get { return _selectedPatternTableType; }
+            set
+            {
+                if (_selectedPatternTableType != value)
+                {
+                    _selectedPatternTableType = value;
+
+                    OnPropertyChanged("SelectedPatternTableType");
+
+                    Save();
+                }
+            }
+        }
 
         public Point CroppedPoint
         {
@@ -81,10 +114,38 @@ namespace NESTool.ViewModels
 
         public PatternTableViewModel()
         {
+            UpdateDialogInfo();
+
             #region Signals
             SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
             SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
+            SignalManager.Get<ProjectConfigurationSavedSignal>().AddListener(OnProjectConfigurationSaved);
             #endregion
+        }
+
+        private void OnProjectConfigurationSaved()
+        {
+            UpdateDialogInfo();
+        }
+
+        private void UpdateDialogInfo()
+        {
+            ProjectModel project = ModelManager.Get<ProjectModel>();
+
+            switch (project.Header.SpriteSize)
+            {
+                case SpriteSize.s8x8: ProjectGridSize = "8x8"; break;
+                case SpriteSize.s8x16: ProjectGridSize = "8x16"; break;
+            }
+        }
+
+        public override void OnActivate()
+        {
+            PatternTableModel model = GetModel();
+            if (model != null)
+            {
+                SelectedPatternTableType = model.PatternTableType;
+            }
         }
 
         private void OnOutputSelectedQuadrant(WriteableBitmap bitmap, Point point)
@@ -106,6 +167,28 @@ namespace NESTool.ViewModels
             {
                 ActualWidth /= ScaleRate;
                 ActualHeight /= ScaleRate;
+            }
+        }
+
+        public PatternTableModel GetModel()
+        {
+            if (ProjectItem?.FileHandler.FileModel is PatternTableModel model)
+            {
+                return model;
+            }
+
+            return null;
+        }
+
+        private void Save()
+        {
+            PatternTableModel model = GetModel();
+
+            if (model != null)
+            {
+                model.PatternTableType = SelectedPatternTableType;
+
+                ProjectItem.FileHandler.Save();
             }
         }
     }

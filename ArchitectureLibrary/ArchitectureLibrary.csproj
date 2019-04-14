@@ -58,7 +58,7 @@
     <Compile Include="History\Originator.cs" />
     <Compile Include="History\Signals\Signals.cs" />
     <Compile Include="Managers\AManager.cs" />
-    <Compile Include="Model\IModel.cs" />
+    <Compile Include="Model\ISingletonModel.cs" />
     <Compile Include="Model\ModelManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Signals\ISignal.cs" />

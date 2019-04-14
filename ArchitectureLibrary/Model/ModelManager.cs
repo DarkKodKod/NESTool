@@ -2,7 +2,7 @@
 
 namespace ArchitectureLibrary.Model
 {
-    public class ModelManager : AManager<IModel>
+    public class ModelManager : AManager<ISingletonModel>
     {
     }
 }

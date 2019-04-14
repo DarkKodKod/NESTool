@@ -1,11 +1,13 @@
 ﻿using ArchitectureLibrary.Model;
+using ArchitectureLibrary.Signals;
 using NESTool.Enums;
+using NESTool.Signals;
 using Nett;
 using System.Windows;
 
 namespace NESTool.Models
 {
-    public class ProjectModel : IModel
+    public class ProjectModel : ISingletonModel
     {
         public class INESHeader
         {
@@ -95,6 +97,8 @@ namespace NESTool.Models
             }
 
             Toml.WriteFile(this, ProjectFilePath);
+
+            SignalManager.Get<ProjectConfigurationSavedSignal>().Dispatch();
         }
     }
 }

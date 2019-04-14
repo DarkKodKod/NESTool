@@ -5,7 +5,7 @@ using System.Windows;
 
 namespace NESTool.Models
 {
-    public class MappersModel : IModel
+    public class MappersModel : ISingletonModel
     {
         public MapperModel[] Mappers { get; set; }
 
