@@ -52,7 +52,7 @@
                               ItemsSource="{Binding Source={ex:EnumBindingSource {x:Type enum:PatternTableType}}}"
                               SelectedItem="{Binding Path=SelectedPatternTableType}"/>
                     <RadioButton GroupName="Grouped" Margin="10,0,0,0" IsChecked="True">Compact</RadioButton>
-                    <RadioButton GroupName="Grouped" Margin="10,0,0,0">Free form</RadioButton>
+                    <RadioButton GroupName="Grouped" Margin="10,0,0,0" Focusable="False" IsHitTestVisible="False">Free form</RadioButton>
                 </StackPanel>
                 <Border Grid.Row="2" Width="510" Height="510"
                         VerticalAlignment="Top">
