@@ -149,10 +149,16 @@
                                 </VisualBrush>
                             </Border.Background>
                             <Canvas x:Name="cvsBigGrid" Width="10000" Height="10000" 
-                            Background="Transparent">
+                                    Background="Transparent">
                                 <i:Interaction.Behaviors>
                                     <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgBig}"/>
                                 </i:Interaction.Behaviors>
+                                <Rectangle Width="8" Height="8" 
+                                           Stroke="Red" 
+                                           StrokeThickness="0.5"
+                                           Canvas.Top="{Binding RectangleTop}"
+                                           Canvas.Left="{Binding RectangleLeft}"
+                                           Visibility="{Binding RectangleVisibility}"/>
                             </Canvas>
                         </Border>
                     </Canvas>

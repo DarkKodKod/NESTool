@@ -25,6 +25,9 @@ namespace NESTool.ViewModels
         private FileModelVO[] _tileSets;
         private int _selectedTileSet;
         private ImageSource _imgSource;
+        private Visibility _rectangleVisibility = Visibility.Hidden;
+        private double _rectangleTop = 0.0;
+        private double _rectangleLeft = 0.0;
 
         #region Commands
         public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
@@ -60,6 +63,39 @@ namespace NESTool.ViewModels
 
                     Save();
                 }
+            }
+        }
+
+        public double RectangleLeft
+        {
+            get { return _rectangleLeft; }
+            set
+            {
+                _rectangleLeft = value;
+
+                OnPropertyChanged("RectangleLeft");
+            }
+        }
+
+        public double RectangleTop
+        {
+            get { return _rectangleTop; }
+            set
+            {
+                _rectangleTop = value;
+
+                OnPropertyChanged("RectangleTop");
+            }
+        }
+
+        public Visibility RectangleVisibility
+        {
+            get { return _rectangleVisibility; }
+            set
+            {
+                _rectangleVisibility = value;
+
+                OnPropertyChanged("RectangleVisibility");
             }
         }
 
@@ -209,6 +245,8 @@ namespace NESTool.ViewModels
                 return;
             }
 
+            RectangleVisibility = Visibility.Hidden;
+
             TileSetModel model = TileSets[SelectedTileSet].Model as TileSetModel;
 
             if (File.Exists(model.ImagePath))
@@ -235,6 +273,10 @@ namespace NESTool.ViewModels
         {
             CroppedPoint = point;
             CroppedImage = bitmap;
+
+            RectangleVisibility = Visibility.Visible;
+            RectangleLeft = point.X;
+            RectangleTop = point.Y;
         }
 
         private void OnMouseWheel(MouseWheelVO vo)

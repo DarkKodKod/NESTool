@@ -40,6 +40,11 @@ namespace NESTool.Commands
 
                 WriteableBitmap cropper = writeableBmp.Crop(x, y, 8, 8);
 
+                if (cropper.PixelHeight != 8 || cropper.PixelWidth != 8)
+                {
+                    return;
+                }
+
                 SignalManager.Get<OutputSelectedQuadrantSignal>().Dispatch(cropper, new System.Windows.Point(x, y));
             }
         }
