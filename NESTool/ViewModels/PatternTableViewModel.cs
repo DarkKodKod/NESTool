@@ -33,6 +33,7 @@ namespace NESTool.ViewModels
         public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
         public ImageMouseDownCommand ImageMouseDownCommand { get; } = new ImageMouseDownCommand();
         public TileSetSelectionChangedCommand TileSetSelectionChangedCommand { get; } = new TileSetSelectionChangedCommand();
+        public MoveTileToPatternTableCommand MoveTileToPatternTableCommand { get; } = new MoveTileToPatternTableCommand();
         #endregion
 
         #region get/set
@@ -246,6 +247,7 @@ namespace NESTool.ViewModels
             }
 
             RectangleVisibility = Visibility.Hidden;
+            CroppedImage = null;
 
             TileSetModel model = TileSets[SelectedTileSet].Model as TileSetModel;
 
@@ -312,6 +314,7 @@ namespace NESTool.ViewModels
             if (model != null)
             {
                 model.PatternTableType = SelectedPatternTableType;
+                model.Distribution = PatterTableDistribution.Compact;
 
                 ProjectItem.FileHandler.Save();
             }

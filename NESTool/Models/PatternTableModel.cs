@@ -23,5 +23,6 @@ namespace NESTool.Models
         }
 
         public PatternTableType PatternTableType { get; set; }
+        public PatterTableDistribution Distribution { get; set; }
     }
 }

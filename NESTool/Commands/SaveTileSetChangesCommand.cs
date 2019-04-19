@@ -30,7 +30,6 @@ namespace NESTool.Commands
             }
 
             object[] values = (object[])parameter;
-            bool changed = (bool)values[0];
             string imagePath = (string)values[1];
             WriteableBitmap wp = (WriteableBitmap)values[2];
             Point croppedPoint = (Point)values[3];

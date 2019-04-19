@@ -133,6 +133,7 @@
     <Compile Include="Commands\HideGridCommand.cs" />
     <Compile Include="Commands\ImageMouseDownCommand.cs" />
     <Compile Include="Commands\ImportImageCommand.cs" />
+    <Compile Include="Commands\MoveTileToPatternTableCommand.cs" />
     <Compile Include="Commands\OpenImportImageDialogCommand.cs" />
     <Compile Include="Commands\ItemSelectedCommand.cs" />
     <Compile Include="Commands\LoadMappersCommand.cs" />

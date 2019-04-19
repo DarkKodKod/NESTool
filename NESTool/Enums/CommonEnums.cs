@@ -6,6 +6,12 @@
         s8x16   = 1
     }
 
+    public enum PatterTableDistribution
+    {
+        Compact     = 0,
+        FreeForm    = 1
+    }
+
     public enum FrameTiming
     {
         NTSC    = 0,

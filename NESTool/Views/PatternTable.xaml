@@ -9,9 +9,14 @@
              xmlns:ex="clr-namespace:NESTool.Utils.Extensions"
              xmlns:enum="clr-namespace:NESTool.Enums"
              xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
+             xmlns:fx="clr-namespace:ArchitectureLibrary.FXs;assembly=ArchitectureLibrary"
+             xmlns:cv="clr-namespace:NESTool.Utils.Converters"
              xmlns:vm="clr-namespace:NESTool.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="660" d:DesignWidth="850">
+    <UserControl.Resources>
+        <cv:ParametersConverter x:Key="parametersConverter"/>
+    </UserControl.Resources>
     <UserControl.DataContext>
         <vm:PatternTableViewModel />
     </UserControl.DataContext>
@@ -85,11 +90,34 @@
             </Grid>
             <StackPanel Grid.Column="2" Grid.Row="1"
                         VerticalAlignment="Center">
-                <Button Height="32" Width="32">
+                <Button Height="32" Width="32"
+                        Command="{Binding MoveTileToPatternTableCommand}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource parametersConverter}">
+                            <Binding Path="CroppedImage" />
+                            <Binding Path="CroppedPoint" />
+                            <Binding Path="ImgSource" />
+                        </MultiBinding>
+                    </Button.CommandParameter>
                     <Image Width="32" Height="32" 
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
-                       Source="/resources/left_arrow.png"/>
+                       Source="/resources/left_arrow.png">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <fx:GrayscaleEffect />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
                 </Button>
             </StackPanel>
             <Grid Grid.Row="1" Grid.Column="3">
