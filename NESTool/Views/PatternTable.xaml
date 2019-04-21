@@ -194,10 +194,13 @@
             </Grid>
         </Grid>
         <ScrollViewer Grid.Row="1" Background="White">
-            <WrapPanel Margin="10">
-                    <TextBlock HorizontalAlignment="Center">
-                        <Hyperlink Command="" CommandParameter="">TileSet 1</Hyperlink>
-                    </TextBlock>
+            <WrapPanel Margin="5" x:Name="wpLinks">
+                <WrapPanel.Resources>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Margin" Value="9,0"/>
+                        <Setter Property="Padding" Value="2,2"/>
+                    </Style>
+                </WrapPanel.Resources>
             </WrapPanel>
         </ScrollViewer>
     </Grid>

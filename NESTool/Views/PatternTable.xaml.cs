@@ -1,5 +1,6 @@
 ﻿using ArchitectureLibrary.Signals;
 using NESTool.Signals;
+using NESTool.UserControls;
 using NESTool.VOs;
 using System.Windows.Controls;
 
@@ -15,6 +16,13 @@ namespace NESTool.Views
             InitializeComponent();
 
             SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
+
+            // todo: make this dynamic!
+            wpLinks.Children.Add(new PatternTableLink());
+            wpLinks.Children.Add(new PatternTableLink());
+            wpLinks.Children.Add(new PatternTableLink());
+            wpLinks.Children.Add(new PatternTableLink());
+            wpLinks.Children.Add(new PatternTableLink());
         }
 
         private void OnMouseWheel(MouseWheelVO vo)

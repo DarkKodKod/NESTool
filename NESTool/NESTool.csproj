@@ -153,6 +153,9 @@
     <Compile Include="Commands\TreeviewSelectedItemChanged.cs" />
     <Compile Include="Commands\UndoCommand.cs" />
     <Compile Include="FileSystem\ProjectFiles.cs" />
+    <Compile Include="UserControls\PatternTableLink.xaml.cs">
+      <DependentUpon>PatternTableLink.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Behaviors\RedirectRoutedEventBehavior.cs" />
     <Compile Include="Utils\PaletteQuantizer.cs" />
     <Compile Include="Utils\CustomTypeConverter\ProjectItemTypeConverter.cs" />
@@ -244,6 +247,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Style_Dark.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\PatternTableLink.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
