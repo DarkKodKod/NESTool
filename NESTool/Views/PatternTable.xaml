@@ -97,6 +97,7 @@
                             <Binding Path="CroppedImage" />
                             <Binding Path="CroppedPoint" />
                             <Binding Path="ImgSource" />
+                            <Binding Path="Model" />
                         </MultiBinding>
                     </Button.CommandParameter>
                     <Image Width="32" Height="32" 

@@ -15,7 +15,26 @@ namespace NESTool.Commands
     public class OpenProjectCommand : Command
     {
         private const string _projectFileNameKey = "projectFileName";
-        private const string _folderImagesKey = "folderImages";
+        private const string _folderBanksKey = "folderBanks";
+        private const string _folderCharactersKey = "folderCharacters";
+        private const string _folderMapsKey = "folderMaps";
+        private const string _folderTileSetsKey = "folderTileSets";
+        private const string _folderPatternTablesKey = "folderPatternTables";
+
+        private readonly string _folderBanks;
+        private readonly string _folderCharacters;
+        private readonly string _folderMaps;
+        private readonly string _folderTileSets;
+        private readonly string _folderPatternTables;
+
+        public OpenProjectCommand()
+        {
+            _folderBanks = (string)Application.Current.FindResource(_folderBanksKey);
+            _folderCharacters = (string)Application.Current.FindResource(_folderCharactersKey);
+            _folderMaps = (string)Application.Current.FindResource(_folderMapsKey);
+            _folderTileSets = (string)Application.Current.FindResource(_folderTileSetsKey);
+            _folderPatternTables = (string)Application.Current.FindResource(_folderPatternTablesKey);
+        }
 
         public override bool CanExecute(object parameter)
         {
@@ -108,11 +127,13 @@ namespace NESTool.Commands
 
         private void ScanDirectories(DirectoryInfo[] directories, ref List<ProjectItem> projectItems, ProjectItem parent = null, string extension = "")
         {
-            string imagesFolder = (string)Application.Current.FindResource(_folderImagesKey);
-
             foreach (DirectoryInfo directory in directories)
             {
-                if (directory.Name == imagesFolder)
+                if (directory.Name != _folderBanks &&
+                    directory.Name != _folderCharacters &&
+                    directory.Name != _folderMaps &&
+                    directory.Name != _folderTileSets &&
+                    directory.Name != _folderPatternTables)
                 {
                     continue;
                 }

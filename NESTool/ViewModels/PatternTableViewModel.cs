@@ -28,6 +28,7 @@ namespace NESTool.ViewModels
         private Visibility _rectangleVisibility = Visibility.Hidden;
         private double _rectangleTop = 0.0;
         private double _rectangleLeft = 0.0;
+        private PatternTableModel _model = null;
 
         #region Commands
         public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
@@ -191,6 +192,28 @@ namespace NESTool.ViewModels
                 OnPropertyChanged("SelectedTileSet");
             }
         }
+
+        public PatternTableModel Model
+        {
+            get
+            {
+                if (_model == null)
+                {
+                    if (ProjectItem?.FileHandler.FileModel is PatternTableModel model)
+                    {
+                        Model = model;
+                    }
+                }
+
+                return _model;
+            }
+            set
+            {
+                _model = value;
+
+                OnPropertyChanged("Model");
+            }
+        }
         #endregion
 
         public PatternTableViewModel()
@@ -202,7 +225,15 @@ namespace NESTool.ViewModels
             SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
             SignalManager.Get<ProjectConfigurationSavedSignal>().AddListener(OnProjectConfigurationSaved);
             SignalManager.Get<TileSetSelectionChangedSignal>().AddListener(OnTileSetSelectionChanged);
+            SignalManager.Get<PatternTableImageUpdatedSignal>().AddListener(OnPatternTableImageUpdated);
             #endregion
+
+            LoadPatternTableImage();
+        }
+
+        private void OnPatternTableImageUpdated()
+        {
+            LoadPatternTableImage();
         }
 
         private void OnTileSetSelectionChanged(FileModelVO fileModel)
@@ -230,10 +261,9 @@ namespace NESTool.ViewModels
 
         public override void OnActivate()
         {
-            PatternTableModel model = GetModel();
-            if (model != null)
+            if (Model != null)
             {
-                SelectedPatternTableType = model.PatternTableType;
+                SelectedPatternTableType = Model.PatternTableType;
             }
 
             LoadTileSetImage();
@@ -297,26 +327,32 @@ namespace NESTool.ViewModels
             }
         }
 
-        public PatternTableModel GetModel()
-        {
-            if (ProjectItem?.FileHandler.FileModel is PatternTableModel model)
-            {
-                return model;
-            }
-
-            return null;
-        }
-
         private void Save()
         {
-            PatternTableModel model = GetModel();
-
-            if (model != null)
+            if (Model != null)
             {
-                model.PatternTableType = SelectedPatternTableType;
-                model.Distribution = PatterTableDistribution.Compact;
+                Model.PatternTableType = SelectedPatternTableType;
+                Model.Distribution = PatterTableDistribution.Compact;
 
                 ProjectItem.FileHandler.Save();
+            }
+        }
+
+        private void LoadPatternTableImage()
+        {
+            if (Model == null)
+            {
+                return;
+            }
+
+            foreach (var tile in Model.PTTiles)
+            {
+                if (string.IsNullOrEmpty(tile.GUID))
+                {
+                    continue;
+                }
+
+                // load the image from the tileset and paste it into the pattern table image
             }
         }
     }
