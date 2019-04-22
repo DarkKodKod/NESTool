@@ -16,19 +16,38 @@ namespace NESTool.FileSystem
 
             foreach (var handler in Handlers)
             {
-                if (handler.Value.FileModel is T)
+                if (handler.Value.FileModel is T model)
                 {
                     models.Add(new FileModelVO()
                     {
                         Id = index++,
                         Name = handler.Value.Name,
-                        Model = handler.Value.FileModel as T,
+                        Model = model,
                         Meta = handler.Value.Meta
                     });
                 }
             }
 
             return models;
+        }
+
+        public static T GetModel<T>(string guid) where T : AFileModel
+        {
+            if (string.IsNullOrEmpty(guid))
+            {
+                return null;
+            }
+
+            foreach (var handler in Handlers)
+            {
+                if (handler.Value.Meta.GUID == guid && 
+                    handler.Value.FileModel is T model)
+                {
+                    return model;
+                }
+            }
+
+            return null;
         }
     }
 }

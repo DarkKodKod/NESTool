@@ -8,6 +8,7 @@ using NESTool.Signals;
 using NESTool.Utils;
 using NESTool.VOs;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
@@ -31,6 +32,7 @@ namespace NESTool.ViewModels
         private double _rectangleTop = 0.0;
         private double _rectangleLeft = 0.0;
         private PatternTableModel _model = null;
+        private readonly Dictionary<string, WriteableBitmap> _bitmapCache = new Dictionary<string, WriteableBitmap>();
 
         #region Commands
         public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
@@ -355,8 +357,6 @@ namespace NESTool.ViewModels
             }
         }
 
-        private bool gato = true;
-
         private void LoadPatternTableImage()
         {
             if (Model == null)
@@ -366,9 +366,11 @@ namespace NESTool.ViewModels
 
             PTImage = null;
 
-            WriteableBitmap writeableBmp = BitmapFactory.New(256, 256);
-            using (writeableBmp.GetBitmapContext())
+            WriteableBitmap patternTableBitmap = BitmapFactory.New(128, 128);
+            using (patternTableBitmap.GetBitmapContext())
             {
+                int index = 0;
+
                 foreach (var tile in Model.PTTiles)
                 {
                     if (string.IsNullOrEmpty(tile.GUID))
@@ -376,16 +378,47 @@ namespace NESTool.ViewModels
                         continue;
                     }
 
-                    // load the image from the tileset and paste it into the pattern table image
+                    if (!_bitmapCache.TryGetValue(tile.GUID, out WriteableBitmap sourceBitmap))
+                    {
+                        var model = ProjectFiles.GetModel<TileSetModel>(tile.GUID);
+
+                        if (model == null)
+                        {
+                            continue;
+                        }
+
+                        BitmapImage bmImage = new BitmapImage();
+
+                        bmImage.BeginInit();
+                        bmImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bmImage.UriSource = new Uri(model.ImagePath, UriKind.Absolute);
+                        bmImage.EndInit();
+                        bmImage.Freeze();
+
+                        sourceBitmap = BitmapFactory.ConvertToPbgra32Format(bmImage as BitmapSource);
+
+                        _bitmapCache.Add(tile.GUID, sourceBitmap);
+                    }
+
+                    using (sourceBitmap.GetBitmapContext())
+                    {
+                        int x = (int)Math.Floor(tile.Point.X / 8) * 8;
+                        int y = (int)Math.Floor(tile.Point.Y / 8) * 8;
+
+                        WriteableBitmap cropped = sourceBitmap.Crop(x, y, 8, 8);
+                        BitmapImage croppedBitmap = Util.ConvertWriteableBitmapToBitmapImage(cropped);
+
+                        int destX = (index % 16) * 8;
+                        int destY = (int)(index / 16) * 8;
+
+                        Util.Chubs_BitBltMerge(ref patternTableBitmap, destX, destY, croppedBitmap);
+                    }
+
+                    index++;
                 }
-
-                
-                writeableBmp.DrawLine(1, 2, 30, 140, gato ? Colors.Green : Colors.Red);
-
-                gato = !gato;
             }
 
-            PTImage = Util.ConvertWriteableBitmapToBitmapImage(writeableBmp);
+            PTImage = Util.ConvertWriteableBitmapToBitmapImage(patternTableBitmap);
         }
     }
 }

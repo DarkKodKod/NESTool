@@ -47,7 +47,7 @@ namespace NESTool.Commands
 
             WriteableBitmap cImage = new WriteableBitmap(originalImage);
 
-            Chubs_BitBltMerge(ref cImage, (int)croppedPoint.X, (int)croppedPoint.Y, ref srcImage);
+            Util.Chubs_BitBltMerge(ref cImage, (int)croppedPoint.X, (int)croppedPoint.Y, srcImage);
 
             SaveFile(outputPath, cImage);
 
@@ -70,32 +70,6 @@ namespace NESTool.Commands
                 encoder.Frames.Add(frame);
                 encoder.Save(stream);
             }
-        }
-
-        private void Chubs_BitBltMerge(ref WriteableBitmap dest, int nXDest, int nYDest, ref BitmapImage src)
-        {
-            // copy the source image into a byte buffer
-            int src_stride = src.PixelWidth * (src.Format.BitsPerPixel >> 3);
-            byte[] src_buffer = new byte[src_stride * src.PixelHeight];
-            src.CopyPixels(src_buffer, src_stride, 0);
-
-            // copy the dest image into a byte buffer
-            int dest_stride = src.PixelWidth * (dest.Format.BitsPerPixel >> 3);
-            byte[] dest_buffer = new byte[(src.PixelWidth * src.PixelHeight) << 2];
-            dest.CopyPixels(new Int32Rect(nXDest, nYDest, src.PixelWidth, src.PixelHeight), dest_buffer, dest_stride, 0);
-
-            // do merge (could be made faster through parallelization)
-            for (int i = 0; i < src_buffer.Length; i += 4)
-            {
-                float src_alpha = ((float)src_buffer[i + 3] / 255);
-                dest_buffer[i + 0] = (byte)((src_buffer[i + 0] * src_alpha) + dest_buffer[i + 0] * (1.0 - src_alpha));
-                dest_buffer[i + 1] = (byte)((src_buffer[i + 1] * src_alpha) + dest_buffer[i + 1] * (1.0 - src_alpha));
-                dest_buffer[i + 2] = (byte)((src_buffer[i + 2] * src_alpha) + dest_buffer[i + 2] * (1.0 - src_alpha));
-                dest_buffer[i + 3] = 255;
-            }
-
-            // copy dest buffer back to the dest WriteableBitmap
-            dest.WritePixels(new Int32Rect(nXDest, nYDest, src.PixelWidth, src.PixelHeight), dest_buffer, dest_stride, 0);
         }
     }
 }

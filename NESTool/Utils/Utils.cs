@@ -184,5 +184,28 @@ namespace NESTool.Utils
             }
             return bmImage;
         }
+
+        public static void Chubs_BitBltMerge(ref WriteableBitmap dest, int nXDest, int nYDest, BitmapImage src)
+        {
+            // copy the source image into a byte buffer
+            int src_stride = src.PixelWidth * (src.Format.BitsPerPixel >> 3);
+            byte[] src_buffer = new byte[src_stride * src.PixelHeight];
+            src.CopyPixels(src_buffer, src_stride, 0);
+
+            int dest_stride = src.PixelWidth * (dest.Format.BitsPerPixel >> 3);
+            byte[] dest_buffer = new byte[(src.PixelWidth * src.PixelHeight) << 2];
+
+            // do merge (could be made faster through parallelization), alpha channel is not used at all
+            for (int i = 0; i < src_buffer.Length; i += 4)
+            {
+                dest_buffer[i + 0] = src_buffer[i + 0];
+                dest_buffer[i + 1] = src_buffer[i + 1];
+                dest_buffer[i + 2] = src_buffer[i + 2];
+                dest_buffer[i + 3] = 255;
+            }
+
+            // copy dest buffer back to the dest WriteableBitmap
+            dest.WritePixels(new Int32Rect(nXDest, nYDest, src.PixelWidth, src.PixelHeight), dest_buffer, dest_stride, 0);
+        }
     }
 }

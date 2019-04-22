@@ -38,14 +38,14 @@ namespace NESTool.Commands
                 int x = (int)Math.Floor(point.X / 8) * 8;
                 int y = (int)Math.Floor(point.Y / 8) * 8;
 
-                WriteableBitmap cropper = writeableBmp.Crop(x, y, 8, 8);
+                WriteableBitmap cropped = writeableBmp.Crop(x, y, 8, 8);
 
-                if (cropper.PixelHeight != 8 || cropper.PixelWidth != 8)
+                if (cropped.PixelHeight != 8 || cropped.PixelWidth != 8)
                 {
                     return;
                 }
 
-                SignalManager.Get<OutputSelectedQuadrantSignal>().Dispatch(cropper, new System.Windows.Point(x, y));
+                SignalManager.Get<OutputSelectedQuadrantSignal>().Dispatch(cropped, new System.Windows.Point(x, y));
             }
         }
     }
