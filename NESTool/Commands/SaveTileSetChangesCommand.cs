@@ -85,7 +85,7 @@ namespace NESTool.Commands
             dest.CopyPixels(new Int32Rect(nXDest, nYDest, src.PixelWidth, src.PixelHeight), dest_buffer, dest_stride, 0);
 
             // do merge (could be made faster through parallelization)
-            for (int i = 0; i < src_buffer.Length; i = i + 4)
+            for (int i = 0; i < src_buffer.Length; i += 4)
             {
                 float src_alpha = ((float)src_buffer[i + 3] / 255);
                 dest_buffer[i + 0] = (byte)((src_buffer[i + 0] * src_alpha) + dest_buffer[i + 0] * (1.0 - src_alpha));

@@ -44,5 +44,22 @@ namespace NESTool.Models
 
             return true;
         }
+
+        public int GetEmptyTileIndex()
+        {
+            int i = 0;
+
+            foreach (var tile in PTTiles)
+            {
+                if (string.IsNullOrEmpty(tile.GUID))
+                {
+                    return i;
+                }
+
+                i++;
+            }
+
+            return -1;
+        }
     }
 }

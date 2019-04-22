@@ -22,7 +22,8 @@ namespace NESTool.FileSystem
                     {
                         Id = index++,
                         Name = handler.Value.Name,
-                        Model = handler.Value.FileModel as T
+                        Model = handler.Value.FileModel as T,
+                        Meta = handler.Value.Meta
                     });
                 }
             }

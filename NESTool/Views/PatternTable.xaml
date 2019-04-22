@@ -97,7 +97,7 @@
                         <MultiBinding Converter="{StaticResource parametersConverter}">
                             <Binding Path="CroppedImage" />
                             <Binding Path="CroppedPoint" />
-                            <Binding Path="ImgSource" />
+                            <Binding Path="SelectedTileSet" />
                             <Binding Path="Model" />
                         </MultiBinding>
                     </Button.CommandParameter>

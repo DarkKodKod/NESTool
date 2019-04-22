@@ -7,5 +7,6 @@ namespace NESTool.VOs
         public int Id { get; set; }
         public string Name { get; set; }
         public AFileModel Model { get; set; }
+        public MetaFileModel Meta { get; set; }
     }
 }

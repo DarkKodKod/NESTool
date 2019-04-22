@@ -247,6 +247,8 @@ namespace NESTool.ViewModels
 
         private void OnPatternTableImageUpdated()
         {
+            ProjectItem.FileHandler.Save();
+
             LoadPatternTableImage();
         }
 
