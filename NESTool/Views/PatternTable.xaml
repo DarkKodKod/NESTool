@@ -69,9 +69,10 @@
                             <ScaleTransform ScaleX="4" ScaleY="4"/>
                         </Canvas.RenderTransform>
                         <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
-	                       Width="128"
-	                       Height="128"
-	                       Stretch="UniformToFill">
+                               Source="{Binding PTImage}"
+	                           Width="128"
+	                           Height="128"
+	                           Stretch="UniformToFill">
                         </Image>
                         <Border>
                             <Border.Background>

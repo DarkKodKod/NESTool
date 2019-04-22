@@ -5,6 +5,7 @@ using NESTool.Enums;
 using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
+using NESTool.Utils;
 using NESTool.VOs;
 using System;
 using System.IO;
@@ -25,6 +26,7 @@ namespace NESTool.ViewModels
         private FileModelVO[] _tileSets;
         private int _selectedTileSet;
         private ImageSource _imgSource;
+        private ImageSource _pTImage;
         private Visibility _rectangleVisibility = Visibility.Hidden;
         private double _rectangleTop = 0.0;
         private double _rectangleLeft = 0.0;
@@ -98,6 +100,20 @@ namespace NESTool.ViewModels
                 _rectangleVisibility = value;
 
                 OnPropertyChanged("RectangleVisibility");
+            }
+        }
+
+        public ImageSource PTImage
+        {
+            get
+            {
+                return _pTImage;
+            }
+            set
+            {
+                _pTImage = value;
+
+                OnPropertyChanged("PTImage");
             }
         }
 
@@ -227,8 +243,6 @@ namespace NESTool.ViewModels
             SignalManager.Get<TileSetSelectionChangedSignal>().AddListener(OnTileSetSelectionChanged);
             SignalManager.Get<PatternTableImageUpdatedSignal>().AddListener(OnPatternTableImageUpdated);
             #endregion
-
-            LoadPatternTableImage();
         }
 
         private void OnPatternTableImageUpdated()
@@ -267,6 +281,7 @@ namespace NESTool.ViewModels
             }
 
             LoadTileSetImage();
+            LoadPatternTableImage();
         }
 
         private void LoadTileSetImage()
@@ -338,6 +353,8 @@ namespace NESTool.ViewModels
             }
         }
 
+        private bool gato = true;
+
         private void LoadPatternTableImage()
         {
             if (Model == null)
@@ -345,15 +362,28 @@ namespace NESTool.ViewModels
                 return;
             }
 
-            foreach (var tile in Model.PTTiles)
+            PTImage = null;
+
+            WriteableBitmap writeableBmp = BitmapFactory.New(256, 256);
+            using (writeableBmp.GetBitmapContext())
             {
-                if (string.IsNullOrEmpty(tile.GUID))
+                foreach (var tile in Model.PTTiles)
                 {
-                    continue;
+                    if (string.IsNullOrEmpty(tile.GUID))
+                    {
+                        continue;
+                    }
+
+                    // load the image from the tileset and paste it into the pattern table image
                 }
 
-                // load the image from the tileset and paste it into the pattern table image
+                
+                writeableBmp.DrawLine(1, 2, 30, 140, gato ? Colors.Green : Colors.Red);
+
+                gato = !gato;
             }
+
+            PTImage = Util.ConvertWriteableBitmapToBitmapImage(writeableBmp);
         }
     }
 }

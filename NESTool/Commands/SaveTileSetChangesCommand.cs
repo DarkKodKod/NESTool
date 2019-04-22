@@ -1,6 +1,7 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
+using NESTool.Utils;
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -40,7 +41,7 @@ namespace NESTool.Commands
 
         private void Merge(WriteableBitmap croppedImage, BitmapSource originalImage, Point croppedPoint, string outputPath)
         {
-            BitmapImage srcImage = ConvertWriteableBitmapToBitmapImage(croppedImage);
+            BitmapImage srcImage = Util.ConvertWriteableBitmapToBitmapImage(croppedImage);
 
             originalImage = new FormatConvertedBitmap(originalImage, srcImage.Format, null, 0);
 
@@ -69,25 +70,6 @@ namespace NESTool.Commands
                 encoder.Frames.Add(frame);
                 encoder.Save(stream);
             }
-        }
-
-        private BitmapImage ConvertWriteableBitmapToBitmapImage(WriteableBitmap wbm)
-        {
-            BitmapImage bmImage = new BitmapImage();
-            using (MemoryStream stream = new MemoryStream())
-            {
-                PngBitmapEncoder encoder = new PngBitmapEncoder();
-
-                encoder.Frames.Add(BitmapFrame.Create(wbm));
-                encoder.Save(stream);
-
-                bmImage.BeginInit();
-                bmImage.CacheOption = BitmapCacheOption.OnLoad;
-                bmImage.StreamSource = stream;
-                bmImage.EndInit();
-                bmImage.Freeze();
-            }
-            return bmImage;
         }
 
         private void Chubs_BitBltMerge(ref WriteableBitmap dest, int nXDest, int nYDest, ref BitmapImage src)
