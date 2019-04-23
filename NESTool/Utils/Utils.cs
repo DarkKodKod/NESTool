@@ -185,7 +185,7 @@ namespace NESTool.Utils
             return bmImage;
         }
 
-        public static void Chubs_BitBltMerge(ref WriteableBitmap dest, int nXDest, int nYDest, BitmapImage src)
+        public static void CopyBitmapImageToWriteableBitmap(ref WriteableBitmap dest, int nXDest, int nYDest, BitmapImage src)
         {
             // copy the source image into a byte buffer
             int src_stride = src.PixelWidth * (src.Format.BitsPerPixel >> 3);

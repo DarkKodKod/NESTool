@@ -5,8 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NESTool.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="19" d:DesignWidth="100">
-    <TextBlock HorizontalAlignment="Center">
-        <Hyperlink Command="" CommandParameter="">TileSet 1</Hyperlink>
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             d:DesignWidth="100"
+             d:DesignHeight="19">
+    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Hyperlink Command="{Binding SelectTileSetCommand}" CommandParameter="{Binding TileSetId}">
+            <TextBlock x:Name="hlText" Text="{Binding Caption}" 
+                       Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Hyperlink}, Path=Style}" />
+        </Hyperlink>
     </TextBlock>
 </UserControl>

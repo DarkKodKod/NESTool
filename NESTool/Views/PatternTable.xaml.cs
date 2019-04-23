@@ -16,13 +16,12 @@ namespace NESTool.Views
             InitializeComponent();
 
             SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
+            SignalManager.Get<AddNewTileSetLinkSignal>().AddListener(OnAddNewTileSetLink);
+        }
 
-            // todo: make this dynamic!
-            wpLinks.Children.Add(new PatternTableLink());
-            wpLinks.Children.Add(new PatternTableLink());
-            wpLinks.Children.Add(new PatternTableLink());
-            wpLinks.Children.Add(new PatternTableLink());
-            wpLinks.Children.Add(new PatternTableLink());
+        private void OnAddNewTileSetLink(PatternTableLinkVO vo)
+        {
+            wpLinks.Children.Add(new PatternTableLink(vo.Caption, vo.Id));
         }
 
         private void OnMouseWheel(MouseWheelVO vo)

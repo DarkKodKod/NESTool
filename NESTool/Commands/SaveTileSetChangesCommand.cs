@@ -47,7 +47,7 @@ namespace NESTool.Commands
 
             WriteableBitmap cImage = new WriteableBitmap(originalImage);
 
-            Util.Chubs_BitBltMerge(ref cImage, (int)croppedPoint.X, (int)croppedPoint.Y, srcImage);
+            Util.CopyBitmapImageToWriteableBitmap(ref cImage, (int)croppedPoint.X, (int)croppedPoint.Y, srcImage);
 
             SaveFile(outputPath, cImage);
 

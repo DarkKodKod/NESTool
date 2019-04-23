@@ -1,28 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using NESTool.Commands;
+using System.ComponentModel;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace NESTool.UserControls
 {
     /// <summary>
     /// Interaction logic for PatternTableLink.xaml
     /// </summary>
-    public partial class PatternTableLink : UserControl
+    public partial class PatternTableLink : UserControl, INotifyPropertyChanged
     {
-        public PatternTableLink()
+        private string _caption;
+        private string _tileSetId;
+
+        public string Caption
+        {
+            get { return _caption; }
+            set
+            {
+                _caption = value;
+
+                OnPropertyChanged("Caption");
+            }
+        }
+
+        public string TileSetId
+        {
+            get { return _tileSetId; }
+            set
+            {
+                _tileSetId = value;
+
+                OnPropertyChanged("TileSetId");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propname)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propname));
+        }
+
+        #region Commands
+        public SelectTileSetCommand SelectTileSetCommand { get; } = new SelectTileSetCommand();
+        #endregion
+
+        public PatternTableLink(string caption, string id)
         {
             InitializeComponent();
+
+            TileSetId = id;
+            Caption = caption;
         }
     }
 }

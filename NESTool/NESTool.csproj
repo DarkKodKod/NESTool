@@ -148,6 +148,7 @@
     <Compile Include="Commands\RedoCommand.cs" />
     <Compile Include="Commands\EnableRenameElementCommand.cs" />
     <Compile Include="Commands\SaveTileSetChangesCommand.cs" />
+    <Compile Include="Commands\SelectTileSetCommand.cs" />
     <Compile Include="Commands\TileSetSelectionChangedCommand.cs" />
     <Compile Include="Commands\ShowGridCommand.cs" />
     <Compile Include="Commands\TreeviewSelectedItemChanged.cs" />
@@ -239,6 +240,7 @@
     <Compile Include="VOs\EventVO.cs" />
     <Compile Include="VOs\MouseMoveVO.cs" />
     <Compile Include="VOs\MouseWheelVO.cs" />
+    <Compile Include="VOs\PatternTableLinkVO.cs" />
     <Compile Include="VOs\ProjectOpenVO.cs" />
     <Compile Include="VOs\FileModelVO.cs" />
     <Compile Include="VOs\WindowVO.cs" />
