@@ -42,6 +42,8 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="3"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="3"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Row="0">
@@ -59,7 +61,18 @@
                     <RadioButton GroupName="Grouped" Margin="10,0,0,0" IsChecked="True">Compact</RadioButton>
                     <RadioButton GroupName="Grouped" Margin="10,0,0,0" Focusable="False" IsHitTestVisible="False">Free form</RadioButton>
                 </StackPanel>
-                <Border Grid.Row="2" Width="510" Height="510"
+                <StackPanel Orientation="Horizontal" Grid.Row="2">
+                    <Button Width="100" Command="{Binding DeletePatternTableTileCommand}">
+                        <Button.CommandParameter>
+                            <MultiBinding Converter="{StaticResource parametersConverter}">
+                                <Binding Path="SelectedPatternTableTile" />
+                                <Binding Path="Model" />
+                            </MultiBinding>
+                        </Button.CommandParameter>
+                        Delete Cell
+                    </Button>
+                </StackPanel>
+                <Border Grid.Row="4" Width="510" Height="510"
                         VerticalAlignment="Top">
                     <Canvas Width="128" Height="128" 
 		                Background="DarkGray"
@@ -72,7 +85,13 @@
                                Source="{Binding PTImage}"
 	                           Width="128"
 	                           Height="128"
+                               x:Name="imgPatternTable"
 	                           Stretch="UniformToFill">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <cmd:EventToCommand Command="{Binding ImageMouseDownCommand}" PassEventArgsToCommand="True" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </Image>
                         <Border>
                             <Border.Background>
@@ -84,7 +103,17 @@
                                     </VisualBrush.Visual>
                                 </VisualBrush>
                             </Border.Background>
-                            <Canvas Width="128" Height="128" Background="Transparent"/>
+                            <Canvas Width="128" Height="128" Background="Transparent">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgPatternTable}"/>
+                                </i:Interaction.Behaviors>
+                                <Rectangle Width="8" Height="8" 
+                                           Stroke="Red" 
+                                           StrokeThickness="0.5"
+                                           Canvas.Top="{Binding SelectionRectangleTop}"
+                                           Canvas.Left="{Binding SelectionRectangleLeft}"
+                                           Visibility="{Binding SelectionRectangleVisibility}"/>
+                            </Canvas>
                         </Border>
                     </Canvas>
                 </Border>

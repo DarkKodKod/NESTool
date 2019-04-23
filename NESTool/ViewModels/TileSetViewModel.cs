@@ -6,6 +6,7 @@ using NESTool.VOs;
 using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -195,7 +196,7 @@ namespace NESTool.ViewModels
             PixelsChanged = true;
         }
 
-        private void OnOutputSelectedQuadrant(WriteableBitmap bitmap, Point point)
+        private void OnOutputSelectedQuadrant(Image sender, WriteableBitmap bitmap, Point point)
         {
             CroppedPoint = point;
             CroppedImage = bitmap;

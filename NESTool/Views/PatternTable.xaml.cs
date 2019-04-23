@@ -17,6 +17,12 @@ namespace NESTool.Views
 
             SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
             SignalManager.Get<AddNewTileSetLinkSignal>().AddListener(OnAddNewTileSetLink);
+            SignalManager.Get<CleanupTileSetLinksSignal>().AddListener(OnCleanupTileSetLinks);
+        }
+
+        private void OnCleanupTileSetLinks()
+        {
+            wpLinks.Children.Clear();
         }
 
         private void OnAddNewTileSetLink(PatternTableLinkVO vo)

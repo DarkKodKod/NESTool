@@ -125,6 +125,7 @@
     <Compile Include="Commands\CreateFolderCommand.cs" />
     <Compile Include="Commands\CroppedImageMouseDownCommand.cs" />
     <Compile Include="Commands\DeleteElementCommand.cs" />
+    <Compile Include="Commands\DeletePatternTableTileCommand.cs" />
     <Compile Include="Commands\DragEnterCommand.cs" />
     <Compile Include="Commands\DragLeaveCommand.cs" />
     <Compile Include="Commands\DragOverCommand.cs" />

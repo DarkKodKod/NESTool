@@ -2,6 +2,7 @@
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
 using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -16,13 +17,13 @@ namespace NESTool.Commands
 
             if (mouseEvent.Source is Image image)
             {
-                System.Windows.Point p = mouseEvent.GetPosition(image);
+                Point p = mouseEvent.GetPosition(image);
 
                 ProcessImage(image, p);
             }
         }
 
-        private void ProcessImage(Image image, System.Windows.Point point)
+        private void ProcessImage(Image image, Point point)
         {
             if (image.ActualWidth == 0 || image.ActualHeight == 0)
             {
@@ -45,7 +46,7 @@ namespace NESTool.Commands
                     return;
                 }
 
-                SignalManager.Get<OutputSelectedQuadrantSignal>().Dispatch(cropped, new System.Windows.Point(x, y));
+                SignalManager.Get<OutputSelectedQuadrantSignal>().Dispatch(image, cropped, new Point(x, y));
             }
         }
     }

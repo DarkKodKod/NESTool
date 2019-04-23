@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -26,11 +27,15 @@ namespace NESTool.ViewModels
         private string _projectGridSize;
         private FileModelVO[] _tileSets;
         private int _selectedTileSet;
+        private int _selectedPatternTableTile;
         private ImageSource _imgSource;
         private ImageSource _pTImage;
         private Visibility _rectangleVisibility = Visibility.Hidden;
         private double _rectangleTop = 0.0;
         private double _rectangleLeft = 0.0;
+        private Visibility _selectionRectangleVisibility = Visibility.Hidden;
+        private double _selectionRectangleTop = 0.0;
+        private double _selectionRectangleLeft = 0.0;
         private PatternTableModel _model = null;
         private readonly Dictionary<string, WriteableBitmap> _bitmapCache = new Dictionary<string, WriteableBitmap>();
 
@@ -39,6 +44,7 @@ namespace NESTool.ViewModels
         public ImageMouseDownCommand ImageMouseDownCommand { get; } = new ImageMouseDownCommand();
         public TileSetSelectionChangedCommand TileSetSelectionChangedCommand { get; } = new TileSetSelectionChangedCommand();
         public MoveTileToPatternTableCommand MoveTileToPatternTableCommand { get; } = new MoveTileToPatternTableCommand();
+        public DeletePatternTableTileCommand DeletePatternTableTileCommand { get; } = new DeletePatternTableTileCommand();
         #endregion
 
         #region get/set
@@ -102,6 +108,39 @@ namespace NESTool.ViewModels
                 _rectangleVisibility = value;
 
                 OnPropertyChanged("RectangleVisibility");
+            }
+        }
+
+        public double SelectionRectangleLeft
+        {
+            get { return _selectionRectangleLeft; }
+            set
+            {
+                _selectionRectangleLeft = value;
+
+                OnPropertyChanged("SelectionRectangleLeft");
+            }
+        }
+
+        public double SelectionRectangleTop
+        {
+            get { return _selectionRectangleTop; }
+            set
+            {
+                _selectionRectangleTop = value;
+
+                OnPropertyChanged("SelectionRectangleTop");
+            }
+        }
+
+        public Visibility SelectionRectangleVisibility
+        {
+            get { return _selectionRectangleVisibility; }
+            set
+            {
+                _selectionRectangleVisibility = value;
+
+                OnPropertyChanged("SelectionRectangleVisibility");
             }
         }
 
@@ -211,6 +250,17 @@ namespace NESTool.ViewModels
             }
         }
 
+        public int SelectedPatternTableTile
+        {
+            get { return _selectedPatternTableTile; }
+            set
+            {
+                _selectedPatternTableTile = value;
+
+                OnPropertyChanged("SelectedPatternTableTile");
+            }
+        }
+
         public PatternTableModel Model
         {
             get
@@ -245,6 +295,7 @@ namespace NESTool.ViewModels
             SignalManager.Get<TileSetSelectionChangedSignal>().AddListener(OnTileSetSelectionChanged);
             SignalManager.Get<PatternTableImageUpdatedSignal>().AddListener(OnPatternTableImageUpdated);
             SignalManager.Get<SelectTileSetSignal>().AddListener(OnSelectTileSet);
+            SignalManager.Get<PatternTableTileDeletedSignal>().AddListener(OnPatternTableTileDeleted);
             #endregion
         }
 
@@ -303,6 +354,8 @@ namespace NESTool.ViewModels
 
             LoadTileSetImage();
             LoadPatternTableImage();
+
+            SelectedPatternTableTile = -1;
         }
 
         private void LoadTileSetImage()
@@ -337,14 +390,39 @@ namespace NESTool.ViewModels
             }
         }
 
-        private void OnOutputSelectedQuadrant(WriteableBitmap bitmap, Point point)
+        private void OnOutputSelectedQuadrant(Image sender, WriteableBitmap bitmap, Point point)
         {
-            CroppedPoint = point;
-            CroppedImage = bitmap;
+            if (sender.Name == "imgPatternTable")
+            {
+                SelectionRectangleVisibility = Visibility.Visible;
+                SelectionRectangleLeft = point.X;
+                SelectionRectangleTop = point.Y;
 
-            RectangleVisibility = Visibility.Visible;
-            RectangleLeft = point.X;
-            RectangleTop = point.Y;
+                int index = ((int)point.X / 8) + (((int)point.Y / 8) * 16);
+
+                SelectedPatternTableTile = index;
+            }
+            else if (sender.Name == "imgBig")
+            {
+                CroppedPoint = point;
+                CroppedImage = bitmap;
+
+                RectangleVisibility = Visibility.Visible;
+                RectangleLeft = point.X;
+                RectangleTop = point.Y;
+            }
+        }
+
+        private void OnPatternTableTileDeleted()
+        {
+            SignalManager.Get<CleanupTileSetLinksSignal>().Dispatch();
+
+            _bitmapCache.Clear();
+
+            OnPatternTableImageUpdated();
+
+            SelectionRectangleVisibility = Visibility.Hidden;
+            SelectedPatternTableTile = -1;
         }
 
         private void OnMouseWheel(MouseWheelVO vo)
