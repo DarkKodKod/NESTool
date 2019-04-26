@@ -78,7 +78,9 @@
                     <RadioButton Content="PAL" GroupName="FrameTiming" Grid.Column="1" Grid.Row="1" IsChecked="{Binding Path=FrameTiming, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=PAL}"/>
                 </StackPanel>
             </GroupBox>
-            <CheckBox Content="Battery" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Battery, Mode=TwoWay}"/>
+            <CheckBox Content="Battery" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                      IsChecked="{Binding Battery, Mode=TwoWay}" 
+                      Focusable="False" IsHitTestVisible="False"/>
         </StackPanel>
         <Button Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="2" Margin="10" Content="Close" IsCancel="True" Width="100" />
     </Grid>
