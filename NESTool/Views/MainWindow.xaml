@@ -27,7 +27,7 @@
         <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NewElementCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
 		<KeyBinding Key="N" Modifiers="Ctrl+Shift" Command="{Binding NewProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
 		<KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding OpenProjectCommand}" />
-		<KeyBinding Key="F5" Command="{Binding BuildProjectCommand}" />
+        <KeyBinding Key="F5" Command="{Binding OpenBuildProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}"/>
         <KeyBinding Key="C" Modifiers="Ctrl" Command="{Binding CopyElementCommand}" />
         <KeyBinding Key="V" Modifiers="Ctrl" Command="{Binding PasteElementCommand}" />
         <KeyBinding Key="D" Modifiers="Ctrl" Command="{Binding DuplicateElementCommand}" />
@@ -314,7 +314,7 @@
                 </MenuItem>
             </MenuItem>
 			<MenuItem Header="_Project">
-                <MenuItem Header="_Build Project" InputGestureText="F5" Command="{Binding BuildProjectCommand}" CommandParameter="{Binding ProjectName}">
+                <MenuItem Header="_Build Project..." InputGestureText="F5" Command="{Binding OpenBuildProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}">
                     <MenuItem.Icon>
                         <Image Width="16" Height="16" Source="/resources/build.png">
                             <Image.Style>
@@ -484,7 +484,7 @@
                 </Button>
             </ToolBar>
 			<ToolBar x:Name="Project">
-				<Button ToolTip="Build Project" ToolBar.OverflowMode="AsNeeded" Command="{Binding BuildProjectCommand}">
+                <Button ToolTip="Build Project" ToolBar.OverflowMode="AsNeeded" Command="{Binding OpenBuildProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}">
                     <Image Width="16" Height="16" Source="/resources/build.png">
                         <Image.Style>
                             <Style TargetType="Image">

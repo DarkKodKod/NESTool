@@ -135,6 +135,7 @@
     <Compile Include="Commands\ImageMouseDownCommand.cs" />
     <Compile Include="Commands\ImportImageCommand.cs" />
     <Compile Include="Commands\MoveTileToPatternTableCommand.cs" />
+    <Compile Include="Commands\OpenBuildProjectCommand.cs" />
     <Compile Include="Commands\OpenImportImageDialogCommand.cs" />
     <Compile Include="Commands\ItemSelectedCommand.cs" />
     <Compile Include="Commands\LoadMappersCommand.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Utils\WindowUtility.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\BanksViewModel.cs" />
+    <Compile Include="ViewModels\BuildProjectDialogViewModel.cs" />
     <Compile Include="ViewModels\CharacterViewModel.cs" />
     <Compile Include="ViewModels\ElementDialogViewModel.cs" />
     <Compile Include="ViewModels\ImportImageDialogViewModel.cs" />
@@ -213,6 +215,9 @@
     </Compile>
     <Compile Include="Views\Banks.xaml.cs">
       <DependentUpon>Banks.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BuildProjectDialog.xaml.cs">
+      <DependentUpon>BuildProjectDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Character.xaml.cs">
       <DependentUpon>Character.xaml</DependentUpon>
@@ -262,6 +267,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Banks.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BuildProjectDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

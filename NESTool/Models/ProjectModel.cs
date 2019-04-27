@@ -38,6 +38,7 @@ namespace NESTool.Models
         /// Run-length encoding
         /// </summary>
         public bool RLECompression { get; set; } = false;
+        public string OutputFilePath { get; set; }
 
         [TomlIgnore] public string ProjectFilePath { get; set; }
         [TomlIgnore] public string ProjectPath { get; set; }
