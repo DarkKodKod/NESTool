@@ -58,6 +58,7 @@ namespace NESTool.Models
             Name = "";
             RLECompression = false;
             Header.Reset();
+            OutputFilePath = "";
         }
 
         public void Copy(ProjectModel copy)
@@ -65,6 +66,7 @@ namespace NESTool.Models
             Name = copy.Name;
             Version = copy.Version;
             RLECompression = copy.RLECompression;
+            OutputFilePath = copy.OutputFilePath;
 
             Header.INesMapper = copy.Header.INesMapper;
             Header.CHRSize = copy.Header.CHRSize;

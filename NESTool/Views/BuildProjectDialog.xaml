@@ -8,7 +8,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         ShowInTaskbar="False"
-        Title="Build" Height="600" Width="500"
+        Title="Build" Height="257.732" Width="500"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Window.DataContext>
         <vm:BuildProjectDialogViewModel />
@@ -26,14 +26,29 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
-
+        <GroupBox Grid.Row="1" Grid.Column="1" Header="Pattern Table" Margin="5">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Label Content="Sprites" Grid.Row="0" Grid.Column="0"/>
+                <Label Content="Background" Grid.Row="0" Grid.Column="2"/>
+                <ComboBox Grid.Column="0" Grid.Row="1" Width="200" HorizontalAlignment="Left"/>
+                <ComboBox Grid.Column="2" Grid.Row="1" Width="200" HorizontalAlignment="Right"/>
+            </Grid>
+        </GroupBox>
         <Label Grid.Row="3" Grid.Column="1" Content="Output directory" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <DockPanel Grid.Row="4" Grid.Column="1" LastChildFill="True">
             <Button DockPanel.Dock="Right" HorizontalAlignment="Right" 
@@ -42,7 +57,6 @@
             <TextBox x:Name="tbPath" Height="23" Text="{Binding FolderPath, UpdateSourceTrigger=PropertyChanged}" 
 					 TextWrapping="NoWrap" VerticalAlignment="Center" Width="auto"/>
         </DockPanel>
-        
         <Grid Grid.Row="5" Grid.Column="1" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
