@@ -45,8 +45,22 @@
                 </Grid.RowDefinitions>
                 <Label Content="Sprites" Grid.Row="0" Grid.Column="0"/>
                 <Label Content="Background" Grid.Row="0" Grid.Column="2"/>
-                <ComboBox Grid.Column="0" Grid.Row="1" Width="200" HorizontalAlignment="Left"/>
-                <ComboBox Grid.Column="2" Grid.Row="1" Width="200" HorizontalAlignment="Right"/>
+                <ComboBox Grid.Column="0" 
+                          Grid.Row="1" Width="200" 
+                          HorizontalAlignment="Left"
+                          ItemsSource="{Binding PatternTableSprites}" 
+                          DisplayMemberPath="Name"
+                          SelectedValuePath="Id"
+                          SelectedValue="{Binding Path=SelectedPatternTableSprite, Mode=TwoWay}">
+                </ComboBox>
+                <ComboBox Grid.Column="2" 
+                          Grid.Row="1" Width="200" 
+                          HorizontalAlignment="Right"
+                          ItemsSource="{Binding PatternTableBackgrounds}" 
+                          DisplayMemberPath="Name"
+                          SelectedValuePath="Id"
+                          SelectedValue="{Binding Path=SelectedPatternTableBackground, Mode=TwoWay}">
+                </ComboBox>
             </Grid>
         </GroupBox>
         <Label Grid.Row="3" Grid.Column="1" Content="Output directory" HorizontalAlignment="Left" VerticalAlignment="Center"/>

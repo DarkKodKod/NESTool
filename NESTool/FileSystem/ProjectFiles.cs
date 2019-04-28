@@ -14,7 +14,7 @@ namespace NESTool.FileSystem
 
             int index = 0;
 
-            foreach (var handler in Handlers)
+            foreach (KeyValuePair<string, FileHandler> handler in Handlers)
             {
                 if (handler.Value.FileModel is T model)
                 {

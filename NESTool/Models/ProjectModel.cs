@@ -31,6 +31,20 @@ namespace NESTool.Models
             }
         }
 
+        public class BuildConfig
+        {
+            public string OutputFilePath { get; set; }
+            public string PatternTableSpriteId { get; set; }
+            public string PatternTableBackgroundId { get; set; }
+
+            public void Reset()
+            {
+                OutputFilePath = "";
+                PatternTableSpriteId = "";
+                PatternTableBackgroundId = "";
+            }
+        }
+
         public int Version { get; set; }
         public string Name { get; set; } = "";
         public INESHeader Header { get; set; } = new INESHeader();
@@ -38,7 +52,7 @@ namespace NESTool.Models
         /// Run-length encoding
         /// </summary>
         public bool RLECompression { get; set; } = false;
-        public string OutputFilePath { get; set; }
+        public BuildConfig Build { get; set; } = new BuildConfig();
 
         [TomlIgnore] public string ProjectFilePath { get; set; }
         [TomlIgnore] public string ProjectPath { get; set; }
@@ -58,7 +72,7 @@ namespace NESTool.Models
             Name = "";
             RLECompression = false;
             Header.Reset();
-            OutputFilePath = "";
+            Build.Reset(); ;
         }
 
         public void Copy(ProjectModel copy)
@@ -66,7 +80,10 @@ namespace NESTool.Models
             Name = copy.Name;
             Version = copy.Version;
             RLECompression = copy.RLECompression;
-            OutputFilePath = copy.OutputFilePath;
+
+            Build.OutputFilePath = copy.Build.OutputFilePath;
+            Build.PatternTableSpriteId = copy.Build.PatternTableSpriteId;
+            Build.PatternTableBackgroundId = copy.Build.PatternTableBackgroundId;
 
             Header.INesMapper = copy.Header.INesMapper;
             Header.CHRSize = copy.Header.CHRSize;
