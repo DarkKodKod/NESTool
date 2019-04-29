@@ -152,11 +152,15 @@ namespace NESTool.ViewModels
 
         private void CreatePatternTableArrays()
         {
-            List<FileModelVO> patternTableSprites = new List<FileModelVO>();
-            patternTableSprites.Add(new FileModelVO() { Id = 0, Name = "None", Model = null, Meta = null });
+            List<FileModelVO> patternTableSprites = new List<FileModelVO>
+            {
+                new FileModelVO() { Id = 0, Name = "None", Model = null, Meta = null }
+            };
 
-            List<FileModelVO> patternTableBackgrounds = new List<FileModelVO>();
-            patternTableBackgrounds.Add(new FileModelVO() { Id = 0, Name = "None", Model = null, Meta = null });
+            List<FileModelVO> patternTableBackgrounds = new List<FileModelVO>
+            {
+                new FileModelVO() { Id = 0, Name = "None", Model = null, Meta = null }
+            };
 
             IEnumerable<FileModelVO> sprites = ProjectFiles.GetModels<PatternTableModel>().ToArray().Where(p => (p.Model as PatternTableModel).PatternTableType == PatternTableType.Characters);
             IEnumerable<FileModelVO> backgrounds = ProjectFiles.GetModels<PatternTableModel>().ToArray().Where(p => (p.Model as PatternTableModel).PatternTableType == PatternTableType.Background).ToArray();
