@@ -75,9 +75,12 @@ namespace NESTool.ViewModels
                 {
                     if (_selectedGroup != value)
                     {
-                        Model.PTTiles[SelectedPatternTableTile].Group = int.Parse(value);
+                        if (int.TryParse(value, out int intValue))
+                        {
+                            Model.PTTiles[SelectedPatternTableTile].Group = intValue;
 
-                        ProjectItem.FileHandler.Save();
+                            ProjectItem.FileHandler.Save();
+                        }
                     }
 
                     _selectedGroup = value;
