@@ -21,6 +21,23 @@ namespace NESTool.Commands
         private const string _folderTileSetsKey = "folderTileSets";
         private const string _folderImagesKey = "folderImages";
 
+        public override bool CanExecute(object parameter)
+        {
+            string filePath = parameter as string;
+
+            if (string.IsNullOrEmpty(filePath))
+            {
+                return false;
+            }
+
+            if (!File.Exists(filePath))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public override void Execute(object parameter)
         {
             string filePath = parameter as string;

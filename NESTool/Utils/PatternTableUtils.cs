@@ -11,7 +11,7 @@ namespace NESTool.Utils
 {
     public static class PatternTableUtils
     {
-        public static WriteableBitmap CreateImage(PatternTableModel patternTableModel, ref Dictionary<string, WriteableBitmap> bitmapCache)
+        public static WriteableBitmap CreateImage(PatternTableModel patternTableModel, ref Dictionary<string, WriteableBitmap> bitmapCache, bool sendSignals = true)
         {
             FileModelVO[] tileSets = ProjectFiles.GetModels<TileSetModel>().ToArray();
 
@@ -52,7 +52,7 @@ namespace NESTool.Utils
                         // Add the link object
                         foreach (FileModelVO tileset in tileSets)
                         {
-                            if (tileset.Meta.GUID == tile.GUID)
+                            if (tileset.Meta.GUID == tile.GUID && sendSignals)
                             {
                                 SignalManager.Get<AddNewTileSetLinkSignal>().Dispatch(new PatternTableLinkVO() { Caption = tileset.Name, Id = tile.GUID });
                                 break;

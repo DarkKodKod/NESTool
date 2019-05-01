@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ArchitectureLibrary.Commands
@@ -16,8 +17,14 @@ namespace ArchitectureLibrary.Commands
             return true;
         }
 
-        public virtual void Execute(object parameter)
+        public virtual Task ExecuteAsync(object parameter)
         {
+            return Task.FromResult<object>(null);
+        }
+
+        public virtual async void Execute(object parameter)
+        {
+            await ExecuteAsync(parameter);
         }
 
         public virtual void Deactivate()
