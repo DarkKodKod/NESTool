@@ -44,6 +44,7 @@ namespace NESTool.Commands
 
             model.PTTiles[index].GUID = tileSets[selectedTileSet].Meta.GUID;
             model.PTTiles[index].Point = croppedPoint;
+            model.PTTiles[index].Group = index;
 
             SignalManager.Get<PatternTableImageUpdatedSignal>().Dispatch();
         }

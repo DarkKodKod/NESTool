@@ -62,15 +62,21 @@
                     <RadioButton GroupName="Grouped" Margin="10,0,0,0" Focusable="False" IsHitTestVisible="False">Free form</RadioButton>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Row="2">
-                    <Button Width="100" Command="{Binding DeletePatternTableTileCommand}">
+                    <Button Width="100" Command="{Binding DeletePatternTableTileCommand}"
+                            Content="Delete Cell">
                         <Button.CommandParameter>
                             <MultiBinding Converter="{StaticResource parametersConverter}">
                                 <Binding Path="SelectedPatternTableTile" />
                                 <Binding Path="Model" />
                             </MultiBinding>
                         </Button.CommandParameter>
-                        Delete Cell
                     </Button>
+                    <TextBlock Margin="10,0,0,0">Group:</TextBlock>
+                    <TextBox Width="30"
+                             Margin="3,0,0,0"
+                             VerticalAlignment="Stretch"
+                             Text="{Binding SelectedGroup, UpdateSourceTrigger=PropertyChanged}">
+                    </TextBox>
                 </StackPanel>
                 <Border Grid.Row="4" Width="510" Height="510"
                         VerticalAlignment="Top">

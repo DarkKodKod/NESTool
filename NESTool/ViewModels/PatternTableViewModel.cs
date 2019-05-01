@@ -25,6 +25,7 @@ namespace NESTool.ViewModels
         private PatternTableType _selectedPatternTableType = PatternTableType.Characters;
         private WriteableBitmap _croppedImage;
         private string _projectGridSize;
+        private string _selectedGroup;
         private FileModelVO[] _tileSets;
         private int _selectedTileSet;
         private int _selectedPatternTableTile;
@@ -59,6 +60,30 @@ namespace NESTool.ViewModels
                 _projectGridSize = value;
 
                 OnPropertyChanged("ProjectGridSize");
+            }
+        }
+
+        public string SelectedGroup
+        {
+            get
+            {
+                return _selectedGroup;
+            }
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    if (_selectedGroup != value)
+                    {
+                        Model.PTTiles[SelectedPatternTableTile].Group = int.Parse(value);
+
+                        ProjectItem.FileHandler.Save();
+                    }
+
+                    _selectedGroup = value;
+
+                    OnPropertyChanged("SelectedGroup");
+                }
             }
         }
 
@@ -401,6 +426,8 @@ namespace NESTool.ViewModels
                 int index = ((int)point.X / 8) + (((int)point.Y / 8) * 16);
 
                 SelectedPatternTableTile = index;
+
+                SelectedGroup = Model.PTTiles[index].Group.ToString();
             }
             else if (sender.Name == "imgBig")
             {

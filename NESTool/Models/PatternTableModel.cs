@@ -8,6 +8,7 @@ namespace NESTool.Models
     {
         public string GUID { get; set; }
         public Point Point { get; set; }
+        public int Group { get; set; }
     }
 
     public class PatternTableModel : AFileModel

@@ -30,6 +30,7 @@ namespace NESTool.ViewModels
         public CroppedImageMouseDownCommand CroppedImageMouseDownCommand { get; } = new CroppedImageMouseDownCommand();
         public ColorPaletteSelectCommand ColorPaletteSelectCommand { get; } = new ColorPaletteSelectCommand();
         public SaveTileSetChangesCommand SaveTileSetChangesCommand { get; } = new SaveTileSetChangesCommand();
+        public BrowseFileCommand BrowseFileCommand { get; } = new BrowseFileCommand();
         #endregion
 
         public TileSetModel GetModel()
@@ -43,6 +44,8 @@ namespace NESTool.ViewModels
         }
 
         #region get/set
+        public string[] Filters { get; } = new string[14];
+
         public Point CroppedPoint
         {
             get
@@ -167,7 +170,10 @@ namespace NESTool.ViewModels
             SignalManager.Get<SelectedPixelSignal>().AddListener(OnSelectedPixel);
             SignalManager.Get<ColorPalleteSelectSignal>().AddListener(OnColorPalleteSelect);
             SignalManager.Get<SavedPixelChangesSignal>().AddListener(OnSavedPixelChanges);
+            SignalManager.Get<BrowseFileSuccessSignal>().AddListener(BrowseFileSuccess);
             #endregion
+
+            FillOutFilters();
         }
 
         private void OnSavedPixelChanges()
@@ -176,6 +182,28 @@ namespace NESTool.ViewModels
 
             UpdateImage();
         }
+
+        private void FillOutFilters()
+        {
+            Filters[0] = "Image";
+            Filters[1] = "*.png;*.bmp;*.gif;*.gif;*.jpg;*.jpeg;*.jpe;*.jfif;*.tif;*.tiff*.tga";
+            Filters[2] = "PNG";
+            Filters[3] = "*.png";
+            Filters[4] = "BMP";
+            Filters[5] = "*.bmp";
+            Filters[6] = "GIF";
+            Filters[7] = "*.gif";
+            Filters[8] = "JPEG";
+            Filters[9] = "*.jpg;*.jpeg;*.jpe;*.jfif";
+            Filters[10] = "TIFF";
+            Filters[11] = "*.tif;*.tiff";
+            Filters[12] = "TGA";
+            Filters[13] = "*.tga";
+
+            OnPropertyChanged("Filters");
+        }
+
+        private void BrowseFileSuccess(string filePath) => ImagePath = filePath;
 
         private void OnColorPalleteSelect(Color color)
         {

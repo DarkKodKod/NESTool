@@ -30,8 +30,16 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="0">
-                <TextBlock Text="{Binding ImagePath}" />
-                <Button Width="30" HorizontalAlignment="Right">...</Button>
+                <TextBlock  x:Name="tbPath" Text="{Binding ImagePath, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Width="30" HorizontalAlignment="Right" Content="..."
+                        Command="{Binding BrowseFileCommand}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource parametersConverter}">
+                            <Binding Path="Text" ElementName="tbPath"/>
+                            <Binding Path="Filters"/>
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                </Button>
             </DockPanel>
             <ScrollViewer Grid.Row="2"
                           Background="DarkGray"
