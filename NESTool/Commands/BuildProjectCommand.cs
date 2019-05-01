@@ -120,8 +120,6 @@ namespace NESTool.Commands
                         groupedPalettes.Add(group, colors);
                     }
 
-                    int colorIndex = 0;
-
                     // read pixels in the 8x8 quadrant
                     for (int y = currentY; y < currentY + 8; ++y)
                     {
@@ -136,9 +134,9 @@ namespace NESTool.Commands
                                 {
                                     if (colors.Count < 4)
                                     {
-                                        value = colorIndex;
+                                        value = colors.Count;
 
-                                        colors.Add(color, colorIndex++);
+                                        colors.Add(color, value);
                                     }
                                     else
                                     {
