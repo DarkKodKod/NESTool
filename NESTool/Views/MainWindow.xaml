@@ -314,6 +314,15 @@
                 </MenuItem>
             </MenuItem>
 			<MenuItem Header="_Project">
+                <MenuItem Header="Project _Properties..." Command="{Binding OpenProjectPropertiesCommand}">
+                    <MenuItem.CommandParameter>
+                        <MultiBinding Converter="{StaticResource parametersConverter}">
+                            <Binding ElementName="MainWindowView"/>
+                            <Binding ElementName="MainWindowView" Path="DataContext.ProjectName"/>
+                        </MultiBinding>
+                    </MenuItem.CommandParameter>
+                </MenuItem>
+                <Separator/>
                 <MenuItem Header="_Build Project..." InputGestureText="F5" Command="{Binding OpenBuildProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}">
                     <MenuItem.Icon>
                         <Image Width="16" Height="16" Source="/resources/build.png">
@@ -334,16 +343,7 @@
                         </Image>
                     </MenuItem.Icon>
                 </MenuItem>
-                <Separator/>
-				<MenuItem Header="Project _Properties..." Command="{Binding OpenProjectPropertiesCommand}">
-					<MenuItem.CommandParameter>
-						<MultiBinding Converter="{StaticResource parametersConverter}">
-							<Binding ElementName="MainWindowView"/>
-							<Binding ElementName="MainWindowView" Path="DataContext.ProjectName"/>
-						</MultiBinding>
-					</MenuItem.CommandParameter>
-				</MenuItem>
-			</MenuItem>
+            </MenuItem>
 			<MenuItem Header="_Help">
                 <MenuItem Header="_View Help" Command="{Binding ViewHelpCommand}">
                     <MenuItem.Icon>

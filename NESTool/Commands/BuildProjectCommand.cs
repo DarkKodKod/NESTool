@@ -83,7 +83,9 @@ namespace NESTool.Commands
 
             outputBits.CopyTo(bytes, 0);
 
-            File.WriteAllBytes(Path.Combine(projectModel.Build.OutputFilePath, _patterntableOutputFile), bytes);
+            string fullPath = Path.Combine(Path.GetFullPath(projectModel.Build.OutputFilePath), _patterntableOutputFile);
+
+            File.WriteAllBytes(fullPath, bytes);
         }
 
         private void Reverse(ref BitArray array, int start, int length)
