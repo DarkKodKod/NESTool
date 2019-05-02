@@ -13,7 +13,7 @@
              xmlns:cv="clr-namespace:NESTool.Utils.Converters"
              xmlns:vm="clr-namespace:NESTool.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="660" d:DesignWidth="850">
+             d:DesignHeight="680" d:DesignWidth="850">
     <UserControl.Resources>
         <cv:ParametersConverter x:Key="parametersConverter"/>
     </UserControl.Resources>

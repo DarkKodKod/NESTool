@@ -62,6 +62,7 @@ namespace NESTool.ViewModels
         private List<ProjectItem> _projectItems;
         private List<RecentProjectModel> _recentProjects = new List<RecentProjectModel>();
         private bool? _isFullscreen = null;
+        private readonly string _appName;
 
         #region Drag & Drop
         private Point _startPoint;
@@ -114,6 +115,10 @@ namespace NESTool.ViewModels
 
         public MainWindowViewModel()
         {
+            _appName = (string)Application.Current.FindResource(_projectNameKey);
+
+            Title = _appName;
+
             #region Signals
             SignalManager.Get<OpenProjectSuccessSignal>().AddListener(OpenProjectSuccess);
             SignalManager.Get<CloseProjectSuccessSignal>().AddListener(OnCloseProjectSuccess);
@@ -263,13 +268,19 @@ namespace NESTool.ViewModels
         {
             ProjectItems = vo.Items;
 
-            string projectName = (string)Application.Current.FindResource(_projectNameKey);
-
             ProjectName = vo.ProjectName;
 
-            Title = $"{ vo.ProjectName } - { projectName }";
+            Title = $"{ vo.ProjectName } - { _appName }";
 
             ProjectModel project = ModelManager.Get<ProjectModel>();
+
+            if (project.Name != vo.ProjectName)
+            {
+                project.Name = vo.ProjectName;
+
+                project.Save();
+            }
+
             project.Name = vo.ProjectName;
         }
 
@@ -277,11 +288,9 @@ namespace NESTool.ViewModels
         {
             ProjectItems = null;
 
-            string projectName = (string)Application.Current.FindResource(_projectNameKey);
-
             ProjectName = "";
 
-            Title = $"{ projectName }";
+            Title = $"{ _appName }";
         }
 
         private void OnExitSuccess()
