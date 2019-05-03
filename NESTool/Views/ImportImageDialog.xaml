@@ -44,6 +44,7 @@
                     <MultiBinding Converter="{StaticResource parametersConverter}">
                         <Binding Path="Text" ElementName="tbPath"/>
                         <Binding Path="Filters"/>
+                        <Binding Path="NewFile"/>
                     </MultiBinding>
                 </Button.CommandParameter>
             </Button>

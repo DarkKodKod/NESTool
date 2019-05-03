@@ -10,7 +10,7 @@ namespace NESTool.Signals
 {
     // Generics
     public class BrowseFolderSuccessSignal : Signal<string> { }
-    public class BrowseFileSuccessSignal : Signal<string> { }
+    public class BrowseFileSuccessSignal : Signal<string, bool> { }
     public class SetUpWindowPropertiesSignal : Signal<WindowVO> { }
     public class CloseDialogSignal : Signal { }
     public class ShowGridSignal : Signal { }

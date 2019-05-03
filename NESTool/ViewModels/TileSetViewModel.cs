@@ -46,6 +46,8 @@ namespace NESTool.ViewModels
         #region get/set
         public string[] Filters { get; } = new string[14];
 
+        public bool NewFile { get; } = false;
+
         public Point CroppedPoint
         {
             get
@@ -203,8 +205,14 @@ namespace NESTool.ViewModels
             OnPropertyChanged("Filters");
         }
 
-        private void BrowseFileSuccess(string filePath)
+        private void BrowseFileSuccess(string filePath, bool newFile)
         {
+            // Only act when is not a new file, only updates the current one
+            if (newFile)
+            {
+                return;
+            }
+
             ImagePath = filePath;
 
             using (ImportImageCommand command = new ImportImageCommand())

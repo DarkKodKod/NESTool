@@ -23,6 +23,8 @@ namespace NESTool.ViewModels
         }
 
         public string[] Filters { get; } = new string[14];
+
+        public bool NewFile { get; } = true;
         #endregion
 
         private string _filePath;
@@ -61,6 +63,6 @@ namespace NESTool.ViewModels
             SignalManager.Get<CloseDialogSignal>().RemoveListener(OnCloseDialog);
         }
 
-        private void BrowseFileSuccess(string filePath) => FilePath = filePath;
+        private void BrowseFileSuccess(string filePath, bool newFile) => FilePath = filePath;
     }
 }

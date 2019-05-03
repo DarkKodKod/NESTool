@@ -2,6 +2,7 @@
 using Microsoft.WindowsAPICodePack.Dialogs;
 using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
+using System.IO;
 
 namespace NESTool.Commands
 {
@@ -12,20 +13,26 @@ namespace NESTool.Commands
             object[] values = (object[])parameter;
             string path = (string)values[0];
             string[] filters = null;
+            bool newFile = (bool)values[2];
 
             if (values.Length > 1)
             {
                 filters = (string[])values[1];
             }
 
+            if (!string.IsNullOrEmpty(path))
+            {
+                path = Path.GetDirectoryName(path);
+            }
+
             CommonOpenFileDialog dialog = new CommonOpenFileDialog
             {
                 Title = "Select File",
                 IsFolderPicker = false,
-                InitialDirectory = parameter as string,
+                InitialDirectory = path,
                 AddToMostRecentlyUsedList = false,
                 AllowNonFileSystemItems = false,
-                DefaultDirectory = parameter as string,
+                DefaultDirectory = path,
                 EnsureFileExists = true,
                 EnsurePathExists = true,
                 EnsureReadOnly = false,
@@ -36,7 +43,7 @@ namespace NESTool.Commands
 
             if (filters != null && filters.Length > 0)
             {
-                for (int i = 0; i < filters.Length; i = i + 2)
+                for (int i = 0; i < filters.Length; i += 2)
                 {
                     dialog.Filters.Add(new CommonFileDialogFilter(filters[i], filters[i+1]));
                 }
@@ -44,7 +51,7 @@ namespace NESTool.Commands
 
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                SignalManager.Get<BrowseFileSuccessSignal>().Dispatch(dialog.FileName);
+                SignalManager.Get<BrowseFileSuccessSignal>().Dispatch(dialog.FileName, newFile);
             }
         }
     }
