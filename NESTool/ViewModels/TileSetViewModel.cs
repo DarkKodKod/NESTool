@@ -203,7 +203,15 @@ namespace NESTool.ViewModels
             OnPropertyChanged("Filters");
         }
 
-        private void BrowseFileSuccess(string filePath) => ImagePath = filePath;
+        private void BrowseFileSuccess(string filePath)
+        {
+            ImagePath = filePath;
+
+            using (ImportImageCommand command = new ImportImageCommand())
+            {
+                command.Execute(filePath);
+            }
+        }   
 
         private void OnColorPalleteSelect(Color color)
         {
