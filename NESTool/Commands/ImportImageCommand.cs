@@ -23,7 +23,13 @@ namespace NESTool.Commands
 
         public override bool CanExecute(object parameter)
         {
-            string filePath = parameter as string;
+            if (parameter == null)
+            {
+                return false;
+            }
+
+            object[] values = (object[])parameter;
+            string filePath = (string)values[0];
 
             if (string.IsNullOrEmpty(filePath))
             {
@@ -40,11 +46,22 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            string filePath = parameter as string;
+            object[] values = (object[])parameter;
+            string filePath = (string)values[0];
 
-            string name = Path.GetFileNameWithoutExtension(filePath);
+            ProjectItem item = null;
 
-            ProjectItem item = CreateTileSetElement(name);
+            if (values.Length > 1)
+            {
+                item = (ProjectItem)values[1];
+            }
+
+            if (item == null)
+            {
+                string name = Path.GetFileNameWithoutExtension(filePath);
+
+                item = CreateTileSetElement(name);
+            }
 
             if (item.FileHandler.FileModel is TileSetModel tileSet)
             {

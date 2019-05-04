@@ -62,7 +62,13 @@
 					IsCancel="True"/>
             <Button Grid.Column="2" Content="Continue" 
 					HorizontalAlignment="center" VerticalAlignment="center" Width="100" 
-					Command="{Binding ImportImageCommand}" CommandParameter="{Binding ElementName=tbPath, Path=Text}" Click="OnClickOK"/>
+					Command="{Binding ImportImageCommand}" Click="OnClickOK">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource parametersConverter}">
+                        <Binding ElementName="tbPath" Path="Text" />
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
         </Grid>
     </Grid>
 </Window>

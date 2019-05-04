@@ -217,7 +217,11 @@ namespace NESTool.ViewModels
 
             using (ImportImageCommand command = new ImportImageCommand())
             {
-                command.Execute(filePath);
+                object[] parameters = new object[2];
+                parameters[0] = filePath;
+                parameters[1] = ProjectItem;
+
+                command.Execute(parameters);
             }
         }   
 
