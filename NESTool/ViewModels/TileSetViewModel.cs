@@ -207,6 +207,11 @@ namespace NESTool.ViewModels
 
         private void BrowseFileSuccess(string filePath, bool newFile)
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             // Only act when is not a new file, only updates the current one
             if (newFile)
             {
@@ -278,6 +283,8 @@ namespace NESTool.ViewModels
 
         public override void OnActivate()
         {
+            base.OnActivate();
+
             UpdateImage();
         }
 

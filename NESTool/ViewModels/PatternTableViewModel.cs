@@ -345,6 +345,11 @@ namespace NESTool.ViewModels
 
         private void OnPatternTableImageUpdated()
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             ProjectItem.FileHandler.Save();
 
             LoadPatternTableImage();
@@ -375,6 +380,8 @@ namespace NESTool.ViewModels
 
         public override void OnActivate()
         {
+            base.OnActivate();
+
             if (Model != null)
             {
                 SelectedPatternTableType = Model.PatternTableType;
@@ -445,6 +452,11 @@ namespace NESTool.ViewModels
 
         private void OnPatternTableTileDeleted()
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             SignalManager.Get<CleanupTileSetLinksSignal>().Dispatch();
 
             _bitmapCache.Clear();

@@ -81,7 +81,18 @@ namespace NESTool
                 return;
             }
 
-            dpItemPanel.Children.Clear();
+            if (dpItemPanel.Children.Count > 0)
+            {
+                if (dpItemPanel.Children[0] is UserControl oldGui)
+                {
+                    if (oldGui.DataContext is ItemViewModel oldModel)
+                    {
+                        oldModel.OnDeactivate();
+                    }
+                }
+
+                dpItemPanel.Children.Clear();
+            }
 
             UserControl view = null;
 
