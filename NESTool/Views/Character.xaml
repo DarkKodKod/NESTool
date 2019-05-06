@@ -13,7 +13,7 @@
              xmlns:cv="clr-namespace:NESTool.Utils.Converters"
              xmlns:vm="clr-namespace:NESTool.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="680" d:DesignWidth="850">
+             d:DesignHeight="680" d:DesignWidth="1250">
 	<UserControl.DataContext>
 		<vm:CharacterViewModel />
 	</UserControl.DataContext>
@@ -42,8 +42,6 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="3"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="3"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Row="0">
@@ -55,14 +53,7 @@
                                    Text="{Binding ProjectGridSize}">
                         </TextBlock>
                     </Border>
-                    <ComboBox Margin="10,0,0,0" Width="200"
-                              ItemsSource="{Binding Source={ex:EnumBindingSource {x:Type enum:PatternTableType}}}"
-                              SelectedItem="{Binding Path=SelectedPatternTableType}"/>
-                    <RadioButton GroupName="Grouped" Margin="10,0,0,0" IsChecked="True">Compact</RadioButton>
-                    <RadioButton GroupName="Grouped" Margin="10,0,0,0" Focusable="False" IsHitTestVisible="False">Free form</RadioButton>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Grid.Row="2">
-                    <Button Width="100" Command="{Binding DeletePatternTableTileCommand}"
+                    <Button Width="100" Margin="10,0,0,0" Command="{Binding DeletePatternTableTileCommand}"
                             Content="Delete Cell">
                         <Button.CommandParameter>
                             <MultiBinding Converter="{StaticResource parametersConverter}">
@@ -71,14 +62,8 @@
                             </MultiBinding>
                         </Button.CommandParameter>
                     </Button>
-                    <TextBlock Margin="10,0,0,0">Group:</TextBlock>
-                    <TextBox Width="30"
-                             Margin="3,0,0,0"
-                             VerticalAlignment="Stretch"
-                             Text="{Binding SelectedGroup, UpdateSourceTrigger=PropertyChanged}">
-                    </TextBox>
                 </StackPanel>
-                <Border Grid.Row="4" Width="510" Height="510"
+                <Border Grid.Row="2" Width="510" Height="510"
                         VerticalAlignment="Top">
                     <Canvas Width="128" Height="128" 
 		                Background="DarkGray"
@@ -91,7 +76,7 @@
                                Source="{Binding PTImage}"
 	                           Width="128"
 	                           Height="128"
-                               x:Name="imgPatternTable"
+                               x:Name="imgCharacter"
 	                           Stretch="UniformToFill">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseDown">
@@ -165,69 +150,62 @@
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Row="0">
                     <ComboBox Width="200"
-                              ItemsSource="{Binding TileSets}" 
+                              ItemsSource="{Binding Banks}" 
                               DisplayMemberPath="Name"
                               SelectedValuePath="Id"
-                              SelectedValue="{Binding Path=SelectedTileSet}">
+                              SelectedValue="{Binding Path=SelectedBank}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
-                                <cmd:EventToCommand Command="{Binding TileSetSelectionChangedCommand}" PassEventArgsToCommand="True" />
+                                <cmd:EventToCommand Command="{Binding FileModelVOSelectionChangedCommand}" PassEventArgsToCommand="True" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ComboBox>
                 </StackPanel>
-                <ScrollViewer Grid.Row="2"
-                              Background="DarkGray"
-                              VerticalScrollBarVisibility="Auto" 
-                              HorizontalScrollBarVisibility="Auto">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="PreviewMouseWheel">
-                            <cmd:EventToCommand Command="{Binding PreviewMouseWheelCommand}" PassEventArgsToCommand="True" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                    <Canvas x:Name="cvsImage"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top"
-                            Width="{Binding ActualWidth}" 
-                            Height="{Binding ActualHeight}">
+                <Border Grid.Row="2" Width="510" Height="510"
+                        VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <Canvas Width="128" Height="128" 
+		                Background="DarkGray"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top">
                         <Canvas.RenderTransform>
-                            <ScaleTransform x:Name="scaleCanvas" />
+                            <ScaleTransform ScaleX="4" ScaleY="4"/>
                         </Canvas.RenderTransform>
-                        <Image Source="{Binding ImgSource}" 
-                               x:Name="imgBig"
-                               RenderOptions.BitmapScalingMode="NearestNeighbor"
-                               Stretch="None">
+                        <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
+                               Source="{Binding BankImage}"
+	                           Width="128"
+	                           Height="128"
+                               x:Name="imgPatternTable"
+	                           Stretch="UniformToFill">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseDown">
                                     <cmd:EventToCommand Command="{Binding ImageMouseDownCommand}" PassEventArgsToCommand="True" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </Image>
-                        <Border Visibility="{Binding GridVisibility}">
+                        <Border>
                             <Border.Background>
                                 <VisualBrush TileMode="Tile"
-                                     Viewport="0,0,8,8" ViewportUnits="Absolute" 
-                                     Viewbox="0,0,8,8" ViewboxUnits="Absolute">
+					                     Viewport="0,0,8,8" ViewportUnits="Absolute" 
+					                     Viewbox="0,0,8,8" ViewboxUnits="Absolute">
                                     <VisualBrush.Visual>
                                         <Rectangle Stroke="Magenta" StrokeThickness="0.1" Height="100" Width="100"/>
                                     </VisualBrush.Visual>
                                 </VisualBrush>
                             </Border.Background>
-                            <Canvas x:Name="cvsBigGrid" Width="10000" Height="10000" 
-                                    Background="Transparent">
+                            <Canvas Width="128" Height="128" Background="Transparent">
                                 <i:Interaction.Behaviors>
-                                    <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgBig}"/>
+                                    <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgPatternTable}"/>
                                 </i:Interaction.Behaviors>
                                 <Rectangle Width="8" Height="8" 
                                            Stroke="Red" 
                                            StrokeThickness="0.5"
-                                           Canvas.Top="{Binding RectangleTop}"
-                                           Canvas.Left="{Binding RectangleLeft}"
-                                           Visibility="{Binding RectangleVisibility}"/>
+                                           Canvas.Top="{Binding SelectionRectangleTop}"
+                                           Canvas.Left="{Binding SelectionRectangleLeft}"
+                                           Visibility="{Binding SelectionRectangleVisibility}"/>
                             </Canvas>
                         </Border>
                     </Canvas>
-                </ScrollViewer>
+                </Border>
             </Grid>
         </Grid>
         <ScrollViewer Grid.Row="1" Background="White">

@@ -43,7 +43,7 @@ namespace NESTool.ViewModels
         #region Commands
         public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
         public ImageMouseDownCommand ImageMouseDownCommand { get; } = new ImageMouseDownCommand();
-        public TileSetSelectionChangedCommand TileSetSelectionChangedCommand { get; } = new TileSetSelectionChangedCommand();
+        public FileModelVOSelectionChangedCommand FileModelVOSelectionChangedCommand { get; } = new FileModelVOSelectionChangedCommand();
         public MoveTileToPatternTableCommand MoveTileToPatternTableCommand { get; } = new MoveTileToPatternTableCommand();
         public DeletePatternTableTileCommand DeletePatternTableTileCommand { get; } = new DeletePatternTableTileCommand();
         #endregion
@@ -320,7 +320,7 @@ namespace NESTool.ViewModels
             SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
             SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
             SignalManager.Get<ProjectConfigurationSavedSignal>().AddListener(OnProjectConfigurationSaved);
-            SignalManager.Get<TileSetSelectionChangedSignal>().AddListener(OnTileSetSelectionChanged);
+            SignalManager.Get<FileModelVOSelectionChangedSignal>().AddListener(OnFileModelVOSelectionChanged);
             SignalManager.Get<PatternTableImageUpdatedSignal>().AddListener(OnPatternTableImageUpdated);
             SignalManager.Get<SelectTileSetSignal>().AddListener(OnSelectTileSet);
             SignalManager.Get<PatternTableTileDeletedSignal>().AddListener(OnPatternTableTileDeleted);
@@ -355,8 +355,13 @@ namespace NESTool.ViewModels
             LoadPatternTableImage();
         }
 
-        private void OnTileSetSelectionChanged(FileModelVO fileModel)
+        private void OnFileModelVOSelectionChanged(FileModelVO fileModel)
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             LoadTileSetImage();
         }
 

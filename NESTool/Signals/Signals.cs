@@ -57,7 +57,7 @@ namespace NESTool.Signals
     public class SavedPixelChangesSignal : Signal { }
 
     // PatternTable
-    public class TileSetSelectionChangedSignal : Signal<FileModelVO> { }
+    public class FileModelVOSelectionChangedSignal : Signal<FileModelVO> { }
     public class PatternTableImageUpdatedSignal : Signal { }
     public class AddNewTileSetLinkSignal : Signal<PatternTableLinkVO> { }
     public class SelectTileSetSignal : Signal<string> { }

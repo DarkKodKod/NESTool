@@ -6,7 +6,7 @@ using System.Windows.Controls;
 
 namespace NESTool.Commands
 {
-    public class TileSetSelectionChangedCommand : Command
+    public class FileModelVOSelectionChangedCommand : Command
     {
         public override void Execute(object parameter)
         {
@@ -16,7 +16,7 @@ namespace NESTool.Commands
             {
                 if (changedEvent.AddedItems[0] is FileModelVO fileModel)
                 {
-                    SignalManager.Get<TileSetSelectionChangedSignal>().Dispatch(fileModel);
+                    SignalManager.Get<FileModelVOSelectionChangedSignal>().Dispatch(fileModel);
                 }
             }
         }

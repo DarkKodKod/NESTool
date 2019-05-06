@@ -171,7 +171,7 @@
                               SelectedValue="{Binding Path=SelectedTileSet}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
-                                <cmd:EventToCommand Command="{Binding TileSetSelectionChangedCommand}" PassEventArgsToCommand="True" />
+                                <cmd:EventToCommand Command="{Binding FileModelVOSelectionChangedCommand}" PassEventArgsToCommand="True" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </ComboBox>
