@@ -8,12 +8,22 @@ using NESTool.Signals;
 using NESTool.Utils;
 using NESTool.VOs;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace NESTool.ViewModels
 {
+    public class ActionTabItem
+    {
+        public string Header { get; set; }
+        public UserControl Content { get; set; }
+    }
+
     public class CharacterViewModel : ItemViewModel
     {
         private string _projectGridSize;
@@ -21,12 +31,30 @@ namespace NESTool.ViewModels
         private int _selectedBank;
         private Dictionary<string, WriteableBitmap> _bitmapCache = new Dictionary<string, WriteableBitmap>();
         private ImageSource _bankImage;
+        private ObservableCollection<ActionTabItem> _items;
 
         #region Commands
         public FileModelVOSelectionChangedCommand FileModelVOSelectionChangedCommand { get; } = new FileModelVOSelectionChangedCommand();
+        public CharacterCloseTabCommand CharacterCloseTabCommand { get; } = new CharacterCloseTabCommand();
+        public CharacterNewTabCommand CharacterNewTabCommand { get; } = new CharacterNewTabCommand();
         #endregion
 
         #region get/set
+        public ObservableCollection<ActionTabItem> Tabs
+        {
+            get
+            {
+                if (_items == null)
+                {
+                    _items = new ObservableCollection<ActionTabItem>();
+                    var itemsView = (IEditableCollectionView)CollectionViewSource.GetDefaultView(_items);
+                    itemsView.NewItemPlaceholderPosition = NewItemPlaceholderPosition.AtEnd;
+                }
+
+                return _items;
+            }
+        }
+
         public ImageSource BankImage
         {
             get
@@ -84,6 +112,8 @@ namespace NESTool.ViewModels
 
             #region Signals
             SignalManager.Get<FileModelVOSelectionChangedSignal>().AddListener(OnFileModelVOSelectionChanged);
+            SignalManager.Get<AnimationTabDeletedSignal>().AddListener(OnAnimationTabDeleted);
+            SignalManager.Get<AnimationTabNewSignal>().AddListener(OnAnimationTabNew);
             #endregion
         }
 
@@ -92,6 +122,16 @@ namespace NESTool.ViewModels
             base.OnActivate();
 
             LoadBankImage();
+
+            PopulateTabs();
+        }
+
+        public void PopulateTabs()
+        {
+            // Add A tab to TabControl With a specific header and Content(UserControl)
+            Tabs.Add(new ActionTabItem { Header = "UserControl 1", Content = new UserControl() });
+            // Add A tab to TabControl With a specific header and Content(UserControl)
+            Tabs.Add(new ActionTabItem { Header = "UserControl 2", Content = new UserControl() });
         }
 
         private void UpdateDialogInfo()
@@ -117,6 +157,24 @@ namespace NESTool.ViewModels
                 Banks[index] = item;
 
                 index++;
+            }
+        }
+
+        private void OnAnimationTabNew()
+        {
+            // Add A tab to TabControl With a specific header and Content(UserControl)
+            Tabs.Add(new ActionTabItem { Header = "UserControl 3", Content = new UserControl() });
+        }
+
+        private void OnAnimationTabDeleted(ActionTabItem tabItem)
+        {
+            foreach (ActionTabItem tab in Tabs)
+            {
+                if (tab == tabItem)
+                {
+                    Tabs.Remove(tab);
+                    return;
+                }
             }
         }
 

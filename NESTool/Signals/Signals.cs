@@ -64,7 +64,9 @@ namespace NESTool.Signals
     public class PatternTableTileDeletedSignal : Signal { }
     public class CleanupTileSetLinksSignal : Signal { }
 
-    // Map
-
     // Character
+    public class AnimationTabDeletedSignal : Signal<ActionTabItem> { }
+    public class AnimationTabNewSignal : Signal { }
+
+    // Map
 }
