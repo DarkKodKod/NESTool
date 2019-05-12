@@ -22,7 +22,15 @@
         <cv:ParametersConverter x:Key="parametersConverter"/>
         <DataTemplate x:Key="itemHeaderTemplate">
             <StackPanel Orientation="Horizontal" Height="21" Width="100">
-                <TextBlock Width="80" Text="{Binding Header}"/>
+                <ContentControl MouseDoubleClick="ContentControl_MouseDoubleClick">
+                    <TextBlock x:Name="txtDisplayName" 
+                           Width="80" 
+                           Text="{Binding Header}"/>
+                </ContentControl>
+                <TextBox x:Name="editableTextBox" Visibility="Collapsed" MinWidth="80" 
+                         Text="{Binding Header}"
+                         IsVisibleChanged="EditableTextBox_IsVisibleChanged"
+                         KeyDown="EditableTextBox_KeyDown"/>
                 <Image Source="/resources/tab_cross.png" Width="10" Height="10" ToolTip="Delete animation">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="MouseUp">
@@ -31,6 +39,17 @@
                     </i:Interaction.Triggers>
                 </Image>
             </StackPanel>
+            <DataTemplate.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding IsInEditMode}" Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter Property="Visibility" TargetName="editableTextBox" Value="Visible" />
+                        <Setter Property="Visibility" TargetName="txtDisplayName" Value="Collapsed" />
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
+            </DataTemplate.Triggers>
         </DataTemplate>
         <DataTemplate x:Key="itemContentTemplate">
             <UserControl Content="{Binding Content}" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />

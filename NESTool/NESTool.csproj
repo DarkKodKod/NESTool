@@ -202,6 +202,7 @@
     <Compile Include="Models\RecentProjectModel.cs" />
     <Compile Include="Utils\WindowUtility.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
+    <Compile Include="ViewModels\ActionTabItem.cs" />
     <Compile Include="ViewModels\BanksViewModel.cs" />
     <Compile Include="ViewModels\BuildProjectDialogViewModel.cs" />
     <Compile Include="ViewModels\CharacterViewModel.cs" />

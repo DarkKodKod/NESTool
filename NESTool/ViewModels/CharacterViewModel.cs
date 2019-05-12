@@ -18,12 +18,6 @@ using System.Windows.Media.Imaging;
 
 namespace NESTool.ViewModels
 {
-    public class ActionTabItem
-    {
-        public string Header { get; set; }
-        public UserControl Content { get; set; }
-    }
-
     public class CharacterViewModel : ItemViewModel
     {
         private string _projectGridSize;
@@ -134,6 +128,12 @@ namespace NESTool.ViewModels
             Tabs.Add(new ActionTabItem { Header = "UserControl 2", Content = new UserControl() });
         }
 
+        private void OnAnimationTabNew()
+        {
+            // Add A tab to TabControl With a specific header and Content(UserControl)
+            Tabs.Add(new ActionTabItem { Header = "UserControl 3", Content = new UserControl() });
+        }
+
         private void UpdateDialogInfo()
         {
             ProjectModel project = ModelManager.Get<ProjectModel>();
@@ -158,12 +158,6 @@ namespace NESTool.ViewModels
 
                 index++;
             }
-        }
-
-        private void OnAnimationTabNew()
-        {
-            // Add A tab to TabControl With a specific header and Content(UserControl)
-            Tabs.Add(new ActionTabItem { Header = "UserControl 3", Content = new UserControl() });
         }
 
         private void OnAnimationTabDeleted(ActionTabItem tabItem)
