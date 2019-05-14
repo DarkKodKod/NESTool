@@ -5,11 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
-             xmlns:local="clr-namespace:NESTool.Views"
-             xmlns:ex="clr-namespace:NESTool.Utils.Extensions"
-             xmlns:enum="clr-namespace:NESTool.Enums"
-             xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
-             xmlns:fx="clr-namespace:ArchitectureLibrary.FXs;assembly=ArchitectureLibrary"
              xmlns:slt="clr-namespace:NESTool.Utils.Selectors"
              xmlns:cv="clr-namespace:NESTool.Utils.Converters"
              xmlns:vm="clr-namespace:NESTool.ViewModels"
@@ -28,7 +23,7 @@
                            Text="{Binding Header}"/>
                 </ContentControl>
                 <TextBox x:Name="editableTextBox" Visibility="Collapsed" MinWidth="80" 
-                         Text="{Binding Header}"
+                         Text="{Binding Header, UpdateSourceTrigger=LostFocus}"
                          IsVisibleChanged="EditableTextBox_IsVisibleChanged"
                          KeyDown="EditableTextBox_KeyDown"/>
                 <Image Source="/resources/tab_cross.png" Width="10" Height="10" ToolTip="Delete animation">

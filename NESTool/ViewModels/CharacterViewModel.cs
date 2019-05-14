@@ -33,6 +33,16 @@ namespace NESTool.ViewModels
         public CharacterNewTabCommand CharacterNewTabCommand { get; } = new CharacterNewTabCommand();
         #endregion
 
+        public CharacterModel GetModel()
+        {
+            if (ProjectItem?.FileHandler.FileModel is CharacterModel model)
+            {
+                return model;
+            }
+
+            return null;
+        }
+
         #region get/set
         public ObservableCollection<ActionTabItem> Tabs
         {
@@ -108,6 +118,7 @@ namespace NESTool.ViewModels
             SignalManager.Get<FileModelVOSelectionChangedSignal>().AddListener(OnFileModelVOSelectionChanged);
             SignalManager.Get<AnimationTabDeletedSignal>().AddListener(OnAnimationTabDeleted);
             SignalManager.Get<AnimationTabNewSignal>().AddListener(OnAnimationTabNew);
+            SignalManager.Get<RenamedAnimationTabSignal>().AddListener(OnRenamedAnimationTab);
             #endregion
         }
 
@@ -122,16 +133,97 @@ namespace NESTool.ViewModels
 
         public void PopulateTabs()
         {
-            // Add A tab to TabControl With a specific header and Content(UserControl)
-            Tabs.Add(new ActionTabItem { Header = "UserControl 1", Content = new UserControl() });
-            // Add A tab to TabControl With a specific header and Content(UserControl)
-            Tabs.Add(new ActionTabItem { Header = "UserControl 2", Content = new UserControl() });
+            CharacterModel model = GetModel();
+
+            if (model == null)
+            {
+                return;
+            }
+
+            foreach (CharacterAnimation animation in model.Animations)
+            {
+                if (string.IsNullOrEmpty(animation.Name))
+                {
+                    continue;
+                }
+
+                AddNewAnimation(animation.Name);
+            }
+        }
+
+        private void OnRenamedAnimationTab(string newName)
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+
+            Save();
         }
 
         private void OnAnimationTabNew()
         {
-            // Add A tab to TabControl With a specific header and Content(UserControl)
-            Tabs.Add(new ActionTabItem { Header = "UserControl 3", Content = new UserControl() });
+            if (!IsActive)
+            {
+                return;
+            }
+
+            string newTabName = "Animation_" + (Tabs.Count + 1);
+
+            AddNewAnimation(newTabName);
+
+            Save();
+        }
+
+        private void AddNewAnimation(string animationName)
+        {
+            Tabs.Add(new ActionTabItem { Header = animationName, Content = new UserControl() });
+        }
+
+        private void Save()
+        {
+            CharacterModel model = GetModel();
+
+            if (model != null)
+            {
+                int index = 0;
+
+                foreach (ActionTabItem tab in Tabs)
+                {
+                    model.Animations[index].Name = tab.Header;
+                    model.Animations[index].FixToGrid = true;
+                    model.Animations[index].Speed = 1;
+
+                    index++;
+                }
+
+                for (int i = index; i < model.Animations.Length; ++i)
+                {
+                    model.Animations[i].Name = string.Empty;
+                }
+
+                model.Palettes[0].Color0 = 0;
+                model.Palettes[0].Color1 = 0;
+                model.Palettes[0].Color2 = 0;
+                model.Palettes[0].Color3 = 0;
+
+                model.Palettes[1].Color0 = 0;
+                model.Palettes[1].Color1 = 0;
+                model.Palettes[1].Color2 = 0;
+                model.Palettes[1].Color3 = 0;
+
+                model.Palettes[2].Color0 = 0;
+                model.Palettes[2].Color1 = 0;
+                model.Palettes[2].Color2 = 0;
+                model.Palettes[2].Color3 = 0;
+
+                model.Palettes[3].Color0 = 0;
+                model.Palettes[3].Color1 = 0;
+                model.Palettes[3].Color2 = 0;
+                model.Palettes[3].Color3 = 0;
+
+                ProjectItem.FileHandler.Save();
+            }
         }
 
         private void UpdateDialogInfo()
@@ -162,11 +254,19 @@ namespace NESTool.ViewModels
 
         private void OnAnimationTabDeleted(ActionTabItem tabItem)
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             foreach (ActionTabItem tab in Tabs)
             {
                 if (tab == tabItem)
                 {
                     Tabs.Remove(tab);
+
+                    Save();
+
                     return;
                 }
             }

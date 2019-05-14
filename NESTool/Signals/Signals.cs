@@ -67,6 +67,7 @@ namespace NESTool.Signals
     // Character
     public class AnimationTabDeletedSignal : Signal<ActionTabItem> { }
     public class AnimationTabNewSignal : Signal { }
+    public class RenamedAnimationTabSignal : Signal<string> { }
 
     // Map
 }

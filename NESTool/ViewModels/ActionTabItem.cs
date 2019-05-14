@@ -1,4 +1,6 @@
-﻿using ArchitectureLibrary.ViewModel;
+﻿using ArchitectureLibrary.Signals;
+using ArchitectureLibrary.ViewModel;
+using NESTool.Signals;
 using System.Windows.Controls;
 
 namespace NESTool.ViewModels
@@ -16,9 +18,19 @@ namespace NESTool.ViewModels
             }
             set
             {
-                _header = value;
+                if (_header != value)
+                {
+                    bool changedName = !string.IsNullOrEmpty(_header);
 
-                OnPropertyChanged("Header");
+                    _header = value;
+
+                    OnPropertyChanged("Header");
+
+                    if (changedName)
+                    {
+                        SignalManager.Get<RenamedAnimationTabSignal>().Dispatch(value);
+                    }
+                }
             }
         }
         public UserControl Content { get; set; }
