@@ -158,6 +158,9 @@
     <Compile Include="Commands\TreeviewSelectedItemChanged.cs" />
     <Compile Include="Commands\UndoCommand.cs" />
     <Compile Include="FileSystem\ProjectFiles.cs" />
+    <Compile Include="UserControls\CharacterAnimation.xaml.cs">
+      <DependentUpon>CharacterAnimation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\PatternTableLink.xaml.cs">
       <DependentUpon>PatternTableLink.xaml</DependentUpon>
     </Compile>
@@ -260,6 +263,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Style_Dark.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\CharacterAnimation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

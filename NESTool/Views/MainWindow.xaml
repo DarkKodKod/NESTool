@@ -769,9 +769,13 @@
 			</TreeView>
             <GridSplitter Grid.Column="1" Width="5" />
             <DockPanel x:Name="dpItemPanel" Grid.Column="2"
-                           Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}"
-                           Height="{Binding ActualHeight, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}"
-                           LastChildFill="True"/>
+                       Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}"
+                       Height="{Binding ActualHeight, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}"
+                       LastChildFill="True">
+                <DockPanel.Background>
+                    <SolidColorBrush Color="#1E1E1E"/>
+                </DockPanel.Background>
+            </DockPanel>
         </Grid>
 	</DockPanel>
 </Window>
