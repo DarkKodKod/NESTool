@@ -2,7 +2,7 @@
 {
     public abstract class AActivate
     {
-        protected bool IsActive { get; set; } = false;
+        public bool IsActive { get; set; } = false;
 
         public virtual void OnActivate()
         {

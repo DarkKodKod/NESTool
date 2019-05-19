@@ -73,6 +73,8 @@ namespace NESTool.Signals
     public class StopCharacterAnimationSignal : Signal { }
     public class PlayCharacterAnimationSignal : Signal { }
     public class PreviousFrameCharacterAnimationSignal : Signal { }
+    public class NewAnimationFrameSignal : Signal<string> { }
+    public class OpenCharacterFrameSignal : Signal { }
 
     // Map
 }

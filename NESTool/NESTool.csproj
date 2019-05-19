@@ -137,8 +137,10 @@
     <Compile Include="Commands\ImageMouseDownCommand.cs" />
     <Compile Include="Commands\ImportImageCommand.cs" />
     <Compile Include="Commands\MoveTileToPatternTableCommand.cs" />
+    <Compile Include="Commands\NewAnimationFrameCommand.cs" />
     <Compile Include="Commands\NextFrameCharacterAnimationCommand.cs" />
     <Compile Include="Commands\OpenBuildProjectCommand.cs" />
+    <Compile Include="Commands\OpenCharacterFrameCommand.cs" />
     <Compile Include="Commands\OpenImportImageDialogCommand.cs" />
     <Compile Include="Commands\ItemSelectedCommand.cs" />
     <Compile Include="Commands\LoadMappersCommand.cs" />
@@ -164,11 +166,15 @@
     <Compile Include="Commands\UndoCommand.cs" />
     <Compile Include="FileSystem\ProjectFiles.cs" />
     <Compile Include="UserControls\ViewModels\CharacterAnimationViewModel.cs" />
+    <Compile Include="UserControls\ViewModels\PatternTableLinkViewModel.cs" />
     <Compile Include="UserControls\Views\CharacterAnimationView.xaml.cs">
       <DependentUpon>CharacterAnimationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Views\PatternTableLink.xaml.cs">
-      <DependentUpon>PatternTableLink.xaml</DependentUpon>
+    <Compile Include="UserControls\Views\CharacterFrameView.xaml.cs">
+      <DependentUpon>CharacterFrameView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Views\PatternTableLinkView.xaml.cs">
+      <DependentUpon>PatternTableLinkView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Behaviors\RedirectRoutedEventBehavior.cs" />
     <Compile Include="Utils\PaletteQuantizer.cs" />
@@ -276,7 +282,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\Views\PatternTableLink.xaml">
+    <Page Include="UserControls\Views\CharacterFrameView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Views\PatternTableLinkView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,6 +1,8 @@
 ﻿using ArchitectureLibrary.Signals;
 using NESTool.Signals;
+using NESTool.UserControls.ViewModels;
 using NESTool.UserControls.Views;
+using NESTool.ViewModels;
 using NESTool.VOs;
 using System.Windows.Controls;
 
@@ -27,7 +29,20 @@ namespace NESTool.Views
 
         private void OnAddNewTileSetLink(PatternTableLinkVO vo)
         {
-            wpLinks.Children.Add(new PatternTableLink(vo.Caption, vo.Id));
+            if (DataContext is PatternTableViewModel viewModel)
+            {
+                if (!viewModel.IsActive)
+                {
+                    return;
+                }
+
+                PatternTableLinkView link = new PatternTableLinkView();
+
+                ((PatternTableLinkViewModel)link.DataContext).Caption = vo.Caption;
+                ((PatternTableLinkViewModel)link.DataContext).TileSetId = vo.Id;
+
+                wpLinks.Children.Add(link);
+            }
         }
 
         private void OnMouseWheel(MouseWheelVO vo)

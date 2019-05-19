@@ -36,9 +36,11 @@ namespace NESTool.Models
 
     public struct CharacterAnimation
     {
+        public string ID { get; set; }
         public string Name { get; set; }
         public int Speed { get; set; }
         public Frame[] Frames { get; set; }
+        public Palette[] Palettes { get; set; }
     }
 
     public class CharacterModel : AFileModel
@@ -60,6 +62,5 @@ namespace NESTool.Models
         }
 
         public CharacterAnimation[] Animations { get; set; } = new CharacterAnimation[256];
-        public Palette[] Palettes { get; set; } = new Palette[4];
     }
 }

@@ -10,6 +10,8 @@ namespace NESTool.ViewModels
         private bool _isInEditMode;
         private string _header;
 
+        public string ID { get; set; }
+
         public string Header
         {
             get
@@ -33,6 +35,7 @@ namespace NESTool.ViewModels
                 }
             }
         }
+
         public UserControl Content { get; set; }
         public string OldCaptionValue { get; set; } = "";
 
