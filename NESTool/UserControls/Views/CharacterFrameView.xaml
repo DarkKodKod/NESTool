@@ -5,9 +5,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NESTool.UserControls.Views"
              mc:Ignorable="d" 
+             xmlns:cv="clr-namespace:NESTool.Utils.Converters"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Button Width="150" Command="{Binding OpenCharacterFrameCommand}">
+    <UserControl.Resources>
+        <cv:ParametersConverter x:Key="parametersConverter"/>
+        <ContextMenu x:Key="ButtonMenu">
+            <MenuItem Header="Delete Frame" Command="{Binding DeleteAnimationFrameCommand}">
+                <MenuItem.CommandParameter>
+                    <MultiBinding Converter="{StaticResource parametersConverter}">
+                        <Binding Path="TabID" />
+                        <Binding Path="FrameIndex" />
+                    </MultiBinding>
+                </MenuItem.CommandParameter>
+            </MenuItem>
+        </ContextMenu>
+    </UserControl.Resources>
+    <Button Width="150" Command="{Binding OpenCharacterFrameCommand}" ContextMenu="{StaticResource ButtonMenu}">
         <Border BorderThickness="0.9" BorderBrush="Black">
             <Image Height="130" Width="130" Source="/resources/showgrid.png"
                    RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="UniformToFill"/>

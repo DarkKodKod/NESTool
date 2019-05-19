@@ -9,8 +9,13 @@ namespace NESTool.UserControls.Views
     /// </summary>
     public partial class CharacterFrameView : UserControl, INotifyPropertyChanged
     {
+        public string TabID { get; set; }
+
+        public int FrameIndex { get; set; }
+
         #region Commands
         public OpenCharacterFrameCommand OpenCharacterFrameCommand { get; } = new OpenCharacterFrameCommand();
+        public DeleteAnimationFrameCommand DeleteAnimationFrameCommand { get; } = new DeleteAnimationFrameCommand();
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -20,9 +25,12 @@ namespace NESTool.UserControls.Views
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propname));
         }
 
-        public CharacterFrameView()
+        public CharacterFrameView(string tabID, int frameIndex)
         {
             InitializeComponent();
+
+            TabID = tabID;
+            FrameIndex = frameIndex;
         }
     }
 }

@@ -55,6 +55,7 @@ namespace NESTool.UserControls.ViewModels
             SignalManager.Get<PlayCharacterAnimationSignal>().AddListener(OnPlayCharacterAnimation);
             SignalManager.Get<PreviousFrameCharacterAnimationSignal>().AddListener(OnPreviousFrameCharacterAnimation);
             SignalManager.Get<NewAnimationFrameSignal>().AddListener(OnNewAnimationFrame);
+            SignalManager.Get<DeleteAnimationFrameSignal>().AddListener(OnDeleteAnimationFrame);
             #endregion
         }
 
@@ -64,6 +65,34 @@ namespace NESTool.UserControls.ViewModels
             {
                 return;
             }
+
+            for (int i = 0; i < CharacterModel.Animations.Length; ++i)
+            {
+                CharacterAnimation animation = CharacterModel.Animations[i];
+
+                if (animation.ID == tabID)
+                {
+                    if (animation.Frames == null)
+                    {
+                        animation.Frames = new Frame[256];
+                        animation.Palettes = new Palette[4];
+                    }
+
+                    // todo: complete the new frame and save functionality
+
+                    return;
+                }
+            }
+        }
+
+        private void OnDeleteAnimationFrame(string tabID, int frameIndex)
+        {
+            if (!IsActive || TabID != tabID)
+            {
+                return;
+            }
+
+            // todo: complete the delete frame and save functionality
         }
 
         private void OnPauseCharacterAnimation()
