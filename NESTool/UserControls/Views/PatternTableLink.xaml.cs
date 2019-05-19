@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Controls;
 
-namespace NESTool.UserControls
+namespace NESTool.UserControls.Views
 {
     /// <summary>
     /// Interaction logic for PatternTableLink.xaml

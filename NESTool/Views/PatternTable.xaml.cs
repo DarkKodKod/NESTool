@@ -1,6 +1,6 @@
 ﻿using ArchitectureLibrary.Signals;
 using NESTool.Signals;
-using NESTool.UserControls;
+using NESTool.UserControls.Views;
 using NESTool.VOs;
 using System.Windows.Controls;
 

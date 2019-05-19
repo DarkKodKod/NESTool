@@ -137,6 +137,7 @@
     <Compile Include="Commands\ImageMouseDownCommand.cs" />
     <Compile Include="Commands\ImportImageCommand.cs" />
     <Compile Include="Commands\MoveTileToPatternTableCommand.cs" />
+    <Compile Include="Commands\NextFrameCharacterAnimationCommand.cs" />
     <Compile Include="Commands\OpenBuildProjectCommand.cs" />
     <Compile Include="Commands\OpenImportImageDialogCommand.cs" />
     <Compile Include="Commands\ItemSelectedCommand.cs" />
@@ -144,10 +145,13 @@
     <Compile Include="Commands\NewElementCommand.cs" />
     <Compile Include="Commands\OpenLinkCommand.cs" />
     <Compile Include="Commands\PasteElementCommand.cs" />
+    <Compile Include="Commands\PauseCharacterAnimationCommand.cs" />
+    <Compile Include="Commands\PlayCharacterAnimationCommand.cs" />
     <Compile Include="Commands\PreviewMouseLeftButtonDownCommand.cs" />
     <Compile Include="Commands\PreviewMouseLeftButtonUpCommand.cs" />
     <Compile Include="Commands\PreviewMouseMoveCommand.cs" />
     <Compile Include="Commands\PreviewMouseWheelCommand.cs" />
+    <Compile Include="Commands\PreviousFrameCharacterAnimationCommand.cs" />
     <Compile Include="Commands\QueryContinueDragCommand.cs" />
     <Compile Include="Commands\RedoCommand.cs" />
     <Compile Include="Commands\EnableRenameElementCommand.cs" />
@@ -155,13 +159,15 @@
     <Compile Include="Commands\SelectTileSetCommand.cs" />
     <Compile Include="Commands\FileModelVOSelectionChangedCommand.cs" />
     <Compile Include="Commands\ShowGridCommand.cs" />
+    <Compile Include="Commands\StopCharacterAnimationCommand.cs" />
     <Compile Include="Commands\TreeviewSelectedItemChanged.cs" />
     <Compile Include="Commands\UndoCommand.cs" />
     <Compile Include="FileSystem\ProjectFiles.cs" />
-    <Compile Include="UserControls\CharacterAnimation.xaml.cs">
-      <DependentUpon>CharacterAnimation.xaml</DependentUpon>
+    <Compile Include="UserControls\ViewModels\CharacterAnimationViewModel.cs" />
+    <Compile Include="UserControls\Views\CharacterAnimationView.xaml.cs">
+      <DependentUpon>CharacterAnimationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\PatternTableLink.xaml.cs">
+    <Compile Include="UserControls\Views\PatternTableLink.xaml.cs">
       <DependentUpon>PatternTableLink.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Behaviors\RedirectRoutedEventBehavior.cs" />
@@ -266,11 +272,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\CharacterAnimation.xaml">
+    <Page Include="UserControls\Views\CharacterAnimationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\PatternTableLink.xaml">
+    <Page Include="UserControls\Views\PatternTableLink.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -426,6 +432,14 @@
   <ItemGroup>
     <Resource Include="Resources\tab_plus.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\next_frame.png" />
+    <Resource Include="Resources\pause.png" />
+    <Resource Include="Resources\play.png" />
+    <Resource Include="Resources\previous_frame.png" />
+    <Resource Include="Resources\stop.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

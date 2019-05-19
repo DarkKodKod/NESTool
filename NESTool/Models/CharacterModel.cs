@@ -23,6 +23,7 @@ namespace NESTool.Models
     {
         public CharacterTile[] Tiles { get; set; }
         public Collision Collision { get; set; }
+        public bool FixToGrid { get; set; }
     }
 
     public struct Palette
@@ -36,7 +37,6 @@ namespace NESTool.Models
     public struct CharacterAnimation
     {
         public string Name { get; set; }
-        public bool FixToGrid { get; set; }
         public int Speed { get; set; }
         public Frame[] Frames { get; set; }
     }

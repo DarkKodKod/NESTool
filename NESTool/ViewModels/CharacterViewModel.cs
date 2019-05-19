@@ -1,17 +1,18 @@
 ﻿using ArchitectureLibrary.Model;
 using ArchitectureLibrary.Signals;
+using ArchitectureLibrary.ViewModel;
 using NESTool.Commands;
 using NESTool.Enums;
 using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
+using NESTool.UserControls.Views;
 using NESTool.Utils;
 using NESTool.VOs;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -129,6 +130,27 @@ namespace NESTool.ViewModels
             LoadBankImage();
 
             PopulateTabs();
+
+            foreach (ActionTabItem tab in Tabs)
+            {
+                if (tab.Content.DataContext is AActivate vm)
+                {
+                    vm.OnActivate();
+                }
+            }
+        }
+
+        public override void OnDeactivate()
+        {
+            base.OnDeactivate();
+
+            foreach (ActionTabItem tab in Tabs)
+            {
+                if (tab.Content.DataContext is AActivate vm)
+                {
+                    vm.OnDeactivate();
+                }
+            }
         }
 
         public void PopulateTabs()
@@ -177,7 +199,7 @@ namespace NESTool.ViewModels
 
         private void AddNewAnimation(string animationName)
         {
-            Tabs.Add(new ActionTabItem { Header = animationName, Content = new UserControl() });
+            Tabs.Add(new ActionTabItem { Header = animationName, Content = new CharacterAnimationView() });
         }
 
         private void Save()
@@ -191,7 +213,6 @@ namespace NESTool.ViewModels
                 foreach (ActionTabItem tab in Tabs)
                 {
                     model.Animations[index].Name = tab.Header;
-                    model.Animations[index].FixToGrid = true;
                     model.Animations[index].Speed = 1;
 
                     index++;

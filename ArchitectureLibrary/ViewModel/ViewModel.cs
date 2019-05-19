@@ -2,7 +2,7 @@
 
 namespace ArchitectureLibrary.ViewModel
 {
-    public class ViewModel : INotifyPropertyChanged
+    public class ViewModel : AActivate, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
