@@ -22,8 +22,7 @@ namespace NESTool.FileSystem
                     {
                         Id = index++,
                         Name = handler.Value.Name,
-                        Model = model,
-                        Meta = handler.Value.Meta
+                        Model = model
                     });
                 }
             }
@@ -40,7 +39,7 @@ namespace NESTool.FileSystem
 
             foreach (var handler in Handlers)
             {
-                if (handler.Value.Meta.GUID == guid && 
+                if (handler.Value.FileModel.GUID == guid && 
                     handler.Value.FileModel is T model)
                 {
                     return model;

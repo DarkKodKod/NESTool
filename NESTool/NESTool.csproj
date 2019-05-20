@@ -195,7 +195,6 @@
     <Compile Include="Models\MapModel.cs" />
     <Compile Include="Models\MapperModel.cs" />
     <Compile Include="Models\MappersModel.cs" />
-    <Compile Include="Models\MetaFileModel.cs" />
     <Compile Include="Models\PatternTableModel.cs" />
     <Compile Include="Models\TileSetModel.cs" />
     <Compile Include="Utils\Adorners\TreeViewDragAdorner.cs" />

@@ -70,9 +70,9 @@ namespace NESTool.ViewModels
 
                 if (value > 0)
                 {
-                    if (project.Build.PatternTableSpriteId != PatternTableSprites[value].Meta.GUID)
+                    if (project.Build.PatternTableSpriteId != PatternTableSprites[value].Model.GUID)
                     {
-                        project.Build.PatternTableSpriteId = PatternTableSprites[value].Meta.GUID;
+                        project.Build.PatternTableSpriteId = PatternTableSprites[value].Model.GUID;
                         project.Save();
                     }
                 }
@@ -97,9 +97,9 @@ namespace NESTool.ViewModels
 
                 if (value > 0)
                 {
-                    if (project.Build.PatternTableBackgroundId != PatternTableBackgrounds[value].Meta.GUID)
+                    if (project.Build.PatternTableBackgroundId != PatternTableBackgrounds[value].Model.GUID)
                     {
-                        project.Build.PatternTableBackgroundId = PatternTableBackgrounds[value].Meta.GUID;
+                        project.Build.PatternTableBackgroundId = PatternTableBackgrounds[value].Model.GUID;
                         project.Save();
                     }
                 }
@@ -128,7 +128,7 @@ namespace NESTool.ViewModels
             int index = 0;
             foreach (FileModelVO vo in PatternTableSprites)
             {
-                if (vo.Meta?.GUID == project.Build.PatternTableSpriteId)
+                if (vo.Model?.GUID == project.Build.PatternTableSpriteId)
                 {
                     SelectedPatternTableSprite = index;
                     break;
@@ -140,7 +140,7 @@ namespace NESTool.ViewModels
             index = 0;
             foreach (FileModelVO vo in PatternTableBackgrounds)
             {
-                if (vo.Meta?.GUID == project.Build.PatternTableBackgroundId)
+                if (vo.Model?.GUID == project.Build.PatternTableBackgroundId)
                 {
                     SelectedPatternTableBackground = index;
                     break;
@@ -154,12 +154,12 @@ namespace NESTool.ViewModels
         {
             List<FileModelVO> patternTableSprites = new List<FileModelVO>
             {
-                new FileModelVO() { Id = 0, Name = "None", Model = null, Meta = null }
+                new FileModelVO() { Id = 0, Name = "None", Model = null }
             };
 
             List<FileModelVO> patternTableBackgrounds = new List<FileModelVO>
             {
-                new FileModelVO() { Id = 0, Name = "None", Model = null, Meta = null }
+                new FileModelVO() { Id = 0, Name = "None", Model = null }
             };
 
             IEnumerable<FileModelVO> sprites = ProjectFiles.GetModels<PatternTableModel>().ToArray().Where(p => (p.Model as PatternTableModel).PatternTableType == PatternTableType.Characters);

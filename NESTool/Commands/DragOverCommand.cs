@@ -48,9 +48,9 @@ namespace NESTool.Commands
                 {
                     if (element.IsFolder && element.Items.Count > 0 && !treeViewItem.IsExpanded)
                     {
-                        if (_folderId != element.FileHandler.Meta.GUID)
+                        if (_folderId != element.FileHandler.FileModel.GUID)
                         {
-                            _folderId = element.FileHandler.Meta.GUID;
+                            _folderId = element.FileHandler.FileModel.GUID;
                             _startTime = DateTime.UtcNow;
                         }
                         else

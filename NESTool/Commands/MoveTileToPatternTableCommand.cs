@@ -42,7 +42,7 @@ namespace NESTool.Commands
 
             FileModelVO[] tileSets = ProjectFiles.GetModels<TileSetModel>().ToArray();
 
-            model.PTTiles[index].GUID = tileSets[selectedTileSet].Meta.GUID;
+            model.PTTiles[index].GUID = tileSets[selectedTileSet].Model.GUID;
             model.PTTiles[index].Point = croppedPoint;
             model.PTTiles[index].Group = index;
 

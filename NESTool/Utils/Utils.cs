@@ -23,9 +23,6 @@ namespace NESTool.Utils
         private const string _extensionMapsKey = "extensionMaps";
         private const string _extensionTileSetsKey = "extensionTileSets";
         private const string _extensionPatternTablesKey = "extensionPatternTables";
-        private const string _metaExtensionKey = "extensionMetaFile";
-
-        private static string _metaExtension = "";
 
         public static bool ValidFileName(string fileName)
         {
@@ -35,16 +32,6 @@ namespace NESTool.Utils
             }
 
             return _regex != null ? _regex.IsMatch(fileName) : false;
-        }
-
-        public static string GetMetaExtension()
-        {
-            if (string.IsNullOrEmpty(_metaExtension))
-            {
-                _metaExtension = (string)Application.Current.FindResource(_metaExtensionKey);
-            }
-
-            return _metaExtension;
         }
 
         public static AFileModel FileModelFactory(ProjectItemType type)

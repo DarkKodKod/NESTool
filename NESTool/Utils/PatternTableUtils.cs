@@ -52,7 +52,7 @@ namespace NESTool.Utils
                         // Add the link object
                         foreach (FileModelVO tileset in tileSets)
                         {
-                            if (tileset.Meta.GUID == tile.GUID && sendSignals)
+                            if (tileset.Model.GUID == tile.GUID && sendSignals)
                             {
                                 SignalManager.Get<AddNewTileSetLinkSignal>().Dispatch(new PatternTableLinkVO() { Caption = tileset.Name, Id = tile.GUID });
                                 break;

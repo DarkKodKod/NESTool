@@ -20,45 +20,34 @@ namespace NESTool.FileSystem
 
         private static void OnRenameFile(ProjectItem item)
         {
-            if (item.FileHandler == null || item.FileHandler.Meta == null)
+            if (item.FileHandler == null)
             {
                 return;
             }
 
             FileHandler fileHandler = item.FileHandler;
 
-            if (ProjectFiles.Handlers.TryGetValue(fileHandler.Meta.GUID, out FileHandler outFile))
+            if (fileHandler.FileModel != null)
             {
-                string metaPath = Path.Combine(fileHandler.Path, fileHandler.Name + fileHandler.Meta.FileExtension);
-                string metaNewPath = Path.Combine(fileHandler.Path, item.DisplayName + fileHandler.Meta.FileExtension);
+                string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name + fileHandler.FileModel.FileExtension);
+                string itemNewPath = Path.Combine(fileHandler.Path, item.DisplayName + fileHandler.FileModel.FileExtension);
 
-                if (File.Exists(metaPath))
+                if (File.Exists(itemPath))
                 {
-                    File.Move(metaPath, metaNewPath);
+                    File.Move(itemPath, itemNewPath);
                 }
+            }
+            else
+            {
+                // Is a folder
+                string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name);
+                string itemNewPath = Path.Combine(fileHandler.Path, item.DisplayName);
 
-                if (fileHandler.FileModel != null)
+                if (Directory.Exists(itemPath))
                 {
-                    string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name + fileHandler.FileModel.FileExtension);
-                    string itemNewPath = Path.Combine(fileHandler.Path, item.DisplayName + fileHandler.FileModel.FileExtension);
+                    Directory.Move(itemPath, itemNewPath);
 
-                    if (File.Exists(itemPath))
-                    {
-                        File.Move(itemPath, itemNewPath);
-                    }
-                }
-                else
-                {
-                    // Is a folder
-                    string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name);
-                    string itemNewPath = Path.Combine(fileHandler.Path, item.DisplayName);
-
-                    if (Directory.Exists(itemPath))
-                    {
-                        Directory.Move(itemPath, itemNewPath);
-
-                        UpdatePath(item, itemNewPath);
-                    }
+                    UpdatePath(item, itemNewPath);
                 }
             }
 
@@ -73,12 +62,34 @@ namespace NESTool.FileSystem
 
             if (!item.IsFolder)
             {
-                RegisterItemFile(ref fileHandler, item.Type);
+                AFileModel model = Util.FileModelFactory(item.Type);
+
+                string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name + model.FileExtension);
+
+                if (File.Exists(itemPath))
+                {
+                    switch (item.Type)
+                    {
+                        case ProjectItemType.Bank:
+                            fileHandler.FileModel = Toml.ReadFile<BankModel>(itemPath);
+                            break;
+                        case ProjectItemType.Character:
+                            fileHandler.FileModel = Toml.ReadFile<CharacterModel>(itemPath);
+                            break;
+                        case ProjectItemType.Map:
+                            fileHandler.FileModel = Toml.ReadFile<MapModel>(itemPath);
+                            break;
+                        case ProjectItemType.TileSet:
+                            fileHandler.FileModel = Toml.ReadFile<TileSetModel>(itemPath);
+                            break;
+                        case ProjectItemType.PatternTable:
+                            fileHandler.FileModel = Toml.ReadFile<PatternTableModel>(itemPath);
+                            break;
+                    }
+
+                    ProjectFiles.Handlers.Add(fileHandler.FileModel.GUID, fileHandler);
+                }
             }
-
-            RegisterMetaFile(ref fileHandler);
-
-            ProjectFiles.Handlers.Add(fileHandler.Meta.GUID, fileHandler);
         }
 
         public static string GetValidFolderName(string path, string name)
@@ -117,49 +128,6 @@ namespace NESTool.FileSystem
             }
 
             return outName;
-        }
-
-        private static void RegisterItemFile(ref FileHandler fileHandler, ProjectItemType type)
-        {
-            AFileModel model = Util.FileModelFactory(type);
-
-            string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name + model.FileExtension);
-
-            if (File.Exists(itemPath))
-            {
-                switch (type)
-                {
-                    case ProjectItemType.Bank:
-                        fileHandler.FileModel = Toml.ReadFile<BankModel>(itemPath);
-                        break;
-                    case ProjectItemType.Character:
-                        fileHandler.FileModel = Toml.ReadFile<CharacterModel>(itemPath);
-                        break;
-                    case ProjectItemType.Map:
-                        fileHandler.FileModel = Toml.ReadFile<MapModel>(itemPath);
-                        break;
-                    case ProjectItemType.TileSet:
-                        fileHandler.FileModel = Toml.ReadFile<TileSetModel>(itemPath);
-                        break;
-                    case ProjectItemType.PatternTable:
-                        fileHandler.FileModel = Toml.ReadFile<PatternTableModel>(itemPath);
-                        break;
-                }
-            }
-        }
-
-        private static void RegisterMetaFile(ref FileHandler fileHandler)
-        {
-            string metaPath = Path.Combine(fileHandler.Path, fileHandler.Name + Util.GetMetaExtension());
-
-            if (File.Exists(metaPath))
-            {
-                fileHandler.Meta = Toml.ReadFile<MetaFileModel>(metaPath);
-            }
-            else
-            {
-                fileHandler.Meta = CreateMetaFile(fileHandler.Name, fileHandler.Path);
-            }
         }
 
         public static void CreateElement(ProjectItem item, string path, string name)
@@ -206,6 +174,8 @@ namespace NESTool.FileSystem
                 Toml.WriteFile(model, filePath);
 
                 item.FileHandler.FileModel = model;
+
+                ProjectFiles.Handlers.Add(item.FileHandler.FileModel.GUID, item.FileHandler);
             }
             else
             {
@@ -213,28 +183,11 @@ namespace NESTool.FileSystem
 
                 Directory.CreateDirectory(folderPath);
             }
-
-            MetaFileModel metaModel = CreateMetaFile(name, path);
-
-            item.FileHandler.Meta = metaModel;
-
-            ProjectFiles.Handlers.Add(item.FileHandler.Meta.GUID, item.FileHandler);
-        }
-
-        private static MetaFileModel CreateMetaFile(string name, string path)
-        {
-            MetaFileModel model = new MetaFileModel();
-
-            string filePath = Path.Combine(path, name + model.FileExtension);
-
-            Toml.WriteFile(model, filePath);
-
-            return model;
         }
 
         private static void OnMoveElement(ProjectItem targetElement, ProjectItem draggedElement)
         {
-            string destFolder = string.Empty;
+            string destFolder;
 
             if (targetElement.IsFolder)
             {
@@ -244,13 +197,6 @@ namespace NESTool.FileSystem
             {
                 destFolder = Path.Combine(targetElement.FileHandler.Path);
             }
-
-            string metaName = draggedElement.FileHandler.Name + draggedElement.FileHandler.Meta.FileExtension;
-
-            string originalMeta = Path.Combine(draggedElement.FileHandler.Path, metaName);
-            string destinationMeta = Path.Combine(destFolder, metaName);
-
-            File.Move(originalMeta, destinationMeta);
 
             if (draggedElement.IsFolder)
             {
@@ -307,41 +253,26 @@ namespace NESTool.FileSystem
 
         private static void DeleteElement(FileHandler fileHandler)
         {
-            if (fileHandler.Meta == null)
+            if (fileHandler.FileModel != null)
             {
-                return;
+                string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name + fileHandler.FileModel.FileExtension);
+
+                if (File.Exists(itemPath))
+                {
+                    File.Delete(itemPath);
+                }
+
+                ProjectFiles.Handlers.Remove(fileHandler.FileModel.GUID);
             }
-
-            if (ProjectFiles.Handlers.TryGetValue(fileHandler.Meta.GUID, out FileHandler outFile))
+            else
             {
-                string metaPath = Path.Combine(fileHandler.Path, fileHandler.Name + fileHandler.Meta.FileExtension);
+                // Is a folder
+                string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name);
 
-                if (File.Exists(metaPath))
+                if (Directory.Exists(itemPath))
                 {
-                    File.Delete(metaPath);
+                    Directory.Delete(itemPath, true);
                 }
-
-                if (fileHandler.FileModel != null)
-                {
-                    string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name + fileHandler.FileModel.FileExtension);
-
-                    if (File.Exists(itemPath))
-                    {
-                        File.Delete(itemPath);
-                    }
-                }
-                else
-                {
-                    // Is a folder
-                    string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name);
-
-                    if (Directory.Exists(itemPath))
-                    {
-                        Directory.Delete(itemPath, true);
-                    }
-                }
-
-                ProjectFiles.Handlers.Remove(fileHandler.Meta.GUID);
             }
         }
 

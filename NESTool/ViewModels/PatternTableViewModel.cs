@@ -333,7 +333,7 @@ namespace NESTool.ViewModels
 
             foreach (FileModelVO tileset in TileSets)
             {
-                if (tileset.Meta.GUID == id)
+                if (tileset.Model.GUID == id)
                 {
                     SelectedTileSet = index;
                     break;
