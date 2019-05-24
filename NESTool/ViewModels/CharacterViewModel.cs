@@ -54,6 +54,7 @@ namespace NESTool.ViewModels
             SignalManager.Get<AnimationTabDeletedSignal>().AddListener(OnAnimationTabDeleted);
             SignalManager.Get<AnimationTabNewSignal>().AddListener(OnAnimationTabNew);
             SignalManager.Get<RenamedAnimationTabSignal>().AddListener(OnRenamedAnimationTab);
+            SignalManager.Get<OpenCharacterFrameSignal>().AddListener(OnOpenCharacterFrame);
             #endregion
         }
 
@@ -105,6 +106,16 @@ namespace NESTool.ViewModels
             }
         }
 
+        private void OnOpenCharacterFrame()
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+
+            //
+        }
+
         private void OnRenamedAnimationTab(string newName)
         {
             if (!IsActive)
@@ -133,6 +144,7 @@ namespace NESTool.ViewModels
         {
             CharacterAnimationView animationView = new CharacterAnimationView();
             ((CharacterAnimationViewModel)animationView.DataContext).CharacterModel = GetModel();
+            ((CharacterAnimationViewModel)animationView.DataContext).FileHandler = ProjectItem.FileHandler;
             ((CharacterAnimationViewModel)animationView.DataContext).TabID = id;
 
             Tabs.Add(new ActionTabItem { ID = id, Header = animationName, Content = animationView });

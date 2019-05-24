@@ -71,7 +71,7 @@ namespace NESTool.Signals
     public class PauseCharacterAnimationSignal : Signal { }
     public class NextFrameCharacterAnimationSignal : Signal { }
     public class StopCharacterAnimationSignal : Signal { }
-    public class PlayCharacterAnimationSignal : Signal { }
+    public class PlayCharacterAnimationSignal : Signal<string> { }
     public class PreviousFrameCharacterAnimationSignal : Signal { }
     public class NewAnimationFrameSignal : Signal<string> { }
     public class OpenCharacterFrameSignal : Signal { }

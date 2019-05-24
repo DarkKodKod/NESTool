@@ -10,6 +10,8 @@ namespace NESTool.UserControls.ViewModels
     {
         private int _speed = 1;
         private string _tabID;
+        private CharacterModel _characterModel;
+        private FileHandler _fileHandler;
 
         #region Commands
         public PauseCharacterAnimationCommand PauseCharacterAnimationCommand { get; } = new PauseCharacterAnimationCommand();
@@ -21,7 +23,27 @@ namespace NESTool.UserControls.ViewModels
         #endregion
 
         #region get/set
-        public CharacterModel CharacterModel { get; set; }
+        public FileHandler FileHandler
+        {
+            get { return _fileHandler; }
+            set
+            {
+                _fileHandler = value;
+
+                OnPropertyChanged("FileHandler");
+            }
+        }
+
+        public CharacterModel CharacterModel
+        {
+            get { return _characterModel; }
+            set
+            {
+                _characterModel = value;
+
+                OnPropertyChanged("CharacterModel");
+            }
+        }
 
         public string TabID
         {
@@ -54,45 +76,30 @@ namespace NESTool.UserControls.ViewModels
             SignalManager.Get<StopCharacterAnimationSignal>().AddListener(OnStopCharacterAnimation);
             SignalManager.Get<PlayCharacterAnimationSignal>().AddListener(OnPlayCharacterAnimation);
             SignalManager.Get<PreviousFrameCharacterAnimationSignal>().AddListener(OnPreviousFrameCharacterAnimation);
-            SignalManager.Get<NewAnimationFrameSignal>().AddListener(OnNewAnimationFrame);
-            SignalManager.Get<DeleteAnimationFrameSignal>().AddListener(OnDeleteAnimationFrame);
             #endregion
         }
 
-        private void OnNewAnimationFrame(string tabID)
+        public override void OnActivate()
         {
-            if (!IsActive || TabID != tabID)
-            {
-                return;
-            }
+            base.OnActivate();
 
             for (int i = 0; i < CharacterModel.Animations.Length; ++i)
             {
                 CharacterAnimation animation = CharacterModel.Animations[i];
 
-                if (animation.ID == tabID)
+                if (animation.ID == TabID && animation.Frames != null)
                 {
-                    if (animation.Frames == null)
+                    for (int j = 0; j < animation.Frames.Length; ++j)
                     {
-                        animation.Frames = new Frame[256];
-                        animation.Palettes = new Palette[4];
+                        Frame frame = animation.Frames[j];
+
+                        if (frame.Tiles != null)
+                        {
+                            SignalManager.Get<NewAnimationFrameSignal>().Dispatch(TabID);
+                        }
                     }
-
-                    // todo: complete the new frame and save functionality
-
-                    return;
                 }
             }
-        }
-
-        private void OnDeleteAnimationFrame(string tabID, int frameIndex)
-        {
-            if (!IsActive || TabID != tabID)
-            {
-                return;
-            }
-
-            // todo: complete the delete frame and save functionality
         }
 
         private void OnPauseCharacterAnimation()
@@ -119,12 +126,14 @@ namespace NESTool.UserControls.ViewModels
             }
         }
 
-        private void OnPlayCharacterAnimation()
+        private void OnPlayCharacterAnimation(string tabId)
         {
-            if (!IsActive)
+            if (!IsActive || TabID != tabId)
             {
                 return;
             }
+
+            // play current animation
         }
 
         private void OnPreviousFrameCharacterAnimation()

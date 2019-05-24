@@ -1,4 +1,5 @@
 ﻿using NESTool.Commands;
+using NESTool.Models;
 using System.ComponentModel;
 using System.Windows.Controls;
 
@@ -10,7 +11,7 @@ namespace NESTool.UserControls.Views
     public partial class CharacterFrameView : UserControl, INotifyPropertyChanged
     {
         public string TabID { get; set; }
-
+        public FileHandler FileHandler { get; set; }
         public int FrameIndex { get; set; }
 
         #region Commands
@@ -25,12 +26,13 @@ namespace NESTool.UserControls.Views
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propname));
         }
 
-        public CharacterFrameView(string tabID, int frameIndex)
+        public CharacterFrameView(string tabID, int frameIndex, FileHandler fileHandler)
         {
             InitializeComponent();
 
             TabID = tabID;
             FrameIndex = frameIndex;
+            FileHandler = fileHandler;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
+using NESTool.Models;
 using NESTool.Signals;
 
 namespace NESTool.Commands
@@ -8,9 +9,45 @@ namespace NESTool.Commands
     {
         public override void Execute(object parameter)
         {
-            string tabID = parameter as string;
+            object[] values = (object[])parameter;
 
-            SignalManager.Get<NewAnimationFrameSignal>().Dispatch(tabID);
+            FileHandler fileHandler = (FileHandler)values[0];
+            string tabID = (string)values[1];
+
+            CharacterModel model = fileHandler.FileModel as CharacterModel;
+
+            for (int i = 0; i < model.Animations.Length; ++i)
+            {
+                ref CharacterAnimation animation = ref model.Animations[i];
+
+                if (animation.ID == tabID)
+                {
+                    if (animation.Frames == null)
+                    {
+                        animation.Frames = new Frame[64];
+                        animation.Palettes = new Palette[4];
+                    }
+
+                    for (int j = 0; j < animation.Frames.Length; ++j)
+                    {
+                        Frame frame = animation.Frames[j];
+
+                        if (frame.Tiles == null)
+                        {
+                            animation.Frames[j].Tiles = new CharacterTile[64];
+                            animation.Frames[j].FixToGrid = true;
+
+                            fileHandler.Save();
+
+                            SignalManager.Get<NewAnimationFrameSignal>().Dispatch(tabID);
+
+                            return;
+                        }
+                    }
+
+                    break;
+                }
+            }
         }
     }
 }

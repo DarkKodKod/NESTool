@@ -16,12 +16,15 @@
                     <MultiBinding Converter="{StaticResource parametersConverter}">
                         <Binding Path="TabID" />
                         <Binding Path="FrameIndex" />
+                        <Binding Path="FileHandler" />
                     </MultiBinding>
                 </MenuItem.CommandParameter>
             </MenuItem>
         </ContextMenu>
     </UserControl.Resources>
-    <Button Width="150" Command="{Binding OpenCharacterFrameCommand}" ContextMenu="{StaticResource ButtonMenu}">
+    <Button Width="150" Command="{Binding OpenCharacterFrameCommand}" 
+            ContextMenu="{StaticResource ButtonMenu}"
+            ToolTip="Edit Frame">
         <Border BorderThickness="0.9" BorderBrush="Black">
             <Image Height="130" Width="130" Source="/resources/showgrid.png"
                    RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="UniformToFill"/>

@@ -4,13 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:fx="clr-namespace:ArchitectureLibrary.FXs;assembly=ArchitectureLibrary"
-             xmlns:local="clr-namespace:NESTool.UserControls"
+             xmlns:local="clr-namespace:NESTool.UserControls.Views"
              mc:Ignorable="d" 
              xmlns:vm="clr-namespace:NESTool.UserControls.ViewModels"
+             xmlns:cv="clr-namespace:NESTool.Utils.Converters"
              d:DesignHeight="720" d:DesignWidth="1050">
     <UserControl.DataContext>
         <vm:CharacterAnimationViewModel />
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <cv:ParametersConverter x:Key="parametersConverter"/>
+    </UserControl.Resources>
     <Grid Background="LightGray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -65,6 +69,12 @@
                 <Button Height="35" Width="35" 
                         ToolTip="Play"
                         Command="{Binding PlayCharacterAnimationCommand}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource parametersConverter}">
+                            <Binding Path="CharacterModel" />
+                            <Binding Path="TabID" />
+                        </MultiBinding>
+                    </Button.CommandParameter>
                     <Image Width="16" Height="16" 
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
@@ -169,8 +179,14 @@
                             <Setter Property="Margin" Value="5,0,0,0"/>
                         </Style>
                     </StackPanel.Resources>
-                    <Button Width="150" Command="{Binding NewAnimationFrameCommand}" CommandParameter="{Binding TabID}"
+                    <Button Width="150" Command="{Binding NewAnimationFrameCommand}"
                             ToolTip="New Frame">
+                        <Button.CommandParameter>
+                            <MultiBinding Converter="{StaticResource parametersConverter}">
+                                <Binding Path="FileHandler" />
+                                <Binding Path="TabID" />
+                            </MultiBinding>
+                        </Button.CommandParameter>
                         <Image Height="130" Width="130" Source="/resources/tab_plus.png"
                                RenderOptions.BitmapScalingMode="NearestNeighbor" 
                                Stretch="UniformToFill"/>
