@@ -10,9 +10,32 @@ namespace NESTool.UserControls.Views
     /// </summary>
     public partial class CharacterFrameView : UserControl, INotifyPropertyChanged
     {
-        public string TabID { get; set; }
+        private string _tabId;
+        private int _frameIndex;
+
+        public string TabID
+        {
+            get { return _tabId; }
+            set
+            {
+                _tabId = value;
+
+                OnPropertyChanged("TabID");
+            }
+        }
+
         public FileHandler FileHandler { get; set; }
-        public int FrameIndex { get; set; }
+
+        public int FrameIndex
+        {
+            get { return _frameIndex; }
+            set
+            {
+                _frameIndex = value;
+
+                OnPropertyChanged("FrameIndex");
+            }
+        }
 
         #region Commands
         public OpenCharacterFrameCommand OpenCharacterFrameCommand { get; } = new OpenCharacterFrameCommand();

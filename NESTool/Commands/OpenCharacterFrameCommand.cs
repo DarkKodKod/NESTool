@@ -8,7 +8,11 @@ namespace NESTool.Commands
     {
         public override void Execute(object parameter)
         {
-            SignalManager.Get<OpenCharacterFrameSignal>().Dispatch();
+            object[] values = (object[])parameter;
+            string tabID = (string)values[0];
+            int frameIndex = (int)values[1];
+
+            SignalManager.Get<OpenCharacterFrameSignal>().Dispatch(tabID, frameIndex);
         }
     }
 }

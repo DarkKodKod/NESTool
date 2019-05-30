@@ -102,25 +102,25 @@ namespace NESTool.UserControls.ViewModels
             }
         }
 
-        private void OnPauseCharacterAnimation()
+        private void OnPauseCharacterAnimation(string tabId)
         {
-            if (!IsActive)
+            if (!IsActive || TabID != tabId)
             {
                 return;
             }
         }
 
-        private void OnNextFrameCharacterAnimation()
+        private void OnNextFrameCharacterAnimation(string tabId)
         {
-            if (!IsActive)
+            if (!IsActive || TabID != tabId)
             {
                 return;
             }
         }
 
-        private void OnStopCharacterAnimation()
+        private void OnStopCharacterAnimation(string tabId)
         {
-            if (!IsActive)
+            if (!IsActive || TabID != tabId)
             {
                 return;
             }
@@ -136,9 +136,9 @@ namespace NESTool.UserControls.ViewModels
             // play current animation
         }
 
-        private void OnPreviousFrameCharacterAnimation()
+        private void OnPreviousFrameCharacterAnimation(string tabId)
         {
-            if (!IsActive)
+            if (!IsActive || TabID != tabId)
             {
                 return;
             }

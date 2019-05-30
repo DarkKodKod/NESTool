@@ -68,13 +68,13 @@ namespace NESTool.Signals
     public class AnimationTabDeletedSignal : Signal<ActionTabItem> { }
     public class AnimationTabNewSignal : Signal { }
     public class RenamedAnimationTabSignal : Signal<string> { }
-    public class PauseCharacterAnimationSignal : Signal { }
-    public class NextFrameCharacterAnimationSignal : Signal { }
-    public class StopCharacterAnimationSignal : Signal { }
+    public class PauseCharacterAnimationSignal : Signal<string> { }
+    public class NextFrameCharacterAnimationSignal : Signal<string> { }
+    public class StopCharacterAnimationSignal : Signal<string> { }
     public class PlayCharacterAnimationSignal : Signal<string> { }
-    public class PreviousFrameCharacterAnimationSignal : Signal { }
+    public class PreviousFrameCharacterAnimationSignal : Signal<string> { }
     public class NewAnimationFrameSignal : Signal<string> { }
-    public class OpenCharacterFrameSignal : Signal { }
+    public class OpenCharacterFrameSignal : Signal<string, int> { }
     public class DeleteAnimationFrameSignal : Signal<string, int> { }
 
     // Map

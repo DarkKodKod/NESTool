@@ -171,6 +171,9 @@
     <Compile Include="UserControls\Views\CharacterAnimationView.xaml.cs">
       <DependentUpon>CharacterAnimationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Views\CharacterFrameEditorView.xaml.cs">
+      <DependentUpon>CharacterFrameEditorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Views\CharacterFrameView.xaml.cs">
       <DependentUpon>CharacterFrameView.xaml</DependentUpon>
     </Compile>
@@ -279,6 +282,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Views\CharacterAnimationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Views\CharacterFrameEditorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

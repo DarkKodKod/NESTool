@@ -25,9 +25,16 @@
     <Button Width="150" Command="{Binding OpenCharacterFrameCommand}" 
             ContextMenu="{StaticResource ButtonMenu}"
             ToolTip="Edit Frame">
+        <Button.CommandParameter>
+            <MultiBinding Converter="{StaticResource parametersConverter}">
+                <Binding Path="TabID" />
+                <Binding Path="FrameIndex" />
+            </MultiBinding>
+        </Button.CommandParameter>
         <Border BorderThickness="0.9" BorderBrush="Black">
-            <Image Height="130" Width="130" Source="/resources/showgrid.png"
-                   RenderOptions.BitmapScalingMode="NearestNeighbor" Stretch="UniformToFill"/>
+            <Image Height="130" Width="130"
+                   RenderOptions.BitmapScalingMode="NearestNeighbor"
+                   Stretch="UniformToFill"/>
         </Border>
     </Button>
 </UserControl>

@@ -18,7 +18,7 @@
     <Grid Background="LightGray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="385"/>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
@@ -35,7 +35,18 @@
                 <TextBlock>Speed:</TextBlock>
                 <TextBox Height="18" Width="30" IsReadOnly="True" Foreground="Gray" Text="{Binding Speed}"/>
             </StackPanel>
-            <Canvas Grid.Row="2" Background="black">
+            <Canvas Grid.Row="2" Background="DarkGray" 
+                    Width="64" Height="64"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top">
+                <Canvas.RenderTransform>
+                    <ScaleTransform ScaleX="6" ScaleY="6"/>
+                </Canvas.RenderTransform>
+                <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
+                       Width="64"
+	                   Height="64"
+                       Stretch="UniformToFill">
+                </Image>
             </Canvas>
             <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
                 <StackPanel.Resources>
@@ -46,6 +57,12 @@
                 <Button Height="35" Width="35" 
                         ToolTip="Previous Frame"
                         Command="{Binding PreviousFrameCharacterAnimationCommand}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource parametersConverter}">
+                            <Binding Path="CharacterModel" />
+                            <Binding Path="TabID" />
+                        </MultiBinding>
+                    </Button.CommandParameter>
                     <Image Width="16" Height="16" 
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
@@ -98,6 +115,12 @@
                 <Button Height="35" Width="35" 
                         ToolTip="Pause" 
                         Command="{Binding PauseCharacterAnimationCommand}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource parametersConverter}">
+                            <Binding Path="CharacterModel" />
+                            <Binding Path="TabID" />
+                        </MultiBinding>
+                    </Button.CommandParameter>
                     <Image Width="16" Height="16" 
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
@@ -121,6 +144,12 @@
                 <Button Height="35" Width="35" 
                         ToolTip="Stop"
                         Command="{Binding StopCharacterAnimationCommand}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource parametersConverter}">
+                            <Binding Path="CharacterModel" />
+                            <Binding Path="TabID" />
+                        </MultiBinding>
+                    </Button.CommandParameter>
                     <Image Width="16" Height="16" 
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"
@@ -144,6 +173,12 @@
                 <Button Height="35" Width="35" 
                         ToolTip="Next Frame"
                         Command="{Binding NextFrameCharacterAnimationCommand}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource parametersConverter}">
+                            <Binding Path="CharacterModel" />
+                            <Binding Path="TabID" />
+                        </MultiBinding>
+                    </Button.CommandParameter>
                     <Image Width="16" Height="16" 
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"

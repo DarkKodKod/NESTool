@@ -106,16 +106,6 @@ namespace NESTool.ViewModels
             }
         }
 
-        private void OnOpenCharacterFrame()
-        {
-            if (!IsActive)
-            {
-                return;
-            }
-
-            //
-        }
-
         private void OnRenamedAnimationTab(string newName)
         {
             if (!IsActive)
@@ -150,6 +140,24 @@ namespace NESTool.ViewModels
             Tabs.Add(new ActionTabItem { ID = id, Header = animationName, Content = animationView });
         }
 
+        private void OnOpenCharacterFrame(string tabId, int frameIndex)
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+
+            foreach (ActionTabItem tab in Tabs)
+            {
+                if (tab.ID == tabId)
+                {
+                    //tab.Content = 
+
+                    return;
+                }
+            }
+        }
+
         private void Save()
         {
             CharacterModel model = GetModel();
@@ -160,7 +168,7 @@ namespace NESTool.ViewModels
 
                 foreach (ActionTabItem tab in Tabs)
                 {
-                    CharacterAnimationView view =  tab.Content as CharacterAnimationView;
+                    CharacterAnimationView view = tab.Content as CharacterAnimationView;
                     CharacterAnimationViewModel viewModel = view.DataContext as CharacterAnimationViewModel;
 
                     model.Animations[index].ID = tab.ID;
