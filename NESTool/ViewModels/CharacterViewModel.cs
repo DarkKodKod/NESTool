@@ -54,7 +54,7 @@ namespace NESTool.ViewModels
             SignalManager.Get<AnimationTabDeletedSignal>().AddListener(OnAnimationTabDeleted);
             SignalManager.Get<AnimationTabNewSignal>().AddListener(OnAnimationTabNew);
             SignalManager.Get<RenamedAnimationTabSignal>().AddListener(OnRenamedAnimationTab);
-            SignalManager.Get<OpenCharacterFrameSignal>().AddListener(OnOpenCharacterFrame);
+            SignalManager.Get<SwitchCharacterFrameViewSignal>().AddListener(OnSwitchCharacterFrameView);
             #endregion
         }
 
@@ -137,10 +137,19 @@ namespace NESTool.ViewModels
             ((CharacterAnimationViewModel)animationView.DataContext).FileHandler = ProjectItem.FileHandler;
             ((CharacterAnimationViewModel)animationView.DataContext).TabID = id;
 
-            Tabs.Add(new ActionTabItem { ID = id, Header = animationName, Content = animationView });
+            CharacterFrameEditorView frameView = new CharacterFrameEditorView();
+
+            Tabs.Add(new ActionTabItem
+            {
+                ID = id,
+                Header = animationName,
+                Content = animationView,
+                FramesView = animationView,
+                PixelsView = frameView
+            });
         }
 
-        private void OnOpenCharacterFrame(string tabId, int frameIndex)
+        private void OnSwitchCharacterFrameView(string tabId, int frameIndex)
         {
             if (!IsActive)
             {
@@ -151,7 +160,7 @@ namespace NESTool.ViewModels
             {
                 if (tab.ID == tabId)
                 {
-                    //tab.Content = 
+                    tab.SwapContent(tabId, frameIndex);
 
                     return;
                 }

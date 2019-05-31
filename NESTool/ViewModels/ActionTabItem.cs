@@ -1,6 +1,8 @@
 ﻿using ArchitectureLibrary.Signals;
 using ArchitectureLibrary.ViewModel;
 using NESTool.Signals;
+using NESTool.UserControls.ViewModels;
+using NESTool.UserControls.Views;
 using System.Windows.Controls;
 
 namespace NESTool.ViewModels
@@ -9,8 +11,12 @@ namespace NESTool.ViewModels
     {
         private bool _isInEditMode;
         private string _header;
+        private UserControl _content;
+        private CharacterFrameEditorViewModel _currentFrameViewModel;
 
         public string ID { get; set; }
+        public UserControl FramesView { get; set; }
+        public UserControl PixelsView { get; set; }
 
         public string Header
         {
@@ -36,8 +42,47 @@ namespace NESTool.ViewModels
             }
         }
 
-        public UserControl Content { get; set; }
+        public UserControl Content
+        {
+            get
+            {
+                return _content;
+            }
+            set
+            {
+                _content = value;
+
+                OnPropertyChanged("Content");
+            }
+        }
+
         public string OldCaptionValue { get; set; } = "";
+
+        public void SwapContent(string tabId, int frameIndex)
+        {
+            if (Content != FramesView)
+            {
+                if (_currentFrameViewModel != null)
+                {
+                    _currentFrameViewModel.OnDeactivate();
+                }
+
+                Content = FramesView;
+            }
+            else
+            {
+                Content = PixelsView;
+
+                CharacterFrameEditorView characterView = _content as CharacterFrameEditorView;
+
+                _currentFrameViewModel = characterView.DataContext as CharacterFrameEditorViewModel;
+
+                _currentFrameViewModel.OnActivate();
+
+                _currentFrameViewModel.TabID = tabId;
+                _currentFrameViewModel.FrameIndex = frameIndex;
+            }
+        }
 
         public bool IsInEditMode
         {

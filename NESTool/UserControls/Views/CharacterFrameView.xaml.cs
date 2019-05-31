@@ -38,7 +38,7 @@ namespace NESTool.UserControls.Views
         }
 
         #region Commands
-        public OpenCharacterFrameCommand OpenCharacterFrameCommand { get; } = new OpenCharacterFrameCommand();
+        public SwitchCharacterFrameViewCommand SwitchCharacterFrameViewCommand { get; } = new SwitchCharacterFrameViewCommand();
         public DeleteAnimationFrameCommand DeleteAnimationFrameCommand { get; } = new DeleteAnimationFrameCommand();
         #endregion
 

@@ -4,7 +4,7 @@ using NESTool.Signals;
 
 namespace NESTool.Commands
 {
-    public class OpenCharacterFrameCommand : Command
+    public class SwitchCharacterFrameViewCommand : Command
     {
         public override void Execute(object parameter)
         {
@@ -12,7 +12,7 @@ namespace NESTool.Commands
             string tabID = (string)values[0];
             int frameIndex = (int)values[1];
 
-            SignalManager.Get<OpenCharacterFrameSignal>().Dispatch(tabID, frameIndex);
+            SignalManager.Get<SwitchCharacterFrameViewSignal>().Dispatch(tabID, frameIndex);
         }
     }
 }

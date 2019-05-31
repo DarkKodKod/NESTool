@@ -22,7 +22,7 @@
             </MenuItem>
         </ContextMenu>
     </UserControl.Resources>
-    <Button Width="150" Command="{Binding OpenCharacterFrameCommand}" 
+    <Button Width="150" Command="{Binding SwitchCharacterFrameViewCommand}" 
             ContextMenu="{StaticResource ButtonMenu}"
             ToolTip="Edit Frame">
         <Button.CommandParameter>
