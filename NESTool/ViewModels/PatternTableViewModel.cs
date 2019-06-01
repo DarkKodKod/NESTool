@@ -432,6 +432,11 @@ namespace NESTool.ViewModels
 
         private void OnOutputSelectedQuadrant(Image sender, WriteableBitmap bitmap, Point point)
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             if (sender.Name == "imgPatternTable")
             {
                 SelectionRectangleVisibility = Visibility.Visible;

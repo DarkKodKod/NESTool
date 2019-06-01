@@ -251,6 +251,11 @@ namespace NESTool.ViewModels
 
         private void OnOutputSelectedQuadrant(Image sender, WriteableBitmap bitmap, Point point)
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             CroppedPoint = point;
             CroppedImage = bitmap;
         }
