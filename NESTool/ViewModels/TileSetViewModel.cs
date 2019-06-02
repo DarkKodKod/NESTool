@@ -228,7 +228,7 @@ namespace NESTool.ViewModels
 
                 command.Execute(parameters);
             }
-        }   
+        }
 
         private void OnColorPalleteSelect(Color color)
         {

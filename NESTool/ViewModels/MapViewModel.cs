@@ -1,6 +1,4 @@
-﻿using ArchitectureLibrary.ViewModel;
-
-namespace NESTool.ViewModels
+﻿namespace NESTool.ViewModels
 {
     public class MapViewModel : ItemViewModel
     {

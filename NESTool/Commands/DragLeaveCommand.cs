@@ -12,7 +12,7 @@ namespace NESTool.Commands
             DragEventArgs dragEvent = parameter as DragEventArgs;
 
             SignalManager.Get<DetachAdornersSignal>().Dispatch();
-            
+
             dragEvent.Handled = true;
         }
     }

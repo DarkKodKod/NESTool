@@ -35,8 +35,8 @@ namespace NESTool.Commands
             ProjectItem newItem = new ProjectItem(ItemSelected.GetContent());
 
             string name = ProjectItemFileSystem.GetValidFileName(
-                ItemSelected.FileHandler.Path, 
-                newItem.DisplayName, 
+                ItemSelected.FileHandler.Path,
+                newItem.DisplayName,
                 Util.GetExtensionByType(ItemSelected.Type));
 
             newItem.RenamedFromAction = true;

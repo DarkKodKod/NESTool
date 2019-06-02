@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Drawing;
-using System.Collections.Generic;
+﻿using SimplePaletteQuantizer.ColorCaches.Common;
 using SimplePaletteQuantizer.Helpers;
-using SimplePaletteQuantizer.ColorCaches.Common;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 
 namespace SimplePaletteQuantizer.ColorCaches.LocalitySensitiveHash
 {

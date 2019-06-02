@@ -7,7 +7,7 @@
         xmlns:cv="clr-namespace:NESTool.Utils.Converters"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-        x:Name="ImportImageDialogView"
+        Name="ImportImageDialogView"
         ShowInTaskbar="False"
         Title="Import Image" Height="145.117" Width="498"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
@@ -48,7 +48,7 @@
                     </MultiBinding>
                 </Button.CommandParameter>
             </Button>
-            <TextBox x:Name="tbPath" Height="23" Text="{Binding FilePath, UpdateSourceTrigger=PropertyChanged}" 
+            <TextBox Name="tbPath" Height="23" Text="{Binding FilePath, UpdateSourceTrigger=PropertyChanged}" 
 					 TextWrapping="NoWrap" VerticalAlignment="Center" Width="auto"/>
         </DockPanel>
         <Grid Grid.Row="3" Grid.Column="1">

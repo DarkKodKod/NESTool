@@ -60,11 +60,11 @@
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Row="0">
                     <Border BorderThickness="0.8" BorderBrush="Gray">
-                        <TextBlock Width="80" Background="White"
-                                Foreground="Gray"
-                                VerticalAlignment="Stretch"
-                                TextAlignment="Center"
-                                Text="{Binding ProjectGridSize}">
+                        <TextBlock Width="80" Background="White" Height="22"
+                                   Foreground="Gray"
+                                   Padding="3"
+                                   TextAlignment="Center"
+                                   Text="{Binding ProjectGridSize}">
                         </TextBlock>
                     </Border>
                 </StackPanel>
@@ -80,7 +80,7 @@
                         <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
 	                           Width="128"
 	                           Height="128"
-                               x:Name="imgFrame"
+                               Name="imgFrame"
 	                           Stretch="UniformToFill">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseDown">
@@ -140,7 +140,7 @@
                                Source="{Binding BankImage}"
 	                           Width="128"
 	                           Height="128"
-                               x:Name="imgPatternTable"
+                               Name="imgPatternTable"
 	                           Stretch="UniformToFill">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseDown">

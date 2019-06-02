@@ -1,14 +1,14 @@
-﻿using System;
+﻿using SimplePaletteQuantizer.ColorCaches.Common;
+using SimplePaletteQuantizer.Ditherers;
+using SimplePaletteQuantizer.Extensions;
+using SimplePaletteQuantizer.PathProviders;
+using SimplePaletteQuantizer.Quantizers;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using SimplePaletteQuantizer.ColorCaches.Common;
-using SimplePaletteQuantizer.Ditherers;
-using SimplePaletteQuantizer.Extensions;
-using SimplePaletteQuantizer.PathProviders;
-using SimplePaletteQuantizer.Quantizers;
 
 namespace SimplePaletteQuantizer.Helpers
 {

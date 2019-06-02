@@ -1,11 +1,11 @@
-﻿using System;
+﻿using SimplePaletteQuantizer.Helpers.Pixels;
+using SimplePaletteQuantizer.Helpers.Pixels.Indexed;
+using SimplePaletteQuantizer.Helpers.Pixels.NonIndexed;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq.Expressions;
 using System.Runtime.InteropServices;
-using SimplePaletteQuantizer.Helpers.Pixels;
-using SimplePaletteQuantizer.Helpers.Pixels.Indexed;
-using SimplePaletteQuantizer.Helpers.Pixels.NonIndexed;
 
 namespace SimplePaletteQuantizer.Helpers
 {

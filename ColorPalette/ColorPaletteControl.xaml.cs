@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace ColorPalette
 {
@@ -90,17 +90,8 @@ namespace ColorPalette
             RaiseEvent(newEventArgs);
         }
 
-        private void ColorPalette_Loaded(object sender, RoutedEventArgs e)
-        {
-            WrapPanel1.Width = PaletteWidth;
-            Border1.Width = PaletteWidth;
-            WrapPanel1.Height = PaletteHeight;
-
-            Border1.Height = 216 * (PaletteWidth % CellWidth) == 0 ? (216 * CellHeight / (PaletteWidth / CellWidth)) : (216 * CellHeight / PaletteWidth / CellWidth) + PaletteHeight;
-
-            // Hardcoded NES palette
-
-            Color[] colors = {
+        // Hardcoded NES palette
+        static readonly Color[] _colors = {
                 Color.FromRgb(101,101,101), Color.FromRgb(0,45,105), Color.FromRgb(19,31,127), Color.FromRgb(60,19,124), Color.FromRgb(96,11,98),
                 Color.FromRgb(115,10,55), Color.FromRgb(113,15,7), Color.FromRgb(90,26,0), Color.FromRgb(52,40,0), Color.FromRgb(11,52,0),
                 Color.FromRgb(0,60,0), Color.FromRgb(0,61,16), Color.FromRgb(0,56,64), Color.FromRgb(0,0,0), Color.FromRgb(0,0,0),
@@ -116,18 +107,34 @@ namespace ColorPalette
                 Color.FromRgb(175,229,234), Color.FromRgb(182,182,182), Color.FromRgb(0,0,0), Color.FromRgb(0,0,0)
             };
 
+        readonly ColorPaletteItem[] _paletteItems = {
+            new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(),
+            new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(),
+            new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(),
+            new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(),
+            new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(),
+            new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(),
+            new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(),
+            new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(), new ColorPaletteItem(),
+        };
+
+        private void ColorPalette_Loaded(object sender, RoutedEventArgs e)
+        {
+            WrapPanel1.Width = PaletteWidth;
+            Border1.Width = PaletteWidth;
+            WrapPanel1.Height = PaletteHeight;
+
+            Border1.Height = 216 * (PaletteWidth % CellWidth) == 0 ? (216 * CellHeight / (PaletteWidth / CellWidth)) : (216 * CellHeight / PaletteWidth / CellWidth) + PaletteHeight;
+
             for (int i = 0; i < 64; i++)
             {
-                ColorPaletteItem cpi = new ColorPaletteItem
-                {
-                    CellHeight = CellHeight,
-                    CellWidth = CellWidth,
-                    Red = colors[i].R,
-                    Green = colors[i].G,
-                    Blue = colors[i].B
-                };
+                _paletteItems[i].CellHeight = CellHeight;
+                _paletteItems[i].CellWidth = CellWidth;
+                _paletteItems[i].Red = _colors[i].R;
+                _paletteItems[i].Green = _colors[i].G;
+                _paletteItems[i].Blue = _colors[i].B;
 
-                WrapPanel1.Children.Add(cpi);
+                WrapPanel1.Children.Add(_paletteItems[i]);
             }
         }
     }

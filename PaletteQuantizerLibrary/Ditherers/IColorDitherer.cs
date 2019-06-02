@@ -1,7 +1,7 @@
-﻿using System;
-using SimplePaletteQuantizer.Helpers;
+﻿using SimplePaletteQuantizer.Helpers;
 using SimplePaletteQuantizer.PathProviders;
 using SimplePaletteQuantizer.Quantizers;
+using System;
 
 namespace SimplePaletteQuantizer.Ditherers
 {

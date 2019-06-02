@@ -1,11 +1,11 @@
-﻿using System;
+﻿using SimplePaletteQuantizer.Helpers;
+using SimplePaletteQuantizer.PathProviders;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading;
-using SimplePaletteQuantizer.Helpers;
-using SimplePaletteQuantizer.PathProviders;
 
 namespace SimplePaletteQuantizer.Quantizers
 {

@@ -1,7 +1,7 @@
-﻿using NESTool.Signals;
-using Microsoft.WindowsAPICodePack.Dialogs;
-using ArchitectureLibrary.Commands;
+﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using NESTool.Signals;
 
 namespace NESTool.Commands
 {

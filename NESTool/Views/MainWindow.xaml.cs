@@ -1,22 +1,22 @@
-﻿using System.ComponentModel;
+﻿using ArchitectureLibrary.Signals;
+using NESTool.Commands;
+using NESTool.Enums;
+using NESTool.FileSystem;
+using NESTool.Signals;
+using NESTool.Utils;
+using NESTool.ViewModels;
+using NESTool.Views;
+using NESTool.VOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Input;
-using ArchitectureLibrary.Signals;
-using NESTool.Signals;
-using System.Runtime.InteropServices;
-using System;
 using System.Windows.Interop;
-using NESTool.VOs;
-using NESTool.ViewModels;
-using System.Collections.Generic;
-using NESTool.Commands;
-using NESTool.Utils;
-using NESTool.FileSystem;
-using NESTool.Views;
-using NESTool.Enums;
+using System.Windows.Media;
 
 namespace NESTool
 {
@@ -123,6 +123,8 @@ namespace NESTool
             }
 
             _currentViewType = item.Type;
+
+            dpItemPanel.UpdateLayout();
         }
 
         private void OnDeleteElement(ProjectItem item)
@@ -132,6 +134,8 @@ namespace NESTool
                 dpItemPanel.Children.Clear();
 
                 _currentViewType = ProjectItemType.None;
+
+                dpItemPanel.UpdateLayout();
             }
         }
 
@@ -317,7 +321,7 @@ namespace NESTool
             if (tb.DataContext is ProjectItem item)
             {
                 item.IsInEditMode = false;
-            }   
+            }
         }
 
         private void EditableTextBox_KeyDown(object sender, KeyEventArgs e)

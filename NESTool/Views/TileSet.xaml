@@ -30,7 +30,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <DockPanel Grid.Row="0">
-                <TextBlock  x:Name="tbPath" Text="{Binding ImagePath, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Name="tbPath" Text="{Binding ImagePath, UpdateSourceTrigger=PropertyChanged}" />
                 <Button Width="30" HorizontalAlignment="Right" Content="..."
                         Command="{Binding BrowseFileCommand}">
                     <Button.CommandParameter>
@@ -51,7 +51,7 @@
                         <cmd:EventToCommand Command="{Binding PreviewMouseWheelCommand}" PassEventArgsToCommand="True" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                <Canvas x:Name="cvsImage"
+                <Canvas Name="cvsImage"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Width="{Binding ActualWidth}" 
@@ -60,7 +60,7 @@
                         <ScaleTransform x:Name="scaleCanvas" />
                     </Canvas.RenderTransform>
                     <Image Source="{Binding ImgSource}" 
-                       x:Name="imgBig"
+                       Name="imgBig"
                        RenderOptions.BitmapScalingMode="NearestNeighbor"
                        Stretch="None">
                         <i:Interaction.Triggers>
@@ -79,7 +79,7 @@
                                 </VisualBrush.Visual>
                             </VisualBrush>
                         </Border.Background>
-                        <Canvas x:Name="cvsBigGrid" Width="10000" Height="10000" 
+                        <Canvas Name="cvsBigGrid" Width="10000" Height="10000" 
                             Background="Transparent">
                             <i:Interaction.Behaviors>
                                 <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgBig}"/>
@@ -103,7 +103,7 @@
                         <ScaleTransform ScaleX="4.7" ScaleY="4.7" />
                     </Canvas.RenderTransform>
                     <Image Source="{Binding CroppedImage, Mode=TwoWay}" 
-                           x:Name="imgSmall"
+                           Name="imgSmall"
                            RenderOptions.BitmapScalingMode="NearestNeighbor"
                            Width="64"
                            Height="64"
@@ -144,7 +144,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </my:ColorPaletteControl>
-            <Border x:Name="mask" BorderThickness="3" BorderBrush="Black"
+            <Border Name="mask" BorderThickness="3" BorderBrush="Black"
                     CornerRadius="30" Grid.Row="1" Width="50" Height="50"
                     Panel.ZIndex="-1"
                     Margin="0,60,0,0"

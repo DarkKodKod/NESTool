@@ -15,7 +15,7 @@
 
         public bool IsEmpty()
         {
-            return string.IsNullOrEmpty(Assembly) 
+            return string.IsNullOrEmpty(Assembly)
                 && string.IsNullOrEmpty(Type)
                 && string.IsNullOrEmpty(Content);
         }

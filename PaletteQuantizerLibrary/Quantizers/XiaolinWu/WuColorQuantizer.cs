@@ -1,7 +1,7 @@
-﻿using System;
-using System.Drawing;
+﻿using SimplePaletteQuantizer.Helpers;
+using System;
 using System.Collections.Generic;
-using SimplePaletteQuantizer.Helpers;
+using System.Drawing;
 
 namespace SimplePaletteQuantizer.Quantizers.XiaolinWu
 {

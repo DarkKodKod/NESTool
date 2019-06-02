@@ -1,9 +1,9 @@
-﻿using System;
+﻿using SimplePaletteQuantizer.ColorCaches;
+using SimplePaletteQuantizer.Helpers;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
-using SimplePaletteQuantizer.ColorCaches;
-using SimplePaletteQuantizer.Helpers;
 
 namespace SimplePaletteQuantizer.Quantizers.MedianCut
 {

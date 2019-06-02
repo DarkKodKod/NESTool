@@ -26,8 +26,8 @@
     interface ISignal2<T1, T2> : ISignalBase
     {
         void Dispatch(T1 t1, T2 t2);
-        void AddListener(Dispatcher<T1,T2> method);
-        void RemoveListener(Dispatcher<T1,T2> method);
+        void AddListener(Dispatcher<T1, T2> method);
+        void RemoveListener(Dispatcher<T1, T2> method);
     }
 
     interface ISignal3<T1, T2, T3> : ISignalBase

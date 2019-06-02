@@ -60,7 +60,7 @@ namespace NESTool.Utils
             if (extension == extensionMaps) return ProjectItemType.Map;
             if (extension == extensionTileSets) return ProjectItemType.TileSet;
             if (extension == extensionPatternTable) return ProjectItemType.PatternTable;
-            
+
             return ProjectItemType.None;
         }
 

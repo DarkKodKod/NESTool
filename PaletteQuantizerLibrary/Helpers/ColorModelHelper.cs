@@ -1,7 +1,7 @@
-﻿using System;
+﻿using SimplePaletteQuantizer.ColorCaches.Common;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using SimplePaletteQuantizer.ColorCaches.Common;
 
 namespace SimplePaletteQuantizer.Helpers
 {

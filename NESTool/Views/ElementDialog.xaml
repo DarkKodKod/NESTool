@@ -6,7 +6,7 @@
         xmlns:vm="clr-namespace:NESTool.ViewModels"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-		x:Name="ElementDialogView"
+		Name="ElementDialogView"
         ShowInTaskbar="False"
         Title="New Element" Height="360.682" Width="355.07" 
 		ResizeMode="NoResize" WindowStartupLocation="CenterOwner">

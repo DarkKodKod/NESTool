@@ -30,6 +30,8 @@ namespace NESTool.UserControls.ViewModels
         private double _selectionRectangleTop = 0.0;
         private double _selectionRectangleLeft = 0.0;
         private int _selectedPatternTableTile;
+        private CharacterModel _characterModel;
+        private FileHandler _fileHandler;
 
         #region Commands
         public SwitchCharacterFrameViewCommand SwitchCharacterFrameViewCommand { get; } = new SwitchCharacterFrameViewCommand();
@@ -38,6 +40,28 @@ namespace NESTool.UserControls.ViewModels
         #endregion
 
         #region get/set
+        public FileHandler FileHandler
+        {
+            get { return _fileHandler; }
+            set
+            {
+                _fileHandler = value;
+
+                OnPropertyChanged("FileHandler");
+            }
+        }
+
+        public CharacterModel CharacterModel
+        {
+            get { return _characterModel; }
+            set
+            {
+                _characterModel = value;
+
+                OnPropertyChanged("CharacterModel");
+            }
+        }
+
         public ImageSource BankImage
         {
             get

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using SimplePaletteQuantizer.Helpers;
+﻿using SimplePaletteQuantizer.Helpers;
 using SimplePaletteQuantizer.PathProviders;
 using SimplePaletteQuantizer.Quantizers;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace SimplePaletteQuantizer.Ditherers
 {

@@ -33,7 +33,7 @@ namespace ArchitectureLibrary.History
             }
         }
 
-        public static  bool IsUndoPossible()
+        public static bool IsUndoPossible()
         {
             return _caretaker.IsUndoPossible();
         }

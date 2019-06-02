@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SimplePaletteQuantizer.Helpers;
+using System;
 using System.Drawing;
-using SimplePaletteQuantizer.Helpers;
 
 namespace SimplePaletteQuantizer.Ditherers.ErrorDiffusion
 {

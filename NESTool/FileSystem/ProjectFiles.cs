@@ -39,7 +39,7 @@ namespace NESTool.FileSystem
 
             foreach (var handler in Handlers)
             {
-                if (handler.Value.FileModel.GUID == guid && 
+                if (handler.Value.FileModel.GUID == guid &&
                     handler.Value.FileModel is T model)
                 {
                     return model;

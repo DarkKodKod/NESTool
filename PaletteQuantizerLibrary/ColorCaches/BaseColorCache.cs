@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SimplePaletteQuantizer.ColorCaches.Common;
+using System;
 using System.Collections.Concurrent;
-using System.Drawing;
 using System.Collections.Generic;
-using SimplePaletteQuantizer.ColorCaches.Common;
+using System.Drawing;
 
 namespace SimplePaletteQuantizer.ColorCaches
 {

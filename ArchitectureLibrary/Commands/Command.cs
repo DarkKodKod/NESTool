@@ -46,7 +46,7 @@ namespace ArchitectureLibrary.Commands
 
         ~Command()
         {
-           Dispose(false);
+            Dispose(false);
         }
 
         public void Dispose()

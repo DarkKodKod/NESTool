@@ -34,7 +34,7 @@ namespace NESTool.Models
                 RecentProjects[i] = "";
             }
 
-            _configFileName = @".\"+ (string)Application.Current.FindResource(_configfileNameKey) + Toml.FileExtension;
+            _configFileName = @".\" + (string)Application.Current.FindResource(_configfileNameKey) + Toml.FileExtension;
             _toolVersion = (int)Application.Current.FindResource(_toolVersionKey);
         }
 

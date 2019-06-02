@@ -2,11 +2,11 @@
 using ArchitectureLibrary.History.Signals;
 using ArchitectureLibrary.Signals;
 using ArchitectureLibrary.ViewModel;
-using NESTool.Utils.CustomTypeConverter;
 using NESTool.Enums;
 using NESTool.HistoryActions;
 using NESTool.Models;
 using NESTool.Signals;
+using NESTool.Utils.CustomTypeConverter;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -315,7 +315,7 @@ namespace NESTool.ViewModels
             IsFolder = item.IsFolder;
             Parent = item.Parent;
             Items = new ObservableCollection<ProjectItem>(item.Items);
-        }   
+        }
 
         private void OnUnSelectItemChanged() => SignalManager.Get<ProjectItemUnselectedSignal>().Dispatch(this);
         private void OnSelectedItemChanged() => SignalManager.Get<ProjectItemSelectedSignal>().Dispatch(this);

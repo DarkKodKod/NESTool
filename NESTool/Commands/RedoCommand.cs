@@ -9,7 +9,7 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            HistoryManager.Redo();    
+            HistoryManager.Redo();
         }
     }
 }

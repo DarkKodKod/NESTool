@@ -1,9 +1,9 @@
-﻿using System;
+﻿using SimplePaletteQuantizer.ColorCaches.Common;
+using SimplePaletteQuantizer.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using SimplePaletteQuantizer.ColorCaches.Common;
-using SimplePaletteQuantizer.Helpers;
 
 namespace SimplePaletteQuantizer.ColorCaches.Octree
 {

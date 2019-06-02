@@ -44,8 +44,8 @@ namespace NESTool.Commands
             string path = Path.Combine(ItemSelected.FileHandler.Path, ItemSelected.FileHandler.Name);
 
             string name = ProjectItemFileSystem.GetValidFileName(
-                path, 
-                _newFileName, 
+                path,
+                _newFileName,
                 Util.GetExtensionByType(ItemSelected.Type));
 
             ProjectItem newElement = new ProjectItem()

@@ -20,7 +20,7 @@ namespace ArchitectureLibrary.History
             else
             {
                 return null;
-            }   
+            }
         }
 
         public Memento GetRedoMemento()
@@ -34,7 +34,7 @@ namespace ArchitectureLibrary.History
             else
             {
                 return null;
-            }   
+            }
         }
 
         public void InsertMementoForUndoRedo(Memento memento)
@@ -67,7 +67,7 @@ namespace ArchitectureLibrary.History
             else
             {
                 return false;
-            }   
+            }
         }
     }
 }

@@ -68,7 +68,7 @@
             <Button DockPanel.Dock="Right" HorizontalAlignment="Right" 
 					VerticalAlignment="Center" Width="30" Content="..." 
 					Command="{Binding BrowseFolderCommand}" CommandParameter="{Binding ElementName=tbPath, Path=Text}"/>
-            <TextBox x:Name="tbPath" Height="23" Text="{Binding FolderPath, UpdateSourceTrigger=PropertyChanged}" 
+            <TextBox Name="tbPath" Height="23" Text="{Binding FolderPath, UpdateSourceTrigger=PropertyChanged}" 
 					 TextWrapping="NoWrap" VerticalAlignment="Center" Width="auto"/>
         </DockPanel>
         <Grid Grid.Row="5" Grid.Column="1" VerticalAlignment="Bottom">

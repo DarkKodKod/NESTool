@@ -36,7 +36,7 @@ namespace NESTool.Commands
                         }
                         else if (frameDeleted)
                         {
-                            Frame prevFrame = animation.Frames[j-1];
+                            Frame prevFrame = animation.Frames[j - 1];
                             animation.Frames[j - 1] = animation.Frames[j];
                             animation.Frames[j] = prevFrame;
                         }

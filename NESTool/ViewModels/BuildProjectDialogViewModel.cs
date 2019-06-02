@@ -2,13 +2,13 @@
 using ArchitectureLibrary.Signals;
 using ArchitectureLibrary.ViewModel;
 using NESTool.Commands;
+using NESTool.Enums;
 using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.VOs;
-using NESTool.Enums;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NESTool.ViewModels
 {
@@ -205,6 +205,6 @@ namespace NESTool.ViewModels
 
                 project.Save();
             }
-        }   
+        }
     }
 }

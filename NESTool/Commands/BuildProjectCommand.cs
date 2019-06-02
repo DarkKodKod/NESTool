@@ -73,7 +73,7 @@ namespace NESTool.Commands
                 }
             }
 
-            for (int i = 0; i < 256*16*16;)
+            for (int i = 0; i < 256 * 16 * 16;)
             {
                 Reverse(ref outputBits, i, 8);
                 i += 8;

@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SimplePaletteQuantizer.Helpers;
+using SimplePaletteQuantizer.PathProviders;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using SimplePaletteQuantizer.Helpers;
-using SimplePaletteQuantizer.PathProviders;
 
 namespace SimplePaletteQuantizer.Quantizers
 {

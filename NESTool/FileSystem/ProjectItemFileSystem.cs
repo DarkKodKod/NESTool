@@ -11,7 +11,7 @@ namespace NESTool.FileSystem
 {
     public static class ProjectItemFileSystem
     {
-        public static  void Initialize()
+        public static void Initialize()
         {
             SignalManager.Get<RegisterFileHandlerSignal>().AddListener(OnRegisterFileHandler);
             SignalManager.Get<RenameFileSignal>().AddListener(OnRenameFile);
@@ -247,7 +247,7 @@ namespace NESTool.FileSystem
                     DeleteElement(itm.FileHandler);
                 }
             }
-            
+
             DeleteElement(item.FileHandler);
         }
 

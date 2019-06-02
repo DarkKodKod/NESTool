@@ -138,6 +138,9 @@ namespace NESTool.ViewModels
             ((CharacterAnimationViewModel)animationView.DataContext).TabID = id;
 
             CharacterFrameEditorView frameView = new CharacterFrameEditorView();
+            ((CharacterFrameEditorViewModel)frameView.DataContext).CharacterModel = GetModel();
+            ((CharacterFrameEditorViewModel)frameView.DataContext).FileHandler = ProjectItem.FileHandler;
+            ((CharacterFrameEditorViewModel)frameView.DataContext).TabID = id;
 
             Tabs.Add(new ActionTabItem
             {

@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace NESTool.Utils.Selectors
-{ 
+{
     public class TemplateSelector : DataTemplateSelector
     {
         public DataTemplate ItemTemplate { get; set; }

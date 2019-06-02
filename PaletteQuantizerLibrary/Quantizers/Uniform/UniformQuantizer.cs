@@ -1,7 +1,7 @@
-﻿using System;
+﻿using SimplePaletteQuantizer.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using SimplePaletteQuantizer.Helpers;
 
 namespace SimplePaletteQuantizer.Quantizers.Uniform
 {

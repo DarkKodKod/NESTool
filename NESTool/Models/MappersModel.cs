@@ -43,11 +43,12 @@ namespace NESTool.Models
 
         private void LoadDefaultMappers()
         {
-            Mappers[0] = new MapperModel() {
+            Mappers[0] = new MapperModel()
+            {
                 Id = 0,
                 Name = "None",
-                PRG = new int[]{ 16, 32 },
-                CHR = new int[]{ 8 }
+                PRG = new int[] { 16, 32 },
+                CHR = new int[] { 8 }
             };
         }
 

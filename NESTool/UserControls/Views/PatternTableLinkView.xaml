@@ -13,7 +13,7 @@
     </UserControl.DataContext>
     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">
         <Hyperlink Command="{Binding SelectTileSetCommand}" CommandParameter="{Binding TileSetId}">
-            <TextBlock x:Name="hlText" Text="{Binding Caption}" 
+            <TextBlock Name="hlText" Text="{Binding Caption}" 
                        Style="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Hyperlink}, Path=Style}" />
         </Hyperlink>
     </TextBlock>

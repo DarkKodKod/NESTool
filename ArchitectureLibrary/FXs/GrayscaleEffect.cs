@@ -1,7 +1,7 @@
-﻿using System.Windows.Media.Effects;
+﻿using ArchitectureLibrary.Utils;
 using System.Windows;
 using System.Windows.Media;
-using ArchitectureLibrary.Utils;
+using System.Windows.Media.Effects;
 
 namespace ArchitectureLibrary.FXs
 {

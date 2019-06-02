@@ -7,7 +7,7 @@
 		xmlns:cv="clr-namespace:NESTool.Utils.Converters"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
-		x:Name="ProjectDialogView"
+		Name="ProjectDialogView"
         ShowInTaskbar="False"
         Title="New Project" Height="287.88" Width="463.635" 
 		ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
@@ -40,7 +40,7 @@
 		</Grid.ColumnDefinitions>
 		<Label Grid.Row="1" Grid.Column="1" Content="Project name" HorizontalAlignment="Left" VerticalAlignment="Center" />
 		<DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True">
-			<TextBox x:Name="tbProjName" DockPanel.Dock="Right" Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged}" 
+			<TextBox Name="tbProjName" DockPanel.Dock="Right" Text="{Binding ProjectName, UpdateSourceTrigger=PropertyChanged}" 
 					 Height="23" TextWrapping="NoWrap" VerticalAlignment="Center" Width="auto"/>
 		</DockPanel>
 		<Label Grid.Row="3" Grid.Column="1" Content="Location" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -48,7 +48,7 @@
 			<Button DockPanel.Dock="Right" HorizontalAlignment="Right" 
 					VerticalAlignment="Center" Width="30" Content="..." 
 					Command="{Binding BrowseFolderCommand}" CommandParameter="{Binding ElementName=tbPath, Path=Text}"/>
-			<TextBox x:Name="tbPath" Height="23" Text="{Binding FolderPath, UpdateSourceTrigger=PropertyChanged}" 
+			<TextBox Name="tbPath" Height="23" Text="{Binding FolderPath, UpdateSourceTrigger=PropertyChanged}" 
 					 TextWrapping="NoWrap" VerticalAlignment="Center" Width="auto"/>
 		</DockPanel>
         <Grid Grid.Row="5" Grid.Column="1">
@@ -64,15 +64,15 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Label Content="Mapper:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <ComboBox x:Name="cbMapper" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" ItemsSource="{Binding Mappers}" 
+            <ComboBox Name="cbMapper" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" ItemsSource="{Binding Mappers}" 
                 DisplayMemberPath="Name"
                 SelectedValuePath="Id"
                 SelectedValue="{Binding Path=SelectedMapper}"/>
             <Label Content="PRG Size:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <ComboBox x:Name="cbPRGSize" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" ItemsSource="{Binding PRGSizes}"
+            <ComboBox Name="cbPRGSize" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" ItemsSource="{Binding PRGSizes}"
                 SelectedIndex="{Binding Path=SelectedCHRSize}"/>
             <Label Content="CHR Size:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <ComboBox x:Name="cbCHRSize" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" ItemsSource="{Binding CHRSizes}"
+            <ComboBox Name="cbCHRSize" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" ItemsSource="{Binding CHRSizes}"
                 SelectedIndex="{Binding Path=SelectedPRGSize}"/>
         </Grid>
 		<Grid Grid.Row="6" Grid.Column="1">

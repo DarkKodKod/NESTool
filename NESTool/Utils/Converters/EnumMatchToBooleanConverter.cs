@@ -11,7 +11,7 @@ namespace NESTool.Utils.Converters
             if (value == null || parameter == null)
             {
                 return false;
-            }   
+            }
 
             string checkValue = value.ToString();
             string targetValue = parameter.ToString();
@@ -24,7 +24,7 @@ namespace NESTool.Utils.Converters
             if (value == null || parameter == null)
             {
                 return null;
-            }   
+            }
 
             bool useValue = (bool)value;
             string targetValue = parameter.ToString();
@@ -32,7 +32,7 @@ namespace NESTool.Utils.Converters
             if (useValue)
             {
                 return Enum.Parse(targetType, targetValue);
-            }   
+            }
 
             return null;
         }

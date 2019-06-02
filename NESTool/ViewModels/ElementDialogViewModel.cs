@@ -2,11 +2,11 @@
 using ArchitectureLibrary.Signals;
 using ArchitectureLibrary.ViewModel;
 using NESTool.Commands;
+using NESTool.Enums;
 using NESTool.Models;
 using NESTool.Signals;
-using System.Collections.Generic;
-using NESTool.Enums;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;

@@ -11,7 +11,7 @@
         xmlns:fx="clr-namespace:ArchitectureLibrary.FXs;assembly=ArchitectureLibrary"
         mc:Ignorable="d"
         Height="617.748" Width="939.57" 
-		x:Name="MainWindowView"
+		Name="MainWindowView"
 		Title="{Binding Title, Mode=OneWay}"
 		WindowStartupLocation="CenterScreen" 
         FrameworkElement.SizeChanged="MainWindowView_SizeChanged">
@@ -370,7 +370,7 @@
 			</MenuItem>
 		</Menu>
 		<ToolBarTray DockPanel.Dock="Top">
-			<ToolBar x:Name="File">
+			<ToolBar Name="File">
 				<Button ToolTip="New Project" ToolBar.OverflowMode="AsNeeded" Command="{Binding NewProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}">
                     <Image Width="16" Height="16" Source="/resources/new_project.png">
                         <Image.Style>
@@ -445,7 +445,7 @@
                     </Image>
 				</Button>
 			</ToolBar>
-            <ToolBar x:Name="Edit">
+            <ToolBar Name="Edit">
                 <Button ToolTip="Undo" ToolBar.OverflowMode="AsNeeded" Command="{Binding UndoCommand}">
                     <Image Width="16" Height="16" Source="/resources/undo.png">
                         <Image.Style>
@@ -483,7 +483,7 @@
                     </Image>
                 </Button>
             </ToolBar>
-			<ToolBar x:Name="Project">
+			<ToolBar Name="Project">
                 <Button ToolTip="Build Project" ToolBar.OverflowMode="AsNeeded" Command="{Binding OpenBuildProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}">
                     <Image Width="16" Height="16" Source="/resources/build.png">
                         <Image.Style>
@@ -503,7 +503,7 @@
                     </Image>
 				</Button>
 			</ToolBar>
-            <ToolBar x:Name="tbrTileSet">
+            <ToolBar Name="tbrTileSet">
                 <ToggleButton ToolTip="Show/Hide Grid" ToolBar.OverflowMode="AsNeeded">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Checked">
@@ -686,9 +686,9 @@
 					</ContextMenu>
 					<HierarchicalDataTemplate DataType="{x:Type vm:ProjectItem}" ItemsSource="{Binding Items}">
                         <StackPanel Orientation="Horizontal" Loaded="StackPanel_Loaded">
-							<Image x:Name="itemImage" Source="/Resources/closed_folder.png" Margin="0,0,5,0" />
-                            <TextBlock x:Name="txtDisplayName" Text="{Binding DisplayName}"/>
-                            <TextBox x:Name="editableTextBox" Visibility="Collapsed" MinWidth="100" 
+							<Image Name="itemImage" Source="/Resources/closed_folder.png" Margin="0,0,5,0" />
+                            <TextBlock Name="txtDisplayName" Text="{Binding DisplayName}"/>
+                            <TextBox Name="editableTextBox" Visibility="Collapsed" MinWidth="100" 
                                      Text="{Binding DisplayName, UpdateSourceTrigger=LostFocus}"
                                      IsVisibleChanged="EditableTextBox_IsVisibleChanged"
                                      PreviewTextInput="EditableTextBox_PreviewTextInput"
@@ -768,7 +768,7 @@
 				</TreeView.ItemContainerStyle>
 			</TreeView>
             <GridSplitter Grid.Column="1" Width="5" />
-            <DockPanel x:Name="dpItemPanel" Grid.Column="2"
+            <DockPanel Name="dpItemPanel" Grid.Column="2"
                        Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}"
                        Height="{Binding ActualHeight, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}}"
                        LastChildFill="True">

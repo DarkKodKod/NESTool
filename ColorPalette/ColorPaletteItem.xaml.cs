@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace ColorPalette
@@ -8,6 +9,8 @@ namespace ColorPalette
     /// </summary>
     public partial class ColorPaletteItem : UserControl
     {
+        private readonly SolidColorBrush _solidColor = new SolidColorBrush();
+
         public byte Red { get; set; }
         public byte Blue { get; set; }
         public byte Green { get; set; }
@@ -19,10 +22,8 @@ namespace ColorPalette
             InitializeComponent();
         }
 
-        private void ColorPaletteItem_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        private void ColorPaletteItem_Loaded(object sender, RoutedEventArgs e)
         {
-            SolidColorBrush scb = new SolidColorBrush();
-
             Color col = new Color
             {
                 A = 255,
@@ -31,11 +32,12 @@ namespace ColorPalette
                 G = Green
             };
 
-            scb.Color = col;
+            _solidColor.Color = col;
+            _solidColor.Freeze();
 
             rect.Height = CellHeight;
             rect.Width = CellWidth;
-            rect.Fill = scb;
+            rect.Fill = _solidColor;
         }
     }
 }

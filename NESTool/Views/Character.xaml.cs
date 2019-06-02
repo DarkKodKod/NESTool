@@ -68,7 +68,7 @@ namespace NESTool.Views
                 }
             }
         }
-        
+
         private void ContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ContentControl tb = sender as ContentControl;

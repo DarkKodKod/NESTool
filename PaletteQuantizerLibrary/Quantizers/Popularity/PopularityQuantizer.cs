@@ -1,11 +1,11 @@
-﻿using System;
+﻿using SimplePaletteQuantizer.ColorCaches;
+using SimplePaletteQuantizer.ColorCaches.Octree;
+using SimplePaletteQuantizer.Helpers;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using SimplePaletteQuantizer.ColorCaches;
-using SimplePaletteQuantizer.ColorCaches.Octree;
-using SimplePaletteQuantizer.Helpers;
 
 namespace SimplePaletteQuantizer.Quantizers.Popularity
 {

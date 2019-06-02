@@ -1,8 +1,8 @@
-﻿using System;
+﻿using SimplePaletteQuantizer.ColorCaches;
+using SimplePaletteQuantizer.ColorCaches.Octree;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using SimplePaletteQuantizer.ColorCaches;
-using SimplePaletteQuantizer.ColorCaches.Octree;
 
 namespace SimplePaletteQuantizer.Quantizers.OptimalPalette
 {

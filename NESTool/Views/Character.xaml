@@ -18,11 +18,11 @@
         <DataTemplate x:Key="itemHeaderTemplate">
             <StackPanel Orientation="Horizontal" Height="21" Width="100">
                 <ContentControl MouseDoubleClick="ContentControl_MouseDoubleClick">
-                    <TextBlock x:Name="txtDisplayName" 
+                    <TextBlock Name="txtDisplayName" 
                            Width="80" 
                            Text="{Binding Header}"/>
                 </ContentControl>
-                <TextBox x:Name="editableTextBox" Visibility="Collapsed" MinWidth="80" 
+                <TextBox Name="editableTextBox" Visibility="Collapsed" MinWidth="80" 
                          Text="{Binding Header, UpdateSourceTrigger=LostFocus}"
                          IsVisibleChanged="EditableTextBox_IsVisibleChanged"
                          KeyDown="EditableTextBox_KeyDown"/>
@@ -85,7 +85,7 @@
                     DockPanel.Dock="Right"
                     HorizontalAlignment="Stretch" 
                     VerticalAlignment="Stretch"
-                    x:Name="actionTabs"
+                    Name="actionTabs"
                     PreviewMouseDown="ActionTabs_PreviewMouseDown"
                     ItemTemplateSelector="{StaticResource headerTemplateSelector}"
                     ContentTemplateSelector="{StaticResource contentTemplateSelector}">

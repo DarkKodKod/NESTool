@@ -1,6 +1,6 @@
-﻿using System.Windows;
+﻿using NESTool.Utils;
 using System;
-using NESTool.Utils;
+using System.Windows;
 
 namespace NESTool.Views
 {

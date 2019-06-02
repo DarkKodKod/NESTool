@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using System.Threading.Tasks;
-using SimplePaletteQuantizer.ColorCaches;
+﻿using SimplePaletteQuantizer.ColorCaches;
 using SimplePaletteQuantizer.ColorCaches.Common;
 using SimplePaletteQuantizer.ColorCaches.EuclideanDistance;
 using SimplePaletteQuantizer.ColorCaches.LocalitySensitiveHash;
@@ -22,6 +16,12 @@ using SimplePaletteQuantizer.Quantizers.OptimalPalette;
 using SimplePaletteQuantizer.Quantizers.Popularity;
 using SimplePaletteQuantizer.Quantizers.Uniform;
 using SimplePaletteQuantizer.Quantizers.XiaolinWu;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace NESTool.Utils
 {

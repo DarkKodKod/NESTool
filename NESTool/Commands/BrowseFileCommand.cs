@@ -1,7 +1,7 @@
-﻿using NESTool.Signals;
-using Microsoft.WindowsAPICodePack.Dialogs;
-using ArchitectureLibrary.Commands;
+﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
+using Microsoft.WindowsAPICodePack.Dialogs;
+using NESTool.Signals;
 using System.IO;
 
 namespace NESTool.Commands
@@ -45,7 +45,7 @@ namespace NESTool.Commands
             {
                 for (int i = 0; i < filters.Length; i += 2)
                 {
-                    dialog.Filters.Add(new CommonFileDialogFilter(filters[i], filters[i+1]));
+                    dialog.Filters.Add(new CommonFileDialogFilter(filters[i], filters[i + 1]));
                 }
             }
 
