@@ -31,9 +31,14 @@ namespace NESTool.UserControls.ViewModels
         private double _selectionRectangleTop = 0.0;
         private double _selectionRectangleLeft = 0.0;
         private int _selectedPatternTableTile;
+        private int _selectedFrameTile;
         private CharacterModel _characterModel;
         private FileHandler _fileHandler;
         private ImageSource _frameImage;
+        private EditFrameTools _editFrameTools;
+        private Visibility _rectangleVisibility = Visibility.Hidden;
+        private double _rectangleTop = 0.0;
+        private double _rectangleLeft = 0.0;
 
         #region Commands
         public SwitchCharacterFrameViewCommand SwitchCharacterFrameViewCommand { get; } = new SwitchCharacterFrameViewCommand();
@@ -64,6 +69,28 @@ namespace NESTool.UserControls.ViewModels
             }
         }
 
+        public EditFrameTools EditFrameTools
+        {
+            get
+            {
+                return _editFrameTools;
+            }
+            set
+            {
+                if (_editFrameTools != value)
+                {
+                    _editFrameTools = value;
+
+                    if (_editFrameTools != EditFrameTools.Select)
+                    {
+                        RectangleVisibility = Visibility.Hidden;
+                    }
+
+                    OnPropertyChanged("EditFrameTools");
+                }
+            }
+        }
+
         public ImageSource FrameImage
         {
             get
@@ -89,6 +116,17 @@ namespace NESTool.UserControls.ViewModels
                 _bankImage = value;
 
                 OnPropertyChanged("BankImage");
+            }
+        }
+
+        public int SelectedFrameTile
+        {
+            get { return _selectedFrameTile; }
+            set
+            {
+                _selectedFrameTile = value;
+
+                OnPropertyChanged("SelectedFrameTile");
             }
         }
 
@@ -204,6 +242,39 @@ namespace NESTool.UserControls.ViewModels
                 OnPropertyChanged("SelectionRectangleVisibility");
             }
         }
+
+        public double RectangleLeft
+        {
+            get { return _rectangleLeft; }
+            set
+            {
+                _rectangleLeft = value;
+
+                OnPropertyChanged("RectangleLeft");
+            }
+        }
+
+        public double RectangleTop
+        {
+            get { return _rectangleTop; }
+            set
+            {
+                _rectangleTop = value;
+
+                OnPropertyChanged("RectangleTop");
+            }
+        }
+
+        public Visibility RectangleVisibility
+        {
+            get { return _rectangleVisibility; }
+            set
+            {
+                _rectangleVisibility = value;
+
+                OnPropertyChanged("RectangleVisibility");
+            }
+        }
         #endregion
 
         public CharacterFrameEditorViewModel()
@@ -219,6 +290,8 @@ namespace NESTool.UserControls.ViewModels
         public override void OnActivate()
         {
             base.OnActivate();
+
+            EditFrameTools = EditFrameTools.Select;
 
             LoadFrameImage();
         }
@@ -269,13 +342,50 @@ namespace NESTool.UserControls.ViewModels
                 return;
             }
 
-            SelectionRectangleVisibility = Visibility.Visible;
-            SelectionRectangleLeft = point.X;
-            SelectionRectangleTop = point.Y;
+            if (sender.Name == "imgFrame")
+            {
+                RectangleLeft = point.X;
+                RectangleTop = point.Y;
 
-            int index = ((int)point.X / 8) + (((int)point.Y / 8) * 16);
+                int index = ((int)point.X / 8) + (((int)point.Y / 8) * 16);
 
-            SelectedPatternTableTile = index;
+                SelectedFrameTile = index;
+
+                if (EditFrameTools == EditFrameTools.Select)
+                {
+                    RectangleVisibility = Visibility.Visible;
+                }
+                else if (EditFrameTools == EditFrameTools.Paint)
+                {
+                    PaintFrame();
+                }
+            }
+            else if (sender.Name == "imgPatternTable")
+            {
+                SelectionRectangleVisibility = Visibility.Visible;
+                SelectionRectangleLeft = point.X;
+                SelectionRectangleTop = point.Y;
+
+                int index = ((int)point.X / 8) + (((int)point.Y / 8) * 16);
+
+                SelectedPatternTableTile = index;
+            }
+        }
+
+        private void PaintFrame()
+        {
+            Point croppedPoint = new Point
+            {
+                X = SelectionRectangleLeft,
+                Y = SelectionRectangleTop
+            };
+
+            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].GUID = "20b60e59-1da0-4e84-8063-b3874464f2a7";
+            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].Point = croppedPoint;
+
+            FileHandler.Save();
+
+            LoadFrameImage();
         }
 
         private void LoadBankImage()

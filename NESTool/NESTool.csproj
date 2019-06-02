@@ -430,6 +430,16 @@
     <Resource Include="Resources\character.png" />
     <Resource Include="Resources\map.png" />
     <Resource Include="Resources\tileset.png" />
+    <Resource Include="Resources\tab_cross.png" />
+    <Resource Include="Resources\tab_plus.png" />
+    <Resource Include="Resources\next_frame.png" />
+    <Resource Include="Resources\pause.png" />
+    <Resource Include="Resources\play.png" />
+    <Resource Include="Resources\previous_frame.png" />
+    <Resource Include="Resources\stop.png" />
+    <Resource Include="Resources\erase.png" />
+    <Resource Include="Resources\paint.png" />
+    <Resource Include="Resources\select.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ArchitectureLibrary\ArchitectureLibrary.csproj">
@@ -445,20 +455,6 @@
       <Name>PaletteQuantizerLibrary</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\tab_cross.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\tab_plus.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\next_frame.png" />
-    <Resource Include="Resources\pause.png" />
-    <Resource Include="Resources\play.png" />
-    <Resource Include="Resources\previous_frame.png" />
-    <Resource Include="Resources\stop.png" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -16,6 +16,7 @@
     </UserControl.DataContext>
     <UserControl.Resources>
         <cv:ParametersConverter x:Key="parametersConverter"/>
+        <cv:EnumMatchToBooleanConverter x:Key="enumConverter" />
     </UserControl.Resources>
     <Grid Background="LightGray">
         <Grid.RowDefinitions>
@@ -48,65 +49,105 @@
         </Button>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="600"/>
+                <ColumnDefinition Width="590"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="3"/>
-                    <RowDefinition Height="580"/>
+                    <RowDefinition Height="550"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <StackPanel Orientation="Horizontal" Grid.Row="0">
-                    <Border BorderThickness="0.8" BorderBrush="Gray">
-                        <TextBlock Width="80" Background="White" Height="22"
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="6"/>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="6"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="3"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="3">
+                        <Border BorderThickness="0.8" BorderBrush="Gray">
+                            <TextBlock Width="80" Background="White" Height="22"
                                    Foreground="Gray"
                                    Padding="3"
                                    TextAlignment="Center"
                                    Text="{Binding ProjectGridSize}">
-                        </TextBlock>
-                    </Border>
-                </StackPanel>
-                <Border Grid.Row="2" Width="510" Height="510"
-                        VerticalAlignment="Top" HorizontalAlignment="Left">
-                    <Canvas Width="128" Height="128" 
-		                    Background="DarkGray"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Top">
-                        <Canvas.RenderTransform>
-                            <ScaleTransform ScaleX="4" ScaleY="4"/>
-                        </Canvas.RenderTransform>
-                        <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
-	                           Width="128"
-	                           Height="128"
-                               Source="{Binding FrameImage}"
-                               Name="imgFrame"
-	                           Stretch="UniformToFill">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseDown">
-                                    <cmd:EventToCommand Command="{Binding ImageMouseDownCommand}" PassEventArgsToCommand="True" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Image>
-                        <Border>
-                            <Border.Background>
-                                <VisualBrush TileMode="Tile"
-					                         Viewport="0,0,8,8" ViewportUnits="Absolute" 
-					                         Viewbox="0,0,8,8" ViewboxUnits="Absolute">
-                                    <VisualBrush.Visual>
-                                        <Rectangle Stroke="Magenta" StrokeThickness="0.1" Height="100" Width="100"/>
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Border.Background>
-                            <Canvas Width="128" Height="128" Background="Transparent">
-                                <i:Interaction.Behaviors>
-                                    <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgFrame}"/>
-                                </i:Interaction.Behaviors>
-                            </Canvas>
+                            </TextBlock>
                         </Border>
-                    </Canvas>
-                </Border>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="2">
+                        <RadioButton Height="26" Width="26"
+                                     GroupName="tools"
+                                     Margin="0,10,0,0"
+                                     IsChecked="{Binding Path=EditFrameTools, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Select}"
+                                     Style="{StaticResource {x:Type ToggleButton}}">
+                            <Image Width="24" Height="24" Source="/resources/select.png"/>
+                        </RadioButton>
+                        <RadioButton Height="26" Width="26" 
+                                     GroupName="tools"
+                                     Margin="0,10,0,0"
+                                     IsChecked="{Binding Path=EditFrameTools, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Paint}"
+                                     Style="{StaticResource {x:Type ToggleButton}}">
+                            <Image Width="24" Height="24" Source="/resources/paint.png"/>
+                        </RadioButton>
+                        <RadioButton Height="26" Width="26" 
+                                     GroupName="tools"
+                                     Margin="0,10,0,0"
+                                     IsChecked="{Binding Path=EditFrameTools, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Erase}"
+                                     Style="{StaticResource {x:Type ToggleButton}}">
+                            <Image Width="24" Height="24" Source="/resources/erase.png"/>
+                        </RadioButton>
+                    </StackPanel>
+                    <Border Grid.Column="3" Width="510" Height="510" Grid.Row="2"
+                            VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <Canvas Width="128" Height="128" 
+		                        Background="DarkGray"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top">
+                            <Canvas.RenderTransform>
+                                <ScaleTransform ScaleX="4" ScaleY="4"/>
+                            </Canvas.RenderTransform>
+                            <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
+	                               Width="128"
+	                               Height="128"
+                                   Source="{Binding FrameImage}"
+                                   Name="imgFrame"
+	                               Stretch="UniformToFill">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseDown">
+                                        <cmd:EventToCommand Command="{Binding ImageMouseDownCommand}" PassEventArgsToCommand="True" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </Image>
+                            <Border>
+                                <Border.Background>
+                                    <VisualBrush TileMode="Tile"
+					                             Viewport="0,0,8,8" ViewportUnits="Absolute" 
+					                             Viewbox="0,0,8,8" ViewboxUnits="Absolute">
+                                        <VisualBrush.Visual>
+                                            <Rectangle Stroke="Magenta" StrokeThickness="0.1" Height="100" Width="100"/>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Border.Background>
+                                <Canvas Width="128" Height="128" Background="Transparent">
+                                    <i:Interaction.Behaviors>
+                                        <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgFrame}"/>
+                                    </i:Interaction.Behaviors>
+                                    <Rectangle Width="8" Height="8" 
+                                               Stroke="Red" 
+                                               StrokeThickness="0.5"
+                                               Canvas.Top="{Binding RectangleTop}"
+                                               Canvas.Left="{Binding RectangleLeft}"
+                                               Visibility="{Binding RectangleVisibility}"/>
+                                </Canvas>
+                            </Border>
+                        </Canvas>
+                    </Border>
+                </Grid>
                 <Label Grid.Row="3">Palettes</Label>
             </Grid>
             <Grid Grid.Column="1">

@@ -40,4 +40,12 @@
         Background = 0,
         Characters = 1
     }
+
+    public enum EditFrameTools
+    {
+        None = 0,
+        Select = 1,
+        Paint = 2,
+        Erase = 3
+    }
 }

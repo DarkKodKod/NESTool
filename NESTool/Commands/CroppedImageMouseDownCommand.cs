@@ -2,6 +2,7 @@
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
 using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -16,13 +17,13 @@ namespace NESTool.Commands
 
             if (mouseEvent.Source is Image image)
             {
-                System.Windows.Point p = mouseEvent.GetPosition(image);
+                Point p = mouseEvent.GetPosition(image);
 
                 ProcessImage(image, p);
             }
         }
 
-        private void ProcessImage(Image image, System.Windows.Point point)
+        private void ProcessImage(Image image, Point point)
         {
             WriteableBitmap writeableBmp = BitmapFactory.New((int)Math.Ceiling(image.ActualWidth), (int)Math.Ceiling(image.ActualHeight));
 
