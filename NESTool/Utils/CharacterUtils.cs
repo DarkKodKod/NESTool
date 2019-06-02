@@ -6,9 +6,9 @@ using System.Windows.Media.Imaging;
 
 namespace NESTool.Utils
 {
-    public static class PatternTableUtils
+    public static class CharacterUtils
     {
-        public static WriteableBitmap CreateImage(PatternTableModel patternTableModel, ref Dictionary<string, WriteableBitmap> bitmapCache, bool sendSignals = true)
+        public static WriteableBitmap CreateImage(CharacterModel characterModel, int animationIndex, int frameIndex, ref Dictionary<string, WriteableBitmap> bitmapCache, bool sendSignals = true)
         {
             FileModelVO[] tileSets = ProjectFiles.GetModels<TileSetModel>().ToArray();
 
@@ -18,7 +18,7 @@ namespace NESTool.Utils
             {
                 int index = 0;
 
-                foreach (PTTileModel tile in patternTableModel.PTTiles)
+                foreach (CharacterTile tile in characterModel.Animations[animationIndex].Frames[frameIndex].Tiles)
                 {
                     if (Util.CopyTileSetToBitmap(tile.GUID, tile.Point, ref patternTableBitmap, index, tileSets, ref bitmapCache, sendSignals))
                     {

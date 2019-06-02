@@ -80,6 +80,7 @@
                         <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
 	                           Width="128"
 	                           Height="128"
+                               Source="{Binding FrameImage}"
                                Name="imgFrame"
 	                           Stretch="UniformToFill">
                             <i:Interaction.Triggers>

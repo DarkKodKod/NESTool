@@ -25,6 +25,7 @@ namespace NESTool.UserControls.ViewModels
         private int _frameIndex;
         private string _projectGridSize;
         private Dictionary<string, WriteableBitmap> _bitmapCache = new Dictionary<string, WriteableBitmap>();
+        private Dictionary<string, WriteableBitmap> _frameBitmapCache = new Dictionary<string, WriteableBitmap>();
         private ImageSource _bankImage;
         private Visibility _selectionRectangleVisibility = Visibility.Hidden;
         private double _selectionRectangleTop = 0.0;
@@ -32,6 +33,7 @@ namespace NESTool.UserControls.ViewModels
         private int _selectedPatternTableTile;
         private CharacterModel _characterModel;
         private FileHandler _fileHandler;
+        private ImageSource _frameImage;
 
         #region Commands
         public SwitchCharacterFrameViewCommand SwitchCharacterFrameViewCommand { get; } = new SwitchCharacterFrameViewCommand();
@@ -59,6 +61,20 @@ namespace NESTool.UserControls.ViewModels
                 _characterModel = value;
 
                 OnPropertyChanged("CharacterModel");
+            }
+        }
+
+        public ImageSource FrameImage
+        {
+            get
+            {
+                return _frameImage;
+            }
+            set
+            {
+                _frameImage = value;
+
+                OnPropertyChanged("FrameImage");
             }
         }
 
@@ -131,8 +147,19 @@ namespace NESTool.UserControls.ViewModels
                 _tabId = value;
 
                 OnPropertyChanged("TabID");
+
+                for (int i = 0; i < CharacterModel.Animations.Length; ++i)
+                {
+                    if (CharacterModel.Animations[i].ID == TabID)
+                    {
+                        AnimationIndex = i;
+                        break;
+                    }
+                }
             }
         }
+
+        public int AnimationIndex { get; set; }
 
         public int FrameIndex
         {
@@ -187,6 +214,13 @@ namespace NESTool.UserControls.ViewModels
             #endregion
 
             UpdateDialogInfo();
+        }
+
+        public override void OnActivate()
+        {
+            base.OnActivate();
+
+            LoadFrameImage();
         }
 
         private void UpdateDialogInfo()
@@ -259,6 +293,18 @@ namespace NESTool.UserControls.ViewModels
             WriteableBitmap patternTableBitmap = PatternTableUtils.CreateImage(model, ref _bitmapCache);
 
             BankImage = Util.ConvertWriteableBitmapToBitmapImage(patternTableBitmap);
+        }
+
+        private void LoadFrameImage()
+        {
+            if (CharacterModel == null)
+            {
+                return;
+            }
+
+            WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, AnimationIndex, FrameIndex, ref _frameBitmapCache);
+
+            FrameImage = Util.ConvertWriteableBitmapToBitmapImage(frameBitmap);
         }
     }
 }

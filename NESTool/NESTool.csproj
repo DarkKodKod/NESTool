@@ -182,6 +182,7 @@
       <DependentUpon>PatternTableLinkView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Behaviors\RedirectRoutedEventBehavior.cs" />
+    <Compile Include="Utils\CharacterUtils.cs" />
     <Compile Include="Utils\PaletteQuantizer.cs" />
     <Compile Include="Utils\CustomTypeConverter\ProjectItemTypeConverter.cs" />
     <Compile Include="FileSystem\ProjectItemFileSystem.cs" />
