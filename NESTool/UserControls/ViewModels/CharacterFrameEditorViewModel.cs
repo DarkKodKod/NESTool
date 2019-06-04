@@ -355,7 +355,7 @@ namespace NESTool.UserControls.ViewModels
                 {
                     RectangleVisibility = Visibility.Visible;
                 }
-                else if (EditFrameTools == EditFrameTools.Paint)
+                else if (EditFrameTools == EditFrameTools.Paint && SelectionRectangleVisibility == Visibility.Visible)
                 {
                     PaintFrame();
                 }
@@ -374,14 +374,23 @@ namespace NESTool.UserControls.ViewModels
 
         private void PaintFrame()
         {
-            Point croppedPoint = new Point
+            Point characterPoint = new Point
             {
-                X = SelectionRectangleLeft,
-                Y = SelectionRectangleTop
+                X = RectangleLeft,
+                Y = RectangleTop
             };
 
-            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].GUID = "20b60e59-1da0-4e84-8063-b3874464f2a7";
-            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].Point = croppedPoint;
+            PatternTableModel model = Banks[SelectedBank].Model as PatternTableModel;
+
+            Point croppedPoint = model.PTTiles[SelectedPatternTableTile].Point;
+            string guid = model.PTTiles[SelectedPatternTableTile].GUID;
+
+            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].GUID = guid;
+            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].Point = characterPoint;
+            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].OriginPoint = croppedPoint;
+            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].FlipX = false;
+            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].FlipY = false;
+            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].PaletteIndex = 0;
 
             FileHandler.Save();
 

@@ -7,22 +7,15 @@ namespace NESTool.Models
     {
         public string GUID { get; set; }
         public Point Point { get; set; }
+        public Point OriginPoint { get; set; }
         public bool FlipX { get; set; }
         public bool FlipY { get; set; }
         public int PaletteIndex { get; set; }
     }
 
-    public struct Collision
-    {
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public Point Hotspot { get; set; }
-    }
-
     public struct Frame
     {
         public CharacterTile[] Tiles { get; set; }
-        public Collision Collision { get; set; }
         public bool FixToGrid { get; set; }
     }
 

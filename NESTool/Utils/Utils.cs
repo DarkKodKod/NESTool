@@ -1,11 +1,5 @@
-﻿using ArchitectureLibrary.Signals;
-using NESTool.Enums;
-using NESTool.FileSystem;
+﻿using NESTool.Enums;
 using NESTool.Models;
-using NESTool.Signals;
-using NESTool.VOs;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -199,62 +193,6 @@ namespace NESTool.Utils
 
             // copy dest buffer back to the dest WriteableBitmap
             dest.WritePixels(new Int32Rect(nXDest, nYDest, src.PixelWidth, src.PixelHeight), dest_buffer, dest_stride, 0);
-        }
-
-        public static bool CopyTileSetToBitmap(string GUID, Point point, ref WriteableBitmap patternTableBitmap, int index, FileModelVO[] tileSets, ref Dictionary<string, WriteableBitmap> bitmapCache, bool sendSignals)
-        {
-            if (string.IsNullOrEmpty(GUID))
-            {
-                return false;
-            }
-
-            if (!bitmapCache.TryGetValue(GUID, out WriteableBitmap sourceBitmap))
-            {
-                TileSetModel model = ProjectFiles.GetModel<TileSetModel>(GUID);
-
-                if (model == null)
-                {
-                    return false;
-                }
-
-                BitmapImage bmImage = new BitmapImage();
-
-                bmImage.BeginInit();
-                bmImage.CacheOption = BitmapCacheOption.OnLoad;
-                bmImage.UriSource = new Uri(model.ImagePath, UriKind.Absolute);
-                bmImage.EndInit();
-                bmImage.Freeze();
-
-                sourceBitmap = BitmapFactory.ConvertToPbgra32Format(bmImage as BitmapSource);
-
-                bitmapCache.Add(GUID, sourceBitmap);
-
-                // Add the link object
-                foreach (FileModelVO tileset in tileSets)
-                {
-                    if (tileset.Model.GUID == GUID && sendSignals)
-                    {
-                        SignalManager.Get<AddNewTileSetLinkSignal>().Dispatch(new PatternTableLinkVO() { Caption = tileset.Name, Id = GUID });
-                        break;
-                    }
-                }
-            }
-
-            using (sourceBitmap.GetBitmapContext())
-            {
-                int x = (int)Math.Floor(point.X / 8) * 8;
-                int y = (int)Math.Floor(point.Y / 8) * 8;
-
-                WriteableBitmap cropped = sourceBitmap.Crop(x, y, 8, 8);
-                BitmapImage croppedBitmap = Util.ConvertWriteableBitmapToBitmapImage(cropped);
-
-                int destX = (index % 16) * 8;
-                int destY = (index / 16) * 8;
-
-                CopyBitmapImageToWriteableBitmap(ref patternTableBitmap, destX, destY, croppedBitmap);
-            }
-
-            return true;
         }
     }
 }
