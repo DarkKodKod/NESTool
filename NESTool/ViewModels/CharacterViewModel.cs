@@ -165,6 +165,14 @@ namespace NESTool.ViewModels
                 {
                     tab.SwapContent(tabId, frameIndex);
 
+                    if (tab.Content is CharacterAnimationView frameView)
+                    {
+                        foreach (CharacterFrameView frame in frameView.FrameViewList)
+                        {
+                            frame.OnActivate();
+                        }
+                    }
+
                     return;
                 }
             }

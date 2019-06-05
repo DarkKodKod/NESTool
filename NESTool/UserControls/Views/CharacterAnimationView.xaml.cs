@@ -1,6 +1,7 @@
 ﻿using ArchitectureLibrary.Signals;
 using NESTool.Signals;
 using NESTool.UserControls.ViewModels;
+using System.Collections.Generic;
 using System.Windows.Controls;
 
 namespace NESTool.UserControls.Views
@@ -10,6 +11,8 @@ namespace NESTool.UserControls.Views
     /// </summary>
     public partial class CharacterAnimationView : UserControl
     {
+        public List<CharacterFrameView> FrameViewList { get; set; } = new List<CharacterFrameView>();
+
         public CharacterAnimationView()
         {
             InitializeComponent();
@@ -29,6 +32,15 @@ namespace NESTool.UserControls.Views
             }
 
             spFrames.Children.RemoveAt(frameIndex);
+
+            foreach (CharacterFrameView frame in FrameViewList)
+            {
+                if (frame.FrameIndex == frameIndex)
+                {
+                    FrameViewList.Remove(frame);
+                    break;
+                }
+            }
 
             int index = 0;
 
@@ -52,6 +64,8 @@ namespace NESTool.UserControls.Views
                 }
 
                 CharacterFrameView frame = new CharacterFrameView(tabID, spFrames.Children.Count - 1, viewModel.FileHandler, viewModel.CharacterModel);
+
+                FrameViewList.Add(frame);
 
                 spFrames.Children.Insert(spFrames.Children.Count - 1, frame);
             }

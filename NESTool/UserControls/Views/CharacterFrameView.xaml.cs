@@ -95,6 +95,11 @@ namespace NESTool.UserControls.Views
             LoadFrameImage();
         }
 
+        public void OnActivate()
+        {
+            LoadFrameImage();
+        }
+
         private void LoadFrameImage()
         {
             if (CharacterModel == null)
