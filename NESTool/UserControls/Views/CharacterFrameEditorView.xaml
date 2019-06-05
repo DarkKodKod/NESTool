@@ -49,7 +49,7 @@
         </Button>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="590"/>
+                <ColumnDefinition Width="400"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
@@ -102,9 +102,9 @@
                             <Image Width="24" Height="24" Source="/resources/erase.png"/>
                         </RadioButton>
                     </StackPanel>
-                    <Border Grid.Column="3" Width="510" Height="510" Grid.Row="2"
+                    <Border Grid.Column="3" Width="256" Height="256" Grid.Row="2"
                             VerticalAlignment="Top" HorizontalAlignment="Left">
-                        <Canvas Width="128" Height="128" 
+                        <Canvas Width="64" Height="64" 
 		                        Background="DarkGray"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top">
@@ -112,8 +112,8 @@
                                 <ScaleTransform ScaleX="4" ScaleY="4"/>
                             </Canvas.RenderTransform>
                             <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
-	                               Width="128"
-	                               Height="128"
+	                               Width="64"
+	                               Height="64"
                                    Source="{Binding FrameImage}"
                                    Name="imgFrame"
 	                               Stretch="UniformToFill">
@@ -133,7 +133,7 @@
                                         </VisualBrush.Visual>
                                     </VisualBrush>
                                 </Border.Background>
-                                <Canvas Width="128" Height="128" Background="Transparent">
+                                <Canvas Width="64" Height="64" Background="Transparent">
                                     <i:Interaction.Behaviors>
                                         <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgFrame}"/>
                                     </i:Interaction.Behaviors>

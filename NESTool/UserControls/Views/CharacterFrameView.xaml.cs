@@ -1,7 +1,11 @@
 ﻿using NESTool.Commands;
 using NESTool.Models;
+using NESTool.Utils;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace NESTool.UserControls.Views
 {
@@ -12,6 +16,21 @@ namespace NESTool.UserControls.Views
     {
         private string _tabId;
         private int _frameIndex;
+        private ImageSource _frameImage;
+        private CharacterModel _characterModel;
+        private Dictionary<string, WriteableBitmap> _frameBitmapCache = new Dictionary<string, WriteableBitmap>();
+
+        #region get/set
+        public CharacterModel CharacterModel
+        {
+            get { return _characterModel; }
+            set
+            {
+                _characterModel = value;
+
+                OnPropertyChanged("CharacterModel");
+            }
+        }
 
         public string TabID
         {
@@ -37,6 +56,21 @@ namespace NESTool.UserControls.Views
             }
         }
 
+        public ImageSource FrameImage
+        {
+            get
+            {
+                return _frameImage;
+            }
+            set
+            {
+                _frameImage = value;
+
+                OnPropertyChanged("FrameImage");
+            }
+        }
+        #endregion
+
         #region Commands
         public SwitchCharacterFrameViewCommand SwitchCharacterFrameViewCommand { get; } = new SwitchCharacterFrameViewCommand();
         public DeleteAnimationFrameCommand DeleteAnimationFrameCommand { get; } = new DeleteAnimationFrameCommand();
@@ -49,13 +83,44 @@ namespace NESTool.UserControls.Views
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propname));
         }
 
-        public CharacterFrameView(string tabID, int frameIndex, FileHandler fileHandler)
+        public CharacterFrameView(string tabID, int frameIndex, FileHandler fileHandler, CharacterModel model)
         {
             InitializeComponent();
 
             TabID = tabID;
             FrameIndex = frameIndex;
             FileHandler = fileHandler;
+            CharacterModel = model;
+
+            LoadFrameImage();
+        }
+
+        private void LoadFrameImage()
+        {
+            if (CharacterModel == null)
+            {
+                return;
+            }
+
+            int animationIndex = -1;
+
+            for (int i = 0; i < CharacterModel.Animations.Length; ++i)
+            {
+                if (CharacterModel.Animations[i].ID == TabID)
+                {
+                    animationIndex = i;
+                    break;
+                }
+            }
+
+            if (animationIndex == -1)
+            {
+                return;
+            }
+
+            WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, animationIndex, FrameIndex, ref _frameBitmapCache);
+
+            FrameImage = Util.ConvertWriteableBitmapToBitmapImage(frameBitmap);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace NESTool.Utils
     {
         public static WriteableBitmap CreateImage(CharacterModel characterModel, int animationIndex, int frameIndex, ref Dictionary<string, WriteableBitmap> bitmapCache)
         {
-            WriteableBitmap patternTableBitmap = BitmapFactory.New(128, 128);
+            WriteableBitmap patternTableBitmap = BitmapFactory.New(64, 64);
 
             using (patternTableBitmap.GetBitmapContext())
             {

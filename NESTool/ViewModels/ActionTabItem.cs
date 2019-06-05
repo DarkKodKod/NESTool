@@ -77,10 +77,10 @@ namespace NESTool.ViewModels
 
                 _currentFrameViewModel = characterView.DataContext as CharacterFrameEditorViewModel;
 
-                _currentFrameViewModel.OnActivate();
-
                 _currentFrameViewModel.TabID = tabId;
                 _currentFrameViewModel.FrameIndex = frameIndex;
+
+                _currentFrameViewModel.OnActivate();
             }
         }
 

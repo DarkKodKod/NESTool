@@ -51,7 +51,9 @@ namespace NESTool.UserControls.Views
                     return;
                 }
 
-                spFrames.Children.Insert(spFrames.Children.Count - 1, new CharacterFrameView(tabID, spFrames.Children.Count - 1, viewModel.FileHandler));
+                CharacterFrameView frame = new CharacterFrameView(tabID, spFrames.Children.Count - 1, viewModel.FileHandler, viewModel.CharacterModel);
+
+                spFrames.Children.Insert(spFrames.Children.Count - 1, frame);
             }
         }
     }

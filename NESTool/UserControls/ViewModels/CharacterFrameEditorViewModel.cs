@@ -347,7 +347,7 @@ namespace NESTool.UserControls.ViewModels
                 RectangleLeft = point.X;
                 RectangleTop = point.Y;
 
-                int index = ((int)point.X / 8) + (((int)point.Y / 8) * 16);
+                int index = ((int)point.X / 8) + (((int)point.Y / 8) * 8);
 
                 SelectedFrameTile = index;
 
@@ -357,7 +357,11 @@ namespace NESTool.UserControls.ViewModels
                 }
                 else if (EditFrameTools == EditFrameTools.Paint && SelectionRectangleVisibility == Visibility.Visible)
                 {
-                    PaintFrame();
+                    UpadteSprite(EditFrameTools.Paint);
+                }
+                else if (EditFrameTools == EditFrameTools.Erase)
+                {
+                    UpadteSprite(EditFrameTools.Erase);
                 }
             }
             else if (sender.Name == "imgPatternTable")
@@ -372,7 +376,7 @@ namespace NESTool.UserControls.ViewModels
             }
         }
 
-        private void PaintFrame()
+        private void UpadteSprite(EditFrameTools tool)
         {
             Point characterPoint = new Point
             {
@@ -382,15 +386,19 @@ namespace NESTool.UserControls.ViewModels
 
             PatternTableModel model = Banks[SelectedBank].Model as PatternTableModel;
 
-            Point croppedPoint = model.PTTiles[SelectedPatternTableTile].Point;
-            string guid = model.PTTiles[SelectedPatternTableTile].GUID;
+            if (tool == EditFrameTools.Paint)
+            {
+                Point croppedPoint = model.PTTiles[SelectedPatternTableTile].Point;
+                string guid = model.PTTiles[SelectedPatternTableTile].GUID;
 
-            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].GUID = guid;
-            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].Point = characterPoint;
-            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].OriginPoint = croppedPoint;
-            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].FlipX = false;
-            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].FlipY = false;
-            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].PaletteIndex = 0;
+                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].GUID = guid;
+                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].Point = characterPoint;
+                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].OriginPoint = croppedPoint;
+            }
+            else if (tool == EditFrameTools.Erase)
+            {
+                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].GUID = string.Empty;
+            }
 
             FileHandler.Save();
 
