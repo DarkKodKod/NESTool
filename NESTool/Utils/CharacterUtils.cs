@@ -10,6 +10,11 @@ namespace NESTool.Utils
     {
         public static WriteableBitmap CreateImage(CharacterModel characterModel, int animationIndex, int frameIndex, ref Dictionary<string, WriteableBitmap> bitmapCache)
         {
+            if (characterModel.Animations[animationIndex].Frames[frameIndex].Tiles == null)
+            {
+                return null;
+            }
+
             WriteableBitmap patternTableBitmap = BitmapFactory.New(64, 64);
 
             using (patternTableBitmap.GetBitmapContext())
@@ -46,6 +51,17 @@ namespace NESTool.Utils
                     using (sourceBitmap.GetBitmapContext())
                     {
                         WriteableBitmap cropped = sourceBitmap.Crop((int)tile.OriginPoint.X, (int)tile.OriginPoint.Y, 8, 8);
+                        
+                        if (tile.FlipX)
+                        {
+                            cropped = WriteableBitmapExtensions.Flip(cropped, WriteableBitmapExtensions.FlipMode.Vertical);
+                        }
+
+                        if (tile.FlipY)
+                        {
+                            cropped = WriteableBitmapExtensions.Flip(cropped, WriteableBitmapExtensions.FlipMode.Horizontal);
+                        }
+
                         BitmapImage croppedBitmap = Util.ConvertWriteableBitmapToBitmapImage(cropped);
 
                         int destX = (int)Math.Floor(tile.Point.X / 8) * 8;

@@ -19,6 +19,12 @@ namespace NESTool.UserControls.ViewModels
 {
     public class CharacterFrameEditorViewModel : ViewModel
     {
+        private enum SpriteProperties
+        {
+            FlipX,
+            FlipY
+        }
+
         private FileModelVO[] _banks;
         private int _selectedBank;
         private string _tabId;
@@ -39,6 +45,10 @@ namespace NESTool.UserControls.ViewModels
         private Visibility _rectangleVisibility = Visibility.Hidden;
         private double _rectangleTop = 0.0;
         private double _rectangleLeft = 0.0;
+        private bool _flipX = false;
+        private bool _flipY = false;
+        private bool[] _spritePropertiesX = new bool[64];
+        private bool[] _spritePropertiesY = new bool[64];
 
         #region Commands
         public SwitchCharacterFrameViewCommand SwitchCharacterFrameViewCommand { get; } = new SwitchCharacterFrameViewCommand();
@@ -47,6 +57,38 @@ namespace NESTool.UserControls.ViewModels
         #endregion
 
         #region get/set
+        public bool FlipX
+        {
+            get { return _flipX; }
+            set
+            {
+                if (_flipX != value)
+                {
+                    _flipX = value;
+
+                    OnPropertyChanged("FlipX");
+
+                    SaveProperty(SpriteProperties.FlipX, value);
+                }
+            }
+        }
+
+        public bool FlipY
+        {
+            get { return _flipY; }
+            set
+            {
+                if (_flipY != value)
+                {
+                    _flipY = value;
+
+                    OnPropertyChanged("FlipY");
+
+                    SaveProperty(SpriteProperties.FlipY, value);
+                }
+            }
+        }
+
         public FileHandler FileHandler
         {
             get { return _fileHandler; }
@@ -294,6 +336,17 @@ namespace NESTool.UserControls.ViewModels
             EditFrameTools = EditFrameTools.Select;
 
             LoadFrameImage();
+
+            LoadSpritesProperties();
+        }
+
+        private void LoadSpritesProperties()
+        {
+            for (int i = 0; i < CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles.Length; ++i)
+            {
+                _spritePropertiesX[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].FlipX;
+                _spritePropertiesY[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].FlipY;
+            }
         }
 
         private void UpdateDialogInfo()
@@ -354,6 +407,9 @@ namespace NESTool.UserControls.ViewModels
                 if (EditFrameTools == EditFrameTools.Select)
                 {
                     RectangleVisibility = Visibility.Visible;
+
+                    FlipX = _spritePropertiesX[SelectedFrameTile];
+                    FlipY = _spritePropertiesY[SelectedFrameTile];
                 }
                 else if (EditFrameTools == EditFrameTools.Paint && SelectionRectangleVisibility == Visibility.Visible)
                 {
@@ -403,6 +459,37 @@ namespace NESTool.UserControls.ViewModels
             FileHandler.Save();
 
             LoadFrameImage();
+        }
+
+        private void SaveProperty(SpriteProperties property, bool value)
+        {
+            if (property == SpriteProperties.FlipX)
+            {
+                if (_spritePropertiesX[SelectedFrameTile] != value)
+                {
+                    _spritePropertiesX[SelectedFrameTile] = value;
+
+                    CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].FlipX = FlipX;
+
+                    FileHandler.Save();
+
+                    LoadFrameImage();
+                }
+            }
+
+            if (property == SpriteProperties.FlipY)
+            {
+                if (_spritePropertiesY[SelectedFrameTile] != value)
+                {
+                    _spritePropertiesY[SelectedFrameTile] = value;
+
+                    CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].FlipY = FlipY;
+
+                    FileHandler.Save();
+
+                    LoadFrameImage();
+                }
+            }
         }
 
         private void LoadBankImage()
