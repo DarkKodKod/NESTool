@@ -162,8 +162,18 @@
                             <CheckBox IsChecked="{Binding FlipY, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Column="1">Flip Y</CheckBox>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Header="Palettes" Grid.Row="4">
-
+                    <GroupBox Header="Palettes" Grid.Row="4" Padding="10">
+                        <StackPanel>
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="Margin" Value="0,20,0,0"/>
+                                </Style>
+                            </StackPanel.Resources>
+                            <Button>pallete 1</Button>
+                            <Button>pallete 2</Button>
+                            <Button>pallete 3</Button>
+                            <Button>pallete 4</Button>
+                        </StackPanel>
                     </GroupBox>
                 </Grid>
             </GroupBox>

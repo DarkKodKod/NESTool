@@ -62,6 +62,11 @@ namespace NESTool.UserControls.ViewModels
             get { return _flipX; }
             set
             {
+                if (EditFrameTools != EditFrameTools.Select)
+                {
+                    return;
+                }
+
                 if (_flipX != value)
                 {
                     _flipX = value;
@@ -78,6 +83,11 @@ namespace NESTool.UserControls.ViewModels
             get { return _flipY; }
             set
             {
+                if (EditFrameTools != EditFrameTools.Select)
+                {
+                    return;
+                }
+
                 if (_flipY != value)
                 {
                     _flipY = value;

@@ -62,6 +62,8 @@ namespace NESTool.Utils
                             cropped = WriteableBitmapExtensions.Flip(cropped, WriteableBitmapExtensions.FlipMode.Horizontal);
                         }
 
+                        cropped.Freeze();
+
                         BitmapImage croppedBitmap = Util.ConvertWriteableBitmapToBitmapImage(cropped);
 
                         int destX = (int)Math.Floor(tile.Point.X / 8) * 8;
