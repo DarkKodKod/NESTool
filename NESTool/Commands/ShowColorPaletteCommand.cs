@@ -9,11 +9,14 @@ namespace NESTool.Commands
     {
         public override void Execute(object parameter)
         {
-            UserControl userControl = parameter as UserControl;
+            object[] values = (object[])parameter;
+            UserControl userControl = (UserControl)values[0];
+            int colorPosition = (int)values[1];
+            int paletteIndex = (int)values[2];
 
             Window window = Window.GetWindow(userControl);
 
-            ColorPaletteDialog dialog = new ColorPaletteDialog(0)
+            ColorPaletteDialog dialog = new ColorPaletteDialog(paletteIndex, colorPosition)
             {
                 Owner = window
             };

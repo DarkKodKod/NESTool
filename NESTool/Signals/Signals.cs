@@ -16,6 +16,7 @@ namespace NESTool.Signals
     public class ShowGridSignal : Signal { }
     public class HideGridSignal : Signal { }
     public class ProjectConfigurationSavedSignal : Signal { }
+    public class ColorPaletteControlSelectedSignal : Signal<Color, int, int> { }
 
     // Edit
     public class PasteElementSignal : Signal<ProjectItem, ProjectItem> { }
@@ -53,7 +54,7 @@ namespace NESTool.Signals
     public class MouseWheelSignal : Signal<MouseWheelVO> { }
     public class OutputSelectedQuadrantSignal : Signal<Image, WriteableBitmap, Point> { }
     public class SelectedPixelSignal : Signal<WriteableBitmap, Point> { }
-    public class ColorPalleteSelectSignal : Signal<Color> { }
+    public class ColorPaletteSelectSignal : Signal<Color> { }
     public class SavedPixelChangesSignal : Signal { }
 
     // PatternTable

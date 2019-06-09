@@ -170,10 +170,10 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <local:PaletteView Grid.Row="0"/>
-                            <local:PaletteView Grid.Row="1"/>
-                            <local:PaletteView Grid.Row="2"/>
-                            <local:PaletteView Grid.Row="3"/>
+                            <local:PaletteView Grid.Row="0" PaletteIndex="0"/>
+                            <local:PaletteView Grid.Row="1" PaletteIndex="1"/>
+                            <local:PaletteView Grid.Row="2" PaletteIndex="2"/>
+                            <local:PaletteView Grid.Row="3" PaletteIndex="3"/>
                         </Grid>
                     </GroupBox>
                 </Grid>

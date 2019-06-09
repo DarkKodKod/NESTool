@@ -5,8 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NESTool.UserControls.Views"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             xmlns:cv="clr-namespace:NESTool.Utils.Converters"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              Name="PaletteViewControl"
              mc:Ignorable="d" Width="149" Height="40">
+    <UserControl.Resources>
+        <cv:ParametersConverter x:Key="parametersConverter"/>
+        <system:Int32 x:Key="index0">0</system:Int32>
+        <system:Int32 x:Key="index1">1</system:Int32>
+        <system:Int32 x:Key="index2">2</system:Int32>
+        <system:Int32 x:Key="index3">3</system:Int32>
+    </UserControl.Resources>
     <Grid Background="red">
         <Grid.RowDefinitions>
             <RowDefinition Height="1"/>
@@ -26,25 +35,53 @@
         </Grid.ColumnDefinitions>
         <Button Name="Color1" Grid.Column="1" Grid.Row="1" 
                 BorderThickness="0" 
-                Command="{Binding ShowColorPaletteCommand}" CommandParameter="{Binding ElementName=PaletteViewControl}">
+                Command="{Binding ShowColorPaletteCommand}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource parametersConverter}">
+                    <Binding ElementName="PaletteViewControl" />
+                    <Binding Source="{StaticResource index0}"/>
+                    <Binding Path="PaletteIndex"/>
+                </MultiBinding>
+            </Button.CommandParameter>
             <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
                     Background="Black" Width="36" Height="38" />
         </Button>
         <Button Name="Color2" Grid.Column="3" Grid.Row="1" 
                 BorderThickness="0"
-                Command="{Binding ShowColorPaletteCommand}" CommandParameter="{Binding ElementName=PaletteViewControl}">
+                Command="{Binding ShowColorPaletteCommand}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource parametersConverter}">
+                    <Binding ElementName="PaletteViewControl" />
+                    <Binding Source="{StaticResource index1}"/>
+                    <Binding Path="PaletteIndex"/>
+                </MultiBinding>
+            </Button.CommandParameter>
             <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
                     Background="Black" Width="36" Height="38" />
         </Button>
         <Button Name="Color3" Grid.Column="5" Grid.Row="1" 
                 BorderThickness="0"
-                Command="{Binding ShowColorPaletteCommand}" CommandParameter="{Binding ElementName=PaletteViewControl}">
+                Command="{Binding ShowColorPaletteCommand}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource parametersConverter}">
+                    <Binding ElementName="PaletteViewControl" />
+                    <Binding Source="{StaticResource index2}"/>
+                    <Binding Path="PaletteIndex"/>
+                </MultiBinding>
+            </Button.CommandParameter>
             <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
                     Background="Black" Width="36" Height="38" />
         </Button>
         <Button Name="Color4" Grid.Column="7" Grid.Row="1" 
                 BorderThickness="0"
-                 Command="{Binding ShowColorPaletteCommand}" CommandParameter="{Binding ElementName=PaletteViewControl}">
+                 Command="{Binding ShowColorPaletteCommand}">
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource parametersConverter}">
+                    <Binding ElementName="PaletteViewControl" />
+                    <Binding Source="{StaticResource index3}"/>
+                    <Binding Path="PaletteIndex"/>
+                </MultiBinding>
+            </Button.CommandParameter>
             <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
                     Background="Black" Width="36" Height="38" />
         </Button>

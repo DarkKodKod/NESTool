@@ -20,10 +20,10 @@ namespace NESTool.Views
             InitializeComponent();
 
             SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
-            SignalManager.Get<ColorPalleteSelectSignal>().AddListener(OnColorPalleteSelect);
+            SignalManager.Get<ColorPaletteSelectSignal>().AddListener(OnColorPaletteSelect);
         }
 
-        private void OnColorPalleteSelect(Color color)
+        private void OnColorPaletteSelect(Color color)
         {
             SolidColorBrush scb = new SolidColorBrush
             {

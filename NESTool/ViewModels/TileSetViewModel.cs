@@ -218,7 +218,7 @@ namespace NESTool.ViewModels
             }
         }
 
-        private void OnColorPalleteSelect(Color color)
+        private void OnColorPaletteSelect(Color color)
         {
             if (IsActive)
             {
@@ -290,7 +290,7 @@ namespace NESTool.ViewModels
             SignalManager.Get<HideGridSignal>().AddListener(OnHideGrid);
             SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
             SignalManager.Get<SelectedPixelSignal>().AddListener(OnSelectedPixel);
-            SignalManager.Get<ColorPalleteSelectSignal>().AddListener(OnColorPalleteSelect);
+            SignalManager.Get<ColorPaletteSelectSignal>().AddListener(OnColorPaletteSelect);
             SignalManager.Get<SavedPixelChangesSignal>().AddListener(OnSavedPixelChanges);
             SignalManager.Get<BrowseFileSuccessSignal>().AddListener(BrowseFileSuccess);
             #endregion
@@ -309,7 +309,7 @@ namespace NESTool.ViewModels
             SignalManager.Get<HideGridSignal>().RemoveListener(OnHideGrid);
             SignalManager.Get<OutputSelectedQuadrantSignal>().RemoveListener(OnOutputSelectedQuadrant);
             SignalManager.Get<SelectedPixelSignal>().RemoveListener(OnSelectedPixel);
-            SignalManager.Get<ColorPalleteSelectSignal>().RemoveListener(OnColorPalleteSelect);
+            SignalManager.Get<ColorPaletteSelectSignal>().RemoveListener(OnColorPaletteSelect);
             SignalManager.Get<SavedPixelChangesSignal>().RemoveListener(OnSavedPixelChanges);
             SignalManager.Get<BrowseFileSuccessSignal>().RemoveListener(BrowseFileSuccess);
             #endregion

@@ -11,7 +11,7 @@ namespace NESTool.Commands
         {
             PaletteEventArgs palette = parameter as PaletteEventArgs;
 
-            SignalManager.Get<ColorPalleteSelectSignal>().Dispatch(palette.C);
+            SignalManager.Get<ColorPaletteSelectSignal>().Dispatch(palette.C);
         }
     }
 }

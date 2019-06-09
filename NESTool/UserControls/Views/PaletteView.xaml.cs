@@ -9,9 +9,22 @@ namespace NESTool.UserControls.Views
     /// </summary>
     public partial class PaletteView : UserControl, INotifyPropertyChanged
     {
+        private int _paletteIndex;
+
         #region Commands
         public ShowColorPaletteCommand ShowColorPaletteCommand { get; } = new ShowColorPaletteCommand();
         #endregion
+
+        public int PaletteIndex
+        {
+            get { return _paletteIndex; }
+            set
+            {
+                _paletteIndex = value;
+
+                OnPropertyChanged("PaletteIndex");
+            }
+        }
 
         public PaletteView()
         {

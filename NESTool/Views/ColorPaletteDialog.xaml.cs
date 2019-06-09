@@ -14,16 +14,22 @@ namespace NESTool.Views
     /// </summary>
     public partial class ColorPaletteDialog : Window, INotifyPropertyChanged
     {
+        private int _paletteIndex;
+        private int _colorPosition;
+
         #region Commands
         public ColorPaletteSelectCommand ColorPaletteSelectCommand { get; } = new ColorPaletteSelectCommand();
         public CloseDialogCommand CloseDialogCommand { get; } = new CloseDialogCommand();
         #endregion
 
-        public ColorPaletteDialog(int paletteIndex)
+        public ColorPaletteDialog(int paletteIndex, int colorPosition)
         {
             InitializeComponent();
+            
+            _paletteIndex = paletteIndex;
+            _colorPosition = colorPosition;
 
-            SignalManager.Get<ColorPalleteSelectSignal>().AddListener(OnColorPalleteSelect);
+            SignalManager.Get<ColorPaletteSelectSignal>().AddListener(OnColorPaletteSelect);
             SignalManager.Get<CloseDialogSignal>().AddListener(OnCloseDialog);
         }
 
@@ -34,16 +40,16 @@ namespace NESTool.Views
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propname));
         }
 
-        private void OnColorPalleteSelect(Color color)
+        private void OnColorPaletteSelect(Color color)
         {
-            //
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(color, _paletteIndex, _colorPosition);
 
             DialogResult = true;
         }
 
         private void OnCloseDialog()
         {
-            SignalManager.Get<ColorPalleteSelectSignal>().RemoveListener(OnColorPalleteSelect);
+            SignalManager.Get<ColorPaletteSelectSignal>().RemoveListener(OnColorPaletteSelect);
             SignalManager.Get<CloseDialogSignal>().RemoveListener(OnCloseDialog);
         }
 
