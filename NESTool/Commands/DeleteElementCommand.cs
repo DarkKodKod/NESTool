@@ -3,6 +3,7 @@ using ArchitectureLibrary.Signals;
 using NESTool.FileSystem;
 using NESTool.HistoryActions;
 using NESTool.Signals;
+using System.Windows;
 
 namespace NESTool.Commands
 {
@@ -30,11 +31,16 @@ namespace NESTool.Commands
                 return;
             }
 
-            SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(new DeleteProjectItemHitoryAction(ItemSelected));
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this element?", "Delete", MessageBoxButton.YesNo);
 
-            ProjectItemFileSystem.DeteElement(ItemSelected);
+            if (result == MessageBoxResult.Yes)
+            {
+                SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(new DeleteProjectItemHitoryAction(ItemSelected));
 
-            SignalManager.Get<DeleteElementSignal>().Dispatch(ItemSelected);
+                ProjectItemFileSystem.DeteElement(ItemSelected);
+
+                SignalManager.Get<DeleteElementSignal>().Dispatch(ItemSelected);
+            }
         }
     }
 }

@@ -133,11 +133,11 @@
                 </Canvas>
             </Border>
             <my:ColorPaletteControl Name="ColorPalette1" Grid.Row="1"
-                          PaletteHeight="85" PaletteWidth="325" 
-                          CellHeight="20" CellWidth="20" 
-                          Width="326" Height="86"
-                          VerticalAlignment="Top"
-                          Hover="ColorPalette1_Hover">
+                                    PaletteHeight="85" PaletteWidth="325" 
+                                    CellHeight="20" CellWidth="20" 
+                                    Width="326" Height="86"
+                                    VerticalAlignment="Top"
+                                    Hover="ColorPalette1_Hover">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Select">
                         <cmd:EventToCommand Command="{Binding ColorPaletteSelectCommand}" PassEventArgsToCommand="True" />

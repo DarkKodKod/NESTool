@@ -21,6 +21,6 @@ namespace ArchitectureLibrary.Managers
             return (T)interfaceObject;
         }
 
-        private static Dictionary<string, object> Interfaces = new Dictionary<string, object>();
+        private static readonly Dictionary<string, object> Interfaces = new Dictionary<string, object>();
     }
 }

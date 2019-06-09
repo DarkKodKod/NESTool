@@ -70,6 +70,12 @@ namespace NESTool.UserControls.ViewModels
 
         public CharacterAnimationViewModel()
         {
+        }
+
+        public override void OnActivate()
+        {
+            base.OnActivate();
+
             #region Signals
             SignalManager.Get<PauseCharacterAnimationSignal>().AddListener(OnPauseCharacterAnimation);
             SignalManager.Get<NextFrameCharacterAnimationSignal>().AddListener(OnNextFrameCharacterAnimation);
@@ -77,11 +83,6 @@ namespace NESTool.UserControls.ViewModels
             SignalManager.Get<PlayCharacterAnimationSignal>().AddListener(OnPlayCharacterAnimation);
             SignalManager.Get<PreviousFrameCharacterAnimationSignal>().AddListener(OnPreviousFrameCharacterAnimation);
             #endregion
-        }
-
-        public override void OnActivate()
-        {
-            base.OnActivate();
 
             for (int i = 0; i < CharacterModel.Animations.Length; ++i)
             {
@@ -100,6 +101,19 @@ namespace NESTool.UserControls.ViewModels
                     }
                 }
             }
+        }
+
+        public override void OnDeactivate()
+        {
+            base.OnDeactivate();
+
+            #region Signals
+            SignalManager.Get<PauseCharacterAnimationSignal>().RemoveListener(OnPauseCharacterAnimation);
+            SignalManager.Get<NextFrameCharacterAnimationSignal>().RemoveListener(OnNextFrameCharacterAnimation);
+            SignalManager.Get<StopCharacterAnimationSignal>().RemoveListener(OnStopCharacterAnimation);
+            SignalManager.Get<PlayCharacterAnimationSignal>().RemoveListener(OnPlayCharacterAnimation);
+            SignalManager.Get<PreviousFrameCharacterAnimationSignal>().RemoveListener(OnPreviousFrameCharacterAnimation);
+            #endregion
         }
 
         private void OnPauseCharacterAnimation(string tabId)

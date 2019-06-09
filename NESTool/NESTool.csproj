@@ -141,6 +141,7 @@
     <Compile Include="Commands\NewAnimationFrameCommand.cs" />
     <Compile Include="Commands\NextFrameCharacterAnimationCommand.cs" />
     <Compile Include="Commands\OpenBuildProjectCommand.cs" />
+    <Compile Include="Commands\ShowColorPaletteCommand.cs" />
     <Compile Include="Commands\SwitchCharacterFrameViewCommand.cs" />
     <Compile Include="Commands\OpenImportImageDialogCommand.cs" />
     <Compile Include="Commands\ItemSelectedCommand.cs" />
@@ -177,6 +178,9 @@
     </Compile>
     <Compile Include="UserControls\Views\CharacterFrameView.xaml.cs">
       <DependentUpon>CharacterFrameView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Views\PaletteView.xaml.cs">
+      <DependentUpon>PaletteView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Views\PatternTableLinkView.xaml.cs">
       <DependentUpon>PatternTableLinkView.xaml</DependentUpon>
@@ -247,6 +251,9 @@
     <Compile Include="Views\Character.xaml.cs">
       <DependentUpon>Character.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ColorPaletteDialog.xaml.cs">
+      <DependentUpon>ColorPaletteDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ElementDialog.xaml.cs">
       <DependentUpon>ElementDialog.xaml</DependentUpon>
     </Compile>
@@ -295,6 +302,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\Views\PaletteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\Views\PatternTableLinkView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -312,6 +323,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Character.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ColorPaletteDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

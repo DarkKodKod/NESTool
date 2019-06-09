@@ -50,17 +50,18 @@ namespace NESTool.ViewModels
 
         public CharacterViewModel()
         {
+        }
+
+        public override void OnActivate()
+        {
+            base.OnActivate();
+
             #region Signals
             SignalManager.Get<AnimationTabDeletedSignal>().AddListener(OnAnimationTabDeleted);
             SignalManager.Get<AnimationTabNewSignal>().AddListener(OnAnimationTabNew);
             SignalManager.Get<RenamedAnimationTabSignal>().AddListener(OnRenamedAnimationTab);
             SignalManager.Get<SwitchCharacterFrameViewSignal>().AddListener(OnSwitchCharacterFrameView);
             #endregion
-        }
-
-        public override void OnActivate()
-        {
-            base.OnActivate();
 
             PopulateTabs();
 
@@ -76,6 +77,13 @@ namespace NESTool.ViewModels
         public override void OnDeactivate()
         {
             base.OnDeactivate();
+
+            #region Signals
+            SignalManager.Get<AnimationTabDeletedSignal>().RemoveListener(OnAnimationTabDeleted);
+            SignalManager.Get<AnimationTabNewSignal>().RemoveListener(OnAnimationTabNew);
+            SignalManager.Get<RenamedAnimationTabSignal>().RemoveListener(OnRenamedAnimationTab);
+            SignalManager.Get<SwitchCharacterFrameViewSignal>().RemoveListener(OnSwitchCharacterFrameView);
+            #endregion
 
             foreach (ActionTabItem tab in Tabs)
             {

@@ -163,17 +163,18 @@
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Palettes" Grid.Row="4" Padding="10">
-                        <StackPanel>
-                            <StackPanel.Resources>
-                                <Style TargetType="{x:Type Button}">
-                                    <Setter Property="Margin" Value="0,20,0,0"/>
-                                </Style>
-                            </StackPanel.Resources>
-                            <Button>pallete 1</Button>
-                            <Button>pallete 2</Button>
-                            <Button>pallete 3</Button>
-                            <Button>pallete 4</Button>
-                        </StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <local:PaletteView Grid.Row="0"/>
+                            <local:PaletteView Grid.Row="1"/>
+                            <local:PaletteView Grid.Row="2"/>
+                            <local:PaletteView Grid.Row="3"/>
+                        </Grid>
                     </GroupBox>
                 </Grid>
             </GroupBox>

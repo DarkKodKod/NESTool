@@ -47,8 +47,8 @@ namespace NESTool.UserControls.ViewModels
         private double _rectangleLeft = 0.0;
         private bool _flipX = false;
         private bool _flipY = false;
-        private bool[] _spritePropertiesX = new bool[64];
-        private bool[] _spritePropertiesY = new bool[64];
+        private readonly bool[] _spritePropertiesX = new bool[64];
+        private readonly bool[] _spritePropertiesY = new bool[64];
 
         #region Commands
         public SwitchCharacterFrameViewCommand SwitchCharacterFrameViewCommand { get; } = new SwitchCharacterFrameViewCommand();
@@ -331,11 +331,6 @@ namespace NESTool.UserControls.ViewModels
 
         public CharacterFrameEditorViewModel()
         {
-            #region Signals
-            SignalManager.Get<FileModelVOSelectionChangedSignal>().AddListener(OnFileModelVOSelectionChanged);
-            SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
-            #endregion
-
             UpdateDialogInfo();
         }
 
@@ -343,11 +338,26 @@ namespace NESTool.UserControls.ViewModels
         {
             base.OnActivate();
 
+            #region Signals
+            SignalManager.Get<FileModelVOSelectionChangedSignal>().AddListener(OnFileModelVOSelectionChanged);
+            SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
+            #endregion
+
             EditFrameTools = EditFrameTools.Select;
 
             LoadFrameImage();
 
             LoadSpritesProperties();
+        }
+
+        public override void OnDeactivate()
+        {
+            base.OnDeactivate();
+
+            #region Signals
+            SignalManager.Get<FileModelVOSelectionChangedSignal>().RemoveListener(OnFileModelVOSelectionChanged);
+            SignalManager.Get<OutputSelectedQuadrantSignal>().RemoveListener(OnOutputSelectedQuadrant);
+            #endregion
         }
 
         private void LoadSpritesProperties()

@@ -315,16 +315,6 @@ namespace NESTool.ViewModels
         public PatternTableViewModel()
         {
             UpdateDialogInfo();
-
-            #region Signals
-            SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
-            SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
-            SignalManager.Get<ProjectConfigurationSavedSignal>().AddListener(OnProjectConfigurationSaved);
-            SignalManager.Get<FileModelVOSelectionChangedSignal>().AddListener(OnFileModelVOSelectionChanged);
-            SignalManager.Get<PatternTableImageUpdatedSignal>().AddListener(OnPatternTableImageUpdated);
-            SignalManager.Get<SelectTileSetSignal>().AddListener(OnSelectTileSet);
-            SignalManager.Get<PatternTableTileDeletedSignal>().AddListener(OnPatternTableTileDeleted);
-            #endregion
         }
 
         private void OnSelectTileSet(string id)
@@ -387,6 +377,16 @@ namespace NESTool.ViewModels
         {
             base.OnActivate();
 
+            #region Signals
+            SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
+            SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
+            SignalManager.Get<ProjectConfigurationSavedSignal>().AddListener(OnProjectConfigurationSaved);
+            SignalManager.Get<FileModelVOSelectionChangedSignal>().AddListener(OnFileModelVOSelectionChanged);
+            SignalManager.Get<PatternTableImageUpdatedSignal>().AddListener(OnPatternTableImageUpdated);
+            SignalManager.Get<SelectTileSetSignal>().AddListener(OnSelectTileSet);
+            SignalManager.Get<PatternTableTileDeletedSignal>().AddListener(OnPatternTableTileDeleted);
+            #endregion
+
             if (Model != null)
             {
                 SelectedPatternTableType = Model.PatternTableType;
@@ -396,6 +396,21 @@ namespace NESTool.ViewModels
             LoadPatternTableImage();
 
             SelectedPatternTableTile = -1;
+        }
+
+        public override void OnDeactivate()
+        {
+            base.OnDeactivate();
+
+            #region Signals
+            SignalManager.Get<MouseWheelSignal>().RemoveListener(OnMouseWheel);
+            SignalManager.Get<OutputSelectedQuadrantSignal>().RemoveListener(OnOutputSelectedQuadrant);
+            SignalManager.Get<ProjectConfigurationSavedSignal>().RemoveListener(OnProjectConfigurationSaved);
+            SignalManager.Get<FileModelVOSelectionChangedSignal>().RemoveListener(OnFileModelVOSelectionChanged);
+            SignalManager.Get<PatternTableImageUpdatedSignal>().RemoveListener(OnPatternTableImageUpdated);
+            SignalManager.Get<SelectTileSetSignal>().RemoveListener(OnSelectTileSet);
+            SignalManager.Get<PatternTableTileDeletedSignal>().RemoveListener(OnPatternTableTileDeleted);
+            #endregion
         }
 
         private void LoadTileSetImage()
