@@ -16,7 +16,6 @@ namespace NESTool.Signals
     public class ShowGridSignal : Signal { }
     public class HideGridSignal : Signal { }
     public class ProjectConfigurationSavedSignal : Signal { }
-    public class ColorPaletteControlSelectedSignal : Signal<Color, int, int> { }
 
     // Edit
     public class PasteElementSignal : Signal<ProjectItem, ProjectItem> { }
@@ -77,6 +76,7 @@ namespace NESTool.Signals
     public class NewAnimationFrameSignal : Signal<string> { }
     public class SwitchCharacterFrameViewSignal : Signal<string, int> { }
     public class DeleteAnimationFrameSignal : Signal<string, int> { }
+    public class ColorPaletteControlSelectedSignal : Signal<Color, int, int, string, int> { }
 
     // Map
 }

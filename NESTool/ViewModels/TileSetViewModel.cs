@@ -168,6 +168,11 @@ namespace NESTool.ViewModels
 
         private void OnSavedPixelChanges()
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             PixelsChanged = false;
 
             UpdateImage();
@@ -220,7 +225,7 @@ namespace NESTool.ViewModels
 
         private void OnColorPaletteSelect(Color color)
         {
-            if (IsActive)
+            if (!IsActive)
             {
                 return;
             }
@@ -230,6 +235,11 @@ namespace NESTool.ViewModels
 
         private void OnSelectedPixel(WriteableBitmap bitmap, Point point)
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             if (_color == Color.FromArgb(0, 255, 255, 255))
             {
                 return;
@@ -255,16 +265,31 @@ namespace NESTool.ViewModels
 
         private void OnHideGrid()
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             GridVisibility = Visibility.Hidden;
         }
 
         private void OnShowGrid()
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             GridVisibility = Visibility.Visible;
         }
 
         private void OnMouseWheel(MouseWheelVO vo)
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             const double ScaleRate = 1.1;
 
             if (vo.Delta > 0)
@@ -317,6 +342,11 @@ namespace NESTool.ViewModels
 
         private void OnUpdateTileSetImage()
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             UpdateImage();
         }
 

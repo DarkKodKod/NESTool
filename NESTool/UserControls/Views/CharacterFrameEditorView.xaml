@@ -10,6 +10,7 @@
              xmlns:cv="clr-namespace:NESTool.Utils.Converters"
              xmlns:vm="clr-namespace:NESTool.UserControls.ViewModels"
              mc:Ignorable="d" 
+             Loaded="UserControl_Loaded"
              d:DesignHeight="720" d:DesignWidth="1050">
     <UserControl.DataContext>
         <vm:CharacterFrameEditorViewModel />
@@ -170,10 +171,10 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <local:PaletteView Grid.Row="0" PaletteIndex="0"/>
-                            <local:PaletteView Grid.Row="1" PaletteIndex="1"/>
-                            <local:PaletteView Grid.Row="2" PaletteIndex="2"/>
-                            <local:PaletteView Grid.Row="3" PaletteIndex="3"/>
+                            <local:PaletteView Grid.Row="0" PaletteIndex="0" x:Name="palette0"/>
+                            <local:PaletteView Grid.Row="1" PaletteIndex="1" x:Name="palette1"/>
+                            <local:PaletteView Grid.Row="2" PaletteIndex="2" x:Name="palette2"/>
+                            <local:PaletteView Grid.Row="3" PaletteIndex="3" x:Name="palette3"/>
                         </Grid>
                     </GroupBox>
                 </Grid>

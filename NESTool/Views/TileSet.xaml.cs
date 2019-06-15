@@ -1,6 +1,7 @@
 ﻿using ArchitectureLibrary.Signals;
 using ColorPalette;
 using NESTool.Signals;
+using NESTool.ViewModels;
 using NESTool.VOs;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,6 +26,14 @@ namespace NESTool.Views
 
         private void OnColorPaletteSelect(Color color)
         {
+            if (DataContext is TileSetViewModel viewModel)
+            {
+                if (!viewModel.IsActive)
+                {
+                    return;
+                }
+            }
+
             SolidColorBrush scb = new SolidColorBrush
             {
                 Color = color
@@ -37,6 +46,14 @@ namespace NESTool.Views
 
         private void OnMouseWheel(MouseWheelVO vo)
         {
+            if (DataContext is TileSetViewModel viewModel)
+            {
+                if (!viewModel.IsActive)
+                {
+                    return;
+                }
+            }
+
             const double ScaleRate = 1.1;
 
             if (vo.Delta > 0)

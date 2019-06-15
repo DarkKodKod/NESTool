@@ -341,7 +341,6 @@ namespace NESTool.UserControls.ViewModels
             #region Signals
             SignalManager.Get<FileModelVOSelectionChangedSignal>().AddListener(OnFileModelVOSelectionChanged);
             SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().AddListener(OnColorPaletteControlSelected);
             #endregion
 
             EditFrameTools = EditFrameTools.Select;
@@ -358,7 +357,6 @@ namespace NESTool.UserControls.ViewModels
             #region Signals
             SignalManager.Get<FileModelVOSelectionChangedSignal>().RemoveListener(OnFileModelVOSelectionChanged);
             SignalManager.Get<OutputSelectedQuadrantSignal>().RemoveListener(OnOutputSelectedQuadrant);
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().RemoveListener(OnColorPaletteControlSelected);
             #endregion
         }
 
@@ -541,11 +539,6 @@ namespace NESTool.UserControls.ViewModels
             WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, AnimationIndex, FrameIndex, ref _frameBitmapCache);
 
             FrameImage = Util.ConvertWriteableBitmapToBitmapImage(frameBitmap);
-        }
-
-        private void OnColorPaletteControlSelected(Color color, int paletteIndex, int colorPosition)
-        {
-            //
         }
     }
 }

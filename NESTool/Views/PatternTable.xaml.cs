@@ -24,6 +24,14 @@ namespace NESTool.Views
 
         private void OnCleanupTileSetLinks()
         {
+            if (DataContext is PatternTableViewModel viewModel)
+            {
+                if (!viewModel.IsActive)
+                {
+                    return;
+                }
+            }
+
             wpLinks.Children.Clear();
         }
 
@@ -47,6 +55,14 @@ namespace NESTool.Views
 
         private void OnMouseWheel(MouseWheelVO vo)
         {
+            if (DataContext is PatternTableViewModel viewModel)
+            {
+                if (!viewModel.IsActive)
+                {
+                    return;
+                }
+            }
+
             const double ScaleRate = 1.1;
 
             if (vo.Delta > 0)
