@@ -10,6 +10,7 @@ using NESTool.Utils;
 using NESTool.VOs;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -22,7 +23,15 @@ namespace NESTool.UserControls.ViewModels
         private enum SpriteProperties
         {
             FlipX,
-            FlipY
+            FlipY,
+            PaletteIndex
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct ValueUnion
+        {
+            [FieldOffset(0)] public int integer;
+            [FieldOffset(4)] public bool boolean;
         }
 
         private FileModelVO[] _banks;
@@ -47,8 +56,10 @@ namespace NESTool.UserControls.ViewModels
         private double _rectangleLeft = 0.0;
         private bool _flipX = false;
         private bool _flipY = false;
+        private PaletteIndex _paletteIndex = 0;
         private readonly bool[] _spritePropertiesX = new bool[64];
         private readonly bool[] _spritePropertiesY = new bool[64];
+        private readonly int[] _spritePaletteIndices = new int[64];
         private bool _doNotSavePalettes = false;
 
         #region Commands
@@ -74,7 +85,7 @@ namespace NESTool.UserControls.ViewModels
 
                     OnPropertyChanged("FlipX");
 
-                    SaveProperty(SpriteProperties.FlipX, value);
+                    SaveProperty(SpriteProperties.FlipX, new ValueUnion { boolean = value });
                 }
             }
         }
@@ -95,7 +106,7 @@ namespace NESTool.UserControls.ViewModels
 
                     OnPropertyChanged("FlipY");
 
-                    SaveProperty(SpriteProperties.FlipY, value);
+                    SaveProperty(SpriteProperties.FlipY, new ValueUnion { boolean = value });
                 }
             }
         }
@@ -119,6 +130,22 @@ namespace NESTool.UserControls.ViewModels
                 _characterModel = value;
 
                 OnPropertyChanged("CharacterModel");
+            }
+        }
+
+        public PaletteIndex PaletteIndex
+        {
+            get { return _paletteIndex; }
+            set
+            {
+                if (_paletteIndex != value)
+                {
+                    _paletteIndex = value;
+
+                    OnPropertyChanged("PaletteIndex");
+
+                    SaveProperty(SpriteProperties.PaletteIndex, new ValueUnion { integer = (int)value });
+                }
             }
         }
 
@@ -371,6 +398,7 @@ namespace NESTool.UserControls.ViewModels
             {
                 _spritePropertiesX[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].FlipX;
                 _spritePropertiesY[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].FlipY;
+                _spritePaletteIndices[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].PaletteIndex;
             }
 
             byte R;
@@ -500,6 +528,7 @@ namespace NESTool.UserControls.ViewModels
 
                     FlipX = _spritePropertiesX[SelectedFrameTile];
                     FlipY = _spritePropertiesY[SelectedFrameTile];
+                    PaletteIndex = (PaletteIndex)_spritePaletteIndices[SelectedFrameTile];
                 }
                 else if (EditFrameTools == EditFrameTools.Paint && SelectionRectangleVisibility == Visibility.Visible)
                 {
@@ -551,34 +580,52 @@ namespace NESTool.UserControls.ViewModels
             LoadFrameImage();
         }
 
-        private void SaveProperty(SpriteProperties property, bool value)
+        private void SaveProperty(SpriteProperties property, ValueUnion value)
         {
-            if (property == SpriteProperties.FlipX)
+            bool didChange = false;
+
+            switch (property)
             {
-                if (_spritePropertiesX[SelectedFrameTile] != value)
-                {
-                    _spritePropertiesX[SelectedFrameTile] = value;
+                case SpriteProperties.FlipX:
 
-                    CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].FlipX = FlipX;
+                    if (_spritePropertiesX[SelectedFrameTile] != value.boolean)
+                    {
+                        _spritePropertiesX[SelectedFrameTile] = value.boolean;
 
-                    FileHandler.Save();
+                        CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].FlipX = FlipX;
 
-                    LoadFrameImage();
-                }
+                        didChange = true;
+                    }
+                    break;
+                case SpriteProperties.FlipY:
+
+                    if (_spritePropertiesY[SelectedFrameTile] != value.boolean)
+                    {
+                        _spritePropertiesY[SelectedFrameTile] = value.boolean;
+
+                        CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].FlipY = FlipY;
+
+                        didChange = true;
+                    }
+                    break;
+                case SpriteProperties.PaletteIndex:
+
+                    if (_spritePaletteIndices[SelectedFrameTile] != value.integer)
+                    {
+                        _spritePaletteIndices[SelectedFrameTile] = value.integer;
+
+                        CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].PaletteIndex = (int)PaletteIndex;
+
+                        didChange = true;
+                    }
+                    break;
             }
 
-            if (property == SpriteProperties.FlipY)
+            if (didChange)
             {
-                if (_spritePropertiesY[SelectedFrameTile] != value)
-                {
-                    _spritePropertiesY[SelectedFrameTile] = value;
+                FileHandler.Save();
 
-                    CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].FlipY = FlipY;
-
-                    FileHandler.Save();
-
-                    LoadFrameImage();
-                }
+                LoadFrameImage();
             }
         }
 

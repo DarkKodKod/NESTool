@@ -48,4 +48,12 @@
         Paint = 2,
         Erase = 3
     }
+
+    public enum PaletteIndex
+    {
+        Palette0 = 0,
+        Palette1 = 1,
+        Palette2 = 2,
+        Palette3 = 3
+    }
 }
