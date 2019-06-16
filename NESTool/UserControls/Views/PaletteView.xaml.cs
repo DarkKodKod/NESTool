@@ -16,7 +16,6 @@ namespace NESTool.UserControls.Views
         private SolidColorBrush _color2;
         private SolidColorBrush _color3;
         private string _animationID;
-        private int _frameIndex;
 
         #region Commands
         public ShowColorPaletteCommand ShowColorPaletteCommand { get; } = new ShowColorPaletteCommand();
@@ -31,17 +30,6 @@ namespace NESTool.UserControls.Views
                 _animationID = value;
 
                 OnPropertyChanged("AnimationID");
-            }
-        }
-
-        public int FrameIndex
-        {
-            get { return _frameIndex; }
-            set
-            {
-                _frameIndex = value;
-
-                OnPropertyChanged("FrameIndex");
             }
         }
 

@@ -17,21 +17,19 @@ namespace NESTool.Views
         private readonly int _paletteIndex;
         private readonly int _colorPosition;
         private readonly string _animationID;
-        private readonly int _frameIndex;
 
         #region Commands
         public ColorPaletteSelectCommand ColorPaletteSelectCommand { get; } = new ColorPaletteSelectCommand();
         public CloseDialogCommand CloseDialogCommand { get; } = new CloseDialogCommand();
         #endregion
 
-        public ColorPaletteDialog(int paletteIndex, int colorPosition, string animationID, int frameIndex)
+        public ColorPaletteDialog(int paletteIndex, int colorPosition, string animationID)
         {
             InitializeComponent();
             
             _paletteIndex = paletteIndex;
             _colorPosition = colorPosition;
             _animationID = animationID;
-            _frameIndex = frameIndex;
 
             SignalManager.Get<ColorPaletteSelectSignal>().AddListener(OnColorPaletteSelect);
             SignalManager.Get<CloseDialogSignal>().AddListener(OnCloseDialog);
@@ -46,7 +44,7 @@ namespace NESTool.Views
 
         private void OnColorPaletteSelect(Color color)
         {
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(color, _paletteIndex, _colorPosition, _animationID, _frameIndex);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(color, _paletteIndex, _colorPosition, _animationID);
 
             DialogResult = true;
         }

@@ -18,14 +18,44 @@ namespace NESTool.UserControls.Views
 
             #region Signals
             SignalManager.Get<ColorPaletteControlSelectedSignal>().AddListener(OnColorPaletteControlSelected);
+            SignalManager.Get<ColorPaletteCleanupSignal>().AddListener(OnColorPaletteCleanup);
             #endregion
         }
 
-        private void OnColorPaletteControlSelected(Color color, int paletteIndex, int colorPosition, string animationID, int frameIndex)
+        private void OnColorPaletteCleanup(string animationID, int frameIndex)
         {
             if (DataContext is CharacterFrameEditorViewModel viewModel)
             {
-                if (!viewModel.IsActive || viewModel.TabID != animationID || viewModel.FrameIndex != frameIndex)
+                if (viewModel.TabID != animationID || viewModel.FrameIndex != frameIndex)
+                {
+                    return;
+                }
+            }
+
+            Color color = Color.FromRgb(0, 0, 0);
+            SolidColorBrush brush = new SolidColorBrush(color);
+
+            void SetColorBack(PaletteView palette)
+            {
+                palette.cvsColor0.Background = brush;
+                palette.cvsColor1.Background = brush;
+                palette.cvsColor2.Background = brush;
+                palette.cvsColor3.Background = brush;
+            }
+
+            SetColorBack(palette0);
+            SetColorBack(palette1);
+            SetColorBack(palette2);
+            SetColorBack(palette3);
+
+            SignalManager.Get<ColorPaletteCleanupSignal>().RemoveListener(OnColorPaletteCleanup);
+        }
+
+        private void OnColorPaletteControlSelected(Color color, int paletteIndex, int colorPosition, string animationID)
+        {
+            if (DataContext is CharacterFrameEditorViewModel viewModel)
+            {
+                if (!viewModel.IsActive || viewModel.TabID != animationID)
                 {
                     return;
                 }
@@ -60,16 +90,9 @@ namespace NESTool.UserControls.Views
             if (DataContext is CharacterFrameEditorViewModel viewModel)
             {
                 palette0.AnimationID = viewModel.TabID;
-                palette0.FrameIndex = viewModel.FrameIndex;
-
                 palette1.AnimationID = viewModel.TabID;
-                palette1.FrameIndex = viewModel.FrameIndex;
-
                 palette2.AnimationID = viewModel.TabID;
-                palette2.FrameIndex = viewModel.FrameIndex;
-
                 palette3.AnimationID = viewModel.TabID;
-                palette3.FrameIndex = viewModel.FrameIndex;
             }
         }
     }

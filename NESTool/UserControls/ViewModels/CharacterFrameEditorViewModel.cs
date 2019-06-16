@@ -49,6 +49,7 @@ namespace NESTool.UserControls.ViewModels
         private bool _flipY = false;
         private readonly bool[] _spritePropertiesX = new bool[64];
         private readonly bool[] _spritePropertiesY = new bool[64];
+        private bool _doNotSavePalettes = false;
 
         #region Commands
         public SwitchCharacterFrameViewCommand SwitchCharacterFrameViewCommand { get; } = new SwitchCharacterFrameViewCommand();
@@ -341,6 +342,7 @@ namespace NESTool.UserControls.ViewModels
             #region Signals
             SignalManager.Get<FileModelVOSelectionChangedSignal>().AddListener(OnFileModelVOSelectionChanged);
             SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().AddListener(OnColorPaletteControlSelected);
             #endregion
 
             EditFrameTools = EditFrameTools.Select;
@@ -354,9 +356,12 @@ namespace NESTool.UserControls.ViewModels
         {
             base.OnDeactivate();
 
+            SignalManager.Get<ColorPaletteCleanupSignal>().Dispatch(TabID, FrameIndex);
+
             #region Signals
             SignalManager.Get<FileModelVOSelectionChangedSignal>().RemoveListener(OnFileModelVOSelectionChanged);
             SignalManager.Get<OutputSelectedQuadrantSignal>().RemoveListener(OnOutputSelectedQuadrant);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().RemoveListener(OnColorPaletteControlSelected);
             #endregion
         }
 
@@ -367,6 +372,46 @@ namespace NESTool.UserControls.ViewModels
                 _spritePropertiesX[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].FlipX;
                 _spritePropertiesY[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].FlipY;
             }
+
+            byte R;
+            byte G;
+            byte B;
+
+            _doNotSavePalettes = true;
+
+            // Load palettes
+            for (int i = 0; i < 4; ++i)
+            {
+                int color0 = CharacterModel.Animations[AnimationIndex].Palettes[i].Color0;
+                R = (byte)(color0 >> 16);
+                G = (byte)(color0 >> 8);
+                B = (byte)color0;
+
+                SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 0, TabID);
+
+                int color1 = CharacterModel.Animations[AnimationIndex].Palettes[i].Color1;
+                R = (byte)(color1 >> 16);
+                G = (byte)(color1 >> 8);
+                B = (byte)color1;
+
+                SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 1, TabID);
+
+                int color2 = CharacterModel.Animations[AnimationIndex].Palettes[i].Color2;
+                R = (byte)(color2 >> 16);
+                G = (byte)(color2 >> 8);
+                B = (byte)color2;
+
+                SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 2, TabID);
+
+                int color3 = CharacterModel.Animations[AnimationIndex].Palettes[i].Color3;
+                R = (byte)(color3 >> 16);
+                G = (byte)(color3 >> 8);
+                B = (byte)color3;
+
+                SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 3, TabID);
+            }
+
+            _doNotSavePalettes = false;
         }
 
         private void UpdateDialogInfo()
@@ -406,6 +451,31 @@ namespace NESTool.UserControls.ViewModels
             }
 
             LoadBankImage();
+        }
+
+        private void OnColorPaletteControlSelected(Color color, int paletteIndex, int colorPosition, string animationID)
+        {
+            if (_doNotSavePalettes)
+            {
+                return;
+            }
+
+            if (!IsActive || TabID != animationID)
+            {
+                return;
+            }
+
+            int colorInt = (((color.R & 0xff) << 16) | ((color.G & 0xff) << 8) | (color.B & 0xff));
+
+            switch (colorPosition)
+            {
+                case 0: CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color0 = colorInt; break;
+                case 1: CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color1 = colorInt; break;
+                case 2: CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color2 = colorInt; break;
+                case 3: CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color3 = colorInt; break;
+            }
+
+            FileHandler.Save();
         }
 
         private void OnOutputSelectedQuadrant(Image sender, WriteableBitmap bitmap, Point point)

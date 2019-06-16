@@ -170,11 +170,13 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
                             <local:PaletteView Grid.Row="0" PaletteIndex="0" x:Name="palette0"/>
                             <local:PaletteView Grid.Row="1" PaletteIndex="1" x:Name="palette1"/>
                             <local:PaletteView Grid.Row="2" PaletteIndex="2" x:Name="palette2"/>
                             <local:PaletteView Grid.Row="3" PaletteIndex="3" x:Name="palette3"/>
+                            <Label Grid.Row="4">* Palettes are share between frames</Label>
                         </Grid>
                     </GroupBox>
                 </Grid>

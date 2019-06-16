@@ -42,7 +42,6 @@
                     <Binding Source="{StaticResource index0}"/>
                     <Binding Path="PaletteIndex"/>
                     <Binding Path="AnimationID" />
-                    <Binding Path="FrameIndex" />
                 </MultiBinding>
             </Button.CommandParameter>
             <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
@@ -59,7 +58,6 @@
                     <Binding Source="{StaticResource index1}"/>
                     <Binding Path="PaletteIndex"/>
                     <Binding Path="AnimationID" />
-                    <Binding Path="FrameIndex" />
                 </MultiBinding>
             </Button.CommandParameter>
             <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
@@ -76,7 +74,6 @@
                     <Binding Source="{StaticResource index2}"/>
                     <Binding Path="PaletteIndex"/>
                     <Binding Path="AnimationID" />
-                    <Binding Path="FrameIndex" />
                 </MultiBinding>
             </Button.CommandParameter>
             <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
@@ -93,7 +90,6 @@
                     <Binding Source="{StaticResource index3}"/>
                     <Binding Path="PaletteIndex"/>
                     <Binding Path="AnimationID" />
-                    <Binding Path="FrameIndex" />
                 </MultiBinding>
             </Button.CommandParameter>
             <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
