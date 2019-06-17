@@ -54,6 +54,6 @@ namespace NESTool.Models
             }
         }
 
-        public CharacterAnimation[] Animations { get; set; } = new CharacterAnimation[256];
+        public CharacterAnimation[] Animations { get; set; } = new CharacterAnimation[64];
     }
 }

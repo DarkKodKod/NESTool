@@ -350,8 +350,6 @@
     <Compile Include="Commands\ExitCommand.cs" />
     <Compile Include="Commands\NewProjectCommand.cs" />
     <Compile Include="Commands\OpenProjectCommand.cs" />
-    <Compile Include="Commands\SaveAllCommand.cs" />
-    <Compile Include="Commands\SaveCommand.cs" />
     <Compile Include="Models\NESToolConfigurationModel.cs" />
     <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Signals\Signals.cs" />
@@ -433,8 +431,6 @@
     <Resource Include="Resources\help.png" />
     <Resource Include="Resources\new_project.png" />
     <Resource Include="Resources\open_project.png" />
-    <Resource Include="Resources\save.png" />
-    <Resource Include="Resources\save_all.png" />
     <Resource Include="Resources\pattern_table.png" />
     <Resource Include="Resources\new_element.png" />
     <Resource Include="Resources\showgrid.png" />

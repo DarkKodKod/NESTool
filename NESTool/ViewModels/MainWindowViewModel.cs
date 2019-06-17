@@ -23,8 +23,6 @@ namespace NESTool.ViewModels
         public ExitCommand ExitCommand { get; } = new ExitCommand();
         public NewProjectCommand NewProjectCommand { get; } = new NewProjectCommand();
         public NewElementCommand NewElementCommand { get; } = new NewElementCommand();
-        public SaveAllCommand SaveAllCommand { get; } = new SaveAllCommand();
-        public SaveCommand SaveCommand { get; } = new SaveCommand();
         public LoadConfigsCommand LoadConfigsCommand { get; } = new LoadConfigsCommand();
         public ShowAboutDialogCommand ShowAboutDialogCommand { get; } = new ShowAboutDialogCommand();
         public OpenBuildProjectCommand OpenBuildProjectCommand { get; } = new OpenBuildProjectCommand();

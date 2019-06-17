@@ -208,7 +208,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
-                <StackPanel Name="spFrames" Orientation="Horizontal">
+                <StackPanel x:Name="spFrames" Orientation="Horizontal">
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Margin" Value="5,0,0,0"/>

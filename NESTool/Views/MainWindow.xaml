@@ -22,8 +22,6 @@
         <vm:MainWindowViewModel />
     </Window.DataContext>
     <Window.InputBindings>
-		<KeyBinding Key="S" Modifiers="Ctrl" Command="{Binding SaveCommand}" />
-		<KeyBinding Key="S" Modifiers="Ctrl+Shift" Command="{Binding SaveAllCommand}" />
         <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NewElementCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
 		<KeyBinding Key="N" Modifiers="Ctrl+Shift" Command="{Binding NewProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
 		<KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding OpenProjectCommand}" />
@@ -115,47 +113,6 @@
                 <MenuItem Header="Close _Project" Command="{Binding CloseProjectCommand}" CommandParameter="{Binding ProjectName}">
                     <MenuItem.Icon>
                         <Image Width="16" Height="16" Source="/resources/close_project.png">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Effect">
-                                                <Setter.Value>
-                                                    <fx:GrayscaleEffect />
-                                                </Setter.Value>
-                                            </Setter>
-                                            <Setter Property="Opacity" Value="0.5"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <Separator />
-                <MenuItem Header="_Save" InputGestureText="Ctrl+S" Command="{Binding SaveCommand}">
-                    <MenuItem.Icon>
-                        <Image Width="16" Height="16" Source="/resources/save.png">
-                            <Image.Style>
-                                <Style TargetType="Image">
-                                    <Style.Triggers>
-                                        <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Effect">
-                                                <Setter.Value>
-                                                    <fx:GrayscaleEffect />
-                                                </Setter.Value>
-                                            </Setter>
-                                            <Setter Property="Opacity" Value="0.5"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Image.Style>
-                        </Image>
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="Save _All" InputGestureText="Ctrl+Shift+S" Command="{Binding SaveAllCommand}">
-                    <MenuItem.Icon>
-                        <Image Width="16" Height="16" Source="/resources/save_all.png">
                             <Image.Style>
                                 <Style TargetType="Image">
                                     <Style.Triggers>
@@ -391,43 +348,6 @@
 				</Button>
 				<Button ToolTip="Open Project" ToolBar.OverflowMode="AsNeeded" Command="{Binding OpenProjectCommand}">
                     <Image Width="16" Height="16" Source="/resources/open_project.png">
-                        <Image.Style>
-                            <Style TargetType="Image">
-                                <Style.Triggers>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Effect">
-                                            <Setter.Value>
-                                                <fx:GrayscaleEffect />
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Setter Property="Opacity" Value="0.5"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Image.Style>
-                    </Image>
-				</Button>
-				<Separator/>
-				<Button ToolTip="Save" ToolBar.OverflowMode="AsNeeded" Command="{Binding SaveCommand}">
-                    <Image Width="16" Height="16" Source="/resources/save.png">
-                        <Image.Style>
-                            <Style TargetType="Image">
-                                <Style.Triggers>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Effect">
-                                            <Setter.Value>
-                                                <fx:GrayscaleEffect />
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Setter Property="Opacity" Value="0.5"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Image.Style>
-                    </Image>
-				</Button>
-				<Button ToolTip="Save All" ToolBar.OverflowMode="AsNeeded" Command="{Binding SaveAllCommand}">
-                    <Image Width="16" Height="16" Source="/resources/save_all.png">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>

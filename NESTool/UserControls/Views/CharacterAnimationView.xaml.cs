@@ -25,7 +25,7 @@ namespace NESTool.UserControls.Views
         {
             if (DataContext is CharacterAnimationViewModel viewModel)
             {
-                if (!viewModel.IsActive || viewModel.TabID != tabID)
+                if (viewModel.TabID != tabID)
                 {
                     return;
                 }
@@ -58,7 +58,7 @@ namespace NESTool.UserControls.Views
         {
             if (DataContext is CharacterAnimationViewModel viewModel)
             {
-                if (!viewModel.IsActive || viewModel.TabID != tabID)
+                if (viewModel.TabID != tabID)
                 {
                     return;
                 }
