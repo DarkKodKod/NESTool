@@ -142,10 +142,10 @@ namespace NESTool.UserControls.ViewModels
                 {
                     _paletteIndex = value;
 
-                    OnPropertyChanged("PaletteIndex");
-
                     SaveProperty(SpriteProperties.PaletteIndex, new ValueUnion { integer = (int)value });
                 }
+
+                OnPropertyChanged("PaletteIndex");
             }
         }
 
@@ -504,6 +504,8 @@ namespace NESTool.UserControls.ViewModels
             }
 
             FileHandler.Save();
+
+            LoadFrameImage();
         }
 
         private void OnOutputSelectedQuadrant(Image sender, WriteableBitmap bitmap, Point point)
@@ -565,8 +567,10 @@ namespace NESTool.UserControls.ViewModels
             {
                 Point croppedPoint = model.PTTiles[SelectedPatternTableTile].Point;
                 string guid = model.PTTiles[SelectedPatternTableTile].GUID;
+                int group = model.PTTiles[SelectedPatternTableTile].Group;
 
                 CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].GUID = guid;
+                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].Group = group;
                 CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].Point = characterPoint;
                 CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].OriginPoint = croppedPoint;
             }

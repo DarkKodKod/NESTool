@@ -6,6 +6,7 @@ namespace NESTool.Models
     public struct CharacterTile
     {
         public string GUID { get; set; }
+        public int Group { get; set; }
         public Point Point { get; set; }
         public Point OriginPoint { get; set; }
         public bool FlipX { get; set; }

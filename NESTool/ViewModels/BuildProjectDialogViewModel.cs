@@ -163,7 +163,7 @@ namespace NESTool.ViewModels
             };
 
             IEnumerable<FileModelVO> sprites = ProjectFiles.GetModels<PatternTableModel>().ToArray().Where(p => (p.Model as PatternTableModel).PatternTableType == PatternTableType.Characters);
-            IEnumerable<FileModelVO> backgrounds = ProjectFiles.GetModels<PatternTableModel>().ToArray().Where(p => (p.Model as PatternTableModel).PatternTableType == PatternTableType.Background).ToArray();
+            IEnumerable<FileModelVO> backgrounds = ProjectFiles.GetModels<PatternTableModel>().ToArray().Where(p => (p.Model as PatternTableModel).PatternTableType == PatternTableType.Background);
 
             int index = 1;
 
