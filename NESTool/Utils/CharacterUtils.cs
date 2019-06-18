@@ -107,41 +107,19 @@ namespace NESTool.Utils
 
                     if (!colors.TryGetValue(color, out Color newColor))
                     {
-                        byte R = 0;
-                        byte G = 0;
-                        byte B = 0;
+                        int paletteColor = 0;
 
                         switch (colors.Count)
                         {
-                        case 0:
-                            int color0 = animation.Palettes[tile.PaletteIndex].Color0;
-
-                            R = (byte)(color0 >> 16);
-                            G = (byte)(color0 >> 8);
-                            B = (byte)color0;
-                            break;
-                        case 1:
-                            int color1 = animation.Palettes[tile.PaletteIndex].Color1;
-
-                            R = (byte)(color1 >> 16);
-                            G = (byte)(color1 >> 8);
-                            B = (byte)color1;
-                            break;
-                        case 2:
-                            int color2 = animation.Palettes[tile.PaletteIndex].Color2;
-
-                            R = (byte)(color2 >> 16);
-                            G = (byte)(color2 >> 8);
-                            B = (byte)color2;
-                            break;
-                        case 3:
-                            int color3 = animation.Palettes[tile.PaletteIndex].Color3;
-
-                            R = (byte)(color3 >> 16);
-                            G = (byte)(color3 >> 8);
-                            B = (byte)color3;
-                            break;
+                        case 0: paletteColor = animation.Palettes[tile.PaletteIndex].Color0; break;
+                        case 1: paletteColor = animation.Palettes[tile.PaletteIndex].Color1; break;
+                        case 2: paletteColor = animation.Palettes[tile.PaletteIndex].Color2; break;
+                        case 3: paletteColor = animation.Palettes[tile.PaletteIndex].Color3; break;
                         }
+
+                        byte R = (byte)(paletteColor >> 16);
+                        byte G = (byte)(paletteColor >> 8);
+                        byte B = (byte)paletteColor;
 
                         newColor = Color.FromRgb(R, G, B);
 
