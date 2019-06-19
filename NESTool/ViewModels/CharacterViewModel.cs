@@ -196,7 +196,7 @@ namespace NESTool.ViewModels
 
                 foreach (ActionTabItem tab in Tabs)
                 {
-                    CharacterAnimationView view = tab.Content as CharacterAnimationView;
+                    CharacterAnimationView view = tab.FramesView as CharacterAnimationView;
                     CharacterAnimationViewModel viewModel = view.DataContext as CharacterAnimationViewModel;
 
                     model.Animations[index].ID = tab.ID;

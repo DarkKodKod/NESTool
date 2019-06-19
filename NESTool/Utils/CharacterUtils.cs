@@ -9,7 +9,7 @@ namespace NESTool.Utils
 {
     public static class CharacterUtils
     {
-        static Dictionary<int, Dictionary<Color, Color>> _groupedPalettes;
+        static Dictionary<Tuple<int,int>, Dictionary<Color, Color>> _groupedPalettes;
 
         public static WriteableBitmap CreateImage(CharacterModel characterModel, int animationIndex, int frameIndex, ref Dictionary<string, WriteableBitmap> bitmapCache)
         {
@@ -20,7 +20,7 @@ namespace NESTool.Utils
 
             WriteableBitmap patternTableBitmap = BitmapFactory.New(64, 64);
 
-            _groupedPalettes = new Dictionary<int, Dictionary<Color, Color>>();
+            _groupedPalettes = new Dictionary<Tuple<int, int>, Dictionary<Color, Color>>();
 
             using (patternTableBitmap.GetBitmapContext())
             {
@@ -90,11 +90,13 @@ namespace NESTool.Utils
         {
             int group = tile.Group;
 
-            if (!_groupedPalettes.TryGetValue(group, out Dictionary<Color, Color> colors))
+            var tuple = Tuple.Create(group, tile.PaletteIndex);
+
+            if (!_groupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))
             {
                 colors = new Dictionary<Color, Color>();
 
-                _groupedPalettes.Add(group, colors);
+                _groupedPalettes.Add(tuple, colors);
             }
 
             // read pixels in the 8x8 quadrant

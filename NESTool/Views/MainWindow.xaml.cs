@@ -131,7 +131,18 @@ namespace NESTool
         {
             if (_currentViewType == item.Type)
             {
-                dpItemPanel.Children.Clear();
+                if (dpItemPanel.Children.Count > 0)
+                {
+                    if (dpItemPanel.Children[0] is UserControl oldGui)
+                    {
+                        if (oldGui.DataContext is ItemViewModel oldModel)
+                        {
+                            oldModel.OnDeactivate();
+                        }
+                    }
+
+                    dpItemPanel.Children.Clear();
+                }
 
                 _currentViewType = ProjectItemType.None;
 
