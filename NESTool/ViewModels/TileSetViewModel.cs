@@ -320,6 +320,10 @@ namespace NESTool.ViewModels
             SignalManager.Get<BrowseFileSuccessSignal>().AddListener(BrowseFileSuccess);
             #endregion
 
+            ImagePath = GetModel().ImagePath;
+            ActualWidth = GetModel().ImageWidth;
+            ActualHeight = GetModel().ImageHeight;
+
             UpdateImage();
         }
 
@@ -347,6 +351,15 @@ namespace NESTool.ViewModels
                 return;
             }
 
+            if (GetModel() == null)
+            {
+                return;
+            }
+
+            ImagePath = GetModel().ImagePath;
+            ActualWidth = GetModel().ImageWidth;
+            ActualHeight = GetModel().ImageHeight;
+
             UpdateImage();
         }
 
@@ -360,10 +373,6 @@ namespace NESTool.ViewModels
             if (File.Exists(GetModel().ImagePath))
             {
                 ImgSource = null;
-
-                ImagePath = GetModel().ImagePath;
-                ActualWidth = GetModel().ImageWidth;
-                ActualHeight = GetModel().ImageHeight;
 
                 BitmapImage bmImage = new BitmapImage();
 

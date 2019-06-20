@@ -37,6 +37,8 @@ namespace NESTool.Commands
             BitmapSource imgSource = (BitmapSource)values[4];
 
             Merge(wp, imgSource, croppedPoint, imagePath);
+
+            SignalManager.Get<SavedPixelChangesSignal>().Dispatch();
         }
 
         private void Merge(WriteableBitmap croppedImage, BitmapSource originalImage, Point croppedPoint, string outputPath)
@@ -50,8 +52,6 @@ namespace NESTool.Commands
             Util.CopyBitmapImageToWriteableBitmap(ref cImage, (int)croppedPoint.X, (int)croppedPoint.Y, srcImage);
 
             SaveFile(outputPath, cImage);
-
-            SignalManager.Get<SavedPixelChangesSignal>().Dispatch();
         }
 
         private void SaveFile(string filename, WriteableBitmap image)

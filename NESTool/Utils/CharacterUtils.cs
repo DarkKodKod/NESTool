@@ -13,6 +13,11 @@ namespace NESTool.Utils
 
         public static WriteableBitmap CreateImage(CharacterModel characterModel, int animationIndex, int frameIndex, ref Dictionary<string, WriteableBitmap> bitmapCache)
         {
+            if (characterModel.Animations[animationIndex].Frames == null)
+            {
+                return null;
+            }
+
             if (characterModel.Animations[animationIndex].Frames[frameIndex].Tiles == null)
             {
                 return null;

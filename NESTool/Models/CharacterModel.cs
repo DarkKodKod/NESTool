@@ -32,7 +32,7 @@ namespace NESTool.Models
     {
         public string ID { get; set; }
         public string Name { get; set; }
-        public int Speed { get; set; }
+        public float Speed { get; set; }
         public Frame[] Frames { get; set; }
         public Palette[] Palettes { get; set; }
     }

@@ -92,7 +92,7 @@ namespace NESTool.UserControls.Views
             FileHandler = fileHandler;
             CharacterModel = model;
 
-            LoadFrameImage();
+            OnActivate();
         }
 
         public void OnActivate()

@@ -14,6 +14,10 @@
     </UserControl.DataContext>
     <UserControl.Resources>
         <cv:ParametersConverter x:Key="parametersConverter"/>
+        <Style x:Key="NormalButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="LightGray" />
+            <Setter Property="Margin" Value="5,0,0,0" />
+        </Style>
     </UserControl.Resources>
     <Grid Background="LightGray">
         <Grid.ColumnDefinitions>
@@ -33,7 +37,7 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock>Speed:</TextBlock>
-                <TextBox Height="18" Width="30" IsReadOnly="True" Foreground="Gray" Text="{Binding Speed}"/>
+                <TextBox Height="18" Width="30" Text="{Binding Speed, Mode=TwoWay}"/>
             </StackPanel>
             <Canvas Grid.Row="2" Background="DarkGray" 
                     Width="64" Height="64"
@@ -45,6 +49,7 @@
                 <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
                        Width="64"
 	                   Height="64"
+                       Source="{Binding FrameImage}"
                        Stretch="UniformToFill">
                 </Image>
             </Canvas>
@@ -64,9 +69,9 @@
                         </MultiBinding>
                     </Button.CommandParameter>
                     <Image Width="16" Height="16" 
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       Source="/resources/previous_frame.png">
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Source="/resources/previous_frame.png">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>
@@ -84,6 +89,7 @@
                     </Image>
                 </Button>
                 <Button Height="35" Width="35" 
+                        Name="btmPlay"
                         ToolTip="Play"
                         Command="{Binding PlayCharacterAnimationCommand}">
                     <Button.CommandParameter>
@@ -92,10 +98,19 @@
                             <Binding Path="TabID" />
                         </MultiBinding>
                     </Button.CommandParameter>
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource NormalButton}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsPlaying}" Value="True">
+                                    <Setter Property="Background" Value="LightGreen"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                     <Image Width="16" Height="16" 
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       Source="/resources/play.png">
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Source="/resources/play.png">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>
@@ -121,10 +136,19 @@
                             <Binding Path="TabID" />
                         </MultiBinding>
                     </Button.CommandParameter>
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource NormalButton}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsPaused}" Value="True">
+                                    <Setter Property="Background" Value="LightGreen"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                     <Image Width="16" Height="16" 
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       Source="/resources/pause.png">
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Source="/resources/pause.png">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>
@@ -151,9 +175,9 @@
                         </MultiBinding>
                     </Button.CommandParameter>
                     <Image Width="16" Height="16" 
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       Source="/resources/stop.png">
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Source="/resources/stop.png">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>
@@ -180,9 +204,9 @@
                         </MultiBinding>
                     </Button.CommandParameter>
                     <Image Width="16" Height="16" 
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       Source="/resources/next_frame.png">
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Source="/resources/next_frame.png">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>

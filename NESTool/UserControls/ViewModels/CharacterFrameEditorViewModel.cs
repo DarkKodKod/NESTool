@@ -659,7 +659,10 @@ namespace NESTool.UserControls.ViewModels
 
             WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, AnimationIndex, FrameIndex, ref _frameBitmapCache);
 
-            FrameImage = Util.ConvertWriteableBitmapToBitmapImage(frameBitmap);
+            if (frameBitmap != null)
+            {
+                FrameImage = Util.ConvertWriteableBitmapToBitmapImage(frameBitmap);
+            }
         }
     }
 }
