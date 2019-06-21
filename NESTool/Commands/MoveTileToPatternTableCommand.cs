@@ -4,6 +4,7 @@ using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.VOs;
+using System;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -42,7 +43,8 @@ namespace NESTool.Commands
 
             FileModelVO[] tileSets = ProjectFiles.GetModels<TileSetModel>().ToArray();
 
-            model.PTTiles[index].GUID = tileSets[selectedTileSet].Model.GUID;
+            model.PTTiles[index].GUID = Guid.NewGuid().ToString();
+            model.PTTiles[index].TileSetID = tileSets[selectedTileSet].Model.GUID;
             model.PTTiles[index].Point = croppedPoint;
             model.PTTiles[index].Group = index;
 

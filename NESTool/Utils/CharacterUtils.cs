@@ -31,14 +31,22 @@ namespace NESTool.Utils
             {
                 foreach (CharacterTile tile in characterModel.Animations[animationIndex].Frames[frameIndex].Tiles)
                 {
-                    if (string.IsNullOrEmpty(tile.GUID))
+                    if (string.IsNullOrEmpty(tile.BankID) || string.IsNullOrEmpty(tile.BankTileID))
                     {
                         continue;
                     }
 
-                    if (!bitmapCache.TryGetValue(tile.GUID, out WriteableBitmap sourceBitmap))
+                    PatternTableModel ptModel = ProjectFiles.GetModel<PatternTableModel>(tile.BankID);
+                    if (ptModel == null)
                     {
-                        TileSetModel model = ProjectFiles.GetModel<TileSetModel>(tile.GUID);
+                        continue;
+                    }
+
+                    PTTileModel bankModel = ptModel.GetTileModel(tile.BankTileID);
+
+                    if (!bitmapCache.TryGetValue(bankModel.TileSetID, out WriteableBitmap sourceBitmap))
+                    {
+                        TileSetModel model = ProjectFiles.GetModel<TileSetModel>(bankModel.TileSetID);
 
                         if (model == null)
                         {
@@ -55,12 +63,12 @@ namespace NESTool.Utils
 
                         sourceBitmap = BitmapFactory.ConvertToPbgra32Format(bmImage as BitmapSource);
 
-                        bitmapCache.Add(tile.GUID, sourceBitmap);
+                        bitmapCache.Add(bankModel.TileSetID, sourceBitmap);
                     }
 
                     using (sourceBitmap.GetBitmapContext())
                     {
-                        WriteableBitmap cropped = sourceBitmap.Crop((int)tile.OriginPoint.X, (int)tile.OriginPoint.Y, 8, 8);
+                        WriteableBitmap cropped = sourceBitmap.Crop((int)bankModel.Point.X, (int)bankModel.Point.Y, 8, 8);
                         
                         if (tile.FlipX)
                         {
@@ -72,7 +80,7 @@ namespace NESTool.Utils
                             cropped = WriteableBitmapExtensions.Flip(cropped, WriteableBitmapExtensions.FlipMode.Horizontal);
                         }
 
-                        PaintPixelsBasedOnPalettes(ref cropped, tile, characterModel.Animations[animationIndex]);
+                        PaintPixelsBasedOnPalettes(ref cropped, tile, characterModel.Animations[animationIndex], bankModel.Group);
 
                         cropped.Freeze();
 
@@ -91,10 +99,8 @@ namespace NESTool.Utils
             return patternTableBitmap;
         }
 
-        private static void PaintPixelsBasedOnPalettes(ref WriteableBitmap bitmap, CharacterTile tile, CharacterAnimation animation)
+        private static void PaintPixelsBasedOnPalettes(ref WriteableBitmap bitmap, CharacterTile tile, CharacterAnimation animation, int group)
         {
-            int group = tile.Group;
-
             var tuple = Tuple.Create(group, tile.PaletteIndex);
 
             if (!_groupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))

@@ -23,14 +23,14 @@ namespace NESTool.Utils
 
                 foreach (PTTileModel tile in patternTableModel.PTTiles)
                 {
-                    if (string.IsNullOrEmpty(tile.GUID))
+                    if (string.IsNullOrEmpty(tile.GUID) || string.IsNullOrEmpty(tile.TileSetID))
                     {
                         continue;
                     }
 
-                    if (!bitmapCache.TryGetValue(tile.GUID, out WriteableBitmap sourceBitmap))
+                    if (!bitmapCache.TryGetValue(tile.TileSetID, out WriteableBitmap sourceBitmap))
                     {
-                        TileSetModel model = ProjectFiles.GetModel<TileSetModel>(tile.GUID);
+                        TileSetModel model = ProjectFiles.GetModel<TileSetModel>(tile.TileSetID);
 
                         if (model == null)
                         {
@@ -47,14 +47,14 @@ namespace NESTool.Utils
 
                         sourceBitmap = BitmapFactory.ConvertToPbgra32Format(bmImage as BitmapSource);
 
-                        bitmapCache.Add(tile.GUID, sourceBitmap);
+                        bitmapCache.Add(tile.TileSetID, sourceBitmap);
 
                         // Add the link object
                         foreach (FileModelVO tileset in tileSets)
                         {
-                            if (tileset.Model.GUID == tile.GUID && sendSignals)
+                            if (tileset.Model.GUID == tile.TileSetID && sendSignals)
                             {
-                                SignalManager.Get<AddNewTileSetLinkSignal>().Dispatch(new PatternTableLinkVO() { Caption = tileset.Name, Id = tile.GUID });
+                                SignalManager.Get<AddNewTileSetLinkSignal>().Dispatch(new PatternTableLinkVO() { Caption = tileset.Name, Id = tile.TileSetID });
                                 break;
                             }
                         }

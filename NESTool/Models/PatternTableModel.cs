@@ -7,6 +7,7 @@ namespace NESTool.Models
     public struct PTTileModel
     {
         public string GUID { get; set; }
+        public string TileSetID { get; set; }
         public Point Point { get; set; }
         public int Group { get; set; }
     }
@@ -44,6 +45,20 @@ namespace NESTool.Models
             }
 
             return true;
+        }
+
+        public PTTileModel GetTileModel(string guid)
+        {
+            foreach (var tile in PTTiles)
+            {
+                if (tile.GUID == guid)
+                {
+                    return tile;
+                }
+            }
+
+            // return empty
+            return new PTTileModel();
         }
 
         public int GetEmptyTileIndex()

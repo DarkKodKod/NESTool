@@ -555,28 +555,26 @@ namespace NESTool.UserControls.ViewModels
 
         private void UpadteSprite(EditFrameTools tool)
         {
-            Point characterPoint = new Point
-            {
-                X = RectangleLeft,
-                Y = RectangleTop
-            };
-
-            PatternTableModel model = Banks[SelectedBank].Model as PatternTableModel;
-
             if (tool == EditFrameTools.Paint)
             {
-                Point croppedPoint = model.PTTiles[SelectedPatternTableTile].Point;
-                string guid = model.PTTiles[SelectedPatternTableTile].GUID;
-                int group = model.PTTiles[SelectedPatternTableTile].Group;
+                Point characterPoint = new Point
+                {
+                    X = RectangleLeft,
+                    Y = RectangleTop
+                };
 
-                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].GUID = guid;
-                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].Group = group;
+                PatternTableModel model = Banks[SelectedBank].Model as PatternTableModel;
+
+                string guid = model.PTTiles[SelectedPatternTableTile].GUID;
+
                 CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].Point = characterPoint;
-                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].OriginPoint = croppedPoint;
+                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankID = model.GUID;
+                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankTileID = guid;
             }
             else if (tool == EditFrameTools.Erase)
             {
-                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].GUID = string.Empty;
+                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankID = string.Empty;
+                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankTileID = string.Empty;
             }
 
             FileHandler.Save();

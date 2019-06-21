@@ -5,13 +5,12 @@ namespace NESTool.Models
 {
     public struct CharacterTile
     {
-        public string GUID { get; set; }
-        public int Group { get; set; }
         public Point Point { get; set; }
-        public Point OriginPoint { get; set; }
         public bool FlipX { get; set; }
         public bool FlipY { get; set; }
         public int PaletteIndex { get; set; }
+        public string BankID { get; set; }
+        public string BankTileID { get; set; }
     }
 
     public struct Frame
