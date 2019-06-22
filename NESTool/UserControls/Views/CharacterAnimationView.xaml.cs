@@ -17,8 +17,21 @@ namespace NESTool.UserControls.Views
         {
             InitializeComponent();
 
+            OnActivate();
+        }
+
+        public void OnActivate()
+        {
             SignalManager.Get<NewAnimationFrameSignal>().AddListener(OnNewAnimationFrame);
             SignalManager.Get<DeleteAnimationFrameSignal>().AddListener(OnDeleteAnimationFrame);
+        }
+
+        public void OnDeactivate()
+        {
+            SignalManager.Get<NewAnimationFrameSignal>().RemoveListener(OnNewAnimationFrame);
+            SignalManager.Get<DeleteAnimationFrameSignal>().RemoveListener(OnDeleteAnimationFrame);
+
+            FrameViewList.Clear();
         }
 
         private void OnDeleteAnimationFrame(string tabID, int frameIndex)
@@ -58,7 +71,7 @@ namespace NESTool.UserControls.Views
         {
             if (DataContext is CharacterAnimationViewModel viewModel)
             {
-                if (!viewModel.IsActive || viewModel.TabID != tabID)
+                if (viewModel.TabID != tabID)
                 {
                     return;
                 }

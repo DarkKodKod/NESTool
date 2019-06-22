@@ -12,7 +12,6 @@ namespace NESTool.ViewModels
         private bool _isInEditMode;
         private string _header;
         private UserControl _content;
-        private CharacterFrameEditorViewModel _currentFrameViewModel;
 
         public string ID { get; set; }
         public UserControl FramesView { get; set; }
@@ -62,25 +61,38 @@ namespace NESTool.ViewModels
         {
             if (Content != FramesView)
             {
-                if (_currentFrameViewModel != null)
+                if (Content is CharacterFrameEditorView characterView)
                 {
-                    _currentFrameViewModel.OnDeactivate();
+                    CharacterFrameEditorViewModel currentFrameViewModel = characterView.DataContext as CharacterFrameEditorViewModel;
+
+                    currentFrameViewModel.OnDeactivate();
                 }
 
                 Content = FramesView;
+
+                if (Content is CharacterAnimationView animationView)
+                {
+                    animationView.OnActivate();
+                }
             }
             else
             {
+                if (Content is CharacterAnimationView animationView)
+                {
+                    animationView.OnDeactivate();
+                }
+
                 Content = PixelsView;
 
-                CharacterFrameEditorView characterView = _content as CharacterFrameEditorView;
+                if (Content is CharacterFrameEditorView characterView)
+                {
+                    CharacterFrameEditorViewModel currentFrameViewModel = characterView.DataContext as CharacterFrameEditorViewModel;
 
-                _currentFrameViewModel = characterView.DataContext as CharacterFrameEditorViewModel;
+                    currentFrameViewModel.TabID = tabId;
+                    currentFrameViewModel.FrameIndex = frameIndex;
 
-                _currentFrameViewModel.TabID = tabId;
-                _currentFrameViewModel.FrameIndex = frameIndex;
-
-                _currentFrameViewModel.OnActivate();
+                    currentFrameViewModel.OnActivate();
+                }
             }
         }
 
