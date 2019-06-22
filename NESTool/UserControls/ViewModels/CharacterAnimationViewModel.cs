@@ -14,7 +14,7 @@ namespace NESTool.UserControls.ViewModels
 {
     public class CharacterAnimationViewModel : ViewModel
     {
-        private float _speed = 1;
+        private float _speed = 0.1f;
         private string _tabID;
         private CharacterModel _characterModel;
         private FileHandler _fileHandler;

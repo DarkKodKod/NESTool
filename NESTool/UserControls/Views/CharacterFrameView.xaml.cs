@@ -118,7 +118,7 @@ namespace NESTool.UserControls.Views
                 }
             }
 
-            if (animationIndex == -1)
+            if (animationIndex == -1 || FrameIndex == -1)
             {
                 return;
             }
