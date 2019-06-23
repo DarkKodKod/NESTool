@@ -1,5 +1,6 @@
 ﻿using NESTool.FileSystem;
 using NESTool.Models;
+using NESTool.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Windows.Media;
@@ -9,9 +10,7 @@ namespace NESTool.Utils
 {
     public static class CharacterUtils
     {
-        static Dictionary<Tuple<int,int>, Dictionary<Color, Color>> _groupedPalettes;
-
-        public static WriteableBitmap CreateImage(CharacterModel characterModel, int animationIndex, int frameIndex, ref Dictionary<string, WriteableBitmap> bitmapCache)
+        public static WriteableBitmap CreateImage(CharacterModel characterModel, int animationIndex, int frameIndex)
         {
             if (characterModel.Animations[animationIndex].Frames == null)
             {
@@ -24,8 +23,6 @@ namespace NESTool.Utils
             }
 
             WriteableBitmap patternTableBitmap = BitmapFactory.New(64, 64);
-
-            _groupedPalettes = new Dictionary<Tuple<int, int>, Dictionary<Color, Color>>();
 
             using (patternTableBitmap.GetBitmapContext())
             {
@@ -44,7 +41,7 @@ namespace NESTool.Utils
 
                     PTTileModel bankModel = ptModel.GetTileModel(tile.BankTileID);
 
-                    if (!bitmapCache.TryGetValue(bankModel.TileSetID, out WriteableBitmap sourceBitmap))
+                    if (!CharacterViewModel.FrameBitmapCache.TryGetValue(bankModel.TileSetID, out WriteableBitmap sourceBitmap))
                     {
                         TileSetModel model = ProjectFiles.GetModel<TileSetModel>(bankModel.TileSetID);
 
@@ -63,7 +60,7 @@ namespace NESTool.Utils
 
                         sourceBitmap = BitmapFactory.ConvertToPbgra32Format(bmImage as BitmapSource);
 
-                        bitmapCache.Add(bankModel.TileSetID, sourceBitmap);
+                        CharacterViewModel.FrameBitmapCache.Add(bankModel.TileSetID, sourceBitmap);
                     }
 
                     using (sourceBitmap.GetBitmapContext())
@@ -103,11 +100,11 @@ namespace NESTool.Utils
         {
             var tuple = Tuple.Create(group, tile.PaletteIndex);
 
-            if (!_groupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))
+            if (!CharacterViewModel.GroupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))
             {
                 colors = new Dictionary<Color, Color>();
 
-                _groupedPalettes.Add(tuple, colors);
+                CharacterViewModel.GroupedPalettes.Add(tuple, colors);
             }
 
             // read pixels in the 8x8 quadrant

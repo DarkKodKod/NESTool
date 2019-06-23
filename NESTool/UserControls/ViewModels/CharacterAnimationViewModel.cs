@@ -5,7 +5,6 @@ using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
 using System;
-using System.Collections.Generic;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -23,7 +22,6 @@ namespace NESTool.UserControls.ViewModels
         private ImageSource _frameImage;
         private int _frameIndex;
         private int _animationIndex = -1;
-        private Dictionary<string, WriteableBitmap> _frameBitmapCache = new Dictionary<string, WriteableBitmap>();
         private DispatcherTimer _dispatcherTimer;
 
         #region Commands
@@ -217,7 +215,7 @@ namespace NESTool.UserControls.ViewModels
                 return;
             }
 
-            WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, _animationIndex, _frameIndex, ref _frameBitmapCache);
+            WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, _animationIndex, _frameIndex);
 
             if (frameBitmap == null)
             {

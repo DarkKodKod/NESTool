@@ -30,8 +30,6 @@ namespace NESTool.UserControls.Views
         {
             SignalManager.Get<NewAnimationFrameSignal>().RemoveListener(OnNewAnimationFrame);
             SignalManager.Get<DeleteAnimationFrameSignal>().RemoveListener(OnDeleteAnimationFrame);
-
-            FrameViewList.Clear();
         }
 
         private void OnDeleteAnimationFrame(string tabID, int frameIndex)

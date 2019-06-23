@@ -7,10 +7,13 @@ using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
+using NESTool.ViewModels;
 using NESTool.VOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -40,7 +43,6 @@ namespace NESTool.UserControls.ViewModels
         private int _frameIndex;
         private string _projectGridSize;
         private Dictionary<string, WriteableBitmap> _bitmapCache = new Dictionary<string, WriteableBitmap>();
-        private Dictionary<string, WriteableBitmap> _frameBitmapCache = new Dictionary<string, WriteableBitmap>();
         private ImageSource _bankImage;
         private Visibility _selectionRectangleVisibility = Visibility.Hidden;
         private double _selectionRectangleTop = 0.0;
@@ -495,17 +497,59 @@ namespace NESTool.UserControls.ViewModels
 
             int colorInt = (((color.R & 0xff) << 16) | ((color.G & 0xff) << 8) | (color.B & 0xff));
 
+            int prevColorInt = 0;
+
             switch (colorPosition)
             {
-                case 0: CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color0 = colorInt; break;
-                case 1: CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color1 = colorInt; break;
-                case 2: CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color2 = colorInt; break;
-                case 3: CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color3 = colorInt; break;
+                case 0:
+                    prevColorInt = CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color0;
+                    CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color0 = colorInt;
+                    break;
+                case 1:
+                    prevColorInt = CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color1;
+                    CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color1 = colorInt;
+                    break;
+                case 2:
+                    prevColorInt = CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color2;
+                    CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color2 = colorInt;
+                    break;
+                case 3:
+                    prevColorInt = CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color3;
+                    CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color3 = colorInt;
+                    break;
             }
+
+            // Convert previous color to type Color
+            byte R = (byte)(prevColorInt >> 16);
+            byte G = (byte)(prevColorInt >> 8);
+            byte B = (byte)prevColorInt;
+
+            Color prevColor = Color.FromRgb(R, G, B);
+
+            Task.Factory.StartNew(() => AdjustPaletteCache(paletteIndex, prevColor, color));
 
             FileHandler.Save();
 
             LoadFrameImage();
+        }
+
+        private void AdjustPaletteCache(int paletteIndex, Color prevColor, Color color)
+        {
+            foreach (KeyValuePair<Tuple<int, int>, Dictionary<Color, Color>> entry in CharacterViewModel.GroupedPalettes)
+            {
+                Tuple<int, int> tuple = entry.Key as Tuple<int, int>;
+
+                if (tuple.Item2 == paletteIndex)
+                {
+                    foreach (KeyValuePair<Color, Color> entry2 in entry.Value)
+                    {
+                        if (entry2.Value == prevColor)
+                        {
+                            entry.Value[entry2.Key] = color;
+                        }
+                    }
+                }
+            }
         }
 
         private void OnOutputSelectedQuadrant(Image sender, WriteableBitmap bitmap, Point point)
@@ -655,7 +699,7 @@ namespace NESTool.UserControls.ViewModels
                 return;
             }
 
-            WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, AnimationIndex, FrameIndex, ref _frameBitmapCache);
+            WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, AnimationIndex, FrameIndex);
 
             if (frameBitmap != null)
             {

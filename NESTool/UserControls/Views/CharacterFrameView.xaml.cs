@@ -1,7 +1,6 @@
 ﻿using NESTool.Commands;
 using NESTool.Models;
 using NESTool.Utils;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -18,7 +17,6 @@ namespace NESTool.UserControls.Views
         private int _frameIndex;
         private ImageSource _frameImage;
         private CharacterModel _characterModel;
-        private Dictionary<string, WriteableBitmap> _frameBitmapCache = new Dictionary<string, WriteableBitmap>();
 
         #region get/set
         public CharacterModel CharacterModel
@@ -123,7 +121,7 @@ namespace NESTool.UserControls.Views
                 return;
             }
 
-            WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, animationIndex, FrameIndex, ref _frameBitmapCache);
+            WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, animationIndex, FrameIndex);
 
             if (frameBitmap == null)
             {

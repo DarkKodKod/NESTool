@@ -6,15 +6,21 @@ using NESTool.Signals;
 using NESTool.UserControls.ViewModels;
 using NESTool.UserControls.Views;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Data;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace NESTool.ViewModels
 {
     public class CharacterViewModel : ItemViewModel
     {
         private ObservableCollection<ActionTabItem> _tabs;
+
+        public static Dictionary<string, WriteableBitmap> FrameBitmapCache;
+        public static Dictionary<Tuple<int, int>, Dictionary<Color, Color>> GroupedPalettes;
 
         #region Commands
         public CharacterCloseTabCommand CharacterCloseTabCommand { get; } = new CharacterCloseTabCommand();
@@ -48,13 +54,12 @@ namespace NESTool.ViewModels
         }
         #endregion
 
-        public CharacterViewModel()
-        {
-        }
-
         public override void OnActivate()
         {
             base.OnActivate();
+
+            FrameBitmapCache = new Dictionary<string, WriteableBitmap>();
+            GroupedPalettes = new Dictionary<Tuple<int, int>, Dictionary<Color, Color>>();
 
             #region Signals
             SignalManager.Get<AnimationTabDeletedSignal>().AddListener(OnAnimationTabDeleted);
