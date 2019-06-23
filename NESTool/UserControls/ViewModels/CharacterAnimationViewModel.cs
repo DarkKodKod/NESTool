@@ -129,7 +129,7 @@ namespace NESTool.UserControls.ViewModels
             }
         }
         #endregion
-        
+
         public override void OnActivate()
         {
             base.OnActivate();

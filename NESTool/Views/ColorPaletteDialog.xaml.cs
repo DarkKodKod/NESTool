@@ -26,7 +26,7 @@ namespace NESTool.Views
         public ColorPaletteDialog(int paletteIndex, int colorPosition, string animationID)
         {
             InitializeComponent();
-            
+
             _paletteIndex = paletteIndex;
             _colorPosition = colorPosition;
             _animationID = animationID;

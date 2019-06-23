@@ -1,7 +1,7 @@
-﻿using System.ComponentModel;
+﻿using NESTool.Commands;
+using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Media;
-using NESTool.Commands;
 
 namespace NESTool.UserControls.Views
 {
