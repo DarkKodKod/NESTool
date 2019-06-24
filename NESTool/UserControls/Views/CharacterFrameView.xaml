@@ -31,22 +31,29 @@
                 <Binding Path="FrameIndex" />
             </MultiBinding>
         </Button.CommandParameter>
-        <Border Width="128" Height="128"
-                VerticalAlignment="Top" HorizontalAlignment="Left">
-            <Canvas Background="DarkGray"
-                    Height="64" Width="64"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top">
-                <Canvas.RenderTransform>
-                    <ScaleTransform ScaleX="2" ScaleY="2"/>
-                </Canvas.RenderTransform>
-                <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
-                       Stretch="UniformToFill" 
-                       Source="{Binding FrameImage}"
-                       Width="64"
-	                   Height="64">
-                </Image>
-            </Canvas>
-        </Border>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="{Binding FrameIndex}"/>
+            <Border Width="128" Height="128" Grid.Row="1"
+                    VerticalAlignment="Top" HorizontalAlignment="Left">
+                <Canvas Background="DarkGray"
+                        Height="64" Width="64"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top">
+                    <Canvas.RenderTransform>
+                        <ScaleTransform ScaleX="2" ScaleY="2"/>
+                    </Canvas.RenderTransform>
+                    <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
+                           Stretch="UniformToFill" 
+                           Source="{Binding FrameImage}"
+                           Width="64"
+	                       Height="64">
+                    </Image>
+                </Canvas>
+            </Border>
+        </Grid>
     </Button>
 </UserControl>

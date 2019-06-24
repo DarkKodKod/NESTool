@@ -37,7 +37,7 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock>Speed:</TextBlock>
-                <TextBox Height="18" Width="30" Text="{Binding Speed, Mode=TwoWay}"/>
+                <TextBox Height="18" Width="50" Text="{Binding Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <Canvas Grid.Row="2" Background="DarkGray" 
                     Width="64" Height="64"
