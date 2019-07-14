@@ -3,6 +3,7 @@ using ArchitectureLibrary.Model;
 using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Utils;
+using NESTool.VOs;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -26,8 +27,46 @@ namespace NESTool.Commands
         public override void Execute(object parameter)
         {
             BuildPatternTables();
+            BuildMetaSprites();
 
             MessageBox.Show("Build completed!", "Build", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void BuildMetaSprites()
+        {
+            ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+
+            List<FileModelVO> models = ProjectFiles.GetModels<CharacterModel>();
+
+            foreach (FileModelVO item in models)
+            {
+                var model = item.Model as CharacterModel;
+
+                string fullPath = Path.Combine(Path.GetFullPath(projectModel.Build.OutputFilePath), item.Name + ".s");
+
+                using (StreamWriter outputFile = new StreamWriter(fullPath))
+                {
+                    WriteMetaSpriteHeader(outputFile);
+                }
+            }
+        }
+
+        private void WriteMetaSpriteHeader(StreamWriter outputFile)
+        {
+            outputFile.WriteLine("; PPU OAM");
+            outputFile.WriteLine("; http://wiki.nesdev.com/w/index.php/PPU_OAM");
+            outputFile.WriteLine("");
+            outputFile.WriteLine("; Byte 0 - Y position of top of sprite");
+            outputFile.WriteLine("; Byte 1 - Tile index number");
+            outputFile.WriteLine("; Byte 2 - Attributes");
+            outputFile.WriteLine(";           76543210");
+            outputFile.WriteLine(";           ||||||||");
+            outputFile.WriteLine(";           ||||||++- Palette (4 to 7) of sprite");
+            outputFile.WriteLine(";           |||+++--- Unimplemented");
+            outputFile.WriteLine(";           ||+------ Priority (0: in front of background; 1: behind background)");
+            outputFile.WriteLine(";           |+------- Flip sprite horizontally");
+            outputFile.WriteLine(";           +-------- Flip sprite vertically");
+            outputFile.WriteLine("; Byte 3 - X position of left side of sprite.");
         }
 
         private void BuildPatternTables()
@@ -73,7 +112,7 @@ namespace NESTool.Commands
                 }
             }
 
-            for (int i = 0; i < 256 * 16 * 16;)
+            for (int i = 0; i < tables * sizeCell * cells;)
             {
                 Reverse(ref outputBits, i, 8);
                 i += 8;

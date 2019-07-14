@@ -1,6 +1,7 @@
 ﻿using ArchitectureLibrary.Signals;
 using ColorPalette;
 using NESTool.Signals;
+using NESTool.UserControls;
 using NESTool.ViewModels;
 using NESTool.VOs;
 using System.Windows;
@@ -12,7 +13,7 @@ namespace NESTool.Views
     /// <summary>
     /// Interaction logic for TileSet.xaml
     /// </summary>
-    public partial class TileSet : UserControl
+    public partial class TileSet : UserControl, ICleanable
     {
         private Color _selectedColor = new Color();
 
@@ -97,6 +98,12 @@ namespace NESTool.Views
                     mask.Background = scb;
                 }
             }
+        }
+
+        public void CleanUp()
+        {
+            SignalManager.Get<MouseWheelSignal>().RemoveListener(OnMouseWheel);
+            SignalManager.Get<ColorPaletteSelectSignal>().RemoveListener(OnColorPaletteSelect);
         }
     }
 }

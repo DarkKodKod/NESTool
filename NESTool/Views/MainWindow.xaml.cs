@@ -3,6 +3,7 @@ using NESTool.Commands;
 using NESTool.Enums;
 using NESTool.FileSystem;
 using NESTool.Signals;
+using NESTool.UserControls;
 using NESTool.Utils;
 using NESTool.ViewModels;
 using NESTool.Views;
@@ -89,6 +90,11 @@ namespace NESTool
                     {
                         oldModel.OnDeactivate();
                     }
+                }
+
+                if (dpItemPanel.Children[0] is ICleanable cloneable)
+                {
+                    cloneable.CleanUp();
                 }
 
                 dpItemPanel.Children.Clear();

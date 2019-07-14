@@ -1,5 +1,6 @@
 ﻿using ArchitectureLibrary.Signals;
 using NESTool.Signals;
+using NESTool.UserControls;
 using NESTool.UserControls.ViewModels;
 using NESTool.UserControls.Views;
 using NESTool.ViewModels;
@@ -11,7 +12,7 @@ namespace NESTool.Views
     /// <summary>
     /// Interaction logic for PatternTable.xaml
     /// </summary>
-    public partial class PatternTable : UserControl
+    public partial class PatternTable : UserControl, ICleanable
     {
         public PatternTable()
         {
@@ -75,6 +76,13 @@ namespace NESTool.Views
                 scaleCanvas.ScaleX /= ScaleRate;
                 scaleCanvas.ScaleY /= ScaleRate;
             }
+        }
+
+        public void CleanUp()
+        {
+            SignalManager.Get<MouseWheelSignal>().RemoveListener(OnMouseWheel);
+            SignalManager.Get<AddNewTileSetLinkSignal>().RemoveListener(OnAddNewTileSetLink);
+            SignalManager.Get<CleanupTileSetLinksSignal>().RemoveListener(OnCleanupTileSetLinks);
         }
     }
 }
