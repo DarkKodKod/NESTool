@@ -6,11 +6,9 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
-             xmlns:local="clr-namespace:NESTool.UserControls.Views"
              xmlns:cv="clr-namespace:NESTool.Utils.Converters"
              xmlns:vm="clr-namespace:NESTool.UserControls.ViewModels"
              mc:Ignorable="d" 
-             Loaded="UserControl_Loaded"
              d:DesignHeight="720" d:DesignWidth="1050">
     <UserControl.DataContext>
         <vm:CharacterFrameEditorViewModel />
@@ -59,7 +57,6 @@
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="8"/>
                         <RowDefinition Height="auto"/>
-                        <RowDefinition Height="8"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
@@ -161,46 +158,6 @@
                             </Grid.ColumnDefinitions>
                             <CheckBox IsChecked="{Binding FlipX, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Column="0">Flip X</CheckBox>
                             <CheckBox IsChecked="{Binding FlipY, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Column="1">Flip Y</CheckBox>
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox Header="Palettes" Grid.Row="4" Padding="10">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="50"/>
-                                <RowDefinition Height="auto"/>
-                            </Grid.RowDefinitions>
-                            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                                <RadioButton GroupName="palettes" 
-                                             VerticalAlignment="Center" 
-                                             IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette0}"
-                                             Margin="0,0,10,0" />
-                                <local:PaletteView PaletteIndex="0" x:Name="palette0"/>
-                            </StackPanel>
-                            <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                                <RadioButton GroupName="palettes" 
-                                             VerticalAlignment="Center" 
-                                             IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette1}"
-                                             Margin="0,0,10,0"/>
-                                <local:PaletteView PaletteIndex="1" x:Name="palette1"/>
-                            </StackPanel>
-                            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                                <RadioButton GroupName="palettes" 
-                                             VerticalAlignment="Center" 
-                                             IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette2}"
-                                             Margin="0,0,10,0"/>
-                                <local:PaletteView PaletteIndex="2" x:Name="palette2"/>
-                            </StackPanel>
-                            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
-                                <RadioButton GroupName="palettes" 
-                                             VerticalAlignment="Center" 
-                                             IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette3}"
-                                             Margin="0,0,10,0"/>
-                                <local:PaletteView PaletteIndex="3" x:Name="palette3"/>
-                            </StackPanel>
-                            <Label Grid.Row="4">* Palettes are share between frames</Label>
                         </Grid>
                     </GroupBox>
                 </Grid>

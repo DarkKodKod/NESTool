@@ -1,6 +1,7 @@
 ﻿using ArchitectureLibrary.Signals;
 using ArchitectureLibrary.ViewModel;
 using NESTool.Commands;
+using NESTool.Enums;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.UserControls.ViewModels;
@@ -18,6 +19,8 @@ namespace NESTool.ViewModels
     public class CharacterViewModel : ItemViewModel
     {
         private ObservableCollection<ActionTabItem> _tabs;
+        private bool _doNotSavePalettes = false;
+        private PaletteIndex _paletteIndex = 0;
 
         public static Dictionary<string, WriteableBitmap> FrameBitmapCache;
         public static Dictionary<Tuple<int, int>, Dictionary<Color, Color>> GroupedPalettes;
@@ -52,6 +55,34 @@ namespace NESTool.ViewModels
                 return _tabs;
             }
         }
+
+        public PaletteIndex PaletteIndex
+        {
+            get { return _paletteIndex; }
+            set
+            {
+                if (_paletteIndex != value)
+                {
+                    _paletteIndex = value;
+
+                    foreach (ActionTabItem tab in Tabs)
+                    {
+                        if (tab.Content is CharacterFrameEditorView frameView)
+                        {
+                            if (frameView.DataContext is CharacterFrameEditorViewModel viewmodel)
+                            {
+                                if (viewmodel.IsActive)
+                                {
+                                    viewmodel.SaveProperty(SpriteProperties.PaletteIndex, new ValueUnion { integer = (int)value });
+                                }
+                            }
+                        }
+                    }
+                }
+
+                OnPropertyChanged("PaletteIndex");
+            }
+        }
         #endregion
 
         public override void OnActivate()
@@ -66,6 +97,9 @@ namespace NESTool.ViewModels
             SignalManager.Get<AnimationTabNewSignal>().AddListener(OnAnimationTabNew);
             SignalManager.Get<RenamedAnimationTabSignal>().AddListener(OnRenamedAnimationTab);
             SignalManager.Get<SwitchCharacterFrameViewSignal>().AddListener(OnSwitchCharacterFrameView);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().AddListener(OnColorPaletteControlSelected);
+            SignalManager.Get<UpdateCharacterImageSignal>().AddListener(OnUpdateCharacterImage);
+            SignalManager.Get<SelectPaletteIndexSignal>().AddListener(OnSelectPaletteIndex);
             #endregion
 
             PopulateTabs();
@@ -77,6 +111,145 @@ namespace NESTool.ViewModels
                     vm.OnActivate();
                 }
             }
+
+            LoadPalettes();
+        }
+
+        private void LoadPalettes()
+        {
+            _doNotSavePalettes = true;
+
+            byte R;
+            byte G;
+            byte B;
+
+            // Load palettes
+            for (int i = 0; i < 4; ++i)
+            {
+                int color0 = GetModel().Palettes[i].Color0;
+                R = (byte)(color0 >> 16);
+                G = (byte)(color0 >> 8);
+                B = (byte)color0;
+
+                SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 0);
+
+                int color1 = GetModel().Palettes[i].Color1;
+                R = (byte)(color1 >> 16);
+                G = (byte)(color1 >> 8);
+                B = (byte)color1;
+
+                SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 1);
+
+                int color2 = GetModel().Palettes[i].Color2;
+                R = (byte)(color2 >> 16);
+                G = (byte)(color2 >> 8);
+                B = (byte)color2;
+
+                SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 2);
+
+                int color3 = GetModel().Palettes[i].Color3;
+                R = (byte)(color3 >> 16);
+                G = (byte)(color3 >> 8);
+                B = (byte)color3;
+
+                SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 3);
+            }
+
+            _doNotSavePalettes = false;
+        }
+
+        private void OnColorPaletteControlSelected(Color color, int paletteIndex, int colorPosition)
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+
+            if (_doNotSavePalettes)
+            {
+                return;
+            }
+
+            int colorInt = (((color.R & 0xff) << 16) | ((color.G & 0xff) << 8) | (color.B & 0xff));
+
+            int prevColorInt = 0;
+
+            switch (colorPosition)
+            {
+                case 0:
+                    prevColorInt = GetModel().Palettes[paletteIndex].Color0;
+                    GetModel().Palettes[paletteIndex].Color0 = colorInt;
+                    break;
+                case 1:
+                    prevColorInt = GetModel().Palettes[paletteIndex].Color1;
+                    GetModel().Palettes[paletteIndex].Color1 = colorInt;
+                    break;
+                case 2:
+                    prevColorInt = GetModel().Palettes[paletteIndex].Color2;
+                    GetModel().Palettes[paletteIndex].Color2 = colorInt;
+                    break;
+                case 3:
+                    prevColorInt = GetModel().Palettes[paletteIndex].Color3;
+                    GetModel().Palettes[paletteIndex].Color3 = colorInt;
+                    break;
+            }
+
+            ProjectItem.FileHandler.Save();
+
+            // Convert previous color to type Color
+            byte R = (byte)(prevColorInt >> 16);
+            byte G = (byte)(prevColorInt >> 8);
+            byte B = (byte)prevColorInt;
+
+            Color prevColor = Color.FromRgb(R, G, B);
+
+            AdjustPaletteCache(paletteIndex, prevColor, color);
+
+            SignalManager.Get<UpdateCharacterImageSignal>().Dispatch();
+        }
+
+        private void AdjustPaletteCache(int paletteIndex, Color prevColor, Color color)
+        {
+            foreach (KeyValuePair<Tuple<int, int>, Dictionary<Color, Color>> entry in GroupedPalettes)
+            {
+                Tuple<int, int> tuple = entry.Key as Tuple<int, int>;
+
+                if (tuple.Item2 == paletteIndex)
+                {
+                    foreach (KeyValuePair<Color, Color> entry2 in entry.Value)
+                    {
+                        if (entry2.Value == prevColor)
+                        {
+                            entry.Value[entry2.Key] = color;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void OnUpdateCharacterImage()
+        {
+            foreach (ActionTabItem tab in Tabs)
+            {
+                if (tab.FramesView is CharacterAnimationView frameView)
+                {
+                    if (frameView.DataContext is CharacterAnimationViewModel viewModel)
+                    {
+                        viewModel.LoadFrameImage();
+                    }
+
+                    foreach (CharacterFrameView frame in frameView.FrameViewList)
+                    {
+                        frame.OnActivate();
+                    }
+                }
+            }
+        }
+
+        private void OnSelectPaletteIndex(PaletteIndex paletteIndex)
+        {
+            PaletteIndex = paletteIndex;
         }
 
         public override void OnDeactivate()
@@ -88,6 +261,9 @@ namespace NESTool.ViewModels
             SignalManager.Get<AnimationTabNewSignal>().RemoveListener(OnAnimationTabNew);
             SignalManager.Get<RenamedAnimationTabSignal>().RemoveListener(OnRenamedAnimationTab);
             SignalManager.Get<SwitchCharacterFrameViewSignal>().RemoveListener(OnSwitchCharacterFrameView);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().RemoveListener(OnColorPaletteControlSelected);
+            SignalManager.Get<UpdateCharacterImageSignal>().RemoveListener(OnUpdateCharacterImage);
+            SignalManager.Get<SelectPaletteIndexSignal>().RemoveListener(OnSelectPaletteIndex);
             #endregion
 
             foreach (ActionTabItem tab in Tabs)

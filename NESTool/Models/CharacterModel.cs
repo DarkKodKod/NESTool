@@ -33,7 +33,6 @@ namespace NESTool.Models
         public string Name { get; set; }
         public float Speed { get; set; }
         public Frame[] Frames { get; set; }
-        public Palette[] Palettes { get; set; }
     }
 
     public class CharacterModel : AFileModel
@@ -55,5 +54,6 @@ namespace NESTool.Models
         }
 
         public CharacterAnimation[] Animations { get; set; } = new CharacterAnimation[64];
+        public Palette[] Palettes { get; set; } = new Palette[4];
     }
 }

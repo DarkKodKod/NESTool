@@ -8,12 +8,14 @@
              xmlns:slt="clr-namespace:NESTool.Utils.Selectors"
              xmlns:cv="clr-namespace:NESTool.Utils.Converters"
              xmlns:vm="clr-namespace:NESTool.ViewModels"
+             xmlns:local="clr-namespace:NESTool.UserControls.Views"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1050">
-	<UserControl.DataContext>
-		<vm:CharacterViewModel x:Name="vmCharacterModel" />
-	</UserControl.DataContext>
+    <UserControl.DataContext>
+        <vm:CharacterViewModel x:Name="vmCharacterModel" />
+    </UserControl.DataContext>
     <UserControl.Resources>
+        <cv:EnumMatchToBooleanConverter x:Key="enumConverter" />
         <cv:ParametersConverter x:Key="parametersConverter"/>
         <DataTemplate x:Key="itemHeaderTemplate">
             <StackPanel Orientation="Horizontal" Height="21" Width="100">
@@ -71,24 +73,82 @@
                               ItemTemplate="{StaticResource itemContentTemplate}"/>
     </UserControl.Resources>
     <Grid Background="LightGray">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="10"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        <TabControl Grid.Column="1" Grid.Row="1" 
-                    DockPanel.Dock="Right"
-                    HorizontalAlignment="Stretch" 
-                    VerticalAlignment="Stretch"
-                    Name="actionTabs"
-                    PreviewMouseDown="ActionTabs_PreviewMouseDown"
-                    ItemTemplateSelector="{StaticResource headerTemplateSelector}"
-                    ContentTemplateSelector="{StaticResource contentTemplateSelector}">
-        </TabControl>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <TabControl Grid.Column="1" Grid.Row="1" 
+                        DockPanel.Dock="Right"
+                        HorizontalAlignment="Stretch" 
+                        VerticalAlignment="Stretch"
+                        Name="actionTabs"
+                        PreviewMouseDown="ActionTabs_PreviewMouseDown"
+                        ItemTemplateSelector="{StaticResource headerTemplateSelector}"
+                        ContentTemplateSelector="{StaticResource contentTemplateSelector}">
+            </TabControl>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <GroupBox Header="Palettes" Grid.Column="1" Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <RadioButton GroupName="palettes" 
+                                     VerticalAlignment="Center"
+                                     IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette0}"
+                                     Margin="15,0,5,0" />
+                        <local:PaletteView PaletteIndex="0" x:Name="palette0"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <RadioButton GroupName="palettes" 
+                                     VerticalAlignment="Center"
+                                     IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette1}"
+                                     Margin="15,0,5,0"/>
+                        <local:PaletteView PaletteIndex="1" x:Name="palette1"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <RadioButton GroupName="palettes" 
+                                     VerticalAlignment="Center" 
+                                     IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette2}"
+                                     Margin="15,0,5,0"/>
+                        <local:PaletteView PaletteIndex="2" x:Name="palette2"/>
+                    </StackPanel>
+                    <StackPanel Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <RadioButton GroupName="palettes" 
+                                     VerticalAlignment="Center" 
+                                     IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette3}"
+                                     Margin="15,0,5,0"/>
+                        <local:PaletteView PaletteIndex="3" x:Name="palette3"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
+        </Grid>
     </Grid>
 </UserControl>

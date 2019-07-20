@@ -1,4 +1,5 @@
 ﻿using ArchitectureLibrary.Signals;
+using NESTool.Enums;
 using NESTool.ViewModels;
 using NESTool.VOs;
 using System.Windows;
@@ -76,8 +77,9 @@ namespace NESTool.Signals
     public class NewAnimationFrameSignal : Signal<string> { }
     public class SwitchCharacterFrameViewSignal : Signal<string, int> { }
     public class DeleteAnimationFrameSignal : Signal<string, int> { }
-    public class ColorPaletteControlSelectedSignal : Signal<Color, int, int, string> { }
-    public class ColorPaletteCleanupSignal : Signal<string, int> { }
+    public class ColorPaletteControlSelectedSignal : Signal<Color, int, int> { }
+    public class UpdateCharacterImageSignal : Signal { }
+    public class SelectPaletteIndexSignal : Signal<PaletteIndex> { }
 
     // Map
 }

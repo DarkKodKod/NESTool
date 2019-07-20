@@ -7,13 +7,10 @@ using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
-using NESTool.ViewModels;
 using NESTool.VOs;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -21,22 +18,22 @@ using System.Windows.Media.Imaging;
 
 namespace NESTool.UserControls.ViewModels
 {
+    public enum SpriteProperties
+    {
+        FlipX,
+        FlipY,
+        PaletteIndex
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    public struct ValueUnion
+    {
+        [FieldOffset(0)] public int integer;
+        [FieldOffset(4)] public bool boolean;
+    }
+
     public class CharacterFrameEditorViewModel : ViewModel
     {
-        private enum SpriteProperties
-        {
-            FlipX,
-            FlipY,
-            PaletteIndex
-        }
-
-        [StructLayout(LayoutKind.Explicit)]
-        public struct ValueUnion
-        {
-            [FieldOffset(0)] public int integer;
-            [FieldOffset(4)] public bool boolean;
-        }
-
         private FileModelVO[] _banks;
         private int _selectedBank;
         private string _tabId;
@@ -48,7 +45,7 @@ namespace NESTool.UserControls.ViewModels
         private double _selectionRectangleTop = 0.0;
         private double _selectionRectangleLeft = 0.0;
         private int _selectedPatternTableTile;
-        private int _selectedFrameTile;
+        private int _selectedFrameTile = -1;
         private CharacterModel _characterModel;
         private FileHandler _fileHandler;
         private ImageSource _frameImage;
@@ -58,11 +55,9 @@ namespace NESTool.UserControls.ViewModels
         private double _rectangleLeft = 0.0;
         private bool _flipX = false;
         private bool _flipY = false;
-        private PaletteIndex _paletteIndex = 0;
         private readonly bool[] _spritePropertiesX = new bool[64];
         private readonly bool[] _spritePropertiesY = new bool[64];
         private readonly int[] _spritePaletteIndices = new int[64];
-        private bool _doNotSavePalettes = false;
 
         #region Commands
         public SwitchCharacterFrameViewCommand SwitchCharacterFrameViewCommand { get; } = new SwitchCharacterFrameViewCommand();
@@ -132,22 +127,6 @@ namespace NESTool.UserControls.ViewModels
                 _characterModel = value;
 
                 OnPropertyChanged("CharacterModel");
-            }
-        }
-
-        public PaletteIndex PaletteIndex
-        {
-            get { return _paletteIndex; }
-            set
-            {
-                if (_paletteIndex != value)
-                {
-                    _paletteIndex = value;
-
-                    SaveProperty(SpriteProperties.PaletteIndex, new ValueUnion { integer = (int)value });
-                }
-
-                OnPropertyChanged("PaletteIndex");
             }
         }
 
@@ -371,7 +350,7 @@ namespace NESTool.UserControls.ViewModels
             #region Signals
             SignalManager.Get<FileModelVOSelectionChangedSignal>().AddListener(OnFileModelVOSelectionChanged);
             SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().AddListener(OnColorPaletteControlSelected);
+            SignalManager.Get<UpdateCharacterImageSignal>().AddListener(OnUpdateCharacterImage);
             #endregion
 
             EditFrameTools = EditFrameTools.Select;
@@ -385,12 +364,10 @@ namespace NESTool.UserControls.ViewModels
         {
             base.OnDeactivate();
 
-            SignalManager.Get<ColorPaletteCleanupSignal>().Dispatch(TabID, FrameIndex);
-
             #region Signals
             SignalManager.Get<FileModelVOSelectionChangedSignal>().RemoveListener(OnFileModelVOSelectionChanged);
             SignalManager.Get<OutputSelectedQuadrantSignal>().RemoveListener(OnOutputSelectedQuadrant);
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().RemoveListener(OnColorPaletteControlSelected);
+            SignalManager.Get<UpdateCharacterImageSignal>().RemoveListener(OnUpdateCharacterImage);
             #endregion
         }
 
@@ -402,46 +379,6 @@ namespace NESTool.UserControls.ViewModels
                 _spritePropertiesY[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].FlipY;
                 _spritePaletteIndices[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].PaletteIndex;
             }
-
-            byte R;
-            byte G;
-            byte B;
-
-            _doNotSavePalettes = true;
-
-            // Load palettes
-            for (int i = 0; i < 4; ++i)
-            {
-                int color0 = CharacterModel.Animations[AnimationIndex].Palettes[i].Color0;
-                R = (byte)(color0 >> 16);
-                G = (byte)(color0 >> 8);
-                B = (byte)color0;
-
-                SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 0, TabID);
-
-                int color1 = CharacterModel.Animations[AnimationIndex].Palettes[i].Color1;
-                R = (byte)(color1 >> 16);
-                G = (byte)(color1 >> 8);
-                B = (byte)color1;
-
-                SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 1, TabID);
-
-                int color2 = CharacterModel.Animations[AnimationIndex].Palettes[i].Color2;
-                R = (byte)(color2 >> 16);
-                G = (byte)(color2 >> 8);
-                B = (byte)color2;
-
-                SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 2, TabID);
-
-                int color3 = CharacterModel.Animations[AnimationIndex].Palettes[i].Color3;
-                R = (byte)(color3 >> 16);
-                G = (byte)(color3 >> 8);
-                B = (byte)color3;
-
-                SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 3, TabID);
-            }
-
-            _doNotSavePalettes = false;
         }
 
         private void UpdateDialogInfo()
@@ -483,73 +420,14 @@ namespace NESTool.UserControls.ViewModels
             LoadBankImage();
         }
 
-        private void OnColorPaletteControlSelected(Color color, int paletteIndex, int colorPosition, string animationID)
+        private void OnUpdateCharacterImage()
         {
-            if (_doNotSavePalettes)
+            if (!IsActive)
             {
                 return;
             }
-
-            if (!IsActive || TabID != animationID)
-            {
-                return;
-            }
-
-            int colorInt = (((color.R & 0xff) << 16) | ((color.G & 0xff) << 8) | (color.B & 0xff));
-
-            int prevColorInt = 0;
-
-            switch (colorPosition)
-            {
-                case 0:
-                    prevColorInt = CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color0;
-                    CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color0 = colorInt;
-                    break;
-                case 1:
-                    prevColorInt = CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color1;
-                    CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color1 = colorInt;
-                    break;
-                case 2:
-                    prevColorInt = CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color2;
-                    CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color2 = colorInt;
-                    break;
-                case 3:
-                    prevColorInt = CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color3;
-                    CharacterModel.Animations[AnimationIndex].Palettes[paletteIndex].Color3 = colorInt;
-                    break;
-            }
-
-            // Convert previous color to type Color
-            byte R = (byte)(prevColorInt >> 16);
-            byte G = (byte)(prevColorInt >> 8);
-            byte B = (byte)prevColorInt;
-
-            Color prevColor = Color.FromRgb(R, G, B);
-
-            Task.Factory.StartNew(() => AdjustPaletteCache(paletteIndex, prevColor, color));
-
-            FileHandler.Save();
 
             LoadFrameImage();
-        }
-
-        private void AdjustPaletteCache(int paletteIndex, Color prevColor, Color color)
-        {
-            foreach (KeyValuePair<Tuple<int, int>, Dictionary<Color, Color>> entry in CharacterViewModel.GroupedPalettes)
-            {
-                Tuple<int, int> tuple = entry.Key as Tuple<int, int>;
-
-                if (tuple.Item2 == paletteIndex)
-                {
-                    foreach (KeyValuePair<Color, Color> entry2 in entry.Value)
-                    {
-                        if (entry2.Value == prevColor)
-                        {
-                            entry.Value[entry2.Key] = color;
-                        }
-                    }
-                }
-            }
         }
 
         private void OnOutputSelectedQuadrant(Image sender, WriteableBitmap bitmap, Point point)
@@ -574,7 +452,8 @@ namespace NESTool.UserControls.ViewModels
 
                     FlipX = _spritePropertiesX[SelectedFrameTile];
                     FlipY = _spritePropertiesY[SelectedFrameTile];
-                    PaletteIndex = (PaletteIndex)_spritePaletteIndices[SelectedFrameTile];
+
+                    SignalManager.Get<SelectPaletteIndexSignal>().Dispatch((PaletteIndex)_spritePaletteIndices[SelectedFrameTile]);
                 }
                 else if (EditFrameTools == EditFrameTools.Paint && SelectionRectangleVisibility == Visibility.Visible)
                 {
@@ -626,8 +505,13 @@ namespace NESTool.UserControls.ViewModels
             LoadFrameImage();
         }
 
-        private void SaveProperty(SpriteProperties property, ValueUnion value)
+        public void SaveProperty(SpriteProperties property, ValueUnion value)
         {
+            if (SelectedFrameTile == -1)
+            {
+                return;
+            }
+
             bool didChange = false;
 
             switch (property)
@@ -660,7 +544,7 @@ namespace NESTool.UserControls.ViewModels
                     {
                         _spritePaletteIndices[SelectedFrameTile] = value.integer;
 
-                        CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].PaletteIndex = (int)PaletteIndex;
+                        CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].PaletteIndex = value.integer;
 
                         didChange = true;
                     }

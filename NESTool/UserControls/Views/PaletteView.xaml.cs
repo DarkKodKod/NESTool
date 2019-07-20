@@ -15,24 +15,12 @@ namespace NESTool.UserControls.Views
         private SolidColorBrush _color1;
         private SolidColorBrush _color2;
         private SolidColorBrush _color3;
-        private string _animationID;
 
         #region Commands
         public ShowColorPaletteCommand ShowColorPaletteCommand { get; } = new ShowColorPaletteCommand();
         #endregion
 
         #region get/set
-        public string AnimationID
-        {
-            get { return _animationID; }
-            set
-            {
-                _animationID = value;
-
-                OnPropertyChanged("AnimationID");
-            }
-        }
-
         public SolidColorBrush Color0
         {
             get { return _color0; }

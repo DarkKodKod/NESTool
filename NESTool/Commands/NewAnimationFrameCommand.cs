@@ -25,7 +25,6 @@ namespace NESTool.Commands
                     if (animation.Frames == null)
                     {
                         animation.Frames = new Frame[64];
-                        animation.Palettes = new Palette[4];
                     }
 
                     for (int j = 0; j < animation.Frames.Length; ++j)

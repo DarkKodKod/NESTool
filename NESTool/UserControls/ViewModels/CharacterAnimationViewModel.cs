@@ -208,7 +208,7 @@ namespace NESTool.UserControls.ViewModels
             }
         }
 
-        private void LoadFrameImage()
+        public void LoadFrameImage()
         {
             if (CharacterModel == null || _animationIndex == -1)
             {

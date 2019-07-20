@@ -77,7 +77,7 @@ namespace NESTool.Utils
                             cropped = WriteableBitmapExtensions.Flip(cropped, WriteableBitmapExtensions.FlipMode.Horizontal);
                         }
 
-                        PaintPixelsBasedOnPalettes(ref cropped, tile, characterModel.Animations[animationIndex], bankModel.Group);
+                        PaintPixelsBasedOnPalettes(ref cropped, tile, characterModel, bankModel.Group);
 
                         cropped.Freeze();
 
@@ -96,7 +96,7 @@ namespace NESTool.Utils
             return patternTableBitmap;
         }
 
-        private static void PaintPixelsBasedOnPalettes(ref WriteableBitmap bitmap, CharacterTile tile, CharacterAnimation animation, int group)
+        private static void PaintPixelsBasedOnPalettes(ref WriteableBitmap bitmap, CharacterTile tile, CharacterModel model, int group)
         {
             var tuple = Tuple.Create(group, tile.PaletteIndex);
 
@@ -121,10 +121,10 @@ namespace NESTool.Utils
 
                         switch (colors.Count)
                         {
-                            case 0: paletteColor = animation.Palettes[tile.PaletteIndex].Color0; break;
-                            case 1: paletteColor = animation.Palettes[tile.PaletteIndex].Color1; break;
-                            case 2: paletteColor = animation.Palettes[tile.PaletteIndex].Color2; break;
-                            case 3: paletteColor = animation.Palettes[tile.PaletteIndex].Color3; break;
+                            case 0: paletteColor = model.Palettes[tile.PaletteIndex].Color0; break;
+                            case 1: paletteColor = model.Palettes[tile.PaletteIndex].Color1; break;
+                            case 2: paletteColor = model.Palettes[tile.PaletteIndex].Color2; break;
+                            case 3: paletteColor = model.Palettes[tile.PaletteIndex].Color3; break;
                         }
 
                         byte R = (byte)(paletteColor >> 16);

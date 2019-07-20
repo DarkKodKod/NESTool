@@ -41,7 +41,6 @@
                     <Binding ElementName="PaletteViewControl" />
                     <Binding Source="{StaticResource index0}"/>
                     <Binding Path="PaletteIndex"/>
-                    <Binding Path="AnimationID" />
                 </MultiBinding>
             </Button.CommandParameter>
             <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
@@ -57,7 +56,6 @@
                     <Binding ElementName="PaletteViewControl" />
                     <Binding Source="{StaticResource index1}"/>
                     <Binding Path="PaletteIndex"/>
-                    <Binding Path="AnimationID" />
                 </MultiBinding>
             </Button.CommandParameter>
             <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
@@ -73,7 +71,6 @@
                     <Binding ElementName="PaletteViewControl" />
                     <Binding Source="{StaticResource index2}"/>
                     <Binding Path="PaletteIndex"/>
-                    <Binding Path="AnimationID" />
                 </MultiBinding>
             </Button.CommandParameter>
             <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
@@ -89,7 +86,6 @@
                     <Binding ElementName="PaletteViewControl" />
                     <Binding Source="{StaticResource index3}"/>
                     <Binding Path="PaletteIndex"/>
-                    <Binding Path="AnimationID" />
                 </MultiBinding>
             </Button.CommandParameter>
             <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
