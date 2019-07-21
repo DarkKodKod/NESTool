@@ -493,6 +493,7 @@ namespace NESTool.UserControls.ViewModels
                 CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].Point = characterPoint;
                 CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankID = model.GUID;
                 CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankTileID = guid;
+                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].FrontBackground = true;
             }
             else if (tool == EditFrameTools.Erase)
             {

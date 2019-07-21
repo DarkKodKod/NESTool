@@ -40,14 +40,65 @@ namespace NESTool.Commands
 
             foreach (FileModelVO item in models)
             {
-                var model = item.Model as CharacterModel;
+                CharacterModel model = item.Model as CharacterModel;
 
                 string fullPath = Path.Combine(Path.GetFullPath(projectModel.Build.OutputFilePath), item.Name + ".s");
 
                 using (StreamWriter outputFile = new StreamWriter(fullPath))
                 {
                     WriteMetaSpriteHeader(outputFile);
+                    WriteMetaSprite(outputFile, model, item.Name);
                 }
+            }
+        }
+
+        private void WriteMetaSprite(StreamWriter outputFile, CharacterModel model, string name)
+        {
+            foreach (CharacterAnimation animation in model.Animations)
+            {
+                if (string.IsNullOrEmpty(animation.ID))
+                {
+                    continue;
+                }
+
+                outputFile.WriteLine($"{name}_{animation.Name}_data:");
+                outputFile.WriteLine(";          vert    tile    attr    horiz");
+
+                for (int i = 0; i < animation.Frames.Length; ++i)
+                {
+                    if (animation.Frames[i].Tiles == null)
+                    {
+                        continue;
+                    }
+
+                    for (int j = 0; j < animation.Frames[i].Tiles.Length; ++j)
+                    {
+                        CharacterTile charTile = animation.Frames[i].Tiles[j];
+
+                        if (string.IsNullOrEmpty(charTile.BankID) || string.IsNullOrEmpty(charTile.BankTileID))
+                        {
+                            continue;
+                        }
+
+                        byte horiz = (byte)charTile.Point.X;
+                        byte vert = (byte)charTile.Point.Y;
+
+                        PatternTableModel patternTable = ProjectFiles.GetModel<PatternTableModel>(charTile.BankID);
+                        byte tile = (byte)patternTable.GetTileIndex(charTile.BankTileID);
+
+                        byte attrs = (byte)charTile.PaletteIndex;
+                        attrs |= charTile.FrontBackground ? (byte)0 : (byte)32;
+                        attrs |= charTile.FlipX ? (byte)64 : (byte)0;
+                        attrs |= charTile.FlipY ? (byte)128 : (byte)0;
+
+                        outputFile.WriteLine($"    .byte   ${vert.ToString("X2")},    ${tile.ToString("X2")},	${attrs.ToString("X2")},	${horiz.ToString("X2")}");
+                    }
+
+                    // todo: only checks the first frame for now
+                    break;
+                }
+
+                outputFile.WriteLine("");
             }
         }
 
@@ -67,6 +118,7 @@ namespace NESTool.Commands
             outputFile.WriteLine(";           |+------- Flip sprite horizontally");
             outputFile.WriteLine(";           +-------- Flip sprite vertically");
             outputFile.WriteLine("; Byte 3 - X position of left side of sprite.");
+            outputFile.WriteLine("");
         }
 
         private void BuildPatternTables()

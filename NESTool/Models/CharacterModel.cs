@@ -11,6 +11,7 @@ namespace NESTool.Models
         public int PaletteIndex { get; set; }
         public string BankID { get; set; }
         public string BankTileID { get; set; }
+        public bool FrontBackground { get; set; }
     }
 
     public struct Frame

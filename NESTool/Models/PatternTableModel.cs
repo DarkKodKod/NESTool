@@ -36,7 +36,7 @@ namespace NESTool.Models
 
         public bool IsFull()
         {
-            foreach (var tile in PTTiles)
+            foreach (PTTileModel tile in PTTiles)
             {
                 if (string.IsNullOrEmpty(tile.GUID))
                 {
@@ -47,9 +47,25 @@ namespace NESTool.Models
             return true;
         }
 
+        public int GetTileIndex(string guid)
+        {
+            int count = 0;
+            foreach (PTTileModel tile in PTTiles)
+            {
+                if (tile.GUID == guid)
+                {
+                    return count;
+                }
+
+                count++;
+            }
+
+            return count;
+        }
+
         public PTTileModel GetTileModel(string guid)
         {
-            foreach (var tile in PTTiles)
+            foreach (PTTileModel tile in PTTiles)
             {
                 if (tile.GUID == guid)
                 {
@@ -65,7 +81,7 @@ namespace NESTool.Models
         {
             int i = 0;
 
-            foreach (var tile in PTTiles)
+            foreach (PTTileModel tile in PTTiles)
             {
                 if (string.IsNullOrEmpty(tile.GUID))
                 {
