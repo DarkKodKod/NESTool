@@ -19,6 +19,8 @@ namespace NESTool.Commands
         private Dictionary<string, WriteableBitmap> _bitmapCache = new Dictionary<string, WriteableBitmap>();
         private readonly string _patterntableOutputFile;
 
+        private const int NESFPS = 60;
+
         public BuildProjectCommand()
         {
             _patterntableOutputFile = (string)Application.Current.FindResource(_patterntableOutputFileKey);
@@ -122,8 +124,12 @@ namespace NESTool.Commands
 
                 animationIndices.Add($"{animation.Name}");
 
+                int frameDuration = (int)(NESFPS * animation.Speed);
+
                 outputFile.WriteLine($"    ; number of frames");
-                outputFile.WriteLine($"    .byte {frameNames.Count}");
+                outputFile.WriteLine($"    .byte ${frameNames.Count.ToString("X2")} ; decimal {frameNames.Count}");
+                outputFile.WriteLine($"    ; frame duration");
+                outputFile.WriteLine($"    .byte ${frameDuration.ToString("X2")} ; decimal {frameDuration}");
 
                 foreach (string frameName in frameNames)
                 {
