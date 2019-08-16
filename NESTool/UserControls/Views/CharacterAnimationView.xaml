@@ -38,6 +38,10 @@
             <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock>Speed:</TextBlock>
                 <TextBox Height="18" Width="50" Text="{Binding Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Margin="20,0,0,0">Frame Index:</TextBlock>
+                <Border BorderThickness="1" BorderBrush="Black">
+                    <TextBlock TextAlignment="Center" Background="White" Height="18" Width="20" Text="{Binding FrameIndex}"/>
+                </Border>
             </StackPanel>
             <Canvas Grid.Row="2" Background="DarkGray" 
                     Width="64" Height="64"

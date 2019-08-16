@@ -167,6 +167,7 @@
     <Compile Include="Commands\TreeviewSelectedItemChanged.cs" />
     <Compile Include="Commands\UndoCommand.cs" />
     <Compile Include="FileSystem\ProjectFiles.cs" />
+    <Compile Include="Models\Palette.cs" />
     <Compile Include="UserControls\ICleanable.cs" />
     <Compile Include="UserControls\ViewModels\CharacterAnimationViewModel.cs" />
     <Compile Include="UserControls\ViewModels\CharacterFrameEditorViewModel.cs" />

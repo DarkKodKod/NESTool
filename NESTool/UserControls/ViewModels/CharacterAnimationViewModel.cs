@@ -56,6 +56,20 @@ namespace NESTool.UserControls.ViewModels
             }
         }
 
+        public int FrameIndex
+        {
+            get
+            {
+                return _frameIndex;
+            }
+            set
+            {
+                _frameIndex = value;
+
+                OnPropertyChanged("FrameIndex");
+            }
+        }
+
         public ImageSource FrameImage
         {
             get
@@ -162,7 +176,7 @@ namespace NESTool.UserControls.ViewModels
 
             IsPlaying = false;
 
-            _frameIndex = 0;
+            FrameIndex = 0;
             _animationIndex = -1;
 
             for (int i = 0; i < CharacterModel.Animations.Length; ++i)
@@ -215,7 +229,7 @@ namespace NESTool.UserControls.ViewModels
                 return;
             }
 
-            WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, _animationIndex, _frameIndex);
+            WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, _animationIndex, FrameIndex);
 
             if (frameBitmap == null)
             {
@@ -304,12 +318,12 @@ namespace NESTool.UserControls.ViewModels
 
         private void NextFrame()
         {
-            _frameIndex++;
+            FrameIndex++;
 
-            if (_frameIndex >= 64 ||
-                CharacterModel.Animations[_animationIndex].Frames[_frameIndex].Tiles == null)
+            if (FrameIndex >= 64 ||
+                CharacterModel.Animations[_animationIndex].Frames[FrameIndex].Tiles == null)
             {
-                _frameIndex = 0;
+                FrameIndex = 0;
             }
 
             LoadFrameImage();
@@ -317,15 +331,15 @@ namespace NESTool.UserControls.ViewModels
 
         private void PreviousFrame()
         {
-            _frameIndex--;
+            FrameIndex--;
 
-            if (_frameIndex < 0)
+            if (FrameIndex < 0)
             {
                 for (int i = CharacterModel.Animations[_animationIndex].Frames.Length - 1; i >= 0; --i)
                 {
                     if (CharacterModel.Animations[_animationIndex].Frames[i].Tiles != null)
                     {
-                        _frameIndex = i;
+                        FrameIndex = i;
                         break;
                     }
                 }

@@ -20,14 +20,6 @@ namespace NESTool.Models
         public bool FixToGrid { get; set; }
     }
 
-    public struct Palette
-    {
-        public int Color0 { get; set; }
-        public int Color1 { get; set; }
-        public int Color2 { get; set; }
-        public int Color3 { get; set; }
-    }
-
     public struct CharacterAnimation
     {
         public string ID { get; set; }

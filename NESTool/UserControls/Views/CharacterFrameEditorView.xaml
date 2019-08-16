@@ -163,7 +163,7 @@
                 </Grid>
             </GroupBox>
             <GroupBox Grid.Column="1" Header="Banks" Margin="10" Padding="10">
-                <Grid>
+                <Grid HorizontalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="3"/>
