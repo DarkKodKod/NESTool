@@ -170,7 +170,7 @@ namespace NESTool.ViewModels
                 return;
             }
 
-            int colorInt = (((color.R & 0xff) << 16) | ((color.G & 0xff) << 8) | (color.B & 0xff));
+            int colorInt = ((color.R & 0xff) << 16) | ((color.G & 0xff) << 8) | (color.B & 0xff);
 
             int prevColorInt = 0;
 

@@ -10,7 +10,7 @@ namespace NESTool.Models
         public string BankTileID { get; set; }
     }
 
-    public struct AttributeTable
+    public class AttributeTable
     {
         public MapTile[] MapTile { get; set; }
         public int PaletteIndex { get; set; }
@@ -34,7 +34,20 @@ namespace NESTool.Models
             }
         }
 
-        public AttributeTable[,] Animations { get; set; } = new AttributeTable[16, 15];
+        public ref MapTile GetTile(int index)
+        {
+            int attributeTableIndex = index / 4;
+            int tileIndex = index % 4;
+
+            if (AttributeTable[attributeTableIndex].MapTile == null)
+            {
+                AttributeTable[attributeTableIndex].MapTile = new MapTile[4];
+            }
+
+            return ref AttributeTable[attributeTableIndex].MapTile[tileIndex];
+        }
+
+        public AttributeTable[] AttributeTable { get; set; } = new AttributeTable[16 * 15];
         public Palette[] Palettes { get; set; } = new Palette[4];
     }
 }

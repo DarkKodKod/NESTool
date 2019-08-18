@@ -11,94 +11,84 @@
              xmlns:cv="clr-namespace:NESTool.Utils.Converters"
 			 xmlns:vm="clr-namespace:NESTool.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="720" d:DesignWidth="1050">
-	<UserControl.DataContext>
-		<vm:MapViewModel />
-	</UserControl.DataContext>
+             d:DesignHeight="770" d:DesignWidth="1300">
+    <UserControl.DataContext>
+        <vm:MapViewModel />
+    </UserControl.DataContext>
     <UserControl.Resources>
         <cv:EnumMatchToBooleanConverter x:Key="enumConverter" />
     </UserControl.Resources>
     <Grid Background="LightGray">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="768"/>
+            <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="530"/>
+            <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
-        <GroupBox Grid.Column="0" Header="Map" Margin="10" Padding="10">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="8"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="6"/>
-                        <ColumnDefinition Width="40"/>
-                        <ColumnDefinition Width="6"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="3"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    
-                    <Border Grid.Column="3" Width="256" Height="256" Grid.Row="2"
-                            VerticalAlignment="Top" HorizontalAlignment="Left">
-                        <Canvas Width="64" Height="64" 
-		                        Background="DarkGray"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top">
-                            <Canvas.RenderTransform>
-                                <ScaleTransform ScaleX="4" ScaleY="4"/>
-                            </Canvas.RenderTransform>
-                            <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
-	                                Width="64"
-	                                Height="64"
-                                    Source="{Binding FrameImage}"
-                                    Name="imgFrame"
-	                                Stretch="UniformToFill">
-                                <!--i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseDown">
-                                        <cmd:EventToCommand Command="{Binding ImageMouseDownCommand}" PassEventArgsToCommand="True" />
-                                    </i:EventTrigger>
-                                </-->
-                            </Image>
-                            <Border>
-                                <Border.Background>
-                                    <VisualBrush TileMode="Tile"
-					                                Viewport="0,0,8,8" ViewportUnits="Absolute" 
-					                                Viewbox="0,0,8,8" ViewboxUnits="Absolute">
-                                        <VisualBrush.Visual>
-                                            <Rectangle Stroke="Magenta" StrokeThickness="0.1" Height="100" Width="100"/>
-                                        </VisualBrush.Visual>
-                                    </VisualBrush>
-                                </Border.Background>
-                                <Canvas Width="64" Height="64" Background="Transparent">
-                                    <!--i:Interaction.Behaviors>
-                                        <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgFrame}"/>
-                                    </-->
-                                    <Rectangle Width="8" Height="8" 
-                                                Stroke="Red" 
-                                                StrokeThickness="0.5"
-                                                Canvas.Top="{Binding RectangleTop}"
-                                                Canvas.Left="{Binding RectangleLeft}"
-                                                Visibility="{Binding RectangleVisibility}"/>
-                                </Canvas>
-                            </Border>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="1"
+                    Width="768"
+                    Height="720"
+                    VerticalAlignment="Top" 
+                    HorizontalAlignment="Left">
+                <Canvas Width="256" Height="240" 
+                        Grid.Row="1"
+		                Background="DarkGray"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top">
+                    <Canvas.RenderTransform>
+                        <ScaleTransform ScaleX="3" ScaleY="3"/>
+                    </Canvas.RenderTransform>
+                    <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
+	                       Width="256"
+	                       Height="240"
+                           Source="{Binding FrameImage}"
+                           Name="imgFrame"
+	                       Stretch="UniformToFill">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDown">
+                                <cmd:EventToCommand Command="{Binding ImageMouseDownCommand}" PassEventArgsToCommand="True" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Image>
+                    <Border>
+                        <Border.Background>
+                            <VisualBrush TileMode="Tile"
+					                     Viewport="0,0,8,8" ViewportUnits="Absolute" 
+					                     Viewbox="0,0,8,8" ViewboxUnits="Absolute">
+                                <VisualBrush.Visual>
+                                    <Rectangle Stroke="Magenta" StrokeThickness="0.1" Height="100" Width="100"/>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Border.Background>
+                        <Canvas Width="256" Height="240" Background="Transparent">
+                            <i:Interaction.Behaviors>
+                                <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgFrame}"/>
+                            </i:Interaction.Behaviors>
+                            <Rectangle Width="8" Height="8" 
+                                       Stroke="Red" 
+                                       StrokeThickness="0.5"
+                                       Canvas.Top="{Binding RectangleTop}"
+                                       Canvas.Left="{Binding RectangleLeft}"
+                                       Visibility="{Binding RectangleVisibility}"/>
                         </Canvas>
                     </Border>
-                </Grid>
-            </Grid>
-        </GroupBox>
-        <Grid Grid.Column="1">
+                </Canvas>
+            </Border>
+        </Grid>
+        <Grid Grid.Column="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
+                <RowDefinition Height="42" />
+                <RowDefinition Height="400"/>
+                <RowDefinition Height="150" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <GroupBox Grid.Row="0" Header="Banks" Margin="0,10,0,0">
+            <GroupBox Grid.Row="0" Header="Banks" Margin="0,10,0,0" Grid.RowSpan="2">
                 <Grid HorizontalAlignment="Center">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
@@ -118,14 +108,14 @@
                             </i:Interaction.Triggers>
                         </ComboBox>
                     </StackPanel>
-                    <Border Grid.Row="2" Width="510" Height="510"
+                    <Border Grid.Row="2" Width="384" Height="384"
                             VerticalAlignment="Top" HorizontalAlignment="Left">
                         <Canvas Width="128" Height="128" 
 		                        Background="DarkGray"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top">
                             <Canvas.RenderTransform>
-                                <ScaleTransform ScaleX="4" ScaleY="4"/>
+                                <ScaleTransform ScaleX="3" ScaleY="3"/>
                             </Canvas.RenderTransform>
                             <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
                                    Source="{Binding BankImage}"
@@ -165,7 +155,7 @@
                     </Border>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="Palettes" Grid.Row="1" Margin="0,10,0,10">
+            <GroupBox Header="Palettes" Grid.Row="2" Margin="0,10,0,10">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />

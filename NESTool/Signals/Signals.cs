@@ -82,4 +82,5 @@ namespace NESTool.Signals
     public class SelectPaletteIndexSignal : Signal<PaletteIndex> { }
 
     // Map
+    public class UpdateMapImageSignal : Signal { }
 }
