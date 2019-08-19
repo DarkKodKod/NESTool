@@ -38,6 +38,9 @@ namespace NESTool
     {
         private ProjectItemType _currentViewType = ProjectItemType.None;
 
+        public static bool ToolBarTileSetShowHideGrid = true;
+        public static EditFrameTools ToolBarMapTool = EditFrameTools.Select;
+
         private readonly FieldInfo _menuDropAlignmentField;
 
         [DllImport("user32.dll")]
@@ -65,9 +68,47 @@ namespace NESTool
             SignalManager.Get<UpdateFolderSignal>().AddListener(OnUpdateFolder);
             SignalManager.Get<LoadProjectItemSignal>().AddListener(OnLoadProjectItem);
             SignalManager.Get<DeleteElementSignal>().AddListener(OnDeleteElement);
+            SignalManager.Get<ShowGridSignal>().AddListener(OnShowGrid);
+            SignalManager.Get<HideGridSignal>().AddListener(OnHideGrid);
+            SignalManager.Get<MapPaintToolSignal>().AddListener(OnMapPaintTool);
+            SignalManager.Get<MapSelectToolSignal>().AddListener(OnMapSelectTool);
+            SignalManager.Get<MapEraseToolSignal>().AddListener(OnMapEraseTool);
 
             // Initialize visibility statte of the toolbars
-            tbrTileSet.Visibility = Visibility.Hidden;
+            tbrTileSet.Visibility = Visibility.Collapsed;
+            tbrMap.Visibility = Visibility.Collapsed;
+        }
+
+        private void OnHideGrid()
+        {
+            ToolBarTileSetShowHideGrid = false;
+        }
+
+        private void OnShowGrid()
+        {
+            ToolBarTileSetShowHideGrid = true;
+        }
+
+        private void OnMapPaintTool()
+        {
+            tbMapSelect.IsChecked = false;
+            tbMapErase.IsChecked = false;
+
+            ToolBarMapTool = EditFrameTools.Paint;
+        }
+        private void OnMapSelectTool()
+        {
+            tbMapPaint.IsChecked = false;
+            tbMapErase.IsChecked = false;
+
+            ToolBarMapTool = EditFrameTools.Select;
+        }
+        private void OnMapEraseTool()
+        {
+            tbMapSelect.IsChecked = false;
+            tbMapPaint.IsChecked = false;
+
+            ToolBarMapTool = EditFrameTools.Erase;
         }
 
         private void SystemParameters_StaticPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -102,15 +143,26 @@ namespace NESTool
 
             UserControl view = null;
 
-            tbrTileSet.Visibility = Visibility.Hidden;
+            tbrTileSet.Visibility = Visibility.Collapsed;
+            tbrMap.Visibility = Visibility.Collapsed;
 
             switch (item.Type)
             {
                 case ProjectItemType.Bank: view = new Banks(); break;
                 case ProjectItemType.Character: view = new Character(); break;
-                case ProjectItemType.Map: view = new Map(); break;
+                case ProjectItemType.Map:
+                    tbrMap.Visibility = Visibility.Visible;
+
+                    tbMapSelect.IsChecked = true;
+                    ToolBarMapTool = EditFrameTools.Select;
+
+                    view = new Map();
+                    break;
                 case ProjectItemType.TileSet:
                     tbrTileSet.Visibility = Visibility.Visible;
+
+                    tbShowHideGrid.IsChecked = ToolBarTileSetShowHideGrid;
+
                     view = new TileSet();
                     break;
                 case ProjectItemType.PatternTable: view = new PatternTable(); break;

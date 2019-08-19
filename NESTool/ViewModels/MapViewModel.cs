@@ -85,7 +85,7 @@ namespace NESTool.ViewModels
             {
                 _selectedAttributeTile = value;
 
-                OnPropertyChanged("SelectedFrameTile");
+                OnPropertyChanged("SelectedAttributeTile");
             }
         }
 
@@ -225,6 +225,8 @@ namespace NESTool.ViewModels
             SignalManager.Get<ColorPaletteControlSelectedSignal>().AddListener(OnColorPaletteControlSelected);
             SignalManager.Get<UpdateMapImageSignal>().AddListener(OnUpdateMapImage);
             SignalManager.Get<SelectPaletteIndexSignal>().AddListener(OnSelectPaletteIndex);
+            SignalManager.Get<MapPaintToolSignal>().AddListener(OnMapPaintTool);
+            SignalManager.Get<MapEraseToolSignal>().AddListener(OnMapEraseTool);
             #endregion
 
             LoadPalettes();
@@ -240,12 +242,23 @@ namespace NESTool.ViewModels
             SignalManager.Get<ColorPaletteControlSelectedSignal>().RemoveListener(OnColorPaletteControlSelected);
             SignalManager.Get<UpdateMapImageSignal>().RemoveListener(OnUpdateMapImage);
             SignalManager.Get<SelectPaletteIndexSignal>().RemoveListener(OnSelectPaletteIndex);
+            SignalManager.Get<MapPaintToolSignal>().RemoveListener(OnMapPaintTool);
+            SignalManager.Get<MapEraseToolSignal>().RemoveListener(OnMapEraseTool);
             #endregion
         }
 
         private void OnSelectPaletteIndex(PaletteIndex paletteIndex)
         {
             PaletteIndex = paletteIndex;
+        }
+
+        private void OnMapPaintTool()
+        {
+            RectangleVisibility = Visibility.Hidden;
+        }
+        private void OnMapEraseTool()
+        {
+            RectangleVisibility = Visibility.Hidden;
         }
 
         private void LoadPalettes()
@@ -411,32 +424,23 @@ namespace NESTool.ViewModels
                 RectangleLeft = point.X;
                 RectangleTop = point.Y;
 
-                if (SelectionRectangleVisibility == Visibility.Visible)
+                int index = ((int)point.X / 8) + (((int)point.Y / 8) * 32);
+
+                int zOrder = Util.CalcZOrder((short)(point.X / 8), (short)(point.Y / 8));
+
+                SelectedAttributeTile = index / 4; // TODO: This is not the way to do it!
+
+                if (MainWindow.ToolBarMapTool == EditFrameTools.Paint && SelectionRectangleVisibility == Visibility.Visible)
                 {
-                    int index = ((int)point.X / 8) + (((int)point.Y / 8) * 8);
-
-                    SelectedAttributeTile = index / 4;
-
-                    // Paint
-                    Point characterPoint = new Point
-                    {
-                        X = RectangleLeft,
-                        Y = RectangleTop
-                    };
-
-                    PatternTableModel model = Banks[SelectedBank].Model as PatternTableModel;
-
-                    string guid = model.PTTiles[SelectedPatternTableTile].GUID;
-
-                    ref MapTile tile = ref GetModel().GetTile(index);
-
-                    tile.Point = characterPoint;
-                    tile.BankID = model.GUID;
-                    tile.BankTileID = guid;
-
-                    ProjectItem?.FileHandler.Save();
-
-                    LoadFrameImage();
+                    PaintTile(index);
+                }
+                else if (MainWindow.ToolBarMapTool == EditFrameTools.Erase)
+                {
+                    EraseTile(index);
+                }
+                else if (MainWindow.ToolBarMapTool == EditFrameTools.Select)
+                {
+                    SelectTile();
                 }
             }
             else if (sender.Name == "imgPatternTable")
@@ -449,6 +453,49 @@ namespace NESTool.ViewModels
 
                 SelectedPatternTableTile = index;
             }
+        }
+
+        private void SelectTile()
+        {
+            RectangleVisibility = Visibility.Visible;
+
+            SignalManager.Get<SelectPaletteIndexSignal>().Dispatch((PaletteIndex)_spritePaletteIndices[SelectedAttributeTile]);
+        }
+
+        private void PaintTile(int index)
+        {
+            // Paint
+            Point characterPoint = new Point
+            {
+                X = RectangleLeft,
+                Y = RectangleTop
+            };
+
+            PatternTableModel model = Banks[SelectedBank].Model as PatternTableModel;
+
+            string guid = model.PTTiles[SelectedPatternTableTile].GUID;
+
+            ref MapTile tile = ref GetModel().GetTile(index);
+
+            tile.Point = characterPoint;
+            tile.BankID = model.GUID;
+            tile.BankTileID = guid;
+
+            ProjectItem?.FileHandler.Save();
+
+            LoadFrameImage();
+        }
+
+        private void EraseTile(int index)
+        {
+            ref MapTile tile = ref GetModel().GetTile(index);
+
+            tile.BankID = string.Empty;
+            tile.BankTileID = string.Empty;
+
+            ProjectItem?.FileHandler.Save();
+
+            LoadFrameImage();
         }
 
         private void OnUpdateMapImage()

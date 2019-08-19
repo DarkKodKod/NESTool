@@ -51,6 +51,9 @@ namespace NESTool.ViewModels
         public TreeviewSelectedItemChangedCommand TreeviewSelectedItemChangedCommand { get; } = new TreeviewSelectedItemChangedCommand();
         public ShowGridCommand ShowGridCommand { get; } = new ShowGridCommand();
         public HideGridCommand HideGridCommand { get; } = new HideGridCommand();
+        public MapPaintToolCommand MapPaintToolCommand { get; } = new MapPaintToolCommand();
+        public MapEraseToolCommand MapEraseToolCommand { get; } = new MapEraseToolCommand();
+        public MapSelectToolCommand MapSelectToolCommand { get; } = new MapSelectToolCommand();
         #endregion
 
         private const string _projectNameKey = "applicationTitle";

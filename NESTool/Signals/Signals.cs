@@ -83,4 +83,7 @@ namespace NESTool.Signals
 
     // Map
     public class UpdateMapImageSignal : Signal { }
+    public class MapPaintToolSignal : Signal { }
+    public class MapSelectToolSignal : Signal { }
+    public class MapEraseToolSignal : Signal { }
 }

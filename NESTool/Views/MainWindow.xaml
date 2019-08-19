@@ -424,7 +424,7 @@
 				</Button>
 			</ToolBar>
             <ToolBar Name="tbrTileSet">
-                <ToggleButton ToolTip="Show/Hide Grid" ToolBar.OverflowMode="AsNeeded">
+                <ToggleButton ToolTip="Show/Hide Grid" ToolBar.OverflowMode="AsNeeded" Name="tbShowHideGrid">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Checked">
                             <cmd:EventToCommand Command="{Binding ShowGridCommand}" PassEventArgsToCommand="True" />
@@ -434,6 +434,77 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                     <Image Width="16" Height="16" Source="/resources/showgrid.png">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <fx:GrayscaleEffect />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </ToggleButton>
+            </ToolBar>
+            <ToolBar Name="tbrMap">
+                <ToggleButton ToolTip="Select" ToolBar.OverflowMode="AsNeeded" Name="tbMapSelect">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <cmd:EventToCommand Command="{Binding MapSelectToolCommand}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Image Width="16" Height="16" Source="/resources/select.png">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <fx:GrayscaleEffect />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </ToggleButton>
+                <ToggleButton ToolTip="Paint" ToolBar.OverflowMode="AsNeeded" Name="tbMapPaint">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <cmd:EventToCommand Command="{Binding MapPaintToolCommand}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Image Width="16" Height="16" Source="/resources/paint.png">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <fx:GrayscaleEffect />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </ToggleButton>
+                <ToggleButton ToolTip="Erase" ToolBar.OverflowMode="AsNeeded" Name="tbMapErase">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <cmd:EventToCommand Command="{Binding MapEraseToolCommand}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <Image Width="16" Height="16" Source="/resources/erase.png">
                         <Image.Style>
                             <Style TargetType="Image">
                                 <Style.Triggers>

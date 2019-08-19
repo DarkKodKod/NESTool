@@ -448,20 +448,15 @@ namespace NESTool.UserControls.ViewModels
 
                 if (EditFrameTools == EditFrameTools.Select)
                 {
-                    RectangleVisibility = Visibility.Visible;
-
-                    FlipX = _spritePropertiesX[SelectedFrameTile];
-                    FlipY = _spritePropertiesY[SelectedFrameTile];
-
-                    SignalManager.Get<SelectPaletteIndexSignal>().Dispatch((PaletteIndex)_spritePaletteIndices[SelectedFrameTile]);
+                    SelectTile();
                 }
                 else if (EditFrameTools == EditFrameTools.Paint && SelectionRectangleVisibility == Visibility.Visible)
                 {
-                    UpadteSprite(EditFrameTools.Paint);
+                    PaintTile();
                 }
                 else if (EditFrameTools == EditFrameTools.Erase)
                 {
-                    UpadteSprite(EditFrameTools.Erase);
+                    EraseTile();
                 }
             }
             else if (sender.Name == "imgPatternTable")
@@ -476,30 +471,42 @@ namespace NESTool.UserControls.ViewModels
             }
         }
 
-        private void UpadteSprite(EditFrameTools tool)
+        private void SelectTile()
         {
-            if (tool == EditFrameTools.Paint)
+            RectangleVisibility = Visibility.Visible;
+
+            FlipX = _spritePropertiesX[SelectedFrameTile];
+            FlipY = _spritePropertiesY[SelectedFrameTile];
+
+            SignalManager.Get<SelectPaletteIndexSignal>().Dispatch((PaletteIndex)_spritePaletteIndices[SelectedFrameTile]);
+        }
+
+        private void PaintTile()
+        {
+            Point characterPoint = new Point
             {
-                Point characterPoint = new Point
-                {
-                    X = RectangleLeft,
-                    Y = RectangleTop
-                };
+                X = RectangleLeft,
+                Y = RectangleTop
+            };
 
-                PatternTableModel model = Banks[SelectedBank].Model as PatternTableModel;
+            PatternTableModel model = Banks[SelectedBank].Model as PatternTableModel;
 
-                string guid = model.PTTiles[SelectedPatternTableTile].GUID;
+            string guid = model.PTTiles[SelectedPatternTableTile].GUID;
 
-                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].Point = characterPoint;
-                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankID = model.GUID;
-                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankTileID = guid;
-                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].FrontBackground = true;
-            }
-            else if (tool == EditFrameTools.Erase)
-            {
-                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankID = string.Empty;
-                CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankTileID = string.Empty;
-            }
+            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].Point = characterPoint;
+            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankID = model.GUID;
+            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankTileID = guid;
+            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].FrontBackground = true;
+
+            FileHandler.Save();
+
+            LoadFrameImage();
+        }
+
+        private void EraseTile()
+        {
+            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankID = string.Empty;
+            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankTileID = string.Empty;
 
             FileHandler.Save();
 

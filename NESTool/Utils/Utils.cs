@@ -194,5 +194,29 @@ namespace NESTool.Utils
             // copy dest buffer back to the dest WriteableBitmap
             dest.WritePixels(new Int32Rect(nXDest, nYDest, src.PixelWidth, src.PixelHeight), dest_buffer, dest_stride, 0);
         }
+
+        // Morton order
+        // Maximum matrix size is 65536*65536
+        public static int CalcZOrder(short xPos, short yPos)
+        {
+            int[] MASKS = new int[] { 0x55555555, 0x33333333, 0x0F0F0F0F, 0x00FF00FF };
+            int[] SHIFTS = new int[] { 1, 2, 4, 8 };
+
+            int x = xPos;  // Interleave lower 16 bits of x and y, so the bits of x
+            int y = yPos;  // are in the even positions and bits from y in the odd;
+
+            x = (x | (x << SHIFTS[3])) & MASKS[3];
+            x = (x | (x << SHIFTS[2])) & MASKS[2];
+            x = (x | (x << SHIFTS[1])) & MASKS[1];
+            x = (x | (x << SHIFTS[0])) & MASKS[0];
+
+            y = (y | (y << SHIFTS[3])) & MASKS[3];
+            y = (y | (y << SHIFTS[2])) & MASKS[2];
+            y = (y | (y << SHIFTS[1])) & MASKS[1];
+            y = (y | (y << SHIFTS[0])) & MASKS[0];
+
+            int result = x | (y << 1);
+            return result;
+        }
     }
 }

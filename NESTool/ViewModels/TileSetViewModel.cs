@@ -308,6 +308,8 @@ namespace NESTool.ViewModels
         {
             base.OnActivate();
 
+            GridVisibility = MainWindow.ToolBarTileSetShowHideGrid ? Visibility.Visible : Visibility.Hidden;
+
             #region Signals
             SignalManager.Get<UpdateTileSetImageSignal>().AddListener(OnUpdateTileSetImage);
             SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);

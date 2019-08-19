@@ -137,6 +137,9 @@
     <Compile Include="Commands\HideGridCommand.cs" />
     <Compile Include="Commands\ImageMouseDownCommand.cs" />
     <Compile Include="Commands\ImportImageCommand.cs" />
+    <Compile Include="Commands\MapEraseToolCommand.cs" />
+    <Compile Include="Commands\MapPaintToolCommand.cs" />
+    <Compile Include="Commands\MapSelectToolCommand.cs" />
     <Compile Include="Commands\MoveTileToPatternTableCommand.cs" />
     <Compile Include="Commands\NewAnimationFrameCommand.cs" />
     <Compile Include="Commands\NextFrameCharacterAnimationCommand.cs" />

@@ -36,8 +36,8 @@ namespace NESTool.Models
 
         public ref MapTile GetTile(int index)
         {
-            int attributeTableIndex = index / 4;
-            int tileIndex = index % 4;
+            int attributeTableIndex = index / 4; // TODO: This is not the way to do it!
+            int tileIndex = index % 4; // TODO: This is not the way to do it!
 
             if (AttributeTable[attributeTableIndex].MapTile == null)
             {
