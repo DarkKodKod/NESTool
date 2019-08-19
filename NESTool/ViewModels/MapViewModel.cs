@@ -426,9 +426,7 @@ namespace NESTool.ViewModels
 
                 int index = ((int)point.X / 8) + (((int)point.Y / 8) * 32);
 
-                int zOrder = Util.CalcZOrder((short)(point.X / 8), (short)(point.Y / 8));
-
-                SelectedAttributeTile = index / 4; // TODO: This is not the way to do it!
+                SelectedAttributeTile = GetModel().GetAttributeTileIndex(index).Item1;
 
                 if (MainWindow.ToolBarMapTool == EditFrameTools.Paint && SelectionRectangleVisibility == Visibility.Visible)
                 {

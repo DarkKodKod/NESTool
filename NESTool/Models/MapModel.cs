@@ -18,6 +18,13 @@ namespace NESTool.Models
 
     public class MapModel : AFileModel
     {
+        #region Attribute Indices Cache
+        private static readonly int[,] IndicesCache = {
+            { 0, 1, 32, 33 },
+            { 2, 3, 34, 35 }
+        };
+        #endregion
+
         private const string _extensionKey = "extensionMaps";
 
         [TomlIgnore]
@@ -34,10 +41,28 @@ namespace NESTool.Models
             }
         }
 
+        public (int, int) GetAttributeTileIndex(int index)
+        {
+            for (int i = 0; i < IndicesCache.GetLength(0); ++i)
+            {
+                for (int j = 0; j < IndicesCache.GetLength(1); ++j)
+                {
+                    int value = IndicesCache[i, j];
+
+                    if (value == index)
+                    {
+                        return (i, j);
+                    }
+                }
+            }
+
+            return (-1, -1);
+        }
+
         public ref MapTile GetTile(int index)
         {
-            int attributeTableIndex = index / 4; // TODO: This is not the way to do it!
-            int tileIndex = index % 4; // TODO: This is not the way to do it!
+            int attributeTableIndex = GetAttributeTileIndex(index).Item1;
+            int tileIndex = GetAttributeTileIndex(index).Item2;
 
             if (AttributeTable[attributeTableIndex].MapTile == null)
             {
