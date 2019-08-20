@@ -33,7 +33,7 @@ namespace NESTool.ViewModels
         private ImageSource _frameImage;
         private Visibility _rectangleVisibility = Visibility.Hidden;
         private bool _doNotSavePalettes = false;
-        private readonly int[] _spritePaletteIndices = new int[240];
+        private readonly int[] _spritePaletteIndices = new int[MapModel.MetaTileMax];
 
         public static Dictionary<string, WriteableBitmap> FrameBitmapCache;
         public static Dictionary<Tuple<int, int>, Dictionary<Color, Color>> GroupedPalettes;
@@ -231,6 +231,7 @@ namespace NESTool.ViewModels
 
             LoadPalettes();
             LoadFrameImage();
+            LoadMetaTileProperties();
         }
 
         public override void OnDeactivate()
@@ -245,6 +246,14 @@ namespace NESTool.ViewModels
             SignalManager.Get<MapPaintToolSignal>().RemoveListener(OnMapPaintTool);
             SignalManager.Get<MapEraseToolSignal>().RemoveListener(OnMapEraseTool);
             #endregion
+        }
+
+        private void LoadMetaTileProperties()
+        {
+            for (int i = 0; i < GetModel().AttributeTable.Length; ++i)
+            {
+                _spritePaletteIndices[i] = GetModel().AttributeTable[i].PaletteIndex;
+            }
         }
 
         private void OnSelectPaletteIndex(PaletteIndex paletteIndex)
@@ -421,12 +430,11 @@ namespace NESTool.ViewModels
 
             if (sender.Name == "imgFrame")
             {
-                RectangleLeft = point.X;
-                RectangleTop = point.Y;
-
                 int index = ((int)point.X / 8) + (((int)point.Y / 8) * 32);
 
-                SelectedAttributeTile = GetModel().GetAttributeTileIndex(index).Item1;
+                (int, int) tuple = GetModel().GetAttributeTileIndex(index);
+
+                SelectedAttributeTile = tuple.Item1;
 
                 if (MainWindow.ToolBarMapTool == EditFrameTools.Paint && SelectionRectangleVisibility == Visibility.Visible)
                 {
@@ -438,6 +446,16 @@ namespace NESTool.ViewModels
                 }
                 else if (MainWindow.ToolBarMapTool == EditFrameTools.Select)
                 {
+                    // get the first element in the selected meta tile
+                    var array = GetModel().GetMetaTableArray(tuple.Item1);
+
+                    // from the first element, get the corresponding X, Y coordinates to put the rectangle in the right place
+                    int y = (array[0] / 32) * 8;
+                    int x = (array[0] - (32 * (array[0] / 32))) * 8;
+
+                    RectangleLeft = x;
+                    RectangleTop = y;
+
                     SelectTile();
                 }
             }
@@ -455,6 +473,11 @@ namespace NESTool.ViewModels
 
         private void SelectTile()
         {
+            if (SelectedAttributeTile == -1)
+            {
+                return;
+            }
+
             RectangleVisibility = Visibility.Visible;
 
             SignalManager.Get<SelectPaletteIndexSignal>().Dispatch((PaletteIndex)_spritePaletteIndices[SelectedAttributeTile]);

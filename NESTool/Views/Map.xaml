@@ -70,7 +70,7 @@
                             <i:Interaction.Behaviors>
                                 <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgFrame}"/>
                             </i:Interaction.Behaviors>
-                            <Rectangle Width="8" Height="8" 
+                            <Rectangle Width="16" Height="16" 
                                        Stroke="Red" 
                                        StrokeThickness="0.5"
                                        Canvas.Top="{Binding RectangleTop}"
