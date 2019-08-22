@@ -432,6 +432,9 @@ namespace NESTool.ViewModels
             {
                 int index = ((int)point.X / 8) + (((int)point.Y / 8) * 32);
 
+                RectangleLeft = point.X;
+                RectangleTop = point.Y;
+
                 (int, int) tuple = GetModel().GetAttributeTileIndex(index);
 
                 SelectedAttributeTile = tuple.Item1;
@@ -449,14 +452,17 @@ namespace NESTool.ViewModels
                     // get the first element in the selected meta tile
                     var array = GetModel().GetMetaTableArray(tuple.Item1);
 
-                    // from the first element, get the corresponding X, Y coordinates to put the rectangle in the right place
-                    int y = (array[0] / 32) * 8;
-                    int x = (array[0] - (32 * (array[0] / 32))) * 8;
+                    if (array != null)
+                    {
+                        // from the first element, get the corresponding X, Y coordinates to put the rectangle in the right place
+                        int y = (array[0] / 32) * 8;
+                        int x = (array[0] - (32 * (array[0] / 32))) * 8;
 
-                    RectangleLeft = x;
-                    RectangleTop = y;
+                        RectangleLeft = x;
+                        RectangleTop = y;
 
-                    SelectTile();
+                        SelectTile();
+                    }
                 }
             }
             else if (sender.Name == "imgPatternTable")
