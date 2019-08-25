@@ -10,23 +10,40 @@ namespace NESTool.Utils
 {
     public static class MapUtils
     {
-        public static WriteableBitmap CreateImage(MapModel mapModel)
+        public static void CreateImage(MapModel mapModel, ref WriteableBitmap mapBitmap, bool update)
         {
-            WriteableBitmap mapBitmap = BitmapFactory.New(256, 240);
+            if (!update)
+            {
+                mapBitmap = BitmapFactory.New(256, 240);
+            }
 
             using (mapBitmap.GetBitmapContext())
             {
-                foreach (AttributeTable attTable in mapModel.AttributeTable)
+                for (int i = 0; i < mapModel.AttributeTable.Length; ++i)
                 {
+                    AttributeTable attTable = mapModel.AttributeTable[i];
+
                     if (attTable.MapTile == null)
                     {
                         continue;
+                    }
+
+                    // Only update the tiles that were affected by any changes
+                    if (update == true)
+                    {
+                        if (MapViewModel.FlagMapBitmapChanges[i] == false)
+                        {
+                            continue;
+                        }
+
+                        MapViewModel.FlagMapBitmapChanges[i] = false;
                     }
 
                     foreach (MapTile tile in attTable.MapTile)
                     {
                         if (string.IsNullOrEmpty(tile.BankID) || string.IsNullOrEmpty(tile.BankTileID))
                         {
+
                             continue;
                         }
 
@@ -79,10 +96,6 @@ namespace NESTool.Utils
                     }
                 }
             }
-
-            mapBitmap.Freeze();
-
-            return mapBitmap;
         }
 
         private static void PaintPixelsBasedOnPalettes(ref WriteableBitmap bitmap, AttributeTable attributeTable, MapModel model, int group)

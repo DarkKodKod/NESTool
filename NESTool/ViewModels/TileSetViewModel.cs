@@ -211,6 +211,8 @@ namespace NESTool.ViewModels
                 return;
             }
 
+            ImgSource = null;
+
             ImagePath = filePath;
 
             using (ImportImageCommand command = new ImportImageCommand())

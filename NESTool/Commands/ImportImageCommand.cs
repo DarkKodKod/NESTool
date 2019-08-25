@@ -89,6 +89,7 @@ namespace NESTool.Commands
                 Method = PaletteQuantizer.EMethod.NESQuantizer
             };
 
+            // todo: If the source image is the same as the output image, Crash!!
             Image outputImage = await quantizer.Convert();
 
             string outputImagePath = Path.Combine(imageFolderPath, item.DisplayName + ".bmp");

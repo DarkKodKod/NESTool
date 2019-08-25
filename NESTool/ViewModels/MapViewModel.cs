@@ -34,9 +34,11 @@ namespace NESTool.ViewModels
         private Visibility _rectangleVisibility = Visibility.Hidden;
         private bool _doNotSavePalettes = false;
         private readonly int[] _spritePaletteIndices = new int[MapModel.MetaTileMax];
+        private WriteableBitmap _mapBitmap;
 
         public static Dictionary<string, WriteableBitmap> FrameBitmapCache;
         public static Dictionary<Tuple<int, int>, Dictionary<Color, Color>> GroupedPalettes;
+        public static bool[] FlagMapBitmapChanges;
 
         public MapModel GetModel()
         {
@@ -217,6 +219,13 @@ namespace NESTool.ViewModels
         {
             base.OnActivate();
 
+            FlagMapBitmapChanges = new bool[MapModel.MetaTileMax];
+
+            for (int i = 0; i < FlagMapBitmapChanges.Length; ++i)
+            {
+                FlagMapBitmapChanges[i] = false;
+            }
+
             FrameBitmapCache = new Dictionary<string, WriteableBitmap>();
             GroupedPalettes = new Dictionary<Tuple<int, int>, Dictionary<Color, Color>>();
 
@@ -230,7 +239,7 @@ namespace NESTool.ViewModels
             #endregion
 
             LoadPalettes();
-            LoadFrameImage();
+            LoadFrameImage(false);
             LoadMetaTileProperties();
         }
 
@@ -491,6 +500,8 @@ namespace NESTool.ViewModels
 
         private void PaintTile(int index)
         {
+            FlagMapBitmapChanges[SelectedAttributeTile] = true;
+
             // Paint
             Point characterPoint = new Point
             {
@@ -510,11 +521,13 @@ namespace NESTool.ViewModels
 
             ProjectItem?.FileHandler.Save();
 
-            LoadFrameImage();
+            LoadFrameImage(true);
         }
 
         private void EraseTile(int index)
         {
+            FlagMapBitmapChanges[SelectedAttributeTile] = true;
+
             ref MapTile tile = ref GetModel().GetTile(index);
 
             tile.BankID = string.Empty;
@@ -522,27 +535,24 @@ namespace NESTool.ViewModels
 
             ProjectItem?.FileHandler.Save();
 
-            LoadFrameImage();
+            LoadFrameImage(false);
         }
 
         private void OnUpdateMapImage()
         {
-            LoadFrameImage();
+            LoadFrameImage(false);
         }
 
-        private void LoadFrameImage()
+        private void LoadFrameImage(bool update)
         {
             if (GetModel() == null)
             {
                 return;
             }
 
-            WriteableBitmap frameBitmap = MapUtils.CreateImage(GetModel());
+            MapUtils.CreateImage(GetModel(), ref _mapBitmap, update);
 
-            if (frameBitmap != null)
-            {
-                FrameImage = Util.ConvertWriteableBitmapToBitmapImage(frameBitmap);
-            }
+            FrameImage = Util.ConvertWriteableBitmapToBitmapImage(_mapBitmap);
         }
 
         public void SavePaletteIndex(PaletteIndex index)
@@ -560,7 +570,9 @@ namespace NESTool.ViewModels
 
                 ProjectItem.FileHandler.Save();
 
-                LoadFrameImage();
+                FlagMapBitmapChanges[SelectedAttributeTile] = true;
+
+                LoadFrameImage(true);
             }
         }
     }
