@@ -99,26 +99,43 @@ namespace NESTool.Commands
         {
             outputFile.WriteLine($"att_{name}:");
 
-            outputFile.Write("    .byte ");
+            for (int j = 0; j < 8; ++j)
+            {
+                outputFile.Write("    .byte ");
 
-            //
-            // 00 00 01 11
-            // continue here: http://nintendoage.com/forum/messageview.cfm?catid=22&threadid=8172
+                for (int i = 0; i < 8; ++i)
+                {
+                    byte top_left = (byte)model.AttributeTable[0 + (i * 2 + (j * 32))].PaletteIndex;
+                    byte top_right = (byte)model.AttributeTable[1 + (i * 2 + (j * 32))].PaletteIndex;
 
-            //byte paletteIndex = (byte)model.AttributeTable[0].PaletteIndex;
-            //byte paletteIndex = (byte)model.AttributeTable[1].PaletteIndex;
-            //byte paletteIndex = (byte)model.AttributeTable[2].PaletteIndex;
-            //byte paletteIndex = (byte)model.AttributeTable[3].PaletteIndex;
-            byte top_left = 3;
-            byte top_right = 1;
-            byte bottom_left = 0;
-            byte bottom_right = 0;
+                    byte bottom_left = 0;
+                    byte bottom_right = 0;
 
-            byte attribute = (byte)((bottom_left << 3) | (bottom_right << 2) | (top_left << 1) | top_right);
+                    int bottomLeftIndex = 16 + (i * 2 + (j * 32));
+                    int bottomRightIndex = 17 + (i * 2 + (j * 32));
 
-            outputFile.Write($"${attribute.ToString("X2")}");
+                    if (bottomLeftIndex < model.AttributeTable.Length)
+                    {
+                        bottom_left = (byte)model.AttributeTable[bottomLeftIndex].PaletteIndex;
+                    }
+                    
+                    if (bottomRightIndex < model.AttributeTable.Length)
+                    {
+                        bottom_right = (byte)model.AttributeTable[bottomRightIndex].PaletteIndex;
+                    }
 
-            outputFile.Write("\n");
+                    byte attribute = (byte)((bottom_left << 3) | (bottom_right << 2) | (top_left << 1) | top_right);
+
+                    outputFile.Write($"${attribute.ToString("X2")}");
+
+                    if (i < 7)
+                    {
+                        outputFile.Write(",");
+                    }
+                }
+
+                outputFile.Write("\n");
+            }
 
             outputFile.WriteLine("");
         }
