@@ -30,8 +30,97 @@ namespace NESTool.Commands
         {
             BuildPatternTables();
             BuildMetaSprites();
+            BuildBackgrounds();
 
             MessageBox.Show("Build completed!", "Build", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void BuildBackgrounds()
+        {
+            ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+
+            List<FileModelVO> models = ProjectFiles.GetModels<MapModel>();
+
+            foreach (FileModelVO item in models)
+            {
+                MapModel model = item.Model as MapModel;
+
+                string fullPath = Path.Combine(Path.GetFullPath(projectModel.Build.OutputFilePath), item.Name + ".s");
+
+                using (StreamWriter outputFile = new StreamWriter(fullPath))
+                {
+                    WriteNametable(outputFile, model, item.Name);
+                    WriteAttributes(outputFile, model, item.Name);
+                }
+            }
+        }
+
+        private void WriteNametable(StreamWriter outputFile, MapModel model, string name)
+        {
+            outputFile.WriteLine($"nt_{name}:");
+
+            // iterate vertically
+            for (int j = 0; j < 15; ++j)
+            {
+                // each meta tile has two rows, so we have to iterate same index twice
+                for (int k = 0; k < 2; ++k)
+                {
+                    outputFile.Write("    .byte ");
+
+                    // iterate horizontally
+                    for (int i = 0; i < 16; ++i)
+                    {
+                        WriteMapTile(outputFile, model.AttributeTable[i + (j * 16)].MapTile[0 + (k * 2)]);
+                        outputFile.Write(",");
+                        WriteMapTile(outputFile, model.AttributeTable[i + (j * 16)].MapTile[1 + (k * 2)]);
+
+                        if (i < 15)
+                        {
+                            outputFile.Write(",");
+                        }
+                    }
+
+                    outputFile.Write("\n");
+                }
+            }
+
+            outputFile.WriteLine("");
+        }
+
+        private void WriteMapTile(StreamWriter outputFile, MapTile mapTile)
+        {
+            PatternTableModel patternTable = ProjectFiles.GetModel<PatternTableModel>(mapTile.BankID);
+            byte tile = (byte)patternTable.GetTileIndex(mapTile.BankTileID);
+
+            outputFile.Write($"${tile.ToString("X2")}");
+        }
+
+        private void WriteAttributes(StreamWriter outputFile, MapModel model, string name)
+        {
+            outputFile.WriteLine($"att_{name}:");
+
+            outputFile.Write("    .byte ");
+
+            //
+            // 00 00 01 11
+            // continue here: http://nintendoage.com/forum/messageview.cfm?catid=22&threadid=8172
+
+            //byte paletteIndex = (byte)model.AttributeTable[0].PaletteIndex;
+            //byte paletteIndex = (byte)model.AttributeTable[1].PaletteIndex;
+            //byte paletteIndex = (byte)model.AttributeTable[2].PaletteIndex;
+            //byte paletteIndex = (byte)model.AttributeTable[3].PaletteIndex;
+            byte top_left = 3;
+            byte top_right = 1;
+            byte bottom_left = 0;
+            byte bottom_right = 0;
+
+            byte attribute = (byte)((bottom_left << 3) | (bottom_right << 2) | (top_left << 1) | top_right);
+
+            outputFile.Write($"${attribute.ToString("X2")}");
+
+            outputFile.Write("\n");
+
+            outputFile.WriteLine("");
         }
 
         private void BuildMetaSprites()
