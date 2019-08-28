@@ -203,12 +203,12 @@ namespace NESTool.ViewModels
 
             Color prevColor = Color.FromRgb(R, G, B);
 
-            AdjustPaletteCache(paletteIndex, prevColor, color);
+            AdjustPaletteCache(paletteIndex, colorPosition, prevColor, color);
 
             SignalManager.Get<UpdateCharacterImageSignal>().Dispatch();
         }
 
-        private void AdjustPaletteCache(int paletteIndex, Color prevColor, Color color)
+        private void AdjustPaletteCache(int paletteIndex, int colorPosition, Color prevColor, Color color)
         {
             foreach (KeyValuePair<Tuple<int, int>, Dictionary<Color, Color>> entry in GroupedPalettes)
             {
@@ -216,13 +216,16 @@ namespace NESTool.ViewModels
 
                 if (tuple.Item2 == paletteIndex)
                 {
+                    int index = 0;
                     foreach (KeyValuePair<Color, Color> entry2 in entry.Value)
                     {
-                        if (entry2.Value == prevColor)
+                        if (index == colorPosition && entry2.Value == prevColor)
                         {
                             entry.Value[entry2.Key] = color;
                             break;
                         }
+
+                        index++;
                     }
                 }
             }

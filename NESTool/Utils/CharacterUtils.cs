@@ -102,7 +102,11 @@ namespace NESTool.Utils
 
             if (!CharacterViewModel.GroupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))
             {
-                colors = new Dictionary<Color, Color>();
+                colors = new Dictionary<Color, Color>
+                {
+                    // always add the background by default
+                    { Color.FromRgb(0, 0, 0), Color.FromRgb(0, 0, 0) }
+                };
 
                 CharacterViewModel.GroupedPalettes.Add(tuple, colors);
             }
@@ -117,14 +121,14 @@ namespace NESTool.Utils
 
                     if (!colors.TryGetValue(color, out Color newColor))
                     {
-                        int paletteColor = 0;
-
+                        int paletteColor;
                         switch (colors.Count)
                         {
                             case 0: paletteColor = model.Palettes[tile.PaletteIndex].Color0; break;
                             case 1: paletteColor = model.Palettes[tile.PaletteIndex].Color1; break;
                             case 2: paletteColor = model.Palettes[tile.PaletteIndex].Color2; break;
                             case 3: paletteColor = model.Palettes[tile.PaletteIndex].Color3; break;
+                            default: paletteColor = model.Palettes[tile.PaletteIndex].Color0; break;
                         }
 
                         byte R = (byte)(paletteColor >> 16);
