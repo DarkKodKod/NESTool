@@ -99,7 +99,7 @@ namespace NESTool.Utils
 
         private static void PaintPixelsBasedOnPalettes(ref WriteableBitmap bitmap, AttributeTable attributeTable, MapModel model, int group)
         {
-            var tuple = Tuple.Create(group, attributeTable.PaletteIndex);
+            Tuple<int, int> tuple = Tuple.Create(group, attributeTable.PaletteIndex);
 
             if (!MapViewModel.GroupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))
             {

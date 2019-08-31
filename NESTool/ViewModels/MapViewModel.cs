@@ -462,7 +462,7 @@ namespace NESTool.ViewModels
                 else if (MainWindow.ToolBarMapTool == EditFrameTools.Select)
                 {
                     // get the first element in the selected meta tile
-                    var array = GetModel().GetMetaTableArray(tuple.Item1);
+                    int[] array = GetModel().GetMetaTableArray(tuple.Item1);
 
                     if (array != null)
                     {

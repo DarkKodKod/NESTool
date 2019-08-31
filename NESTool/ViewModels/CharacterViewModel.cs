@@ -48,7 +48,7 @@ namespace NESTool.ViewModels
                 if (_tabs == null)
                 {
                     _tabs = new ObservableCollection<ActionTabItem>();
-                    var itemsView = (IEditableCollectionView)CollectionViewSource.GetDefaultView(_tabs);
+                    IEditableCollectionView itemsView = (IEditableCollectionView)CollectionViewSource.GetDefaultView(_tabs);
                     itemsView.NewItemPlaceholderPosition = NewItemPlaceholderPosition.AtEnd;
                 }
 

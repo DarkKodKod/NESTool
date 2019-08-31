@@ -98,7 +98,7 @@ namespace NESTool.Utils
 
         private static void PaintPixelsBasedOnPalettes(ref WriteableBitmap bitmap, CharacterTile tile, CharacterModel model, int group)
         {
-            var tuple = Tuple.Create(group, tile.PaletteIndex);
+            Tuple<int, int> tuple = Tuple.Create(group, tile.PaletteIndex);
 
             if (!CharacterViewModel.GroupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))
             {

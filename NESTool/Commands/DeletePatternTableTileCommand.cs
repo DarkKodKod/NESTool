@@ -38,7 +38,7 @@ namespace NESTool.Commands
 
             for (int i = selectedTile; i < 255; ++i)
             {
-                var tmp = model.PTTiles[i];
+                PTTileModel tmp = model.PTTiles[i];
 
                 model.PTTiles[i] = model.PTTiles[i + 1];
 

@@ -37,7 +37,7 @@ namespace NESTool.FileSystem
                 return null;
             }
 
-            foreach (var handler in Handlers)
+            foreach (KeyValuePair<string, FileHandler> handler in Handlers)
             {
                 if (handler.Value.FileModel.GUID == guid &&
                     handler.Value.FileModel is T model)

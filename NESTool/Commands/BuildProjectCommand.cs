@@ -97,13 +97,16 @@ namespace NESTool.Commands
 
         private void WriteAttributes(StreamWriter outputFile, MapModel model, string name)
         {
+            const int MaxHorizontal = 8;
+            const int MaxVertical = 8;
+
             outputFile.WriteLine($"att_{name}:");
 
-            for (int j = 0; j < 8; ++j)
+            for (int j = 0; j < MaxVertical; ++j)
             {
                 outputFile.Write("    .byte ");
 
-                for (int i = 0; i < 8; ++i)
+                for (int i = 0; i < MaxHorizontal; ++i)
                 {
                     byte top_left = (byte)model.AttributeTable[0 + (i * 2 + (j * 32))].PaletteIndex;
                     byte top_right = (byte)model.AttributeTable[1 + (i * 2 + (j * 32))].PaletteIndex;
@@ -124,11 +127,17 @@ namespace NESTool.Commands
                         bottom_right = (byte)model.AttributeTable[bottomRightIndex].PaletteIndex;
                     }
 
-                    byte attribute = (byte)((bottom_left << 3) | (bottom_right << 2) | (top_left << 1) | top_right);
+                    // 7654 3210
+                    // |||| ||++- Color bits 3 - 2 for top left quadrant of this byte
+                    // |||| ++--- Color bits 3 - 2 for top right quadrant of this byte
+                    // ||++------ Color bits 3 - 2 for bottom left quadrant of this byte
+                    // ++-------- Color bits 3 - 2 for bottom right quadrant of this byte
+
+                    byte attribute = (byte)((bottom_right << 6) | (bottom_left << 4) | (top_right << 2) | top_left);
 
                     outputFile.Write($"${attribute.ToString("X2")}");
 
-                    if (i < 7)
+                    if (i < MaxHorizontal - 1)
                     {
                         outputFile.Write(",");
                     }

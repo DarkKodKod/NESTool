@@ -80,7 +80,7 @@ namespace NESTool.Utils.Behaviors
 
         private void EventHandler(object sender, RoutedEventArgs e)
         {
-            var newEvent = CloneEvent(e);
+            RoutedEventArgs newEvent = CloneEvent(e);
             e.Handled = true;
 
             if (this.RedirectTarget != null)

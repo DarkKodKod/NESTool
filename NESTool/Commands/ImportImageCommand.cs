@@ -82,7 +82,7 @@ namespace NESTool.Commands
                 Directory.CreateDirectory(imageFolderPath);
             }
 
-            var quantizer = new PaletteQuantizer
+            PaletteQuantizer quantizer = new PaletteQuantizer
             {
                 InputFileName = filePath,
                 ColorCache = PaletteQuantizer.EColorCache.OctreeSearch,
