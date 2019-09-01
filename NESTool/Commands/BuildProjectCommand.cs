@@ -261,8 +261,9 @@ namespace NESTool.Commands
                 for (int i = 0; i < animationIndices.Count; ++i)
                 {
                     string index = animationIndices[i].ToUpper();
+                    string nameUpper = name.ToUpper();
 
-                    outputFile.WriteLine($"ANIM_{index} = {i}");
+                    outputFile.WriteLine($"ANIM_{nameUpper}_{index} = {i}");
                 }
 
                 outputFile.WriteLine("");
