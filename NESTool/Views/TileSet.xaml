@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              xmlns:local="clr-namespace:NESTool.Views"
              xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
              xmlns:cv="clr-namespace:NESTool.Utils.Converters"
@@ -46,11 +45,9 @@
                           Background="DarkGray"
                           VerticalScrollBarVisibility="Auto" 
                           HorizontalScrollBarVisibility="Auto">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="PreviewMouseWheel">
-                        <cmd:EventToCommand Command="{Binding PreviewMouseWheelCommand}" PassEventArgsToCommand="True" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+                <i:Interaction.Behaviors>
+                    <behaviors:EventToCommandBehavior Command="{Binding PreviewMouseWheelCommand}" Event="PreviewMouseWheel" PassArguments="True" />
+                </i:Interaction.Behaviors>
                 <Canvas Name="cvsImage"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
@@ -63,11 +60,9 @@
                            Name="imgBig"
                            RenderOptions.BitmapScalingMode="NearestNeighbor"
                            Stretch="None">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDown">
-                                <cmd:EventToCommand Command="{Binding ImageMouseDownCommand}" PassEventArgsToCommand="True" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                        <i:Interaction.Behaviors>
+                            <behaviors:EventToCommandBehavior Command="{Binding ImageMouseDownCommand}" Event="MouseDown" PassArguments="True" />
+                        </i:Interaction.Behaviors>
                     </Image>
                     <Border Visibility="{Binding GridVisibility}">
                         <Border.Background>
@@ -108,11 +103,9 @@
                            Width="64"
                            Height="64"
                            Stretch="UniformToFill">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDown">
-                                <cmd:EventToCommand Command="{Binding CroppedImageMouseDownCommand}" PassEventArgsToCommand="True" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                        <i:Interaction.Behaviors>
+                            <behaviors:EventToCommandBehavior Command="{Binding CroppedImageMouseDownCommand}" Event="MouseDown" PassArguments="True" />
+                        </i:Interaction.Behaviors>
                     </Image>
                     <Border>
                         <Border.Background>
@@ -138,11 +131,9 @@
                                     Width="326" Height="86"
                                     VerticalAlignment="Top"
                                     Hover="ColorPalette1_Hover">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="Select">
-                        <cmd:EventToCommand Command="{Binding ColorPaletteSelectCommand}" PassEventArgsToCommand="True" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+                <i:Interaction.Behaviors>
+                    <behaviors:EventToCommandBehavior Command="{Binding ColorPaletteSelectCommand}" Event="Select" PassArguments="True" />
+                </i:Interaction.Behaviors>
             </my:ColorPaletteControl>
             <Border Name="mask" BorderThickness="3" BorderBrush="Black"
                     CornerRadius="30" Grid.Row="1" Width="50" Height="50"

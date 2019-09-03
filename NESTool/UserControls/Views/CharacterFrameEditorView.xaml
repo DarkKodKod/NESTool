@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
              xmlns:cv="clr-namespace:NESTool.Utils.Converters"
              xmlns:vm="clr-namespace:NESTool.UserControls.ViewModels"
@@ -119,11 +118,9 @@
                                        Source="{Binding FrameImage}"
                                        Name="imgFrame"
 	                                   Stretch="UniformToFill">
-                                    <i:Interaction.Triggers>
-                                        <i:EventTrigger EventName="MouseDown">
-                                            <cmd:EventToCommand Command="{Binding ImageMouseDownCommand}" PassEventArgsToCommand="True" />
-                                        </i:EventTrigger>
-                                    </i:Interaction.Triggers>
+                                    <i:Interaction.Behaviors>
+                                        <behaviors:EventToCommandBehavior Command="{Binding ImageMouseDownCommand}" Event="MouseDown" PassArguments="True"  />
+                                    </i:Interaction.Behaviors>
                                 </Image>
                                 <Border>
                                     <Border.Background>
@@ -175,11 +172,9 @@
                                   DisplayMemberPath="Name"
                                   SelectedValuePath="Id"
                                   SelectedValue="{Binding Path=SelectedBank}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="SelectionChanged">
-                                    <cmd:EventToCommand Command="{Binding FileModelVOSelectionChangedCommand}" PassEventArgsToCommand="True" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
+                            <i:Interaction.Behaviors>
+                                <behaviors:EventToCommandBehavior Command="{Binding FileModelVOSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />
+                            </i:Interaction.Behaviors>
                         </ComboBox>
                     </StackPanel>
                     <Border Grid.Row="2" Width="510" Height="510"
@@ -197,11 +192,9 @@
 	                               Height="128"
                                    Name="imgPatternTable"
 	                               Stretch="UniformToFill">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="MouseDown">
-                                        <cmd:EventToCommand Command="{Binding ImageMouseDownCommand}" PassEventArgsToCommand="True" />
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
+                                <i:Interaction.Behaviors>
+                                    <behaviors:EventToCommandBehavior Command="{Binding ImageMouseDownCommand}" Event="MouseDown" PassArguments="True" />
+                                </i:Interaction.Behaviors>
                             </Image>
                             <Border>
                                 <Border.Background>

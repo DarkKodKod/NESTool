@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         xmlns:my="clr-namespace:ColorPalette;assembly=ColorPalette"
+        xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
         xmlns:local="clr-namespace:NESTool.Views"
         mc:Ignorable="d"
         ShowInTaskbar="False"
@@ -24,11 +24,9 @@
                                 CellHeight="20" CellWidth="20" 
                                 Width="326" Height="86"
                                 VerticalAlignment="Top">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Select">
-                    <cmd:EventToCommand Command="{Binding ColorPaletteSelectCommand}" PassEventArgsToCommand="True" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
+            <i:Interaction.Behaviors>
+                <behaviors:EventToCommandBehavior Command="{Binding ColorPaletteSelectCommand}" Event="Select" PassArguments="True" />
+            </i:Interaction.Behaviors>
         </my:ColorPaletteControl>
     </Grid>
 </Window>

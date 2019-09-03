@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
              xmlns:slt="clr-namespace:NESTool.Utils.Selectors"
              xmlns:cv="clr-namespace:NESTool.Utils.Converters"
+             xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
              xmlns:vm="clr-namespace:NESTool.ViewModels"
              xmlns:local="clr-namespace:NESTool.UserControls.Views"
              mc:Ignorable="d" 
@@ -29,11 +29,9 @@
                          IsVisibleChanged="EditableTextBox_IsVisibleChanged"
                          KeyDown="EditableTextBox_KeyDown"/>
                 <Image Source="/resources/tab_cross.png" Width="10" Height="10" ToolTip="Delete animation">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseUp">
-                            <cmd:EventToCommand Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type UserControl}}, Path=DataContext.CharacterCloseTabCommand}" PassEventArgsToCommand="True" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                    <i:Interaction.Behaviors>
+                        <behaviors:EventToCommandBehavior Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type UserControl}}, Path=DataContext.CharacterCloseTabCommand}" Event="MouseUp" PassArguments="True" />
+                    </i:Interaction.Behaviors>
                 </Image>
             </StackPanel>
             <DataTemplate.Triggers>
@@ -55,11 +53,9 @@
             <Image Source="/resources/tab_plus.png" 
                    Width="16" Height="16" 
                    ToolTip="New animation">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseUp">
-                        <cmd:EventToCommand Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type UserControl}}, Path=DataContext.CharacterNewTabCommand}" PassEventArgsToCommand="True" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+                <i:Interaction.Behaviors>
+                    <behaviors:EventToCommandBehavior Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type UserControl}}, Path=DataContext.CharacterNewTabCommand}" Event="MouseUp" PassArguments="True" />
+                </i:Interaction.Behaviors>
             </Image>
         </DataTemplate>
         <DataTemplate x:Key="newTabButtonContentTemplate">

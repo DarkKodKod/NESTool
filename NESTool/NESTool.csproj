@@ -240,6 +240,7 @@
     <Compile Include="ViewModels\BuildProjectDialogViewModel.cs" />
     <Compile Include="ViewModels\CharacterViewModel.cs" />
     <Compile Include="ViewModels\ElementDialogViewModel.cs" />
+    <Compile Include="Utils\Behaviors\EventToCommandBehavior.cs" />
     <Compile Include="ViewModels\ImportImageDialogViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />

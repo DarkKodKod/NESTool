@@ -7,8 +7,8 @@
 		xmlns:cv="clr-namespace:NESTool.Utils.Converters"
 		xmlns:enum="clr-namespace:NESTool.Enums"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-		xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"
         xmlns:fx="clr-namespace:ArchitectureLibrary.FXs;assembly=ArchitectureLibrary"
+        xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
         mc:Ignorable="d"
         Height="617.748" Width="939.57" 
 		Name="MainWindowView"
@@ -425,14 +425,10 @@
 			</ToolBar>
             <ToolBar Name="tbrTileSet">
                 <ToggleButton ToolTip="Show/Hide Grid" ToolBar.OverflowMode="AsNeeded" Name="tbShowHideGrid">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Checked">
-                            <cmd:EventToCommand Command="{Binding ShowGridCommand}" PassEventArgsToCommand="True" />
-                        </i:EventTrigger>
-                        <i:EventTrigger EventName="Unchecked">
-                            <cmd:EventToCommand Command="{Binding HideGridCommand}" PassEventArgsToCommand="True" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                    <i:Interaction.Behaviors>
+                        <behaviors:EventToCommandBehavior Command="{Binding ShowGridCommand}" Event="Checked" PassArguments="True" />
+                        <behaviors:EventToCommandBehavior Command="{Binding HideGridCommand}" Event="Unchecked" PassArguments="True" />
+                    </i:Interaction.Behaviors>
                     <Image Width="16" Height="16" Source="/resources/showgrid.png">
                         <Image.Style>
                             <Style TargetType="Image">
@@ -453,11 +449,9 @@
             </ToolBar>
             <ToolBar Name="tbrMap">
                 <ToggleButton ToolTip="Select" ToolBar.OverflowMode="AsNeeded" Name="tbMapSelect">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Checked">
-                            <cmd:EventToCommand Command="{Binding MapSelectToolCommand}" PassEventArgsToCommand="True" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                    <i:Interaction.Behaviors>
+                        <behaviors:EventToCommandBehavior Command="{Binding MapSelectToolCommand}" Event="Checked" PassArguments="True" />
+                    </i:Interaction.Behaviors>
                     <Image Width="16" Height="16" Source="/resources/select.png">
                         <Image.Style>
                             <Style TargetType="Image">
@@ -476,11 +470,9 @@
                     </Image>
                 </ToggleButton>
                 <ToggleButton ToolTip="Paint" ToolBar.OverflowMode="AsNeeded" Name="tbMapPaint">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Checked">
-                            <cmd:EventToCommand Command="{Binding MapPaintToolCommand}" PassEventArgsToCommand="True" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                    <i:Interaction.Behaviors>
+                        <behaviors:EventToCommandBehavior  Command="{Binding MapPaintToolCommand}" Event="Checked" PassArguments="True" />
+                    </i:Interaction.Behaviors>
                     <Image Width="16" Height="16" Source="/resources/paint.png">
                         <Image.Style>
                             <Style TargetType="Image">
@@ -499,11 +491,9 @@
                     </Image>
                 </ToggleButton>
                 <ToggleButton ToolTip="Erase" ToolBar.OverflowMode="AsNeeded" Name="tbMapErase">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Checked">
-                            <cmd:EventToCommand Command="{Binding MapEraseToolCommand}" PassEventArgsToCommand="True" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
+                    <i:Interaction.Behaviors>
+                        <behaviors:EventToCommandBehavior Command="{Binding MapEraseToolCommand}" Event="Checked" PassArguments="True"/>
+                    </i:Interaction.Behaviors>
                     <Image Width="16" Height="16" Source="/resources/erase.png">
                         <Image.Style>
                             <Style TargetType="Image">
@@ -536,35 +526,17 @@
 				<ColumnDefinition Width="3"/>
 			</Grid.ColumnDefinitions>
 			<TreeView Name="tvProjectItems" Grid.Column="1" ItemsSource="{Binding ProjectItems}" PreviewMouseRightButtonDown="TreeView_PreviewMouseRightButtonDown" AllowDrop="True">
-				<i:Interaction.Triggers>
-					<i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-						<cmd:EventToCommand Command="{Binding PreviewMouseLeftButtonDownCommand}" PassEventArgsToCommand="True" />
-					</i:EventTrigger>
-					<i:EventTrigger EventName="PreviewMouseLeftButtonUp">
-						<cmd:EventToCommand Command="{Binding PreviewMouseLeftButtonUpCommand}" PassEventArgsToCommand="True" />
-					</i:EventTrigger>
-					<i:EventTrigger EventName="PreviewMouseMove">
-						<cmd:EventToCommand Command="{Binding PreviewMouseMoveCommand, Mode=OneWay}" PassEventArgsToCommand="True" />
-					</i:EventTrigger>
-					<i:EventTrigger EventName="PreviewDrop">
-						<cmd:EventToCommand Command="{Binding DropCommand}" PassEventArgsToCommand="True" />
-					</i:EventTrigger>
-					<i:EventTrigger EventName="PreviewDragOver">
-						<cmd:EventToCommand Command="{Binding DragOverCommand}" PassEventArgsToCommand="True" />
-					</i:EventTrigger>
-					<i:EventTrigger EventName="DragLeave">
-						<cmd:EventToCommand Command="{Binding DragLeaveCommand}" PassEventArgsToCommand="True" />
-					</i:EventTrigger>
-					<i:EventTrigger EventName="PreviewDragEnter">
-						<cmd:EventToCommand Command="{Binding DragEnterCommand}" PassEventArgsToCommand="True" />
-					</i:EventTrigger>
-					<i:EventTrigger EventName="PreviewQueryContinueDrag">
-						<cmd:EventToCommand Command="{Binding QueryContinueDragCommand}" PassEventArgsToCommand="True" />
-					</i:EventTrigger>
-                    <i:EventTrigger EventName="SelectedItemChanged">
-                        <cmd:EventToCommand Command="{Binding TreeviewSelectedItemChangedCommand}" PassEventArgsToCommand="True" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+				<i:Interaction.Behaviors>
+                    <behaviors:EventToCommandBehavior Command="{Binding PreviewMouseLeftButtonDownCommand}" Event="PreviewMouseLeftButtonDown"  PassArguments="True"/>
+                    <behaviors:EventToCommandBehavior Command="{Binding PreviewMouseLeftButtonUpCommand}" Event="PreviewMouseLeftButtonUp" PassArguments="True" />
+                    <behaviors:EventToCommandBehavior Command="{Binding PreviewMouseMoveCommand, Mode=OneWay}" Event="PreviewMouseMove" PassArguments="True" />
+                    <behaviors:EventToCommandBehavior Command="{Binding DropCommand}" Event="PreviewDrop" PassArguments="True" />
+                    <behaviors:EventToCommandBehavior Command="{Binding DragOverCommand}" Event="PreviewDragOver" PassArguments="True" />
+                    <behaviors:EventToCommandBehavior Command="{Binding DragLeaveCommand}" Event="DragLeave" PassArguments="True" />
+                    <behaviors:EventToCommandBehavior Command="{Binding DragEnterCommand}" Event="PreviewDragEnter" PassArguments="True" />
+                    <behaviors:EventToCommandBehavior Command="{Binding QueryContinueDragCommand}" Event="PreviewQueryContinueDrag" PassArguments="True" />
+                    <behaviors:EventToCommandBehavior Command="{Binding TreeviewSelectedItemChangedCommand}" Event="SelectedItemChanged" PassArguments="True"/>
+                </i:Interaction.Behaviors>
 				<TreeView.Resources>
                     <ContextMenu x:Key="FolderPopup">
                         <MenuItem Header="Create Folder" Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}, Path=DataContext.CreateFolderCommand}"/>
