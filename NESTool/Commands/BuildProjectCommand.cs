@@ -183,6 +183,8 @@ namespace NESTool.Commands
                 int frameIndex = 0;
                 List<string> frameNames = new List<string>();
 
+                int halfMetaSprite = 0;
+
                 for (int i = 0; i < animation.Frames.Length; ++i)
                 {
                     if (animation.Frames[i].Tiles == null)
@@ -216,6 +218,8 @@ namespace NESTool.Commands
                         byte horiz = (byte)charTile.Point.X;
                         byte vert = (byte)charTile.Point.Y;
 
+                        halfMetaSprite = 8; // todo: for now this is hardcoded, 8 means that all meta sprites are two sprites in vertical size
+
                         PatternTableModel patternTable = ProjectFiles.GetModel<PatternTableModel>(charTile.BankID);
                         byte tile = (byte)patternTable.GetTileIndex(charTile.BankTileID);
 
@@ -245,6 +249,8 @@ namespace NESTool.Commands
                 outputFile.WriteLine($"    .byte ${frameNames.Count.ToString("X2")} ; decimal {frameNames.Count}");
                 outputFile.WriteLine($"    ; frame duration");
                 outputFile.WriteLine($"    .byte ${frameDuration.ToString("X2")} ; decimal {frameDuration}");
+                outputFile.WriteLine($"    ; half size");
+                outputFile.WriteLine($"    .byte ${halfMetaSprite.ToString("X2")} ; decimal {halfMetaSprite}");
 
                 foreach (string frameName in frameNames)
                 {
