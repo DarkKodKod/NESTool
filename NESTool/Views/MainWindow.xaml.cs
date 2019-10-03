@@ -165,7 +165,6 @@ namespace NESTool
 
                     view = new TileSet();
                     break;
-                case ProjectItemType.PatternTable: view = new PatternTable(); break;
             }
 
             if (view != null)

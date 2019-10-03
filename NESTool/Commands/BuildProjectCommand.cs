@@ -89,8 +89,8 @@ namespace NESTool.Commands
 
         private void WriteMapTile(StreamWriter outputFile, MapTile mapTile)
         {
-            PatternTableModel patternTable = ProjectFiles.GetModel<PatternTableModel>(mapTile.BankID);
-            byte tile = (byte)patternTable.GetTileIndex(mapTile.BankTileID);
+            BankModel bank = ProjectFiles.GetModel<BankModel>(mapTile.BankID);
+            byte tile = (byte)bank.GetTileIndex(mapTile.BankTileID);
 
             outputFile.Write($"${tile.ToString("X2")}");
         }
@@ -220,8 +220,8 @@ namespace NESTool.Commands
 
                         halfMetaSprite = 8; // todo: for now this is hardcoded, 8 means that all meta sprites are two sprites in vertical size
 
-                        PatternTableModel patternTable = ProjectFiles.GetModel<PatternTableModel>(charTile.BankID);
-                        byte tile = (byte)patternTable.GetTileIndex(charTile.BankTileID);
+                        BankModel bank = ProjectFiles.GetModel<BankModel>(charTile.BankID);
+                        byte tile = (byte)bank.GetTileIndex(charTile.BankTileID);
 
                         byte attrs = (byte)charTile.PaletteIndex;
                         attrs |= charTile.FrontBackground ? (byte)0 : (byte)32;
@@ -321,11 +321,11 @@ namespace NESTool.Commands
 
             if (!string.IsNullOrEmpty(projectModel.Build.PatternTableSpriteId))
             {
-                PatternTableModel model = ProjectFiles.GetModel<PatternTableModel>(projectModel.Build.PatternTableSpriteId);
+                BankModel model = ProjectFiles.GetModel<BankModel>(projectModel.Build.PatternTableSpriteId);
 
                 if (model != null)
                 {
-                    WriteableBitmap bitmap = PatternTableUtils.CreateImage(model, ref _bitmapCache, false);
+                    WriteableBitmap bitmap = BanksUtils.CreateImage(model, ref _bitmapCache, false);
 
                     using (bitmap.GetBitmapContext())
                     {
@@ -336,11 +336,11 @@ namespace NESTool.Commands
 
             if (!string.IsNullOrEmpty(projectModel.Build.PatternTableBackgroundId))
             {
-                PatternTableModel model = ProjectFiles.GetModel<PatternTableModel>(projectModel.Build.PatternTableBackgroundId);
+                BankModel model = ProjectFiles.GetModel<BankModel>(projectModel.Build.PatternTableBackgroundId);
 
                 if (model != null)
                 {
-                    WriteableBitmap bitmap = PatternTableUtils.CreateImage(model, ref _bitmapCache);
+                    WriteableBitmap bitmap = BanksUtils.CreateImage(model, ref _bitmapCache);
 
                     using (bitmap.GetBitmapContext())
                     {
@@ -376,7 +376,7 @@ namespace NESTool.Commands
             }
         }
 
-        private void WriteIntoBitArray(PatternTableModel model, WriteableBitmap bitmap, ref BitArray bits, ref int currentIndex)
+        private void WriteIntoBitArray(BankModel model, WriteableBitmap bitmap, ref BitArray bits, ref int currentIndex)
         {
             int currentX = 0;
             int currentY = 0;

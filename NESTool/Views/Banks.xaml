@@ -3,14 +3,233 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:local="clr-namespace:NESTool.Views"
+             xmlns:ex="clr-namespace:NESTool.Utils.Extensions"
+             xmlns:enum="clr-namespace:NESTool.Enums"
+             xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
+             xmlns:fx="clr-namespace:ArchitectureLibrary.FXs;assembly=ArchitectureLibrary"
+             xmlns:cv="clr-namespace:NESTool.Utils.Converters"
+             xmlns:vm="clr-namespace:NESTool.ViewModels"
              mc:Ignorable="d" 
-			 xmlns:vm="clr-namespace:NESTool.ViewModels"
-			 d:DesignHeight="460.5" d:DesignWidth="515">
-	<UserControl.DataContext>
-		<vm:BanksViewModel />
-	</UserControl.DataContext>
-    <Grid Background="#FF96CB49">
-            
+             d:DesignHeight="680" d:DesignWidth="850">
+    <UserControl.Resources>
+        <cv:ParametersConverter x:Key="parametersConverter"/>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <vm:BanksViewModel />
+    </UserControl.DataContext>
+    <Grid Background="LightGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Column="1" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="3"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="3"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Row="0">
+                    <Border BorderThickness="0.8" BorderBrush="Gray">
+                        <TextBlock Width="80" Background="White"
+                                   Foreground="Gray"
+                                   VerticalAlignment="Stretch"
+                                   TextAlignment="Center"
+                                   Text="{Binding ProjectGridSize}">
+                        </TextBlock>
+                    </Border>
+                    <ComboBox Margin="10,0,0,0" Width="200"
+                              ItemsSource="{Binding Source={ex:EnumBindingSource {x:Type enum:PatternTableType}}}"
+                              SelectedItem="{Binding Path=SelectedPatternTableType}"/>
+                    <RadioButton GroupName="Grouped" Margin="10,0,0,0" IsChecked="True">Compact</RadioButton>
+                    <RadioButton GroupName="Grouped" Margin="10,0,0,0" Focusable="False" IsHitTestVisible="False">Free form</RadioButton>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="2">
+                    <Button Width="100" Command="{Binding DeleteBankTileCommand}"
+                            Content="Delete Cell">
+                        <Button.CommandParameter>
+                            <MultiBinding Converter="{StaticResource parametersConverter}">
+                                <Binding Path="SelectedPatternTableTile" />
+                                <Binding Path="Model" />
+                            </MultiBinding>
+                        </Button.CommandParameter>
+                    </Button>
+                    <TextBlock Margin="10,0,0,0">Group:</TextBlock>
+                    <TextBox Width="30"
+                             Margin="3,0,0,0"
+                             VerticalAlignment="Stretch"
+                             Text="{Binding SelectedGroup, UpdateSourceTrigger=PropertyChanged}">
+                    </TextBox>
+                </StackPanel>
+                <Border Grid.Row="4" Width="510" Height="510"
+                        VerticalAlignment="Top">
+                    <Canvas Width="128" Height="128" 
+		                Background="DarkGray"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top">
+                        <Canvas.RenderTransform>
+                            <ScaleTransform ScaleX="4" ScaleY="4"/>
+                        </Canvas.RenderTransform>
+                        <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
+                               Source="{Binding PTImage}"
+	                           Width="128"
+	                           Height="128"
+                               Name="imgPatternTable"
+	                           Stretch="UniformToFill">
+                            <i:Interaction.Behaviors>
+                                <behaviors:EventToCommandBehavior Command="{Binding ImageMouseDownCommand}" Event="MouseDown" PassArguments="True" />
+                            </i:Interaction.Behaviors>
+                        </Image>
+                        <Border>
+                            <Border.Background>
+                                <VisualBrush TileMode="Tile"
+					                         Viewport="0,0,8,8" ViewportUnits="Absolute" 
+					                         Viewbox="0,0,8,8" ViewboxUnits="Absolute">
+                                    <VisualBrush.Visual>
+                                        <Rectangle Stroke="Magenta" StrokeThickness="0.1" Height="100" Width="100"/>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Border.Background>
+                            <Canvas Width="128" Height="128" Background="Transparent">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgPatternTable}"/>
+                                </i:Interaction.Behaviors>
+                                <Rectangle Width="8" Height="8" 
+                                           Stroke="Red" 
+                                           StrokeThickness="0.5"
+                                           Canvas.Top="{Binding SelectionRectangleTop}"
+                                           Canvas.Left="{Binding SelectionRectangleLeft}"
+                                           Visibility="{Binding SelectionRectangleVisibility}"/>
+                            </Canvas>
+                        </Border>
+                    </Canvas>
+                </Border>
+            </Grid>
+            <StackPanel Grid.Column="2" Grid.Row="1"
+                        VerticalAlignment="Center">
+                <Button Height="32" Width="32"
+                        Command="{Binding MoveTileToBankCommand}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource parametersConverter}">
+                            <Binding Path="CroppedImage" />
+                            <Binding Path="CroppedPoint" />
+                            <Binding Path="SelectedTileSet" />
+                            <Binding Path="Model" />
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                    <Image Width="32" Height="32" 
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           Source="/resources/left_arrow.png">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <fx:GrayscaleEffect />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </Button>
+            </StackPanel>
+            <Grid Grid.Row="1" Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="3"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Row="0">
+                    <ComboBox Width="200"
+                              ItemsSource="{Binding TileSets}" 
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="Id"
+                              SelectedValue="{Binding Path=SelectedTileSet}">
+                        <i:Interaction.Behaviors>
+                            <behaviors:EventToCommandBehavior Command="{Binding FileModelVOSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />
+                        </i:Interaction.Behaviors>
+                    </ComboBox>
+                </StackPanel>
+                <ScrollViewer Grid.Row="2"
+                              Background="DarkGray"
+                              VerticalScrollBarVisibility="Auto" 
+                              HorizontalScrollBarVisibility="Auto">
+                    <i:Interaction.Behaviors>
+                        <behaviors:EventToCommandBehavior Command="{Binding PreviewMouseWheelCommand}" Event="PreviewMouseWheel" PassArguments="True" />
+                    </i:Interaction.Behaviors>
+                    <Canvas Name="cvsImage"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Width="{Binding ActualWidth}" 
+                            Height="{Binding ActualHeight}">
+                        <Canvas.RenderTransform>
+                            <ScaleTransform x:Name="scaleCanvas" />
+                        </Canvas.RenderTransform>
+                        <Image Source="{Binding ImgSource}" 
+                               Name="imgBig"
+                               RenderOptions.BitmapScalingMode="NearestNeighbor"
+                               Stretch="None">
+                            <i:Interaction.Behaviors>
+                                <behaviors:EventToCommandBehavior Command="{Binding ImageMouseDownCommand}" Event="MouseDown" PassArguments="True" />
+                            </i:Interaction.Behaviors>
+                        </Image>
+                        <Border Visibility="{Binding GridVisibility}">
+                            <Border.Background>
+                                <VisualBrush TileMode="Tile"
+                                             Viewport="0,0,8,8" ViewportUnits="Absolute" 
+                                             Viewbox="0,0,8,8" ViewboxUnits="Absolute">
+                                    <VisualBrush.Visual>
+                                        <Rectangle Stroke="Magenta" StrokeThickness="0.1" Height="100" Width="100"/>
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Border.Background>
+                            <Canvas Name="cvsBigGrid" Width="10000" Height="10000" 
+                                    Background="Transparent">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgBig}"/>
+                                </i:Interaction.Behaviors>
+                                <Rectangle Width="8" Height="8" 
+                                           Stroke="Red" 
+                                           StrokeThickness="0.5"
+                                           Canvas.Top="{Binding RectangleTop}"
+                                           Canvas.Left="{Binding RectangleLeft}"
+                                           Visibility="{Binding RectangleVisibility}"/>
+                            </Canvas>
+                        </Border>
+                    </Canvas>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+        <ScrollViewer Grid.Row="1" Background="White">
+            <WrapPanel Margin="5" Name="wpLinks">
+                <WrapPanel.Resources>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Margin" Value="9,0"/>
+                        <Setter Property="Padding" Value="2,2"/>
+                    </Style>
+                </WrapPanel.Resources>
+            </WrapPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

@@ -34,7 +34,6 @@ namespace NESTool.ViewModels
         private const string _folderCharactersKey = "folderCharacters";
         private const string _folderMapsKey = "folderMaps";
         private const string _folderTileSetsKey = "folderTileSets";
-        private const string _folderPatternTablesKey = "folderPatternTables";
 
         private ElementTypeModel _selectedType;
 
@@ -58,12 +57,11 @@ namespace NESTool.ViewModels
             string characters = (string)Application.Current.FindResource(_folderCharactersKey);
             string maps = (string)Application.Current.FindResource(_folderMapsKey);
             string tileSets = (string)Application.Current.FindResource(_folderTileSetsKey);
-            string patternTables = (string)Application.Current.FindResource(_folderPatternTablesKey);
 
             ElementTypes.Add(new ElementTypeModel()
             {
                 Name = banks,
-                Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/Bank.png", UriKind.RelativeOrAbsolute)),
+                Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/pattern_table.png", UriKind.RelativeOrAbsolute)),
                 Type = ProjectItemType.Bank,
                 Path = Path.Combine(projectModel.ProjectPath, banks)
             });
@@ -80,13 +78,6 @@ namespace NESTool.ViewModels
                 Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/map.png", UriKind.RelativeOrAbsolute)),
                 Type = ProjectItemType.Map,
                 Path = Path.Combine(projectModel.ProjectPath, maps)
-            });
-            ElementTypes.Add(new ElementTypeModel()
-            {
-                Name = patternTables,
-                Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/pattern_table.png", UriKind.RelativeOrAbsolute)),
-                Type = ProjectItemType.PatternTable,
-                Path = Path.Combine(projectModel.ProjectPath, patternTables)
             });
             ElementTypes.Add(new ElementTypeModel()
             {

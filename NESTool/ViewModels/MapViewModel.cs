@@ -397,8 +397,8 @@ namespace NESTool.ViewModels
 
         private void UpdateDialogInfo()
         {
-            IEnumerable<FileModelVO> banks = ProjectFiles.GetModels<PatternTableModel>().ToArray()
-                .Where(p => (p.Model as PatternTableModel).PatternTableType == PatternTableType.Background);
+            IEnumerable<FileModelVO> banks = ProjectFiles.GetModels<BankModel>().ToArray()
+                .Where(p => (p.Model as BankModel).PatternTableType == PatternTableType.Background);
 
             Banks = new FileModelVO[banks.Count()];
 
@@ -423,12 +423,12 @@ namespace NESTool.ViewModels
                 return;
             }
 
-            if (!(Banks[SelectedBank].Model is PatternTableModel model))
+            if (!(Banks[SelectedBank].Model is BankModel model))
             {
                 return;
             }
 
-            WriteableBitmap patternTableBitmap = PatternTableUtils.CreateImage(model, ref _bitmapCache);
+            WriteableBitmap patternTableBitmap = BanksUtils.CreateImage(model, ref _bitmapCache);
 
             BankImage = Util.ConvertWriteableBitmapToBitmapImage(patternTableBitmap);
         }
@@ -512,7 +512,7 @@ namespace NESTool.ViewModels
                 Y = RectangleTop
             };
 
-            PatternTableModel model = Banks[SelectedBank].Model as PatternTableModel;
+            BankModel model = Banks[SelectedBank].Model as BankModel;
 
             string guid = model.PTTiles[SelectedPatternTableTile].GUID;
 

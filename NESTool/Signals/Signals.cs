@@ -57,12 +57,12 @@ namespace NESTool.Signals
     public class ColorPaletteSelectSignal : Signal<Color> { }
     public class SavedPixelChangesSignal : Signal { }
 
-    // PatternTable
+    // Banks
     public class FileModelVOSelectionChangedSignal : Signal<FileModelVO> { }
-    public class PatternTableImageUpdatedSignal : Signal { }
-    public class AddNewTileSetLinkSignal : Signal<PatternTableLinkVO> { }
+    public class BankImageUpdatedSignal : Signal { }
+    public class AddNewTileSetLinkSignal : Signal<BankLinkVO> { }
     public class SelectTileSetSignal : Signal<string> { }
-    public class PatternTableTileDeletedSignal : Signal { }
+    public class BankTileDeletedSignal : Signal { }
     public class CleanupTileSetLinksSignal : Signal { }
 
     // Character

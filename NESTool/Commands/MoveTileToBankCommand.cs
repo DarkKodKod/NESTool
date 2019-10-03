@@ -10,7 +10,7 @@ using System.Windows.Media.Imaging;
 
 namespace NESTool.Commands
 {
-    public class MoveTileToPatternTableCommand : Command
+    public class MoveTileToBankCommand : Command
     {
         public override bool CanExecute(object parameter)
         {
@@ -21,7 +21,7 @@ namespace NESTool.Commands
 
             object[] values = (object[])parameter;
             WriteableBitmap cropperImage = (WriteableBitmap)values[0];
-            PatternTableModel model = (PatternTableModel)values[3];
+            BankModel model = (BankModel)values[3];
 
             if (cropperImage == null || model == null || model.IsFull())
             {
@@ -37,7 +37,7 @@ namespace NESTool.Commands
 
             Point croppedPoint = (Point)values[1];
             int selectedTileSet = (int)values[2];
-            PatternTableModel model = (PatternTableModel)values[3];
+            BankModel model = (BankModel)values[3];
 
             int index = model.GetEmptyTileIndex();
 
@@ -48,7 +48,7 @@ namespace NESTool.Commands
             model.PTTiles[index].Point = croppedPoint;
             model.PTTiles[index].Group = index;
 
-            SignalManager.Get<PatternTableImageUpdatedSignal>().Dispatch();
+            SignalManager.Get<BankImageUpdatedSignal>().Dispatch();
         }
     }
 }

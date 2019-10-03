@@ -128,7 +128,7 @@
     <Compile Include="Commands\CroppedImageMouseDownCommand.cs" />
     <Compile Include="Commands\DeleteAnimationFrameCommand.cs" />
     <Compile Include="Commands\DeleteElementCommand.cs" />
-    <Compile Include="Commands\DeletePatternTableTileCommand.cs" />
+    <Compile Include="Commands\DeleteBankTileCommand.cs" />
     <Compile Include="Commands\DragEnterCommand.cs" />
     <Compile Include="Commands\DragLeaveCommand.cs" />
     <Compile Include="Commands\DragOverCommand.cs" />
@@ -140,7 +140,7 @@
     <Compile Include="Commands\MapEraseToolCommand.cs" />
     <Compile Include="Commands\MapPaintToolCommand.cs" />
     <Compile Include="Commands\MapSelectToolCommand.cs" />
-    <Compile Include="Commands\MoveTileToPatternTableCommand.cs" />
+    <Compile Include="Commands\MoveTileToBankCommand.cs" />
     <Compile Include="Commands\NewAnimationFrameCommand.cs" />
     <Compile Include="Commands\NextFrameCharacterAnimationCommand.cs" />
     <Compile Include="Commands\OpenBuildProjectCommand.cs" />
@@ -210,13 +210,12 @@
     <Compile Include="Models\MapModel.cs" />
     <Compile Include="Models\MapperModel.cs" />
     <Compile Include="Models\MappersModel.cs" />
-    <Compile Include="Models\PatternTableModel.cs" />
     <Compile Include="Models\TileSetModel.cs" />
     <Compile Include="Utils\Adorners\TreeViewDragAdorner.cs" />
     <Compile Include="Utils\Adorners\TreeViewInsertAdorner.cs" />
     <Compile Include="Utils\Converters\EnumMatchToBooleanConverter.cs" />
     <Compile Include="Utils\Extensions\EnumBindingSourceExtension.cs" />
-    <Compile Include="Utils\PatternTableUtils.cs" />
+    <Compile Include="Utils\BanksUtils.cs" />
     <Compile Include="Utils\Selectors\TemplateSelector.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Commands\BrowseFolderCommand.cs" />
@@ -241,7 +240,6 @@
     <Compile Include="ViewModels\ImportImageDialogViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
-    <Compile Include="ViewModels\PatternTableViewModel.cs" />
     <Compile Include="ViewModels\ProjectItem.cs" />
     <Compile Include="ViewModels\ProjectDialogViewModel.cs" />
     <Compile Include="ViewModels\ProjectPropertiesDialogViewModel.cs" />
@@ -270,9 +268,6 @@
     <Compile Include="Views\Map.xaml.cs">
       <DependentUpon>Map.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\PatternTable.xaml.cs">
-      <DependentUpon>PatternTable.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ProjectDialog.xaml.cs">
       <DependentUpon>ProjectDialog.xaml</DependentUpon>
     </Compile>
@@ -285,7 +280,7 @@
     <Compile Include="VOs\EventVO.cs" />
     <Compile Include="VOs\MouseMoveVO.cs" />
     <Compile Include="VOs\MouseWheelVO.cs" />
-    <Compile Include="VOs\PatternTableLinkVO.cs" />
+    <Compile Include="VOs\BankLinkVO.cs" />
     <Compile Include="VOs\ProjectOpenVO.cs" />
     <Compile Include="VOs\FileModelVO.cs" />
     <Compile Include="VOs\WindowVO.cs" />
@@ -369,10 +364,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\PatternTable.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\ProjectDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -444,7 +435,6 @@
     <Resource Include="Resources\left_arrow.png" />
     <Resource Include="Resources\closed_folder.png" />
     <Resource Include="Resources\open_folder.png" />
-    <Resource Include="Resources\bank.png" />
     <Resource Include="Resources\character.png" />
     <Resource Include="Resources\map.png" />
     <Resource Include="Resources\tileset.png" />

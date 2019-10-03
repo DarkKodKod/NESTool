@@ -82,9 +82,6 @@ namespace NESTool.FileSystem
                         case ProjectItemType.TileSet:
                             fileHandler.FileModel = Toml.ReadFile<TileSetModel>(itemPath);
                             break;
-                        case ProjectItemType.PatternTable:
-                            fileHandler.FileModel = Toml.ReadFile<PatternTableModel>(itemPath);
-                            break;
                     }
 
                     ProjectFiles.Handlers.Add(fileHandler.FileModel.GUID, fileHandler);

@@ -22,9 +22,9 @@ namespace NESTool.Utils
                 return null;
             }
 
-            WriteableBitmap patternTableBitmap = BitmapFactory.New(64, 64);
+            WriteableBitmap bankBitmap = BitmapFactory.New(64, 64);
 
-            using (patternTableBitmap.GetBitmapContext())
+            using (bankBitmap.GetBitmapContext())
             {
                 foreach (CharacterTile tile in characterModel.Animations[animationIndex].Frames[frameIndex].Tiles)
                 {
@@ -33,7 +33,7 @@ namespace NESTool.Utils
                         continue;
                     }
 
-                    PatternTableModel ptModel = ProjectFiles.GetModel<PatternTableModel>(tile.BankID);
+                    BankModel ptModel = ProjectFiles.GetModel<BankModel>(tile.BankID);
                     if (ptModel == null)
                     {
                         continue;
@@ -86,14 +86,14 @@ namespace NESTool.Utils
                         int destX = (int)Math.Floor(tile.Point.X / 8) * 8;
                         int destY = (int)Math.Floor(tile.Point.Y / 8) * 8;
 
-                        Util.CopyBitmapImageToWriteableBitmap(ref patternTableBitmap, destX, destY, croppedBitmap);
+                        Util.CopyBitmapImageToWriteableBitmap(ref bankBitmap, destX, destY, croppedBitmap);
                     }
                 }
             }
 
-            patternTableBitmap.Freeze();
+            bankBitmap.Freeze();
 
-            return patternTableBitmap;
+            return bankBitmap;
         }
 
         private static void PaintPixelsBasedOnPalettes(ref WriteableBitmap bitmap, CharacterTile tile, CharacterModel model, int group)

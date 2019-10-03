@@ -19,13 +19,11 @@ namespace NESTool.Commands
         private const string _folderCharactersKey = "folderCharacters";
         private const string _folderMapsKey = "folderMaps";
         private const string _folderTileSetsKey = "folderTileSets";
-        private const string _folderPatternTablesKey = "folderPatternTables";
 
         private readonly string _folderBanks;
         private readonly string _folderCharacters;
         private readonly string _folderMaps;
         private readonly string _folderTileSets;
-        private readonly string _folderPatternTables;
 
         public OpenProjectCommand()
         {
@@ -33,7 +31,6 @@ namespace NESTool.Commands
             _folderCharacters = (string)Application.Current.FindResource(_folderCharactersKey);
             _folderMaps = (string)Application.Current.FindResource(_folderMapsKey);
             _folderTileSets = (string)Application.Current.FindResource(_folderTileSetsKey);
-            _folderPatternTables = (string)Application.Current.FindResource(_folderPatternTablesKey);
         }
 
         public override bool CanExecute(object parameter)
@@ -132,8 +129,7 @@ namespace NESTool.Commands
                 if (directory.Name != _folderBanks &&
                     directory.Name != _folderCharacters &&
                     directory.Name != _folderMaps &&
-                    directory.Name != _folderTileSets &&
-                    directory.Name != _folderPatternTables)
+                    directory.Name != _folderTileSets)
                 {
                     continue;
                 }

@@ -5,7 +5,7 @@ using NESTool.Signals;
 
 namespace NESTool.Commands
 {
-    public class DeletePatternTableTileCommand : Command
+    public class DeleteBankTileCommand : Command
     {
         public override bool CanExecute(object parameter)
         {
@@ -17,7 +17,7 @@ namespace NESTool.Commands
             object[] values = (object[])parameter;
 
             int selectedTile = (int)values[0];
-            PatternTableModel model = (PatternTableModel)values[1];
+            BankModel model = (BankModel)values[1];
 
             if (selectedTile < 0 || model == null)
             {
@@ -32,7 +32,7 @@ namespace NESTool.Commands
             object[] values = (object[])parameter;
 
             int selectedTile = (int)values[0];
-            PatternTableModel model = (PatternTableModel)values[1];
+            BankModel model = (BankModel)values[1];
 
             model.PTTiles[selectedTile].GUID = string.Empty;
 
@@ -45,7 +45,7 @@ namespace NESTool.Commands
                 model.PTTiles[i + 1] = tmp;
             }
 
-            SignalManager.Get<PatternTableTileDeletedSignal>().Dispatch();
+            SignalManager.Get<BankTileDeletedSignal>().Dispatch();
         }
     }
 }

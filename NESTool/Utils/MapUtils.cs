@@ -46,7 +46,7 @@ namespace NESTool.Utils
                             continue;
                         }
 
-                        PatternTableModel ptModel = ProjectFiles.GetModel<PatternTableModel>(tile.BankID);
+                        BankModel ptModel = ProjectFiles.GetModel<BankModel>(tile.BankID);
 
                         if (ptModel == null)
                         {

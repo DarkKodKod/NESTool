@@ -6,7 +6,7 @@
         s8x16 = 1
     }
 
-    public enum PatterTableDistribution
+    public enum BankTileDistribution
     {
         Compact = 0,
         FreeForm = 1
@@ -31,8 +31,14 @@
         Bank = 1,
         Character = 2,
         Map = 3,
-        TileSet = 4,
-        PatternTable = 5
+        TileSet = 4
+    }
+
+    public enum BankType
+    {
+        PatternTable = 0,
+        Size1KB = 1,
+        Size2KB = 2
     }
 
     public enum PatternTableType

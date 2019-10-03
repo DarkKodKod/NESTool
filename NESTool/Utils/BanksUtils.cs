@@ -9,19 +9,19 @@ using System.Windows.Media.Imaging;
 
 namespace NESTool.Utils
 {
-    public static class PatternTableUtils
+    public static class BanksUtils
     {
-        public static WriteableBitmap CreateImage(PatternTableModel patternTableModel, ref Dictionary<string, WriteableBitmap> bitmapCache, bool sendSignals = true)
+        public static WriteableBitmap CreateImage(BankModel bankModel, ref Dictionary<string, WriteableBitmap> bitmapCache, bool sendSignals = true)
         {
             FileModelVO[] tileSets = ProjectFiles.GetModels<TileSetModel>().ToArray();
 
-            WriteableBitmap patternTableBitmap = BitmapFactory.New(128, 128);
+            WriteableBitmap bankBitmap = BitmapFactory.New(128, 128);
 
-            using (patternTableBitmap.GetBitmapContext())
+            using (bankBitmap.GetBitmapContext())
             {
                 int index = 0;
 
-                foreach (PTTileModel tile in patternTableModel.PTTiles)
+                foreach (PTTileModel tile in bankModel.PTTiles)
                 {
                     if (string.IsNullOrEmpty(tile.GUID) || string.IsNullOrEmpty(tile.TileSetID))
                     {
@@ -54,7 +54,7 @@ namespace NESTool.Utils
                         {
                             if (tileset.Model.GUID == tile.TileSetID && sendSignals)
                             {
-                                SignalManager.Get<AddNewTileSetLinkSignal>().Dispatch(new PatternTableLinkVO() { Caption = tileset.Name, Id = tile.TileSetID });
+                                SignalManager.Get<AddNewTileSetLinkSignal>().Dispatch(new BankLinkVO() { Caption = tileset.Name, Id = tile.TileSetID });
                                 break;
                             }
                         }
@@ -68,14 +68,14 @@ namespace NESTool.Utils
                         int destX = (index % 16) * 8;
                         int destY = (index / 16) * 8;
 
-                        Util.CopyBitmapImageToWriteableBitmap(ref patternTableBitmap, destX, destY, croppedBitmap);
+                        Util.CopyBitmapImageToWriteableBitmap(ref bankBitmap, destX, destY, croppedBitmap);
                     }
 
                     index++;
                 }
             }
 
-            return patternTableBitmap;
+            return bankBitmap;
         }
     }
 }

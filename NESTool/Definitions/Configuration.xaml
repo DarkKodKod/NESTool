@@ -7,13 +7,11 @@
 	<system:String x:Key="applicationTitle">NES Tool</system:String>
 	<system:String x:Key="folderBanks">Banks</system:String>
 	<system:String x:Key="folderCharacters">Characters</system:String>
-    <system:String x:Key="folderPatternTables">PatternTables</system:String>
 	<system:String x:Key="folderMaps">Maps</system:String>
 	<system:String x:Key="folderTileSets">TileSets</system:String>
     <system:String x:Key="folderImages">Images</system:String>
     <system:String x:Key="extensionBanks">.bank</system:String>
     <system:String x:Key="extensionCharacters">.char</system:String>
-    <system:String x:Key="extensionPatternTables">.table</system:String>
     <system:String x:Key="extensionMaps">.map</system:String>
     <system:String x:Key="extensionTileSets">.tileset</system:String>
 	<system:Int32 x:Key="projectVersion">1</system:Int32>
