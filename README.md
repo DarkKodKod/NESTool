@@ -2,27 +2,27 @@
 Tool to manage asset for the NES game
 
 ##### Table of Content
- [Overview](#Overview)  
+ [1. Overview](#Overview)  
 <a name="Overview"/>
- [Getting started](#Gettingstarted)  
+ [2. Getting started](#Gettingstarted)  
 <a name="Gettingstarted"/>
 
-## Overview
+## 1. Overview
 
 ![](/Images/nestool.png)
 
-### Menu
+### 1.1 Menu
 
-### Toolbar
+### 1.2 Toolbar
 
-## Getting started
+## 2. Getting started
 
-### Tile Sets
+### 2.1 Tile Sets
 
-### Banks
+### 2.2 Banks
 
-### Characters
+### 2.3 Characters
 
-### Maps
+### 2.4 Maps
 
-## Building the project
+## 3. Building the project
