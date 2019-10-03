@@ -4,8 +4,8 @@ Tool to manage asset for the NES game
 ##### Table of Content
  [Overview](#Overview)  
 <a name="Overview"/>
- [Gettingstarted](#Getting started)  
-<a name="Getting started"/>
+ [Getting started](#Gettingstarted)  
+<a name="Gettingstarted"/>
 
 ## Overview
 
