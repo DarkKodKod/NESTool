@@ -16,3 +16,13 @@ Tool to manage asset for the NES game
 ### Toolbar
 
 ## Getting started
+
+### Tile Sets
+
+### Banks
+
+### Characters
+
+### Maps
+
+## Building the project
