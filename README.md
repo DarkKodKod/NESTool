@@ -1,16 +1,13 @@
 # NESTool
 Tool to manage asset for the NES game
 
-##### Table of Content
- [1. Overview](#Overview) 
- <a name="Overview"/>
- [2. Getting started](#Gettingstarted) 
- <a name="Gettingstarted"/>
- [3. Building the project](#Buildingtheproject) 
- <a name="Buildingtheproject"/>
- [4. Known bugs](#Knownbugs)  
- <a name="Knownbugs"/>
+##### Table of Content  
+  [1. Overview](#Overview)   
+  [2. Getting started](#Gettingstarted)    
+  [3. Building the project](#Buildingtheproject)    
+  [4. Known bugs](#Knownbugs)     
 
+<a name="Overview"/>
 ## 1. Overview
 
 ![](/Images/nestool.png)
@@ -19,6 +16,7 @@ Tool to manage asset for the NES game
 
 ### 1.2 Toolbar
 
+<a name="Gettingstarted"/>
 ## 2. Getting started
 
 ### 2.1 Tile Sets
@@ -29,6 +27,11 @@ Tool to manage asset for the NES game
 
 ### 2.4 Maps
 
+<a name="Buildingtheproject"/>
 ## 3. Building the project
 
+<a name="Knownbugs"/>
 ## 4. Known bugs
+
+
+
