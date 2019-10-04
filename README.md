@@ -15,6 +15,16 @@ Tool to manage asset for a NES game. Current implementation only supports NROM (
 
 ### 1.1 Menu
 
+![](/Images/menu.png)
+
+![](/Images/file_menu.png)
+
+![](/Images/edit_menu.png)
+
+![](/Images/project_menu.png)
+
+![](/Images/help_menu.png)
+
 ### 1.2 Toolbar
 
 <a name="Gettingstarted"/>
