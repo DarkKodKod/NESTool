@@ -1,5 +1,5 @@
 # NESTool
-Tool to manage asset for the NES game
+Tool to manage asset for a NES game. Current implementation only supports NROM (Mapper 0).
 
 ##### Table of Content  
   [1. Overview](#Overview)   
@@ -42,6 +42,7 @@ asdasd
 asd
 asd
 asd
+
 asd
 asd
 asd
