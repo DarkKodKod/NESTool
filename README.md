@@ -6,7 +6,6 @@ Tool to manage asset for the NES game
   [2. Getting started](#Gettingstarted)    
   [3. Building the project](#Buildingtheproject)    
   [4. Known bugs](#Knownbugs)     
-<a name="Knownbugs"/>
 
 <a name="Overview"/>
 ## 1. Overview
@@ -45,6 +44,8 @@ asd
 asd
 asd
 asd
+
+<a name="Knownbugs"/>
 
 ## 4. Known bugs
 
