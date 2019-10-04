@@ -40,7 +40,7 @@ namespace NESTool.ViewModels
         private void FillOutFilters()
         {
             Filters[0] = "Image";
-            Filters[1] = "*.png;*.bmp;*.gif;*.gif;*.jpg;*.jpeg;*.jpe;*.jfif;*.tif;*.tiff*.tga";
+            Filters[1] = "*.png;*.bmp;*.gif;*.jpg;*.jpeg;*.jpe;*.jfif;*.tif;*.tiff*.tga";
             Filters[2] = "PNG";
             Filters[3] = "*.png";
             Filters[4] = "BMP";
