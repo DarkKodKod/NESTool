@@ -89,7 +89,7 @@ From Project properties is possible to change the Mapper type, PRG size, CHR siz
 
 Creating elements is possible from the menu File > New > New Element (Ctrl + N) or right click on any root folder to open the context menu and select *Create New Element*.
 
-There are only four type of elements to create, [Tile Sets](#TileSets), where you can import a new image and change its pixels, [Banks](#Banks), where you can create banks of any size or NES pattern tables using the [Tile Sets](#TileSets) as input, [Characters](#Characters), is an element created to by [Banks](#Banks) as its input and there it is possible to create meta sprites and animations, and finally, [Maps](#Maps), also uses [Banks](#Banks) as its input.
+There are only four type of elements to create, [Tile Sets](#TileSets), where you can import a new image and change its pixels, [Banks](#Banks), where you can create banks of any size or NES pattern tables using the [Tile Sets](#TileSets) as input, [Characters](#Characters), is an element created to by [Banks](#Banks) as its input and there it is possible to create meta sprites and animations, and finally, [Maps](#Maps), also uses [Banks](#Banks) as its input. It is really important to understand that all of the links between elements are just references to each other. For example: the bank pattern table could use different tile sets but if one of those tile sets changes something it will also change the tile inside the pattern table and immediately in the character or map that is using that specific bank.
 
 ![](/Images/tree.png)
 
@@ -101,15 +101,21 @@ To start creating assets for the NES, the very first thing to create is the Tile
 
 ### 2.1 Tile Sets
 
-Tile Sets are 
+Tile Sets are the basic element to start constructing NES assets. They are images from these formats: *.png, .bmp, .gif, .jpg, .jpeg, .jpe, .jfif, .tif, .tiff, .tga*. The image will reduce the colors with a Palette Quantizer algorithm to match the number of colors the NES can reproduce. Once is imported, it is possible to use each 8x8 or 8x16 pixels of the image as sprites to construct a character meta sprite including its animation or a map.
 
 ![](/Images/mario.png)
 
-Picking any image 
+Let´s pick up this image from Super Mario World. Ideally should be an image with the right size to be use because this tool does not support scaling.
 
 ![](/Images/importimage.png)
 
+There are two ways to import a new image to a *Tile Set* element, first one is to use File > Import > Image... (Ctrl + I). This will create a *Tile Set* element with the name of the image. The second way to import an image is to create a *Tile Set* element, explained the the [Getting started](#Gettingstarted) section and then click over the new element and then click the *tree dots* button on the top part of the element window to browse your computer for an image.
+
+All images after being imported will create if it doesn't exist already a folder name **Images** in the project root directory and I will copy the new imported image there with the extension *.bmp*.
+
 ![](/Images/importedimage.png)
+
+More stuff the say
 
 ![](/Images/changingcolors.png)
 
@@ -146,3 +152,4 @@ More stuff the say
 Real Github's Issues are needed here. For now the list is just here with no real ticket created.
 
 + Reimporting the same image to a TileSet element will make the tool crash.
++ Undo, Redo is not working inside each element.
