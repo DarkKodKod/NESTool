@@ -71,15 +71,31 @@ Toolbar Has the option to create a new project (explained in [Getting started](#
 
 ## 2. Getting started
 
-Once NESTool is opened for the first time, it will create in the root of the executable, the file **mappers.toml** and **config.toml** . Only the last one if some of the configuration of the tool changes like the window size.
+Once NESTool is opened for the first time, it will create in the root of the executable, the file **mappers.toml** and **config.toml** . Only the last one if some of the configuration of the tool changes like the window size. **Mappers.toml** contains the information of all mappers configuration and the idea is that if an especific mapper is selected, it will reconfigure what the tool is capable of doing and exporting. So far, only mapper 0 or NROM is available.
 
 ![](/Images/newproject.png)
 
+To craete a new project click File > New > New Project (Ctrl + Shift + N) or ![](/Images/newproject_toolbar.png) in the toolbar. From there is possible to name the project and a location. Selecting the mapper will change the options available for PRG size and CHR size. Right now is only possible to select no mapper (NROM). After that press the button *Create project* and this will create in the specified location the file *name of the project*.proj in [TOML](https://github.com/toml-lang/toml) format, and the folders *Banks*, *Characters*, *Maps*, *TileSets*.
+
+Once the project is created, NESTool will always open the last opened project. 
+
+At any time is possible to change the project configurations from the menu Project > Project Properties...
+
 ![](/Images/projectproperties.png)
+
+From Project properties is possible to change the Mapper type, PRG size, CHR size, mirroring, sprite size between 8x8 or 8x16, etc.
 
 ![](/Images/newelement.png)
 
+Creating elements is possible from the menu File > New > New Element (Ctrl + N) or right click on any root folder to open the context menu and select *Create New Element*.
+
+There are only four type of elements to create, [Tile Sets](#TileSets), where you can import a new image and change its pixels, [Banks](#Banks), where you can create banks of any size or NES pattern tables using the [Tile Sets](#TileSets) as input, [Characters](#Characters), is an element created to by [Banks](#Banks) as its input and there it is possible to create meta sprites and animations, and finally, [Maps](#Maps), also uses [Banks](#Banks) as its input.
+
 ![](/Images/tree.png)
+
+Is possible to create folders inside each root folder and move elements of the same type to any sub folder by just dragging the element. Each element including folders has a context menu with the right click.
+
+To start creating assets for the NES, the very first thing to create is the Tile Set explained in the section below.
 
 <a name="TileSets"/>
 
