@@ -65,6 +65,8 @@ View Help redirects to this page in github.com.
 
 ![](/Images/toolbar.png)
 
+Toolbar Has the option to create a new project (explained in [Getting started](#Gettingstarted) section) or open an existing project, undo or redo (not recommended to use) and build project. The last one is explained in the [Building the project](#Buildingtheproject) section.
+
 <a name="Gettingstarted"/>
 
 ## 2. Getting started
