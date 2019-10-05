@@ -28,11 +28,32 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
+            if (!CheckValidOutputFolder())
+            {
+                return;
+            }
+
             BuildPatternTables();
             BuildMetaSprites();
             BuildBackgrounds();
 
             MessageBox.Show("Build completed!", "Build", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private bool CheckValidOutputFolder()
+        {
+            ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+
+            try
+            {
+                string result = Path.GetFullPath(projectModel.Build.OutputFilePath);
+
+                return Directory.Exists(result);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         private void BuildBackgrounds()
