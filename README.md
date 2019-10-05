@@ -69,6 +69,14 @@ View Help redirects to this page in github.com.
 
 Once NESTool is opened for the first time, it will create in the root of the executable, the file **mappers.toml** and **config.toml** . Only the last one if some of the configuration of the tool changes like the window size.
 
+![](/Images/newproject.png)
+
+![](/Images/projectproperties.png)
+
+![](/Images/newelement.png)
+
+![](/Images/tree.png)
+
 <a name="TileSets"/>
 
 ### 2.1 Tile Sets
