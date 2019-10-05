@@ -63,6 +63,8 @@ View Help redirects to this page in github.com.
 
 ### 1.2 Toolbar
 
+![](/Images/toolbar.png)
+
 <a name="Gettingstarted"/>
 
 ## 2. Getting started
@@ -80,6 +82,14 @@ Once NESTool is opened for the first time, it will create in the root of the exe
 <a name="TileSets"/>
 
 ### 2.1 Tile Sets
+
+![](/Images/mario.png)
+
+![](/Images/importimage.png)
+
+![](/Images/importedimage.png)
+
+![](/Images/changingcolors.png)
 
 <a name="Banks"/>
 
