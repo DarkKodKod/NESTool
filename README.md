@@ -101,7 +101,11 @@ To start creating assets for the NES, the very first thing to create is the Tile
 
 ### 2.1 Tile Sets
 
+Tile Sets are 
+
 ![](/Images/mario.png)
+
+Picking any image 
 
 ![](/Images/importimage.png)
 
@@ -109,22 +113,36 @@ To start creating assets for the NES, the very first thing to create is the Tile
 
 ![](/Images/changingcolors.png)
 
+Clicking
+
 <a name="Banks"/>
 
 ### 2.2 Banks
+
+More stuff the say
 
 <a name="Characters"/>
 
 ### 2.3 Characters
 
+More stuff the say
+
 <a name="Maps"/>
 
 ### 2.4 Maps
+
+More stuff the say
 
 <a name="Buildingtheproject"/>
 
 ## 3. Building the project
 
+More stuff the say
+
 <a name="Knownbugs"/>
 
 ## 4. Known bugs
+
+Real Github's Issues are needed here. For now the list is just here with no real ticket created.
+
++ Reimporting the same image to a TileSet element will make the tool crash.
