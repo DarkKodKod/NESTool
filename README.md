@@ -42,11 +42,22 @@ Import any image from these formats: *.png, .bmp, .gif, .jpg, .jpeg, .jpe, .jfif
 
 Recent project will contain all previous opened projects.
 
+#### Edit
 ![](/Images/edit_menu.png)
 
+Undo/Redo, Copy, Paste, Duplicate and Delete only affects the project's elements like a [Character](#Characters) element although the fucntionality is not complete yet so it is better not to use them.
+
+#### Project
 ![](/Images/project_menu.png)
 
+Project Properties is where is possible to reconfigure the project settings after the project is created. There are actually more options here change than when the project is created. For more information read the [Getting started](#Gettingstarted) section.
+
+Build Project will create and export all maps, characters and pattern tables in the selected output folder. More on that in [Building the project](#Buildingtheproject) section.
+
+#### Help
 ![](/Images/help_menu.png)
+
+View Help redirects to this page in github.com.
 
 <a name="Toolbar"/>
 
@@ -56,7 +67,7 @@ Recent project will contain all previous opened projects.
 
 ## 2. Getting started
 
-Once NESTool is opened for the first time, it will create in the root of the executable, the file **mappers.toml** and **config.toml** if some of the configuration of the tool changes like the window size.
+Once NESTool is opened for the first time, it will create in the root of the executable, the file **mappers.toml** and **config.toml** . Only the last one if some of the configuration of the tool changes like the window size.
 
 <a name="TileSets"/>
 
