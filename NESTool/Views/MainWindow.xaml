@@ -132,7 +132,7 @@
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="_Import">
-                    <MenuItem Header="_Image" InputGestureText="Ctrl+I" Command="{Binding OpenImportImageDialogCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
+                    <MenuItem Header="_Image..." InputGestureText="Ctrl+I" Command="{Binding OpenImportImageDialogCommand}" CommandParameter="{Binding ElementName=MainWindowView}" />
                 </MenuItem>
                 <Separator />
 				<MenuItem Header="_Recent Projects" ItemsSource="{Binding RecentProjects}">
