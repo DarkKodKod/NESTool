@@ -150,7 +150,7 @@ More stuff the say
 
 <a name="Futurefeatures"/>
 
-## 5. Future features
+## 4. Future features
 
 + Support 8x16 sprites
 + Support multiple banks with different sizes.
