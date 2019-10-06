@@ -38,7 +38,7 @@ namespace NESTool.Models
                     int index = 0;
                     int index2 = 32;
 
-                    for (int i = 0; i < 30*32; ++i)
+                    for (int i = 0; i < 30 * 32; ++i)
                     {
                         if (jIndex < 2)
                         {

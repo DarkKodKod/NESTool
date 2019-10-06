@@ -166,17 +166,15 @@ namespace NESTool.ViewModels
 
         private ProjectItem ParseAndCreateObject(string content)
         {
-            ProjectItem item = new ProjectItem();
-
-            item.IsLoaded = true;
+            ProjectItem item = new ProjectItem
+            {
+                IsLoaded = true
+            };
 
             int index = 0;
-            int found = 0;
-
             while (index < content.Length)
             {
-                found = content.IndexOf(":", index);
-
+                int found = content.IndexOf(":", index);
                 if (found == -1)
                 {
                     break;
@@ -213,56 +211,57 @@ namespace NESTool.ViewModels
 
                             string braketsContent = content.Substring(found + 1, content.Length - found - 1);
 
-                            StringReader reader = new StringReader(braketsContent);
-
-                            int intChar = 0;
                             int countOpenBrakets = 0;
                             int countObjectsCreated = 0;
 
-                            StringBuilder sb = new StringBuilder();
-
-                            while ((intChar = reader.Read()) != -1)
+                            using (StringReader reader = new StringReader(braketsContent))
                             {
-                                bool includeChar = true;
-                                char chr = Convert.ToChar(intChar);
+                                StringBuilder sb = new StringBuilder();
 
-                                if (chr == '{')
+                                int intChar;
+                                while ((intChar = reader.Read()) != -1)
                                 {
-                                    if (countOpenBrakets == 0)
+                                    bool includeChar = true;
+                                    char chr = Convert.ToChar(intChar);
+
+                                    if (chr == '{')
                                     {
-                                        includeChar = false;
+                                        if (countOpenBrakets == 0)
+                                        {
+                                            includeChar = false;
+                                        }
+
+                                        countOpenBrakets++;
                                     }
 
-                                    countOpenBrakets++;
-                                }
-
-                                if (chr == '}')
-                                {
-                                    string gato = sb.ToString();
-
-                                    countOpenBrakets--;
-
-                                    if (countOpenBrakets == 0)
+                                    if (chr == '}')
                                     {
-                                        includeChar = false;
+                                        string gato = sb.ToString();
+
+                                        countOpenBrakets--;
+
+                                        if (countOpenBrakets == 0)
+                                        {
+                                            includeChar = false;
+                                        }
+
+                                        // last braket?
+                                        if (countOpenBrakets == 0)
+                                        {
+                                            ProjectItem itm = ParseAndCreateObject(sb.ToString());
+                                            itm.Parent = item;
+                                            item.Items.Add(itm);
+
+                                            sb.Clear();
+
+                                            countObjectsCreated++;
+                                        }
                                     }
 
-                                    // last braket?
-                                    if (countOpenBrakets == 0)
+                                    if (includeChar)
                                     {
-                                        ProjectItem itm = ParseAndCreateObject(sb.ToString());
-                                        itm.Parent = item;
-                                        item.Items.Add(itm);
-
-                                        sb.Clear();
-
-                                        countObjectsCreated++;
+                                        sb.Append(chr);
                                     }
-                                }
-
-                                if (includeChar)
-                                {
-                                    sb.Append(chr);
                                 }
                             }
 

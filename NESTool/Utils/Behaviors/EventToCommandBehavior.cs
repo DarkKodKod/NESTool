@@ -34,7 +34,7 @@ namespace NESTool.Utils.Behaviors
             if (beh.AssociatedObject != null) // is not yet attached at initial load
             {
                 beh.AttachHandler((string)e.NewValue);
-            }   
+            }
         }
 
         protected override void OnAttached()
@@ -51,7 +51,7 @@ namespace NESTool.Utils.Behaviors
             if (_oldEvent != null)
             {
                 _oldEvent.RemoveEventHandler(this.AssociatedObject, _handler);
-            }   
+            }
 
             // attach new event
             if (!string.IsNullOrEmpty(eventName))
@@ -71,7 +71,7 @@ namespace NESTool.Utils.Behaviors
                 else
                 {
                     throw new ArgumentException(string.Format("The event '{0}' was not found on type '{1}'", eventName, this.AssociatedObject.GetType().Name));
-                }   
+                }
             }
         }
 
@@ -87,7 +87,7 @@ namespace NESTool.Utils.Behaviors
                 if (this.Command.CanExecute(parameter))
                 {
                     this.Command.Execute(parameter);
-                }   
+                }
             }
         }
     }

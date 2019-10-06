@@ -142,7 +142,7 @@ namespace NESTool.Commands
                     {
                         bottom_left = (byte)model.AttributeTable[bottomLeftIndex].PaletteIndex;
                     }
-                    
+
                     if (bottomRightIndex < model.AttributeTable.Length)
                     {
                         bottom_right = (byte)model.AttributeTable[bottomRightIndex].PaletteIndex;
@@ -257,7 +257,7 @@ namespace NESTool.Commands
                         // Add the termination byte
                         outputFile.WriteLine("    .byte   $FF");
                         outputFile.WriteLine("");
-                    }   
+                    }
                 }
 
                 outputFile.WriteLine($"{name}_{animation.Name}_data:");
