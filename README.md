@@ -13,7 +13,8 @@ This tool is far from comlete. Current version is 1.0.0.0
 [2.3. Characters](#Characters)    
 [2.4. Maps](#Maps)    
 [3. Building the project](#Buildingtheproject)    
-[4. Known bugs](#Knownbugs)     
+[4. Future features](#Futurefeatures)     
+[5. Known bugs](#Knownbugs)     
 
 <a name="Overview"/>
 
@@ -115,11 +116,13 @@ All images after being imported will create if it doesn't exist already a folder
 
 ![](/Images/importedimage.png)
 
-More stuff the say
+After the image is imported it is possible to zoom in/out with the mouse's scroll wheel and it will appear a new toobar button to hide or show the 8x8/8x16 grid.
 
 ![](/Images/changingcolors.png)
 
-Clicking
+Clicking any 8x8 cell in the image will show it in the zoon in quadrant at the left where is possible to change the colors. It is important to press the button save to apply the changes.
+
+> ⚠️**WARNING**: Each 8x8/8x16 cell must be 4 colors maximum. Transparent color counts as one color leaving 3 colors left.
 
 <a name="Banks"/>
 
@@ -145,9 +148,16 @@ More stuff the say
 
 More stuff the say
 
+<a name="Futurefeatures"/>
+
+## 5. Future features
+
++ Support 8x16 sprites
++ Support multiple banks with different sizes.
+
 <a name="Knownbugs"/>
 
-## 4. Known bugs
+## 5. Known bugs
 
 Real Github's Issues are needed here. For now the list is just here with no real ticket created.
 
