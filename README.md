@@ -122,31 +122,31 @@ After the image is imported it is possible to zoom in/out with the mouse's scrol
 
 Clicking any 8x8 cell in the image will show it in the zoon in quadrant at the left where is possible to change the colors. It is important to press the button save to apply the changes.
 
-> ⚠️**WARNING**: Each 8x8/8x16 cell must be 4 colors maximum. Transparent color counts as one color leaving 3 colors left.
+> ⚠️**WARNING**: Each 8x8/8x16 cell must be 4 colors maximum. Transparent color counts as one color leaving 3 colors left. This tool does not check if a cell has more than 4 colors.
 
 <a name="Banks"/>
 
 ### 2.2 Banks
 
-More stuff the say
+More stuff to say
 
 <a name="Characters"/>
 
 ### 2.3 Characters
 
-More stuff the say
+More stuff to say
 
 <a name="Maps"/>
 
 ### 2.4 Maps
 
-More stuff the say
+More stuff to say
 
 <a name="Buildingtheproject"/>
 
 ## 3. Building the project
 
-More stuff the say
+More stuff to say
 
 <a name="Futurefeatures"/>
 
