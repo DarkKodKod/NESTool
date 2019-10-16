@@ -134,7 +134,7 @@ Banks are tiles grouped together. Is possible to have banks in different sizes (
 
 ### 2.3 Characters
 
-More stuff to say
+Characters are created by using banks. If the bank is set to pattern table for background tiles, it won't appear as an option for character creation.
 
 <a name="Maps"/>
 
