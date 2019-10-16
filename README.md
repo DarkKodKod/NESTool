@@ -140,13 +140,13 @@ Characters are created by using banks. If the bank is set to pattern table for b
 
 ### 2.4 Maps
 
-More stuff to say
+Maps are created by using banks. If the bank is set to pattern table for sprite tiles, it won't appear as an option for map creation.
 
 <a name="Buildingtheproject"/>
 
 ## 3. Building the project
 
-More stuff to say
+Building the project will create a bunch of files in the output directory. 
 
 <a name="Futurefeatures"/>
 
