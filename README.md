@@ -33,9 +33,9 @@ This tool is far from comlete. Current version is 1.0.0.0
 
 From File is possible to create a new project or a new element like a [Tile Sets](#TileSets) or a [Character](#Characters).
 
-A new project will have the extension **.proj** which is internaly a [TOML](https://github.com/toml-lang/toml) format and the name is given by the user. It will also create the folders **Banks**, **Characters**, **Maps** and **TileSets**. 
+* A new project will have the extension **.proj** which is internaly a [TOML](https://github.com/toml-lang/toml) format and the name is given by the user. It will also create the folders **Banks**, **Characters**, **Maps** and **TileSets**. 
 
-You can open an existing project, selecting a **.proj** file.
+* You can open an existing project, selecting a **.proj** file.
 
 Close the current project.
 
