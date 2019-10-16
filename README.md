@@ -37,11 +37,11 @@ From File is possible to create a new project or a new element like a [Tile Sets
 
 * You can open an existing project, selecting a **.proj** file.
 
-Close the current project.
+* Close the current project.
 
-Import any image from these formats: *.png, .bmp, .gif, .jpg, .jpeg, .jpe, .jfif, .tif, .tiff, .tga*. The image will reduce the colors with a Palette Quantizer algorithm to match the number of colors the NES can reproduce. More about this topic in the [Getting started](#Gettingstarted).
+* Import any image from these formats: *.png, .bmp, .gif, .jpg, .jpeg, .jpe, .jfif, .tif, .tiff, .tga*. The image will reduce the colors with a Palette Quantizer algorithm to match the number of colors the NES can reproduce. More about this topic in the [Getting started](#Gettingstarted).
 
-Recent project will contain all previous opened projects.
+* Recent project will contain all previous opened projects.
 
 #### Edit
 ![](/Images/edit_menu.png)
@@ -51,9 +51,9 @@ Undo/Redo, Copy, Paste, Duplicate and Delete only affects the project's elements
 #### Project
 ![](/Images/project_menu.png)
 
-Project Properties is where is possible to reconfigure the project settings after the project is created. There are actually more options here change than when the project is created. For more information read the [Getting started](#Gettingstarted) section.
+* Project Properties is where is possible to reconfigure the project settings after the project is created. There are actually more options here change than when the project is created. For more information read the [Getting started](#Gettingstarted) section.
 
-Build Project will create and export all maps, characters and pattern tables in the selected output folder. More on that in [Building the project](#Buildingtheproject) section.
+* Build Project will create and export all maps, characters and pattern tables in the selected output folder. More on that in [Building the project](#Buildingtheproject) section.
 
 #### Help
 ![](/Images/help_menu.png)
