@@ -136,7 +136,9 @@ Banks are tiles grouped together. Is possible to have banks in different sizes (
 
 Characters are created by using banks. If the bank is set to pattern table for background tiles, it won't appear as an option for character creation.
 
-From here it is possible to create animations. Clicking the plus button will create a new frame of the animation. When there is more than one frame the play, stop, pause, previous frame and next frame are available.
+From here it is possible to create animations. Clicking the plus button will create a new frame of the animation. When there is more than one frame, the play button, stop, pause, previous frame and next frame are available.
+
+Here is also possible to set the animation speed. This value is in seconds per frame and this is also used when building the project to be used in the assembly. More details explained in [Building the project](#Buildingtheproject) section.
 
 <a name="Maps"/>
 
