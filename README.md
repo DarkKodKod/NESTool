@@ -152,6 +152,8 @@ Maps are created by using banks. If the bank is set to pattern table for sprite 
 
 Building the project will create a bunch of files in the output directory. 
 
+There can only be two [Pattern Tables](#Banks), one for sprites and one for backgrounds.
+
 <a name="Futurefeatures"/>
 
 ## 4. Future features
