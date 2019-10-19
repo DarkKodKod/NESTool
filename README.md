@@ -102,7 +102,7 @@ To start creating assets for the NES, the very first thing to create is the Tile
 
 ### 2.1 Tile Sets
 
-Tile Sets are the basic element to start constructing NES assets but they are not exported directly, they are only used to build [Banks](#Banks), those are exported. Most explained in the [Building the project](#Buildingtheproject) section. Tile Sets are images from these formats: *.png, .bmp, .gif, .jpg, .jpeg, .jpe, .jfif, .tif, .tiff, .tga*. The image will reduce the colors with a Palette Quantizer algorithm to match the number of colors the NES can reproduce. Once is imported, it is possible to use each 8x8 or 8x16 pixels of the image as sprites to construct a character meta sprite including its animation or a map.
+Tile Sets are the basic element to start constructing NES assets but they are not exported directly, they are only used to build [Banks](#Banks), those are exported. This is explained more in depth in the [Building the project](#Buildingtheproject) section. Tile Sets are images from these formats: *.png, .bmp, .gif, .jpg, .jpeg, .jpe, .jfif, .tif, .tiff, .tga*. The image will reduce the colors with a Palette Quantizer algorithm to match the number of colors the NES can reproduce. Once is imported, it is possible to use each 8x8 or 8x16 pixels of the image as sprites to construct a character meta sprite including its animation or a map.
 
 ![](/Images/mario.png)
 
