@@ -128,7 +128,7 @@ Clicking any 8x8 cell in the image will show it in the zoon in quadrant at the l
 
 ### 2.2 Banks
 
-Banks are tiles grouped together. Is possible to have banks in different sizes (1kb, 2kb, 4kb). Pattern Tables are 4kb banks used as the main source for NES graphics. Pattern Tables can be either background or sprites. 
+Banks are tiles grouped together. Is possible to have banks in different sizes (1kb, 2kb, 4kb). Pattern Tables are 4kb banks used as the main source for NES graphics. Pattern Tables can be either background or sprites. Banks are constructed from [Tile Sets](#TileSets). This will form a link inside the banks to each Tile Set used. If a Tile Set changes its tiles, it is renamed or removed, it will automatically update the bank.
 
 <a name="Characters"/>
 
