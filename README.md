@@ -134,7 +134,9 @@ Banks are tiles grouped together. Is possible to have banks in different sizes (
 
 ### 2.3 Characters
 
-Characters are created by using banks. If the bank is set to pattern table for background tiles, it won't appear as an option for character creation.
+Characters are created by using banks. The tiles from this bank will be stored as a link to them, if one of those banks changes, it is renamed or deleted it will automatically updates the character.
+
+If the bank is set to pattern table for background tiles, it won't appear as an option for character creation.
 
 From here it is possible to create animations. Clicking the plus button will create a new frame of the animation. When there is more than one frame, the play button, stop, pause, previous frame and next frame are available.
 
