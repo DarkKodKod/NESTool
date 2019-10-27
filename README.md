@@ -130,17 +130,19 @@ Clicking any 8x8 cell in the image will show it in the zoon in quadrant at the l
 
 Banks are tiles grouped together. Is possible to have banks in different sizes (1kb, 2kb, 4kb). **Pattern Tables** are 4kb banks used as the main source for NES graphics. Pattern Tables can be either background or sprites. Banks are constructed from [Tile Sets](#TileSets). This will form a link inside the banks to each Tile Set used. If a Tile Set changes its tiles, it is renamed or removed, it will automatically update the bank.
 
+![](/Images/bank.png)
+
 <a name="Characters"/>
 
 ### 2.3 Characters
-
-![](/Images/emptyCharacter.png)
 
 Characters are created by using banks. The tiles from this bank will be stored as a link to them, if one of those banks changes, it is renamed or deleted it will automatically updates the character.
 
 If the bank is set to pattern table for background tiles, it won't appear as an option for character creation.
 
-Press the plus button in the tab to create an animation.
+![](/Images/emptyCharacter.png)
+
+Press the plus button in the tab to create a new animation.
 
 ![](/Images/emptyFrame.png)
 
@@ -153,6 +155,8 @@ Here is also possible to set the animation speed. This value is in seconds per f
 ### 2.4 Maps
 
 Maps are created by using banks. If the bank is set to pattern table for sprite tiles, it won't appear as an option for map creation.
+
+![](/Images/map.png)
 
 <a name="Buildingtheproject"/>
 
