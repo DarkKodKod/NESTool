@@ -1,6 +1,7 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Model;
 using ArchitectureLibrary.Signals;
+using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
@@ -83,11 +84,13 @@ namespace NESTool.Commands
             }
             else
             {
-                // We want to capture the brow folder signal to open the project
+                // We want to capture the browse folder signal to open the project
                 SignalManager.Get<BrowseFolderSuccessSignal>().AddListener(BrowseFolderSuccess);
 
-                BrowseFolderCommand browseFolder = new BrowseFolderCommand();
-                browseFolder.Execute(null);
+                using (BrowseFolderCommand browseFolder = new BrowseFolderCommand())
+                {
+                    browseFolder.Execute(null);
+                }   
 
                 SignalManager.Get<BrowseFolderSuccessSignal>().RemoveListener(BrowseFolderSuccess);
             }
@@ -103,7 +106,15 @@ namespace NESTool.Commands
 
         private void LoadProject(string directoryPath, string projectFullPath, string projectName)
         {
+            // Clean up previous stuff
+            ProjectFiles.Handlers.Clear();
+
             ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+
+            if (projectModel.IsOpen())
+            {
+                SignalManager.Get<CloseProjectSuccessSignal>().Dispatch();
+            }
 
             // load project configuration file
             projectModel.Load(directoryPath, projectFullPath);

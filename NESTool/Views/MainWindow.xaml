@@ -280,7 +280,7 @@
                     </MenuItem.CommandParameter>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="_Build Project..." InputGestureText="F5" Command="{Binding OpenBuildProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}">
+                <MenuItem Header="_Build Project..." InputGestureText="F5" Command="{Binding OpenBuildProjectCommand}">
                     <MenuItem.Icon>
                         <Image Width="16" Height="16" Source="/resources/build.png">
                             <Image.Style>
@@ -299,6 +299,12 @@
                             </Image.Style>
                         </Image>
                     </MenuItem.Icon>
+                    <MenuItem.CommandParameter>
+                        <MultiBinding Converter="{StaticResource parametersConverter}">
+                            <Binding ElementName="MainWindowView"/>
+                            <Binding ElementName="MainWindowView" Path="DataContext.ProjectName"/>
+                        </MultiBinding>
+                    </MenuItem.CommandParameter>
                 </MenuItem>
             </MenuItem>
 			<MenuItem Header="_Help">
@@ -404,7 +410,7 @@
                 </Button>
             </ToolBar>
 			<ToolBar Name="Project">
-                <Button ToolTip="Build Project" ToolBar.OverflowMode="AsNeeded" Command="{Binding OpenBuildProjectCommand}" CommandParameter="{Binding ElementName=MainWindowView}">
+                <Button ToolTip="Build Project" ToolBar.OverflowMode="AsNeeded" Command="{Binding OpenBuildProjectCommand}">
                     <Image Width="16" Height="16" Source="/resources/build.png">
                         <Image.Style>
                             <Style TargetType="Image">
@@ -421,8 +427,14 @@
                             </Style>
                         </Image.Style>
                     </Image>
-				</Button>
-			</ToolBar>
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource parametersConverter}">
+                            <Binding ElementName="MainWindowView"/>
+                            <Binding ElementName="MainWindowView" Path="DataContext.ProjectName"/>
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                </Button>
+            </ToolBar>
             <ToolBar Name="tbrTileSet">
                 <ToggleButton ToolTip="Show/Hide Grid" ToolBar.OverflowMode="AsNeeded" Name="tbShowHideGrid">
                     <i:Interaction.Behaviors>

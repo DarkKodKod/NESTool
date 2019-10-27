@@ -6,6 +6,25 @@ namespace NESTool.Commands
 {
     public class OpenBuildProjectCommand : Command
     {
+        public override bool CanExecute(object parameter)
+        {
+            if (parameter == null)
+            {
+                return false;
+            }
+
+            object[] values = (object[])parameter;
+            Window window = (Window)values[0];
+            string projectName = (string)values[1];
+
+            if (string.IsNullOrEmpty(projectName))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public override void Execute(object parameter)
         {
             Window window = parameter as Window;
@@ -14,6 +33,7 @@ namespace NESTool.Commands
             {
                 Owner = window
             };
+
             dialog.ShowDialog();
         }
     }

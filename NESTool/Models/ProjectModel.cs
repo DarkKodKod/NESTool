@@ -75,6 +75,11 @@ namespace NESTool.Models
             Build.Reset(); ;
         }
 
+        public bool IsOpen()
+        {
+            return !string.IsNullOrEmpty(ProjectFilePath) && !string.IsNullOrEmpty(ProjectPath);
+        }
+
         public void Copy(ProjectModel copy)
         {
             Name = copy.Name;

@@ -73,6 +73,7 @@ namespace NESTool
             SignalManager.Get<MapPaintToolSignal>().AddListener(OnMapPaintTool);
             SignalManager.Get<MapSelectToolSignal>().AddListener(OnMapSelectTool);
             SignalManager.Get<MapEraseToolSignal>().AddListener(OnMapEraseTool);
+            SignalManager.Get<CloseProjectSuccessSignal>().AddListener(OnCloseProjectSuccess);
 
             // Initialize visibility statte of the toolbars
             tbrTileSet.Visibility = Visibility.Collapsed;
@@ -205,6 +206,18 @@ namespace NESTool
 
                 dpItemPanel.UpdateLayout();
             }
+        }
+
+        private void OnCloseProjectSuccess()
+        {
+            tbrTileSet.Visibility = Visibility.Collapsed;
+            tbrMap.Visibility = Visibility.Collapsed;
+
+            dpItemPanel.Children.Clear();
+
+            _currentViewType = ProjectItemType.None;
+
+            dpItemPanel.UpdateLayout();
         }
 
         private void EnsureStandardPopupAlignment()

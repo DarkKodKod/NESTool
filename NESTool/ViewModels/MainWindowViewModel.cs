@@ -220,10 +220,12 @@ namespace NESTool.ViewModels
 
             if (!string.IsNullOrEmpty(config.DefaultProjectPath))
             {
-                OpenProjectCommand openProjectCommand = new OpenProjectCommand();
-                if (openProjectCommand.CanExecute(config.DefaultProjectPath))
+                using (OpenProjectCommand openProjectCommand = new OpenProjectCommand())
                 {
-                    openProjectCommand.Execute(config.DefaultProjectPath);
+                    if (openProjectCommand.CanExecute(config.DefaultProjectPath))
+                    {
+                        openProjectCommand.Execute(config.DefaultProjectPath);
+                    }
                 }
             }
         }
@@ -231,10 +233,12 @@ namespace NESTool.ViewModels
         private void OnCreateProjectSuccess(string projectFullPath)
         {
             // After creating the project now it is time to open it
-            OpenProjectCommand openProjectCommand = new OpenProjectCommand();
-            if (openProjectCommand.CanExecute(projectFullPath))
+            using (OpenProjectCommand openProjectCommand = new OpenProjectCommand())
             {
-                openProjectCommand.Execute(projectFullPath);
+                if (openProjectCommand.CanExecute(projectFullPath))
+                {
+                    openProjectCommand.Execute(projectFullPath);
+                }
             }
         }
 

@@ -84,7 +84,10 @@ namespace NESTool.FileSystem
                             break;
                     }
 
-                    ProjectFiles.Handlers.Add(fileHandler.FileModel.GUID, fileHandler);
+                    if (!ProjectFiles.Handlers.ContainsKey(fileHandler.FileModel.GUID))
+                    {
+                        ProjectFiles.Handlers.Add(fileHandler.FileModel.GUID, fileHandler);
+                    }
                 }
             }
         }

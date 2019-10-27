@@ -31,8 +31,10 @@ namespace NESTool.Commands
             Window window = (Window)values[0];
             string projectName = (string)values[1];
 
-            ProjectPropertiesDialog dialog = new ProjectPropertiesDialog();
-            dialog.Owner = window;
+            ProjectPropertiesDialog dialog = new ProjectPropertiesDialog
+            {
+                Owner = window
+            };
             dialog.ShowDialog();
         }
     }
