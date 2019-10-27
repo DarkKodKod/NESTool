@@ -150,6 +150,8 @@ From here it is possible to create frames for the animation. Clicking the plus b
 
 Here is also possible to set the animation speed. This value is in seconds per frame and this is also used when building the project to be used in the assembly. More details explained in [Building the project](#Buildingtheproject) section.
 
+![](/Images/editframe.png)
+
 <a name="Maps"/>
 
 ### 2.4 Maps
