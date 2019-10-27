@@ -35,7 +35,7 @@ From File is possible to create a new project or a new element like a [Tile Sets
 
 * A new project will have the extension **.proj** which is internaly a [TOML](https://github.com/toml-lang/toml) format and the name is given by the user. It will also create the folders **Banks**, **Characters**, **Maps** and **TileSets**. 
 
-* You can open an existing project, selecting a **.proj** file.
+* You can open an existing project, where the **.proj** file exist.
 
 * Close the current project.
 
@@ -151,6 +151,8 @@ Maps are created by using banks. If the bank is set to pattern table for sprite 
 <a name="Buildingtheproject"/>
 
 ## 3. Building the project
+
+![](/Images/build.png)
 
 Building the project will create a bunch of files in the output directory. 
 
