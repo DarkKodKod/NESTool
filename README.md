@@ -177,6 +177,7 @@ There can only be two [Pattern Tables](#Banks), one for sprites and one for back
 + Support 8x16 sprites
 + Support multiple banks with different sizes.
 + Way more tools to manipulate tiles in the map editor. Now it is just the bare minimum to paint one tile at a time.
++ It is not exporting any palette
 
 <a name="Knownbugs"/>
 
@@ -186,3 +187,4 @@ Real Github's Issues are needed here. For now the list is just here with no real
 
 + Reimporting the same image to a TileSet element will make the tool crash.
 + Undo, Redo is not working inside each element.
++ Sprite palettes color order is not matching the ones used in the real NES.
