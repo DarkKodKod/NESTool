@@ -27,7 +27,10 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            Window window = parameter as Window;
+            object[] values = (object[])parameter;
+
+            Window window = (Window)values[0];
+            string projectName = (string)values[1];
 
             BuildProjectDialog dialog = new BuildProjectDialog
             {

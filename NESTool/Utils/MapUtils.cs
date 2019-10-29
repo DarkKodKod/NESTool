@@ -1,8 +1,10 @@
-﻿using NESTool.FileSystem;
+﻿using ArchitectureLibrary.Model;
+using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -64,11 +66,13 @@ namespace NESTool.Utils
                                 continue;
                             }
 
+                            ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+
                             BitmapImage bmImage = new BitmapImage();
 
                             bmImage.BeginInit();
                             bmImage.CacheOption = BitmapCacheOption.OnLoad;
-                            bmImage.UriSource = new Uri(model.ImagePath, UriKind.Absolute);
+                            bmImage.UriSource = new Uri(Path.Combine(projectModel.ProjectPath, model.ImagePath), UriKind.RelativeOrAbsolute);
                             bmImage.EndInit();
                             bmImage.Freeze();
 

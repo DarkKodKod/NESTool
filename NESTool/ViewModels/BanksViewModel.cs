@@ -425,7 +425,11 @@ namespace NESTool.ViewModels
 
             TileSetModel model = TileSets[SelectedTileSet].Model as TileSetModel;
 
-            if (File.Exists(model.ImagePath))
+            ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+
+            string path = Path.Combine(projectModel.ProjectPath, model.ImagePath);
+
+            if (File.Exists(path))
             {
                 ImgSource = null;
 
@@ -437,7 +441,7 @@ namespace NESTool.ViewModels
                 bmImage.BeginInit();
                 bmImage.CacheOption = BitmapCacheOption.OnLoad;
                 bmImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                bmImage.UriSource = new Uri(model.ImagePath, UriKind.Absolute);
+                bmImage.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
                 bmImage.EndInit();
                 bmImage.Freeze();
 

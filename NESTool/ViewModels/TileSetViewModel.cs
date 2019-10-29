@@ -1,4 +1,5 @@
-﻿using ArchitectureLibrary.Signals;
+﻿using ArchitectureLibrary.Model;
+using ArchitectureLibrary.Signals;
 using NESTool.Commands;
 using NESTool.Models;
 using NESTool.Signals;
@@ -324,7 +325,15 @@ namespace NESTool.ViewModels
             SignalManager.Get<BrowseFileSuccessSignal>().AddListener(BrowseFileSuccess);
             #endregion
 
-            ImagePath = GetModel().ImagePath;
+            if (!string.IsNullOrEmpty(GetModel().ImagePath))
+            {
+                ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+
+                string path = Path.Combine(projectModel.ProjectPath, GetModel().ImagePath);
+
+                ImagePath = path;
+            }
+
             ActualWidth = GetModel().ImageWidth;
             ActualHeight = GetModel().ImageHeight;
 
@@ -360,7 +369,15 @@ namespace NESTool.ViewModels
                 return;
             }
 
-            ImagePath = GetModel().ImagePath;
+            if (!string.IsNullOrEmpty(GetModel().ImagePath))
+            {
+                ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+
+                string path = Path.Combine(projectModel.ProjectPath, GetModel().ImagePath);
+
+                ImagePath = path;
+            }
+
             ActualWidth = GetModel().ImageWidth;
             ActualHeight = GetModel().ImageHeight;
 
@@ -374,7 +391,16 @@ namespace NESTool.ViewModels
                 return;
             }
 
-            if (File.Exists(GetModel().ImagePath))
+            ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+
+            if (string.IsNullOrEmpty(GetModel().ImagePath))
+            {
+                return;
+            }
+
+            string path = Path.Combine(projectModel.ProjectPath, GetModel().ImagePath);
+
+            if (File.Exists(path))
             {
                 ImgSource = null;
 
@@ -383,7 +409,7 @@ namespace NESTool.ViewModels
                 bmImage.BeginInit();
                 bmImage.CacheOption = BitmapCacheOption.OnLoad;
                 bmImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                bmImage.UriSource = new Uri(GetModel().ImagePath, UriKind.Absolute);
+                bmImage.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
                 bmImage.EndInit();
                 bmImage.Freeze();
 

@@ -75,11 +75,11 @@ namespace NESTool.Commands
 
             ProjectModel projectModel = ModelManager.Get<ProjectModel>();
 
-            string imageFolderPath = Path.Combine(projectModel.ProjectPath, imagesFolder);
+            string imageFolderFullPath = Path.Combine(projectModel.ProjectPath, imagesFolder);
 
-            if (!Directory.Exists(imageFolderPath))
+            if (!Directory.Exists(imageFolderFullPath))
             {
-                Directory.CreateDirectory(imageFolderPath);
+                Directory.CreateDirectory(imageFolderFullPath);
             }
 
             PaletteQuantizer quantizer = new PaletteQuantizer
@@ -92,9 +92,9 @@ namespace NESTool.Commands
             // todo: If the source image is the same as the output image, Crash!!
             Image outputImage = await quantizer.Convert();
 
-            string outputImagePath = Path.Combine(imageFolderPath, item.DisplayName + ".bmp");
+            string outputImagePath = Path.Combine(imageFolderFullPath, item.DisplayName + ".bmp");
 
-            tileSet.ImagePath = outputImagePath;
+            tileSet.ImagePath = Path.Combine(imagesFolder, item.DisplayName + ".bmp");
             tileSet.ImageWidth = outputImage.Width;
             tileSet.ImageHeight = outputImage.Height;
 
