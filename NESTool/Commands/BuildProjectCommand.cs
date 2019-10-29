@@ -30,6 +30,7 @@ namespace NESTool.Commands
         {
             if (!CheckValidOutputFolder())
             {
+                MessageBox.Show("Invalid output folder!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
