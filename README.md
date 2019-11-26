@@ -9,9 +9,10 @@ This tool is far from comlete. Current version is 1.0.0.0
 [1.2. Toolbar](#Toolbar)   
 [2. Getting started](#Gettingstarted)    
 [2.1. Tile Sets](#TileSets)    
-[2.2. Banks](#Banks)    
-[2.3. Characters](#Characters)    
-[2.4. Maps](#Maps)    
+[2.2. Banks](#Banks)
+[2.3. Palettes](#Palettes)
+[2.4. Characters](#Characters)    
+[2.5. Maps](#Maps)    
 [3. Building the project](#Buildingtheproject)    
 [4. Future features](#Futurefeatures)     
 [5. Known bugs](#Knownbugs)     
@@ -132,9 +133,13 @@ Banks are tiles grouped together. Is possible to have banks in different sizes (
 
 ![](/Images/bank.png)
 
+<a name="Palettes"/>
+
+### 2.3 Palettes
+
 <a name="Characters"/>
 
-### 2.3 Characters
+### 2.4 Characters
 
 Characters are created by using banks. The tiles from this bank will be stored as a link to them, if one of those banks changes, it is renamed or deleted it will automatically updates the character.
 
@@ -154,7 +159,7 @@ Here is also possible to set the animation speed. This value is in seconds per f
 
 <a name="Maps"/>
 
-### 2.4 Maps
+### 2.5 Maps
 
 Maps are created by using banks. If the bank is set to pattern table for sprite tiles, it won't appear as an option for map creation.
 
@@ -177,7 +182,7 @@ There can only be two [Pattern Tables](#Banks), one for sprites and one for back
 + Support 8x16 sprites
 + Support multiple banks with different sizes.
 + Way more tools to manipulate tiles in the map editor. Now it is just the bare minimum to paint one tile at a time.
-+ It is not exporting any palette
++ Support for palette animations.
 
 <a name="Knownbugs"/>
 
