@@ -34,6 +34,7 @@ namespace NESTool.ViewModels
         private const string _folderCharactersKey = "folderCharacters";
         private const string _folderMapsKey = "folderMaps";
         private const string _folderTileSetsKey = "folderTileSets";
+        private const string _folderPalettesKey = "folderPalettes";
 
         private ElementTypeModel _selectedType;
 
@@ -57,6 +58,7 @@ namespace NESTool.ViewModels
             string characters = (string)Application.Current.FindResource(_folderCharactersKey);
             string maps = (string)Application.Current.FindResource(_folderMapsKey);
             string tileSets = (string)Application.Current.FindResource(_folderTileSetsKey);
+            string palettes = (string)Application.Current.FindResource(_folderPalettesKey);
 
             ElementTypes.Add(new ElementTypeModel()
             {
@@ -85,6 +87,13 @@ namespace NESTool.ViewModels
                 Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/tileset.png", UriKind.RelativeOrAbsolute)),
                 Type = ProjectItemType.TileSet,
                 Path = Path.Combine(projectModel.ProjectPath, tileSets)
+            });
+            ElementTypes.Add(new ElementTypeModel()
+            { 
+                Name = palettes,
+                Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/palette.png", UriKind.RelativeOrAbsolute)),
+                Type = ProjectItemType.Palette,
+                Path = Path.Combine(projectModel.ProjectPath, palettes)
             });
         }
     }

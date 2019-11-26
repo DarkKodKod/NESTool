@@ -167,6 +167,7 @@
     <Compile Include="Commands\UndoCommand.cs" />
     <Compile Include="FileSystem\ProjectFiles.cs" />
     <Compile Include="Models\Palette.cs" />
+    <Compile Include="Models\PaletteModel.cs" />
     <Compile Include="UserControls\ICleanable.cs" />
     <Compile Include="UserControls\ViewModels\CharacterAnimationViewModel.cs" />
     <Compile Include="UserControls\ViewModels\CharacterFrameEditorViewModel.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="ViewModels\ImportImageDialogViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
+    <Compile Include="ViewModels\PaletteViewModel.cs" />
     <Compile Include="ViewModels\ProjectItem.cs" />
     <Compile Include="ViewModels\ProjectDialogViewModel.cs" />
     <Compile Include="ViewModels\ProjectPropertiesDialogViewModel.cs" />
@@ -263,6 +265,9 @@
     </Compile>
     <Compile Include="Views\Map.xaml.cs">
       <DependentUpon>Map.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Palette.xaml.cs">
+      <DependentUpon>Palette.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProjectDialog.xaml.cs">
       <DependentUpon>ProjectDialog.xaml</DependentUpon>
@@ -357,6 +362,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Map.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Palette.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -458,6 +467,9 @@
       <Project>{37DCDA26-34C9-489E-800B-0957FAC221E4}</Project>
       <Name>PaletteQuantizerLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\palette.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

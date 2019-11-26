@@ -17,10 +17,12 @@ namespace NESTool.Utils
         private const string _folderCharactersKey = "folderCharacters";
         private const string _folderMapsKey = "folderMaps";
         private const string _folderTileSetsKey = "folderTileSets";
+        private const string _folderPalettesKey = "folderPalettes";
         private const string _extensionBanksKey = "extensionBanks";
         private const string _extensionCharactersKey = "extensionCharacters";
         private const string _extensionMapsKey = "extensionMaps";
         private const string _extensionTileSetsKey = "extensionTileSets";
+        private const string _extensionPalettesKey = "extensionPalettes";
 
         public static bool ValidFileName(string fileName)
         {
@@ -40,6 +42,7 @@ namespace NESTool.Utils
                 case ProjectItemType.Character: return new CharacterModel();
                 case ProjectItemType.Map: return new MapModel();
                 case ProjectItemType.TileSet: return new TileSetModel();
+                case ProjectItemType.Palette: return new PaletteModel();
                 default: return null;
             }
         }
@@ -50,11 +53,13 @@ namespace NESTool.Utils
             string extensionCharacters = (string)Application.Current.FindResource(_extensionCharactersKey);
             string extensionMaps = (string)Application.Current.FindResource(_extensionMapsKey);
             string extensionTileSets = (string)Application.Current.FindResource(_extensionTileSetsKey);
+            string extensionPalettes = (string)Application.Current.FindResource(_extensionPalettesKey);
 
             if (extension == extensionBanks) return ProjectItemType.Bank;
             if (extension == extensionCharacters) return ProjectItemType.Character;
             if (extension == extensionMaps) return ProjectItemType.Map;
             if (extension == extensionTileSets) return ProjectItemType.TileSet;
+            if (extension == extensionPalettes) return ProjectItemType.Palette;
 
             return ProjectItemType.None;
         }
@@ -65,6 +70,7 @@ namespace NESTool.Utils
             string extensionCharacters = (string)Application.Current.FindResource(_extensionCharactersKey);
             string extensionMaps = (string)Application.Current.FindResource(_extensionMapsKey);
             string extensionTileSets = (string)Application.Current.FindResource(_extensionTileSetsKey);
+            string extensionPalettes = (string)Application.Current.FindResource(_extensionPalettesKey);
 
             switch (type)
             {
@@ -72,6 +78,7 @@ namespace NESTool.Utils
                 case ProjectItemType.Character: return extensionCharacters;
                 case ProjectItemType.Map: return extensionMaps;
                 case ProjectItemType.TileSet: return extensionTileSets;
+                case ProjectItemType.Palette: return extensionPalettes;
                 default: return string.Empty;
             }
         }
@@ -82,16 +89,19 @@ namespace NESTool.Utils
             string folderCharacters = (string)Application.Current.FindResource(_folderCharactersKey);
             string folderMaps = (string)Application.Current.FindResource(_folderMapsKey);
             string folderTileSets = (string)Application.Current.FindResource(_folderTileSetsKey);
+            string folderPalettes = (string)Application.Current.FindResource(_folderPalettesKey);
 
             string extensionBanks = (string)Application.Current.FindResource(_extensionBanksKey);
             string extensionCharacters = (string)Application.Current.FindResource(_extensionCharactersKey);
             string extensionMaps = (string)Application.Current.FindResource(_extensionMapsKey);
             string extensionTileSets = (string)Application.Current.FindResource(_extensionTileSetsKey);
+            string extensionPalettes = (string)Application.Current.FindResource(_extensionPalettesKey);
 
             if (folderName == folderBanks) return extensionBanks;
             if (folderName == folderCharacters) return extensionCharacters;
             if (folderName == folderMaps) return extensionMaps;
             if (folderName == folderTileSets) return extensionTileSets;
+            if (folderName == folderPalettes) return extensionPalettes;
 
             return string.Empty;
         }
