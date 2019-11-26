@@ -10,7 +10,7 @@ This tool is far from comlete. Current version is 1.0.0.0
 [2. Getting started](#Gettingstarted)    
 [2.1. Tile Sets](#TileSets)    
 [2.2. Banks](#Banks)
-[2.3. Palettes](#Palettes)
+[2.3. Palettes](#Palettes)    
 [2.4. Characters](#Characters)    
 [2.5. Maps](#Maps)    
 [3. Building the project](#Buildingtheproject)    
