@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="NESTool.UserControls.Views.PaletteViewBig"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NESTool.UserControls.Views"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             xmlns:cv="clr-namespace:NESTool.Utils.Converters"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             Name="PaletteViewControl"
+             mc:Ignorable="d" Width="400" Height="400">
+	<UserControl.Resources>
+		<cv:ParametersConverter x:Key="parametersConverter"/>
+		<system:Int32 x:Key="index0">0</system:Int32>
+		<system:Int32 x:Key="index1">1</system:Int32>
+		<system:Int32 x:Key="index2">2</system:Int32>
+		<system:Int32 x:Key="index3">3</system:Int32>
+	</UserControl.Resources>
+	<Grid Background="red">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="1"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="*"/>
+			<ColumnDefinition Width="1"/>
+		</Grid.ColumnDefinitions>
+		<Button Name="btnColor1" Grid.Column="1" Grid.Row="1" 
+                BorderThickness="0" 
+                Command="{Binding ShowColorPaletteCommand}">
+			<Button.CommandParameter>
+				<MultiBinding Converter="{StaticResource parametersConverter}">
+					<Binding ElementName="PaletteViewControl" />
+					<Binding Source="{StaticResource index0}"/>
+				</MultiBinding>
+			</Button.CommandParameter>
+			<Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Name="cvsColor0"
+                    Background="Black"
+                    Width="198" Height="198" />
+		</Button>
+		<Button Name="btnColor2" Grid.Column="2" Grid.Row="1" 
+                BorderThickness="0"
+                Command="{Binding ShowColorPaletteCommand}">
+			<Button.CommandParameter>
+				<MultiBinding Converter="{StaticResource parametersConverter}">
+					<Binding ElementName="PaletteViewControl" />
+					<Binding Source="{StaticResource index1}"/>
+				</MultiBinding>
+			</Button.CommandParameter>
+			<Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Name="cvsColor1"
+                    Background="Black"
+                    Width="198" Height="198" />
+		</Button>
+		<Button Name="btnColor3" Grid.Column="1" Grid.Row="2" 
+                BorderThickness="0"
+                Command="{Binding ShowColorPaletteCommand}">
+			<Button.CommandParameter>
+				<MultiBinding Converter="{StaticResource parametersConverter}">
+					<Binding ElementName="PaletteViewControl" />
+					<Binding Source="{StaticResource index2}"/>
+				</MultiBinding>
+			</Button.CommandParameter>
+			<Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Name="cvsColor2"
+                    Background="Black"
+                    Width="198" Height="198" />
+		</Button>
+		<Button Name="btnColor4" Grid.Column="2" Grid.Row="2" 
+                BorderThickness="0"
+                Command="{Binding ShowColorPaletteCommand}">
+			<Button.CommandParameter>
+				<MultiBinding Converter="{StaticResource parametersConverter}">
+					<Binding ElementName="PaletteViewControl" />
+					<Binding Source="{StaticResource index3}"/>
+				</MultiBinding>
+			</Button.CommandParameter>
+			<Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
+                    Name="cvsColor3"
+                    Background="Black"
+                    Width="198" Height="198" />
+		</Button>
+	</Grid>
+</UserControl>

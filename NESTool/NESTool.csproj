@@ -184,6 +184,9 @@
     <Compile Include="UserControls\Views\PaletteView.xaml.cs">
       <DependentUpon>PaletteView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Views\PaletteViewBig.xaml.cs">
+      <DependentUpon>PaletteViewBig.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Views\PatternTableLinkView.xaml.cs">
       <DependentUpon>PatternTableLinkView.xaml</DependentUpon>
     </Compile>
@@ -306,6 +309,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Views\PaletteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Views\PaletteViewBig.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

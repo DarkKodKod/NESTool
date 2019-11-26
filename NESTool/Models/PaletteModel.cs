@@ -20,5 +20,7 @@ namespace NESTool.Models
                 return _fileExtension;
             }
         }
-    }
+
+		public Palette Palette { get; set; }
+	}
 }

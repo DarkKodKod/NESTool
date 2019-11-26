@@ -12,7 +12,13 @@ namespace NESTool.Commands
             object[] values = (object[])parameter;
             UserControl userControl = (UserControl)values[0];
             int colorPosition = (int)values[1];
-            int paletteIndex = (int)values[2];
+
+			int paletteIndex = 0;
+
+			if (values.Length > 2)
+			{
+				paletteIndex = (int)values[2];
+			}
 
             Window window = Window.GetWindow(userControl);
 
