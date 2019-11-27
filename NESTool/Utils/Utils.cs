@@ -1,5 +1,7 @@
-﻿using NESTool.Enums;
+﻿using ColorPalette;
+using NESTool.Enums;
 using NESTool.Models;
+using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -81,6 +83,18 @@ namespace NESTool.Utils
                 case ProjectItemType.Palette: return extensionPalettes;
                 default: return string.Empty;
             }
+        }
+
+        public static string ColorToColorHex(Color color)
+        {
+            int index = Array.FindIndex(ColorPaletteControl.Colors, element => element == color);
+            
+            if (index != -1)
+            {
+                return ColorPaletteControl.HexColors[index];
+            }
+
+            return "--";
         }
 
         public static string GetFolderExtension(string folderName)

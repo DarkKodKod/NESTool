@@ -44,12 +44,13 @@
                     Background="Black"
                     Width="198" Height="198">
 				<local2:OutlinedTextBlock Stroke="Black" 
+                                          x:Name="hexColor0"
 										  ClipToBounds="False"
 										  FontSize="40" 
 									      Fill="White"
                                           StrokePosition="Outside"
                                           StrokeThickness="1" 
-										  Text="0x40">
+										  Text="00">
 				</local2:OutlinedTextBlock>
 			</Canvas>
 		</Button>
@@ -62,11 +63,21 @@
 					<Binding Source="{StaticResource index1}"/>
 				</MultiBinding>
 			</Button.CommandParameter>
-			<Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
+            <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
                     Name="cvsColor1"
                     Background="Black"
-                    Width="198" Height="198" />
-		</Button>
+                    Width="198" Height="198">
+                <local2:OutlinedTextBlock Stroke="Black" 
+										  ClipToBounds="False"
+                                          x:Name="hexColor1"
+										  FontSize="40" 
+									      Fill="White"
+                                          StrokePosition="Outside"
+                                          StrokeThickness="1" 
+										  Text="00">
+                </local2:OutlinedTextBlock>
+            </Canvas>
+        </Button>
 		<Button Name="btnColor3" Grid.Column="1" Grid.Row="2" 
                 BorderThickness="0"
                 Command="{Binding ShowColorPaletteCommand}">
@@ -76,11 +87,21 @@
 					<Binding Source="{StaticResource index2}"/>
 				</MultiBinding>
 			</Button.CommandParameter>
-			<Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
+            <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
                     Name="cvsColor2"
                     Background="Black"
-                    Width="198" Height="198" />
-		</Button>
+                    Width="198" Height="198">
+                <local2:OutlinedTextBlock Stroke="Black" 
+										  ClipToBounds="False"
+										  FontSize="40" 
+                                          x:Name="hexColor2"
+									      Fill="White"
+                                          StrokePosition="Outside"
+                                          StrokeThickness="1" 
+										  Text="00">
+                </local2:OutlinedTextBlock>
+            </Canvas>
+        </Button>
 		<Button Name="btnColor4" Grid.Column="2" Grid.Row="2" 
                 BorderThickness="0"
                 Command="{Binding ShowColorPaletteCommand}">
@@ -90,10 +111,20 @@
 					<Binding Source="{StaticResource index3}"/>
 				</MultiBinding>
 			</Button.CommandParameter>
-			<Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
+            <Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
                     Name="cvsColor3"
                     Background="Black"
-                    Width="198" Height="198" />
-		</Button>
+                    Width="198" Height="198">
+                <local2:OutlinedTextBlock Stroke="Black" 
+										  ClipToBounds="False"
+										  FontSize="40" 
+                                          x:Name="hexColor3"
+									      Fill="White"
+                                          StrokePosition="Outside"
+                                          StrokeThickness="1" 
+										  Text="00">
+                </local2:OutlinedTextBlock>
+            </Canvas>
+        </Button>
 	</Grid>
 </UserControl>

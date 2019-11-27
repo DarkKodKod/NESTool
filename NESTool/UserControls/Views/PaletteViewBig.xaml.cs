@@ -20,8 +20,8 @@ namespace NESTool.UserControls.Views
 		private SolidColorBrush _color2;
 		private SolidColorBrush _color3;
 
-		#region Commands
-		public ShowColorPaletteCommand ShowColorPaletteCommand { get; } = new ShowColorPaletteCommand();
+        #region Commands
+        public ShowColorPaletteCommand ShowColorPaletteCommand { get; } = new ShowColorPaletteCommand();
 		#endregion
 
 		#region get/set
@@ -68,9 +68,9 @@ namespace NESTool.UserControls.Views
 				cvsColor0.Background = _color3;
 			}
 		}
-		#endregion
+        #endregion
 
-		public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
 		protected virtual void OnPropertyChanged(string propname)
 		{

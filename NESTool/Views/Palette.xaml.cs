@@ -1,6 +1,7 @@
 ﻿using ArchitectureLibrary.Signals;
 using NESTool.Signals;
 using NESTool.UserControls;
+using NESTool.Utils;
 using NESTool.ViewModels;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -38,10 +39,22 @@ namespace NESTool.Views
 
             switch (colorPosition)
             {
-                case 0: palette.cvsColor0.Background = scb; break;
-                case 1: palette.cvsColor1.Background = scb; break;
-                case 2: palette.cvsColor2.Background = scb; break;
-                case 3: palette.cvsColor3.Background = scb; break;
+                case 0: 
+                    palette.cvsColor0.Background = scb;
+                    palette.hexColor0.Text = Util.ColorToColorHex(color);
+                    break;
+                case 1: 
+                    palette.cvsColor1.Background = scb;
+                    palette.hexColor1.Text = Util.ColorToColorHex(color);
+                    break;
+                case 2: 
+                    palette.cvsColor2.Background = scb;
+                    palette.hexColor2.Text = Util.ColorToColorHex(color);
+                    break;
+                case 3: 
+                    palette.cvsColor3.Background = scb;
+                    palette.hexColor3.Text = Util.ColorToColorHex(color);
+                    break;
             }
         }
 
@@ -51,9 +64,13 @@ namespace NESTool.Views
             SolidColorBrush brush = new SolidColorBrush(color);
 
             palette.cvsColor0.Background = brush;
+            palette.hexColor0.Text = "0F";
             palette.cvsColor1.Background = brush;
+            palette.hexColor1.Text = "0F";
             palette.cvsColor2.Background = brush;
+            palette.hexColor2.Text = "0F";
             palette.cvsColor3.Background = brush;
+            palette.hexColor3.Text = "0F";
         }
 
         public void CleanUp()

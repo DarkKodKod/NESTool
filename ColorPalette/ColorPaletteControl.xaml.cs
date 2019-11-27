@@ -91,7 +91,7 @@ namespace ColorPalette
         }
 
         // Hardcoded NES palette
-        static readonly Color[] _colors = {
+        public static readonly Color[] Colors = {
                 Color.FromRgb(101,101,101), Color.FromRgb(0,45,105), Color.FromRgb(19,31,127), Color.FromRgb(60,19,124), Color.FromRgb(96,11,98),
                 Color.FromRgb(115,10,55), Color.FromRgb(113,15,7), Color.FromRgb(90,26,0), Color.FromRgb(52,40,0), Color.FromRgb(11,52,0),
                 Color.FromRgb(0,60,0), Color.FromRgb(0,61,16), Color.FromRgb(0,56,64), Color.FromRgb(0,0,0), Color.FromRgb(0,0,0),
@@ -105,6 +105,13 @@ namespace ColorPalette
                 Color.FromRgb(209,216,255), Color.FromRgb(232,209,255), Color.FromRgb(251,205,253), Color.FromRgb(255,204,229), Color.FromRgb(255,207,202),
                 Color.FromRgb(248,213,180), Color.FromRgb(228,220,168), Color.FromRgb(204,227,169), Color.FromRgb(185,232,184), Color.FromRgb(174,232,208),
                 Color.FromRgb(175,229,234), Color.FromRgb(182,182,182), Color.FromRgb(0,0,0), Color.FromRgb(0,0,0)
+            };
+
+        public static readonly string[] HexColors = {
+                "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "0A", "0B", "0C", "0F", "0E", "0F",
+                "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "1A", "1B", "1C", "1D", "1E", "1F",
+                "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "2A", "2B", "2C", "2D", "2E", "2F",
+                "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "3A", "3B", "3C", "3D", "3E", "3F"
             };
 
         readonly ColorPaletteItem[] _paletteItems = {
@@ -130,9 +137,9 @@ namespace ColorPalette
             {
                 _paletteItems[i].CellHeight = CellHeight;
                 _paletteItems[i].CellWidth = CellWidth;
-                _paletteItems[i].Red = _colors[i].R;
-                _paletteItems[i].Green = _colors[i].G;
-                _paletteItems[i].Blue = _colors[i].B;
+                _paletteItems[i].Red = Colors[i].R;
+                _paletteItems[i].Green = Colors[i].G;
+                _paletteItems[i].Blue = Colors[i].B;
 
                 WrapPanel1.Children.Add(_paletteItems[i]);
             }

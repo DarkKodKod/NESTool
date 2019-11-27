@@ -9,7 +9,7 @@ namespace NESTool.ViewModels
     {
 		private bool _doNotSavePalettes = false;
 
-		public override void OnActivate()
+        public override void OnActivate()
         {
             base.OnActivate();
 
