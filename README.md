@@ -137,6 +137,8 @@ Banks are tiles grouped together. Is possible to have banks in different sizes (
 
 ### 2.3 Palettes
 
+Here it is just simply, one four color palette where is possible to pick colors. This palettes are referenced by name for the [Characters](#Characters) and [Maps](#Maps).
+
 <a name="Characters"/>
 
 ### 2.4 Characters
