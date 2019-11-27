@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NESTool.UserControls.Views"
+			 xmlns:local2="clr-namespace:NESTool"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              xmlns:cv="clr-namespace:NESTool.Utils.Converters"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
@@ -41,7 +42,16 @@
 			<Canvas HorizontalAlignment="Center" VerticalAlignment="Center" 
                     Name="cvsColor0"
                     Background="Black"
-                    Width="198" Height="198" />
+                    Width="198" Height="198">
+				<local2:OutlinedTextBlock Stroke="Black" 
+										  ClipToBounds="False"
+										  FontSize="40" 
+									      Fill="White"
+                                          StrokePosition="Outside"
+                                          StrokeThickness="1" 
+										  Text="0x40">
+				</local2:OutlinedTextBlock>
+			</Canvas>
 		</Button>
 		<Button Name="btnColor2" Grid.Column="2" Grid.Row="1" 
                 BorderThickness="0"
