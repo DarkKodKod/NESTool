@@ -145,7 +145,9 @@ namespace NESTool.Views
         {
             ColorPaletteCleanup();
 
+            #region Signals
             SignalManager.Get<ColorPaletteControlSelectedSignal>().RemoveListener(OnColorPaletteControlSelected);
+            #endregion
         }
     }
 }

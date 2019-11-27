@@ -12,6 +12,6 @@
         <vm:PaletteViewModel />
     </UserControl.DataContext>
     <Grid Background="LightGray">
-		<uc:PaletteViewBig x:Name="palette0"/>
+		<uc:PaletteViewBig x:Name="palette"/>
 	</Grid>
 </UserControl>
