@@ -8,7 +8,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         ShowInTaskbar="False"
-        Title="Build" Height="450" Width="500"
+        Title="Build" Height="470" Width="500"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Window.DataContext>
         <vm:BuildProjectDialogViewModel />
@@ -73,7 +73,6 @@
 					<ListView HorizontalAlignment="Stretch" 
 							  VerticalAlignment="Stretch" 
 							  SelectionMode="Single"
-							  Height="170"
 							  Width="160"
 							  SelectedValue="{Binding SelectedPalette}"
 							  ItemsSource="{Binding ElementPalettes}">
@@ -99,7 +98,29 @@
 						<RowDefinition Height="auto"/>
 					</Grid.RowDefinitions>
 					<TextBlock HorizontalAlignment="Center" Text="Background" Grid.Row="0" Grid.Column="1"/>
+					<ListView Grid.Column="1" Grid.Row="1" Height="85"
+							  SelectedValue="{Binding SelectedBackgroundPalette}"
+							  ItemsSource="{Binding ElementBackgroundPalettes}">
+						<ListView.ItemTemplate>
+							<DataTemplate>
+								<WrapPanel>
+									<TextBlock Text="{Binding Name}"/>
+								</WrapPanel>
+							</DataTemplate>
+						</ListView.ItemTemplate>
+					</ListView>
 					<TextBlock HorizontalAlignment="Center" Text="Sprites" Grid.Row="2" Grid.Column="1"/>
+					<ListView Grid.Column="1" Grid.Row="3" Height="85"
+							  SelectedValue="{Binding SelectedSpritePalette}"
+							  ItemsSource="{Binding ElementSpritePalettes}">
+						<ListView.ItemTemplate>
+							<DataTemplate>
+								<WrapPanel>
+									<TextBlock Text="{Binding Name}"/>
+								</WrapPanel>
+							</DataTemplate>
+						</ListView.ItemTemplate>
+					</ListView>
 				</Grid>
 			</Grid>
 		</GroupBox>

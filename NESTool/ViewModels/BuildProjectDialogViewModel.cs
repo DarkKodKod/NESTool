@@ -20,8 +20,12 @@ namespace NESTool.ViewModels
         private int _selectedPatternTableSprite;
         private int _selectedPatternTableBackground;
 		private ElementPaletteModel _selectedPalette;
+		private ElementPaletteModel _selectedSpritePalette;
+		private ElementPaletteModel _selectedBackgroundPalette;
 
 		public List<ElementPaletteModel> ElementPalettes { get; set; } = new List<ElementPaletteModel>();
+		public List<ElementPaletteModel> ElementBackgroundPalettes { get; set; } = new List<ElementPaletteModel>();
+		public List<ElementPaletteModel> ElementSpritePalettes { get; set; } = new List<ElementPaletteModel>();
 
 		#region Commands
 		public BuildProjectCommand BuildProjectCommand { get; } = new BuildProjectCommand();
@@ -37,6 +41,26 @@ namespace NESTool.ViewModels
 			{
 				_selectedPalette = value;
 				OnPropertyChanged("SelectedPalette");
+			}
+		}
+
+		public ElementPaletteModel SelectedBackgroundPalette
+		{
+			get { return _selectedBackgroundPalette; }
+			set
+			{
+				_selectedBackgroundPalette = value;
+				OnPropertyChanged("SelectedBackgroundPalette");
+			}
+		}
+
+		public ElementPaletteModel SelectedSpritePalette
+		{
+			get { return _selectedSpritePalette; }
+			set
+			{
+				_selectedSpritePalette = value;
+				OnPropertyChanged("SelectedSpritePalette");
 			}
 		}
 
@@ -129,10 +153,12 @@ namespace NESTool.ViewModels
 
         public BuildProjectDialogViewModel()
         {
-            SignalManager.Get<BrowseFolderSuccessSignal>().AddListener(BrowseFolderSuccess);
+			#region Signals
+			SignalManager.Get<BrowseFolderSuccessSignal>().AddListener(BrowseFolderSuccess);
             SignalManager.Get<CloseDialogSignal>().AddListener(OnCloseDialog);
+			#endregion
 
-            ProjectModel project = ModelManager.Get<ProjectModel>();
+			ProjectModel project = ModelManager.Get<ProjectModel>();
 
             FolderPath = project.Build.OutputFilePath;
 
@@ -175,9 +201,23 @@ namespace NESTool.ViewModels
 
 				ElementPalettes.Add(new ElementPaletteModel()
 				{
-					Name = item.Name
+					Name = item.Name,
+					Model = item.Model as PaletteModel
 				});
 			}
+
+			ProjectModel project = ModelManager.Get<ProjectModel>();
+
+			// TODO: read from ProjectModel
+			ElementBackgroundPalettes.Add(new ElementPaletteModel() { Name = "gato 1" });
+			ElementBackgroundPalettes.Add(new ElementPaletteModel() { Name = "gato 2" });
+			ElementBackgroundPalettes.Add(new ElementPaletteModel() { Name = "gato 3" });
+			ElementBackgroundPalettes.Add(new ElementPaletteModel() { Name = "gato 4" });
+
+			ElementSpritePalettes.Add(new ElementPaletteModel() { Name = "gato 1" });
+			ElementSpritePalettes.Add(new ElementPaletteModel() { Name = "gato 2" });
+			ElementSpritePalettes.Add(new ElementPaletteModel() { Name = "gato 3" });
+			ElementSpritePalettes.Add(new ElementPaletteModel() { Name = "gato 4" });
 		}
 
 		private void CreatePatternTableArrays()
@@ -219,11 +259,13 @@ namespace NESTool.ViewModels
 
         private void OnCloseDialog()
         {
-            SignalManager.Get<BrowseFolderSuccessSignal>().RemoveListener(BrowseFolderSuccess);
+			#region Signals
+			SignalManager.Get<BrowseFolderSuccessSignal>().RemoveListener(BrowseFolderSuccess);
             SignalManager.Get<CloseDialogSignal>().RemoveListener(OnCloseDialog);
-        }
+			#endregion
+		}
 
-        private void BrowseFolderSuccess(string folderPath)
+		private void BrowseFolderSuccess(string folderPath)
         {
             ProjectModel project = ModelManager.Get<ProjectModel>();
 
