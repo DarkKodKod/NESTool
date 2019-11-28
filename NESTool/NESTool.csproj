@@ -167,6 +167,7 @@
     <Compile Include="Commands\UndoCommand.cs" />
     <Compile Include="FileSystem\ProjectFiles.cs" />
     <Compile Include="FrameworkElement\OutlinedTextBlock.cs" />
+    <Compile Include="Models\ElementPaletteModel.cs" />
     <Compile Include="Models\Palette.cs" />
     <Compile Include="Models\PaletteModel.cs" />
     <Compile Include="UserControls\ICleanable.cs" />

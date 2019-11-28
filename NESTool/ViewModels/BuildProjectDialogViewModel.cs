@@ -19,15 +19,28 @@ namespace NESTool.ViewModels
         private FileModelVO[] _patternTableBackgrounds;
         private int _selectedPatternTableSprite;
         private int _selectedPatternTableBackground;
+		private ElementPaletteModel _selectedPalette;
 
-        #region Commands
-        public BuildProjectCommand BuildProjectCommand { get; } = new BuildProjectCommand();
+		public List<ElementPaletteModel> ElementPalettes { get; set; } = new List<ElementPaletteModel>();
+
+		#region Commands
+		public BuildProjectCommand BuildProjectCommand { get; } = new BuildProjectCommand();
         public BrowseFolderCommand BrowseFolderCommand { get; } = new BrowseFolderCommand();
         public CloseDialogCommand CloseDialogCommand { get; } = new CloseDialogCommand();
-        #endregion
+		#endregion
 
-        #region get/set
-        public string FolderPath
+		#region get/set
+		public ElementPaletteModel SelectedPalette
+		{
+			get { return _selectedPalette; }
+			set
+			{
+				_selectedPalette = value;
+				OnPropertyChanged("SelectedPalette");
+			}
+		}
+
+		public string FolderPath
         {
             get { return _folderPath; }
             set
@@ -112,7 +125,7 @@ namespace NESTool.ViewModels
                 OnPropertyChanged("SelectedPatternTableBackground");
             }
         }
-        #endregion
+		#endregion
 
         public BuildProjectDialogViewModel()
         {
@@ -148,9 +161,26 @@ namespace NESTool.ViewModels
 
                 index++;
             }
-        }
 
-        private void CreatePatternTableArrays()
+			InitializePalettes();
+		}
+
+		private void InitializePalettes()
+		{
+			List<FileModelVO> models = ProjectFiles.GetModels<PaletteModel>();
+
+			foreach (FileModelVO item in models)
+			{
+				PaletteModel model = item.Model as PaletteModel;
+
+				ElementPalettes.Add(new ElementPaletteModel()
+				{
+					Name = item.Name
+				});
+			}
+		}
+
+		private void CreatePatternTableArrays()
         {
             List<FileModelVO> patternTableSprites = new List<FileModelVO>
             {
