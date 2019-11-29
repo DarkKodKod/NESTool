@@ -208,28 +208,62 @@ namespace NESTool.ViewModels
 
 			ProjectModel project = ModelManager.Get<ProjectModel>();
 
-			// TODO: read from ProjectModel
-			ElementBackgroundPalettes.Add(new ElementPaletteModel() { Name = "gato 1" });
-			ElementBackgroundPalettes.Add(new ElementPaletteModel() { Name = "gato 2" });
-			ElementBackgroundPalettes.Add(new ElementPaletteModel() { Name = "gato 3" });
-			ElementBackgroundPalettes.Add(new ElementPaletteModel() { Name = "gato 4" });
+			string[] palettes1 = project.Build.BackgroundPalettes;
 
-			ElementSpritePalettes.Add(new ElementPaletteModel() { Name = "gato 1" });
-			ElementSpritePalettes.Add(new ElementPaletteModel() { Name = "gato 2" });
-			ElementSpritePalettes.Add(new ElementPaletteModel() { Name = "gato 3" });
-			ElementSpritePalettes.Add(new ElementPaletteModel() { Name = "gato 4" });
+			if (FillPaletteList(ref palettes1, ElementBackgroundPalettes))
+			{
+				project.Build.BackgroundPalettes = palettes1;
+			}
+
+			string[] palettes2 = project.Build.SpritePalettes;
+
+			if (FillPaletteList(ref palettes2, ElementSpritePalettes))
+			{
+				project.Build.SpritePalettes = palettes2;
+			}
+		}
+
+		private bool FillPaletteList(ref string[] originList, List<ElementPaletteModel> destination)
+		{
+			bool ret = false;
+
+			foreach (string id in originList)
+			{
+				if (string.IsNullOrEmpty(id))
+				{
+					continue;
+				}
+
+				PaletteModel model = ProjectFiles.GetModel<PaletteModel>(id);
+
+				if (model == null)
+				{
+					// Model does not exist anymore, remove it
+					ret = true;
+
+					continue;
+				}
+
+				destination.Add(new ElementPaletteModel()
+				{
+					Name = "gato 1",
+					Model = model
+				});
+			}
+
+			return ret;
 		}
 
 		private void CreatePatternTableArrays()
         {
             List<FileModelVO> patternTableSprites = new List<FileModelVO>
             {
-                new FileModelVO() { Id = 0, Name = "None", Model = null }
+                new FileModelVO() { Index = 0, Name = "None", Model = null }
             };
 
             List<FileModelVO> patternTableBackgrounds = new List<FileModelVO>
             {
-                new FileModelVO() { Id = 0, Name = "None", Model = null }
+                new FileModelVO() { Index = 0, Name = "None", Model = null }
             };
 
             IEnumerable<FileModelVO> sprites = ProjectFiles.GetModels<BankModel>().ToArray().Where(p => (p.Model as BankModel).PatternTableType == PatternTableType.Characters);
@@ -239,7 +273,7 @@ namespace NESTool.ViewModels
 
             foreach (FileModelVO item in sprites)
             {
-                item.Id = index++;
+                item.Index = index++;
 
                 patternTableSprites.Add(item);
             }
@@ -248,7 +282,7 @@ namespace NESTool.ViewModels
 
             foreach (FileModelVO item in backgrounds)
             {
-                item.Id = index++;
+                item.Index = index++;
 
                 patternTableBackgrounds.Add(item);
             }

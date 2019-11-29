@@ -20,7 +20,7 @@ namespace NESTool.FileSystem
                 {
                     models.Add(new FileModelVO()
                     {
-                        Id = index++,
+                        Index = index++,
                         Name = handler.Value.Name,
                         Model = model
                     });

@@ -36,8 +36,10 @@ namespace NESTool.Models
             public string OutputFilePath { get; set; }
             public string PatternTableSpriteId { get; set; }
             public string PatternTableBackgroundId { get; set; }
+			public string[] BackgroundPalettes { get; set; }
+			public string[] SpritePalettes { get; set; }
 
-            public void Reset()
+			public void Reset()
             {
                 OutputFilePath = "";
                 PatternTableSpriteId = "";

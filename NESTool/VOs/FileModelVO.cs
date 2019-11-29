@@ -7,7 +7,7 @@ namespace NESTool.VOs
     {
         private string _name;
 
-        public int Id { get; set; }
+        public int Index { get; set; }
         public string Name
         {
             get { return _name; }

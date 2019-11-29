@@ -406,7 +406,7 @@ namespace NESTool.ViewModels
 
             foreach (FileModelVO item in banks)
             {
-                item.Id = index;
+                item.Index = index;
 
                 Banks[index] = item;
 
