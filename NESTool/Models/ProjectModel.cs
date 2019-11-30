@@ -44,6 +44,8 @@ namespace NESTool.Models
                 OutputFilePath = "";
                 PatternTableSpriteId = "";
                 PatternTableBackgroundId = "";
+                BackgroundPalettes = new string[4];
+                SpritePalettes = new string[4];
             }
         }
 
@@ -91,6 +93,8 @@ namespace NESTool.Models
             Build.OutputFilePath = copy.Build.OutputFilePath;
             Build.PatternTableSpriteId = copy.Build.PatternTableSpriteId;
             Build.PatternTableBackgroundId = copy.Build.PatternTableBackgroundId;
+            Build.BackgroundPalettes = copy.Build.BackgroundPalettes;
+            Build.SpritePalettes = copy.Build.SpritePalettes;
 
             Header.INesMapper = copy.Header.INesMapper;
             Header.CHRSize = copy.Header.CHRSize;

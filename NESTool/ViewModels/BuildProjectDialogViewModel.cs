@@ -208,47 +208,64 @@ namespace NESTool.ViewModels
 
 			ProjectModel project = ModelManager.Get<ProjectModel>();
 
-			string[] palettes1 = project.Build.BackgroundPalettes;
+            List<string> output = new List<string>();
+            bool changed = false;
 
-			if (FillPaletteList(ref palettes1, ElementBackgroundPalettes))
+			if (FillPaletteList(project.Build.BackgroundPalettes, ElementBackgroundPalettes, ref output))
 			{
-				project.Build.BackgroundPalettes = palettes1;
-			}
+				project.Build.BackgroundPalettes = output.ToArray();
+                changed = true;
 
-			string[] palettes2 = project.Build.SpritePalettes;
+            }
 
-			if (FillPaletteList(ref palettes2, ElementSpritePalettes))
+			if (FillPaletteList(project.Build.SpritePalettes, ElementSpritePalettes, ref output))
 			{
-				project.Build.SpritePalettes = palettes2;
-			}
-		}
+				project.Build.SpritePalettes = output.ToArray();
+                changed = true;
+            }
 
-		private bool FillPaletteList(ref string[] originList, List<ElementPaletteModel> destination)
+            if (changed)
+            {
+                project.Save();
+            }
+        }
+
+		private bool FillPaletteList(string[] originList, List<ElementPaletteModel> destination, ref List<string> output)
 		{
-			bool ret = false;
+            if (originList == null)
+            {
+                return false;
+            }
 
-			foreach (string id in originList)
+            bool ret = false;
+
+            output.Clear();
+
+            foreach (string id in originList)
 			{
 				if (string.IsNullOrEmpty(id))
 				{
 					continue;
 				}
 
-				PaletteModel model = ProjectFiles.GetModel<PaletteModel>(id);
+				FileModelVO handler = ProjectFiles.GetFileHandler(id);
 
-				if (model == null)
+				if (handler == null)
 				{
-					// Model does not exist anymore, remove it
-					ret = true;
+                    // Model does not exist anymore, this means we will 
+                    // copy the output array to the original arary
+                    ret = true;
 
 					continue;
 				}
 
-				destination.Add(new ElementPaletteModel()
+                output.Add(id);
+
+                destination.Add(new ElementPaletteModel()
 				{
-					Name = "gato 1",
-					Model = model
-				});
+					Name = handler.Name,
+					Model = handler.Model as PaletteModel
+                });
 			}
 
 			return ret;

@@ -30,6 +30,29 @@ namespace NESTool.FileSystem
             return models;
         }
 
+        public static FileModelVO GetFileHandler(string guid)
+        {
+            if (string.IsNullOrEmpty(guid))
+            {
+                return null;
+            }
+
+            foreach (KeyValuePair<string, FileHandler> handler in Handlers)
+            {
+                if (handler.Key == guid)
+                {
+                    return new FileModelVO()
+                    {
+                        Index = 0,
+                        Name = handler.Value.Name,
+                        Model = handler.Value.FileModel
+                    };
+                }
+            }
+
+            return null;
+        }
+
         public static T GetModel<T>(string guid) where T : AFileModel
         {
             if (string.IsNullOrEmpty(guid))
@@ -39,7 +62,7 @@ namespace NESTool.FileSystem
 
             foreach (KeyValuePair<string, FileHandler> handler in Handlers)
             {
-                if (handler.Value.FileModel.GUID == guid &&
+                if (handler.Key == guid &&
                     handler.Value.FileModel is T model)
                 {
                     return model;

@@ -164,7 +164,7 @@
                     <ComboBox Width="200"
                               ItemsSource="{Binding TileSets}" 
                               DisplayMemberPath="Name"
-                              SelectedValuePath="Id"
+                              SelectedValuePath="Index"
                               SelectedValue="{Binding Path=SelectedTileSet}">
                         <i:Interaction.Behaviors>
                             <behaviors:EventToCommandBehavior Command="{Binding FileModelVOSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />

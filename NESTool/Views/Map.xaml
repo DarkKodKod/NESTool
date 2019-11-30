@@ -96,7 +96,7 @@
                         <ComboBox Width="200"
                                   ItemsSource="{Binding Banks}" 
                                   DisplayMemberPath="Name"
-                                  SelectedValuePath="Id"
+                                  SelectedValuePath="Index"
                                   SelectedValue="{Binding Path=SelectedBank}">
                             <i:Interaction.Behaviors>
                                 <behaviors:EventToCommandBehavior Command="{Binding FileModelVOSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />

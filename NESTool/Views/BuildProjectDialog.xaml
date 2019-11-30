@@ -8,7 +8,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         mc:Ignorable="d"
         ShowInTaskbar="False"
-        Title="Build" Height="470" Width="500"
+        Title="Build" Height="500" Width="550"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Window.DataContext>
         <vm:BuildProjectDialogViewModel />
@@ -32,7 +32,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
-        <GroupBox Grid.Row="1" Grid.Column="1" Header="Pattern Table" Margin="5">
+        <GroupBox Grid.Row="1" Grid.Column="1" Header="Pattern Table" Margin="5" Padding="5">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
@@ -50,7 +50,7 @@
                           HorizontalAlignment="Left"
                           ItemsSource="{Binding PatternTableSprites}" 
                           DisplayMemberPath="Name"
-                          SelectedValuePath="Id"
+                          SelectedValuePath="Index"
                           SelectedValue="{Binding Path=SelectedPatternTableSprite, Mode=TwoWay}">
                 </ComboBox>
                 <ComboBox Grid.Column="2" 
@@ -58,12 +58,12 @@
                           HorizontalAlignment="Right"
                           ItemsSource="{Binding PatternTableBackgrounds}" 
                           DisplayMemberPath="Name"
-                          SelectedValuePath="Id"
+                          SelectedValuePath="Index"
                           SelectedValue="{Binding Path=SelectedPatternTableBackground, Mode=TwoWay}">
                 </ComboBox>
             </Grid>
         </GroupBox>
-		<GroupBox Grid.Row="2" Grid.Column="1" Header="Palettes" Margin="5">
+		<GroupBox Grid.Row="2" Grid.Column="1" Header="Palettes" Margin="5" Padding="5">
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="auto"/>
