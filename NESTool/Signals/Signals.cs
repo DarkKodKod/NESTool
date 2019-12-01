@@ -1,5 +1,6 @@
 ﻿using ArchitectureLibrary.Signals;
 using NESTool.Enums;
+using NESTool.Models;
 using NESTool.ViewModels;
 using NESTool.VOs;
 using System.Windows;
@@ -86,4 +87,7 @@ namespace NESTool.Signals
     public class MapPaintToolSignal : Signal { }
     public class MapSelectToolSignal : Signal { }
     public class MapEraseToolSignal : Signal { }
+
+    // Build Project Dialog
+    public class AddPaletteToListSignal : Signal<ElementPaletteModel, PatternTableType>  { }
 }

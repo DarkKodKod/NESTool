@@ -31,10 +31,11 @@ namespace NESTool.ViewModels
 		public BuildProjectCommand BuildProjectCommand { get; } = new BuildProjectCommand();
         public BrowseFolderCommand BrowseFolderCommand { get; } = new BrowseFolderCommand();
         public CloseDialogCommand CloseDialogCommand { get; } = new CloseDialogCommand();
-		#endregion
+        public AddPaletteToListCommand AddPaletteToListCommand { get; } = new AddPaletteToListCommand();
+        #endregion
 
-		#region get/set
-		public ElementPaletteModel SelectedPalette
+        #region get/set
+        public ElementPaletteModel SelectedPalette
 		{
 			get { return _selectedPalette; }
 			set
@@ -156,6 +157,7 @@ namespace NESTool.ViewModels
 			#region Signals
 			SignalManager.Get<BrowseFolderSuccessSignal>().AddListener(BrowseFolderSuccess);
             SignalManager.Get<CloseDialogSignal>().AddListener(OnCloseDialog);
+            SignalManager.Get<AddPaletteToListSignal>().AddListener(OnAddPaletteToList);
 			#endregion
 
 			ProjectModel project = ModelManager.Get<ProjectModel>();
@@ -313,10 +315,63 @@ namespace NESTool.ViewModels
 			#region Signals
 			SignalManager.Get<BrowseFolderSuccessSignal>().RemoveListener(BrowseFolderSuccess);
             SignalManager.Get<CloseDialogSignal>().RemoveListener(OnCloseDialog);
-			#endregion
-		}
+            SignalManager.Get<AddPaletteToListSignal>().RemoveListener(OnAddPaletteToList);
+            #endregion
+        }
 
-		private void BrowseFolderSuccess(string folderPath)
+        private void OnAddPaletteToList(ElementPaletteModel palette, PatternTableType type)
+        {
+            ProjectModel project = ModelManager.Get<ProjectModel>();
+
+            int index = 0;
+
+            if (type == PatternTableType.Background)
+            {
+                foreach (string item in project.Build.BackgroundPalettes)
+                {
+                    if (string.IsNullOrEmpty(item))
+                    {
+                        project.Build.BackgroundPalettes[index] = palette.Model.GUID;
+
+                        project.Save();
+
+                        ElementBackgroundPalettes.Add(new ElementPaletteModel()
+                        {
+                            Name = palette.Name,
+                            Model = palette.Model
+                        });
+
+                        break;
+                    }
+
+                    index++;
+                }
+            }
+            else if (type == PatternTableType.Characters)
+            {
+                foreach (string item in project.Build.SpritePalettes)
+                {
+                    if (string.IsNullOrEmpty(item))
+                    {
+                        project.Build.SpritePalettes[index] = palette.Model.GUID;
+
+                        project.Save();
+
+                        ElementSpritePalettes.Add(new ElementPaletteModel()
+                        {
+                            Name = palette.Name,
+                            Model = palette.Model
+                        });
+
+                        break;
+                    }
+
+                    index++;
+                }
+            }
+        }
+
+        private void BrowseFolderSuccess(string folderPath)
         {
             ProjectModel project = ModelManager.Get<ProjectModel>();
 
