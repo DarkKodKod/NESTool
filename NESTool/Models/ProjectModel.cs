@@ -9,6 +9,8 @@ namespace NESTool.Models
 {
     public class ProjectModel : ISingletonModel
     {
+		private const int MAX_PALETTE = 4;
+
         public class INESHeader
         {
             public int INesMapper { get; set; }
@@ -39,14 +41,29 @@ namespace NESTool.Models
 			public string[] BackgroundPalettes { get; set; }
 			public string[] SpritePalettes { get; set; }
 
+			public BuildConfig()
+			{
+				Reset();
+			}
+
 			public void Reset()
             {
                 OutputFilePath = "";
                 PatternTableSpriteId = "";
                 PatternTableBackgroundId = "";
-                BackgroundPalettes = new string[4];
-                SpritePalettes = new string[4];
-            }
+                BackgroundPalettes = new string[MAX_PALETTE];
+                SpritePalettes = new string[MAX_PALETTE];
+
+				for (int i = 0; i < BackgroundPalettes.Length; i++)
+				{
+					SpritePalettes[i] = string.Empty;
+				}
+
+				for (int i = 0; i < SpritePalettes.Length; i++)
+				{
+					SpritePalettes[i] = string.Empty;
+				}
+			}
         }
 
         public int Version { get; set; }
