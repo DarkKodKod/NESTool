@@ -8,6 +8,7 @@ using NESTool.Models;
 using NESTool.Signals;
 using NESTool.VOs;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace NESTool.ViewModels
@@ -24,8 +25,8 @@ namespace NESTool.ViewModels
 		private ElementPaletteModel _selectedBackgroundPalette;
 
 		public List<ElementPaletteModel> ElementPalettes { get; set; } = new List<ElementPaletteModel>();
-		public List<ElementPaletteModel> ElementBackgroundPalettes { get; set; } = new List<ElementPaletteModel>();
-		public List<ElementPaletteModel> ElementSpritePalettes { get; set; } = new List<ElementPaletteModel>();
+		public ObservableCollection<ElementPaletteModel> ElementBackgroundPalettes { get; set; } = new ObservableCollection<ElementPaletteModel>();
+		public ObservableCollection<ElementPaletteModel> ElementSpritePalettes { get; set; } = new ObservableCollection<ElementPaletteModel>();
 
 		#region Commands
 		public BuildProjectCommand BuildProjectCommand { get; } = new BuildProjectCommand();
@@ -232,7 +233,7 @@ namespace NESTool.ViewModels
             }
         }
 
-		private bool FillPaletteList(string[] originList, List<ElementPaletteModel> destination, ref List<string> output)
+		private bool FillPaletteList(string[] originList, ObservableCollection<ElementPaletteModel> destination, ref List<string> output)
 		{
             if (originList == null)
             {
