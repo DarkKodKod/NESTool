@@ -361,14 +361,44 @@ namespace NESTool.ViewModels
         {
             ProjectModel project = ModelManager.Get<ProjectModel>();
 
-            if (type == PatternTableType.Background)
+			bool deleted = false;
+
+			if (type == PatternTableType.Background)
             {
-                //
-            }
+				if (ElementBackgroundPalettes.Contains(palette))
+				{
+					ElementBackgroundPalettes.Remove(palette);
+
+					List<string> list = project.Build.BackgroundPalettes.ToList();
+
+					list.Remove(list.SingleOrDefault(id => id == palette.Model.GUID));
+
+					project.Build.BackgroundPalettes = list.ToArray();
+
+					deleted = true;
+				}	
+
+			}
             else if (type == PatternTableType.Characters)
             {
-                //
-            }
+				if (ElementBackgroundPalettes.Contains(palette))
+				{
+					ElementBackgroundPalettes.Remove(palette);
+
+					List<string> list = project.Build.SpritePalettes.ToList();
+
+					list.Remove(list.SingleOrDefault(id => id == palette.Model.GUID));
+
+					project.Build.SpritePalettes = list.ToArray();
+
+					deleted = true;
+				}
+			}
+
+			if (deleted)
+			{
+				project.Save();
+			}
         }
 
         private void OnAddPaletteToList(ElementPaletteModel palette, PatternTableType type)
