@@ -126,6 +126,7 @@
     <Compile Include="Commands\DeleteAnimationFrameCommand.cs" />
     <Compile Include="Commands\DeleteElementCommand.cs" />
     <Compile Include="Commands\DeleteBankTileCommand.cs" />
+    <Compile Include="Commands\DeletePaletteFromListCommand.cs" />
     <Compile Include="Commands\DragEnterCommand.cs" />
     <Compile Include="Commands\DragLeaveCommand.cs" />
     <Compile Include="Commands\DragOverCommand.cs" />
@@ -137,6 +138,8 @@
     <Compile Include="Commands\MapEraseToolCommand.cs" />
     <Compile Include="Commands\MapPaintToolCommand.cs" />
     <Compile Include="Commands\MapSelectToolCommand.cs" />
+    <Compile Include="Commands\MovePaletteDownCommand.cs" />
+    <Compile Include="Commands\MovePaletteUpCommand.cs" />
     <Compile Include="Commands\MoveTileToBankCommand.cs" />
     <Compile Include="Commands\NewAnimationFrameCommand.cs" />
     <Compile Include="Commands\NextFrameCharacterAnimationCommand.cs" />

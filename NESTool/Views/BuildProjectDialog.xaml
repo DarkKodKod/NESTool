@@ -199,10 +199,10 @@
 							</Style>
 						</WrapPanel.Resources>
 						<Button Height="26" Width="26" 
-                                Command="{Binding AddPaletteToListCommand}">
+                                Command="{Binding MovePaletteUpCommand}">
 							<Button.CommandParameter>
 								<MultiBinding Converter="{StaticResource parametersConverter}">
-									<Binding Path="SelectedPalette" />
+                                    <Binding Path="SelectedBackgroundPalette" />
 									<Binding Source="{x:Static enum:PatternTableType.Background}"/>
 								</MultiBinding>
 							</Button.CommandParameter>
@@ -231,10 +231,10 @@
 							</Image>
 						</Button>
 						<Button Height="26" Width="26" 
-                                Command="{Binding AddPaletteToListCommand}">
+                                Command="{Binding MovePaletteDownCommand}">
 							<Button.CommandParameter>
 								<MultiBinding Converter="{StaticResource parametersConverter}">
-									<Binding Path="SelectedPalette" />
+                                    <Binding Path="SelectedBackgroundPalette" />
 									<Binding Source="{x:Static enum:PatternTableType.Background}"/>
 								</MultiBinding>
 							</Button.CommandParameter>
@@ -263,10 +263,10 @@
 							</Image>
 						</Button>
 						<Button Height="26" Width="26" 
-                                Command="{Binding AddPaletteToListCommand}">
+                                Command="{Binding DeletePaletteFromListCommand}">
 							<Button.CommandParameter>
 								<MultiBinding Converter="{StaticResource parametersConverter}">
-									<Binding Path="SelectedPalette" />
+                                    <Binding Path="SelectedBackgroundPalette" />
 									<Binding Source="{x:Static enum:PatternTableType.Background}"/>
 								</MultiBinding>
 							</Button.CommandParameter>
@@ -303,10 +303,10 @@
 							</Style>
 						</WrapPanel.Resources>
 						<Button Height="26" Width="26" 
-                                Command="{Binding AddPaletteToListCommand}">
+                                Command="{Binding MovePaletteUpCommand}">
 							<Button.CommandParameter>
 								<MultiBinding Converter="{StaticResource parametersConverter}">
-									<Binding Path="SelectedPalette" />
+                                    <Binding Path="SelectedSpritePalette" />
 									<Binding Source="{x:Static enum:PatternTableType.Background}"/>
 								</MultiBinding>
 							</Button.CommandParameter>
@@ -335,10 +335,10 @@
 							</Image>
 						</Button>
 						<Button Height="26" Width="26" 
-                                Command="{Binding AddPaletteToListCommand}">
+                                Command="{Binding MovePaletteDownCommand}">
 							<Button.CommandParameter>
 								<MultiBinding Converter="{StaticResource parametersConverter}">
-									<Binding Path="SelectedPalette" />
+                                    <Binding Path="SelectedSpritePalette" />
 									<Binding Source="{x:Static enum:PatternTableType.Background}"/>
 								</MultiBinding>
 							</Button.CommandParameter>
@@ -367,10 +367,10 @@
 							</Image>
 						</Button>
 						<Button Height="26" Width="26" 
-                                Command="{Binding AddPaletteToListCommand}">
+                                Command="{Binding DeletePaletteFromListCommand}">
 							<Button.CommandParameter>
 								<MultiBinding Converter="{StaticResource parametersConverter}">
-									<Binding Path="SelectedPalette" />
+                                    <Binding Path="SelectedSpritePalette" />
 									<Binding Source="{x:Static enum:PatternTableType.Background}"/>
 								</MultiBinding>
 							</Button.CommandParameter>

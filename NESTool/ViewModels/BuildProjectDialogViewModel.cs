@@ -33,6 +33,9 @@ namespace NESTool.ViewModels
         public BrowseFolderCommand BrowseFolderCommand { get; } = new BrowseFolderCommand();
         public CloseDialogCommand CloseDialogCommand { get; } = new CloseDialogCommand();
         public AddPaletteToListCommand AddPaletteToListCommand { get; } = new AddPaletteToListCommand();
+        public DeletePaletteFromListCommand DeletePaletteFromListCommand { get; } = new DeletePaletteFromListCommand();
+        public MovePaletteUpCommand MovePaletteUpCommand { get; } = new MovePaletteUpCommand();
+        public MovePaletteDownCommand MovePaletteDownCommand { get; } = new MovePaletteDownCommand();
         #endregion
 
         #region get/set
