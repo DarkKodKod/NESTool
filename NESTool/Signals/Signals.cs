@@ -90,4 +90,7 @@ namespace NESTool.Signals
 
     // Build Project Dialog
     public class AddPaletteToListSignal : Signal<ElementPaletteModel, PatternTableType>  { }
+    public class MovePaletteDownSignal : Signal<ElementPaletteModel, PatternTableType> { }
+    public class MovePaletteUpSignal : Signal<ElementPaletteModel, PatternTableType> { }
+    public class DeletePaletteFromListSignal : Signal<ElementPaletteModel, PatternTableType> { }
 }

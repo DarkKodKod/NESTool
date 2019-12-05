@@ -162,9 +162,12 @@ namespace NESTool.ViewModels
 			SignalManager.Get<BrowseFolderSuccessSignal>().AddListener(BrowseFolderSuccess);
             SignalManager.Get<CloseDialogSignal>().AddListener(OnCloseDialog);
             SignalManager.Get<AddPaletteToListSignal>().AddListener(OnAddPaletteToList);
-			#endregion
+            SignalManager.Get <MovePaletteDownSignal>().AddListener(OnMovePaletteDown);
+            SignalManager.Get <MovePaletteUpSignal>().AddListener(OnMovePaletteUp);
+            SignalManager.Get <DeletePaletteFromListSignal>().AddListener(OnDeletePaletteFromList);
+            #endregion
 
-			ProjectModel project = ModelManager.Get<ProjectModel>();
+            ProjectModel project = ModelManager.Get<ProjectModel>();
 
             FolderPath = project.Build.OutputFilePath;
 
@@ -320,7 +323,52 @@ namespace NESTool.ViewModels
 			SignalManager.Get<BrowseFolderSuccessSignal>().RemoveListener(BrowseFolderSuccess);
             SignalManager.Get<CloseDialogSignal>().RemoveListener(OnCloseDialog);
             SignalManager.Get<AddPaletteToListSignal>().RemoveListener(OnAddPaletteToList);
+            SignalManager.Get<MovePaletteDownSignal>().RemoveListener(OnMovePaletteDown);
+            SignalManager.Get<MovePaletteUpSignal>().RemoveListener(OnMovePaletteUp);
+            SignalManager.Get<DeletePaletteFromListSignal>().RemoveListener(OnDeletePaletteFromList);
             #endregion
+        }
+
+        private void OnMovePaletteDown(ElementPaletteModel palette, PatternTableType type)
+        {
+            ProjectModel project = ModelManager.Get<ProjectModel>();
+
+            if (type == PatternTableType.Background)
+            {
+                //
+            }
+            else if (type == PatternTableType.Characters)
+            {
+                //
+            }
+        }
+
+        private void OnMovePaletteUp(ElementPaletteModel palette, PatternTableType type)
+        {
+            ProjectModel project = ModelManager.Get<ProjectModel>();
+            
+            if (type == PatternTableType.Background)
+            {
+                //
+            }
+            else if (type == PatternTableType.Characters)
+            {
+                //
+            }
+        }
+
+        private void OnDeletePaletteFromList(ElementPaletteModel palette, PatternTableType type)
+        {
+            ProjectModel project = ModelManager.Get<ProjectModel>();
+
+            if (type == PatternTableType.Background)
+            {
+                //
+            }
+            else if (type == PatternTableType.Characters)
+            {
+                //
+            }
         }
 
         private void OnAddPaletteToList(ElementPaletteModel palette, PatternTableType type)
