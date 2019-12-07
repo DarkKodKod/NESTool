@@ -307,7 +307,7 @@
 							<Button.CommandParameter>
 								<MultiBinding Converter="{StaticResource parametersConverter}">
                                     <Binding Path="SelectedSpritePalette" />
-									<Binding Source="{x:Static enum:PatternTableType.Background}"/>
+									<Binding Source="{x:Static enum:PatternTableType.Characters}"/>
 								</MultiBinding>
 							</Button.CommandParameter>
 							<Image Width="26" Height="26" 
@@ -339,7 +339,7 @@
 							<Button.CommandParameter>
 								<MultiBinding Converter="{StaticResource parametersConverter}">
                                     <Binding Path="SelectedSpritePalette" />
-									<Binding Source="{x:Static enum:PatternTableType.Background}"/>
+									<Binding Source="{x:Static enum:PatternTableType.Characters}"/>
 								</MultiBinding>
 							</Button.CommandParameter>
 							<Image Width="26" Height="26" 
@@ -371,7 +371,7 @@
 							<Button.CommandParameter>
 								<MultiBinding Converter="{StaticResource parametersConverter}">
                                     <Binding Path="SelectedSpritePalette" />
-									<Binding Source="{x:Static enum:PatternTableType.Background}"/>
+									<Binding Source="{x:Static enum:PatternTableType.Characters}"/>
 								</MultiBinding>
 							</Button.CommandParameter>
 							<Image Width="26" Height="26" 

@@ -3,6 +3,7 @@ using ArchitectureLibrary.Signals;
 using NESTool.Enums;
 using NESTool.Signals;
 using Nett;
+using System;
 using System.Windows;
 
 namespace NESTool.Models
@@ -110,8 +111,15 @@ namespace NESTool.Models
             Build.OutputFilePath = copy.Build.OutputFilePath;
             Build.PatternTableSpriteId = copy.Build.PatternTableSpriteId;
             Build.PatternTableBackgroundId = copy.Build.PatternTableBackgroundId;
-            Build.BackgroundPalettes = copy.Build.BackgroundPalettes;
-            Build.SpritePalettes = copy.Build.SpritePalettes;
+            
+            var array1 = copy.Build.BackgroundPalettes;
+            var array2 = copy.Build.SpritePalettes;
+
+            Array.Resize(ref array1, 4);
+            Array.Resize(ref array2, 4);
+
+            Build.BackgroundPalettes = array1;
+            Build.SpritePalettes = array2;
 
             Header.INesMapper = copy.Header.INesMapper;
             Header.CHRSize = copy.Header.CHRSize;
