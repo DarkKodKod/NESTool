@@ -34,6 +34,7 @@ namespace NESTool.Commands
                 return;
             }
 
+            BuildPalettes();
             BuildPatternTables();
             BuildMetaSprites();
             BuildBackgrounds();
@@ -54,6 +55,93 @@ namespace NESTool.Commands
             catch
             {
                 return false;
+            }
+        }
+
+        private Color GetColorFromInt(int color)
+        {
+            byte R = (byte)(color >> 16);
+            byte G = (byte)(color >> 8);
+            byte B = (byte)color;
+
+            return Color.FromRgb(R, G, B);
+        }
+
+        private void BuildPalettes()
+        {
+            ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+
+            string fullPath = Path.Combine(Path.GetFullPath(projectModel.Build.OutputFilePath), "palettes.s");
+
+            using (StreamWriter outputFile = new StreamWriter(fullPath))
+            {
+                outputFile.WriteLine($"");
+                outputFile.WriteLine($"Palettes:");
+                outputFile.WriteLine($"    ; background palette data");
+
+                int count = 0;
+
+                foreach (string id in projectModel.Build.BackgroundPalettes)
+                {
+                    PaletteModel model = ProjectFiles.GetModel<PaletteModel>(id);
+                    if (model != null)
+                    {
+                        Color color0 = GetColorFromInt(model.Palette.Color0);
+                        Color color1 = GetColorFromInt(model.Palette.Color1);
+                        Color color2 = GetColorFromInt(model.Palette.Color2);
+                        Color color3 = GetColorFromInt(model.Palette.Color3);
+
+                        outputFile.Write($"    .byte ");
+                        outputFile.Write($"${Util.ColorToColorHex(color0)},");
+                        outputFile.Write($"${Util.ColorToColorHex(color1)},");
+                        outputFile.Write($"${Util.ColorToColorHex(color2)},");
+                        outputFile.Write($"${Util.ColorToColorHex(color3)}");
+                        outputFile.Write("\n");
+
+                        count++;
+                    }
+                }
+
+                if (count < 4)
+                {
+                    for (int i = count; i < 4; i++)
+                    {
+                        outputFile.WriteLine($"    .byte $0F,$0F,$0F,$0F");
+                    }
+                }
+
+                outputFile.WriteLine($"    ; sprite palette data");
+
+                count = 0;
+
+                foreach (string id in projectModel.Build.SpritePalettes)
+                {
+                    PaletteModel model = ProjectFiles.GetModel<PaletteModel>(id);
+                    if (model != null)
+                    {
+                        Color color0 = GetColorFromInt(model.Palette.Color0);
+                        Color color1 = GetColorFromInt(model.Palette.Color1);
+                        Color color2 = GetColorFromInt(model.Palette.Color2);
+                        Color color3 = GetColorFromInt(model.Palette.Color3);
+
+                        outputFile.Write($"    .byte ");
+                        outputFile.Write($"${Util.ColorToColorHex(color0)},");
+                        outputFile.Write($"${Util.ColorToColorHex(color1)},");
+                        outputFile.Write($"${Util.ColorToColorHex(color2)},");
+                        outputFile.Write($"${Util.ColorToColorHex(color3)}");
+                        outputFile.Write("\n");
+
+                        count++;
+                    }
+                }
+
+                if (count < 4)
+                {
+                    for (int i = count; i < 4; i++)
+                    {
+                        outputFile.WriteLine($"    .byte $0F,$0F,$0F,$0F");
+                    }
+                }
             }
         }
 
