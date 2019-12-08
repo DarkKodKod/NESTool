@@ -86,10 +86,10 @@ namespace NESTool.Commands
                     PaletteModel model = ProjectFiles.GetModel<PaletteModel>(id);
                     if (model != null)
                     {
-                        Color color0 = GetColorFromInt(model.Palette.Color0);
-                        Color color1 = GetColorFromInt(model.Palette.Color1);
-                        Color color2 = GetColorFromInt(model.Palette.Color2);
-                        Color color3 = GetColorFromInt(model.Palette.Color3);
+                        Color color0 = GetColorFromInt(model.Color0);
+                        Color color1 = GetColorFromInt(model.Color1);
+                        Color color2 = GetColorFromInt(model.Color2);
+                        Color color3 = GetColorFromInt(model.Color3);
 
                         outputFile.Write($"    .byte ");
                         outputFile.Write($"${Util.ColorToColorHex(color0)},");
@@ -119,10 +119,10 @@ namespace NESTool.Commands
                     PaletteModel model = ProjectFiles.GetModel<PaletteModel>(id);
                     if (model != null)
                     {
-                        Color color0 = GetColorFromInt(model.Palette.Color0);
-                        Color color1 = GetColorFromInt(model.Palette.Color1);
-                        Color color2 = GetColorFromInt(model.Palette.Color2);
-                        Color color3 = GetColorFromInt(model.Palette.Color3);
+                        Color color0 = GetColorFromInt(model.Color0);
+                        Color color1 = GetColorFromInt(model.Color1);
+                        Color color2 = GetColorFromInt(model.Color2);
+                        Color color3 = GetColorFromInt(model.Color3);
 
                         outputFile.Write($"    .byte ");
                         outputFile.Write($"${Util.ColorToColorHex(color0)},");

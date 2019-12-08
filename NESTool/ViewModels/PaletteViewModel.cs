@@ -50,28 +50,28 @@ namespace NESTool.ViewModels
 			// Load palettes
 			for (int i = 0; i < 4; ++i)
 			{
-				int color0 = GetModel().Palette.Color0;
+				int color0 = GetModel().Color0;
 				R = (byte)(color0 >> 16);
 				G = (byte)(color0 >> 8);
 				B = (byte)color0;
 
 				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 0);
 
-				int color1 = GetModel().Palette.Color1;
+				int color1 = GetModel().Color1;
 				R = (byte)(color1 >> 16);
 				G = (byte)(color1 >> 8);
 				B = (byte)color1;
 
 				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 1);
 
-				int color2 = GetModel().Palette.Color2;
+				int color2 = GetModel().Color2;
 				R = (byte)(color2 >> 16);
 				G = (byte)(color2 >> 8);
 				B = (byte)color2;
 
 				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 2);
 
-				int color3 = GetModel().Palette.Color3;
+				int color3 = GetModel().Color3;
 				R = (byte)(color3 >> 16);
 				G = (byte)(color3 >> 8);
 				B = (byte)color3;
@@ -98,10 +98,10 @@ namespace NESTool.ViewModels
 
             Palette palette = new Palette
             {
-                Color0 = GetModel().Palette.Color0,
-                Color1 = GetModel().Palette.Color1,
-                Color2 = GetModel().Palette.Color2,
-                Color3 = GetModel().Palette.Color3
+                Color0 = GetModel().Color0,
+                Color1 = GetModel().Color1,
+                Color2 = GetModel().Color2,
+                Color3 = GetModel().Color3
             };
 
             switch (colorPosition)
