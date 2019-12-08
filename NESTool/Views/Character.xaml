@@ -71,7 +71,7 @@
     <Grid Background="LightGray">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="120"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -109,40 +109,98 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <RadioButton GroupName="palettes" 
-                                     VerticalAlignment="Center"
-                                     IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette0}"
-                                     Margin="15,0,5,0" />
-                        <local:PaletteView PaletteIndex="0" x:Name="palette0"/>
-                    </StackPanel>
-                    <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <RadioButton GroupName="palettes" 
-                                     VerticalAlignment="Center"
-                                     IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette1}"
-                                     Margin="15,0,5,0"/>
-                        <local:PaletteView PaletteIndex="1" x:Name="palette1"/>
-                    </StackPanel>
-                    <StackPanel Grid.Column="3" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <RadioButton GroupName="palettes" 
-                                     VerticalAlignment="Center" 
-                                     IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette2}"
-                                     Margin="15,0,5,0"/>
-                        <local:PaletteView PaletteIndex="2" x:Name="palette2"/>
-                    </StackPanel>
-                    <StackPanel Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Center">
-                        <RadioButton GroupName="palettes" 
-                                     VerticalAlignment="Center" 
-                                     IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette3}"
-                                     Margin="15,0,5,0"/>
-                        <local:PaletteView PaletteIndex="3" x:Name="palette3"/>
-                    </StackPanel>
+                    <Grid Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+                            <RadioButton GroupName="palettes" Grid.Row="0"
+                                         VerticalAlignment="Center"
+                                         IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette0}"
+                                         Margin="0,0,8,0"/>
+                            <ComboBox Width="150" Grid.Row="0"
+                                      ItemsSource="{Binding Palettes}" 
+                                      DisplayMemberPath="Name"
+                                      SelectedValuePath="Index"
+                                      SelectedValue="{Binding Path=SelectedPalette1}">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:EventToCommandBehavior Command="{Binding FileModelVOSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />
+                                </i:Interaction.Behaviors>
+                            </ComboBox>
+                        </StackPanel>
+                        <local:PaletteView PaletteIndex="0" x:Name="palette0" Grid.Row="1"/>
+                    </Grid>
+                    <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+                            <RadioButton GroupName="palettes" Grid.Row="0"
+                                         VerticalAlignment="Center"
+                                         IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette1}"
+                                         Margin="0,0,8,0"/>
+                            <ComboBox Width="150" Grid.Row="0"
+                                      ItemsSource="{Binding Palettes}" 
+                                      DisplayMemberPath="Name"
+                                      SelectedValuePath="Index"
+                                      SelectedValue="{Binding Path=SelectedPalette2}">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:EventToCommandBehavior Command="{Binding FileModelVOSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />
+                                </i:Interaction.Behaviors>
+                            </ComboBox>
+                        </StackPanel>
+                        <local:PaletteView PaletteIndex="1" x:Name="palette1" Grid.Row="1"/>
+                    </Grid>
+                    <Grid Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+                            <RadioButton GroupName="palettes" Grid.Row="0"
+                                         VerticalAlignment="Center" 
+                                         IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette2}"
+                                         Margin="0,0,8,0"/>
+                            <ComboBox Width="150" Grid.Row="0"
+                                      ItemsSource="{Binding Palettes}" 
+                                      DisplayMemberPath="Name"
+                                      SelectedValuePath="Index"
+                                      SelectedValue="{Binding Path=SelectedPalette3}">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:EventToCommandBehavior Command="{Binding FileModelVOSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />
+                                </i:Interaction.Behaviors>
+                            </ComboBox>
+                        </StackPanel>
+                        <local:PaletteView PaletteIndex="2" x:Name="palette2" Grid.Row="1"/>
+                    </Grid>
+                    <Grid Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+                            <RadioButton GroupName="palettes" Grid.Row="0"
+                                         VerticalAlignment="Center" 
+                                         IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette3}"
+                                         Margin="0,0,8,0"/>
+                            <ComboBox Width="150" Grid.Row="0"
+                                      ItemsSource="{Binding Palettes}" 
+                                      DisplayMemberPath="Name"
+                                      SelectedValuePath="Index"
+                                      SelectedValue="{Binding Path=SelectedPalette4}">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:EventToCommandBehavior Command="{Binding FileModelVOSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />
+                                </i:Interaction.Behaviors>
+                            </ComboBox>
+                        </StackPanel>
+                        <local:PaletteView PaletteIndex="3" x:Name="palette3" Grid.Row="1"/>
+                    </Grid>
                 </Grid>
             </GroupBox>
         </Grid>

@@ -47,6 +47,6 @@ namespace NESTool.Models
         }
 
         public CharacterAnimation[] Animations { get; set; } = new CharacterAnimation[64];
-        public Palette[] Palettes { get; set; } = new Palette[4];
+        public string[] PaletteIDs { get; set; } = new string[4];
     }
 }

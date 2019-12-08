@@ -2,10 +2,12 @@
 using ArchitectureLibrary.ViewModel;
 using NESTool.Commands;
 using NESTool.Enums;
+using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.UserControls.ViewModels;
 using NESTool.UserControls.Views;
+using NESTool.VOs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,6 +23,11 @@ namespace NESTool.ViewModels
         private ObservableCollection<ActionTabItem> _tabs;
         private bool _doNotSavePalettes = false;
         private PaletteIndex _paletteIndex = 0;
+        private FileModelVO[] _palettes;
+        private int _selectedPalette1 = -1;
+        private int _selectedPalette2 = -1;
+        private int _selectedPalette3 = -1;
+        private int _selectedPalette4 = -1;
 
         public static Dictionary<string, WriteableBitmap> FrameBitmapCache;
         public static Dictionary<Tuple<int, int>, Dictionary<Color, Color>> GroupedPalettes;
@@ -56,6 +63,61 @@ namespace NESTool.ViewModels
             }
         }
 
+        public int SelectedPalette1
+        {
+            get { return _selectedPalette1; }
+            set
+            {
+                _selectedPalette1 = value;
+
+                OnPropertyChanged("SelectedPalette1");
+            }
+        }
+
+        public int SelectedPalette2
+        {
+            get { return _selectedPalette2; }
+            set
+            {
+                _selectedPalette2 = value;
+
+                OnPropertyChanged("SelectedPalette2");
+            }
+        }
+
+        public int SelectedPalette3
+        {
+            get { return _selectedPalette3; }
+            set
+            {
+                _selectedPalette3 = value;
+
+                OnPropertyChanged("SelectedPalette3");
+            }
+        }
+
+        public int SelectedPalette4
+        {
+            get { return _selectedPalette4; }
+            set
+            {
+                _selectedPalette4 = value;
+
+                OnPropertyChanged("SelectedPalette4");
+            }
+        }
+
+        public FileModelVO[] Palettes
+        {
+            get { return _palettes; }
+            set
+            {
+                _palettes = value;
+
+                OnPropertyChanged("Palettes");
+            }
+        }
+
         public PaletteIndex PaletteIndex
         {
             get { return _paletteIndex; }
@@ -88,6 +150,20 @@ namespace NESTool.ViewModels
         public override void OnActivate()
         {
             base.OnActivate();
+
+            List<FileModelVO> list = new List<FileModelVO>
+            {
+                new FileModelVO()
+                {
+                    Index = -1,
+                    Name = "None",
+                    Model = null
+                }
+            };
+
+            list.AddRange(ProjectFiles.GetModels<PaletteModel>());
+
+            Palettes = list.ToArray();
 
             FrameBitmapCache = new Dictionary<string, WriteableBitmap>();
             GroupedPalettes = new Dictionary<Tuple<int, int>, Dictionary<Color, Color>>();
