@@ -290,28 +290,36 @@ namespace NESTool.ViewModels
             // Load palettes
             for (int i = 0; i < 4; ++i)
             {
-                int color0 = GetModel().Palettes[i].Color0;
+                string paletteId = GetModel().PaletteIDs[i];
+
+                PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
+                if (paletteModel == null)
+                {
+                    continue;
+                }
+
+                int color0 = paletteModel.Color0;
                 R = (byte)(color0 >> 16);
                 G = (byte)(color0 >> 8);
                 B = (byte)color0;
 
                 SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 0);
 
-                int color1 = GetModel().Palettes[i].Color1;
+                int color1 = paletteModel.Color1;
                 R = (byte)(color1 >> 16);
                 G = (byte)(color1 >> 8);
                 B = (byte)color1;
 
                 SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 1);
 
-                int color2 = GetModel().Palettes[i].Color2;
+                int color2 = paletteModel.Color2;
                 R = (byte)(color2 >> 16);
                 G = (byte)(color2 >> 8);
                 B = (byte)color2;
 
                 SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 2);
 
-                int color3 = GetModel().Palettes[i].Color3;
+                int color3 = paletteModel.Color3;
                 R = (byte)(color3 >> 16);
                 G = (byte)(color3 >> 8);
                 B = (byte)color3;
@@ -334,6 +342,14 @@ namespace NESTool.ViewModels
                 return;
             }
 
+            string paletteId = GetModel().PaletteIDs[paletteIndex];
+
+            PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
+            if (paletteModel == null)
+            {
+                return;
+            }
+
             int colorInt = ((color.R & 0xff) << 16) | ((color.G & 0xff) << 8) | (color.B & 0xff);
 
             int prevColorInt = 0;
@@ -341,20 +357,20 @@ namespace NESTool.ViewModels
             switch (colorPosition)
             {
                 case 0:
-                    prevColorInt = GetModel().Palettes[paletteIndex].Color0;
-                    GetModel().Palettes[paletteIndex].Color0 = colorInt;
+                    prevColorInt = paletteModel.Color0;
+                    paletteModel.Color0 = colorInt;
                     break;
                 case 1:
-                    prevColorInt = GetModel().Palettes[paletteIndex].Color1;
-                    GetModel().Palettes[paletteIndex].Color1 = colorInt;
+                    prevColorInt = paletteModel.Color1;
+                    paletteModel.Color1 = colorInt;
                     break;
                 case 2:
-                    prevColorInt = GetModel().Palettes[paletteIndex].Color2;
-                    GetModel().Palettes[paletteIndex].Color2 = colorInt;
+                    prevColorInt = paletteModel.Color2;
+                    paletteModel.Color2 = colorInt;
                     break;
                 case 3:
-                    prevColorInt = GetModel().Palettes[paletteIndex].Color3;
-                    GetModel().Palettes[paletteIndex].Color3 = colorInt;
+                    prevColorInt = paletteModel.Color3;
+                    paletteModel.Color3 = colorInt;
                     break;
             }
 

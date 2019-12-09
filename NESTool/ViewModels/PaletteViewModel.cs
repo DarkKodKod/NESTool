@@ -96,25 +96,25 @@ namespace NESTool.ViewModels
 
 			int colorInt = ((color.R & 0xff) << 16) | ((color.G & 0xff) << 8) | (color.B & 0xff);
 
-            Palette palette = new Palette
-            {
-                Color0 = GetModel().Color0,
-                Color1 = GetModel().Color1,
-                Color2 = GetModel().Color2,
-                Color3 = GetModel().Color3
-            };
+			int color0 = GetModel().Color0;
+			int color1 = GetModel().Color1;
+			int color2 = GetModel().Color2;
+			int color3 = GetModel().Color3;
 
             switch (colorPosition)
 			{
-				case 0: palette.Color0 = colorInt; break;
-				case 1: palette.Color1 = colorInt; break;
-				case 2: palette.Color2 = colorInt; break;
-				case 3: palette.Color3 = colorInt; break;
+				case 0: color0 = colorInt; break;
+				case 1: color1 = colorInt; break;
+				case 2: color2 = colorInt; break;
+				case 3: color3 = colorInt; break;
 			}
 
-            GetModel().Palette = palette;
+            GetModel().Color0 = color0;
+			GetModel().Color1 = color1;
+			GetModel().Color2 = color2;
+			GetModel().Color3 = color3;
 
-            ProjectItem.FileHandler.Save();
+			ProjectItem.FileHandler.Save();
 		}
 	}
 }

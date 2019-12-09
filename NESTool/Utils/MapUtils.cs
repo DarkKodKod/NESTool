@@ -116,6 +116,14 @@ namespace NESTool.Utils
                 MapViewModel.GroupedPalettes.Add(tuple, colors);
             }
 
+            string paletteId = model.PaletteIDs[attributeTable.PaletteIndex];
+
+            PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
+            if (paletteModel == null)
+            {
+                return;
+            }
+
             // read pixels in the 8x8 quadrant
             for (int y = 0; y < 8; ++y)
             {
@@ -129,11 +137,11 @@ namespace NESTool.Utils
                         int paletteColor;
                         switch (colors.Count)
                         {
-                            case 0: paletteColor = model.Palettes[attributeTable.PaletteIndex].Color0; break;
-                            case 1: paletteColor = model.Palettes[attributeTable.PaletteIndex].Color1; break;
-                            case 2: paletteColor = model.Palettes[attributeTable.PaletteIndex].Color2; break;
-                            case 3: paletteColor = model.Palettes[attributeTable.PaletteIndex].Color3; break;
-                            default: paletteColor = model.Palettes[attributeTable.PaletteIndex].Color0; break;
+                            case 0: paletteColor = paletteModel.Color0; break;
+                            case 1: paletteColor = paletteModel.Color1; break;
+                            case 2: paletteColor = paletteModel.Color2; break;
+                            case 3: paletteColor = paletteModel.Color3; break;
+                            default: paletteColor = paletteModel.Color0; break;
                         }
 
                         byte R = (byte)(paletteColor >> 16);
