@@ -276,7 +276,6 @@ namespace NESTool.ViewModels
 
         private void LoadPalettes()
         {
-            // Load palettes
             for (int i = 0; i < 4; ++i)
             {
                 string paletteId = GetModel().PaletteIDs[i];
