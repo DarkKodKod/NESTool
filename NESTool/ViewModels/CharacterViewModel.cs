@@ -72,9 +72,7 @@ namespace NESTool.ViewModels
 				{
 					_selectedPalette1 = value;
 
-					GetModel().PaletteIDs[0] = Palettes[SelectedPalette1 + 1].Model.GUID;
-
-					ProjectItem.FileHandler.Save();
+					UpdateAndSavePalette(value, 0);
 				}
 
                 OnPropertyChanged("SelectedPalette1");
@@ -90,7 +88,7 @@ namespace NESTool.ViewModels
 				{
 					_selectedPalette2 = value;
 
-					GetModel().PaletteIDs[1] = Palettes[SelectedPalette2 + 1].Model.GUID;
+					UpdateAndSavePalette(value, 1);
 				}
 
                 OnPropertyChanged("SelectedPalette2");
@@ -106,7 +104,7 @@ namespace NESTool.ViewModels
 				{
 					_selectedPalette3 = value;
 
-					GetModel().PaletteIDs[2] = Palettes[SelectedPalette3 + 1].Model.GUID;
+					UpdateAndSavePalette(value, 2);
 				}
 
                 OnPropertyChanged("SelectedPalette3");
@@ -122,7 +120,7 @@ namespace NESTool.ViewModels
 				{
 					_selectedPalette4 = value;
 
-					GetModel().PaletteIDs[3] = Palettes[SelectedPalette4 + 1].Model.GUID;
+					UpdateAndSavePalette(value, 3);
 				}
 
                 OnPropertyChanged("SelectedPalette4");
@@ -169,6 +167,33 @@ namespace NESTool.ViewModels
         }
         #endregion
 
+		private void UpdateAndSavePalette(int newValue, int index)
+		{
+			if (newValue == -1)
+			{
+				GetModel().PaletteIDs[index] = string.Empty;
+			}
+			else
+			{
+				GetModel().PaletteIDs[index] = Palettes[newValue + 1].Model.GUID;
+			}
+
+			if (!_doNotSavePalettes)
+			{
+				PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(GetModel().PaletteIDs[index]);
+				if (paletteModel != null)
+				{
+					SetPalleteWithColors(paletteModel, index);
+				}
+				else
+				{
+					SetPaletteEmpty(index);
+				}
+
+				ProjectItem.FileHandler.Save();
+			}
+		}
+
         public override void OnActivate()
         {
             base.OnActivate();
@@ -210,12 +235,16 @@ namespace NESTool.ViewModels
                 }
             }
 
-            LoadPalettes();
+			_doNotSavePalettes = true;
+
+			LoadPalettes();
 
 			LoadPaletteIndex(0);
 			LoadPaletteIndex(1);
 			LoadPaletteIndex(2);
 			LoadPaletteIndex(3);
+
+			_doNotSavePalettes = false;
 		}
 
 		private void LoadPaletteIndex(int index)
@@ -247,12 +276,6 @@ namespace NESTool.ViewModels
 
         private void LoadPalettes()
         {
-            _doNotSavePalettes = true;
-
-            byte R;
-            byte G;
-            byte B;
-
             // Load palettes
             for (int i = 0; i < 4; ++i)
             {
@@ -261,41 +284,53 @@ namespace NESTool.ViewModels
                 PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
                 if (paletteModel == null)
                 {
-					SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), i, 0);
-					SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), i, 1);
-					SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), i, 2);
-					SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), i, 3);
-
-					continue;
+					SetPaletteEmpty(i);
                 }
-
-                R = (byte)(paletteModel.Color0 >> 16);
-                G = (byte)(paletteModel.Color0 >> 8);
-                B = (byte)paletteModel.Color0;
-
-                SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 0);
-
-                R = (byte)(paletteModel.Color1 >> 16);
-                G = (byte)(paletteModel.Color1 >> 8);
-                B = (byte)paletteModel.Color1;
-
-                SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 1);
-
-                R = (byte)(paletteModel.Color2 >> 16);
-                G = (byte)(paletteModel.Color2 >> 8);
-                B = (byte)paletteModel.Color2;
-
-                SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 2);
-
-                R = (byte)(paletteModel.Color3 >> 16);
-                G = (byte)(paletteModel.Color3 >> 8);
-                B = (byte)paletteModel.Color3;
-
-                SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 3);
-            }
-
-            _doNotSavePalettes = false;
+				else
+				{
+					SetPalleteWithColors(paletteModel, i);
+				}
+			}
         }
+
+		private void SetPaletteEmpty(int index)
+		{
+			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 0);
+			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 1);
+			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 2);
+			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 3);
+		}
+
+		private void SetPalleteWithColors(PaletteModel paletteModel, int index)
+		{
+			byte R;
+			byte G;
+			byte B;
+
+			R = (byte)(paletteModel.Color0 >> 16);
+			G = (byte)(paletteModel.Color0 >> 8);
+			B = (byte)paletteModel.Color0;
+
+			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), index, 0);
+
+			R = (byte)(paletteModel.Color1 >> 16);
+			G = (byte)(paletteModel.Color1 >> 8);
+			B = (byte)paletteModel.Color1;
+
+			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), index, 1);
+
+			R = (byte)(paletteModel.Color2 >> 16);
+			G = (byte)(paletteModel.Color2 >> 8);
+			B = (byte)paletteModel.Color2;
+
+			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), index, 2);
+
+			R = (byte)(paletteModel.Color3 >> 16);
+			G = (byte)(paletteModel.Color3 >> 8);
+			B = (byte)paletteModel.Color3;
+
+			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), index, 3);
+		}
 
         private void OnColorPaletteControlSelected(Color color, int paletteIndex, int colorPosition)
         {
@@ -309,37 +344,35 @@ namespace NESTool.ViewModels
                 return;
             }
 
-            string paletteId = GetModel().PaletteIDs[paletteIndex];
+			int colorInt = ((color.R & 0xff) << 16) | ((color.G & 0xff) << 8) | (color.B & 0xff);
+
+			int prevColorInt = 0;
+
+			string paletteId = GetModel().PaletteIDs[paletteIndex];
 
             PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
-            if (paletteModel == null)
+            if (paletteModel != null)
             {
-                return;
-            }
-
-            int colorInt = ((color.R & 0xff) << 16) | ((color.G & 0xff) << 8) | (color.B & 0xff);
-
-            int prevColorInt = 0;
-
-            switch (colorPosition)
-            {
-                case 0:
-                    prevColorInt = paletteModel.Color0;
-                    paletteModel.Color0 = colorInt;
-                    break;
-                case 1:
-                    prevColorInt = paletteModel.Color1;
-                    paletteModel.Color1 = colorInt;
-                    break;
-                case 2:
-                    prevColorInt = paletteModel.Color2;
-                    paletteModel.Color2 = colorInt;
-                    break;
-                case 3:
-                    prevColorInt = paletteModel.Color3;
-                    paletteModel.Color3 = colorInt;
-                    break;
-            }
+				switch (colorPosition)
+				{
+					case 0:
+						prevColorInt = paletteModel.Color0;
+						paletteModel.Color0 = colorInt;
+						break;
+					case 1:
+						prevColorInt = paletteModel.Color1;
+						paletteModel.Color1 = colorInt;
+						break;
+					case 2:
+						prevColorInt = paletteModel.Color2;
+						paletteModel.Color2 = colorInt;
+						break;
+					case 3:
+						prevColorInt = paletteModel.Color3;
+						paletteModel.Color3 = colorInt;
+						break;
+				}
+			}
 
             ProjectItem.FileHandler.Save();
 
