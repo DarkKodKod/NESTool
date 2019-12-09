@@ -68,7 +68,14 @@ namespace NESTool.ViewModels
             get { return _selectedPalette1; }
             set
             {
-                _selectedPalette1 = value;
+				if (_selectedPalette1 != value)
+				{
+					_selectedPalette1 = value;
+
+					GetModel().PaletteIDs[0] = Palettes[SelectedPalette1 + 1].Model.GUID;
+
+					ProjectItem.FileHandler.Save();
+				}
 
                 OnPropertyChanged("SelectedPalette1");
             }
@@ -79,7 +86,12 @@ namespace NESTool.ViewModels
             get { return _selectedPalette2; }
             set
             {
-                _selectedPalette2 = value;
+				if (_selectedPalette2 != value)
+				{
+					_selectedPalette2 = value;
+
+					GetModel().PaletteIDs[1] = Palettes[SelectedPalette2 + 1].Model.GUID;
+				}
 
                 OnPropertyChanged("SelectedPalette2");
             }
@@ -90,7 +102,12 @@ namespace NESTool.ViewModels
             get { return _selectedPalette3; }
             set
             {
-                _selectedPalette3 = value;
+				if (_selectedPalette3 != value)
+				{
+					_selectedPalette3 = value;
+
+					GetModel().PaletteIDs[2] = Palettes[SelectedPalette3 + 1].Model.GUID;
+				}
 
                 OnPropertyChanged("SelectedPalette3");
             }
@@ -101,7 +118,12 @@ namespace NESTool.ViewModels
             get { return _selectedPalette4; }
             set
             {
-                _selectedPalette4 = value;
+                if (_selectedPalette4 != value)
+				{
+					_selectedPalette4 = value;
+
+					GetModel().PaletteIDs[3] = Palettes[SelectedPalette4 + 1].Model.GUID;
+				}
 
                 OnPropertyChanged("SelectedPalette4");
             }
@@ -189,7 +211,39 @@ namespace NESTool.ViewModels
             }
 
             LoadPalettes();
-        }
+
+			LoadPaletteIndex(0);
+			LoadPaletteIndex(1);
+			LoadPaletteIndex(2);
+			LoadPaletteIndex(3);
+		}
+
+		private void LoadPaletteIndex(int index)
+		{
+			if (!string.IsNullOrEmpty(GetModel().PaletteIDs[index]))
+			{
+				for (int i = 0; i < Palettes.Length; ++i)
+				{
+					FileModelVO item = Palettes[i];
+
+					if (item.Model == null)
+					{
+						continue;
+					}
+
+					if (item.Model.GUID == GetModel().PaletteIDs[index])
+					{
+						switch (index)
+						{
+							case 0: SelectedPalette1 = i - 1; break;
+							case 1: SelectedPalette2 = i - 1; break;
+							case 2: SelectedPalette3 = i - 1; break;
+							case 3: SelectedPalette4 = i - 1; break;
+						}
+					}
+				}
+			}
+		}
 
         private void LoadPalettes()
         {
@@ -207,7 +261,12 @@ namespace NESTool.ViewModels
                 PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
                 if (paletteModel == null)
                 {
-                    continue;
+					SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), i, 0);
+					SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), i, 1);
+					SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), i, 2);
+					SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), i, 3);
+
+					continue;
                 }
 
                 R = (byte)(paletteModel.Color0 >> 16);

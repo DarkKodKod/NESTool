@@ -57,7 +57,7 @@ namespace NESTool.Models
 
 				for (int i = 0; i < BackgroundPalettes.Length; i++)
 				{
-					SpritePalettes[i] = string.Empty;
+					BackgroundPalettes[i] = string.Empty;
 				}
 
 				for (int i = 0; i < SpritePalettes.Length; i++)

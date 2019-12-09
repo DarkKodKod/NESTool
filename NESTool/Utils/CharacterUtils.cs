@@ -118,17 +118,20 @@ namespace NESTool.Utils
             string paletteId = model.PaletteIDs[tile.PaletteIndex];
 
             PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
-            if (paletteModel == null)
-            {
-                return;
-            }
 
             // read pixels in the 8x8 quadrant
             for (int y = 0; y < 8; ++y)
             {
                 for (int x = 0; x < 8; ++x)
                 {
-                    Color color = bitmap.GetPixel(x, y);
+					if (paletteModel == null)
+					{
+						bitmap.SetPixel(x, y, Color.FromRgb(0, 0, 0));
+
+						continue;
+					}
+
+					Color color = bitmap.GetPixel(x, y);
                     color.A = 255;
 
                     if (!colors.TryGetValue(color, out Color newColor))
