@@ -16,6 +16,12 @@ namespace NESTool.Commands
 
             object[] values = (object[])parameter;
             CharacterModel model = (CharacterModel)values[0];
+
+			if (model == null)
+			{
+				return false;
+			}
+
             string tabID = (string)values[1];
 
             foreach (CharacterAnimation anim in model.Animations)
