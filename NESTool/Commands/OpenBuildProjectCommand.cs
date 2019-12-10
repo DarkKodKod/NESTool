@@ -15,6 +15,12 @@ namespace NESTool.Commands
 
             object[] values = (object[])parameter;
             Window window = (Window)values[0];
+
+			if (window == null)
+			{
+				return false;
+			}
+
             string projectName = (string)values[1];
 
             if (string.IsNullOrEmpty(projectName))
