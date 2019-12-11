@@ -15,13 +15,15 @@ namespace NESTool.ViewModels
 {
     public class TileSetViewModel : ItemViewModel
     {
+		private static readonly Color NullColor = Color.FromArgb(0, 255, 255, 255);
+
         private string _imagePath;
         private ImageSource _imgSource;
         private double _actualWidth;
         private double _actualHeight;
         private Visibility _gridVisibility = Visibility.Visible;
         private WriteableBitmap _croppedImage;
-        private Color _color = Color.FromArgb(0, 255, 255, 255);
+        private Color _color = NullColor;
         private bool _pixelsChanged = false;
         private Point _croppedPoint;
 
@@ -243,7 +245,7 @@ namespace NESTool.ViewModels
                 return;
             }
 
-            if (_color == Color.FromArgb(0, 255, 255, 255))
+            if (_color == NullColor)
             {
                 return;
             }
