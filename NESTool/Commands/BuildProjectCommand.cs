@@ -505,6 +505,8 @@ namespace NESTool.Commands
                     {
                         colors = new Dictionary<Color, int>();
 
+                        //colors.Add(Color.FromRgb(0, 0, 0), 0);
+
                         groupedPalettes.Add(group, colors);
                     }
 
@@ -516,8 +518,8 @@ namespace NESTool.Commands
                             Color color = bitmap.GetPixel(x, y);
                             color.A = 255;
 
-                            if (!Colors.Black.Equals(color))
-                            {
+                            //if (!Colors.Black.Equals(color))
+                            //{
                                 if (!colors.TryGetValue(color, out int value))
                                 {
                                     if (colors.Count < 4)
@@ -545,7 +547,7 @@ namespace NESTool.Commands
                                         bits[currentIndex + 64] = true;
                                         break;
                                 }
-                            }
+                            //}
 
                             currentIndex++;
                         }

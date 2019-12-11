@@ -55,13 +55,16 @@ namespace NESTool.Utils
 
                         bitmapCache.Add(tile.TileSetID, sourceBitmap);
 
-                        // Add the link object
-                        foreach (FileModelVO tileset in tileSets)
+                        if (sendSignals)
                         {
-                            if (tileset.Model.GUID == tile.TileSetID && sendSignals)
+                            // Add the link object
+                            foreach (FileModelVO tileset in tileSets)
                             {
-                                SignalManager.Get<AddNewTileSetLinkSignal>().Dispatch(new BankLinkVO() { Caption = tileset.Name, Id = tile.TileSetID });
-                                break;
+                                if (tileset.Model.GUID == tile.TileSetID)
+                                {
+                                    SignalManager.Get<AddNewTileSetLinkSignal>().Dispatch(new BankLinkVO() { Caption = tileset.Name, Id = tile.TileSetID });
+                                    break;
+                                }
                             }
                         }
                     }
