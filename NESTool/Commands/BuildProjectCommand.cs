@@ -58,15 +58,6 @@ namespace NESTool.Commands
             }
         }
 
-        private Color GetColorFromInt(int color)
-        {
-            byte R = (byte)(color >> 16);
-            byte G = (byte)(color >> 8);
-            byte B = (byte)color;
-
-            return Color.FromRgb(R, G, B);
-        }
-
         private void BuildPalettes()
         {
             ProjectModel projectModel = ModelManager.Get<ProjectModel>();
@@ -86,10 +77,10 @@ namespace NESTool.Commands
                     PaletteModel model = ProjectFiles.GetModel<PaletteModel>(id);
                     if (model != null)
                     {
-                        Color color0 = GetColorFromInt(model.Color0);
-                        Color color1 = GetColorFromInt(model.Color1);
-                        Color color2 = GetColorFromInt(model.Color2);
-                        Color color3 = GetColorFromInt(model.Color3);
+                        Color color0 = Util.GetColorFromInt(model.Color0);
+                        Color color1 = Util.GetColorFromInt(model.Color1);
+                        Color color2 = Util.GetColorFromInt(model.Color2);
+                        Color color3 = Util.GetColorFromInt(model.Color3);
 
                         outputFile.Write($"    .byte ");
                         outputFile.Write($"${Util.ColorToColorHex(color0)},");
@@ -119,10 +110,10 @@ namespace NESTool.Commands
                     PaletteModel model = ProjectFiles.GetModel<PaletteModel>(id);
                     if (model != null)
                     {
-                        Color color0 = GetColorFromInt(model.Color0);
-                        Color color1 = GetColorFromInt(model.Color1);
-                        Color color2 = GetColorFromInt(model.Color2);
-                        Color color3 = GetColorFromInt(model.Color3);
+                        Color color0 = Util.GetColorFromInt(model.Color0);
+                        Color color1 = Util.GetColorFromInt(model.Color1);
+                        Color color2 = Util.GetColorFromInt(model.Color2);
+                        Color color3 = Util.GetColorFromInt(model.Color3);
 
                         outputFile.Write($"    .byte ");
                         outputFile.Write($"${Util.ColorToColorHex(color0)},");
@@ -492,7 +483,10 @@ namespace NESTool.Commands
             int currentY = 0;
             int matrixIndex = 0;
 
-            Dictionary<int, Dictionary<Color, int>> groupedPalettes = new Dictionary<int, Dictionary<Color, int>>();
+			ProjectModel project = ModelManager.Get<ProjectModel>();
+			Color transparentColor = Util.GetColorFromInt(project.TransparentColor);
+
+			Dictionary<int, Dictionary<Color, int>> groupedPalettes = new Dictionary<int, Dictionary<Color, int>>();
 
             // go throug the 16x16 tiles
             for (int j = 0; j < 16; ++j)
@@ -505,7 +499,7 @@ namespace NESTool.Commands
                     {
                         colors = new Dictionary<Color, int>();
 
-                        //colors.Add(Color.FromRgb(0, 0, 0), 0);
+                        colors.Add(transparentColor, 0);
 
                         groupedPalettes.Add(group, colors);
                     }
@@ -518,36 +512,33 @@ namespace NESTool.Commands
                             Color color = bitmap.GetPixel(x, y);
                             color.A = 255;
 
-                            //if (!Colors.Black.Equals(color))
-                            //{
-                                if (!colors.TryGetValue(color, out int value))
+                            if (!colors.TryGetValue(color, out int value))
+                            {
+                                if (colors.Count < 4)
                                 {
-                                    if (colors.Count < 4)
-                                    {
-                                        value = colors.Count;
+                                    value = colors.Count;
 
-                                        colors.Add(color, value);
-                                    }
-                                    else
-                                    {
-                                        value = -1;
-                                    }
+                                    colors.Add(color, value);
                                 }
-
-                                switch (value)
+                                else
                                 {
-                                    case 0:
-                                        bits[currentIndex] = true;
-                                        break;
-                                    case 1:
-                                        bits[currentIndex + 64] = true;
-                                        break;
-                                    case 2:
-                                        bits[currentIndex] = true;
-                                        bits[currentIndex + 64] = true;
-                                        break;
+                                    value = -1;
                                 }
-                            //}
+                            }
+
+                            switch (value)
+                            {
+                                case 0:
+                                    bits[currentIndex] = true;
+                                    break;
+                                case 1:
+                                    bits[currentIndex + 64] = true;
+                                    break;
+                                case 2:
+                                    bits[currentIndex] = true;
+                                    bits[currentIndex + 64] = true;
+                                    break;
+                            }
 
                             currentIndex++;
                         }

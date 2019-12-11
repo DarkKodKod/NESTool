@@ -102,14 +102,17 @@ namespace NESTool.Utils
 
         private static void PaintPixelsBasedOnPalettes(ref WriteableBitmap bitmap, CharacterTile tile, CharacterModel model, int group)
         {
-            Tuple<int, int> tuple = Tuple.Create(group, tile.PaletteIndex);
+			ProjectModel project = ModelManager.Get<ProjectModel>();
+			Color transparentColor = Util.GetColorFromInt(project.TransparentColor);
+
+			Tuple<int, int> tuple = Tuple.Create(group, tile.PaletteIndex);
 
             if (!CharacterViewModel.GroupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))
             {
                 colors = new Dictionary<Color, Color>
                 {
                     // always add the background by default
-                    { Color.FromRgb(0, 0, 0), Color.FromRgb(0, 0, 0) }
+                    { transparentColor, transparentColor }
                 };
 
                 CharacterViewModel.GroupedPalettes.Add(tuple, colors);
@@ -126,7 +129,7 @@ namespace NESTool.Utils
                 {
 					if (paletteModel == null)
 					{
-						bitmap.SetPixel(x, y, Color.FromRgb(0, 0, 0));
+						bitmap.SetPixel(x, y, transparentColor);
 
 						continue;
 					}
@@ -146,11 +149,7 @@ namespace NESTool.Utils
                             default: paletteColor = paletteModel.Color0; break;
                         }
 
-                        byte R = (byte)(paletteColor >> 16);
-                        byte G = (byte)(paletteColor >> 8);
-                        byte B = (byte)paletteColor;
-
-                        newColor = Color.FromRgb(R, G, B);
+                        newColor = Util.GetColorFromInt(paletteColor);
 
                         colors.Add(color, newColor);
                     }

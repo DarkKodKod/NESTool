@@ -97,6 +97,15 @@ namespace NESTool.Utils
             return "--";
         }
 
+		public static Color GetColorFromInt(int colorInt)
+		{
+			byte R = (byte)(colorInt >> 16);
+			byte G = (byte)(colorInt >> 8);
+			byte B = (byte)colorInt;
+
+			return Color.FromRgb(R, G, B);
+		}
+
         public static string GetFolderExtension(string folderName)
         {
             string folderBanks = (string)Application.Current.FindResource(_folderBanksKey);

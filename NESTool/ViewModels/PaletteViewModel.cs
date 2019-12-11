@@ -1,6 +1,7 @@
 ﻿using ArchitectureLibrary.Signals;
 using NESTool.Models;
 using NESTool.Signals;
+using NESTool.Utils;
 using System.Windows.Media;
 
 namespace NESTool.ViewModels
@@ -43,40 +44,13 @@ namespace NESTool.ViewModels
 		{
 			_doNotSavePalettes = true;
 
-			byte R;
-			byte G;
-			byte B;
-
 			// Load palettes
 			for (int i = 0; i < 4; ++i)
 			{
-				int color0 = GetModel().Color0;
-				R = (byte)(color0 >> 16);
-				G = (byte)(color0 >> 8);
-				B = (byte)color0;
-
-				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 0);
-
-				int color1 = GetModel().Color1;
-				R = (byte)(color1 >> 16);
-				G = (byte)(color1 >> 8);
-				B = (byte)color1;
-
-				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 1);
-
-				int color2 = GetModel().Color2;
-				R = (byte)(color2 >> 16);
-				G = (byte)(color2 >> 8);
-				B = (byte)color2;
-
-				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 2);
-
-				int color3 = GetModel().Color3;
-				R = (byte)(color3 >> 16);
-				G = (byte)(color3 >> 8);
-				B = (byte)color3;
-
-				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), i, 3);
+				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(GetModel().Color0), i, 0);
+				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(GetModel().Color1), i, 1);
+				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(GetModel().Color2), i, 2);
+				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(GetModel().Color3), i, 3);
 			}
 
 			_doNotSavePalettes = false;

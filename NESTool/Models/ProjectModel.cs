@@ -75,6 +75,7 @@ namespace NESTool.Models
         /// </summary>
         public bool RLECompression { get; set; } = false;
         public BuildConfig Build { get; set; } = new BuildConfig();
+		public int TransparentColor { get; set; } = 0;
 
         [TomlIgnore] public string ProjectFilePath { get; set; }
         [TomlIgnore] public string ProjectPath { get; set; }
@@ -93,6 +94,7 @@ namespace NESTool.Models
             ProjectPath = "";
             Name = "";
             RLECompression = false;
+			TransparentColor = 0;
             Header.Reset();
             Build.Reset(); ;
         }
@@ -107,6 +109,7 @@ namespace NESTool.Models
             Name = copy.Name;
             Version = copy.Version;
             RLECompression = copy.RLECompression;
+			TransparentColor = copy.TransparentColor;
 
             Build.OutputFilePath = copy.Build.OutputFilePath;
             Build.PatternTableSpriteId = copy.Build.PatternTableSpriteId;

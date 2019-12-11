@@ -7,6 +7,7 @@ using NESTool.Models;
 using NESTool.Signals;
 using NESTool.UserControls.ViewModels;
 using NESTool.UserControls.Views;
+using NESTool.Utils;
 using NESTool.VOs;
 using System;
 using System.Collections.Generic;
@@ -302,33 +303,10 @@ namespace NESTool.ViewModels
 
 		private void SetPalleteWithColors(PaletteModel paletteModel, int index)
 		{
-			byte R;
-			byte G;
-			byte B;
-
-			R = (byte)(paletteModel.Color0 >> 16);
-			G = (byte)(paletteModel.Color0 >> 8);
-			B = (byte)paletteModel.Color0;
-
-			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), index, 0);
-
-			R = (byte)(paletteModel.Color1 >> 16);
-			G = (byte)(paletteModel.Color1 >> 8);
-			B = (byte)paletteModel.Color1;
-
-			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), index, 1);
-
-			R = (byte)(paletteModel.Color2 >> 16);
-			G = (byte)(paletteModel.Color2 >> 8);
-			B = (byte)paletteModel.Color2;
-
-			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), index, 2);
-
-			R = (byte)(paletteModel.Color3 >> 16);
-			G = (byte)(paletteModel.Color3 >> 8);
-			B = (byte)paletteModel.Color3;
-
-			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(R, G, B), index, 3);
+			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(paletteModel.Color0), index, 0);
+			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(paletteModel.Color1), index, 1);
+			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(paletteModel.Color2), index, 2);
+			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(paletteModel.Color3), index, 3);
 		}
 
         private void OnColorPaletteControlSelected(Color color, int paletteIndex, int colorPosition)
@@ -375,12 +353,7 @@ namespace NESTool.ViewModels
 
             ProjectItem.FileHandler.Save();
 
-            // Convert previous color to type Color
-            byte R = (byte)(prevColorInt >> 16);
-            byte G = (byte)(prevColorInt >> 8);
-            byte B = (byte)prevColorInt;
-
-            Color prevColor = Color.FromRgb(R, G, B);
+            Color prevColor = Util.GetColorFromInt(prevColorInt);
 
             AdjustPaletteCache(paletteIndex, colorPosition, prevColor, color);
 
