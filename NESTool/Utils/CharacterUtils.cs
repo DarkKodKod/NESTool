@@ -102,61 +102,117 @@ namespace NESTool.Utils
 
         private static void PaintPixelsBasedOnPalettes(ref WriteableBitmap bitmap, CharacterTile tile, CharacterModel model, int group)
         {
-			ProjectModel project = ModelManager.Get<ProjectModel>();
-			Color transparentColor = Util.GetColorFromInt(project.TransparentColor);
-
-			Tuple<int, int> tuple = Tuple.Create(group, tile.PaletteIndex);
+            Tuple<int, int> tuple = Tuple.Create(group, tile.PaletteIndex);
 
             if (!CharacterViewModel.GroupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))
             {
-                colors = new Dictionary<Color, Color>
-                {
-                    // always add the background by default
-                    { transparentColor, transparentColor }
-                };
+                colors = FillColorCacheByGroup(tile, group, model.PaletteIDs[tile.PaletteIndex]);
 
                 CharacterViewModel.GroupedPalettes.Add(tuple, colors);
             }
-
-            string paletteId = model.PaletteIDs[tile.PaletteIndex];
-
-            PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
 
             // read pixels in the 8x8 quadrant
             for (int y = 0; y < 8; ++y)
             {
                 for (int x = 0; x < 8; ++x)
                 {
-					if (paletteModel == null)
-					{
-						bitmap.SetPixel(x, y, transparentColor);
-
-						continue;
-					}
-
 					Color color = bitmap.GetPixel(x, y);
                     color.A = 255;
 
                     if (!colors.TryGetValue(color, out Color newColor))
                     {
-                        int paletteColor;
-                        switch (colors.Count)
-                        {
-                            case 0: paletteColor = paletteModel.Color0; break;
-                            case 1: paletteColor = paletteModel.Color1; break;
-                            case 2: paletteColor = paletteModel.Color2; break;
-                            case 3: paletteColor = paletteModel.Color3; break;
-                            default: paletteColor = paletteModel.Color0; break;
-                        }
-
-                        newColor = Util.GetColorFromInt(paletteColor);
-
-                        colors.Add(color, newColor);
+                        newColor = Util.GetColorFromInt(ModelManager.Get<ProjectModel>().TransparentColor);
                     }
 
                     bitmap.SetPixel(x, y, newColor);
                 }
             }
+        }
+
+        private static Dictionary<Color, Color> FillColorCacheByGroup(CharacterTile characterTile, int group, string paletteId)
+        {
+            ProjectModel project = ModelManager.Get<ProjectModel>();
+            Color transparentColor = Util.GetColorFromInt(project.TransparentColor);
+
+            BankModel bank = ProjectFiles.GetModel<BankModel>(characterTile.BankID);
+
+            PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
+
+            Dictionary<Color, Color> colors = new Dictionary<Color, Color>() { { transparentColor, transparentColor } };
+
+            for (int i = 0; i < bank.PTTiles.Length; ++i)
+            {
+                PTTileModel tile = bank.PTTiles[i];
+
+                if (string.IsNullOrEmpty(tile.GUID))
+                {
+                    continue;
+                }
+
+                if (tile.Group == group)
+                {
+                    TileSetModel model = ProjectFiles.GetModel<TileSetModel>(tile.TileSetID);
+
+                    if (model == null)
+                    {
+                        continue;
+                    }
+
+                    bool exists = CharacterViewModel.FrameBitmapCache.TryGetValue(tile.TileSetID, out WriteableBitmap writeableBmp);
+
+                    if (!exists)
+                    {
+                        BitmapImage bmImage = new BitmapImage();
+
+                        string path = Path.Combine(project.ProjectPath, model.ImagePath);
+
+                        bmImage.BeginInit();
+                        bmImage.CacheOption = BitmapCacheOption.OnLoad;
+                        bmImage.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
+                        bmImage.EndInit();
+                        bmImage.Freeze();
+
+                        writeableBmp = BitmapFactory.ConvertToPbgra32Format(bmImage as BitmapSource);
+
+                        CharacterViewModel.FrameBitmapCache.Add(tile.TileSetID, writeableBmp);
+                    }
+
+                    using (writeableBmp.GetBitmapContext())
+                    {
+                        WriteableBitmap cropped = writeableBmp.Crop((int)tile.Point.X, (int)tile.Point.Y, 8, 8);
+
+                        for (int y = 0; y < 8; ++y)
+                        {
+                            for (int x = 0; x < 8; ++x)
+                            {
+                                Color color = cropped.GetPixel(x, y);
+                                color.A = 255;
+
+                                if (!colors.TryGetValue(color, out Color newColor))
+                                {
+                                    if (paletteModel == null)
+                                    {
+                                        newColor = transparentColor;
+                                    }
+                                    else
+                                    {
+                                        switch (colors.Count)
+                                        {
+                                            case 1: newColor = Util.GetColorFromInt(paletteModel.Color1); break;
+                                            case 2: newColor = Util.GetColorFromInt(paletteModel.Color2); break;
+                                            case 3: newColor = Util.GetColorFromInt(paletteModel.Color3); break;
+                                        }
+                                    }
+
+                                    colors.Add(color, newColor);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return colors;
         }
     }
 }

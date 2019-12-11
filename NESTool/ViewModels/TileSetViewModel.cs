@@ -264,7 +264,25 @@ namespace NESTool.ViewModels
                 return;
             }
 
+            //ProjectModel project = ModelManager.Get<ProjectModel>();
+            //Color transparentColor = Util.GetColorFromInt(project.TransparentColor);
+
             CroppedPoint = point;
+
+            /*for (int y = 0; y < 8; ++y)
+            {
+                for (int x = 0; x < 8; ++x)
+                {
+                    Color color = bitmap.GetPixel(x, y);
+
+                    if (color == transparentColor)
+                    {
+                        color.A = 0;
+                        bitmap.SetPixel(x, y, color);
+                    }
+                }
+            }*/
+
             CroppedImage = bitmap;
         }
 

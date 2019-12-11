@@ -497,9 +497,10 @@ namespace NESTool.Commands
 
                     if (!groupedPalettes.TryGetValue(group, out Dictionary<Color, int> colors))
                     {
-                        colors = new Dictionary<Color, int>();
-
-                        colors.Add(transparentColor, 0);
+                        colors = new Dictionary<Color, int>
+                        {
+                            { transparentColor, 0 }
+                        };
 
                         groupedPalettes.Add(group, colors);
                     }
@@ -512,32 +513,35 @@ namespace NESTool.Commands
                             Color color = bitmap.GetPixel(x, y);
                             color.A = 255;
 
-                            if (!colors.TryGetValue(color, out int value))
+                            if (!transparentColor.Equals(color))
                             {
-                                if (colors.Count < 4)
+                                if (!colors.TryGetValue(color, out int value))
                                 {
-                                    value = colors.Count;
+                                    if (colors.Count < 4)
+                                    {
+                                        value = colors.Count;
 
-                                    colors.Add(color, value);
+                                        colors.Add(color, value);
+                                    }
+                                    else
+                                    {
+                                        value = -1;
+                                    }
                                 }
-                                else
+
+                                switch (value)
                                 {
-                                    value = -1;
+                                    case 1:
+                                        bits[currentIndex] = true;
+                                        break;
+                                    case 2:
+                                        bits[currentIndex + 64] = true;
+                                        break;
+                                    case 3:
+                                        bits[currentIndex] = true;
+                                        bits[currentIndex + 64] = true;
+                                        break;
                                 }
-                            }
-
-                            switch (value)
-                            {
-                                case 0:
-                                    bits[currentIndex] = true;
-                                    break;
-                                case 1:
-                                    bits[currentIndex + 64] = true;
-                                    break;
-                                case 2:
-                                    bits[currentIndex] = true;
-                                    bits[currentIndex + 64] = true;
-                                    break;
                             }
 
                             currentIndex++;
