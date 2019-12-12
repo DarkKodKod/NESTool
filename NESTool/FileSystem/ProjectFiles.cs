@@ -14,14 +14,14 @@ namespace NESTool.FileSystem
 
             int index = 0;
 
-            foreach (KeyValuePair<string, FileHandler> handler in Handlers)
+            foreach (KeyValuePair<string, FileHandler> pair in Handlers)
             {
-                if (handler.Value.FileModel is T model)
+                if (pair.Value.FileModel is T model)
                 {
                     models.Add(new FileModelVO()
                     {
                         Index = index++,
-                        Name = handler.Value.Name,
+                        Name = pair.Value.Name,
                         Model = model
                     });
                 }
@@ -30,22 +30,39 @@ namespace NESTool.FileSystem
             return models;
         }
 
-        public static FileModelVO GetFileHandler(string guid)
+		public static void SaveModel<T>(string guid, T model) where T : AFileModel
+		{
+			if (string.IsNullOrEmpty(guid))
+			{
+				return;
+			}
+
+			foreach (KeyValuePair<string, FileHandler> pair in Handlers)
+			{
+				if (pair.Key == guid)
+				{
+					pair.Value.FileModel = model;
+					pair.Value.Save();
+				}
+			}
+		}
+
+		public static FileModelVO GetFileModel(string guid)
         {
             if (string.IsNullOrEmpty(guid))
             {
                 return null;
             }
 
-            foreach (KeyValuePair<string, FileHandler> handler in Handlers)
+            foreach (KeyValuePair<string, FileHandler> pair in Handlers)
             {
-                if (handler.Key == guid)
+                if (pair.Key == guid)
                 {
                     return new FileModelVO()
                     {
                         Index = 0,
-                        Name = handler.Value.Name,
-                        Model = handler.Value.FileModel
+                        Name = pair.Value.Name,
+                        Model = pair.Value.FileModel
                     };
                 }
             }
@@ -60,10 +77,10 @@ namespace NESTool.FileSystem
                 return null;
             }
 
-            foreach (KeyValuePair<string, FileHandler> handler in Handlers)
+            foreach (KeyValuePair<string, FileHandler> pair in Handlers)
             {
-                if (handler.Key == guid &&
-                    handler.Value.FileModel is T model)
+                if (pair.Key == guid &&
+					pair.Value.FileModel is T model)
                 {
                     return model;
                 }

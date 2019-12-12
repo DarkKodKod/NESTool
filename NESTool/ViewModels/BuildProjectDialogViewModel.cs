@@ -256,7 +256,7 @@ namespace NESTool.ViewModels
 					continue;
 				}
 
-				FileModelVO handler = ProjectFiles.GetFileHandler(id);
+				FileModelVO handler = ProjectFiles.GetFileModel(id);
 
 				if (handler == null)
 				{

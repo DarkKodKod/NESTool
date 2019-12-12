@@ -349,9 +349,9 @@ namespace NESTool.ViewModels
 						paletteModel.Color3 = colorInt;
 						break;
 				}
-			}
 
-            ProjectItem.FileHandler.Save();
+				ProjectFiles.SaveModel(paletteId, paletteModel);
+			}
 
             Color prevColor = Util.GetColorFromInt(prevColorInt);
 
@@ -385,7 +385,9 @@ namespace NESTool.ViewModels
 
         private void OnUpdateCharacterImage()
         {
-            foreach (ActionTabItem tab in Tabs)
+			GroupedPalettes = new Dictionary<Tuple<int, int>, Dictionary<Color, Color>>();
+
+			foreach (ActionTabItem tab in Tabs)
             {
                 if (tab.FramesView is CharacterAnimationView frameView)
                 {
