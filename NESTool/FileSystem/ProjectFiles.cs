@@ -43,6 +43,8 @@ namespace NESTool.FileSystem
 				{
 					pair.Value.FileModel = model;
 					pair.Value.Save();
+
+					break;
 				}
 			}
 		}

@@ -272,6 +272,8 @@ namespace NESTool.Commands
 
         private void WriteMetaSprites(StreamWriter outputFile, CharacterModel model, string name)
         {
+			ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+
             List<string> animationIndices = new List<string>();
 
             foreach (CharacterAnimation animation in model.Animations)
@@ -324,7 +326,32 @@ namespace NESTool.Commands
                         BankModel bank = ProjectFiles.GetModel<BankModel>(charTile.BankID);
                         byte tile = (byte)bank.GetTileIndex(charTile.BankTileID);
 
-                        byte attrs = (byte)charTile.PaletteIndex;
+						int paletteIndex = 0;
+
+						string paletteId = model.PaletteIDs[charTile.PaletteIndex];
+
+						if (!string.IsNullOrEmpty(paletteId))
+						{
+							PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
+
+							// Does exist this palette?
+							if (paletteModel != null)
+							{
+								// Check against the palettes defined for the sprites
+								for (int k = 0; k < projectModel.Build.SpritePalettes.Length; ++k)
+								{
+									string id = projectModel.Build.SpritePalettes[k];
+
+									if (paletteModel.GUID == id)
+									{
+										paletteIndex = k;
+										break;
+									}
+								}
+							}
+						}
+
+						byte attrs = (byte)paletteIndex;
                         attrs |= charTile.FrontBackground ? (byte)0 : (byte)32;
                         attrs |= charTile.FlipX ? (byte)64 : (byte)0;
                         attrs |= charTile.FlipY ? (byte)128 : (byte)0;
