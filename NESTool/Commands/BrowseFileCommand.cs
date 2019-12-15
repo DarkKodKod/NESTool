@@ -25,6 +25,8 @@ namespace NESTool.Commands
                 path = Path.GetDirectoryName(path);
             }
 
+            path = Path.GetFullPath(path);
+
             CommonOpenFileDialog dialog = new CommonOpenFileDialog
             {
                 Title = "Select File",
