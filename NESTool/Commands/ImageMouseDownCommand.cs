@@ -30,7 +30,10 @@ namespace NESTool.Commands
                 return;
             }
 
-            WriteableBitmap writeableBmp = BitmapFactory.New((int)Math.Ceiling(image.ActualWidth), (int)Math.Ceiling(image.ActualHeight));
+            int imageWidth = (int)Math.Ceiling(image.ActualWidth);
+            int imageHeight = (int)Math.Ceiling(image.ActualHeight);
+
+            WriteableBitmap writeableBmp = BitmapFactory.New(imageWidth, imageHeight);
 
             using (writeableBmp.GetBitmapContext())
             {
