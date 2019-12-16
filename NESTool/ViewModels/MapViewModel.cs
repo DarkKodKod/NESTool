@@ -469,11 +469,11 @@ namespace NESTool.ViewModels
                 return;
             }
 
-            string paletteId = GetModel().PaletteIDs[paletteIndex];
-
             int colorInt = ((color.R & 0xff) << 16) | ((color.G & 0xff) << 8) | (color.B & 0xff);
 
             int prevColorInt = 0;
+
+            string paletteId = GetModel().PaletteIDs[paletteIndex];
 
             PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
             if (paletteModel != null)
@@ -497,6 +497,8 @@ namespace NESTool.ViewModels
                         paletteModel.Color3 = colorInt;
                         break;
                 }
+
+                ProjectFiles.SaveModel(paletteId, paletteModel);
             }
 
             ProjectItem.FileHandler.Save();

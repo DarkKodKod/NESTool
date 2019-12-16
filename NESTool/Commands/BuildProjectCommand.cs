@@ -171,6 +171,11 @@ namespace NESTool.Commands
                     // iterate horizontally
                     for (int i = 0; i < 16; ++i)
                     {
+                        if (model.AttributeTable[i + (j * 16)].MapTile == null)
+                        {
+                            continue;
+                        }
+
                         WriteMapTile(outputFile, model.AttributeTable[i + (j * 16)].MapTile[0 + (k * 2)]);
                         outputFile.Write(",");
                         WriteMapTile(outputFile, model.AttributeTable[i + (j * 16)].MapTile[1 + (k * 2)]);
@@ -510,10 +515,10 @@ namespace NESTool.Commands
             int currentY = 0;
             int matrixIndex = 0;
 
-			ProjectModel project = ModelManager.Get<ProjectModel>();
-			Color transparentColor = Util.GetColorFromInt(project.TransparentColor);
+            int transparent = 0;
+            Color transparentColor = Util.GetColorFromInt(transparent);
 
-			Dictionary<int, Dictionary<Color, int>> groupedPalettes = new Dictionary<int, Dictionary<Color, int>>();
+            Dictionary<int, Dictionary<Color, int>> groupedPalettes = new Dictionary<int, Dictionary<Color, int>>();
 
             // go throug the 16x16 tiles
             for (int j = 0; j < 16; ++j)

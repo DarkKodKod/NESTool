@@ -12,6 +12,8 @@ namespace NESTool.Utils
 {
     public static class MapUtils
     {
+        private static readonly int NullColor = 0;
+
         public static void CreateImage(MapModel mapModel, ref WriteableBitmap mapBitmap, bool update)
         {
             if (!update)
@@ -103,25 +105,26 @@ namespace NESTool.Utils
 
         private static void PaintPixelsBasedOnPalettes(ref WriteableBitmap bitmap, AttributeTable attributeTable, MapModel model, int group)
         {
-            Tuple<int, int> tuple = Tuple.Create(group, attributeTable.PaletteIndex);
+			Color nullColor = Util.GetColorFromInt(NullColor);
 
-			ProjectModel project = ModelManager.Get<ProjectModel>();
-			Color transparentColor = Util.GetColorFromInt(project.TransparentColor);
+            string paletteId = model.PaletteIDs[attributeTable.PaletteIndex];
+
+            PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
+
+            Color firstColor = paletteModel == null ? nullColor : Util.GetColorFromInt(paletteModel.Color0);
+
+            Tuple<int, int> tuple = Tuple.Create(group, attributeTable.PaletteIndex);
 
             if (!MapViewModel.GroupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))
             {
                 colors = new Dictionary<Color, Color>
                 {
-                    // always add the background by default
-                    { transparentColor, transparentColor }
+                    // always add the first color of the palette as the background color
+                    { nullColor, firstColor }
                 };
 
                 MapViewModel.GroupedPalettes.Add(tuple, colors);
             }
-
-            string paletteId = model.PaletteIDs[attributeTable.PaletteIndex];
-
-            PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
 
             // read pixels in the 8x8 quadrant
             for (int y = 0; y < 8; ++y)
@@ -130,7 +133,7 @@ namespace NESTool.Utils
                 {
                     if (paletteModel == null)
                     {
-                        bitmap.SetPixel(x, y, transparentColor);
+                        bitmap.SetPixel(x, y, nullColor);
 
                         continue;
                     }

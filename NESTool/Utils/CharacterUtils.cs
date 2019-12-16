@@ -12,6 +12,8 @@ namespace NESTool.Utils
 {
     public static class CharacterUtils
     {
+        private static readonly int NullColor = 0;
+
         public static WriteableBitmap CreateImage(CharacterModel characterModel, int animationIndex, int frameIndex)
         {
             if (characterModel.Animations[animationIndex].Frames == null)
@@ -121,7 +123,7 @@ namespace NESTool.Utils
 
                     if (!colors.TryGetValue(color, out Color newColor))
                     {
-                        newColor = Util.GetColorFromInt(ModelManager.Get<ProjectModel>().TransparentColor);
+                        newColor = Util.GetColorFromInt(NullColor);
                     }
 
                     bitmap.SetPixel(x, y, newColor);
@@ -132,13 +134,14 @@ namespace NESTool.Utils
         private static Dictionary<Color, Color> FillColorCacheByGroup(CharacterTile characterTile, int group, string paletteId)
         {
             ProjectModel project = ModelManager.Get<ProjectModel>();
-            Color transparentColor = Util.GetColorFromInt(project.TransparentColor);
+
+            Color nullColor = Util.GetColorFromInt(NullColor);
 
             BankModel bank = ProjectFiles.GetModel<BankModel>(characterTile.BankID);
 
             PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
 
-            Dictionary<Color, Color> colors = new Dictionary<Color, Color>() { { transparentColor, transparentColor } };
+            Dictionary<Color, Color> colors = new Dictionary<Color, Color>() { { nullColor, nullColor } };
 
             for (int i = 0; i < bank.PTTiles.Length; ++i)
             {
@@ -192,7 +195,7 @@ namespace NESTool.Utils
                                 {
                                     if (paletteModel == null)
                                     {
-                                        newColor = transparentColor;
+                                        newColor = nullColor;
                                     }
                                     else
                                     {
