@@ -39,7 +39,6 @@ namespace NESTool.Models
             public string OutputFilePath { get; set; }
             public string PatternTableSpriteId { get; set; }
             public string PatternTableBackgroundId { get; set; }
-			public string[] BackgroundPalettes { get; set; }
 			public string[] SpritePalettes { get; set; }
 
 			public BuildConfig()
@@ -52,13 +51,7 @@ namespace NESTool.Models
                 OutputFilePath = "";
                 PatternTableSpriteId = "";
                 PatternTableBackgroundId = "";
-                BackgroundPalettes = new string[MAX_PALETTE];
                 SpritePalettes = new string[MAX_PALETTE];
-
-				for (int i = 0; i < BackgroundPalettes.Length; i++)
-				{
-					BackgroundPalettes[i] = string.Empty;
-				}
 
 				for (int i = 0; i < SpritePalettes.Length; i++)
 				{
@@ -111,15 +104,12 @@ namespace NESTool.Models
             Build.OutputFilePath = copy.Build.OutputFilePath;
             Build.PatternTableSpriteId = copy.Build.PatternTableSpriteId;
             Build.PatternTableBackgroundId = copy.Build.PatternTableBackgroundId;
-            
-            var array1 = copy.Build.BackgroundPalettes;
-            var array2 = copy.Build.SpritePalettes;
 
-            Array.Resize(ref array1, 4);
-            Array.Resize(ref array2, 4);
+            string[] array = copy.Build.SpritePalettes;
 
-            Build.BackgroundPalettes = array1;
-            Build.SpritePalettes = array2;
+            Array.Resize(ref array, 4);
+
+            Build.SpritePalettes = array;
 
             Header.INesMapper = copy.Header.INesMapper;
             Header.CHRSize = copy.Header.CHRSize;

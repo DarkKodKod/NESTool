@@ -1,6 +1,5 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
-using NESTool.Enums;
 using NESTool.Models;
 using NESTool.Signals;
 
@@ -35,9 +34,8 @@ namespace NESTool.Commands
             object[] values = (object[])parameter;
 
             ElementPaletteModel palette = (ElementPaletteModel)values[0];
-            PatternTableType patternTableType = (PatternTableType)values[1];
 
-            SignalManager.Get<MovePaletteUpSignal>().Dispatch(palette, patternTableType);
+            SignalManager.Get<MovePaletteUpSignal>().Dispatch(palette);
         }
     }
 }

@@ -7,6 +7,7 @@ using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.VOs;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -22,10 +23,8 @@ namespace NESTool.ViewModels
         private int _selectedPatternTableBackground;
 		private ElementPaletteModel _selectedPalette;
 		private ElementPaletteModel _selectedSpritePalette;
-		private ElementPaletteModel _selectedBackgroundPalette;
 
 		public List<ElementPaletteModel> ElementPalettes { get; set; } = new List<ElementPaletteModel>();
-		public ObservableCollection<ElementPaletteModel> ElementBackgroundPalettes { get; set; } = new ObservableCollection<ElementPaletteModel>(new List<ElementPaletteModel>(4));
 		public ObservableCollection<ElementPaletteModel> ElementSpritePalettes { get; set; } = new ObservableCollection<ElementPaletteModel>(new List<ElementPaletteModel>(4));
 
 		#region Commands
@@ -46,16 +45,6 @@ namespace NESTool.ViewModels
 			{
 				_selectedPalette = value;
 				OnPropertyChanged("SelectedPalette");
-			}
-		}
-
-		public ElementPaletteModel SelectedBackgroundPalette
-		{
-			get { return _selectedBackgroundPalette; }
-			set
-			{
-				_selectedBackgroundPalette = value;
-				OnPropertyChanged("SelectedBackgroundPalette");
 			}
 		}
 
@@ -218,24 +207,13 @@ namespace NESTool.ViewModels
 			ProjectModel project = ModelManager.Get<ProjectModel>();
 
             List<string> output = new List<string>();
-            bool changed = false;
-
-			if (FillPaletteList(project.Build.BackgroundPalettes, ElementBackgroundPalettes, ref output))
-			{
-				project.Build.BackgroundPalettes = output.ToArray();
-                changed = true;
-            }
 
 			if (FillPaletteList(project.Build.SpritePalettes, ElementSpritePalettes, ref output))
 			{
 				project.Build.SpritePalettes = output.ToArray();
-                changed = true;
-            }
 
-            if (changed)
-            {
-                project.Save();
-            }
+				project.Save();
+			}
         }
 
 		private bool FillPaletteList(string[] originList, ObservableCollection<ElementPaletteModel> destination, ref List<string> output)
@@ -393,211 +371,123 @@ namespace NESTool.ViewModels
             return elementPalettes;
         }
 
-        private void OnMovePaletteDown(ElementPaletteModel palette, PatternTableType type)
+        private void OnMovePaletteDown(ElementPaletteModel palette)
         {
             ProjectModel project = ModelManager.Get<ProjectModel>();
 
-            if (type == PatternTableType.Background)
+            ObservableCollection<ElementPaletteModel> list = MoveDownPalette(palette, ElementSpritePalettes);
+
+            if (list != null)
             {
-                ObservableCollection<ElementPaletteModel> list = MoveDownPalette(palette, ElementBackgroundPalettes);
+                ElementSpritePalettes = list;
 
-                if (list != null)
+                List<string> idList = new List<string>();
+                foreach (ElementPaletteModel item in list)
                 {
-                    ElementBackgroundPalettes = list;
-
-                    List<string> idList = new List<string>();
-                    foreach (ElementPaletteModel item in list)
-                    {
-                        idList.Add(item.Model.GUID);
-                    }
-
-                    project.Build.BackgroundPalettes = idList.ToArray();
-                    project.Save();
+                    idList.Add(item.Model.GUID);
                 }
-            }
-            else if (type == PatternTableType.Characters)
-            {
-                ObservableCollection<ElementPaletteModel> list = MoveDownPalette(palette, ElementSpritePalettes);
 
-                if (list != null)
-                {
-                    ElementSpritePalettes = list;
-
-                    List<string> idList = new List<string>();
-                    foreach (ElementPaletteModel item in list)
-                    {
-                        idList.Add(item.Model.GUID);
-                    }
-
-                    project.Build.SpritePalettes = idList.ToArray();
-                    project.Save();
-                }
+                project.Build.SpritePalettes = idList.ToArray();
+                project.Save();
             }
         }
 
-        private void OnMovePaletteUp(ElementPaletteModel palette, PatternTableType type)
+        private void OnMovePaletteUp(ElementPaletteModel palette)
         {
             ProjectModel project = ModelManager.Get<ProjectModel>();
             
-            if (type == PatternTableType.Background)
+            ObservableCollection<ElementPaletteModel> list = MoveUpPalette(palette, ElementSpritePalettes);
+
+            if (list != null)
             {
-                ObservableCollection<ElementPaletteModel> list = MoveUpPalette(palette, ElementBackgroundPalettes);
+                ElementSpritePalettes = list;
 
-                if (list != null)
+                List<string> idList = new List<string>();
+                foreach (ElementPaletteModel item in list)
                 {
-                    ElementBackgroundPalettes = list;
-
-                    List<string> idList = new List<string>();
-                    foreach (ElementPaletteModel item in list)
-                    {
-                        idList.Add(item.Model.GUID);
-                    }
-
-                    project.Build.BackgroundPalettes = idList.ToArray();
-                    project.Save();
+                    idList.Add(item.Model.GUID);
                 }
-            }
-            else if (type == PatternTableType.Characters)
-            {
-                ObservableCollection<ElementPaletteModel> list = MoveUpPalette(palette, ElementSpritePalettes);
 
-                if (list != null)
-                {
-                    ElementSpritePalettes = list;
-
-                    List<string> idList = new List<string>();
-                    foreach (ElementPaletteModel item in list)
-                    {
-                        idList.Add(item.Model.GUID);
-                    }
-
-                    project.Build.SpritePalettes = idList.ToArray();
-                    project.Save();
-                }
+                project.Build.SpritePalettes = idList.ToArray();
+                project.Save();
             }
         }
 
-        private void OnDeletePaletteFromList(ElementPaletteModel palette, PatternTableType type)
+        private void OnDeletePaletteFromList(ElementPaletteModel palette)
         {
             ProjectModel project = ModelManager.Get<ProjectModel>();
 
-			if (type == PatternTableType.Background)
+            if (ElementSpritePalettes.Contains(palette))
             {
-				if (ElementBackgroundPalettes.Contains(palette))
-				{
-					ElementBackgroundPalettes.Remove(palette);
-                }
+                ElementSpritePalettes.Remove(palette);
+            }
 
-                List<string> list = project.Build.BackgroundPalettes.ToList();
+            List<string> list = project.Build.SpritePalettes.ToList();
 
-                foreach (string item in list)
-                {
-                    if (item == palette.Model.GUID)
-                    {
-                        list.Remove(item);
-                        list.Add(string.Empty);
-
-                        project.Build.BackgroundPalettes = list.ToArray();
-
-                        project.Save();
-
-                        break;
-                    }
-                }
-
-			}
-            else if (type == PatternTableType.Characters)
+            foreach (string item in list)
             {
-                if (ElementSpritePalettes.Contains(palette))
+                if (item == palette.Model.GUID)
                 {
-                    ElementSpritePalettes.Remove(palette);
+                    list.Remove(item);
+                    list.Add(string.Empty);
+
+                    project.Build.SpritePalettes = list.ToArray();
+
+                    project.Save();
+
+                    break;
                 }
-
-                List<string> list = project.Build.SpritePalettes.ToList();
-
-                foreach (string item in list)
-                {
-                    if (item == palette.Model.GUID)
-                    {
-                        list.Remove(item);
-                        list.Add(string.Empty);
-
-                        project.Build.SpritePalettes = list.ToArray();
-
-                        project.Save();
-
-                        break;
-                    }
-				}
 			}
         }
 
-        private void AddPaletteToList(int index, ElementPaletteModel palette, PatternTableType type)
+        private void AddPaletteToList(int index, ElementPaletteModel palette)
         {
             ProjectModel project = ModelManager.Get<ProjectModel>();
 
-            if (type == PatternTableType.Background)
+            if (project.Build.SpritePalettes.Length < 4)
             {
-                project.Build.BackgroundPalettes[index] = palette.Model.GUID;
+                string[] tmp = project.Build.SpritePalettes;
 
-                ElementBackgroundPalettes.Add(new ElementPaletteModel()
-                {
-                    Name = palette.Name,
-                    Model = palette.Model
-                });
+                Array.Resize(ref tmp, 4);
+
+                project.Build.SpritePalettes = tmp;
             }
-            else if (type == PatternTableType.Characters)
+
+            project.Build.SpritePalettes[index] = palette.Model.GUID;
+
+            ElementSpritePalettes.Add(new ElementPaletteModel()
             {
-                project.Build.SpritePalettes[index] = palette.Model.GUID;
-
-                ElementSpritePalettes.Add(new ElementPaletteModel()
-                {
-                    Name = palette.Name,
-                    Model = palette.Model
-                });
-            }
+                Name = palette.Name,
+                Model = palette.Model
+            });
 
             project.Save();
         }
 
-        private void OnAddPaletteToList(ElementPaletteModel palette, PatternTableType type)
+        private void OnAddPaletteToList(ElementPaletteModel palette)
         {
+            if (ElementSpritePalettes.Count >= 4)
+            {
+                return;
+            }
+
             ProjectModel project = ModelManager.Get<ProjectModel>();
 
             int index = 0;
 
-            if (type == PatternTableType.Background)
+            foreach (string item in project.Build.SpritePalettes)
             {
-                foreach (string item in project.Build.BackgroundPalettes)
+                if (string.IsNullOrEmpty(item))
                 {
-                    if (string.IsNullOrEmpty(item))
-                    {
-                        AddPaletteToList(index, palette, type);
+                    AddPaletteToList(index, palette);
 
-                        return;
-                    }
-
-                    index++;
+                    return;
                 }
 
-                AddPaletteToList(index, palette, type);
+                index++;
             }
-            else if (type == PatternTableType.Characters)
-            {
-                foreach (string item in project.Build.SpritePalettes)
-                {
-                    if (string.IsNullOrEmpty(item))
-                    {
-                        AddPaletteToList(index, palette, type);
 
-                        return;
-                    }
-
-                    index++;
-                }
-
-                AddPaletteToList(index, palette, type);
-            }
+            AddPaletteToList(index, palette);
         }
 
         private void BrowseFolderSuccess(string folderPath)

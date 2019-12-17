@@ -89,8 +89,8 @@ namespace NESTool.Signals
     public class MapEraseToolSignal : Signal { }
 
     // Build Project Dialog
-    public class AddPaletteToListSignal : Signal<ElementPaletteModel, PatternTableType>  { }
-    public class MovePaletteDownSignal : Signal<ElementPaletteModel, PatternTableType> { }
-    public class MovePaletteUpSignal : Signal<ElementPaletteModel, PatternTableType> { }
-    public class DeletePaletteFromListSignal : Signal<ElementPaletteModel, PatternTableType> { }
+    public class AddPaletteToListSignal : Signal<ElementPaletteModel>  { }
+    public class MovePaletteDownSignal : Signal<ElementPaletteModel> { }
+    public class MovePaletteUpSignal : Signal<ElementPaletteModel> { }
+    public class DeletePaletteFromListSignal : Signal<ElementPaletteModel> { }
 }

@@ -66,31 +66,43 @@ namespace NESTool.Commands
 
             using (StreamWriter outputFile = new StreamWriter(fullPath))
             {
+                List<FileModelVO> mapModelVOs = ProjectFiles.GetModels<MapModel>();
+
                 outputFile.WriteLine($"");
                 outputFile.WriteLine($"Palettes:");
                 outputFile.WriteLine($"    ; background palette data");
 
                 int count = 0;
 
-                foreach (string id in projectModel.Build.BackgroundPalettes)
+                foreach (FileModelVO vo in mapModelVOs)
                 {
-                    PaletteModel model = ProjectFiles.GetModel<PaletteModel>(id);
-                    if (model != null)
+                    MapModel mapModel = vo.Model as MapModel;
+
+                    for (int i = 0; i < mapModel.PaletteIDs.Length; i++)
                     {
-                        Color color0 = Util.GetColorFromInt(model.Color0);
-                        Color color1 = Util.GetColorFromInt(model.Color1);
-                        Color color2 = Util.GetColorFromInt(model.Color2);
-                        Color color3 = Util.GetColorFromInt(model.Color3);
+                        string paletteId = mapModel.PaletteIDs[i];
 
-                        outputFile.Write($"    .byte ");
-                        outputFile.Write($"${Util.ColorToColorHex(color0)},");
-                        outputFile.Write($"${Util.ColorToColorHex(color1)},");
-                        outputFile.Write($"${Util.ColorToColorHex(color2)},");
-                        outputFile.Write($"${Util.ColorToColorHex(color3)}");
-                        outputFile.Write("\n");
+                        if (!string.IsNullOrEmpty(paletteId))
+                        {
+                            PaletteModel model = ProjectFiles.GetModel<PaletteModel>(paletteId);
+                            if (model != null)
+                            {
+                                Color color0 = Util.GetColorFromInt(model.Color0);
+                                Color color1 = Util.GetColorFromInt(model.Color1);
+                                Color color2 = Util.GetColorFromInt(model.Color2);
+                                Color color3 = Util.GetColorFromInt(model.Color3);
 
-                        count++;
-                    }
+                                outputFile.Write($"    .byte ");
+                                outputFile.Write($"${Util.ColorToColorHex(color0)},");
+                                outputFile.Write($"${Util.ColorToColorHex(color1)},");
+                                outputFile.Write($"${Util.ColorToColorHex(color2)},");
+                                outputFile.Write($"${Util.ColorToColorHex(color3)}");
+                                outputFile.Write("\n");
+
+                                count++;
+                            }
+                        }
+                    } 
                 }
 
                 if (count < 4)
