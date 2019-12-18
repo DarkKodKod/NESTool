@@ -64,18 +64,54 @@ namespace NESTool.Commands
 
             string fullPath = Path.Combine(Path.GetFullPath(projectModel.Build.OutputFilePath), "palettes.s");
 
-            using (StreamWriter outputFile = new StreamWriter(fullPath))
+			Dictionary<string, string> palettesIdNames = new Dictionary<string, string>();
+
+			using (StreamWriter outputFile = new StreamWriter(fullPath))
             {
+				PrintPalettes(outputFile, ref palettesIdNames);
+
 				MapPalettes(projectModel, outputFile);
 				SpritePalettes(projectModel, outputFile);
             }
         }
 
+		private void PrintPalettes(StreamWriter outputFile, ref Dictionary<string, string> palettesIdNames)
+		{
+			List<FileModelVO> mapModelVOs = ProjectFiles.GetModels<PaletteModel>();
+
+			foreach (FileModelVO vo in mapModelVOs)
+			{
+				PaletteModel model = vo.Model as PaletteModel;
+
+				string name = vo.Name.Replace(' ', '_').ToLower();
+
+				outputFile.WriteLine($"");
+				outputFile.WriteLine($"palette_{name.ToLower()}:");
+
+				Color color0 = Util.GetColorFromInt(model.Color0);
+				Color color1 = Util.GetColorFromInt(model.Color1);
+				Color color2 = Util.GetColorFromInt(model.Color2);
+				Color color3 = Util.GetColorFromInt(model.Color3);
+
+				outputFile.Write($"    .byte ");
+				outputFile.Write($"${Util.ColorToColorHex(color0)},");
+				outputFile.Write($"${Util.ColorToColorHex(color1)},");
+				outputFile.Write($"${Util.ColorToColorHex(color2)},");
+				outputFile.Write($"${Util.ColorToColorHex(color3)}");
+				outputFile.Write("\n");
+
+				palettesIdNames.Add(model.GUID, name);
+			}
+		}
+
 		private void MapPalettes(ProjectModel projectModel, StreamWriter outputFile)
 		{
-			// TODO: Here, I have to print each palette separatelly with its name
+			// TODO: 
 			// then the map's palette will use the names instead of the raw bytes
 			// and if the is another map with the same configuration, I dont write it again.
+
+			outputFile.WriteLine($"");
+			outputFile.WriteLine($"; background palettes data");
 
 			List<FileModelVO> mapModelVOs = ProjectFiles.GetModels<MapModel>();
 
@@ -126,6 +162,8 @@ namespace NESTool.Commands
 
 		private void SpritePalettes(ProjectModel projectModel, StreamWriter outputFile)
 		{
+			outputFile.WriteLine($"");
+			outputFile.WriteLine($"; sprites palettes data");
 			outputFile.WriteLine($"");
 			outputFile.WriteLine($"palettes_sprites:");
 
