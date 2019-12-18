@@ -70,23 +70,27 @@ namespace NESTool.Commands
             {
 				PrintPalettes(outputFile, ref palettesIdNames);
 
-				MapPalettes(projectModel, outputFile);
-				SpritePalettes(projectModel, outputFile);
+				MapPalettes(outputFile, palettesIdNames);
+				SpritePalettes(projectModel, outputFile, palettesIdNames);
             }
         }
 
 		private void PrintPalettes(StreamWriter outputFile, ref Dictionary<string, string> palettesIdNames)
 		{
-			List<FileModelVO> mapModelVOs = ProjectFiles.GetModels<PaletteModel>();
+            outputFile.WriteLine("");
+            outputFile.WriteLine("palette_null:");
+            outputFile.WriteLine("    .byte $FF");
+
+            List <FileModelVO> mapModelVOs = ProjectFiles.GetModels<PaletteModel>();
 
 			foreach (FileModelVO vo in mapModelVOs)
 			{
 				PaletteModel model = vo.Model as PaletteModel;
 
-				string name = vo.Name.Replace(' ', '_').ToLower();
+				string name = "palette_"+vo.Name.Replace(' ', '_').ToLower();
 
-				outputFile.WriteLine($"");
-				outputFile.WriteLine($"palette_{name.ToLower()}:");
+				outputFile.WriteLine("");
+				outputFile.WriteLine($"{name}:");
 
 				Color color0 = Util.GetColorFromInt(model.Color0);
 				Color color1 = Util.GetColorFromInt(model.Color1);
@@ -104,11 +108,9 @@ namespace NESTool.Commands
 			}
 		}
 
-		private void MapPalettes(ProjectModel projectModel, StreamWriter outputFile)
+		private void MapPalettes(StreamWriter outputFile, Dictionary<string, string> palettesIdNames)
 		{
-			// TODO: 
-			// then the map's palette will use the names instead of the raw bytes
-			// and if the is another map with the same configuration, I dont write it again.
+			// TODO: if the is another map with the same configuration, I dont write it again.
 
 			outputFile.WriteLine($"");
 			outputFile.WriteLine($"; background palettes data");
@@ -132,35 +134,24 @@ namespace NESTool.Commands
 
 					if (!string.IsNullOrEmpty(paletteId))
 					{
-						PaletteModel model = ProjectFiles.GetModel<PaletteModel>(paletteId);
-						if (model != null)
-						{
-							Color color0 = Util.GetColorFromInt(model.Color0);
-							Color color1 = Util.GetColorFromInt(model.Color1);
-							Color color2 = Util.GetColorFromInt(model.Color2);
-							Color color3 = Util.GetColorFromInt(model.Color3);
+                        if (palettesIdNames.TryGetValue(paletteId, out string value))
+                        {
+                            outputFile.Write($"    .addr {value}\n");
 
-							outputFile.Write($"    .byte ");
-							outputFile.Write($"${Util.ColorToColorHex(color0)},");
-							outputFile.Write($"${Util.ColorToColorHex(color1)},");
-							outputFile.Write($"${Util.ColorToColorHex(color2)},");
-							outputFile.Write($"${Util.ColorToColorHex(color3)}");
-							outputFile.Write("\n");
-
-							count++;
-						}
+                            count++;
+                        }
 					}
 				}
 
-				// If for this map the number of palettes is less than 4, then $FF is printes as a mark for the end of the reading
+				// If for this map the number of palettes is less than 4, then $FF is printed as a mark for the end of the reading
 				if (count < 4)
 				{
-					outputFile.WriteLine($"    .byte $FF");
+					outputFile.WriteLine($"    .addr palette_null");
 				}
 			}
 		}
 
-		private void SpritePalettes(ProjectModel projectModel, StreamWriter outputFile)
+		private void SpritePalettes(ProjectModel projectModel, StreamWriter outputFile, Dictionary<string, string> palettesIdNames)
 		{
 			outputFile.WriteLine($"");
 			outputFile.WriteLine($"; sprites palettes data");
@@ -171,33 +162,20 @@ namespace NESTool.Commands
 
 			foreach (string id in projectModel.Build.SpritePalettes)
 			{
-				PaletteModel model = ProjectFiles.GetModel<PaletteModel>(id);
-				if (model != null)
-				{
-					Color color0 = Util.GetColorFromInt(model.Color0);
-					Color color1 = Util.GetColorFromInt(model.Color1);
-					Color color2 = Util.GetColorFromInt(model.Color2);
-					Color color3 = Util.GetColorFromInt(model.Color3);
+                if (palettesIdNames.TryGetValue(id, out string value))
+                {
+                    outputFile.Write($"    .addr {value}\n");
 
-					outputFile.Write($"    .byte ");
-					outputFile.Write($"${Util.ColorToColorHex(color0)},");
-					outputFile.Write($"${Util.ColorToColorHex(color1)},");
-					outputFile.Write($"${Util.ColorToColorHex(color2)},");
-					outputFile.Write($"${Util.ColorToColorHex(color3)}");
-					outputFile.Write("\n");
-
-					count++;
-				}
+                    count++;
+                }
 			}
 
-			if (count < 4)
-			{
-				for (int i = count; i < 4; i++)
-				{
-					outputFile.WriteLine($"    .byte $0F,$0F,$0F,$0F");
-				}
-			}
-		}
+            // If is less than 4, then $FF is printed as a mark for the end of the reading
+            if (count < 4)
+            {
+                outputFile.WriteLine($"    .addr palette_null");
+            }
+        }
 
         private void BuildBackgrounds()
         {
