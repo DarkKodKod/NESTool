@@ -66,87 +66,100 @@ namespace NESTool.Commands
 
             using (StreamWriter outputFile = new StreamWriter(fullPath))
             {
-                List<FileModelVO> mapModelVOs = ProjectFiles.GetModels<MapModel>();
-
-                outputFile.WriteLine($"");
-                outputFile.WriteLine($"Palettes:");
-                outputFile.WriteLine($"    ; background palette data");
-
-                int count = 0;
-
-                foreach (FileModelVO vo in mapModelVOs)
-                {
-                    MapModel mapModel = vo.Model as MapModel;
-
-                    for (int i = 0; i < mapModel.PaletteIDs.Length; i++)
-                    {
-                        string paletteId = mapModel.PaletteIDs[i];
-
-                        if (!string.IsNullOrEmpty(paletteId))
-                        {
-                            PaletteModel model = ProjectFiles.GetModel<PaletteModel>(paletteId);
-                            if (model != null)
-                            {
-                                Color color0 = Util.GetColorFromInt(model.Color0);
-                                Color color1 = Util.GetColorFromInt(model.Color1);
-                                Color color2 = Util.GetColorFromInt(model.Color2);
-                                Color color3 = Util.GetColorFromInt(model.Color3);
-
-                                outputFile.Write($"    .byte ");
-                                outputFile.Write($"${Util.ColorToColorHex(color0)},");
-                                outputFile.Write($"${Util.ColorToColorHex(color1)},");
-                                outputFile.Write($"${Util.ColorToColorHex(color2)},");
-                                outputFile.Write($"${Util.ColorToColorHex(color3)}");
-                                outputFile.Write("\n");
-
-                                count++;
-                            }
-                        }
-                    } 
-                }
-
-                if (count < 4)
-                {
-                    for (int i = count; i < 4; i++)
-                    {
-                        outputFile.WriteLine($"    .byte $0F,$0F,$0F,$0F");
-                    }
-                }
-
-                outputFile.WriteLine($"    ; sprite palette data");
-
-                count = 0;
-
-                foreach (string id in projectModel.Build.SpritePalettes)
-                {
-                    PaletteModel model = ProjectFiles.GetModel<PaletteModel>(id);
-                    if (model != null)
-                    {
-                        Color color0 = Util.GetColorFromInt(model.Color0);
-                        Color color1 = Util.GetColorFromInt(model.Color1);
-                        Color color2 = Util.GetColorFromInt(model.Color2);
-                        Color color3 = Util.GetColorFromInt(model.Color3);
-
-                        outputFile.Write($"    .byte ");
-                        outputFile.Write($"${Util.ColorToColorHex(color0)},");
-                        outputFile.Write($"${Util.ColorToColorHex(color1)},");
-                        outputFile.Write($"${Util.ColorToColorHex(color2)},");
-                        outputFile.Write($"${Util.ColorToColorHex(color3)}");
-                        outputFile.Write("\n");
-
-                        count++;
-                    }
-                }
-
-                if (count < 4)
-                {
-                    for (int i = count; i < 4; i++)
-                    {
-                        outputFile.WriteLine($"    .byte $0F,$0F,$0F,$0F");
-                    }
-                }
+				MapPalettes(projectModel, outputFile);
+				SpritePalettes(projectModel, outputFile);
             }
         }
+
+		private void MapPalettes(ProjectModel projectModel, StreamWriter outputFile)
+		{
+			// TODO: Here, I have to print each palette separatelly with its name
+			// then the map's palette will use the names instead of the raw bytes
+			// and if the is another map with the same configuration, I dont write it again.
+
+			List<FileModelVO> mapModelVOs = ProjectFiles.GetModels<MapModel>();
+
+			foreach (FileModelVO vo in mapModelVOs)
+			{
+				MapModel mapModel = vo.Model as MapModel;
+
+				string name = vo.Name.Replace(' ', '_');
+
+				outputFile.WriteLine($"");
+				outputFile.WriteLine($"palettes_map_{name.ToLower()}:");
+
+				int count = 0;
+
+				for (int i = 0; i < mapModel.PaletteIDs.Length; i++)
+				{
+					string paletteId = mapModel.PaletteIDs[i];
+
+					if (!string.IsNullOrEmpty(paletteId))
+					{
+						PaletteModel model = ProjectFiles.GetModel<PaletteModel>(paletteId);
+						if (model != null)
+						{
+							Color color0 = Util.GetColorFromInt(model.Color0);
+							Color color1 = Util.GetColorFromInt(model.Color1);
+							Color color2 = Util.GetColorFromInt(model.Color2);
+							Color color3 = Util.GetColorFromInt(model.Color3);
+
+							outputFile.Write($"    .byte ");
+							outputFile.Write($"${Util.ColorToColorHex(color0)},");
+							outputFile.Write($"${Util.ColorToColorHex(color1)},");
+							outputFile.Write($"${Util.ColorToColorHex(color2)},");
+							outputFile.Write($"${Util.ColorToColorHex(color3)}");
+							outputFile.Write("\n");
+
+							count++;
+						}
+					}
+				}
+
+				// If for this map the number of palettes is less than 4, then $FF is printes as a mark for the end of the reading
+				if (count < 4)
+				{
+					outputFile.WriteLine($"    .byte $FF");
+				}
+			}
+		}
+
+		private void SpritePalettes(ProjectModel projectModel, StreamWriter outputFile)
+		{
+			outputFile.WriteLine($"");
+			outputFile.WriteLine($"palettes_sprites:");
+
+			int count = 0;
+
+			foreach (string id in projectModel.Build.SpritePalettes)
+			{
+				PaletteModel model = ProjectFiles.GetModel<PaletteModel>(id);
+				if (model != null)
+				{
+					Color color0 = Util.GetColorFromInt(model.Color0);
+					Color color1 = Util.GetColorFromInt(model.Color1);
+					Color color2 = Util.GetColorFromInt(model.Color2);
+					Color color3 = Util.GetColorFromInt(model.Color3);
+
+					outputFile.Write($"    .byte ");
+					outputFile.Write($"${Util.ColorToColorHex(color0)},");
+					outputFile.Write($"${Util.ColorToColorHex(color1)},");
+					outputFile.Write($"${Util.ColorToColorHex(color2)},");
+					outputFile.Write($"${Util.ColorToColorHex(color3)}");
+					outputFile.Write("\n");
+
+					count++;
+				}
+			}
+
+			if (count < 4)
+			{
+				for (int i = count; i < 4; i++)
+				{
+					outputFile.WriteLine($"    .byte $0F,$0F,$0F,$0F");
+				}
+			}
+		}
 
         private void BuildBackgrounds()
         {
@@ -208,6 +221,12 @@ namespace NESTool.Commands
         private void WriteMapTile(StreamWriter outputFile, MapTile mapTile)
         {
             BankModel bank = ProjectFiles.GetModel<BankModel>(mapTile.BankID);
+
+			if (bank == null)
+			{
+				return;
+			}
+
             byte tile = (byte)bank.GetTileIndex(mapTile.BankTileID);
 
             outputFile.Write($"${tile.ToString("X2")}");
