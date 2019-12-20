@@ -293,30 +293,7 @@ namespace NESTool.Commands
                         BankModel bank = ProjectFiles.GetModel<BankModel>(charTile.BankID);
                         byte tile = (byte)bank.GetTileIndex(charTile.BankTileID);
 
-						int paletteIndex = 0;
-
-						string paletteId = model.PaletteIDs[charTile.PaletteIndex];
-
-						if (!string.IsNullOrEmpty(paletteId))
-						{
-							PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
-
-							// Does exist this palette?
-							if (paletteModel != null)
-							{
-								// Check against the palettes defined for the sprites
-								for (int k = 0; k < projectModel.Build.SpritePalettes.Length; ++k)
-								{
-									string id = projectModel.Build.SpritePalettes[k];
-
-									if (paletteModel.GUID == id)
-									{
-										paletteIndex = k;
-										break;
-									}
-								}
-							}
-						}
+						int paletteIndex = charTile.PaletteIndex;
 
 						byte attrs = (byte)paletteIndex;
                         attrs |= charTile.FrontBackground ? (byte)0 : (byte)32;

@@ -87,10 +87,4 @@ namespace NESTool.Signals
     public class MapPaintToolSignal : Signal { }
     public class MapSelectToolSignal : Signal { }
     public class MapEraseToolSignal : Signal { }
-
-    // Build Project Dialog
-    public class AddPaletteToListSignal : Signal<ElementPaletteModel>  { }
-    public class MovePaletteDownSignal : Signal<ElementPaletteModel> { }
-    public class MovePaletteUpSignal : Signal<ElementPaletteModel> { }
-    public class DeletePaletteFromListSignal : Signal<ElementPaletteModel> { }
 }

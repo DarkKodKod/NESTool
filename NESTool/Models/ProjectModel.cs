@@ -3,15 +3,12 @@ using ArchitectureLibrary.Signals;
 using NESTool.Enums;
 using NESTool.Signals;
 using Nett;
-using System;
 using System.Windows;
 
 namespace NESTool.Models
 {
     public class ProjectModel : ISingletonModel
     {
-		private const int MAX_PALETTE = 4;
-
         public class INESHeader
         {
             public int INesMapper { get; set; }
@@ -39,7 +36,6 @@ namespace NESTool.Models
             public string OutputFilePath { get; set; }
             public string PatternTableSpriteId { get; set; }
             public string PatternTableBackgroundId { get; set; }
-			public string[] SpritePalettes { get; set; }
 
 			public BuildConfig()
 			{
@@ -51,12 +47,6 @@ namespace NESTool.Models
                 OutputFilePath = "";
                 PatternTableSpriteId = "";
                 PatternTableBackgroundId = "";
-                SpritePalettes = new string[MAX_PALETTE];
-
-				for (int i = 0; i < SpritePalettes.Length; i++)
-				{
-					SpritePalettes[i] = string.Empty;
-				}
 			}
         }
 
@@ -104,12 +94,6 @@ namespace NESTool.Models
             Build.OutputFilePath = copy.Build.OutputFilePath;
             Build.PatternTableSpriteId = copy.Build.PatternTableSpriteId;
             Build.PatternTableBackgroundId = copy.Build.PatternTableBackgroundId;
-
-            string[] array = copy.Build.SpritePalettes;
-
-            Array.Resize(ref array, 4);
-
-            Build.SpritePalettes = array;
 
             Header.INesMapper = copy.Header.INesMapper;
             Header.CHRSize = copy.Header.CHRSize;

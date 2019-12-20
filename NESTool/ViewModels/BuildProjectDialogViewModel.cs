@@ -7,9 +7,7 @@ using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.VOs;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace NESTool.ViewModels
@@ -21,43 +19,14 @@ namespace NESTool.ViewModels
         private FileModelVO[] _patternTableBackgrounds;
         private int _selectedPatternTableSprite;
         private int _selectedPatternTableBackground;
-		private ElementPaletteModel _selectedPalette;
-		private ElementPaletteModel _selectedSpritePalette;
-
-		public List<ElementPaletteModel> ElementPalettes { get; set; } = new List<ElementPaletteModel>();
-		public ObservableCollection<ElementPaletteModel> ElementSpritePalettes { get; set; } = new ObservableCollection<ElementPaletteModel>(new List<ElementPaletteModel>(4));
 
 		#region Commands
 		public BuildProjectCommand BuildProjectCommand { get; } = new BuildProjectCommand();
         public BrowseFolderCommand BrowseFolderCommand { get; } = new BrowseFolderCommand();
         public CloseDialogCommand CloseDialogCommand { get; } = new CloseDialogCommand();
-        public AddPaletteToListCommand AddPaletteToListCommand { get; } = new AddPaletteToListCommand();
-        public DeletePaletteFromListCommand DeletePaletteFromListCommand { get; } = new DeletePaletteFromListCommand();
-        public MovePaletteUpCommand MovePaletteUpCommand { get; } = new MovePaletteUpCommand();
-        public MovePaletteDownCommand MovePaletteDownCommand { get; } = new MovePaletteDownCommand();
         #endregion
 
         #region get/set
-        public ElementPaletteModel SelectedPalette
-		{
-			get { return _selectedPalette; }
-			set
-			{
-				_selectedPalette = value;
-				OnPropertyChanged("SelectedPalette");
-			}
-		}
-
-		public ElementPaletteModel SelectedSpritePalette
-		{
-			get { return _selectedSpritePalette; }
-			set
-			{
-				_selectedSpritePalette = value;
-				OnPropertyChanged("SelectedSpritePalette");
-			}
-		}
-
 		public string FolderPath
         {
             get { return _folderPath; }
@@ -150,10 +119,6 @@ namespace NESTool.ViewModels
 			#region Signals
 			SignalManager.Get<BrowseFolderSuccessSignal>().AddListener(BrowseFolderSuccess);
             SignalManager.Get<CloseDialogSignal>().AddListener(OnCloseDialog);
-            SignalManager.Get<AddPaletteToListSignal>().AddListener(OnAddPaletteToList);
-            SignalManager.Get<MovePaletteDownSignal>().AddListener(OnMovePaletteDown);
-            SignalManager.Get<MovePaletteUpSignal>().AddListener(OnMovePaletteUp);
-            SignalManager.Get<DeletePaletteFromListSignal>().AddListener(OnDeletePaletteFromList);
             #endregion
 
             ProjectModel project = ModelManager.Get<ProjectModel>();
@@ -185,76 +150,6 @@ namespace NESTool.ViewModels
 
                 index++;
             }
-
-			InitializePalettes();
-		}
-
-		private void InitializePalettes()
-		{
-			List<FileModelVO> models = ProjectFiles.GetModels<PaletteModel>();
-
-			foreach (FileModelVO item in models)
-			{
-				PaletteModel model = item.Model as PaletteModel;
-
-				ElementPalettes.Add(new ElementPaletteModel()
-				{
-					Name = item.Name,
-					Model = item.Model as PaletteModel
-				});
-			}
-
-			ProjectModel project = ModelManager.Get<ProjectModel>();
-
-            List<string> output = new List<string>();
-
-			if (FillPaletteList(project.Build.SpritePalettes, ElementSpritePalettes, ref output))
-			{
-				project.Build.SpritePalettes = output.ToArray();
-
-				project.Save();
-			}
-        }
-
-		private bool FillPaletteList(string[] originList, ObservableCollection<ElementPaletteModel> destination, ref List<string> output)
-		{
-            if (originList == null)
-            {
-                return false;
-            }
-
-            bool ret = false;
-
-            output.Clear();
-
-            foreach (string id in originList)
-			{
-				if (string.IsNullOrEmpty(id))
-				{
-					continue;
-				}
-
-				FileModelVO handler = ProjectFiles.GetFileModel(id);
-
-				if (handler == null)
-				{
-                    // Model does not exist anymore, this means we will 
-                    // copy the output array to the original arary
-                    ret = true;
-
-					continue;
-				}
-
-                output.Add(id);
-
-                destination.Add(new ElementPaletteModel()
-				{
-					Name = handler.Name,
-					Model = handler.Model as PaletteModel
-                });
-			}
-
-			return ret;
 		}
 
 		private void CreatePatternTableArrays()
@@ -299,195 +194,7 @@ namespace NESTool.ViewModels
 			#region Signals
 			SignalManager.Get<BrowseFolderSuccessSignal>().RemoveListener(BrowseFolderSuccess);
             SignalManager.Get<CloseDialogSignal>().RemoveListener(OnCloseDialog);
-            SignalManager.Get<AddPaletteToListSignal>().RemoveListener(OnAddPaletteToList);
-            SignalManager.Get<MovePaletteDownSignal>().RemoveListener(OnMovePaletteDown);
-            SignalManager.Get<MovePaletteUpSignal>().RemoveListener(OnMovePaletteUp);
-            SignalManager.Get<DeletePaletteFromListSignal>().RemoveListener(OnDeletePaletteFromList);
             #endregion
-        }
-
-        private ObservableCollection<ElementPaletteModel> MoveDownPalette(ElementPaletteModel palette, ObservableCollection<ElementPaletteModel> elementPalettes)
-        {
-            ElementPaletteModel tempItem = null;
-
-            for (int i = 0; i < elementPalettes.Count; ++i)
-            {
-                ElementPaletteModel item = elementPalettes[i];
-
-                if (item == palette)
-                {
-                    // last one
-                    if (i == 3)
-                    {
-                        return null;
-                    }
-
-                    tempItem = item;
-                }
-                else if (tempItem != null && item != null)
-                {
-                    elementPalettes[i - 1] = elementPalettes[i];
-                    elementPalettes[i] = tempItem;
-
-                    tempItem = null;
-                }
-            }
-
-            return elementPalettes;
-        }
-
-        private ObservableCollection<ElementPaletteModel> MoveUpPalette(ElementPaletteModel palette, ObservableCollection<ElementPaletteModel> elementPalettes)
-        {
-            ElementPaletteModel tempItem = null;
-
-            for (int i = 3; i >= 0; --i)
-            {
-                if (i >= elementPalettes.Count)
-                {
-                    continue;
-                }
-
-                ElementPaletteModel item = elementPalettes[i];
-
-                if (item == palette)
-                {
-                    // first one
-                    if (i == 0)
-                    {
-                        return null;
-                    }
-
-                    tempItem = item;
-                }
-                else if (tempItem != null && item != null)
-                {
-                    elementPalettes[i + 1] = elementPalettes[i];
-                    elementPalettes[i] = tempItem;
-
-                    tempItem = null;
-                }
-            }
-
-            return elementPalettes;
-        }
-
-        private void OnMovePaletteDown(ElementPaletteModel palette)
-        {
-            ProjectModel project = ModelManager.Get<ProjectModel>();
-
-            ObservableCollection<ElementPaletteModel> list = MoveDownPalette(palette, ElementSpritePalettes);
-
-            if (list != null)
-            {
-                ElementSpritePalettes = list;
-
-                List<string> idList = new List<string>();
-                foreach (ElementPaletteModel item in list)
-                {
-                    idList.Add(item.Model.GUID);
-                }
-
-                project.Build.SpritePalettes = idList.ToArray();
-                project.Save();
-            }
-        }
-
-        private void OnMovePaletteUp(ElementPaletteModel palette)
-        {
-            ProjectModel project = ModelManager.Get<ProjectModel>();
-            
-            ObservableCollection<ElementPaletteModel> list = MoveUpPalette(palette, ElementSpritePalettes);
-
-            if (list != null)
-            {
-                ElementSpritePalettes = list;
-
-                List<string> idList = new List<string>();
-                foreach (ElementPaletteModel item in list)
-                {
-                    idList.Add(item.Model.GUID);
-                }
-
-                project.Build.SpritePalettes = idList.ToArray();
-                project.Save();
-            }
-        }
-
-        private void OnDeletePaletteFromList(ElementPaletteModel palette)
-        {
-            ProjectModel project = ModelManager.Get<ProjectModel>();
-
-            if (ElementSpritePalettes.Contains(palette))
-            {
-                ElementSpritePalettes.Remove(palette);
-            }
-
-            List<string> list = project.Build.SpritePalettes.ToList();
-
-            foreach (string item in list)
-            {
-                if (item == palette.Model.GUID)
-                {
-                    list.Remove(item);
-                    list.Add(string.Empty);
-
-                    project.Build.SpritePalettes = list.ToArray();
-
-                    project.Save();
-
-                    break;
-                }
-			}
-        }
-
-        private void AddPaletteToList(int index, ElementPaletteModel palette)
-        {
-            ProjectModel project = ModelManager.Get<ProjectModel>();
-
-            if (project.Build.SpritePalettes.Length < 4)
-            {
-                string[] tmp = project.Build.SpritePalettes;
-
-                Array.Resize(ref tmp, 4);
-
-                project.Build.SpritePalettes = tmp;
-            }
-
-            project.Build.SpritePalettes[index] = palette.Model.GUID;
-
-            ElementSpritePalettes.Add(new ElementPaletteModel()
-            {
-                Name = palette.Name,
-                Model = palette.Model
-            });
-
-            project.Save();
-        }
-
-        private void OnAddPaletteToList(ElementPaletteModel palette)
-        {
-            if (ElementSpritePalettes.Count >= 4)
-            {
-                return;
-            }
-
-            ProjectModel project = ModelManager.Get<ProjectModel>();
-
-            int index = 0;
-
-            foreach (string item in project.Build.SpritePalettes)
-            {
-                if (string.IsNullOrEmpty(item))
-                {
-                    AddPaletteToList(index, palette);
-
-                    return;
-                }
-
-                index++;
-            }
-
-            AddPaletteToList(index, palette);
         }
 
         private void BrowseFolderSuccess(string folderPath)
