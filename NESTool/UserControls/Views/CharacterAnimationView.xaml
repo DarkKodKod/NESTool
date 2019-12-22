@@ -232,30 +232,48 @@
         <Grid Grid.Column="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="200"/>
+                <RowDefinition Height="250"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
-                <StackPanel x:Name="spFrames" Orientation="Horizontal">
-                    <StackPanel.Resources>
-                        <Style TargetType="{x:Type Button}">
-                            <Setter Property="Margin" Value="5,0,0,0"/>
-                        </Style>
-                    </StackPanel.Resources>
-                    <Button Width="150" Command="{Binding NewAnimationFrameCommand}"
+            <GroupBox Header="Frames" Grid.Row="1" Padding="10" Margin="10">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                    <StackPanel x:Name="spFrames" Orientation="Horizontal">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Margin" Value="5,0,0,0"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <Button Width="150" Command="{Binding NewAnimationFrameCommand}"
                             ToolTip="New Frame">
-                        <Button.CommandParameter>
-                            <MultiBinding Converter="{StaticResource parametersConverter}">
-                                <Binding Path="FileHandler" />
-                                <Binding Path="TabID" />
-                            </MultiBinding>
-                        </Button.CommandParameter>
-                        <Image Height="130" Width="130" Source="/resources/tab_plus.png"
+                            <Button.CommandParameter>
+                                <MultiBinding Converter="{StaticResource parametersConverter}">
+                                    <Binding Path="FileHandler" />
+                                    <Binding Path="TabID" />
+                                </MultiBinding>
+                            </Button.CommandParameter>
+                            <Image Height="130" Width="130" Source="/resources/tab_plus.png"
                                RenderOptions.BitmapScalingMode="NearestNeighbor" 
                                Stretch="UniformToFill"/>
-                    </Button>
-                </StackPanel>                
-            </ScrollViewer>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </GroupBox>
+            <GroupBox Header="Collisions" Grid.Row="2" Height="200" Margin="10" Padding="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <CheckBox IsChecked="{Binding ShowCollisionBox, Mode=TwoWay}" HorizontalAlignment="Left">Show collision box</CheckBox>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock>Width:</TextBlock>
+                        <TextBox Height="18" Width="50" Text="{Binding Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock>Height:</TextBlock>
+                        <TextBox Height="18" Width="50" Text="{Binding Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                </Grid>
+            </GroupBox>
         </Grid>
     </Grid>
 </UserControl>

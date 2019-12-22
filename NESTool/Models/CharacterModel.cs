@@ -20,12 +20,19 @@ namespace NESTool.Models
         public bool FixToGrid { get; set; }
     }
 
+    public struct CollisionInfo
+    {
+        public int Width { get; set; }
+        public int Height { get; set; }
+    }
+
     public struct CharacterAnimation
     {
         public string ID { get; set; }
         public string Name { get; set; }
         public float Speed { get; set; }
         public Frame[] Frames { get; set; }
+        public CollisionInfo CollisionInfo { get; set; }
     }
 
     public class CharacterModel : AFileModel

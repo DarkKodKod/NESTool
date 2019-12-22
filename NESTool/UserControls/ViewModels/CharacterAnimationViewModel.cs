@@ -14,6 +14,7 @@ namespace NESTool.UserControls.ViewModels
     public class CharacterAnimationViewModel : ViewModel
     {
         private float _speed = 0.1f;
+        private bool _showCollisionBox = false;
         private string _tabID;
         private CharacterModel _characterModel;
         private FileHandler _fileHandler;
@@ -139,6 +140,20 @@ namespace NESTool.UserControls.ViewModels
                     }
 
                     OnPropertyChanged("Speed");
+                }
+            }
+        }
+
+        public bool ShowCollisionBox
+        {
+            get { return _showCollisionBox; }
+            set
+            {
+                if (_showCollisionBox != value)
+                {
+                    _showCollisionBox = value;
+
+                    OnPropertyChanged("ShowCollisionBox");
                 }
             }
         }

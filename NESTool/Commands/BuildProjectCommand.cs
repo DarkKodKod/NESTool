@@ -155,7 +155,8 @@ namespace NESTool.Commands
 
 			if (bank == null)
 			{
-				return;
+                outputFile.Write("$00");
+                return;
 			}
 
             byte tile = (byte)bank.GetTileIndex(mapTile.BankTileID);
