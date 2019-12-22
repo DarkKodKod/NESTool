@@ -239,8 +239,6 @@ namespace NESTool.Commands
 
         private void WriteMetaSprites(StreamWriter outputFile, CharacterModel model, string name)
         {
-			ProjectModel projectModel = ModelManager.Get<ProjectModel>();
-
             List<string> animationIndices = new List<string>();
 
             foreach (CharacterAnimation animation in model.Animations)
@@ -254,6 +252,7 @@ namespace NESTool.Commands
                 List<string> frameNames = new List<string>();
 
                 int halfMetaSprite = 0;
+                int maxHorzSize = 0;
 
                 for (int i = 0; i < animation.Frames.Length; ++i)
                 {
@@ -288,7 +287,12 @@ namespace NESTool.Commands
                         byte horiz = (byte)charTile.Point.X;
                         byte vert = (byte)charTile.Point.Y;
 
-                        halfMetaSprite = 8; // todo: for now this is hardcoded, 8 means that all meta sprites are two sprites in vertical size
+                        if (maxHorzSize < horiz + 8)
+                        {
+                            maxHorzSize = horiz + 8;
+
+                            halfMetaSprite = maxHorzSize / 2;
+                        }
 
                         BankModel bank = ProjectFiles.GetModel<BankModel>(charTile.BankID);
                         byte tile = (byte)bank.GetTileIndex(charTile.BankTileID);
@@ -296,7 +300,7 @@ namespace NESTool.Commands
 						int paletteIndex = charTile.PaletteIndex;
 
 						byte attrs = (byte)paletteIndex;
-                        attrs |= charTile.FrontBackground ? (byte)0 : (byte)32;
+                        attrs |= charTile.BackBackground ? (byte)32 : (byte)0;
                         attrs |= charTile.FlipX ? (byte)64 : (byte)0;
                         attrs |= charTile.FlipY ? (byte)128 : (byte)0;
 

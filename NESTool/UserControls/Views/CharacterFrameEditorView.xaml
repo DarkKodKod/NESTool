@@ -149,12 +149,16 @@
                     </Grid>
                     <GroupBox Header="Sprite Configuration" Grid.Row="2" Padding="10">
                         <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="120"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <CheckBox IsChecked="{Binding FlipX, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Column="0">Flip Horizontal</CheckBox>
-                            <CheckBox IsChecked="{Binding FlipY, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Column="1">Flip Vertical</CheckBox>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="10" />
+                                <RowDefinition Height="auto" />
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                                <CheckBox IsChecked="{Binding FlipX, Mode=TwoWay}" HorizontalAlignment="Left">Flip Horizontal</CheckBox>
+                                <CheckBox IsChecked="{Binding FlipY, Mode=TwoWay}" HorizontalAlignment="Left" Margin="30,0,0,0">Flip Vertical</CheckBox>
+                            </StackPanel>
+                            <CheckBox IsChecked="{Binding BackBackground, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Row="2">Back background</CheckBox>
                         </Grid>
                     </GroupBox>
                 </Grid>

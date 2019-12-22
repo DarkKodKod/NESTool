@@ -22,7 +22,8 @@ namespace NESTool.UserControls.ViewModels
     {
         FlipX,
         FlipY,
-        PaletteIndex
+        PaletteIndex,
+        BackBackground
     }
 
     [StructLayout(LayoutKind.Explicit)]
@@ -55,9 +56,11 @@ namespace NESTool.UserControls.ViewModels
         private double _rectangleLeft = 0.0;
         private bool _flipX = false;
         private bool _flipY = false;
+        private bool _backBackground = false;
         private readonly bool[] _spritePropertiesX = new bool[64];
         private readonly bool[] _spritePropertiesY = new bool[64];
         private readonly int[] _spritePaletteIndices = new int[64];
+        private readonly bool[] _spritePropertiesBack = new bool[64];
 
         #region Commands
         public SwitchCharacterFrameViewCommand SwitchCharacterFrameViewCommand { get; } = new SwitchCharacterFrameViewCommand();
@@ -104,6 +107,27 @@ namespace NESTool.UserControls.ViewModels
                     OnPropertyChanged("FlipY");
 
                     SaveProperty(SpriteProperties.FlipY, new ValueUnion { boolean = value });
+                }
+            }
+        }
+
+        public bool BackBackground
+        {
+            get { return _backBackground; }
+            set
+            {
+                if (EditFrameTools != EditFrameTools.Select)
+                {
+                    return;
+                }
+
+                if (_backBackground != value)
+                {
+                    _backBackground = value;
+
+                    OnPropertyChanged("BackBackground");
+
+                    SaveProperty(SpriteProperties.BackBackground, new ValueUnion { boolean = value } );
                 }
             }
         }
@@ -378,6 +402,7 @@ namespace NESTool.UserControls.ViewModels
                 _spritePropertiesX[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].FlipX;
                 _spritePropertiesY[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].FlipY;
                 _spritePaletteIndices[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].PaletteIndex;
+                _spritePropertiesBack[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].BackBackground;
             }
         }
 
@@ -477,6 +502,7 @@ namespace NESTool.UserControls.ViewModels
 
             FlipX = _spritePropertiesX[SelectedFrameTile];
             FlipY = _spritePropertiesY[SelectedFrameTile];
+            BackBackground = _spritePropertiesBack[SelectedFrameTile];
 
             SignalManager.Get<SelectPaletteIndexSignal>().Dispatch((PaletteIndex)_spritePaletteIndices[SelectedFrameTile]);
         }
@@ -496,7 +522,6 @@ namespace NESTool.UserControls.ViewModels
             CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].Point = characterPoint;
             CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankID = model.GUID;
             CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankTileID = guid;
-            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].FrontBackground = true;
 
             FileHandler.Save();
 
@@ -553,6 +578,17 @@ namespace NESTool.UserControls.ViewModels
                         _spritePaletteIndices[SelectedFrameTile] = value.integer;
 
                         CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].PaletteIndex = value.integer;
+
+                        didChange = true;
+                    }
+                    break;
+                case SpriteProperties.BackBackground:
+
+                    if (_spritePropertiesBack[SelectedFrameTile] != value.boolean)
+                    {
+                        _spritePropertiesBack[SelectedFrameTile] = value.boolean;
+
+                        CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BackBackground = BackBackground;
 
                         didChange = true;
                     }
