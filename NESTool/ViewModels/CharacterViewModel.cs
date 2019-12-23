@@ -541,7 +541,19 @@ namespace NESTool.ViewModels
                     model.Animations[index].Name = tab.Header;
                     model.Animations[index].Speed = viewModel.Speed;
 
-                    index++;
+					if (model.Animations[index].CollisionInfo == null)
+					{
+						model.Animations[index].CollisionInfo = new CollisionInfo();
+					}
+
+					model.Animations[index].CollisionInfo.Width = viewModel.CollisionWidth;
+					model.Animations[index].CollisionInfo.Height = viewModel.CollisionHeight;
+					model.Animations[index].CollisionInfo.OffsetX = viewModel.CollisionOffsetX;
+					model.Animations[index].CollisionInfo.OffsetY = viewModel.CollisionOffsetY;
+					model.Animations[index].CollisionInfo.HotSpotX = viewModel.CollisionHotSpotX;
+					model.Animations[index].CollisionInfo.HotSpotY = viewModel.CollisionHotSpotY;
+
+					index++;
                 }
 
                 for (int i = index; i < model.Animations.Length; ++i)

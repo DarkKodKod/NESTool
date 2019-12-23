@@ -266,12 +266,33 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <CheckBox IsChecked="{Binding ShowCollisionBox, Mode=TwoWay}" HorizontalAlignment="Left">Show collision box</CheckBox>
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
-                        <TextBlock>Width:</TextBlock>
-                        <TextBox Height="18" Width="50" Text="{Binding Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBlock>Height:</TextBlock>
-                        <TextBox Height="18" Width="50" Text="{Binding Speed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
+					<Grid Grid.Row="1">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="auto"/>
+							<ColumnDefinition Width="auto"/>
+						</Grid.ColumnDefinitions>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="10" />
+							<RowDefinition Height="auto" />
+							<RowDefinition Height="auto" />
+							<RowDefinition Height="auto" />
+							<RowDefinition Height="auto" />
+							<RowDefinition Height="auto" />
+							<RowDefinition Height="auto" />
+						</Grid.RowDefinitions>
+						<TextBlock Grid.Column="0" Grid.Row="1">Width:</TextBlock>
+						<TextBox Grid.Column="1" Grid.Row="1" Height="18" Width="50" Text="{Binding CollisionWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+						<TextBlock Grid.Column="0" Grid.Row="2">Height:</TextBlock>
+						<TextBox Grid.Column="1" Grid.Row="2" Height="18" Width="50" Text="{Binding CollisionHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+						<TextBlock Grid.Column="0" Grid.Row="3">Hot Spot X:</TextBlock>
+						<TextBox Grid.Column="1" Grid.Row="3" Height="18" Width="50" Text="{Binding CollisionHotSpotX, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+						<TextBlock Grid.Column="0" Grid.Row="4">Hot Spot Y:</TextBlock>
+						<TextBox Grid.Column="1" Grid.Row="4" Height="18" Width="50" Text="{Binding CollisionHotSpotY, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+						<TextBlock Grid.Column="0" Grid.Row="5">Offset X:</TextBlock>
+						<TextBox Grid.Column="1" Grid.Row="5" Height="18" Width="50" Text="{Binding CollisionOffsetX, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+						<TextBlock Grid.Column="0" Grid.Row="6">Offset Y:</TextBlock>
+						<TextBox Grid.Column="1" Grid.Row="6" Height="18" Width="50" Text="{Binding CollisionOffsetY, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+					</Grid>
                 </Grid>
             </GroupBox>
         </Grid>

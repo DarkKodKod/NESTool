@@ -20,11 +20,15 @@ namespace NESTool.Models
         public bool FixToGrid { get; set; }
     }
 
-    public struct CollisionInfo
+    public class CollisionInfo
     {
         public int Width { get; set; }
         public int Height { get; set; }
-    }
+		public int HotSpotX { get; set; }
+		public int HotSpotY { get; set; }
+		public int OffsetX { get; set; }
+		public int OffsetY { get; set; }
+	}
 
     public struct CharacterAnimation
     {
@@ -32,7 +36,7 @@ namespace NESTool.Models
         public string Name { get; set; }
         public float Speed { get; set; }
         public Frame[] Frames { get; set; }
-        public CollisionInfo CollisionInfo { get; set; }
+		public CollisionInfo CollisionInfo { get; set; }
     }
 
     public class CharacterModel : AFileModel
