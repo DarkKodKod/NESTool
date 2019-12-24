@@ -425,6 +425,11 @@ namespace NESTool.ViewModels
 
             foreach (ActionTabItem tab in Tabs)
             {
+                if (tab.Content is CharacterAnimationView animationView)
+                {
+                    animationView.OnDeactivate();
+                }
+
                 if (tab.Content.DataContext is AActivate vm)
                 {
                     vm.OnDeactivate();

@@ -6,9 +6,6 @@
         public string Name { get; set; }
         public AFileModel FileModel { get; set; }
 
-        public void Save()
-        {
-            FileModel.Save(Path, Name);
-        }
+        public void Save() => FileModel.Save(Path, Name);
     }
 }

@@ -5,6 +5,7 @@ using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
 using System;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -20,9 +21,12 @@ namespace NESTool.UserControls.ViewModels
         private FileHandler _fileHandler;
         private bool _isPlaying;
         private bool _isPaused;
+        private double _rectangleTop = 0.0;
+        private double _rectangleLeft = 0.0;
         private ImageSource _frameImage;
         private int _frameIndex;
         private int _animationIndex = -1;
+        private bool _dontSave = false;
         private DispatcherTimer _dispatcherTimer;
 		private int _collisionWidth;
 		private int _collisionHeight;
@@ -30,9 +34,12 @@ namespace NESTool.UserControls.ViewModels
 		private int _collisionHotSpotY;
 		private int _collisionOffsetX;
 		private int _collisionOffsetY;
+        private Visibility _rectangleVisibility = Visibility.Hidden;
+        private double _rectangleWidth;
+        private double _rectangleHeight;
 
-		#region Commands
-		public PauseCharacterAnimationCommand PauseCharacterAnimationCommand { get; } = new PauseCharacterAnimationCommand();
+        #region Commands
+        public PauseCharacterAnimationCommand PauseCharacterAnimationCommand { get; } = new PauseCharacterAnimationCommand();
         public NextFrameCharacterAnimationCommand NextFrameCharacterAnimationCommand { get; } = new NextFrameCharacterAnimationCommand();
         public StopCharacterAnimationCommand StopCharacterAnimationCommand { get; } = new StopCharacterAnimationCommand();
         public PlayCharacterAnimationCommand PlayCharacterAnimationCommand { get; } = new PlayCharacterAnimationCommand();
@@ -49,6 +56,50 @@ namespace NESTool.UserControls.ViewModels
                 _isPlaying = value;
 
                 OnPropertyChanged("IsPlaying");
+            }
+        }
+
+        public double RectangleLeft
+        {
+            get { return _rectangleLeft; }
+            set
+            {
+                _rectangleLeft = value;
+
+                OnPropertyChanged("RectangleLeft");
+            }
+        }
+
+        public double RectangleWidth
+        {
+            get { return _rectangleWidth; }
+            set
+            {
+                _rectangleWidth = value;
+
+                OnPropertyChanged("RectangleWidth");
+            }
+        }
+
+        public double RectangleHeight
+        {
+            get { return _rectangleHeight; }
+            set
+            {
+                _rectangleHeight = value;
+
+                OnPropertyChanged("RectangleHeight");
+            }
+        }
+
+        public double RectangleTop
+        {
+            get { return _rectangleTop; }
+            set
+            {
+                _rectangleTop = value;
+
+                OnPropertyChanged("RectangleTop");
             }
         }
 
@@ -140,8 +191,13 @@ namespace NESTool.UserControls.ViewModels
 
 					CharacterModel.Animations[_animationIndex].CollisionInfo.Width = value;
 
-					FileHandler.Save();
-				}
+                    RectangleWidth = value;
+
+                    if (!_dontSave)
+                    {
+                        FileHandler.Save();
+                    }
+                }
 
 				OnPropertyChanged("CollisionWidth");
 			}
@@ -163,8 +219,13 @@ namespace NESTool.UserControls.ViewModels
 
 					CharacterModel.Animations[_animationIndex].CollisionInfo.Height = value;
 
-					FileHandler.Save();
-				}
+                    RectangleHeight = value;
+
+                    if (!_dontSave)
+                    {
+                        FileHandler.Save();
+                    }
+                }
 
 				OnPropertyChanged("CollisionHeight");
 			}
@@ -186,8 +247,11 @@ namespace NESTool.UserControls.ViewModels
 
 					CharacterModel.Animations[_animationIndex].CollisionInfo.OffsetX = value;
 
-					FileHandler.Save();
-				}
+                    if (!_dontSave)
+                    {
+                        FileHandler.Save();
+                    }
+                }
 
 				OnPropertyChanged("CollisionOffsetX");
 			}
@@ -209,8 +273,11 @@ namespace NESTool.UserControls.ViewModels
 
 					CharacterModel.Animations[_animationIndex].CollisionInfo.OffsetY = value;
 
-					FileHandler.Save();
-				}
+                    if (!_dontSave)
+                    {
+                        FileHandler.Save();
+                    }
+                }
 
 				OnPropertyChanged("CollisionOffsetY");
 			}
@@ -232,8 +299,11 @@ namespace NESTool.UserControls.ViewModels
 
 					CharacterModel.Animations[_animationIndex].CollisionInfo.HotSpotX = value;
 
-					FileHandler.Save();
-				}
+                    if (!_dontSave)
+                    {
+                        FileHandler.Save();
+                    }
+                }
 
 				OnPropertyChanged("CollisionHotSpotX");
 			}
@@ -255,7 +325,10 @@ namespace NESTool.UserControls.ViewModels
 
 					CharacterModel.Animations[_animationIndex].CollisionInfo.HotSpotY = value;
 
-					FileHandler.Save();
+                    if (!_dontSave)
+                    {
+                        FileHandler.Save();
+                    }   
 				}
 
 				OnPropertyChanged("CollisionHotSpotY");
@@ -280,11 +353,25 @@ namespace NESTool.UserControls.ViewModels
                     {
                         CharacterModel.Animations[_animationIndex].Speed = value;
 
-                        FileHandler.Save();
+                        if (!_dontSave)
+                        {
+                            FileHandler.Save();
+                        }
                     }
 
                     OnPropertyChanged("Speed");
                 }
+            }
+        }
+
+        public Visibility RectangleVisibility
+        {
+            get { return _rectangleVisibility; }
+            set
+            {
+                _rectangleVisibility = value;
+
+                OnPropertyChanged("RectangleVisibility");
             }
         }
 
@@ -296,6 +383,8 @@ namespace NESTool.UserControls.ViewModels
                 if (_showCollisionBox != value)
                 {
                     _showCollisionBox = value;
+
+                    RectangleVisibility = value == true ? Visibility.Visible : Visibility.Hidden;
 
                     OnPropertyChanged("ShowCollisionBox");
                 }
@@ -314,6 +403,8 @@ namespace NESTool.UserControls.ViewModels
             SignalManager.Get<PlayCharacterAnimationSignal>().AddListener(OnPlayCharacterAnimation);
             SignalManager.Get<PreviousFrameCharacterAnimationSignal>().AddListener(OnPreviousFrameCharacterAnimation);
             #endregion
+
+            _dontSave = true;
 
             for (int i = 0; i < CharacterModel.Animations.Length; ++i)
             {
@@ -355,7 +446,7 @@ namespace NESTool.UserControls.ViewModels
 					CollisionHotSpotX = cInfo == null ? 0 : cInfo.HotSpotX;
 					CollisionHotSpotY = cInfo == null ? 0 : cInfo.HotSpotY;
 
-					break;
+                    break;
                 }
             }
 
@@ -367,6 +458,8 @@ namespace NESTool.UserControls.ViewModels
             };
             _dispatcherTimer.Tick += Update;
             _dispatcherTimer.Start();
+
+            _dontSave = false;
         }
 
         public override void OnDeactivate()
