@@ -268,7 +268,7 @@
                     </StackPanel>
                 </ScrollViewer>
             </GroupBox>
-            <GroupBox Header="Collisions" Grid.Row="2" Height="200" Margin="10" Padding="10">
+            <GroupBox Header="Collision" Grid.Row="2" Height="200" Margin="10" Padding="10">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
@@ -286,21 +286,15 @@
 							<RowDefinition Height="auto" />
 							<RowDefinition Height="auto" />
 							<RowDefinition Height="auto" />
-							<RowDefinition Height="auto" />
-							<RowDefinition Height="auto" />
 						</Grid.RowDefinitions>
 						<TextBlock Grid.Column="0" Grid.Row="1">Width:</TextBlock>
                         <TextBox Grid.Column="1" Grid.Row="1" Height="18" Width="50" TextAlignment="Right" Text="{Binding CollisionWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 						<TextBlock Grid.Column="0" Grid.Row="2">Height:</TextBlock>
 						<TextBox Grid.Column="1" Grid.Row="2" Height="18" Width="50" TextAlignment="Right" Text="{Binding CollisionHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-						<TextBlock Grid.Column="0" Grid.Row="3">Hot Spot X:</TextBlock>
-                        <TextBox Grid.Column="1" Grid.Row="3" Height="18" Width="50" TextAlignment="Right" Text="{Binding CollisionHotSpotX, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-						<TextBlock Grid.Column="0" Grid.Row="4">Hot Spot Y:</TextBlock>
-                        <TextBox Grid.Column="1" Grid.Row="4" Height="18" Width="50" TextAlignment="Right" Text="{Binding CollisionHotSpotY, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-						<TextBlock Grid.Column="0" Grid.Row="5">Offset X:</TextBlock>
-                        <TextBox Grid.Column="1" Grid.Row="5" Height="18" Width="50" TextAlignment="Right" Text="{Binding CollisionOffsetX, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-						<TextBlock Grid.Column="0" Grid.Row="6">Offset Y:</TextBlock>
-                        <TextBox Grid.Column="1" Grid.Row="6" Height="18" Width="50" TextAlignment="Right" Text="{Binding CollisionOffsetY, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+						<TextBlock Grid.Column="0" Grid.Row="3">Offset X:</TextBlock>
+                        <TextBox Grid.Column="1" Grid.Row="3" Height="18" Width="50" TextAlignment="Right" Text="{Binding CollisionOffsetX, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+						<TextBlock Grid.Column="0" Grid.Row="4">Offset Y:</TextBlock>
+                        <TextBox Grid.Column="1" Grid.Row="4" Height="18" Width="50" TextAlignment="Right" Text="{Binding CollisionOffsetY, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 					</Grid>
                 </Grid>
             </GroupBox>

@@ -30,8 +30,6 @@ namespace NESTool.UserControls.ViewModels
         private DispatcherTimer _dispatcherTimer;
 		private int _collisionWidth;
 		private int _collisionHeight;
-		private int _collisionHotSpotX;
-		private int _collisionHotSpotY;
 		private int _collisionOffsetX;
 		private int _collisionOffsetY;
         private Visibility _rectangleVisibility = Visibility.Hidden;
@@ -247,6 +245,8 @@ namespace NESTool.UserControls.ViewModels
 
 					CharacterModel.Animations[_animationIndex].CollisionInfo.OffsetX = value;
 
+                    RectangleLeft = value;
+
                     if (!_dontSave)
                     {
                         FileHandler.Save();
@@ -273,6 +273,8 @@ namespace NESTool.UserControls.ViewModels
 
 					CharacterModel.Animations[_animationIndex].CollisionInfo.OffsetY = value;
 
+                    RectangleTop = value;
+
                     if (!_dontSave)
                     {
                         FileHandler.Save();
@@ -280,58 +282,6 @@ namespace NESTool.UserControls.ViewModels
                 }
 
 				OnPropertyChanged("CollisionOffsetY");
-			}
-		}
-
-		public int CollisionHotSpotX
-		{
-			get { return _collisionHotSpotX; }
-			set
-			{
-				_collisionHotSpotX = value;
-
-				if (_animationIndex != -1)
-				{
-					if (CharacterModel.Animations[_animationIndex].CollisionInfo == null)
-					{
-						CharacterModel.Animations[_animationIndex].CollisionInfo = new CollisionInfo();
-					}
-
-					CharacterModel.Animations[_animationIndex].CollisionInfo.HotSpotX = value;
-
-                    if (!_dontSave)
-                    {
-                        FileHandler.Save();
-                    }
-                }
-
-				OnPropertyChanged("CollisionHotSpotX");
-			}
-		}
-
-		public int CollisionHotSpotY
-		{
-			get { return _collisionHotSpotY; }
-			set
-			{
-				_collisionHotSpotY = value;
-
-				if (_animationIndex != -1)
-				{
-					if (CharacterModel.Animations[_animationIndex].CollisionInfo == null)
-					{
-						CharacterModel.Animations[_animationIndex].CollisionInfo = new CollisionInfo();
-					}
-
-					CharacterModel.Animations[_animationIndex].CollisionInfo.HotSpotY = value;
-
-                    if (!_dontSave)
-                    {
-                        FileHandler.Save();
-                    }   
-				}
-
-				OnPropertyChanged("CollisionHotSpotY");
 			}
 		}
 
@@ -443,8 +393,6 @@ namespace NESTool.UserControls.ViewModels
 					CollisionHeight = cInfo == null ? 0 : cInfo.Height;
 					CollisionOffsetX = cInfo == null ? 0 : cInfo.OffsetX;
 					CollisionOffsetY = cInfo == null ? 0 : cInfo.OffsetY;
-					CollisionHotSpotX = cInfo == null ? 0 : cInfo.HotSpotX;
-					CollisionHotSpotY = cInfo == null ? 0 : cInfo.HotSpotY;
 
                     break;
                 }

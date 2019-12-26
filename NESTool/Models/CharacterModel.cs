@@ -24,8 +24,6 @@ namespace NESTool.Models
     {
         public int Width { get; set; }
         public int Height { get; set; }
-		public int HotSpotX { get; set; }
-		public int HotSpotY { get; set; }
 		public int OffsetX { get; set; }
 		public int OffsetY { get; set; }
 	}

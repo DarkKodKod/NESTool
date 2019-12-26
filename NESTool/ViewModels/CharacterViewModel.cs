@@ -555,8 +555,6 @@ namespace NESTool.ViewModels
 					model.Animations[index].CollisionInfo.Height = viewModel.CollisionHeight;
 					model.Animations[index].CollisionInfo.OffsetX = viewModel.CollisionOffsetX;
 					model.Animations[index].CollisionInfo.OffsetY = viewModel.CollisionOffsetY;
-					model.Animations[index].CollisionInfo.HotSpotX = viewModel.CollisionHotSpotX;
-					model.Animations[index].CollisionInfo.HotSpotY = viewModel.CollisionHotSpotY;
 
 					index++;
                 }
