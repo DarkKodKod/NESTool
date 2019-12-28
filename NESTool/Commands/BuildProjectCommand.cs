@@ -325,10 +325,14 @@ namespace NESTool.Commands
 
                 int frameDuration = (int)(NESFPS * animation.Speed);
 
-                int colBoxA = 0;
-                int colBoxB = 0;
-                int colBoxC = 0;
-                int colBoxD = 0;
+                int colBoxAx = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetX;
+                int colBoxAy = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetY;
+                int colBoxBx = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetX + animation.CollisionInfo.Width;
+                int colBoxBy = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetY;
+                int colBoxCx = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetX;
+                int colBoxCy = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetY + animation.CollisionInfo.Height;
+                int colBoxDx = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetX + animation.CollisionInfo.Width;
+                int colBoxDy = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetY + animation.CollisionInfo.Height;
 
                 outputFile.WriteLine($"    ; number of frames");
                 outputFile.WriteLine($"    .byte ${frameNames.Count.ToString("X2")} ; decimal {frameNames.Count}");
@@ -341,8 +345,17 @@ namespace NESTool.Commands
                 outputFile.WriteLine($"    ; |    |");
                 outputFile.WriteLine($"    ; |____|");
                 outputFile.WriteLine($"    ; c    d");
-                outputFile.WriteLine($"    ;      a    b    c    d");
-                outputFile.WriteLine($"    .byte ${colBoxA.ToString("X2")}, ${colBoxB.ToString("X2")}, ${colBoxC.ToString("X2")}, ${colBoxD.ToString("X2")}");
+                outputFile.WriteLine($"    ;        a         b         c         d");
+                outputFile.WriteLine($"    ;      x    y    x    y    x    y    x    y");
+                outputFile.Write($"    .byte ");
+                outputFile.Write($"${colBoxAx.ToString("X2")}, ");
+                outputFile.Write($"${colBoxAy.ToString("X2")}, ");
+                outputFile.Write($"${colBoxBx.ToString("X2")}, ");
+                outputFile.Write($"${colBoxBy.ToString("X2")}, ");
+                outputFile.Write($"${colBoxCx.ToString("X2")}, ");
+                outputFile.Write($"${colBoxCy.ToString("X2")}, ");
+                outputFile.Write($"${colBoxDx.ToString("X2")}, ");
+                outputFile.Write($"${colBoxDy.ToString("X2")}\n");
 
                 foreach (string frameName in frameNames)
                 {
