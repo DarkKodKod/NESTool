@@ -447,7 +447,7 @@ namespace NESTool.Commands
 
                 if (model != null)
                 {
-                    WriteableBitmap bitmap = BanksUtils.CreateImage(model, ref _bitmapCache);
+                    WriteableBitmap bitmap = BanksUtils.CreateImage(model, ref _bitmapCache, false);
 
                     using (bitmap.GetBitmapContext())
                     {
