@@ -53,7 +53,7 @@
                 <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
                        Width="64"
 	                   Height="64"
-                       Source="{Binding FrameImage}"
+                       Source="{Binding FrameImage, Mode=OneWay}"
                        Stretch="UniformToFill">
                 </Image>
                 <Rectangle Width="{Binding RectangleWidth}"

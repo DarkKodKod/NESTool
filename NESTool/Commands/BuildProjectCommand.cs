@@ -4,6 +4,7 @@ using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Utils;
 using NESTool.VOs;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -89,7 +90,7 @@ namespace NESTool.Commands
 					outputFile.Write($"${Util.ColorToColorHex(color1)},");
 					outputFile.Write($"${Util.ColorToColorHex(color2)},");
 					outputFile.Write($"${Util.ColorToColorHex(color3)}");
-					outputFile.Write("\n");
+					outputFile.Write(Environment.NewLine);
 				}
 			}
         }
@@ -147,7 +148,7 @@ namespace NESTool.Commands
                         }
                     }
 
-                    outputFile.Write("\n");
+                    outputFile.Write(Environment.NewLine);
                 }
             }
 
@@ -217,7 +218,7 @@ namespace NESTool.Commands
                     }
                 }
 
-                outputFile.Write("\n");
+                outputFile.Write(Environment.NewLine);
             }
 
             outputFile.WriteLine("");
@@ -303,9 +304,9 @@ namespace NESTool.Commands
                         BankModel bank = ProjectFiles.GetModel<BankModel>(charTile.BankID);
                         byte tile = (byte)bank.GetTileIndex(charTile.BankTileID);
 
-						int paletteIndex = charTile.PaletteIndex;
+                        int paletteIndex = charTile.PaletteIndex;
 
-						byte attrs = (byte)paletteIndex;
+                        byte attrs = (byte)paletteIndex;
                         attrs |= charTile.BackBackground ? (byte)32 : (byte)0;
                         attrs |= charTile.FlipX ? (byte)64 : (byte)0;
                         attrs |= charTile.FlipY ? (byte)128 : (byte)0;
@@ -357,7 +358,8 @@ namespace NESTool.Commands
                 outputFile.Write($"${colBoxCx.ToString("X2")}, ");
                 outputFile.Write($"${colBoxCy.ToString("X2")}, ");
                 outputFile.Write($"${colBoxDx.ToString("X2")}, ");
-                outputFile.Write($"${colBoxDy.ToString("X2")}\n");
+                outputFile.Write($"${colBoxDy.ToString("X2")}");
+                outputFile.Write(Environment.NewLine);
 
                 foreach (string frameName in frameNames)
                 {

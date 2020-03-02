@@ -39,6 +39,8 @@ namespace NESTool.Models
 
     public class CharacterModel : AFileModel
     {
+        public const int AnimationSize = 64;
+
         private const string _extensionKey = "extensionCharacters";
 
         [TomlIgnore]
@@ -55,7 +57,7 @@ namespace NESTool.Models
             }
         }
 
-        public CharacterAnimation[] Animations { get; set; } = new CharacterAnimation[64];
+        public CharacterAnimation[] Animations { get; set; } = new CharacterAnimation[AnimationSize];
         public string[] PaletteIDs { get; set; } = new string[4] { string.Empty, string.Empty, string.Empty, string.Empty };
     }
 }

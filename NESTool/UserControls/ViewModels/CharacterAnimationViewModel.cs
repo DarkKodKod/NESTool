@@ -35,6 +35,8 @@ namespace NESTool.UserControls.ViewModels
         private Visibility _rectangleVisibility = Visibility.Hidden;
         private double _rectangleWidth;
         private double _rectangleHeight;
+        private readonly bool[] _reloadImages = new bool[CharacterModel.AnimationSize];
+        private readonly BitmapImage[] _bitmapImages = new BitmapImage[CharacterModel.AnimationSize];
 
         #region Commands
         public PauseCharacterAnimationCommand PauseCharacterAnimationCommand { get; } = new PauseCharacterAnimationCommand();
@@ -346,6 +348,11 @@ namespace NESTool.UserControls.ViewModels
         {
             base.OnActivate();
 
+            for (int i = 0; i < _reloadImages.Length; i++)
+            {
+                _reloadImages[i] = false;
+            }
+
             #region Signals
             SignalManager.Get<PauseCharacterAnimationSignal>().AddListener(OnPauseCharacterAnimation);
             SignalManager.Get<NextFrameCharacterAnimationSignal>().AddListener(OnNextFrameCharacterAnimation);
@@ -438,14 +445,20 @@ namespace NESTool.UserControls.ViewModels
                 return;
             }
 
-            WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, _animationIndex, FrameIndex);
-
-            if (frameBitmap == null)
+            if (_reloadImages[FrameIndex] == false)
             {
-                return;
+                WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, _animationIndex, FrameIndex);
+
+                if (frameBitmap == null)
+                {
+                    return;
+                }
+
+                _bitmapImages[FrameIndex] = Util.ConvertWriteableBitmapToBitmapImage(frameBitmap);
+                _reloadImages[FrameIndex] = true;                
             }
 
-            FrameImage = Util.ConvertWriteableBitmapToBitmapImage(frameBitmap);
+            FrameImage = _bitmapImages[FrameIndex];
         }
 
         private void OnPauseCharacterAnimation(string tabId)
@@ -482,6 +495,11 @@ namespace NESTool.UserControls.ViewModels
             if (!IsActive || TabID != tabId)
             {
                 return;
+            }
+
+            for (int i = 0; i < _reloadImages.Length; i++)
+            {
+                _reloadImages[i] = false;
             }
 
             IsPlaying = false;
@@ -529,7 +547,7 @@ namespace NESTool.UserControls.ViewModels
         {
             FrameIndex++;
 
-            if (FrameIndex >= 64 ||
+            if (FrameIndex >= CharacterModel.AnimationSize ||
                 CharacterModel.Animations[_animationIndex].Frames[FrameIndex].Tiles == null)
             {
                 FrameIndex = 0;
