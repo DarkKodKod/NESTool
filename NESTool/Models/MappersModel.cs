@@ -1,4 +1,5 @@
 ﻿using ArchitectureLibrary.Model;
+using NESTool.Enums;
 using Nett;
 using System.IO;
 using System.Windows;
@@ -48,7 +49,8 @@ namespace NESTool.Models
                 Id = 0,
                 Name = "None",
                 PRG = new int[] { 16, 32 },
-                CHR = new int[] { 8 }
+                CHR = new int[] { 8 },
+                Mirroring = new MirroringType[] { MirroringType.Horizontal, MirroringType.Vertical }
             };
         }
 

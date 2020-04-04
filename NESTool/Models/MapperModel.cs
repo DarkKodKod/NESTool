@@ -1,4 +1,5 @@
 ﻿using ArchitectureLibrary.Model;
+using NESTool.Enums;
 
 namespace NESTool.Models
 {
@@ -8,5 +9,6 @@ namespace NESTool.Models
         public string Name { get; set; }
         public int[] PRG { get; set; }
         public int[] CHR { get; set; }
+        public MirroringType[] Mirroring { get; set; }
     }
 }

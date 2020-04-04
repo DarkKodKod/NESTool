@@ -59,6 +59,16 @@ namespace NESTool.ViewModels
             }
         }
 
+        public MirroringType[] Mirrorings
+        {
+            get { return _mirrorings; }
+            set
+            {
+                _mirrorings = value;
+                OnPropertyChanged("Mirrorings");
+            }
+        }
+
         public int[] PRGSizes
         {
             get { return _prgSizes; }
@@ -135,6 +145,7 @@ namespace NESTool.ViewModels
         private SpriteSize _spriteSize;
         private int[] _chrSizes;
         private int[] _prgSizes;
+        private MirroringType[] _mirrorings;
         private MapperModel[] _mappers;
         private int _selectedMapper;
         private MirroringType _selectedMirroring = MirroringType.Vertical;
@@ -188,6 +199,7 @@ namespace NESTool.ViewModels
             SelectedPRGSize = project.Header.PRGSize;
             FrameTiming = project.Header.FrameTiming;
             SpriteSize = project.Header.SpriteSize;
+            Mirrorings = mappers.Mappers[SelectedMapper].Mirroring;
             SelectedMirroring = project.Header.MirroringType;
             Battery = project.Header.Battery;
         }

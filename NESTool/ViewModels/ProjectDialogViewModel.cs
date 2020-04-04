@@ -2,6 +2,7 @@
 using ArchitectureLibrary.Signals;
 using ArchitectureLibrary.ViewModel;
 using NESTool.Commands;
+using NESTool.Enums;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
@@ -63,6 +64,16 @@ namespace NESTool.ViewModels
             }
         }
 
+        public MirroringType[] Mirrorings
+        {
+            get { return _mirrorings; }
+            set
+            {
+                _mirrorings = value;
+                OnPropertyChanged("Mirrorings");
+            }
+        }
+
         public int[] CHRSizes
         {
             get { return _chrSizes; }
@@ -109,6 +120,7 @@ namespace NESTool.ViewModels
         private string _folderPath;
         private int[] _chrSizes;
         private int[] _prgSizes;
+        private MirroringType[] _mirrorings;
         private MapperModel[] _mappers;
         private int _selectedMapper;
         private int _selectedCHRSize;
@@ -121,6 +133,7 @@ namespace NESTool.ViewModels
             Mappers = mappers.Mappers;
             SelectedMapper = mappers.Mappers[0].Id;
             CHRSizes = mappers.Mappers[0].CHR;
+            Mirrorings = mappers.Mappers[0].Mirroring;
             SelectedCHRSize = 0;
             PRGSizes = mappers.Mappers[0].PRG;
             SelectedPRGSize = 0;
