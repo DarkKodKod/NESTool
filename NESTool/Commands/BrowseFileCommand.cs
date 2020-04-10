@@ -22,10 +22,9 @@ namespace NESTool.Commands
 
             if (!string.IsNullOrEmpty(path))
             {
+                path = Path.GetFullPath(path);
                 path = Path.GetDirectoryName(path);
             }
-
-            path = Path.GetFullPath(path);
 
             CommonOpenFileDialog dialog = new CommonOpenFileDialog
             {

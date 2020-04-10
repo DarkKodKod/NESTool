@@ -167,7 +167,7 @@ namespace NESTool.Commands
 
             byte tile = (byte)bank.GetTileIndex(mapTile.BankTileID);
 
-            outputFile.Write($"${tile.ToString("X2")}");
+            outputFile.Write($"${tile:X2}");
         }
 
         private void WriteAttributes(StreamWriter outputFile, MapModel model, string name)
@@ -210,7 +210,7 @@ namespace NESTool.Commands
 
                     byte attribute = (byte)((bottom_right << 6) | (bottom_left << 4) | (top_right << 2) | top_left);
 
-                    outputFile.Write($"${attribute.ToString("X2")}");
+                    outputFile.Write($"${attribute:X2}");
 
                     if (i < MaxHorizontal - 1)
                     {
@@ -311,7 +311,7 @@ namespace NESTool.Commands
                         attrs |= charTile.FlipX ? (byte)64 : (byte)0;
                         attrs |= charTile.FlipY ? (byte)128 : (byte)0;
 
-                        outputFile.WriteLine($"    .byte   ${vert.ToString("X2")},   ${tile.ToString("X2")},   ${attrs.ToString("X2")},   ${horiz.ToString("X2")}");
+                        outputFile.WriteLine($"    .byte   ${vert:X2},   ${tile:X2},   ${attrs:X2},   ${horiz:X2}");
                     }
 
                     if (foundFrame == true)
@@ -338,11 +338,11 @@ namespace NESTool.Commands
                 int colBoxDy = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetY + animation.CollisionInfo.Height;
 
                 outputFile.WriteLine($"    ; number of frames");
-                outputFile.WriteLine($"    .byte ${frameNames.Count.ToString("X2")} ; decimal {frameNames.Count}");
+                outputFile.WriteLine($"    .byte ${frameNames.Count:X2} ; decimal {frameNames.Count}");
                 outputFile.WriteLine($"    ; frame duration");
-                outputFile.WriteLine($"    .byte ${frameDuration.ToString("X2")} ; decimal {frameDuration}");
+                outputFile.WriteLine($"    .byte ${frameDuration:X2} ; decimal {frameDuration}");
                 outputFile.WriteLine($"    ; half size");
-                outputFile.WriteLine($"    .byte ${halfMetaSprite.ToString("X2")} ; decimal {halfMetaSprite}");
+                outputFile.WriteLine($"    .byte ${halfMetaSprite:X2} ; decimal {halfMetaSprite}");
                 outputFile.WriteLine($"    ; collision");
                 outputFile.WriteLine($"    ; a____b");
                 outputFile.WriteLine($"    ; |    |");
@@ -351,14 +351,14 @@ namespace NESTool.Commands
                 outputFile.WriteLine($"    ;        a         b         c         d");
                 outputFile.WriteLine($"    ;      x    y    x    y    x    y    x    y");
                 outputFile.Write($"    .byte ");
-                outputFile.Write($"${colBoxAx.ToString("X2")}, ");
-                outputFile.Write($"${colBoxAy.ToString("X2")}, ");
-                outputFile.Write($"${colBoxBx.ToString("X2")}, ");
-                outputFile.Write($"${colBoxBy.ToString("X2")}, ");
-                outputFile.Write($"${colBoxCx.ToString("X2")}, ");
-                outputFile.Write($"${colBoxCy.ToString("X2")}, ");
-                outputFile.Write($"${colBoxDx.ToString("X2")}, ");
-                outputFile.Write($"${colBoxDy.ToString("X2")}");
+                outputFile.Write($"${colBoxAx:X2}, ");
+                outputFile.Write($"${colBoxAy:X2}, ");
+                outputFile.Write($"${colBoxBx:X2}, ");
+                outputFile.Write($"${colBoxBy:X2}, ");
+                outputFile.Write($"${colBoxCx:X2}, ");
+                outputFile.Write($"${colBoxCy:X2}, ");
+                outputFile.Write($"${colBoxDx:X2}, ");
+                outputFile.Write($"${colBoxDy:X2}");
                 outputFile.Write(Environment.NewLine);
 
                 foreach (string frameName in frameNames)
@@ -378,7 +378,7 @@ namespace NESTool.Commands
                     string index = animationIndices[i].ToUpper();
                     string nameUpper = name.ToUpper();
 
-                    outputFile.WriteLine($"ANIM_{nameUpper}_{index} = {i}");
+                    outputFile.WriteLine($"ANIM_{nameUpper}_{index} = ${i:X2}");
                 }
 
                 outputFile.WriteLine("");
