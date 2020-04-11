@@ -154,8 +154,18 @@ namespace NESTool
                 case ProjectItemType.Map:
                     tbrMap.Visibility = Visibility.Visible;
 
-                    tbMapSelect.IsChecked = true;
-                    ToolBarMapTool = EditFrameTools.Select;
+                    switch (ToolBarMapTool)
+                    {
+                        case EditFrameTools.Select:
+                            tbMapSelect.IsChecked = true;
+                            break;
+                        case EditFrameTools.Erase:
+                            tbMapErase.IsChecked = true;
+                            break;
+                        case EditFrameTools.Paint:
+                            tbMapPaint.IsChecked = true;
+                            break;
+                    }
 
                     view = new Map();
                     break;
