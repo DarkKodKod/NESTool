@@ -43,7 +43,8 @@ namespace NESTool.ViewModels
 
         public static Dictionary<string, WriteableBitmap> FrameBitmapCache;
         public static Dictionary<Tuple<int, int>, Dictionary<Color, Color>> GroupedPalettes;
-        public static bool[] FlagMapBitmapChanges;
+        public static TileUpdate[] FlagMapBitmapChanges;
+        public static Point[] PointMapBitmapChanges;
 
         public MapModel GetModel()
         {
@@ -326,11 +327,12 @@ namespace NESTool.ViewModels
         {
             base.OnActivate();
 
-            FlagMapBitmapChanges = new bool[MapModel.MetaTileMax];
+            FlagMapBitmapChanges = new TileUpdate[MapModel.MetaTileMax];
+            PointMapBitmapChanges = new Point[MapModel.MetaTileMax];
 
             for (int i = 0; i < FlagMapBitmapChanges.Length; ++i)
             {
-                FlagMapBitmapChanges[i] = false;
+                FlagMapBitmapChanges[i] = TileUpdate.None;
             }
 
             FrameBitmapCache = new Dictionary<string, WriteableBitmap>();
@@ -655,10 +657,9 @@ namespace NESTool.ViewModels
 
         private void PaintTile(int index)
         {
-            FlagMapBitmapChanges[SelectedAttributeTile] = true;
+            FlagMapBitmapChanges[SelectedAttributeTile] = TileUpdate.Normal;
 
-            // Paint
-            Point characterPoint = new Point
+            Point selectedTilePoint = new Point
             {
                 X = RectangleLeft,
                 Y = RectangleTop
@@ -670,9 +671,11 @@ namespace NESTool.ViewModels
 
             ref MapTile tile = ref GetModel().GetTile(index);
 
-            tile.Point = characterPoint;
+            tile.Point = selectedTilePoint;
             tile.BankID = model.GUID;
             tile.BankTileID = guid;
+
+            PointMapBitmapChanges[SelectedAttributeTile] = selectedTilePoint;
 
             ProjectItem?.FileHandler.Save();
 
@@ -681,16 +684,24 @@ namespace NESTool.ViewModels
 
         private void EraseTile(int index)
         {
-            FlagMapBitmapChanges[SelectedAttributeTile] = true;
+            FlagMapBitmapChanges[SelectedAttributeTile] = TileUpdate.Erased;
+
+            Point selectedTilePoint = new Point
+            {
+                X = RectangleLeft,
+                Y = RectangleTop
+            };
+
+            PointMapBitmapChanges[SelectedAttributeTile] = selectedTilePoint;
 
             ref MapTile tile = ref GetModel().GetTile(index);
+
+            LoadFrameImage(true);
 
             tile.BankID = string.Empty;
             tile.BankTileID = string.Empty;
 
             ProjectItem?.FileHandler.Save();
-
-            LoadFrameImage(false);
         }
 
         private void OnUpdateMapImage()
@@ -725,7 +736,7 @@ namespace NESTool.ViewModels
 
                 ProjectItem.FileHandler.Save();
 
-                FlagMapBitmapChanges[SelectedAttributeTile] = true;
+                FlagMapBitmapChanges[SelectedAttributeTile] = TileUpdate.Normal;
 
                 LoadFrameImage(true);
             }

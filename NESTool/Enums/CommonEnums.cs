@@ -63,4 +63,11 @@
         Palette2 = 2,
         Palette3 = 3
     }
+
+    public enum TileUpdate
+    {
+        None = 0,
+        Normal,
+        Erased
+    }
 }

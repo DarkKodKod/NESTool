@@ -1,4 +1,5 @@
 ﻿using ArchitectureLibrary.Model;
+using NESTool.Enums;
 using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.ViewModels;
@@ -32,19 +33,31 @@ namespace NESTool.Utils
                         continue;
                     }
 
+                    bool erased = false;
+
                     if (isUpdate == true)
                     {
                         // Only update the tiles that were affected by the change
-                        if (MapViewModel.FlagMapBitmapChanges[i] == false)
+                        if (MapViewModel.FlagMapBitmapChanges[i] == TileUpdate.None)
                         {
                             continue;
                         }
 
-                        MapViewModel.FlagMapBitmapChanges[i] = false;
+                        erased = MapViewModel.FlagMapBitmapChanges[i] == TileUpdate.Erased;
+
+                        MapViewModel.FlagMapBitmapChanges[i] = TileUpdate.None;
                     }
 
                     foreach (MapTile tile in attTable.MapTile)
                     {
+                        if (isUpdate)
+                        {
+                            if (tile.Point != MapViewModel.PointMapBitmapChanges[i])
+                            {
+                                continue;
+                            }
+                        }   
+
                         if (string.IsNullOrEmpty(tile.BankID) || string.IsNullOrEmpty(tile.BankTileID))
                         {
                             continue;
@@ -94,9 +107,20 @@ namespace NESTool.Utils
                         {
                             WriteableBitmap cropped = sourceBitmap.Crop((int)bankModel.Point.X, (int)bankModel.Point.Y, 8, 8);
 
-                            Tuple<int, int> colorsKey = Tuple.Create(bankModel.Group, attTable.PaletteIndex);
+                            if (erased)
+                            {
+                                cropped.Clear(Color.FromRgb(
+                                        System.Drawing.Color.DarkGray.R, 
+                                        System.Drawing.Color.DarkGray.G, 
+                                        System.Drawing.Color.DarkGray.B)
+                                    );
+                            }
+                            else
+                            {
+                                Tuple<int, int> colorsKey = Tuple.Create(bankModel.Group, attTable.PaletteIndex);
 
-                            PaintPixelsBasedOnPalettes(ref cropped, colorsKey);
+                                PaintPixelsBasedOnPalettes(ref cropped, colorsKey);
+                            }
 
                             cropped.Freeze();
 
