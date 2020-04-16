@@ -14,6 +14,7 @@ namespace NESTool.Utils
     public static class MapUtils
     {
         private static Color NullColor = Util.GetColorFromInt(0);
+        private static Color BackgroundColor = Color.FromRgb(System.Drawing.Color.DarkGray.R, System.Drawing.Color.DarkGray.G, System.Drawing.Color.DarkGray.B);
 
         public static void CreateImage(MapModel mapModel, ref WriteableBitmap mapBitmap, bool isUpdate)
         {
@@ -109,11 +110,7 @@ namespace NESTool.Utils
 
                             if (erased)
                             {
-                                cropped.Clear(Color.FromRgb(
-                                        System.Drawing.Color.DarkGray.R, 
-                                        System.Drawing.Color.DarkGray.G, 
-                                        System.Drawing.Color.DarkGray.B)
-                                    );
+                                cropped.Clear(BackgroundColor);
                             }
                             else
                             {
