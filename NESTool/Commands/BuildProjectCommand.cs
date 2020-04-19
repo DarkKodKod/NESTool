@@ -128,27 +128,43 @@ namespace NESTool.Commands
                 // each meta tile has two rows, so we have to iterate same index twice
                 for (int k = 0; k < 2; ++k)
                 {
-                    outputFile.Write("    .byte ");
-
                     // iterate horizontally
                     for (int i = 0; i < 16; ++i)
                     {
-                        if (model.AttributeTable[i + (j * 16)].MapTile == null)
+                        MapTile[] mapTile = model.AttributeTable[i + (j * 16)].MapTile;
+
+                        if (mapTile == null)
                         {
                             continue;
                         }
 
-                        WriteMapTile(outputFile, model.AttributeTable[i + (j * 16)].MapTile[0 + (k * 2)]);
+                        if (string.IsNullOrEmpty(mapTile[0 + (k * 2)].BankID) ||
+                            string.IsNullOrEmpty(mapTile[0 + (k * 2)].BankTileID) ||
+                            string.IsNullOrEmpty(mapTile[1 + (k * 2)].BankID) ||
+                            string.IsNullOrEmpty(mapTile[1 + (k * 2)].BankTileID))
+                        {
+                            continue;
+                        }
+
+                        if (i == 0)
+                        {
+                            outputFile.Write("    .byte ");
+                        }
+
+                        WriteMapTile(outputFile, mapTile[0 + (k * 2)]);
                         outputFile.Write(",");
-                        WriteMapTile(outputFile, model.AttributeTable[i + (j * 16)].MapTile[1 + (k * 2)]);
+                        WriteMapTile(outputFile, mapTile[1 + (k * 2)]);
 
                         if (i < 15)
                         {
                             outputFile.Write(",");
                         }
-                    }
 
-                    outputFile.Write(Environment.NewLine);
+                        if (i == 15)
+                        {
+                            outputFile.Write(Environment.NewLine);
+                        }
+                    }
                 }
             }
 
