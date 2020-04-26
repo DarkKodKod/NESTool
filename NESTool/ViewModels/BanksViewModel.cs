@@ -26,6 +26,7 @@ namespace NESTool.ViewModels
         private WriteableBitmap _croppedImage;
         private string _projectGridSize;
         private string _selectedGroup;
+        private string _selectedIndex;
         private FileModelVO[] _tileSets;
         private int _selectedTileSet;
         private int _selectedPatternTableTile;
@@ -60,6 +61,23 @@ namespace NESTool.ViewModels
                 _projectGridSize = value;
 
                 OnPropertyChanged("ProjectGridSize");
+            }
+        }
+
+        public string SelectedIndex
+        {
+            get
+            {
+                return _selectedIndex;
+            }
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    _selectedIndex = value;
+
+                    OnPropertyChanged("SelectedIndex");
+                }
             }
         }
 
@@ -467,6 +485,7 @@ namespace NESTool.ViewModels
                 SelectedPatternTableTile = index;
 
                 SelectedGroup = Model.PTTiles[index].Group.ToString();
+                SelectedIndex = $"${index:X2}";
             }
             else if (sender.Name == "imgBig")
             {

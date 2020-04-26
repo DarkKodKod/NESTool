@@ -70,12 +70,15 @@
                             </MultiBinding>
                         </Button.CommandParameter>
                     </Button>
-                    <TextBlock Margin="10,0,0,0">Group:</TextBlock>
+                    <TextBlock Margin="10,0,0,0" VerticalAlignment="Center">Group:</TextBlock>
                     <TextBox Width="30"
                              Margin="3,0,0,0"
                              VerticalAlignment="Stretch"
+                             VerticalContentAlignment="Center"
                              Text="{Binding SelectedGroup, UpdateSourceTrigger=PropertyChanged}">
                     </TextBox>
+                    <Label Margin="10,0,0,0">Hex Index:</Label>
+                    <TextBlock VerticalAlignment="Center" Text="{Binding SelectedIndex}" />
                 </StackPanel>
                 <Border Grid.Row="4" Width="510" Height="510"
                         VerticalAlignment="Top">
