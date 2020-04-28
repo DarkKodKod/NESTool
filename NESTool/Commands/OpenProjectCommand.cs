@@ -140,11 +140,13 @@ namespace NESTool.Commands
         {
             foreach (DirectoryInfo directory in directories)
             {
+                // Discard any unknown folder in the root of the project
                 if (directory.Name != _folderBanks &&
                     directory.Name != _folderCharacters &&
                     directory.Name != _folderMaps &&
                     directory.Name != _folderTileSets &&
-                    directory.Name != _folderPalettes)
+                    directory.Name != _folderPalettes &&
+                    parent == null)
                 {
                     continue;
                 }

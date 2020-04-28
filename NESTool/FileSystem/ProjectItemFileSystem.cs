@@ -5,6 +5,7 @@ using NESTool.Signals;
 using NESTool.Utils;
 using NESTool.ViewModels;
 using Nett;
+using System;
 using System.IO;
 
 namespace NESTool.FileSystem
@@ -85,6 +86,11 @@ namespace NESTool.FileSystem
                         case ProjectItemType.Palette:
                             fileHandler.FileModel = Toml.ReadFile<PaletteModel>(itemPath);
                             break;
+                    }
+
+                    if (string.IsNullOrEmpty(fileHandler.FileModel.GUID))
+                    {
+                        fileHandler.FileModel.GUID = Guid.NewGuid().ToString();
                     }
 
                     if (!ProjectFiles.Handlers.ContainsKey(fileHandler.FileModel.GUID))

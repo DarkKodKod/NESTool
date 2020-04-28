@@ -18,6 +18,11 @@ namespace NESTool.Commands
 
             TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)dragEvent.OriginalSource);
 
+            if (treeViewItem == null)
+            {
+                return false;
+            }
+
             if (treeViewItem.DataContext is ProjectItem item && item.Type != draggingItem.Type)
             {
                 dragEvent.Handled = true;

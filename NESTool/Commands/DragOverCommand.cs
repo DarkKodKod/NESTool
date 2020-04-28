@@ -22,6 +22,11 @@ namespace NESTool.Commands
 
             TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)dragEvent.OriginalSource);
 
+            if (treeViewItem == null)
+            {
+                return false;
+            }
+
             if (treeViewItem.DataContext is ProjectItem item && item.Type != draggingItem.Type)
             {
                 dragEvent.Handled = true;
@@ -48,6 +53,11 @@ namespace NESTool.Commands
                 {
                     if (element.IsFolder && element.Items.Count > 0 && !treeViewItem.IsExpanded)
                     {
+                        if (element.FileHandler.FileModel == null)
+                        {
+                            return;
+                        }
+
                         if (_folderId != element.FileHandler.FileModel.GUID)
                         {
                             _folderId = element.FileHandler.FileModel.GUID;
