@@ -7,6 +7,8 @@ using NESTool.ViewModels;
 using Nett;
 using System;
 using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace NESTool.FileSystem
 {
@@ -55,7 +57,26 @@ namespace NESTool.FileSystem
             fileHandler.Name = item.DisplayName;
         }
 
-        private static void OnRegisterFileHandler(ProjectItem item, string path)
+        private static async Task<string> ReadTextAsync(string filePath)
+        {
+            using (FileStream sourceStream = File.Open(filePath, FileMode.Open))
+            {
+                StringBuilder sb = new StringBuilder();
+
+                byte[] buffer = new byte[sourceStream.Length];
+                int numRead;
+
+                while ((numRead = await sourceStream.ReadAsync(buffer, 0, buffer.Length)) != 0)
+                {
+                    string text = Encoding.UTF8.GetString(buffer, 0, numRead);
+                    sb.Append(text);
+                }
+
+                return sb.ToString();
+            }
+        }
+
+        private static async void OnRegisterFileHandler(ProjectItem item, string path)
         {
             FileHandler fileHandler = new FileHandler() { Name = item.DisplayName, Path = path };
 
@@ -69,24 +90,9 @@ namespace NESTool.FileSystem
 
                 if (File.Exists(itemPath))
                 {
-                    switch (item.Type)
-                    {
-                        case ProjectItemType.Bank:
-                            fileHandler.FileModel = Toml.ReadFile<BankModel>(itemPath);
-                            break;
-                        case ProjectItemType.Character:
-                            fileHandler.FileModel = Toml.ReadFile<CharacterModel>(itemPath);
-                            break;
-                        case ProjectItemType.Map:
-                            fileHandler.FileModel = Toml.ReadFile<MapModel>(itemPath);
-                            break;
-                        case ProjectItemType.TileSet:
-                            fileHandler.FileModel = Toml.ReadFile<TileSetModel>(itemPath);
-                            break;
-                        case ProjectItemType.Palette:
-                            fileHandler.FileModel = Toml.ReadFile<PaletteModel>(itemPath);
-                            break;
-                    }
+                    string content = await ReadTextAsync(itemPath);
+
+                    fileHandler.FileModel = await ReadFileModel(item.Type, content);
 
                     if (string.IsNullOrEmpty(fileHandler.FileModel.GUID))
                     {
@@ -99,6 +105,25 @@ namespace NESTool.FileSystem
                     }
                 }
             }
+        }
+
+        private static Task<AFileModel> ReadFileModel(ProjectItemType type, string content)
+        {
+            switch (type)
+            {
+                case ProjectItemType.Bank: 
+                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<BankModel>(content));
+                case ProjectItemType.Character: 
+                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<CharacterModel>(content));
+                case ProjectItemType.Map: 
+                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<MapModel>(content));
+                case ProjectItemType.TileSet: 
+                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<TileSetModel>(content));
+                case ProjectItemType.Palette: 
+                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<PaletteModel>(content));
+            }
+
+            return Task.FromResult<AFileModel>(null);
         }
 
         public static string GetValidFolderName(string path, string name)
