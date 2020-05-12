@@ -178,7 +178,7 @@ namespace NESTool.Commands
 
                 outputFile.Write($"${compressedData[i]:X2}");
 
-                if (i < compressedData.Count - 1)
+                if (i < compressedData.Count - 1 && i % 32 != 31)
                 {
                     outputFile.Write(",");
                 }
