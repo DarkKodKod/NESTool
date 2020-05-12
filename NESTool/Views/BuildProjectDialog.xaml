@@ -11,7 +11,7 @@
         xmlns:cv="clr-namespace:NESTool.Utils.Converters"
         xmlns:enum="clr-namespace:NESTool.Enums"
         ShowInTaskbar="False"
-        Title="Build" Height="260" Width="550"
+        Title="Build" Height="316" Width="550"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Window.DataContext>
         <vm:BuildProjectDialogViewModel />
@@ -68,14 +68,24 @@
                 </ComboBox>
             </Grid>
         </GroupBox>
-		<Label Grid.Row="2" Grid.Column="1" Content="Output directory" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <DockPanel Grid.Row="3" Grid.Column="1" LastChildFill="True">
-            <Button DockPanel.Dock="Right" HorizontalAlignment="Right" 
+        <GroupBox Grid.Row="2" Grid.Column="1" Header="Output" Margin="5" Padding="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="1" Content="Output directory" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <DockPanel Grid.Row="1" Grid.Column="1" LastChildFill="True">
+                    <Button DockPanel.Dock="Right" HorizontalAlignment="Right" 
 					VerticalAlignment="Center" Width="30" Content="..." 
 					Command="{Binding BrowseFolderCommand}" CommandParameter="{Binding ElementName=tbPath, Path=Text}"/>
-            <TextBox Name="tbPath" Height="23" Text="{Binding FolderPath, UpdateSourceTrigger=PropertyChanged}" 
+                    <TextBox Name="tbPath" Height="23" Text="{Binding FolderPath, UpdateSourceTrigger=PropertyChanged}" 
 					 TextWrapping="NoWrap" VerticalAlignment="Center" Width="auto"/>
-        </DockPanel>
+                </DockPanel>
+                <CheckBox Grid.Row="2" Margin="0,20,0,0" Content="Use RLE on maps" IsChecked="{Binding UseRLEOnMaps, Mode=TwoWay}"/>
+            </Grid>
+        </GroupBox>
         <Grid Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

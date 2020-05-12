@@ -15,6 +15,7 @@ namespace NESTool.ViewModels
     public class BuildProjectDialogViewModel : ViewModel
     {
         private string _folderPath;
+        private bool _useRLEOnMaps = false;
         private FileModelVO[] _patternTableSprites;
         private FileModelVO[] _patternTableBackgrounds;
         private int _selectedPatternTableSprite;
@@ -34,6 +35,24 @@ namespace NESTool.ViewModels
             {
                 _folderPath = value;
                 OnPropertyChanged("FolderPath");
+            }
+        }
+
+        public bool UseRLEOnMaps
+        {
+            get { return _useRLEOnMaps; }
+            set 
+            {
+                if (_useRLEOnMaps != value)
+                {
+                    ProjectModel project = ModelManager.Get<ProjectModel>();
+                    project.Build.UseRLEOnMaps = value;
+                    project.Save();
+
+                    _useRLEOnMaps = value;
+
+                    OnPropertyChanged("UseRLEOnMaps");
+                }
             }
         }
 
@@ -124,6 +143,7 @@ namespace NESTool.ViewModels
             ProjectModel project = ModelManager.Get<ProjectModel>();
 
             FolderPath = project.Build.OutputFilePath;
+            UseRLEOnMaps = project.Build.UseRLEOnMaps;
 
             CreatePatternTableArrays();
 

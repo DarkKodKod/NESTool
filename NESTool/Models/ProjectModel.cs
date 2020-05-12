@@ -36,14 +36,16 @@ namespace NESTool.Models
             public string OutputFilePath { get; set; }
             public string PatternTableSpriteId { get; set; }
             public string PatternTableBackgroundId { get; set; }
+            public bool UseRLEOnMaps { get; set; }
 
-			public BuildConfig()
+            public BuildConfig()
 			{
 				Reset();
 			}
 
 			public void Reset()
             {
+                UseRLEOnMaps = false;
                 OutputFilePath = "";
                 PatternTableSpriteId = "";
                 PatternTableBackgroundId = "";
@@ -94,6 +96,7 @@ namespace NESTool.Models
             Build.OutputFilePath = copy.Build.OutputFilePath;
             Build.PatternTableSpriteId = copy.Build.PatternTableSpriteId;
             Build.PatternTableBackgroundId = copy.Build.PatternTableBackgroundId;
+            Build.UseRLEOnMaps = copy.Build.UseRLEOnMaps;
 
             Header.INesMapper = copy.Header.INesMapper;
             Header.CHRSize = copy.Header.CHRSize;

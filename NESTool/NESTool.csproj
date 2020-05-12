@@ -219,6 +219,7 @@
     <Compile Include="Utils\Converters\EnumMatchToBooleanConverter.cs" />
     <Compile Include="Utils\Extensions\EnumBindingSourceExtension.cs" />
     <Compile Include="Utils\BanksUtils.cs" />
+    <Compile Include="Utils\RLE.cs" />
     <Compile Include="Utils\Selectors\TemplateSelector.cs" />
     <Compile Include="Utils\Utils.cs" />
     <Compile Include="Commands\BrowseFolderCommand.cs" />
