@@ -609,6 +609,11 @@ namespace NESTool.ViewModels
                 return;
             }
 
+            if (point.X < 0 || point.Y < 0)
+            {
+                return;
+            }
+
             if (sender.Name == "imgFrame")
             {
                 int index = ((int)point.X / 8) + (((int)point.Y / 8) * 32);
