@@ -52,6 +52,8 @@ namespace NESTool.Utils
         /// <param name="outputData"></param>
         public static void Compress(List<byte> inputData, out List<byte> outputData)
         {
+            const byte NullCharacter = 255;
+
             outputData = new List<byte>();
 
             List<byte> cache = new List<byte>();
@@ -105,7 +107,7 @@ namespace NESTool.Utils
             }
 
             // end token
-            outputData.Add(255);
+            outputData.Add(NullCharacter);
         }
     }
 }
