@@ -48,6 +48,10 @@
 	                       Height="240"
                            Source="{Binding FrameImage}"
                            Name="imgFrame"
+                           MouseUp="ImgFrame_MouseUp"
+                           MouseDown="ImgFrame_MouseDown"
+                           MouseLeave="ImgFrame_MouseLeave"
+                           MouseMove="ImgFrame_MouseMove"
 	                       Stretch="UniformToFill">
                         <i:Interaction.Behaviors>
                             <behaviors:EventToCommandBehavior Command="{Binding ImageMouseDownCommand}" Event="MouseDown" PassArguments="True" />

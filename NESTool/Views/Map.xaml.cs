@@ -5,6 +5,9 @@ using NESTool.UserControls.Views;
 using NESTool.ViewModels;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Input;
+using System.Windows;
+using NESTool.Utils;
 
 namespace NESTool.Views
 {
@@ -13,6 +16,8 @@ namespace NESTool.Views
     /// </summary>
     public partial class Map : UserControl, ICleanable
     {
+        private bool _mouseDown = false;
+
         public Map()
         {
             InitializeComponent();
@@ -80,6 +85,65 @@ namespace NESTool.Views
             ColorPaletteCleanup();
 
             SignalManager.Get<ColorPaletteControlSelectedSignal>().RemoveListener(OnColorPaletteControlSelected);
+        }
+
+        private void ImgFrame_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Image image)
+            {
+                if (image.IsMouseCaptured)
+                {
+                    image.ReleaseMouseCapture();
+                }
+            }
+
+            _mouseDown = false;
+        }
+
+        private void ImgFrame_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (sender is Image image)
+            {
+                if (image.IsMouseCaptured)
+                {
+                    image.ReleaseMouseCapture();
+                }
+            }
+
+            _mouseDown = false;
+        }
+
+        private void ImgFrame_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!_mouseDown)
+            {
+                return;
+            }
+
+            if (sender is Image image)
+            {
+                if (!image.IsMouseCaptured)
+                {
+                    return;
+                }
+
+                Point point = e.GetPosition(image);
+
+                Util.SendSelectedQuadrantSignal(image, point);
+            }
+        }
+
+        private void ImgFrame_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Image image)
+            {
+                if (!image.IsMouseCaptured)
+                {
+                    image.CaptureMouse();
+                }
+            }
+
+            _mouseDown = true;
         }
     }
 }

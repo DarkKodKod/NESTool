@@ -1,6 +1,8 @@
-﻿using ColorPalette;
+﻿using ArchitectureLibrary.Signals;
+using ColorPalette;
 using NESTool.Enums;
 using NESTool.Models;
+using NESTool.Signals;
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -216,6 +218,38 @@ namespace NESTool.Utils
 
             // copy dest buffer back to the dest WriteableBitmap
             dest.WritePixels(new Int32Rect(nXDest, nYDest, src.PixelWidth, src.PixelHeight), dest_buffer, dest_stride, 0);
+        }
+
+        public static bool SendSelectedQuadrantSignal(Image image, Point point)
+        {
+            if (image.ActualWidth == 0 || image.ActualHeight == 0)
+            {
+                return false;
+            }
+
+            int imageWidth = (int)Math.Ceiling(image.ActualWidth);
+            int imageHeight = (int)Math.Ceiling(image.ActualHeight);
+
+            WriteableBitmap writeableBmp = BitmapFactory.New(imageWidth, imageHeight);
+
+            using (writeableBmp.GetBitmapContext())
+            {
+                writeableBmp = BitmapFactory.ConvertToPbgra32Format(image.Source as BitmapSource);
+
+                int x = (int)Math.Floor(point.X / 8) * 8;
+                int y = (int)Math.Floor(point.Y / 8) * 8;
+
+                WriteableBitmap cropped = writeableBmp.Crop(x, y, 8, 8);
+
+                if (cropped.PixelHeight != 8 || cropped.PixelWidth != 8)
+                {
+                    return false;
+                }
+
+                SignalManager.Get<OutputSelectedQuadrantSignal>().Dispatch(image, cropped, new Point(x, y));
+            }
+
+            return true;
         }
     }
 }

@@ -394,6 +394,11 @@ namespace NESTool.ViewModels
 
         private void LoadPaletteIndex(int index)
         {
+            if (GetModel() == null)
+            {
+                return;
+            }
+
             if (!string.IsNullOrEmpty(GetModel().PaletteIDs[index]))
             {
                 for (int i = 0; i < Palettes.Length; ++i)
@@ -421,6 +426,11 @@ namespace NESTool.ViewModels
 
         private void LoadMetaTileProperties()
         {
+            if (GetModel() == null)
+            {
+                return;
+            }
+
             for (int i = 0; i < GetModel().AttributeTable.Length; ++i)
             {
                 _spritePaletteIndices[i] = GetModel().AttributeTable[i].PaletteIndex;
@@ -443,6 +453,11 @@ namespace NESTool.ViewModels
 
         private void LoadPalettes()
         {
+            if (GetModel() == null)
+            {
+                return;
+            }
+
             for (int i = 0; i < 4; ++i)
             {
                 string paletteId = GetModel().PaletteIDs[i];
