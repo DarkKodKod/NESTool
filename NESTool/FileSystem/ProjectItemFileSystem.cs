@@ -102,6 +102,8 @@ namespace NESTool.FileSystem
                     if (!ProjectFiles.Handlers.ContainsKey(fileHandler.FileModel.GUID))
                     {
                         ProjectFiles.Handlers.Add(fileHandler.FileModel.GUID, fileHandler);
+
+                        SignalManager.Get<ProjectItemLoadedSignal>().Dispatch(fileHandler.Path, fileHandler.Name);
                     }
                 }
             }

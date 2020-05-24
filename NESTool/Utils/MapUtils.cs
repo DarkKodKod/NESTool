@@ -35,6 +35,7 @@ namespace NESTool.Utils
                     }
 
                     bool erased = false;
+                    bool updateTile = false;
 
                     if (isUpdate == true)
                     {
@@ -45,13 +46,14 @@ namespace NESTool.Utils
                         }
 
                         erased = MapViewModel.FlagMapBitmapChanges[i] == TileUpdate.Erased;
+                        updateTile = MapViewModel.FlagMapBitmapChanges[i] == TileUpdate.Normal;
 
                         MapViewModel.FlagMapBitmapChanges[i] = TileUpdate.None;
                     }
 
                     foreach (MapTile tile in attTable.MapTile)
                     {
-                        if (isUpdate)
+                        if (isUpdate && !updateTile)
                         {
                             if (tile.Point != MapViewModel.PointMapBitmapChanges[i])
                             {
@@ -181,11 +183,11 @@ namespace NESTool.Utils
                             int paletteColor;
                             switch (colors.Count)
                             {
-                                case 0: paletteColor = paletteModel.Color0; break;
-                                case 1: paletteColor = paletteModel.Color1; break;
-                                case 2: paletteColor = paletteModel.Color2; break;
-                                case 3: paletteColor = paletteModel.Color3; break;
-                                default: paletteColor = paletteModel.Color0; break;
+                                case 0: paletteColor = paletteModel == null ? 0 : paletteModel.Color0; break;
+                                case 1: paletteColor = paletteModel == null ? 0 : paletteModel.Color1; break;
+                                case 2: paletteColor = paletteModel == null ? 0 : paletteModel.Color2; break;
+                                case 3: paletteColor = paletteModel == null ? 0 : paletteModel.Color3; break;
+                                default: paletteColor = paletteModel == null ? 0 : paletteModel.Color0; break;
                             }
 
                             Color newColor = Util.GetColorFromInt(paletteColor);

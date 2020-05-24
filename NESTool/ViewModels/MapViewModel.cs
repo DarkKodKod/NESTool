@@ -58,6 +58,7 @@ namespace NESTool.ViewModels
 
         #region Commands
         public ImageMouseDownCommand ImageMouseDownCommand { get; } = new ImageMouseDownCommand();
+        public FileModelVOSelectionChangedCommand FileModelVOSelectionChangedCommand { get; } = new FileModelVOSelectionChangedCommand();
         #endregion
 
         #region get/set
@@ -345,6 +346,8 @@ namespace NESTool.ViewModels
             SignalManager.Get<SelectPaletteIndexSignal>().AddListener(OnSelectPaletteIndex);
             SignalManager.Get<MapPaintToolSignal>().AddListener(OnMapPaintTool);
             SignalManager.Get<MapEraseToolSignal>().AddListener(OnMapEraseTool);
+            SignalManager.Get<ProjectItemLoadedSignal>().AddListener(OnProjectItemLoaded);
+            SignalManager.Get<FileModelVOSelectionChangedSignal>().AddListener(OnFileModelVOSelectionChanged);
             #endregion
 
             _doNotSavePalettes = true;
@@ -373,6 +376,8 @@ namespace NESTool.ViewModels
             SignalManager.Get<SelectPaletteIndexSignal>().RemoveListener(OnSelectPaletteIndex);
             SignalManager.Get<MapPaintToolSignal>().RemoveListener(OnMapPaintTool);
             SignalManager.Get<MapEraseToolSignal>().RemoveListener(OnMapEraseTool);
+            SignalManager.Get<ProjectItemLoadedSignal>().RemoveListener(OnProjectItemLoaded);
+            SignalManager.Get<FileModelVOSelectionChangedSignal>().RemoveListener(OnFileModelVOSelectionChanged);
             #endregion
         }
 
@@ -437,17 +442,62 @@ namespace NESTool.ViewModels
             }
         }
 
+        private void OnProjectItemLoaded(string path, string name)
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+
+            if (ProjectItem.FileHandler.Path != path || ProjectItem.FileHandler.Name != name)
+            {
+                return;
+            }
+        }
+
+        private void OnFileModelVOSelectionChanged(FileModelVO fileModel)
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+
+            if (_doNotSavePalettes)
+            {
+                return;
+            }
+
+            GroupedPalettes.Clear();
+
+            LoadFrameImage(false);
+        }
+
         private void OnSelectPaletteIndex(PaletteIndex paletteIndex)
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             PaletteIndex = paletteIndex;
         }
 
         private void OnMapPaintTool()
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             RectangleVisibility = Visibility.Hidden;
         }
         private void OnMapEraseTool()
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             RectangleVisibility = Visibility.Hidden;
         }
 
@@ -726,6 +776,11 @@ namespace NESTool.ViewModels
 
         private void OnUpdateMapImage()
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             LoadFrameImage(false);
         }
 

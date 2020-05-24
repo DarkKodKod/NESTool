@@ -1,6 +1,5 @@
 ﻿using ArchitectureLibrary.Signals;
 using NESTool.Enums;
-using NESTool.Models;
 using NESTool.ViewModels;
 using NESTool.VOs;
 using System.Windows;
@@ -18,6 +17,7 @@ namespace NESTool.Signals
     public class ShowGridSignal : Signal { }
     public class HideGridSignal : Signal { }
     public class ProjectConfigurationSavedSignal : Signal { }
+    public class ProjectItemLoadedSignal : Signal<string, string> { }
 
     // Edit
     public class PasteElementSignal : Signal<ProjectItem, ProjectItem> { }
