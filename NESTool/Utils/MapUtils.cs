@@ -13,7 +13,6 @@ namespace NESTool.Utils
 {
     public static class MapUtils
     {
-        private static Color NullColor = Util.GetColorFromInt(0);
         private static Color BackgroundColor = Color.FromRgb(System.Drawing.Color.DarkGray.R, System.Drawing.Color.DarkGray.G, System.Drawing.Color.DarkGray.B);
 
         public static void CreateImage(MapModel mapModel, ref WriteableBitmap mapBitmap, bool isUpdate)
@@ -141,7 +140,7 @@ namespace NESTool.Utils
 
             PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
 
-            Color firstColor = paletteModel == null ? NullColor : Util.GetColorFromInt(paletteModel.Color0);
+            Color firstColor = paletteModel == null ? Util.NullColor : Util.GetColorFromInt(paletteModel.Color0);
 
             Tuple<int, int> tuple = Tuple.Create(group, attributeTable.PaletteIndex);
 
@@ -150,7 +149,7 @@ namespace NESTool.Utils
                 colors = new Dictionary<Color, Color>
                 {
                     // always add the first color of the palette as the background color
-                    { NullColor, firstColor }
+                    { Util.NullColor, firstColor }
                 };
 
                 MapViewModel.GroupedPalettes.Add(tuple, colors);
@@ -220,7 +219,7 @@ namespace NESTool.Utils
 
                     if (!colors.TryGetValue(color, out Color newColor))
                     {
-                        newColor = NullColor;
+                        newColor = Util.NullColor;
                     }
 
                     bitmap.SetPixel(x, y, newColor);

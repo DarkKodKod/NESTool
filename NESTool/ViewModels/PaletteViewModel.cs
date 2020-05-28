@@ -42,6 +42,11 @@ namespace NESTool.ViewModels
 
 		private void LoadPalettes()
 		{
+			if (GetModel() == null)
+			{
+				return;
+			}
+
 			_doNotSavePalettes = true;
 
 			// Load palettes

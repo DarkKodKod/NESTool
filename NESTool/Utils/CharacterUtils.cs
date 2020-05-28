@@ -12,8 +12,6 @@ namespace NESTool.Utils
 {
     public static class CharacterUtils
     {
-        private static readonly int NullColor = 0;
-
         public static WriteableBitmap CreateImage(CharacterModel characterModel, int animationIndex, int frameIndex)
         {
             if (characterModel.Animations[animationIndex].Frames == null)
@@ -123,7 +121,7 @@ namespace NESTool.Utils
 
                     if (!colors.TryGetValue(color, out Color newColor))
                     {
-                        newColor = Util.GetColorFromInt(NullColor);
+                        newColor = Util.NullColor;
                     }
 
                     bitmap.SetPixel(x, y, newColor);
@@ -135,7 +133,7 @@ namespace NESTool.Utils
         {
             ProjectModel project = ModelManager.Get<ProjectModel>();
 
-            Color nullColor = Util.GetColorFromInt(NullColor);
+            Color nullColor = Util.NullColor;
 
             BankModel bank = ProjectFiles.GetModel<BankModel>(characterTile.BankID);
 

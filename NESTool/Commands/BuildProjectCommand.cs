@@ -527,9 +527,6 @@ namespace NESTool.Commands
             int currentY = 0;
             int matrixIndex = 0;
 
-            int transparent = 0;
-            Color transparentColor = Util.GetColorFromInt(transparent);
-
             Dictionary<int, Dictionary<Color, int>> groupedPalettes = new Dictionary<int, Dictionary<Color, int>>();
 
             // go throug the 16x16 tiles
@@ -543,7 +540,7 @@ namespace NESTool.Commands
                     {
                         colors = new Dictionary<Color, int>
                         {
-                            { transparentColor, 0 }
+                            { Util.NullColor, 0 }
                         };
 
                         groupedPalettes.Add(group, colors);
@@ -557,7 +554,7 @@ namespace NESTool.Commands
                             Color color = bitmap.GetPixel(x, y);
                             color.A = 255;
 
-                            if (!transparentColor.Equals(color))
+                            if (!Util.NullColor.Equals(color))
                             {
                                 if (!colors.TryGetValue(color, out int value))
                                 {

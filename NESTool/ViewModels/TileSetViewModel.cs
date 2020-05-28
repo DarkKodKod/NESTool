@@ -331,6 +331,11 @@ namespace NESTool.ViewModels
         {
             base.OnActivate();
 
+            if (GetModel() == null)
+            {
+                return;
+            }
+
             GridVisibility = MainWindow.ToolBarTileSetShowHideGrid ? Visibility.Visible : Visibility.Hidden;
 
             #region Signals
