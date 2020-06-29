@@ -196,5 +196,4 @@ Real Github's Issues are needed here. For now the list is just here with no real
 
 + Reimporting the same image to a TileSet element will make the tool crash.
 + Undo, Redo is not working inside each element.
-+ Sprite palettes color order is not matching the ones used in the real NES.
 + After an image is imported, the source image is not released.
