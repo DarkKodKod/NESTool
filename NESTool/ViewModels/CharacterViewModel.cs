@@ -15,7 +15,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace NESTool.ViewModels
 {
@@ -30,7 +29,6 @@ namespace NESTool.ViewModels
         private int _selectedPalette3 = -1;
         private int _selectedPalette4 = -1;
 
-        public static Dictionary<string, WriteableBitmap> FrameBitmapCache;
         public static Dictionary<Tuple<int, int>, Dictionary<Color, Color>> GroupedPalettes;
 
         #region Commands
@@ -213,7 +211,6 @@ namespace NESTool.ViewModels
 
             Palettes = list.ToArray();
 
-            FrameBitmapCache = new Dictionary<string, WriteableBitmap>();
             GroupedPalettes = new Dictionary<Tuple<int, int>, Dictionary<Color, Color>>();
 
             #region Signals

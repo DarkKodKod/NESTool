@@ -3,8 +3,8 @@ using ArchitectureLibrary.Signals;
 using NESTool.Commands;
 using NESTool.Models;
 using NESTool.Signals;
+using NESTool.Utils;
 using NESTool.VOs;
-using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -178,7 +178,7 @@ namespace NESTool.ViewModels
 
             PixelsChanged = false;
 
-            UpdateImage();
+            UpdateImage(true);
         }
 
         private void FillOutFilters()
@@ -264,25 +264,7 @@ namespace NESTool.ViewModels
                 return;
             }
 
-            //ProjectModel project = ModelManager.Get<ProjectModel>();
-            //Color transparentColor = Util.GetColorFromInt(project.TransparentColor);
-
             CroppedPoint = point;
-
-            /*for (int y = 0; y < 8; ++y)
-            {
-                for (int x = 0; x < 8; ++x)
-                {
-                    Color color = bitmap.GetPixel(x, y);
-
-                    if (color == transparentColor)
-                    {
-                        color.A = 0;
-                        bitmap.SetPixel(x, y, color);
-                    }
-                }
-            }*/
-
             CroppedImage = bitmap;
         }
 
@@ -406,40 +388,26 @@ namespace NESTool.ViewModels
             ActualWidth = GetModel().ImageWidth;
             ActualHeight = GetModel().ImageHeight;
 
-            UpdateImage();
+            UpdateImage(true);
         }
 
-        private void UpdateImage()
+        private void UpdateImage(bool redraw = false)
         {
             if (GetModel() == null)
             {
                 return;
             }
 
-            ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+            ImgSource = null;
 
-            if (string.IsNullOrEmpty(GetModel().ImagePath))
+            if (redraw || !TileSetModel.BitmapCache.TryGetValue(GetModel().GUID, out WriteableBitmap bitmap))
             {
-                return;
+                Util.GenerateBitmapFromTileSet(GetModel(), out bitmap);
+
+                TileSetModel.BitmapCache[GetModel().GUID] = bitmap;
             }
 
-            string path = Path.Combine(projectModel.ProjectPath, GetModel().ImagePath);
-
-            if (File.Exists(path))
-            {
-                ImgSource = null;
-
-                BitmapImage bmImage = new BitmapImage();
-
-                bmImage.BeginInit();
-                bmImage.CacheOption = BitmapCacheOption.OnLoad;
-                bmImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                bmImage.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
-                bmImage.EndInit();
-                bmImage.Freeze();
-
-                ImgSource = bmImage;
-            }
+            ImgSource = bitmap;
         }
     }
 }

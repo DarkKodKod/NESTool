@@ -9,14 +9,50 @@ using NESTool.Utils;
 using NESTool.VOs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace NESTool.ViewModels
 {
+    public class CellGroup : INotifyPropertyChanged
+    {
+        public int[] _items = new int[16 * 16];
+
+        public CellGroup()
+        {
+            for (int i = 0; i < _items.Length; ++i)
+            {
+                _items[i] = -1;
+            }
+        }
+
+        public int this[int i]
+        {
+            get
+            {
+                return _items[i];
+            }
+            set
+            {
+                _items[i] = value;
+
+                OnPropertyChanged(Binding.IndexerName);
+            }
+        }
+
+        protected virtual void OnPropertyChanged(string propname)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propname));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
+
     public class BanksViewModel : ItemViewModel
     {
         private double _actualWidth;
@@ -64,6 +100,8 @@ namespace NESTool.ViewModels
             }
         }
 
+        public CellGroup CellGroup { get; set; } = new CellGroup();
+
         public string SelectedIndex
         {
             get
@@ -95,6 +133,8 @@ namespace NESTool.ViewModels
                     {
                         if (int.TryParse(value, out int intValue))
                         {
+                            CellGroup[SelectedPatternTableTile] = intValue;
+
                             Model.PTTiles[SelectedPatternTableTile].Group = intValue;
 
                             ProjectItem.FileHandler.Save();
@@ -361,6 +401,14 @@ namespace NESTool.ViewModels
             ProjectItem.FileHandler.Save();
 
             LoadImage();
+
+            if (Model != null)
+            {
+                for (int i = 0; i < Model.PTTiles.Length; i++)
+                {
+                    CellGroup[i] = Model.PTTiles[i].Group;
+                }
+            }
         }
 
         private void OnFileModelVOSelectionChanged(FileModelVO fileModel)
@@ -408,6 +456,11 @@ namespace NESTool.ViewModels
             if (Model != null)
             {
                 SelectedPatternTableType = Model.PatternTableType;
+
+                for (int i = 0; i < Model.PTTiles.Length; i++)
+                {
+                    CellGroup[i] = Model.PTTiles[i].Group;
+                }
             }
 
             LoadTileSetImage();
@@ -513,6 +566,14 @@ namespace NESTool.ViewModels
 
             SelectionRectangleVisibility = Visibility.Hidden;
             SelectedPatternTableTile = -1;
+
+            if (Model != null)
+            {
+                for (int i = 0; i < Model.PTTiles.Length; i++)
+                {
+                    CellGroup[i] = Model.PTTiles[i].Group;
+                }
+            }
         }
 
         private void OnMouseWheel(MouseWheelVO vo)

@@ -1,11 +1,9 @@
-﻿using ArchitectureLibrary.Model;
-using NESTool.Enums;
+﻿using NESTool.Enums;
 using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -65,49 +63,32 @@ namespace NESTool.Utils
                             continue;
                         }
 
-                        BankModel ptModel = ProjectFiles.GetModel<BankModel>(tile.BankID);
+                        BankModel banckModel = ProjectFiles.GetModel<BankModel>(tile.BankID);
 
-                        if (ptModel == null)
+                        if (banckModel == null)
                         {
                             continue;
                         }
 
-                        PTTileModel bankModel = ptModel.GetTileModel(tile.BankTileID);
+                        PTTileModel bankModel = banckModel.GetTileModel(tile.BankTileID);
 
                         if (bankModel.TileSetID == null)
                         {
                             continue;
                         }
 
-                        if (!MapViewModel.FrameBitmapCache.TryGetValue(bankModel.TileSetID, out WriteableBitmap sourceBitmap))
+                        TileSetModel.BitmapCache.TryGetValue(bankModel.TileSetID, out WriteableBitmap tileSetBitmap);
+
+                        if (tileSetBitmap == null)
                         {
-                            TileSetModel model = ProjectFiles.GetModel<TileSetModel>(bankModel.TileSetID);
-
-                            if (model == null)
-                            {
-                                continue;
-                            }
-
-                            ProjectModel projectModel = ModelManager.Get<ProjectModel>();
-
-                            BitmapImage bmImage = new BitmapImage();
-
-                            bmImage.BeginInit();
-                            bmImage.CacheOption = BitmapCacheOption.OnLoad;
-                            bmImage.UriSource = new Uri(Path.Combine(projectModel.ProjectPath, model.ImagePath), UriKind.RelativeOrAbsolute);
-                            bmImage.EndInit();
-                            bmImage.Freeze();
-
-                            sourceBitmap = BitmapFactory.ConvertToPbgra32Format(bmImage as BitmapSource);
-
-                            MapViewModel.FrameBitmapCache.Add(bankModel.TileSetID, sourceBitmap);
+                            continue;
                         }
 
-                        CacheColorsFromBank(sourceBitmap, bankModel.Group, attTable, mapModel, ptModel);
+                        CacheColorsFromBank(tileSetBitmap, bankModel.Group, attTable, mapModel, banckModel);
 
-                        using (sourceBitmap.GetBitmapContext())
+                        using (tileSetBitmap.GetBitmapContext())
                         {
-                            WriteableBitmap cropped = sourceBitmap.Crop((int)bankModel.Point.X, (int)bankModel.Point.Y, 8, 8);
+                            WriteableBitmap cropped = tileSetBitmap.Crop((int)bankModel.Point.X, (int)bankModel.Point.Y, 8, 8);
 
                             if (erased)
                             {

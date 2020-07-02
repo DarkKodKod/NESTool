@@ -1,4 +1,5 @@
-﻿using ArchitectureLibrary.Signals;
+﻿using ArchitectureLibrary.Model;
+using ArchitectureLibrary.Signals;
 using ColorPalette;
 using NESTool.Enums;
 using NESTool.Models;
@@ -252,6 +253,34 @@ namespace NESTool.Utils
             }
 
             return true;
+        }
+
+        public static void GenerateBitmapFromTileSet(TileSetModel model, out WriteableBitmap bitmap)
+        {
+            bitmap = null;
+
+            ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+
+            if (string.IsNullOrEmpty(model.ImagePath))
+            {
+                return;
+            }
+
+            string path = Path.Combine(projectModel.ProjectPath, model.ImagePath);
+
+            if (File.Exists(path))
+            {
+                BitmapImage bmImage = new BitmapImage();
+
+                bmImage.BeginInit();
+                bmImage.CacheOption = BitmapCacheOption.OnLoad;
+                bmImage.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                bmImage.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
+                bmImage.EndInit();
+                bmImage.Freeze();
+
+                bitmap = BitmapFactory.ConvertToPbgra32Format(bmImage);
+            }
         }
     }
 }

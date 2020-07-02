@@ -1,10 +1,8 @@
-﻿using ArchitectureLibrary.Model;
-using NESTool.FileSystem;
+﻿using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -43,28 +41,11 @@ namespace NESTool.Utils
 
                     PTTileModel bankModel = ptModel.GetTileModel(tile.BankTileID);
 
-                    if (!CharacterViewModel.FrameBitmapCache.TryGetValue(bankModel.TileSetID, out WriteableBitmap sourceBitmap))
+                    TileSetModel.BitmapCache.TryGetValue(bankModel.TileSetID, out WriteableBitmap sourceBitmap);
+                    
+                    if (sourceBitmap == null)
                     {
-                        TileSetModel model = ProjectFiles.GetModel<TileSetModel>(bankModel.TileSetID);
-
-                        if (model == null)
-                        {
-                            continue;
-                        }
-
-                        ProjectModel projectModel = ModelManager.Get<ProjectModel>();
-
-                        BitmapImage bmImage = new BitmapImage();
-
-                        bmImage.BeginInit();
-                        bmImage.CacheOption = BitmapCacheOption.OnLoad;
-                        bmImage.UriSource = new Uri(Path.Combine(projectModel.ProjectPath, model.ImagePath), UriKind.RelativeOrAbsolute);
-                        bmImage.EndInit();
-                        bmImage.Freeze();
-
-                        sourceBitmap = BitmapFactory.ConvertToPbgra32Format(bmImage as BitmapSource);
-
-                        CharacterViewModel.FrameBitmapCache.Add(bankModel.TileSetID, sourceBitmap);
+                        continue;
                     }
 
                     using (sourceBitmap.GetBitmapContext())
@@ -131,8 +112,6 @@ namespace NESTool.Utils
 
         private static Dictionary<Color, Color> FillColorCacheByGroup(CharacterTile characterTile, int group, string paletteId)
         {
-            ProjectModel project = ModelManager.Get<ProjectModel>();
-
             Color nullColor = Util.NullColor;
 
             BankModel bank = ProjectFiles.GetModel<BankModel>(characterTile.BankID);
@@ -159,28 +138,16 @@ namespace NESTool.Utils
                         continue;
                     }
 
-                    bool exists = CharacterViewModel.FrameBitmapCache.TryGetValue(tile.TileSetID, out WriteableBitmap writeableBmp);
-
-                    if (!exists)
+                    TileSetModel.BitmapCache.TryGetValue(tile.TileSetID, out WriteableBitmap tileSetBitmap);
+                    
+                    if (tileSetBitmap == null)
                     {
-                        BitmapImage bmImage = new BitmapImage();
-
-                        string path = Path.Combine(project.ProjectPath, model.ImagePath);
-
-                        bmImage.BeginInit();
-                        bmImage.CacheOption = BitmapCacheOption.OnLoad;
-                        bmImage.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
-                        bmImage.EndInit();
-                        bmImage.Freeze();
-
-                        writeableBmp = BitmapFactory.ConvertToPbgra32Format(bmImage as BitmapSource);
-
-                        CharacterViewModel.FrameBitmapCache.Add(tile.TileSetID, writeableBmp);
+                        continue;
                     }
 
-                    using (writeableBmp.GetBitmapContext())
+                    using (tileSetBitmap.GetBitmapContext())
                     {
-                        WriteableBitmap cropped = writeableBmp.Crop((int)tile.Point.X, (int)tile.Point.Y, 8, 8);
+                        WriteableBitmap cropped = tileSetBitmap.Crop((int)tile.Point.X, (int)tile.Point.Y, 8, 8);
 
                         for (int y = 0; y < 8; ++y)
                         {

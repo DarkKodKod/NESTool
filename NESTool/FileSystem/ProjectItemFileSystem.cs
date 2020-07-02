@@ -103,7 +103,7 @@ namespace NESTool.FileSystem
                     {
                         ProjectFiles.Handlers.Add(fileHandler.FileModel.GUID, fileHandler);
 
-                        SignalManager.Get<ProjectItemLoadedSignal>().Dispatch(fileHandler.Path, fileHandler.Name);
+                        SignalManager.Get<ProjectItemLoadedSignal>().Dispatch(fileHandler.FileModel.GUID);
                     }
                 }
             }

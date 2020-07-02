@@ -17,7 +17,7 @@ namespace NESTool.Signals
     public class ShowGridSignal : Signal { }
     public class HideGridSignal : Signal { }
     public class ProjectConfigurationSavedSignal : Signal { }
-    public class ProjectItemLoadedSignal : Signal<string, string> { }
+    public class ProjectItemLoadedSignal : Signal<string> { }
 
     // Edit
     public class PasteElementSignal : Signal<ProjectItem, ProjectItem> { }

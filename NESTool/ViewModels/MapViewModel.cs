@@ -41,7 +41,6 @@ namespace NESTool.ViewModels
         private int _selectedPalette3 = -1;
         private int _selectedPalette4 = -1;
 
-        public static Dictionary<string, WriteableBitmap> FrameBitmapCache;
         public static Dictionary<Tuple<int, int>, Dictionary<Color, Color>> GroupedPalettes;
         public static TileUpdate[] FlagMapBitmapChanges;
         public static Point[] PointMapBitmapChanges;
@@ -336,7 +335,6 @@ namespace NESTool.ViewModels
                 FlagMapBitmapChanges[i] = TileUpdate.None;
             }
 
-            FrameBitmapCache = new Dictionary<string, WriteableBitmap>();
             GroupedPalettes = new Dictionary<Tuple<int, int>, Dictionary<Color, Color>>();
 
             #region Signals
@@ -442,14 +440,14 @@ namespace NESTool.ViewModels
             }
         }
 
-        private void OnProjectItemLoaded(string path, string name)
+        private void OnProjectItemLoaded(string id)
         {
             if (!IsActive)
             {
                 return;
             }
 
-            if (ProjectItem.FileHandler.Path != path || ProjectItem.FileHandler.Name != name)
+            if (GetModel().GUID != id)
             {
                 return;
             }
