@@ -63,32 +63,32 @@ namespace NESTool.Utils
                             continue;
                         }
 
-                        BankModel banckModel = ProjectFiles.GetModel<BankModel>(tile.BankID);
+                        BankModel bankModel = ProjectFiles.GetModel<BankModel>(tile.BankID);
 
-                        if (banckModel == null)
+                        if (bankModel == null)
                         {
                             continue;
                         }
 
-                        PTTileModel bankModel = banckModel.GetTileModel(tile.BankTileID);
+                        PTTileModel ptTileModel = bankModel.GetTileModel(tile.BankTileID);
 
-                        if (bankModel.TileSetID == null)
+                        if (ptTileModel.TileSetID == null)
                         {
                             continue;
                         }
 
-                        TileSetModel.BitmapCache.TryGetValue(bankModel.TileSetID, out WriteableBitmap tileSetBitmap);
+                        TileSetModel.BitmapCache.TryGetValue(ptTileModel.TileSetID, out WriteableBitmap tileSetBitmap);
 
                         if (tileSetBitmap == null)
                         {
                             continue;
                         }
 
-                        CacheColorsFromBank(tileSetBitmap, bankModel.Group, attTable, mapModel, banckModel);
+                        CacheColorsFromBank(ptTileModel.Group, attTable, mapModel, bankModel);
 
                         using (tileSetBitmap.GetBitmapContext())
                         {
-                            WriteableBitmap cropped = tileSetBitmap.Crop((int)bankModel.Point.X, (int)bankModel.Point.Y, 8, 8);
+                            WriteableBitmap cropped = tileSetBitmap.Crop((int)ptTileModel.Point.X, (int)ptTileModel.Point.Y, 8, 8);
 
                             if (erased)
                             {
@@ -96,7 +96,7 @@ namespace NESTool.Utils
                             }
                             else
                             {
-                                Tuple<int, PaletteIndex> colorsKey = Tuple.Create(bankModel.Group, (PaletteIndex)attTable.PaletteIndex);
+                                Tuple<int, PaletteIndex> colorsKey = Tuple.Create(ptTileModel.Group, (PaletteIndex)attTable.PaletteIndex);
 
                                 PaintPixelsBasedOnPalettes(ref cropped, colorsKey);
                             }
@@ -115,7 +115,7 @@ namespace NESTool.Utils
             }
         }
 
-        private static void CacheColorsFromBank(WriteableBitmap bankImage, int group, AttributeTable attributeTable, MapModel mapModel, BankModel bankModel)
+        private static void CacheColorsFromBank(int group, AttributeTable attributeTable, MapModel mapModel, BankModel bankModel)
         {
             string paletteId = mapModel.PaletteIDs[(int)attributeTable.PaletteIndex];
 
@@ -149,7 +149,14 @@ namespace NESTool.Utils
                     continue;
                 }
 
-                WriteableBitmap bitmap = bankImage.Crop((int)tile.Point.X, (int)tile.Point.Y, 8, 8);
+                TileSetModel.BitmapCache.TryGetValue(tile.TileSetID, out WriteableBitmap tileSetBitmap);
+
+                if (tileSetBitmap == null)
+                {
+                    continue;
+                }
+
+                WriteableBitmap bitmap = tileSetBitmap.Crop((int)tile.Point.X, (int)tile.Point.Y, 8, 8);
 
                 for (int y = 0; y < 8; ++y)
                 {

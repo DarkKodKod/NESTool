@@ -293,8 +293,7 @@ namespace NESTool
             mi.cbSize = Marshal.SizeOf(mi);
             GetMonitorInfoEx(MonitorFromWindow(hWnd, MONITOR_DEFAULTTOPRIMARY), ref mi);
 
-            Rect appBounds = new Rect();
-            GetWindowRect(hWnd, out appBounds);
+             GetWindowRect(hWnd, out Rect appBounds);
 
             double windowHeight = appBounds.Right - appBounds.Left;
             double windowWidth = appBounds.Bottom - appBounds.Top;
