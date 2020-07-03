@@ -459,6 +459,30 @@
                     </Image>
                 </ToggleButton>
             </ToolBar>
+            <ToolBar Name="tbrBanks">
+                <ToggleButton ToolTip="Show/Hide Group Marks" ToolBar.OverflowMode="AsNeeded" Name="tbShowHideGroupMarks">
+                    <i:Interaction.Behaviors>
+                        <behaviors:EventToCommandBehavior Command="{Binding ShowGroupMarksCommand}" Event="Checked" PassArguments="True" />
+                        <behaviors:EventToCommandBehavior Command="{Binding HideGroupMarksCommand}" Event="Unchecked" PassArguments="True" />
+                    </i:Interaction.Behaviors>
+                    <Image Width="16" Height="16" Source="/resources/group_mark.png">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <fx:GrayscaleEffect />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </ToggleButton>
+            </ToolBar>
             <ToolBar Name="tbrMap">
                 <ToggleButton ToolTip="Select" ToolBar.OverflowMode="AsNeeded" Name="tbMapSelect">
                     <i:Interaction.Behaviors>

@@ -39,6 +39,7 @@ namespace NESTool
         private ProjectItemType _currentViewType = ProjectItemType.None;
 
         public static bool ToolBarTileSetShowHideGrid = true;
+        public static bool ToolBarBanksShowHideGroupMarks = false;
         public static EditFrameTools ToolBarMapTool = EditFrameTools.Select;
 
         private readonly FieldInfo _menuDropAlignmentField;
@@ -70,6 +71,8 @@ namespace NESTool
             SignalManager.Get<DeleteElementSignal>().AddListener(OnDeleteElement);
             SignalManager.Get<ShowGridSignal>().AddListener(OnShowGrid);
             SignalManager.Get<HideGridSignal>().AddListener(OnHideGrid);
+            SignalManager.Get<ShowGroupMarksSignal>().AddListener(OnShowGroupMarks);
+            SignalManager.Get<HideGroupMarksSignal>().AddListener(OnHideGroupMarks);
             SignalManager.Get<MapPaintToolSignal>().AddListener(OnMapPaintTool);
             SignalManager.Get<MapSelectToolSignal>().AddListener(OnMapSelectTool);
             SignalManager.Get<MapEraseToolSignal>().AddListener(OnMapEraseTool);
@@ -78,6 +81,7 @@ namespace NESTool
             // Initialize visibility statte of the toolbars
             tbrTileSet.Visibility = Visibility.Collapsed;
             tbrMap.Visibility = Visibility.Collapsed;
+            tbrBanks.Visibility = Visibility.Collapsed;
         }
 
         private void OnHideGrid()
@@ -88,6 +92,16 @@ namespace NESTool
         private void OnShowGrid()
         {
             ToolBarTileSetShowHideGrid = true;
+        }
+
+        private void OnShowGroupMarks()
+        {
+            ToolBarBanksShowHideGroupMarks = true;
+        }
+
+        private void OnHideGroupMarks()
+        {
+            ToolBarBanksShowHideGroupMarks = false;
         }
 
         private void OnMapPaintTool()
@@ -146,10 +160,17 @@ namespace NESTool
 
             tbrTileSet.Visibility = Visibility.Collapsed;
             tbrMap.Visibility = Visibility.Collapsed;
+            tbrBanks.Visibility = Visibility.Collapsed;
 
             switch (item.Type)
             {
-                case ProjectItemType.Bank: view = new Banks(); break;
+                case ProjectItemType.Bank:
+                    tbrBanks.Visibility = Visibility.Visible;
+
+                    tbShowHideGroupMarks.IsChecked = ToolBarBanksShowHideGroupMarks;
+
+                    view = new Banks(); 
+                    break;
                 case ProjectItemType.Character: view = new Character(); break;
                 case ProjectItemType.Map:
                     tbrMap.Visibility = Visibility.Visible;
@@ -223,6 +244,7 @@ namespace NESTool
         {
             tbrTileSet.Visibility = Visibility.Collapsed;
             tbrMap.Visibility = Visibility.Collapsed;
+            tbrBanks.Visibility = Visibility.Collapsed;
 
             dpItemPanel.Children.Clear();
 

@@ -134,6 +134,7 @@
     <Compile Include="Commands\DropCommand.cs" />
     <Compile Include="Commands\DuplicateElementCommand.cs" />
     <Compile Include="Commands\HideGridCommand.cs" />
+    <Compile Include="Commands\HideGroupMarksCommand.cs" />
     <Compile Include="Commands\ImageMouseDownCommand.cs" />
     <Compile Include="Commands\ImportImageCommand.cs" />
     <Compile Include="Commands\MapEraseToolCommand.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Commands\NextFrameCharacterAnimationCommand.cs" />
     <Compile Include="Commands\OpenBuildProjectCommand.cs" />
     <Compile Include="Commands\ShowColorPaletteCommand.cs" />
+    <Compile Include="Commands\ShowGroupMarksCommand.cs" />
     <Compile Include="Commands\SwitchCharacterFrameViewCommand.cs" />
     <Compile Include="Commands\OpenImportImageDialogCommand.cs" />
     <Compile Include="Commands\ItemSelectedCommand.cs" />
@@ -481,6 +483,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\palette.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\group_mark.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

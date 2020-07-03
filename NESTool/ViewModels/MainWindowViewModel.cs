@@ -51,6 +51,8 @@ namespace NESTool.ViewModels
         public TreeviewSelectedItemChangedCommand TreeviewSelectedItemChangedCommand { get; } = new TreeviewSelectedItemChangedCommand();
         public ShowGridCommand ShowGridCommand { get; } = new ShowGridCommand();
         public HideGridCommand HideGridCommand { get; } = new HideGridCommand();
+        public ShowGroupMarksCommand ShowGroupMarksCommand { get; } = new ShowGroupMarksCommand();
+        public HideGroupMarksCommand HideGroupMarksCommand { get; } = new HideGroupMarksCommand();
         public MapPaintToolCommand MapPaintToolCommand { get; } = new MapPaintToolCommand();
         public MapEraseToolCommand MapEraseToolCommand { get; } = new MapEraseToolCommand();
         public MapSelectToolCommand MapSelectToolCommand { get; } = new MapSelectToolCommand();

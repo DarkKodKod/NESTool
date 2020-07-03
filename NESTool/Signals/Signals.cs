@@ -16,6 +16,8 @@ namespace NESTool.Signals
     public class CloseDialogSignal : Signal { }
     public class ShowGridSignal : Signal { }
     public class HideGridSignal : Signal { }
+    public class ShowGroupMarksSignal : Signal { }
+    public class HideGroupMarksSignal : Signal { }
     public class ProjectConfigurationSavedSignal : Signal { }
     public class ProjectItemLoadedSignal : Signal<string> { }
 

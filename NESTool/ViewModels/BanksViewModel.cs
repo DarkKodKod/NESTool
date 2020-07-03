@@ -76,6 +76,7 @@ namespace NESTool.ViewModels
         private double _selectionRectangleLeft = 0.0;
         private BankModel _model = null;
         private Dictionary<string, WriteableBitmap> _bitmapCache = new Dictionary<string, WriteableBitmap>();
+        private Visibility _groupMarkVisible = Visibility.Hidden;
 
         #region Commands
         public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
@@ -116,6 +117,20 @@ namespace NESTool.ViewModels
 
                     OnPropertyChanged("SelectedIndex");
                 }
+            }
+        }
+
+        public Visibility GroupMarkVisible
+        {
+            get
+            {
+                return _groupMarkVisible;
+            }
+            set
+            {
+                _groupMarkVisible = value;
+
+                OnPropertyChanged("GroupMarkVisible");
             }
         }
 
@@ -443,6 +458,8 @@ namespace NESTool.ViewModels
         {
             base.OnActivate();
 
+            GroupMarkVisible = MainWindow.ToolBarBanksShowHideGroupMarks ? Visibility.Visible : Visibility.Hidden;
+
             #region Signals
             SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
             SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
@@ -451,6 +468,8 @@ namespace NESTool.ViewModels
             SignalManager.Get<BankImageUpdatedSignal>().AddListener(OnBankImageUpdated);
             SignalManager.Get<SelectTileSetSignal>().AddListener(OnSelectTileSet);
             SignalManager.Get<BankTileDeletedSignal>().AddListener(OnBankTileDeleted);
+            SignalManager.Get<ShowGroupMarksSignal>().AddListener(OnShowGroupMarks);
+            SignalManager.Get<HideGroupMarksSignal>().AddListener(OnHideGroupMarks);
             #endregion
 
             if (Model != null)
@@ -481,6 +500,8 @@ namespace NESTool.ViewModels
             SignalManager.Get<BankImageUpdatedSignal>().RemoveListener(OnBankImageUpdated);
             SignalManager.Get<SelectTileSetSignal>().RemoveListener(OnSelectTileSet);
             SignalManager.Get<BankTileDeletedSignal>().RemoveListener(OnBankTileDeleted);
+            SignalManager.Get<ShowGroupMarksSignal>().RemoveListener(OnShowGroupMarks);
+            SignalManager.Get<HideGroupMarksSignal>().RemoveListener(OnHideGroupMarks);
             #endregion
         }
 
@@ -549,6 +570,26 @@ namespace NESTool.ViewModels
                 RectangleLeft = point.X;
                 RectangleTop = point.Y;
             }
+        }
+
+        private void OnHideGroupMarks()
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+
+            GroupMarkVisible = Visibility.Hidden;
+        }
+
+        private void OnShowGroupMarks()
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+
+            GroupMarkVisible = Visibility.Visible;
         }
 
         private void OnBankTileDeleted()
