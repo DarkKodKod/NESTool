@@ -96,7 +96,7 @@ namespace NESTool.Utils
                             }
                             else
                             {
-                                Tuple<int, int> colorsKey = Tuple.Create(bankModel.Group, attTable.PaletteIndex);
+                                Tuple<int, PaletteIndex> colorsKey = Tuple.Create(bankModel.Group, (PaletteIndex)attTable.PaletteIndex);
 
                                 PaintPixelsBasedOnPalettes(ref cropped, colorsKey);
                             }
@@ -117,13 +117,13 @@ namespace NESTool.Utils
 
         private static void CacheColorsFromBank(WriteableBitmap bankImage, int group, AttributeTable attributeTable, MapModel mapModel, BankModel bankModel)
         {
-            string paletteId = mapModel.PaletteIDs[attributeTable.PaletteIndex];
+            string paletteId = mapModel.PaletteIDs[(int)attributeTable.PaletteIndex];
 
             PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
 
             Color firstColor = paletteModel == null ? Util.NullColor : Util.GetColorFromInt(paletteModel.Color0);
 
-            Tuple<int, int> tuple = Tuple.Create(group, attributeTable.PaletteIndex);
+            Tuple<int, PaletteIndex> tuple = Tuple.Create(group, (PaletteIndex)attributeTable.PaletteIndex);
 
             if (!MapViewModel.GroupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))
             {
@@ -183,7 +183,7 @@ namespace NESTool.Utils
             }
         }
 
-        private static void PaintPixelsBasedOnPalettes(ref WriteableBitmap bitmap, Tuple<int, int> colorsKey)
+        private static void PaintPixelsBasedOnPalettes(ref WriteableBitmap bitmap, Tuple<int, PaletteIndex> colorsKey)
         {
             if (!MapViewModel.GroupedPalettes.TryGetValue(colorsKey, out Dictionary<Color, Color> colors))
             {

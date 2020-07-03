@@ -1,5 +1,6 @@
 ﻿using ArchitectureLibrary.Signals;
 using NESTool.Commands;
+using NESTool.Enums;
 using NESTool.Signals;
 using NESTool.Utils;
 using System;
@@ -14,7 +15,7 @@ namespace NESTool.Views
     /// </summary>
     public partial class ColorPaletteDialog : Window, INotifyPropertyChanged
     {
-        private readonly int _paletteIndex;
+        private readonly PaletteIndex _paletteIndex;
         private readonly int _colorPosition;
 
         #region Commands
@@ -22,7 +23,7 @@ namespace NESTool.Views
         public CloseDialogCommand CloseDialogCommand { get; } = new CloseDialogCommand();
         #endregion
 
-        public ColorPaletteDialog(int paletteIndex, int colorPosition)
+        public ColorPaletteDialog(PaletteIndex paletteIndex, int colorPosition)
         {
             InitializeComponent();
 

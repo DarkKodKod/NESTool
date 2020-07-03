@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows;
 using NESTool.Utils;
+using NESTool.Enums;
 
 namespace NESTool.Views
 {
@@ -27,7 +28,7 @@ namespace NESTool.Views
             #endregion
         }
 
-        private void OnColorPaletteControlSelected(Color color, int paletteIndex, int colorPosition)
+        private void OnColorPaletteControlSelected(Color color, PaletteIndex paletteIndex, int colorPosition)
         {
             if (DataContext is MapViewModel viewModel)
             {
@@ -46,10 +47,10 @@ namespace NESTool.Views
 
             switch (paletteIndex)
             {
-                case 0: palette = palette0; break;
-                case 1: palette = palette1; break;
-                case 2: palette = palette2; break;
-                case 3: palette = palette3; break;
+                case PaletteIndex.Palette0: palette = palette0; break;
+                case PaletteIndex.Palette1: palette = palette1; break;
+                case PaletteIndex.Palette2: palette = palette2; break;
+                case PaletteIndex.Palette3: palette = palette3; break;
             }
 
             switch (colorPosition)

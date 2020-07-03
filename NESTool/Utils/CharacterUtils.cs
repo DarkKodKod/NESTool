@@ -1,4 +1,5 @@
-﻿using NESTool.FileSystem;
+﻿using NESTool.Enums;
+using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.ViewModels;
 using System;
@@ -83,11 +84,11 @@ namespace NESTool.Utils
 
         private static void PaintPixelsBasedOnPalettes(ref WriteableBitmap bitmap, CharacterTile tile, CharacterModel model, int group)
         {
-            Tuple<int, int> tuple = Tuple.Create(group, tile.PaletteIndex);
+            Tuple<int, PaletteIndex> tuple = Tuple.Create(group, (PaletteIndex)tile.PaletteIndex);
 
             if (!CharacterViewModel.GroupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))
             {
-                colors = FillColorCacheByGroup(tile, group, model.PaletteIDs[tile.PaletteIndex]);
+                colors = FillColorCacheByGroup(tile, group, model.PaletteIDs[(int)tile.PaletteIndex]);
 
                 CharacterViewModel.GroupedPalettes.Add(tuple, colors);
             }

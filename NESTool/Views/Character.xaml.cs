@@ -1,4 +1,5 @@
 ﻿using ArchitectureLibrary.Signals;
+using NESTool.Enums;
 using NESTool.Signals;
 using NESTool.UserControls;
 using NESTool.UserControls.Views;
@@ -88,7 +89,7 @@ namespace NESTool.Views
             }
         }
 
-        private void OnColorPaletteControlSelected(Color color, int paletteIndex, int colorPosition)
+        private void OnColorPaletteControlSelected(Color color, PaletteIndex paletteIndex, int colorPosition)
         {
             if (DataContext is CharacterViewModel viewModel)
             {
@@ -107,10 +108,10 @@ namespace NESTool.Views
 
             switch (paletteIndex)
             {
-                case 0: palette = palette0; break;
-                case 1: palette = palette1; break;
-                case 2: palette = palette2; break;
-                case 3: palette = palette3; break;
+                case PaletteIndex.Palette0: palette = palette0; break;
+                case PaletteIndex.Palette1: palette = palette1; break;
+                case PaletteIndex.Palette2: palette = palette2; break;
+                case PaletteIndex.Palette3: palette = palette3; break;
             }
 
             switch (colorPosition)

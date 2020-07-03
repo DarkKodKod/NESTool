@@ -1,4 +1,5 @@
 ﻿using ArchitectureLibrary.Signals;
+using NESTool.Enums;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
@@ -52,16 +53,16 @@ namespace NESTool.ViewModels
 			// Load palettes
 			for (int i = 0; i < 4; ++i)
 			{
-				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(GetModel().Color0), i, 0);
-				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(GetModel().Color1), i, 1);
-				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(GetModel().Color2), i, 2);
-				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(GetModel().Color3), i, 3);
+				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(GetModel().Color0), (PaletteIndex)i, 0);
+				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(GetModel().Color1), (PaletteIndex)i, 1);
+				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(GetModel().Color2), (PaletteIndex)i, 2);
+				SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(GetModel().Color3), (PaletteIndex)i, 3);
 			}
 
 			_doNotSavePalettes = false;
 		}
 
-		private void OnColorPaletteControlSelected(Color color, int paletteIndex, int colorPosition)
+		private void OnColorPaletteControlSelected(Color color, PaletteIndex paletteIndex, int colorPosition)
 		{
 			if (!IsActive)
 			{

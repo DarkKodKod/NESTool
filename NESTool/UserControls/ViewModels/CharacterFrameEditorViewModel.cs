@@ -59,7 +59,7 @@ namespace NESTool.UserControls.ViewModels
         private bool _backBackground = false;
         private readonly bool[] _spritePropertiesX = new bool[64];
         private readonly bool[] _spritePropertiesY = new bool[64];
-        private readonly int[] _spritePaletteIndices = new int[64];
+        private readonly PaletteIndex[] _spritePaletteIndices = new PaletteIndex[64];
         private readonly bool[] _spritePropertiesBack = new bool[64];
 
         #region Commands
@@ -401,7 +401,7 @@ namespace NESTool.UserControls.ViewModels
             {
                 _spritePropertiesX[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].FlipX;
                 _spritePropertiesY[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].FlipY;
-                _spritePaletteIndices[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].PaletteIndex;
+                _spritePaletteIndices[i] = (PaletteIndex)CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].PaletteIndex;
                 _spritePropertiesBack[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].BackBackground;
             }
         }
@@ -573,9 +573,9 @@ namespace NESTool.UserControls.ViewModels
                     break;
                 case SpriteProperties.PaletteIndex:
 
-                    if (_spritePaletteIndices[SelectedFrameTile] != value.integer)
+                    if (_spritePaletteIndices[SelectedFrameTile] != (PaletteIndex)value.integer)
                     {
-                        _spritePaletteIndices[SelectedFrameTile] = value.integer;
+                        _spritePaletteIndices[SelectedFrameTile] = (PaletteIndex)value.integer;
 
                         CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].PaletteIndex = value.integer;
 

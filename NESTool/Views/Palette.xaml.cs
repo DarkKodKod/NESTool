@@ -1,4 +1,5 @@
 ﻿using ArchitectureLibrary.Signals;
+using NESTool.Enums;
 using NESTool.Signals;
 using NESTool.UserControls;
 using NESTool.Utils;
@@ -22,7 +23,7 @@ namespace NESTool.Views
             #endregion
         }
 
-        private void OnColorPaletteControlSelected(Color color, int paletteIndex, int colorPosition)
+        private void OnColorPaletteControlSelected(Color color, PaletteIndex paletteIndex, int colorPosition)
         {
             if (DataContext is PaletteViewModel viewModel)
             {

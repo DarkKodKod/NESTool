@@ -78,7 +78,7 @@ namespace NESTool.Signals
     public class NewAnimationFrameSignal : Signal<string> { }
     public class SwitchCharacterFrameViewSignal : Signal<string, int> { }
     public class DeleteAnimationFrameSignal : Signal<string, int> { }
-    public class ColorPaletteControlSelectedSignal : Signal<Color, int, int> { }
+    public class ColorPaletteControlSelectedSignal : Signal<Color, PaletteIndex, int> { }
     public class UpdateCharacterImageSignal : Signal { }
     public class SelectPaletteIndexSignal : Signal<PaletteIndex> { }
 

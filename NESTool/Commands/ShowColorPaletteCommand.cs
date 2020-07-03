@@ -1,4 +1,5 @@
 ﻿using ArchitectureLibrary.Commands;
+using NESTool.Enums;
 using NESTool.Views;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,11 +14,11 @@ namespace NESTool.Commands
             UserControl userControl = (UserControl)values[0];
             int colorPosition = (int)values[1];
 
-			int paletteIndex = 0;
+            PaletteIndex paletteIndex = PaletteIndex.Palette0;
 
 			if (values.Length > 2)
 			{
-				paletteIndex = (int)values[2];
+				paletteIndex = (PaletteIndex)values[2];
 			}
 
             Window window = Window.GetWindow(userControl);
