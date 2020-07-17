@@ -32,7 +32,8 @@
         Character   = 2,
         Map         = 3,
         TileSet     = 4,
-        Palette     = 5
+        Palette     = 5,
+        World       = 6
     }
 
     public enum BankType

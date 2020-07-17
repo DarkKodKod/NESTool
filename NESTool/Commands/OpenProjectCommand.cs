@@ -21,12 +21,14 @@ namespace NESTool.Commands
         private const string _folderMapsKey = "folderMaps";
         private const string _folderTileSetsKey = "folderTileSets";
         private const string _folderPalettesKey = "folderPalettes";
+        private const string _folderWorldsKey = "folderWorlds";
 
         private readonly string _folderBanks;
         private readonly string _folderCharacters;
         private readonly string _folderMaps;
         private readonly string _folderTileSets;
         private readonly string _folderPalettes;
+        private readonly string _folderWorlds;
 
         public OpenProjectCommand()
         {
@@ -35,6 +37,7 @@ namespace NESTool.Commands
             _folderMaps = (string)Application.Current.FindResource(_folderMapsKey);
             _folderTileSets = (string)Application.Current.FindResource(_folderTileSetsKey);
             _folderPalettes = (string)Application.Current.FindResource(_folderPalettesKey);
+            _folderWorlds = (string)Application.Current.FindResource(_folderWorldsKey);
         }
 
         public override bool CanExecute(object parameter)
@@ -146,6 +149,7 @@ namespace NESTool.Commands
                     directory.Name != _folderMaps &&
                     directory.Name != _folderTileSets &&
                     directory.Name != _folderPalettes &&
+                    directory.Name != _folderWorlds &&
                     parent == null)
                 {
                     continue;

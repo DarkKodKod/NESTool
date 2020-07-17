@@ -123,6 +123,8 @@ namespace NESTool.FileSystem
                     return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<TileSetModel>(content));
                 case ProjectItemType.Palette: 
                     return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<PaletteModel>(content));
+                case ProjectItemType.World:
+                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<WorldModel>(content));
             }
 
             return Task.FromResult<AFileModel>(null);
@@ -205,13 +207,16 @@ namespace NESTool.FileSystem
             {
                 AFileModel model = Util.FileModelFactory(item.Type);
 
-                string filePath = Path.Combine(path, name + model.FileExtension);
+                if (model != null)
+                {
+                    string filePath = Path.Combine(path, name + model.FileExtension);
 
-                Toml.WriteFile(model, filePath);
+                    Toml.WriteFile(model, filePath);
 
-                item.FileHandler.FileModel = model;
+                    item.FileHandler.FileModel = model;
 
-                ProjectFiles.Handlers.Add(item.FileHandler.FileModel.GUID, item.FileHandler);
+                    ProjectFiles.Handlers.Add(item.FileHandler.FileModel.GUID, item.FileHandler);
+                }
             }
             else
             {
