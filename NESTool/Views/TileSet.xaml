@@ -88,6 +88,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="330"/>
                 <RowDefinition Height="110"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Border BorderThickness="3" BorderBrush="Black" Margin="20,13,23,10">
@@ -146,8 +147,24 @@
                     </Canvas.OpacityMask>
                 </Canvas>
             </Border>
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0">Pseudonym:</Label>
+                <TextBox Grid.Row="0" Grid.Column="1" 
+                         Margin="0,0,15,0"
+                         Name="tbPseudonym"
+                         TextWrapping="NoWrap"
+                         Height="22"
+                         Text="{Binding Pseudonym, UpdateSourceTrigger=PropertyChanged}"/>
+            </Grid>
             <Button VerticalAlignment="Bottom" 
-                    Grid.Row="2" 
+                    Grid.Row="3" 
                     Margin="20" 
                     Height="23"
                     Content="Save"

@@ -26,6 +26,7 @@ namespace NESTool.ViewModels
         private Color _color = NullColor;
         private bool _pixelsChanged = false;
         private Point _croppedPoint;
+        private string _pseudonym;
 
         #region Commands
         public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
@@ -118,6 +119,36 @@ namespace NESTool.ViewModels
                 _imgSource = value;
 
                 OnPropertyChanged("ImgSource");
+            }
+        }
+
+        public int TileSelected
+        {
+            get;
+            set;
+        }
+
+        public string Pseudonym
+        {
+            get
+            {
+                return _pseudonym;
+            }
+            set
+            {
+                if (_pseudonym != value)
+                {
+                    _pseudonym = value;
+
+                    OnPropertyChanged("Pseudonym");
+
+                    if (TileSelected >= 0 && GetModel() != null)
+                    {
+                        GetModel().TilePseudonyms[TileSelected] = value;
+
+                        ProjectItem.FileHandler.Save();
+                    }
+                }
             }
         }
 
@@ -266,6 +297,15 @@ namespace NESTool.ViewModels
 
             CroppedPoint = point;
             CroppedImage = bitmap;
+
+            if (GetModel() != null)
+            {
+                int index = GetModel().GetIndexFromPosition(point);
+
+                TileSelected = index;
+
+                Pseudonym = GetModel().TilePseudonyms[index];
+            }
         }
 
         private void OnHideGrid()
@@ -345,6 +385,8 @@ namespace NESTool.ViewModels
             ActualHeight = GetModel().ImageHeight;
 
             UpdateImage();
+
+            TileSelected = -1;
         }
 
         public override void OnDeactivate()

@@ -3,6 +3,7 @@ using NESTool.Signals;
 using NESTool.Utils;
 using Nett;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -10,6 +11,7 @@ namespace NESTool.Models
 {
     public class TileSetModel : AFileModel
     {
+        private const int MaxPseudonyms = 512;
         private const string _extensionKey = "extensionTileSets";
 
         [TomlIgnore]
@@ -29,6 +31,7 @@ namespace NESTool.Models
         public string ImagePath { get; set; }
         public int ImageWidth { get; set; }
         public int ImageHeight { get; set; }
+        public string[] TilePseudonyms { get; set; } = Enumerable.Repeat(string.Empty, MaxPseudonyms).ToArray();
 
         public static Dictionary<string, WriteableBitmap> BitmapCache = new Dictionary<string, WriteableBitmap>();
 
@@ -50,6 +53,15 @@ namespace NESTool.Models
             {
                 BitmapCache.Add(GUID, bitmap);
             }
+        }
+
+        internal int GetIndexFromPosition(Point point)
+        {
+            int lengthWidth = (int)(ImageWidth / 8.0f);
+            int yPos = (int)(point.Y / 8.0f);
+            int xPos = (int)(point.X / 8.0f);
+
+            return (lengthWidth * yPos) + xPos;
         }
     }
 }
