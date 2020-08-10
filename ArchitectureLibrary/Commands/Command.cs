@@ -24,7 +24,7 @@ namespace ArchitectureLibrary.Commands
 
         public virtual async void Execute(object parameter)
         {
-            await ExecuteAsync(parameter);
+            await ExecuteAsync(parameter).ConfigureAwait(false);
         }
 
         public virtual void Deactivate()
