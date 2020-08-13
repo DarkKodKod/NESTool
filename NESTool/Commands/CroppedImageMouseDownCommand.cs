@@ -34,7 +34,7 @@ namespace NESTool.Commands
                 int x = (int)Math.Floor(point.X / 8);
                 int y = (int)Math.Floor(point.Y / 8);
 
-                SignalManager.Get<SelectedPixelSignal>().Dispatch(writeableBmp.Clone(), new System.Windows.Point(x, y));
+                SignalManager.Get<SelectedPixelSignal>().Dispatch(writeableBmp.Clone(), new Point(x, y));
             }
         }
     }

@@ -7,6 +7,9 @@ using NESTool.VOs;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using System;
 
 namespace NESTool.Views
 {
@@ -16,6 +19,7 @@ namespace NESTool.Views
     public partial class TileSet : UserControl, ICleanable
     {
         private Color _selectedColor = new Color();
+        private bool _mouseDown = false;
 
         public TileSet()
         {
@@ -104,6 +108,75 @@ namespace NESTool.Views
         {
             SignalManager.Get<MouseWheelSignal>().RemoveListener(OnMouseWheel);
             SignalManager.Get<ColorPaletteSelectSignal>().RemoveListener(OnColorPaletteSelect);
+        }
+
+        private void ImgSmall_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Image image)
+            {
+                if (image.IsMouseCaptured)
+                {
+                    image.ReleaseMouseCapture();
+                }
+            }
+
+            _mouseDown = false;
+        }
+
+        private void ImgSmall_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Image image)
+            {
+                if (!image.IsMouseCaptured)
+                {
+                    image.CaptureMouse();
+                }
+            }
+
+            _mouseDown = true;
+        }
+
+        private void ImgSmall_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (sender is Image image)
+            {
+                if (image.IsMouseCaptured)
+                {
+                    image.ReleaseMouseCapture();
+                }
+            }
+
+            _mouseDown = false;
+        }
+
+        private void ImgSmall_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!_mouseDown)
+            {
+                return;
+            }
+
+            if (sender is Image image)
+            {
+                if (!image.IsMouseCaptured)
+                {
+                    return;
+                }
+
+                Point point = e.GetPosition(image);
+
+                int x = (int)Math.Floor(point.X / 8);
+                int y = (int)Math.Floor(point.Y / 8);
+
+                if (x < 0 || y < 0 || x >= 8 || y >= 8)
+                {
+                    return;
+                }
+
+                WriteableBitmap writeableBmp = BitmapFactory.ConvertToPbgra32Format(image.Source as BitmapSource);
+
+                SignalManager.Get<SelectedPixelSignal>().Dispatch(writeableBmp.Clone(), new Point(x, y));
+            }
         }
     }
 }

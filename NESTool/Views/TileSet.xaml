@@ -103,6 +103,10 @@
                            RenderOptions.BitmapScalingMode="NearestNeighbor"
                            Width="64"
                            Height="64"
+                           MouseUp="ImgSmall_MouseUp"
+                           MouseDown="ImgSmall_MouseDown"
+                           MouseLeave="ImgSmall_MouseLeave"
+                           MouseMove="ImgSmall_MouseMove"
                            Stretch="UniformToFill">
                         <i:Interaction.Behaviors>
                             <behaviors:EventToCommandBehavior Command="{Binding CroppedImageMouseDownCommand}" Event="MouseDown" PassArguments="True" />
