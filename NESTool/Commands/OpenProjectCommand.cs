@@ -122,6 +122,8 @@ namespace NESTool.Commands
                 SignalManager.Get<CloseProjectSuccessSignal>().Dispatch();
             }
 
+            SignalManager.Get<ShowLoadingDialogSignal>().Dispatch();
+
             // load project configuration file
             projectModel.Load(directoryPath, projectFullPath);
 
@@ -218,6 +220,8 @@ namespace NESTool.Commands
                     item.Items.Add(fileItem);
 
                     SignalManager.Get<RegisterFileHandlerSignal>().Dispatch(fileItem, file.DirectoryName);
+
+                    ProjectFiles.ObjectsLoading++;
                 }
 
                 projectItems.Add(item);

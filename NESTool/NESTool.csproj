@@ -246,6 +246,7 @@
     <Compile Include="Utils\Behaviors\EventToCommandBehavior.cs" />
     <Compile Include="ViewModels\ImportImageDialogViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
+    <Compile Include="ViewModels\LoadingDialogViewModel.cs" />
     <Compile Include="ViewModels\MapViewModel.cs" />
     <Compile Include="ViewModels\PaletteViewModel.cs" />
     <Compile Include="ViewModels\ProjectItem.cs" />
@@ -273,6 +274,9 @@
     </Compile>
     <Compile Include="Views\ImportImageDialog.xaml.cs">
       <DependentUpon>ImportImageDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoadingDialog.xaml.cs">
+      <DependentUpon>LoadingDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Map.xaml.cs">
       <DependentUpon>Map.xaml</DependentUpon>
@@ -356,6 +360,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ImportImageDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoadingDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

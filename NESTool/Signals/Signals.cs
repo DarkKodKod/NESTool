@@ -20,6 +20,8 @@ namespace NESTool.Signals
     public class HideGroupMarksSignal : Signal { }
     public class ProjectConfigurationSavedSignal : Signal { }
     public class ProjectItemLoadedSignal : Signal<string> { }
+    public class ShowLoadingDialogSignal : Signal { }
+    public class HideLoadingDialogSignal : Signal { }
 
     // Edit
     public class PasteElementSignal : Signal<ProjectItem, ProjectItem> { }

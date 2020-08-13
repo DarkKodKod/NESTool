@@ -1,0 +1,30 @@
+﻿<Window x:Class="NESTool.Views.LoadingDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:NESTool.ViewModels"
+        xmlns:local="clr-namespace:NESTool.Views"
+        mc:Ignorable="d"
+        ShowInTaskbar="False"
+        Title="About NESTool" Height="100" Width="300"
+		ResizeMode="NoResize"
+        WindowStyle="None"
+		WindowStartupLocation="CenterOwner">
+    <Window.DataContext>
+        <vm:LoadingDialogViewModel />
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="1" Grid.Column="1">Loading...</Label>
+    </Grid>
+</Window>

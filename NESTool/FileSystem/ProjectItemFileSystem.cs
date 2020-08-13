@@ -130,6 +130,13 @@ namespace NESTool.FileSystem
                         ProjectFiles.Handlers.Add(fileHandler.FileModel.GUID, fileHandler);
 
                         SignalManager.Get<ProjectItemLoadedSignal>().Dispatch(fileHandler.FileModel.GUID);
+
+                        ProjectFiles.ObjectsLoading--;
+
+                        if (ProjectFiles.ObjectsLoading <= 0)
+                        {
+                            SignalManager.Get<HideLoadingDialogSignal>().Dispatch();
+                        }
                     }
                 }
             }

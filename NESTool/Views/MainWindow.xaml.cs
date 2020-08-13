@@ -42,6 +42,7 @@ namespace NESTool
         public static bool ToolBarBanksShowHideGroupMarks = false;
         public static EditFrameTools ToolBarMapTool = EditFrameTools.Select;
 
+        private readonly LoadingDialog _loadingDialog = new LoadingDialog();
         private readonly FieldInfo _menuDropAlignmentField;
 
         [DllImport("user32.dll")]
@@ -77,6 +78,8 @@ namespace NESTool
             SignalManager.Get<MapSelectToolSignal>().AddListener(OnMapSelectTool);
             SignalManager.Get<MapEraseToolSignal>().AddListener(OnMapEraseTool);
             SignalManager.Get<CloseProjectSuccessSignal>().AddListener(OnCloseProjectSuccess);
+            SignalManager.Get<ShowLoadingDialogSignal>().AddListener(OnShowLoadingDialog);
+            SignalManager.Get<HideLoadingDialogSignal>().AddListener(OnHideLoadingDialog);
 
             // Initialize visibility statte of the toolbars
             tbrTileSet.Visibility = Visibility.Collapsed;
@@ -239,6 +242,17 @@ namespace NESTool
 
                 dpItemPanel.UpdateLayout();
             }
+        }
+
+        private void OnShowLoadingDialog()
+        {
+            _loadingDialog.Owner = this;
+            _loadingDialog.Show();
+        }
+
+        private void OnHideLoadingDialog()
+        {
+            _loadingDialog.Hide();
         }
 
         private void OnCloseProjectSuccess()

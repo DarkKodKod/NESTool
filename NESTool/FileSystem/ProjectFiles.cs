@@ -7,6 +7,7 @@ namespace NESTool.FileSystem
     public static class ProjectFiles
     {
         public static Dictionary<string, FileHandler> Handlers = new Dictionary<string, FileHandler>();
+        public static int ObjectsLoading = 0;
 
         public static List<FileModelVO> GetModels<T>() where T : AFileModel
         {
