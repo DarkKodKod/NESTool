@@ -33,6 +33,7 @@ namespace NESTool.ViewModels
         private ImageSource _frameImage;
         private Visibility _rectangleVisibility = Visibility.Hidden;
         private bool _doNotSavePalettes = false;
+        private Visibility _gridVisibility = Visibility.Visible;
         private readonly PaletteIndex[] _spritePaletteIndices = new PaletteIndex[MapModel.MetaTileMax];
         private WriteableBitmap _mapBitmap;
         private FileModelVO[] _palettes;
@@ -69,6 +70,20 @@ namespace NESTool.ViewModels
                 _selectedPatternTableTile = value;
 
                 OnPropertyChanged("SelectedPatternTableTile");
+            }
+        }
+
+        public Visibility GridVisibility
+        {
+            get
+            {
+                return _gridVisibility;
+            }
+            set
+            {
+                _gridVisibility = value;
+
+                OnPropertyChanged("GridVisibility");
             }
         }
 
@@ -327,6 +342,8 @@ namespace NESTool.ViewModels
         {
             base.OnActivate();
 
+            GridVisibility = MainWindow.ToolBarMapShowHideGrid ? Visibility.Visible : Visibility.Hidden;
+
             FlagMapBitmapChanges = new TileUpdate[MapModel.MetaTileMax];
             PointMapBitmapChanges = new Point[MapModel.MetaTileMax];
 
@@ -346,6 +363,8 @@ namespace NESTool.ViewModels
             SignalManager.Get<MapEraseToolSignal>().AddListener(OnMapEraseTool);
             SignalManager.Get<ProjectItemLoadedSignal>().AddListener(OnProjectItemLoaded);
             SignalManager.Get<FileModelVOSelectionChangedSignal>().AddListener(OnFileModelVOSelectionChanged);
+            SignalManager.Get<ShowGridSignal>().AddListener(OnShowGrid);
+            SignalManager.Get<HideGridSignal>().AddListener(OnHideGrid);
             #endregion
 
             _doNotSavePalettes = true;
@@ -374,6 +393,8 @@ namespace NESTool.ViewModels
             SignalManager.Get<SelectPaletteIndexSignal>().RemoveListener(OnSelectPaletteIndex);
             SignalManager.Get<MapPaintToolSignal>().RemoveListener(OnMapPaintTool);
             SignalManager.Get<MapEraseToolSignal>().RemoveListener(OnMapEraseTool);
+            SignalManager.Get<ShowGridSignal>().RemoveListener(OnShowGrid);
+            SignalManager.Get<HideGridSignal>().RemoveListener(OnHideGrid);
             SignalManager.Get<ProjectItemLoadedSignal>().RemoveListener(OnProjectItemLoaded);
             SignalManager.Get<FileModelVOSelectionChangedSignal>().RemoveListener(OnFileModelVOSelectionChanged);
             #endregion
@@ -393,6 +414,26 @@ namespace NESTool.ViewModels
             SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(paletteModel.Color1), index, 1);
             SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(paletteModel.Color2), index, 2);
             SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(paletteModel.Color3), index, 3);
+        }
+
+        private void OnHideGrid()
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+
+            GridVisibility = Visibility.Hidden;
+        }
+
+        private void OnShowGrid()
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+
+            GridVisibility = Visibility.Visible;
         }
 
         private void LoadPaletteIndex(int index)

@@ -39,6 +39,7 @@ namespace NESTool
         private ProjectItemType _currentViewType = ProjectItemType.None;
 
         public static bool ToolBarTileSetShowHideGrid = true;
+        public static bool ToolBarMapShowHideGrid = true;
         public static bool ToolBarBanksShowHideGroupMarks = false;
         public static EditFrameTools ToolBarMapTool = EditFrameTools.Select;
 
@@ -90,11 +91,13 @@ namespace NESTool
         private void OnHideGrid()
         {
             ToolBarTileSetShowHideGrid = false;
+            ToolBarMapShowHideGrid = false;
         }
 
         private void OnShowGrid()
         {
             ToolBarTileSetShowHideGrid = true;
+            ToolBarMapShowHideGrid = true;
         }
 
         private void OnShowGroupMarks()
@@ -177,6 +180,8 @@ namespace NESTool
                 case ProjectItemType.Character: view = new Character(); break;
                 case ProjectItemType.Map:
                     tbrMap.Visibility = Visibility.Visible;
+
+                    tbMapShowHideGrid.IsChecked = ToolBarMapShowHideGrid;
 
                     switch (ToolBarMapTool)
                     {
