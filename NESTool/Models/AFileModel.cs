@@ -19,7 +19,14 @@ namespace NESTool.Models
 
         public void Save(string path, string name)
         {
-            Toml.WriteFile(this, Path.Combine(path, name + FileExtension));
+            try
+            {
+                Toml.WriteFile(this, Path.Combine(path, name + FileExtension));
+            }
+            catch (IOException)
+            {
+                // Sometimes the IO is overlapped with another one, I dont want to save if this happens
+            }
         }
     }
 }
