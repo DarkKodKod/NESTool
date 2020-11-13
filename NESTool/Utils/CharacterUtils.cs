@@ -42,6 +42,11 @@ namespace NESTool.Utils
 
                     PTTileModel bankModel = ptModel.GetTileModel(tile.BankTileID);
 
+                    if (string.IsNullOrEmpty(bankModel.GUID) && string.IsNullOrEmpty(bankModel.TileSetID))
+                    {
+                        continue;
+                    }
+
                     TileSetModel.BitmapCache.TryGetValue(bankModel.TileSetID, out WriteableBitmap sourceBitmap);
                     
                     if (sourceBitmap == null)
