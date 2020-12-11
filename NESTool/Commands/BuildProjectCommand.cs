@@ -208,7 +208,7 @@ namespace NESTool.Commands
 
                     if (!string.IsNullOrEmpty(model.MetaData))
                     {
-                        outputFile.WriteLine("; Meta Data");
+                        outputFile.WriteLine($"metadata_{item.Name}:");
 
                         string[] lines = model.MetaData.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
