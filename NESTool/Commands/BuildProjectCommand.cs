@@ -205,6 +205,44 @@ namespace NESTool.Commands
                     }
 
                     FormatBytes(serializedMap, outputFile, 8);
+
+                    if (!string.IsNullOrEmpty(model.MetaData))
+                    {
+                        outputFile.WriteLine("; Meta Data");
+
+                        string[] lines = model.MetaData.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+
+                        for (int i = 0; i < lines.Length; ++i)
+                        {
+                            string line = lines[i].Trim();
+
+                            if (string.IsNullOrWhiteSpace(line))
+                            {
+                                continue;
+                            }
+
+                            string[] bytes = line.Split(new[] { "," }, StringSplitOptions.None);
+
+                            outputFile.Write("    .byte ");
+
+                            for (int j = 0; j < bytes.Length; ++j)
+                            {
+                                if (!int.TryParse(bytes[j], out int nValue))
+                                {
+                                    continue;
+                                }
+
+                                outputFile.Write($"${nValue:X2}");
+
+                                if (j < bytes.Length - 1)
+                                {
+                                    outputFile.Write(", ");
+                                }
+                            }
+
+                            outputFile.Write(Environment.NewLine);
+                        }
+                    }
                 }
             }
         }

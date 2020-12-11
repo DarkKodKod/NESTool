@@ -476,7 +476,7 @@
                                 <behaviors:EventToCommandBehavior Command="{Binding ImageMouseDownCommand}" Event="MouseDown" PassArguments="True" />
                             </i:Interaction.Behaviors>
                         </Image>
-                        <Border Visibility="{Binding GridVisibility}">
+                        <Border>
                             <Border.Background>
                                 <VisualBrush TileMode="Tile"
                                              Viewport="0,0,8,8" ViewportUnits="Absolute" 

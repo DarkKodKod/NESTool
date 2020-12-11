@@ -34,6 +34,7 @@ namespace NESTool.ViewModels
         private Visibility _rectangleVisibility = Visibility.Hidden;
         private bool _doNotSavePalettes = false;
         private Visibility _gridVisibility = Visibility.Visible;
+        private string _metaData = string.Empty;
         private readonly PaletteIndex[] _spritePaletteIndices = new PaletteIndex[MapModel.MetaTileMax];
         private WriteableBitmap _mapBitmap;
         private FileModelVO[] _palettes;
@@ -84,6 +85,25 @@ namespace NESTool.ViewModels
                 _gridVisibility = value;
 
                 OnPropertyChanged("GridVisibility");
+            }
+        }
+
+        public string MetaData
+        {
+            get
+            {
+                return _metaData;
+            }
+            set
+            {
+                if (_metaData != value)
+                {
+                    _metaData = value;
+
+                    UpdateAndSaveMetaData(value);
+                }
+
+                OnPropertyChanged("MetaData");
             }
         }
 
@@ -306,6 +326,13 @@ namespace NESTool.ViewModels
         }
         #endregion
 
+        private void UpdateAndSaveMetaData(string metaData)
+        {
+            GetModel().MetaData = metaData;
+
+            ProjectItem.FileHandler.Save();
+        }
+
         private void UpdateAndSavePalette(int newValue, PaletteIndex index)
         {
             if (newValue == -1)
@@ -353,6 +380,11 @@ namespace NESTool.ViewModels
             }
 
             GroupedPalettes = new Dictionary<Tuple<int, PaletteIndex>, Dictionary<Color, Color>>();
+
+            if (GetModel() != null)
+            {
+                MetaData = GetModel().MetaData;
+            }
 
             #region Signals
             SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
