@@ -278,7 +278,7 @@ namespace NESTool.Commands
             }
 
             // Add always a null terminator
-            outputFile.Write("    .byte $FF");
+            outputFile.Write("    .byte $00");
             outputFile.Write(Environment.NewLine);
         }
 
