@@ -239,10 +239,10 @@ namespace NESTool.Commands
 
         private void PrintMetaData(MapModel model, FileModelVO item, StreamWriter outputFile)
         {
-            outputFile.WriteLine($"metadata_{item.Name}:");
-
             if (!string.IsNullOrEmpty(model.MetaData))
             {
+                outputFile.WriteLine($"metadata_{item.Name}:");
+
                 string[] lines = model.MetaData.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
                 for (int i = 0; i < lines.Length; ++i)
@@ -275,11 +275,11 @@ namespace NESTool.Commands
 
                     outputFile.Write(Environment.NewLine);
                 }
-            }
 
-            // Add always a null terminator
-            outputFile.Write("    .byte $00");
-            outputFile.Write(Environment.NewLine);
+                // Add always a null terminator
+                outputFile.Write("    .byte $00");
+                outputFile.Write(Environment.NewLine);
+            }
         }
 
         private void SerializeNametable(MapModel model, ref List<byte> serializedData)
