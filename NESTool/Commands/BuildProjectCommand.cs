@@ -258,6 +258,9 @@ namespace NESTool.Commands
 
                     outputFile.Write("    .byte ");
 
+                    bool mapElement = false;
+                    int cacheX = 0;
+
                     for (int j = 0; j < bytes.Length; ++j)
                     {
                         if (!int.TryParse(bytes[j], out int nValue))
@@ -265,11 +268,33 @@ namespace NESTool.Commands
                             continue;
                         }
 
-                        outputFile.Write($"${nValue:X2}");
-
-                        if (j < bytes.Length - 1)
+                        // This is not generic at all, but I need it for my game
+                        if (j == 0 && (nValue >= 5 && nValue <= 11))
                         {
-                            outputFile.Write(", ");
+                            mapElement = true;
+                        }
+
+                        if (mapElement && j == 1)
+                        {
+                            cacheX = nValue;
+                        }
+                        else if (mapElement && j == 2)
+                        {
+                            int dec = 8192 + ((32 * nValue) + cacheX);
+                            string str = $"{dec:X4}";
+
+                            string strLow = str.Substring(2, 2);
+                            string strHigh = str.Substring(0, 2);
+                            outputFile.Write($"${strLow}, ${strHigh}, ");
+                        }
+                        else
+                        {
+                            outputFile.Write($"${nValue:X2}");
+
+                            if (j < bytes.Length - 1)
+                            {
+                                outputFile.Write(", ");
+                            }
                         }
                     }
 
