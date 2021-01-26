@@ -271,6 +271,9 @@ namespace NESTool.Commands
 
                     bool mapElement = false;
                     int cacheX = 0;
+                    int cacheY = 0;
+                    int bigCellPosX = 0;
+                    int bigCellPosY = 0;
 
                     for (int j = 0; j < bytes.Length; ++j)
                     {
@@ -291,6 +294,8 @@ namespace NESTool.Commands
                         }
                         else if (mapElement && j == 2)
                         {
+                            cacheY = nValue;
+
                             // write PPU name table addresses
                             int dec = 8192 + (32 * nValue) + cacheX;
                             string str = $"{dec:X4}";
@@ -301,10 +306,10 @@ namespace NESTool.Commands
                             outputFile.Write($"${strLow}, ${strHigh}, ");
 
                             // write PPU attribute table addresses
-                            int x1 = Convert.ToInt32(cacheX / 32.0f * 8.0f);
-                            int y1 = Convert.ToInt32(nValue / 32.0f * 8.0f);
+                            bigCellPosX = Convert.ToInt32(cacheX / 32.0f * 8.0f);
+                            bigCellPosY = Convert.ToInt32(nValue / 32.0f * 8.0f);
 
-                            dec = 9152 + (8 * y1) + x1;
+                            dec = 9152 + (8 * bigCellPosY) + bigCellPosX;
                             str = $"{dec:X4}";
 
                             strLow = str.Substring(2, 2);
@@ -314,6 +319,47 @@ namespace NESTool.Commands
 
                             // write x, y coordinates
                             outputFile.Write($"${cacheX:X2}, ${nValue:X2}, ");
+                        }
+                        else if (mapElement && j == 3)
+                        {
+                            // value = (bottomright << 6) | (bottomleft << 4) | (topright << 2) | (topleft << 0);
+
+                            // check if is left or right and bottom or top
+                            int middleX = (4 * bigCellPosX) + 2;
+                            int middleY = (4 * bigCellPosY) + 2;
+
+                            int paletteIndex;
+
+                            // to the right
+                            if (cacheX >= middleX)
+                            {
+                                // to the top
+                                if (cacheY >= middleY)
+                                {
+                                    paletteIndex = nValue << 2;
+                                }
+                                else
+                                // to the bottom
+                                {
+                                    paletteIndex = nValue << 6;
+                                }
+                            }
+                            // to the left
+                            else
+                            {
+                                // to the top
+                                if (cacheY < middleY)
+                                {
+                                    paletteIndex = nValue;
+                                }
+                                else
+                                // to the bottom
+                                {
+                                    paletteIndex = nValue << 4;
+                                }
+                            }    
+
+                            outputFile.Write($"${paletteIndex:X2}, ");
                         }
                         else
                         {
