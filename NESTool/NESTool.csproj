@@ -61,8 +61,8 @@
     <ApplicationIcon>nestool.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommonServiceLocator, Version=2.0.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommonServiceLocator.2.0.5\lib\net46\CommonServiceLocator.dll</HintPath>
+    <Reference Include="CommonServiceLocator, Version=2.0.6.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.6\lib\net46\CommonServiceLocator.dll</HintPath>
     </Reference>
     <Reference Include="CustomMarshalers" />
     <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
