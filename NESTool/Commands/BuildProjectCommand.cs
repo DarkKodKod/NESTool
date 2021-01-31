@@ -334,7 +334,7 @@ namespace NESTool.Commands
                             if (cacheX >= middleX)
                             {
                                 // to the top
-                                if (cacheY >= middleY)
+                                if (cacheY > middleY)
                                 {
                                     paletteIndex = nValue << 2;
                                 }
