@@ -578,11 +578,7 @@ namespace NESTool.Commands
                 int colBoxAx = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetX;
                 int colBoxAy = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetY;
                 int colBoxBx = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetX + animation.CollisionInfo.Width;
-                int colBoxBy = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetY;
-                int colBoxCx = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetX;
                 int colBoxCy = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetY + animation.CollisionInfo.Height;
-                int colBoxDx = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetX + animation.CollisionInfo.Width;
-                int colBoxDy = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetY + animation.CollisionInfo.Height;
 
                 outputFile.WriteLine($"    ; number of frames");
                 outputFile.WriteLine($"    .byte ${frameNames.Count:X2} ; decimal {frameNames.Count}");
@@ -595,17 +591,13 @@ namespace NESTool.Commands
                 outputFile.WriteLine($"    ; |    |");
                 outputFile.WriteLine($"    ; |____|");
                 outputFile.WriteLine($"    ; c    d");
-                outputFile.WriteLine($"    ;        a         b         c         d");
-                outputFile.WriteLine($"    ;      x    y    x    y    x    y    x    y");
+                outputFile.WriteLine($"    ;        a       b     c");
+                outputFile.WriteLine($"    ;      x    y    x     y");
                 outputFile.Write($"    .byte ");
                 outputFile.Write($"${colBoxAx:X2}, ");
                 outputFile.Write($"${colBoxAy:X2}, ");
                 outputFile.Write($"${colBoxBx:X2}, ");
-                outputFile.Write($"${colBoxBy:X2}, ");
-                outputFile.Write($"${colBoxCx:X2}, ");
-                outputFile.Write($"${colBoxCy:X2}, ");
-                outputFile.Write($"${colBoxDx:X2}, ");
-                outputFile.Write($"${colBoxDy:X2}");
+                outputFile.Write($"${colBoxCy:X2}");
                 outputFile.Write(Environment.NewLine);
 
                 foreach (string frameName in frameNames)
