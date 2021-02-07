@@ -274,6 +274,7 @@ namespace NESTool.Commands
                     int cacheY = 0;
                     int bigCellPosX = 0;
                     int bigCellPosY = 0;
+                    int type = 0;
 
                     for (int j = 0; j < bytes.Length; ++j)
                     {
@@ -283,9 +284,14 @@ namespace NESTool.Commands
                         }
 
                         // This is not generic at all, but I need it for my game
-                        if (j == 0 && (nValue >= 5 && nValue <= 11))
+                        if (j == 0)
                         {
-                            mapElement = true;
+                            type = nValue;
+
+                            if (nValue >= 5 && nValue <= 13)
+                            {
+                                mapElement = true;
+                            }
                         }
 
                         if (mapElement && j == 1)
@@ -305,17 +311,20 @@ namespace NESTool.Commands
                             
                             outputFile.Write($"${strLow}, ${strHigh}, ");
 
-                            // write PPU attribute table addresses
-                            bigCellPosX = Convert.ToInt32(cacheX / 32.0f * 8.0f);
-                            bigCellPosY = Convert.ToInt32(nValue / 32.0f * 8.0f);
+                            if (type != 13 /* 13 = "add element" type */)
+                            {
+                                // write PPU attribute table addresses
+                                bigCellPosX = Convert.ToInt32(cacheX / 32.0f * 8.0f);
+                                bigCellPosY = Convert.ToInt32(nValue / 32.0f * 8.0f);
 
-                            dec = 9152 + (8 * bigCellPosY) + bigCellPosX;
-                            str = $"{dec:X4}";
+                                dec = 9152 + (8 * bigCellPosY) + bigCellPosX;
+                                str = $"{dec:X4}";
 
-                            strLow = str.Substring(2, 2);
-                            strHigh = str.Substring(0, 2);
-                            
-                            outputFile.Write($"${strLow}, ${strHigh}, ");
+                                strLow = str.Substring(2, 2);
+                                strHigh = str.Substring(0, 2);
+
+                                outputFile.Write($"${strLow}, ${strHigh}, ");
+                            }
 
                             // write x, y coordinates
                             outputFile.Write($"${cacheX:X2}, ${nValue:X2}, ");
