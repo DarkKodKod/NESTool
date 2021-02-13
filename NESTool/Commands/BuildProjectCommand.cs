@@ -288,7 +288,7 @@ namespace NESTool.Commands
                         {
                             type = nValue;
 
-                            if (nValue >= 5 && nValue <= 13)
+                            if (nValue >= 5 && nValue <= 14)
                             {
                                 mapElement = true;
                             }
@@ -329,10 +329,12 @@ namespace NESTool.Commands
                             // write x, y coordinates
                             outputFile.Write($"${cacheX:X2}, ${nValue:X2}, ");
                         }
-                        else if (mapElement && j == 3)
+                        else if (mapElement && j == 3 && type == 14 /* 14 = "Door" */)
                         {
-                            // value = (bottomright << 6) | (bottomleft << 4) | (topright << 2) | (topleft << 0);
-
+                            outputFile.Write($"${nValue:X2}, ");
+                        }
+                        else if (mapElement && j == 3 && type != 14 /* 14 = "Door" */)
+                        {
                             // check if is left or right and bottom or top
                             int middleX = (4 * bigCellPosX) + 2;
                             int middleY = (4 * bigCellPosY) + 2;
