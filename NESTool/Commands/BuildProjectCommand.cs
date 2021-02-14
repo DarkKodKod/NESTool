@@ -314,8 +314,8 @@ namespace NESTool.Commands
                             if (type != 13 /* 13 = "add element" type */)
                             {
                                 // write PPU attribute table addresses
-                                bigCellPosX = Convert.ToInt32(cacheX / 32.0f * 8.0f);
-                                bigCellPosY = Convert.ToInt32(nValue / 32.0f * 8.0f);
+                                bigCellPosX = (int)Math.Floor(cacheX / 32.0f * 8.0f);
+                                bigCellPosY = (int)Math.Floor(nValue / 32.0f * 8.0f);
 
                                 dec = 9152 + (8 * bigCellPosY) + bigCellPosX;
                                 str = $"{dec:X4}";
@@ -329,7 +329,7 @@ namespace NESTool.Commands
                             // write x, y coordinates
                             outputFile.Write($"${cacheX:X2}, ${nValue:X2}, ");
                         }
-                        else if (mapElement && j == 3 && type == 14 /* 14 = "Door" */)
+                        else if (mapElement && j == 3 && (type == 14 || type == 13) /* 14 = "Door", 13 = "add element" */)
                         {
                             outputFile.Write($"${nValue:X2}, ");
                         }
