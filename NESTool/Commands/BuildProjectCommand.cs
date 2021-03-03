@@ -317,7 +317,7 @@ namespace NESTool.Commands
                                 bigCellPosX = (int)Math.Floor(cacheX / 32.0f * 8.0f);
                                 bigCellPosY = (int)Math.Floor(nValue / 32.0f * 8.0f);
 
-                                dec = 9152 + (8 * bigCellPosY) + bigCellPosX;
+                                dec = /*PPU address = $23C0*/9152 + (8 * bigCellPosY) + bigCellPosX;
                                 str = $"{dec:X4}";
 
                                 strLow = str.Substring(2, 2);
@@ -345,7 +345,7 @@ namespace NESTool.Commands
                             if (cacheX >= middleX)
                             {
                                 // to the top
-                                if (cacheY > middleY)
+                                if (cacheY < middleY)
                                 {
                                     paletteIndex = nValue << 2;
                                 }
