@@ -204,18 +204,21 @@ namespace NESTool.Commands
 
                     serializedMap.Clear();
 
-                    outputFile.WriteLine($"att_{item.Name}:");
-
-                    SerializeAttributes(model, ref serializedMap);
-
-                    if (projectModel.Build.UseRLEOnMaps)
+                    if (model.ExportAttributeTable)
                     {
-                        RLE.Compress(serializedMap, out List<byte> compressedData);
+                        outputFile.WriteLine($"att_{item.Name}:");
 
-                        serializedMap = compressedData;
+                        SerializeAttributes(model, ref serializedMap);
+
+                        if (projectModel.Build.UseRLEOnMaps)
+                        {
+                            RLE.Compress(serializedMap, out List<byte> compressedData);
+
+                            serializedMap = compressedData;
+                        }
+
+                        FormatBytes(serializedMap, outputFile, 8);
                     }
-
-                    FormatBytes(serializedMap, outputFile, 8);
 
                     PrintMetaData(model, item, outputFile);
                 }

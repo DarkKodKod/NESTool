@@ -10,7 +10,7 @@
              xmlns:cv="clr-namespace:NESTool.Utils.Converters"
 			 xmlns:vm="clr-namespace:NESTool.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="770" d:DesignWidth="1300">
+             d:DesignHeight="790" d:DesignWidth="1300">
     <UserControl.DataContext>
         <vm:MapViewModel />
     </UserControl.DataContext>
@@ -86,6 +86,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="450"/>
                 <RowDefinition Height="200" />
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <GroupBox Grid.Row="0" Header="Banks" Margin="0,10,0,0">
@@ -151,7 +152,7 @@
                     </Border>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="Palettes" Grid.Row="1" Margin="0,10,0,10">
+            <GroupBox Header="Palettes" Grid.Row="1" Margin="0,2,0,0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
@@ -265,7 +266,12 @@
                     </Grid>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="Meta Data" Grid.Row="2" Margin="0,10,0,10">
+            <GroupBox Header="Options" Grid.Row="2" Margin="0,2,0,0">
+                <Grid>
+                    <CheckBox IsChecked="{Binding ExportAttributeTable, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Row="2">Export Attribute Table</CheckBox>
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="Meta Data" Grid.Row="3" Margin="0,2,0,10">
                 <Grid>
                     <TextBox AcceptsReturn="True" TextWrapping="NoWrap" Text="{Binding Path=MetaData,Mode=TwoWay}" />
                 </Grid>

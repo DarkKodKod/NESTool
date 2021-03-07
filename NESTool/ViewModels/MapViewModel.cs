@@ -35,6 +35,7 @@ namespace NESTool.ViewModels
         private bool _doNotSavePalettes = false;
         private Visibility _gridVisibility = Visibility.Visible;
         private string _metaData = string.Empty;
+        private bool _exportAttributeTable = true;
         private readonly PaletteIndex[] _spritePaletteIndices = new PaletteIndex[MapModel.MetaTileMax];
         private WriteableBitmap _mapBitmap;
         private FileModelVO[] _palettes;
@@ -85,6 +86,25 @@ namespace NESTool.ViewModels
                 _gridVisibility = value;
 
                 OnPropertyChanged("GridVisibility");
+            }
+        }
+
+        public bool ExportAttributeTable
+        {
+            get
+            {
+                return _exportAttributeTable;
+            }
+            set
+            { 
+                if (_exportAttributeTable != value)
+                {
+                    _exportAttributeTable = value;
+
+                    UpdateAndSaveExportAttributeTable(value);
+                }
+
+                OnPropertyChanged("ExportAttributeTable");
             }
         }
 
@@ -329,6 +349,13 @@ namespace NESTool.ViewModels
         private void UpdateAndSaveMetaData(string metaData)
         {
             GetModel().MetaData = metaData;
+
+            ProjectItem.FileHandler.Save();
+        }
+
+        private void UpdateAndSaveExportAttributeTable(bool exportAttributeTable)
+        {
+            GetModel().ExportAttributeTable = exportAttributeTable;
 
             ProjectItem.FileHandler.Save();
         }
