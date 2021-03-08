@@ -408,6 +408,8 @@ namespace NESTool.ViewModels
 
             GroupedPalettes = new Dictionary<Tuple<int, PaletteIndex>, Dictionary<Color, Color>>();
 
+            ExportAttributeTable = GetModel().ExportAttributeTable;
+
             if (GetModel() != null)
             {
                 MetaData = GetModel().MetaData;
