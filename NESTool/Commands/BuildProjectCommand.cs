@@ -519,9 +519,6 @@ namespace NESTool.Commands
                 int frameIndex = 0;
                 List<string> frameNames = new List<string>();
 
-                int halfMetaSprite = 0;
-                int maxHorzSize = 0;
-
                 for (int i = 0; i < animation.Frames.Length; ++i)
                 {
                     if (animation.Frames[i].Tiles == null)
@@ -554,13 +551,6 @@ namespace NESTool.Commands
 
                         byte horiz = (byte)charTile.Point.X;
                         byte vert = (byte)charTile.Point.Y;
-
-                        if (maxHorzSize < horiz + 8)
-                        {
-                            maxHorzSize = horiz + 8;
-
-                            halfMetaSprite = maxHorzSize / 2;
-                        }
 
                         BankModel bank = ProjectFiles.GetModel<BankModel>(charTile.BankID);
                         byte tile = (byte)bank.GetTileIndex(charTile.BankTileID);
@@ -598,8 +588,6 @@ namespace NESTool.Commands
                 outputFile.WriteLine($"    .byte ${frameNames.Count:X2} ; decimal {frameNames.Count}");
                 outputFile.WriteLine($"    ; frame duration");
                 outputFile.WriteLine($"    .byte ${frameDuration:X2} ; decimal {frameDuration}");
-                outputFile.WriteLine($"    ; half size");
-                outputFile.WriteLine($"    .byte ${halfMetaSprite:X2} ; decimal {halfMetaSprite}");
                 outputFile.WriteLine($"    ; collision");
                 outputFile.WriteLine($"    ; a____b");
                 outputFile.WriteLine($"    ; |    |");
