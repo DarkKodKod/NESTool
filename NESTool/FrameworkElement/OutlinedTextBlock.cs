@@ -296,7 +296,8 @@ namespace NESTool
 			  FlowDirection,
 			  new Typeface(FontFamily, FontStyle, FontWeight, FontStretch),
 			  FontSize,
-			  Brushes.Black);
+			  Brushes.Black,
+			  VisualTreeHelper.GetDpi(this).PixelsPerDip);
 
 			UpdateFormattedText();
 		}
