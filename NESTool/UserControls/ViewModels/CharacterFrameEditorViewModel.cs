@@ -45,7 +45,7 @@ namespace NESTool.UserControls.ViewModels
         private Visibility _selectionRectangleVisibility = Visibility.Hidden;
         private double _selectionRectangleTop = 0.0;
         private double _selectionRectangleLeft = 0.0;
-        private int _selectedPatternTableTile;
+        private int _selectedBankTile;
         private int _selectedFrameTile = -1;
         private CharacterModel _characterModel;
         private FileHandler _fileHandler;
@@ -215,14 +215,14 @@ namespace NESTool.UserControls.ViewModels
             }
         }
 
-        public int SelectedPatternTableTile
+        public int SelectedBankTile
         {
-            get { return _selectedPatternTableTile; }
+            get { return _selectedBankTile; }
             set
             {
-                _selectedPatternTableTile = value;
+                _selectedBankTile = value;
 
-                OnPropertyChanged("SelectedPatternTableTile");
+                OnPropertyChanged("SelectedBankTile");
             }
         }
 
@@ -409,7 +409,7 @@ namespace NESTool.UserControls.ViewModels
         private void UpdateDialogInfo()
         {
             IEnumerable<FileModelVO> banks = ProjectFiles.GetModels<BankModel>().ToArray()
-                .Where(p => (p.Model as BankModel).PatternTableType == PatternTableType.Characters);
+                .Where(p => (p.Model as BankModel).BankUseType == BankUseType.Characters);
 
             Banks = new FileModelVO[banks.Count()];
 
@@ -484,7 +484,7 @@ namespace NESTool.UserControls.ViewModels
                     EraseTile();
                 }
             }
-            else if (sender.Name == "imgPatternTable")
+            else if (sender.Name == "imgBank")
             {
                 SelectionRectangleVisibility = Visibility.Visible;
                 SelectionRectangleLeft = point.X;
@@ -492,7 +492,7 @@ namespace NESTool.UserControls.ViewModels
 
                 int index = ((int)point.X / 8) + (((int)point.Y / 8) * 16);
 
-                SelectedPatternTableTile = index;
+                SelectedBankTile = index;
             }
         }
 
@@ -504,7 +504,7 @@ namespace NESTool.UserControls.ViewModels
             FlipY = _spritePropertiesY[SelectedFrameTile];
             BackBackground = _spritePropertiesBack[SelectedFrameTile];
 
-            SignalManager.Get<SelectPaletteIndexSignal>().Dispatch((PaletteIndex)_spritePaletteIndices[SelectedFrameTile]);
+            SignalManager.Get<SelectPaletteIndexSignal>().Dispatch(_spritePaletteIndices[SelectedFrameTile]);
         }
 
         private void PaintTile()
@@ -517,7 +517,7 @@ namespace NESTool.UserControls.ViewModels
 
             BankModel model = Banks[SelectedBank].Model as BankModel;
 
-            string guid = model.PTTiles[SelectedPatternTableTile].GUID;
+            string guid = model.PTTiles[SelectedBankTile].GUID;
 
             CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].Point = characterPoint;
             CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankID = model.GUID;
@@ -615,9 +615,9 @@ namespace NESTool.UserControls.ViewModels
                 return;
             }
 
-            WriteableBitmap patternTableBitmap = BanksUtils.CreateImage(model, ref _bitmapCache);
+            WriteableBitmap bankBitmap = BanksUtils.CreateImage(model, ref _bitmapCache);
 
-            BankImage = Util.ConvertWriteableBitmapToBitmapImage(patternTableBitmap);
+            BankImage = Util.ConvertWriteableBitmapToBitmapImage(bankBitmap);
         }
 
         private void LoadFrameImage()

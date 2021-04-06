@@ -177,7 +177,7 @@
     <Compile Include="UserControls\ICleanable.cs" />
     <Compile Include="UserControls\ViewModels\CharacterAnimationViewModel.cs" />
     <Compile Include="UserControls\ViewModels\CharacterFrameEditorViewModel.cs" />
-    <Compile Include="UserControls\ViewModels\PatternTableLinkViewModel.cs" />
+    <Compile Include="UserControls\ViewModels\BankLinkViewModel.cs" />
     <Compile Include="UserControls\Views\CharacterAnimationView.xaml.cs">
       <DependentUpon>CharacterAnimationView.xaml</DependentUpon>
     </Compile>
@@ -193,8 +193,8 @@
     <Compile Include="UserControls\Views\PaletteViewBig.xaml.cs">
       <DependentUpon>PaletteViewBig.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Views\PatternTableLinkView.xaml.cs">
-      <DependentUpon>PatternTableLinkView.xaml</DependentUpon>
+    <Compile Include="UserControls\Views\BankLinkView.xaml.cs">
+      <DependentUpon>BankLinkView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\Behaviors\RedirectRoutedEventBehavior.cs" />
     <Compile Include="Utils\CharacterUtils.cs" />
@@ -331,7 +331,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\Views\PatternTableLinkView.xaml">
+    <Page Include="UserControls\Views\BankLinkView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

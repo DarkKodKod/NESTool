@@ -1,5 +1,6 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Model;
+using NESTool.Enums;
 using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Utils;
@@ -16,16 +17,7 @@ namespace NESTool.Commands
 {
     public class BuildProjectCommand : Command
     {
-        private const string _patterntableOutputFileKey = "PatterntableOutputFile";
-        private Dictionary<string, WriteableBitmap> _bitmapCache = new Dictionary<string, WriteableBitmap>();
-        private readonly string _patterntableOutputFile;
-
         private const int NESFPS = 60;
-
-        public BuildProjectCommand()
-        {
-            _patterntableOutputFile = (string)Application.Current.FindResource(_patterntableOutputFileKey);
-        }
 
         public override void Execute(object parameter)
         {
@@ -36,7 +28,7 @@ namespace NESTool.Commands
             }
 
             BuildPalettes();
-            BuildPatternTables();
+            BuildBanks();
             BuildMetaSprites();
             BuildBackgrounds();
             BuildTilesDefinition();
@@ -126,7 +118,7 @@ namespace NESTool.Commands
                 {
                     BankModel model = vo.Model as BankModel;
 
-                    if (model.PatternTableType == Enums.PatternTableType.Characters)
+                    if (model.BankUseType != BankUseType.Background)
                     {
                         continue;
                     }
@@ -656,62 +648,57 @@ namespace NESTool.Commands
             outputFile.WriteLine("");
         }
 
-        private void BuildPatternTables()
+        private void BuildBanks()
         {
-            const int cells = 16 * 16;
-            const int tables = 2;
-            const int sizeCell = 128; // 16 bytes each cell
-
             ProjectModel projectModel = ModelManager.Get<ProjectModel>();
 
-            BitArray outputBits = new BitArray(sizeCell * cells * tables);
-            outputBits.SetAll(false);
+            string outputPath = Path.GetFullPath(projectModel.Build.OutputFilePath);
 
-            int currentIndex = 0;
+            List<FileModelVO> bankModelVOs = ProjectFiles.GetModels<BankModel>();
 
-            if (!string.IsNullOrEmpty(projectModel.Build.PatternTableSpriteId))
+            const int cellSizeInBytes = 128; // 16 bytes each cell
+
+            foreach (FileModelVO vo in bankModelVOs)
             {
-                BankModel model = ProjectFiles.GetModel<BankModel>(projectModel.Build.PatternTableSpriteId);
+                BankModel bank = vo.Model as BankModel;
 
-                if (model != null)
+                int cellsCount = 0;
+
+                switch (bank.BankSize)
                 {
-                    WriteableBitmap bitmap = BanksUtils.CreateImage(model, ref _bitmapCache, false);
-
-                    using (bitmap.GetBitmapContext())
-                    {
-                        WriteIntoBitArray(model, bitmap, ref outputBits, ref currentIndex);
-                    }
+                    case BankSize.Size4Kb: cellsCount = 16 * 16; break;
+                    case BankSize.Size2Kb: cellsCount = 16 * 8; break;
+                    case BankSize.Size1Kb: cellsCount = 16 * 4; break;
                 }
-            }
 
-            if (!string.IsNullOrEmpty(projectModel.Build.PatternTableBackgroundId))
-            {
-                BankModel model = ProjectFiles.GetModel<BankModel>(projectModel.Build.PatternTableBackgroundId);
+                Dictionary<string, WriteableBitmap> bitmapCache = new Dictionary<string, WriteableBitmap>();
 
-                if (model != null)
+                BitArray outputBits = new BitArray(cellSizeInBytes * cellsCount);
+                outputBits.SetAll(false);
+
+                int currentIndex = 0;
+
+                WriteableBitmap bitmap = BanksUtils.CreateImage(bank, ref bitmapCache, false);
+
+                using (bitmap.GetBitmapContext())
                 {
-                    WriteableBitmap bitmap = BanksUtils.CreateImage(model, ref _bitmapCache, false);
-
-                    using (bitmap.GetBitmapContext())
-                    {
-                        WriteIntoBitArray(model, bitmap, ref outputBits, ref currentIndex);
-                    }
+                    WriteIntoBitArray(bank, bitmap, ref outputBits, ref currentIndex);
                 }
+
+                for (int i = 0; i < cellSizeInBytes * cellsCount;)
+                {
+                    Reverse(ref outputBits, i, 8);
+                    i += 8;
+                }
+
+                byte[] bytes = new byte[outputBits.Length / 8];
+
+                outputBits.CopyTo(bytes, 0);
+
+                string fullPath = Path.Combine(outputPath, vo.Name.ToLower() + ".bin");
+
+                File.WriteAllBytes(fullPath, bytes);
             }
-
-            for (int i = 0; i < tables * sizeCell * cells;)
-            {
-                Reverse(ref outputBits, i, 8);
-                i += 8;
-            }
-
-            byte[] bytes = new byte[outputBits.Length / 8];
-
-            outputBits.CopyTo(bytes, 0);
-
-            string fullPath = Path.Combine(Path.GetFullPath(projectModel.Build.OutputFilePath), _patterntableOutputFile);
-
-            File.WriteAllBytes(fullPath, bytes);
         }
 
         private void Reverse(ref BitArray array, int start, int length)

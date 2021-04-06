@@ -30,8 +30,8 @@ namespace NESTool.Models
             }
         }
 
-        public BankType BankType { get; set; }
-        public PatternTableType PatternTableType { get; set; }
+        public BankSize BankSize { get; set; }
+        public BankUseType BankUseType { get; set; }
         public BankTileDistribution Distribution { get; set; }
         public PTTileModel[] PTTiles { get; set; } = new PTTileModel[256];
 

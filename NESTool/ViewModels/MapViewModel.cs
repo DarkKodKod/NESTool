@@ -25,14 +25,14 @@ namespace NESTool.ViewModels
         private Visibility _selectionRectangleVisibility = Visibility.Hidden;
         private double _selectionRectangleTop = 0.0;
         private double _selectionRectangleLeft = 0.0;
-        private int _selectedPatternTableTile;
+        private int _selectedBankTile;
         private PaletteIndex _paletteIndex = 0;
         private double _rectangleTop = 0.0;
         private double _rectangleLeft = 0.0;
         private int _selectedAttributeTile = -1;
         private ImageSource _frameImage;
         private Visibility _rectangleVisibility = Visibility.Hidden;
-        private bool _doNotSavePalettes = false;
+        private bool _doNotSave = false;
         private Visibility _gridVisibility = Visibility.Visible;
         private string _metaData = string.Empty;
         private bool _exportAttributeTable = true;
@@ -64,14 +64,14 @@ namespace NESTool.ViewModels
         #endregion
 
         #region get/set
-        public int SelectedPatternTableTile
+        public int SelectedBankTile
         {
-            get { return _selectedPatternTableTile; }
+            get { return _selectedBankTile; }
             set
             {
-                _selectedPatternTableTile = value;
+                _selectedBankTile = value;
 
-                OnPropertyChanged("SelectedPatternTableTile");
+                OnPropertyChanged("SelectedBankTile");
             }
         }
 
@@ -350,6 +350,11 @@ namespace NESTool.ViewModels
         {
             GetModel().MetaData = metaData;
 
+            if (_doNotSave)
+            {
+                return;
+            }
+
             ProjectItem.FileHandler.Save();
         }
 
@@ -371,7 +376,7 @@ namespace NESTool.ViewModels
                 GetModel().PaletteIDs[(int)index] = Palettes[newValue + 1].Model.GUID;
             }
 
-            if (!_doNotSavePalettes)
+            if (!_doNotSave)
             {
                 PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(GetModel().PaletteIDs[(int)index]);
                 if (paletteModel != null)
@@ -410,11 +415,6 @@ namespace NESTool.ViewModels
 
             ExportAttributeTable = GetModel().ExportAttributeTable;
 
-            if (GetModel() != null)
-            {
-                MetaData = GetModel().MetaData;
-            }
-
             #region Signals
             SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
             SignalManager.Get<ColorPaletteControlSelectedSignal>().AddListener(OnColorPaletteControlSelected);
@@ -428,7 +428,12 @@ namespace NESTool.ViewModels
             SignalManager.Get<HideGridSignal>().AddListener(OnHideGrid);
             #endregion
 
-            _doNotSavePalettes = true;
+            _doNotSave = true;
+
+            if (GetModel() != null)
+            {
+                MetaData = GetModel().MetaData;
+            }
 
             LoadPalettes();
 
@@ -437,7 +442,7 @@ namespace NESTool.ViewModels
             LoadPaletteIndex(2);
             LoadPaletteIndex(3);
 
-            _doNotSavePalettes = false;
+            _doNotSave = false;
 
             LoadFrameImage(false);
             LoadMetaTileProperties();
@@ -562,7 +567,7 @@ namespace NESTool.ViewModels
                 return;
             }
 
-            if (_doNotSavePalettes)
+            if (_doNotSave)
             {
                 return;
             }
@@ -631,7 +636,7 @@ namespace NESTool.ViewModels
                 return;
             }
 
-            if (_doNotSavePalettes)
+            if (_doNotSave)
             {
                 return;
             }
@@ -703,7 +708,7 @@ namespace NESTool.ViewModels
         private void UpdateDialogInfo()
         {
             IEnumerable<FileModelVO> banks = ProjectFiles.GetModels<BankModel>().ToArray()
-                .Where(p => (p.Model as BankModel).PatternTableType == PatternTableType.Background);
+                .Where(p => (p.Model as BankModel).BankUseType == BankUseType.Background);
 
             Banks = new FileModelVO[banks.Count()];
 
@@ -747,9 +752,9 @@ namespace NESTool.ViewModels
                 return;
             }
 
-            WriteableBitmap patternTableBitmap = BanksUtils.CreateImage(model, ref _bitmapCache);
+            WriteableBitmap bankBitmap = BanksUtils.CreateImage(model, ref _bitmapCache);
 
-            BankImage = Util.ConvertWriteableBitmapToBitmapImage(patternTableBitmap);
+            BankImage = Util.ConvertWriteableBitmapToBitmapImage(bankBitmap);
         }
 
         private void OnOutputSelectedQuadrant(Image sender, WriteableBitmap bitmap, Point point)
@@ -801,7 +806,7 @@ namespace NESTool.ViewModels
                     }
                 }
             }
-            else if (sender.Name == "imgPatternTable")
+            else if (sender.Name == "imgBank")
             {
                 SelectionRectangleVisibility = Visibility.Visible;
                 SelectionRectangleLeft = point.X;
@@ -809,7 +814,7 @@ namespace NESTool.ViewModels
 
                 int index = ((int)point.X / 8) + (((int)point.Y / 8) * 16);
 
-                SelectedPatternTableTile = index;
+                SelectedBankTile = index;
             }
         }
 
@@ -837,7 +842,7 @@ namespace NESTool.ViewModels
 
             BankModel model = Banks[SelectedBank].Model as BankModel;
 
-            string guid = model.PTTiles[SelectedPatternTableTile].GUID;
+            string guid = model.PTTiles[SelectedBankTile].GUID;
 
             ref MapTile tile = ref GetModel().GetTile(index);
 

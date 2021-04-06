@@ -3,7 +3,7 @@ using NESTool.Commands;
 
 namespace NESTool.UserControls.ViewModels
 {
-    public class PatternTableLinkViewModel : ViewModel
+    public class BankLinkViewModel : ViewModel
     {
         private string _caption;
         private string _tileSetId;

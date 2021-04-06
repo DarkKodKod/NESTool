@@ -45,10 +45,10 @@ namespace NESTool.Views
                     return;
                 }
 
-                PatternTableLinkView link = new PatternTableLinkView();
+                BankLinkView link = new BankLinkView();
 
-                ((PatternTableLinkViewModel)link.DataContext).Caption = vo.Caption;
-                ((PatternTableLinkViewModel)link.DataContext).TileSetId = vo.Id;
+                ((BankLinkViewModel)link.DataContext).Caption = vo.Caption;
+                ((BankLinkViewModel)link.DataContext).TileSetId = vo.Id;
 
                 wpLinks.Children.Add(link);
             }

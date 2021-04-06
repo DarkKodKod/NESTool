@@ -36,17 +36,18 @@
         World       = 6
     }
 
-    public enum BankType
+    public enum BankSize
     {
-        PatternTable    = 0,
-        Size1KB         = 1,
-        Size2KB         = 2
+        Size4Kb = 0,
+        Size2Kb = 1,
+        Size1Kb = 2
     }
 
-    public enum PatternTableType
+    public enum BankUseType
     {
-        Background = 0,
-        Characters = 1
+        None        = 0,
+        Background  = 1,
+        Characters  = 2
     }
 
     public enum EditFrameTools

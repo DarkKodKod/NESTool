@@ -58,14 +58,16 @@ namespace NESTool.ViewModels
         private double _actualWidth;
         private double _actualHeight;
         private Point _croppedPoint;
-        private PatternTableType _selectedPatternTableType = PatternTableType.Characters;
+        private bool _doNotSave = false;
+        private BankUseType _selectedBankUseType = BankUseType.None;
+        private BankSize _selectedBankSize = BankSize.Size4Kb;
         private WriteableBitmap _croppedImage;
         private string _projectGridSize;
         private string _selectedGroup;
         private string _selectedIndex;
         private FileModelVO[] _tileSets;
         private int _selectedTileSet;
-        private int _selectedPatternTableTile;
+        private int _selectedBankTile;
         private ImageSource _imgSource;
         private ImageSource _pTImage;
         private Visibility _rectangleVisibility = Visibility.Hidden;
@@ -148,9 +150,9 @@ namespace NESTool.ViewModels
                     {
                         if (int.TryParse(value, out int intValue))
                         {
-                            CellGroup[SelectedPatternTableTile] = intValue;
+                            CellGroup[SelectedBankTile] = intValue;
 
-                            Model.PTTiles[SelectedPatternTableTile].Group = intValue;
+                            Model.PTTiles[SelectedBankTile].Group = intValue;
 
                             ProjectItem.FileHandler.Save();
                         }
@@ -163,16 +165,32 @@ namespace NESTool.ViewModels
             }
         }
 
-        public PatternTableType SelectedPatternTableType
+        public BankSize SelectedBankSize
         {
-            get { return _selectedPatternTableType; }
+            get { return _selectedBankSize; }
             set
             {
-                if (_selectedPatternTableType != value)
+                if (_selectedBankSize != value)
                 {
-                    _selectedPatternTableType = value;
+                    _selectedBankSize = value;
 
-                    OnPropertyChanged("SelectedPatternTableType");
+                    OnPropertyChanged("SelectedBankSize");
+
+                    Save();
+                }
+            }
+        }
+
+        public BankUseType SelectedBankUseType
+        {
+            get { return _selectedBankUseType; }
+            set
+            {
+                if (_selectedBankUseType != value)
+                {
+                    _selectedBankUseType = value;
+
+                    OnPropertyChanged("SelectedBankUseType");
 
                     Save();
                 }
@@ -351,14 +369,14 @@ namespace NESTool.ViewModels
             }
         }
 
-        public int SelectedPatternTableTile
+        public int SelectedBankTile
         {
-            get { return _selectedPatternTableTile; }
+            get { return _selectedBankTile; }
             set
             {
-                _selectedPatternTableTile = value;
+                _selectedBankTile = value;
 
-                OnPropertyChanged("SelectedPatternTableTile");
+                OnPropertyChanged("SelectedBankTile");
             }
         }
 
@@ -472,9 +490,12 @@ namespace NESTool.ViewModels
             SignalManager.Get<HideGroupMarksSignal>().AddListener(OnHideGroupMarks);
             #endregion
 
+            _doNotSave = true;
+
             if (Model != null)
             {
-                SelectedPatternTableType = Model.PatternTableType;
+                SelectedBankUseType = Model.BankUseType;
+                SelectedBankSize = Model.BankSize;
 
                 for (int i = 0; i < Model.PTTiles.Length; i++)
                 {
@@ -482,10 +503,12 @@ namespace NESTool.ViewModels
                 }
             }
 
+            _doNotSave = false;
+
             LoadTileSetImage();
             LoadImage();
 
-            SelectedPatternTableTile = -1;
+            SelectedBankTile = -1;
         }
 
         public override void OnDeactivate()
@@ -548,7 +571,7 @@ namespace NESTool.ViewModels
                 return;
             }
 
-            if (sender.Name == "imgPatternTable")
+            if (sender.Name == "imgBank")
             {
                 SelectionRectangleVisibility = Visibility.Visible;
                 SelectionRectangleLeft = point.X;
@@ -556,7 +579,7 @@ namespace NESTool.ViewModels
 
                 int index = ((int)point.X / 8) + (((int)point.Y / 8) * 16);
 
-                SelectedPatternTableTile = index;
+                SelectedBankTile = index;
 
                 SelectedGroup = Model.PTTiles[index].Group.ToString();
                 SelectedIndex = $"${index:X2}";
@@ -606,7 +629,7 @@ namespace NESTool.ViewModels
             OnBankImageUpdated();
 
             SelectionRectangleVisibility = Visibility.Hidden;
-            SelectedPatternTableTile = -1;
+            SelectedBankTile = -1;
 
             if (Model != null)
             {
@@ -635,14 +658,21 @@ namespace NESTool.ViewModels
 
         private void Save()
         {
-            if (Model != null)
+            if (_doNotSave)
             {
-                Model.PatternTableType = SelectedPatternTableType;
-                Model.Distribution = BankTileDistribution.Compact;
-                Model.BankType = BankType.PatternTable;
-
-                ProjectItem.FileHandler.Save();
+                return;
             }
+
+            if (Model == null)
+            {
+                return;
+            }
+
+            Model.BankUseType = SelectedBankUseType;
+            Model.BankSize = SelectedBankSize;
+            Model.Distribution = BankTileDistribution.Compact;
+
+            ProjectItem.FileHandler.Save();
         }
 
         private void LoadImage()

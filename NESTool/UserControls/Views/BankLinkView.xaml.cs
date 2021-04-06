@@ -3,11 +3,11 @@
 namespace NESTool.UserControls.Views
 {
     /// <summary>
-    /// Interaction logic for PatternTableLink.xaml
+    /// Interaction logic for BankLinkView.xaml
     /// </summary>
-    public partial class PatternTableLinkView : UserControl
+    public partial class BankLinkView : UserControl
     {
-        public PatternTableLinkView()
+        public BankLinkView()
         {
             InitializeComponent();
         }

@@ -12,7 +12,7 @@
              xmlns:cv="clr-namespace:NESTool.Utils.Converters"
              xmlns:vm="clr-namespace:NESTool.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="690" d:DesignWidth="850">
+             d:DesignHeight="750" d:DesignWidth="850">
     <UserControl.Resources>
         <cv:ParametersConverter x:Key="parametersConverter"/>
     </UserControl.Resources>
@@ -43,6 +43,8 @@
                     <RowDefinition Height="3"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="3"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="3"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Row="0">
@@ -54,18 +56,25 @@
                                    Text="{Binding ProjectGridSize}">
                         </TextBlock>
                     </Border>
-                    <ComboBox Margin="10,0,0,0" Width="200"
-                              ItemsSource="{Binding Source={ex:EnumBindingSource {x:Type enum:PatternTableType}}}"
-                              SelectedItem="{Binding Path=SelectedPatternTableType}"/>
                     <RadioButton GroupName="Grouped" Margin="10,0,0,0" IsChecked="True">Compact</RadioButton>
                     <RadioButton GroupName="Grouped" Margin="10,0,0,0" Focusable="False" IsHitTestVisible="False">Free form</RadioButton>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Row="2">
+                    <TextBlock Margin="0,0,0,0" VerticalAlignment="Center">Use:</TextBlock>
+                    <ComboBox Margin="10,0,0,0" Width="200"
+                              ItemsSource="{Binding Source={ex:EnumBindingSource {x:Type enum:BankUseType}}}"
+                              SelectedItem="{Binding Path=SelectedBankUseType}"/>
+                    <TextBlock Margin="40,0,0,0" VerticalAlignment="Center">Size:</TextBlock>
+                    <ComboBox Margin="10,0,0,0" Width="100"
+                              ItemsSource="{Binding Source={ex:EnumBindingSource {x:Type enum:BankSize}}}"
+                              SelectedItem="{Binding Path=SelectedBankSize}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Grid.Row="4">
                     <Button Width="100" Command="{Binding DeleteBankTileCommand}"
                             Content="Delete Cell">
                         <Button.CommandParameter>
                             <MultiBinding Converter="{StaticResource parametersConverter}">
-                                <Binding Path="SelectedPatternTableTile" />
+                                <Binding Path="SelectedBankTile" />
                                 <Binding Path="Model" />
                             </MultiBinding>
                         </Button.CommandParameter>
@@ -80,7 +89,7 @@
                     <Label Margin="10,0,0,0">Hex Index:</Label>
                     <TextBlock VerticalAlignment="Center" Text="{Binding SelectedIndex}" />
                 </StackPanel>
-                <Border Grid.Row="4" Width="510" Height="510"
+                <Border Grid.Row="6" Width="510" Height="510"
                         VerticalAlignment="Top">
                     <Canvas Width="128" Height="128" 
 		                Background="DarkGray"
@@ -93,7 +102,7 @@
                                Source="{Binding PTImage}"
 	                           Width="128"
 	                           Height="128"
-                               Name="imgPatternTable"
+                               Name="imgBank"
 	                           Stretch="UniformToFill">
                             <i:Interaction.Behaviors>
                                 <behaviors:EventToCommandBehavior Command="{Binding ImageMouseDownCommand}" Event="MouseDown" PassArguments="True" />
@@ -390,7 +399,7 @@
                             </Border.Background>
                             <Canvas Width="128" Height="128" Background="Transparent">
                                 <i:Interaction.Behaviors>
-                                    <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgPatternTable}"/>
+                                    <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgBank}"/>
                                 </i:Interaction.Behaviors>
                                 <Rectangle Width="8" Height="8" 
                                            Stroke="Red" 

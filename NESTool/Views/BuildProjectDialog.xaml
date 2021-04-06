@@ -11,7 +11,7 @@
         xmlns:cv="clr-namespace:NESTool.Utils.Converters"
         xmlns:enum="clr-namespace:NESTool.Enums"
         ShowInTaskbar="False"
-        Title="Build" Height="316" Width="550"
+        Title="Build" Height="216" Width="550"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Window.DataContext>
         <vm:BuildProjectDialogViewModel />
@@ -28,8 +28,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -37,38 +35,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
-        <GroupBox Grid.Row="1" Grid.Column="1" Header="Pattern Table" Margin="5" Padding="5">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <Label Content="Sprites" Grid.Row="0" Grid.Column="0"/>
-                <Label Content="Background" Grid.Row="0" Grid.Column="2"/>
-                <ComboBox Grid.Column="0" 
-                          Grid.Row="1" Width="200" 
-                          HorizontalAlignment="Left"
-                          ItemsSource="{Binding PatternTableSprites}" 
-                          DisplayMemberPath="Name"
-                          SelectedValuePath="Index"
-                          SelectedValue="{Binding Path=SelectedPatternTableSprite, Mode=TwoWay}">
-                </ComboBox>
-                <ComboBox Grid.Column="2" 
-                          Grid.Row="1" Width="200" 
-                          HorizontalAlignment="Right"
-                          ItemsSource="{Binding PatternTableBackgrounds}" 
-                          DisplayMemberPath="Name"
-                          SelectedValuePath="Index"
-                          SelectedValue="{Binding Path=SelectedPatternTableBackground, Mode=TwoWay}">
-                </ComboBox>
-            </Grid>
-        </GroupBox>
-        <GroupBox Grid.Row="2" Grid.Column="1" Header="Output" Margin="5" Padding="5">
+        <GroupBox Grid.Row="1" Grid.Column="1" Header="Output" Margin="5" Padding="5">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -86,7 +53,7 @@
                 <CheckBox Grid.Row="2" Margin="0,20,0,0" Content="Use RLE on maps" IsChecked="{Binding UseRLEOnMaps, Mode=TwoWay}"/>
             </Grid>
         </GroupBox>
-        <Grid Grid.Row="4" Grid.Column="1" VerticalAlignment="Bottom">
+        <Grid Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="100"/>

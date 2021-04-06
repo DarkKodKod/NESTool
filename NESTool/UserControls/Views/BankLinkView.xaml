@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NESTool.UserControls.Views.PatternTableLinkView"
+﻿<UserControl x:Class="NESTool.UserControls.Views.BankLinkView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,7 +9,7 @@
              d:DesignWidth="100"
              d:DesignHeight="19">
     <UserControl.DataContext>
-        <vm:PatternTableLinkViewModel />
+        <vm:BankLinkViewModel />
     </UserControl.DataContext>
     <UserControl.Resources>
         <Style x:Key="linkStyle" TargetType="TextBlock">

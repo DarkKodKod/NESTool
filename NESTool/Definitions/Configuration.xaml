@@ -24,5 +24,4 @@
     <system:Int32 x:Key="mappersVersion">1</system:Int32>
     <system:String x:Key="NewElementName">New Element</system:String>
     <system:String x:Key="NewFolderName">New Folder</system:String>
-    <system:String x:Key="PatterntableOutputFile">patterntable.bin</system:String>
 </ResourceDictionary>
