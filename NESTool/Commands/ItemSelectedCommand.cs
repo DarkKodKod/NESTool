@@ -11,14 +11,14 @@ namespace NESTool.Commands
 
         public ItemSelectedCommand()
         {
-            SignalManager.Get<ProjectItemSelectedSignal>().AddListener(OnProjectItemSelected);
-            SignalManager.Get<ProjectItemUnselectedSignal>().AddListener(OnProjectItemUnselected);
+            SignalManager.Get<ProjectItemSelectedSignal>().Listener += OnProjectItemSelected;
+            SignalManager.Get<ProjectItemUnselectedSignal>().Listener += OnProjectItemUnselected;
         }
 
         public override void Deactivate()
         {
-            SignalManager.Get<ProjectItemSelectedSignal>().RemoveListener(OnProjectItemSelected);
-            SignalManager.Get<ProjectItemUnselectedSignal>().RemoveListener(OnProjectItemUnselected);
+            SignalManager.Get<ProjectItemSelectedSignal>().Listener -= OnProjectItemSelected;
+            SignalManager.Get<ProjectItemUnselectedSignal>().Listener -= OnProjectItemUnselected;
         }
 
         private void OnProjectItemSelected(ProjectItem item)

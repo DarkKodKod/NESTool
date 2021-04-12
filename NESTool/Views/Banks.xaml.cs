@@ -18,9 +18,9 @@ namespace NESTool.Views
         {
             InitializeComponent();
 
-            SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
-            SignalManager.Get<AddNewTileSetLinkSignal>().AddListener(OnAddNewTileSetLink);
-            SignalManager.Get<CleanupTileSetLinksSignal>().AddListener(OnCleanupTileSetLinks);
+            SignalManager.Get<MouseWheelSignal>().Listener += OnMouseWheel;
+            SignalManager.Get<AddNewTileSetLinkSignal>().Listener += OnAddNewTileSetLink;
+            SignalManager.Get<CleanupTileSetLinksSignal>().Listener += OnCleanupTileSetLinks;
         }
 
         private void OnCleanupTileSetLinks()
@@ -80,9 +80,9 @@ namespace NESTool.Views
 
         public void CleanUp()
         {
-            SignalManager.Get<MouseWheelSignal>().RemoveListener(OnMouseWheel);
-            SignalManager.Get<AddNewTileSetLinkSignal>().RemoveListener(OnAddNewTileSetLink);
-            SignalManager.Get<CleanupTileSetLinksSignal>().RemoveListener(OnCleanupTileSetLinks);
+            SignalManager.Get<MouseWheelSignal>().Listener -= OnMouseWheel;
+            SignalManager.Get<AddNewTileSetLinkSignal>().Listener -= OnAddNewTileSetLink;
+            SignalManager.Get<CleanupTileSetLinksSignal>().Listener -= OnCleanupTileSetLinks;
         }
     }
 }

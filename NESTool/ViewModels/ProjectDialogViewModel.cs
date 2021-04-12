@@ -138,14 +138,14 @@ namespace NESTool.ViewModels
             PRGSizes = mappers.Mappers[0].PRG;
             SelectedPRGSize = 0;
 
-            SignalManager.Get<BrowseFolderSuccessSignal>().AddListener(BrowseFolderSuccess);
-            SignalManager.Get<CloseDialogSignal>().AddListener(OnCloseDialog);
+            SignalManager.Get<BrowseFolderSuccessSignal>().Listener += BrowseFolderSuccess;
+            SignalManager.Get<CloseDialogSignal>().Listener += OnCloseDialog;
         }
 
         private void OnCloseDialog()
         {
-            SignalManager.Get<BrowseFolderSuccessSignal>().RemoveListener(BrowseFolderSuccess);
-            SignalManager.Get<CloseDialogSignal>().RemoveListener(OnCloseDialog);
+            SignalManager.Get<BrowseFolderSuccessSignal>().Listener -= BrowseFolderSuccess;
+            SignalManager.Get<CloseDialogSignal>().Listener -= OnCloseDialog;
         }
 
         private void BrowseFolderSuccess(string folderPath) => FolderPath = folderPath;

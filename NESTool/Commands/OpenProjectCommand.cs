@@ -91,14 +91,14 @@ namespace NESTool.Commands
             else
             {
                 // We want to capture the browse folder signal to open the project
-                SignalManager.Get<BrowseFolderSuccessSignal>().AddListener(BrowseFolderSuccess);
+                SignalManager.Get<BrowseFolderSuccessSignal>().Listener += BrowseFolderSuccess;
 
                 using (BrowseFolderCommand browseFolder = new BrowseFolderCommand())
                 {
                     browseFolder.Execute(null);
                 }   
 
-                SignalManager.Get<BrowseFolderSuccessSignal>().RemoveListener(BrowseFolderSuccess);
+                SignalManager.Get<BrowseFolderSuccessSignal>().Listener += BrowseFolderSuccess;
             }
         }
 

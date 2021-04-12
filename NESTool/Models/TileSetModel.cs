@@ -37,7 +37,7 @@ namespace NESTool.Models
 
         public TileSetModel()
         {
-            SignalManager.Get<ProjectItemLoadedSignal>().AddListener(OnProjectItemLoaded);
+            SignalManager.Get<ProjectItemLoadedSignal>().Listener += OnProjectItemLoaded;
         }
 
         private void OnProjectItemLoaded(string id)

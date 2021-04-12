@@ -354,11 +354,11 @@ namespace NESTool.UserControls.ViewModels
             }
 
             #region Signals
-            SignalManager.Get<PauseCharacterAnimationSignal>().AddListener(OnPauseCharacterAnimation);
-            SignalManager.Get<NextFrameCharacterAnimationSignal>().AddListener(OnNextFrameCharacterAnimation);
-            SignalManager.Get<StopCharacterAnimationSignal>().AddListener(OnStopCharacterAnimation);
-            SignalManager.Get<PlayCharacterAnimationSignal>().AddListener(OnPlayCharacterAnimation);
-            SignalManager.Get<PreviousFrameCharacterAnimationSignal>().AddListener(OnPreviousFrameCharacterAnimation);
+            SignalManager.Get<PauseCharacterAnimationSignal>().Listener += OnPauseCharacterAnimation;
+            SignalManager.Get<NextFrameCharacterAnimationSignal>().Listener += OnNextFrameCharacterAnimation;
+            SignalManager.Get<StopCharacterAnimationSignal>().Listener += OnStopCharacterAnimation;
+            SignalManager.Get<PlayCharacterAnimationSignal>().Listener += OnPlayCharacterAnimation;
+            SignalManager.Get<PreviousFrameCharacterAnimationSignal>().Listener += OnPreviousFrameCharacterAnimation;
             #endregion
 
             _dontSave = true;
@@ -422,11 +422,11 @@ namespace NESTool.UserControls.ViewModels
             base.OnDeactivate();
 
             #region Signals
-            SignalManager.Get<PauseCharacterAnimationSignal>().RemoveListener(OnPauseCharacterAnimation);
-            SignalManager.Get<NextFrameCharacterAnimationSignal>().RemoveListener(OnNextFrameCharacterAnimation);
-            SignalManager.Get<StopCharacterAnimationSignal>().RemoveListener(OnStopCharacterAnimation);
-            SignalManager.Get<PlayCharacterAnimationSignal>().RemoveListener(OnPlayCharacterAnimation);
-            SignalManager.Get<PreviousFrameCharacterAnimationSignal>().RemoveListener(OnPreviousFrameCharacterAnimation);
+            SignalManager.Get<PauseCharacterAnimationSignal>().Listener -= OnPauseCharacterAnimation;
+            SignalManager.Get<NextFrameCharacterAnimationSignal>().Listener -= OnNextFrameCharacterAnimation;
+            SignalManager.Get<StopCharacterAnimationSignal>().Listener -= OnStopCharacterAnimation;
+            SignalManager.Get<PlayCharacterAnimationSignal>().Listener -= OnPlayCharacterAnimation;
+            SignalManager.Get<PreviousFrameCharacterAnimationSignal>().Listener -= OnPreviousFrameCharacterAnimation;
             #endregion
 
             IsPlaying = false;

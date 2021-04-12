@@ -25,8 +25,8 @@ namespace NESTool.Views
         {
             InitializeComponent();
 
-            SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
-            SignalManager.Get<ColorPaletteSelectSignal>().AddListener(OnColorPaletteSelect);
+            SignalManager.Get<MouseWheelSignal>().Listener += OnMouseWheel;
+            SignalManager.Get<ColorPaletteSelectSignal>().Listener +=OnColorPaletteSelect;
         }
 
         private void OnColorPaletteSelect(Color color)
@@ -106,8 +106,8 @@ namespace NESTool.Views
 
         public void CleanUp()
         {
-            SignalManager.Get<MouseWheelSignal>().RemoveListener(OnMouseWheel);
-            SignalManager.Get<ColorPaletteSelectSignal>().RemoveListener(OnColorPaletteSelect);
+            SignalManager.Get<MouseWheelSignal>().Listener -= OnMouseWheel;
+            SignalManager.Get<ColorPaletteSelectSignal>().Listener -= OnColorPaletteSelect;
         }
 
         private void ImgSmall_MouseUp(object sender, MouseButtonEventArgs e)

@@ -416,16 +416,16 @@ namespace NESTool.ViewModels
             ExportAttributeTable = GetModel().ExportAttributeTable;
 
             #region Signals
-            SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().AddListener(OnColorPaletteControlSelected);
-            SignalManager.Get<UpdateMapImageSignal>().AddListener(OnUpdateMapImage);
-            SignalManager.Get<SelectPaletteIndexSignal>().AddListener(OnSelectPaletteIndex);
-            SignalManager.Get<MapPaintToolSignal>().AddListener(OnMapPaintTool);
-            SignalManager.Get<MapEraseToolSignal>().AddListener(OnMapEraseTool);
-            SignalManager.Get<ProjectItemLoadedSignal>().AddListener(OnProjectItemLoaded);
-            SignalManager.Get<FileModelVOSelectionChangedSignal>().AddListener(OnFileModelVOSelectionChanged);
-            SignalManager.Get<ShowGridSignal>().AddListener(OnShowGrid);
-            SignalManager.Get<HideGridSignal>().AddListener(OnHideGrid);
+            SignalManager.Get<OutputSelectedQuadrantSignal>().Listener += OnOutputSelectedQuadrant;
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Listener += OnColorPaletteControlSelected;
+            SignalManager.Get<UpdateMapImageSignal>().Listener += OnUpdateMapImage;
+            SignalManager.Get<SelectPaletteIndexSignal>().Listener += OnSelectPaletteIndex;
+            SignalManager.Get<MapPaintToolSignal>().Listener += OnMapPaintTool;
+            SignalManager.Get<MapEraseToolSignal>().Listener += OnMapEraseTool;
+            SignalManager.Get<ProjectItemLoadedSignal>().Listener += OnProjectItemLoaded;
+            SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener += OnFileModelVOSelectionChanged;
+            SignalManager.Get<ShowGridSignal>().Listener += OnShowGrid;
+            SignalManager.Get<HideGridSignal>().Listener += OnHideGrid;
             #endregion
 
             _doNotSave = true;
@@ -453,16 +453,16 @@ namespace NESTool.ViewModels
             base.OnDeactivate();
 
             #region Signals
-            SignalManager.Get<OutputSelectedQuadrantSignal>().RemoveListener(OnOutputSelectedQuadrant);
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().RemoveListener(OnColorPaletteControlSelected);
-            SignalManager.Get<UpdateMapImageSignal>().RemoveListener(OnUpdateMapImage);
-            SignalManager.Get<SelectPaletteIndexSignal>().RemoveListener(OnSelectPaletteIndex);
-            SignalManager.Get<MapPaintToolSignal>().RemoveListener(OnMapPaintTool);
-            SignalManager.Get<MapEraseToolSignal>().RemoveListener(OnMapEraseTool);
-            SignalManager.Get<ShowGridSignal>().RemoveListener(OnShowGrid);
-            SignalManager.Get<HideGridSignal>().RemoveListener(OnHideGrid);
-            SignalManager.Get<ProjectItemLoadedSignal>().RemoveListener(OnProjectItemLoaded);
-            SignalManager.Get<FileModelVOSelectionChangedSignal>().RemoveListener(OnFileModelVOSelectionChanged);
+            SignalManager.Get<OutputSelectedQuadrantSignal>().Listener -= OnOutputSelectedQuadrant;
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Listener -= OnColorPaletteControlSelected;
+            SignalManager.Get<UpdateMapImageSignal>().Listener -= OnUpdateMapImage;
+            SignalManager.Get<SelectPaletteIndexSignal>().Listener -= OnSelectPaletteIndex;
+            SignalManager.Get<MapPaintToolSignal>().Listener -= OnMapPaintTool;
+            SignalManager.Get<MapEraseToolSignal>().Listener -= OnMapEraseTool;
+            SignalManager.Get<ShowGridSignal>().Listener -= OnShowGrid;
+            SignalManager.Get<HideGridSignal>().Listener -= OnHideGrid;
+            SignalManager.Get<ProjectItemLoadedSignal>().Listener -= OnProjectItemLoaded;
+            SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener -= OnFileModelVOSelectionChanged;
             #endregion
         }
 

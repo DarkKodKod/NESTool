@@ -16,9 +16,9 @@ namespace NESTool.FileSystem
     {
         public static void Initialize()
         {
-            SignalManager.Get<RegisterFileHandlerSignal>().AddListener(OnRegisterFileHandler);
-            SignalManager.Get<RenameFileSignal>().AddListener(OnRenameFile);
-            SignalManager.Get<MoveElementSignal>().AddListener(OnMoveElement);
+            SignalManager.Get<RegisterFileHandlerSignal>().Listener += OnRegisterFileHandler;
+            SignalManager.Get<RenameFileSignal>().Listener += OnRenameFile;
+            SignalManager.Get<MoveElementSignal>().Listener += OnMoveElement;
         }
 
         private static void OnRenameFile(ProjectItem item)

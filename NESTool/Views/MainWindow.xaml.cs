@@ -66,21 +66,21 @@ namespace NESTool
             EnsureStandardPopupAlignment();
             SystemParameters.StaticPropertyChanged += SystemParameters_StaticPropertyChanged;
 
-            SignalManager.Get<SetUpWindowPropertiesSignal>().AddListener(OnSetUpWindowProperties);
-            SignalManager.Get<CreateNewElementSignal>().AddListener(OnCreateNewElement);
-            SignalManager.Get<UpdateFolderSignal>().AddListener(OnUpdateFolder);
-            SignalManager.Get<LoadProjectItemSignal>().AddListener(OnLoadProjectItem);
-            SignalManager.Get<DeleteElementSignal>().AddListener(OnDeleteElement);
-            SignalManager.Get<ShowGridSignal>().AddListener(OnShowGrid);
-            SignalManager.Get<HideGridSignal>().AddListener(OnHideGrid);
-            SignalManager.Get<ShowGroupMarksSignal>().AddListener(OnShowGroupMarks);
-            SignalManager.Get<HideGroupMarksSignal>().AddListener(OnHideGroupMarks);
-            SignalManager.Get<MapPaintToolSignal>().AddListener(OnMapPaintTool);
-            SignalManager.Get<MapSelectToolSignal>().AddListener(OnMapSelectTool);
-            SignalManager.Get<MapEraseToolSignal>().AddListener(OnMapEraseTool);
-            SignalManager.Get<CloseProjectSuccessSignal>().AddListener(OnCloseProjectSuccess);
-            SignalManager.Get<ShowLoadingDialogSignal>().AddListener(OnShowLoadingDialog);
-            SignalManager.Get<HideLoadingDialogSignal>().AddListener(OnHideLoadingDialog);
+            SignalManager.Get<SetUpWindowPropertiesSignal>().Listener += OnSetUpWindowProperties;
+            SignalManager.Get<CreateNewElementSignal>().Listener += OnCreateNewElement;
+            SignalManager.Get<UpdateFolderSignal>().Listener += OnUpdateFolder;
+            SignalManager.Get<LoadProjectItemSignal>().Listener += OnLoadProjectItem;
+            SignalManager.Get<DeleteElementSignal>().Listener += OnDeleteElement;
+            SignalManager.Get<ShowGridSignal>().Listener += OnShowGrid;
+            SignalManager.Get<HideGridSignal>().Listener += OnHideGrid;
+            SignalManager.Get<ShowGroupMarksSignal>().Listener += OnShowGroupMarks;
+            SignalManager.Get<HideGroupMarksSignal>().Listener += OnHideGroupMarks;
+            SignalManager.Get<MapPaintToolSignal>().Listener += OnMapPaintTool;
+            SignalManager.Get<MapSelectToolSignal>().Listener += OnMapSelectTool;
+            SignalManager.Get<MapEraseToolSignal>().Listener += OnMapEraseTool;
+            SignalManager.Get<CloseProjectSuccessSignal>().Listener += OnCloseProjectSuccess;
+            SignalManager.Get<ShowLoadingDialogSignal>().Listener += OnShowLoadingDialog;
+            SignalManager.Get<HideLoadingDialogSignal>().Listener += OnHideLoadingDialog;
 
             // Initialize visibility statte of the toolbars
             tbrTileSet.Visibility = Visibility.Collapsed;

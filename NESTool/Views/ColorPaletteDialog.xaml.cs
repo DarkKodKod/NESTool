@@ -30,8 +30,8 @@ namespace NESTool.Views
             _paletteIndex = paletteIndex;
             _colorPosition = colorPosition;
 
-            SignalManager.Get<ColorPaletteSelectSignal>().AddListener(OnColorPaletteSelect);
-            SignalManager.Get<CloseDialogSignal>().AddListener(OnCloseDialog);
+            SignalManager.Get<ColorPaletteSelectSignal>().Listener += OnColorPaletteSelect;
+            SignalManager.Get<CloseDialogSignal>().Listener += OnCloseDialog;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -50,8 +50,8 @@ namespace NESTool.Views
 
         private void OnCloseDialog()
         {
-            SignalManager.Get<ColorPaletteSelectSignal>().RemoveListener(OnColorPaletteSelect);
-            SignalManager.Get<CloseDialogSignal>().RemoveListener(OnCloseDialog);
+            SignalManager.Get<ColorPaletteSelectSignal>().Listener -= OnColorPaletteSelect;
+            SignalManager.Get<CloseDialogSignal>().Listener -= OnCloseDialog;
         }
 
         protected override void OnSourceInitialized(EventArgs e)

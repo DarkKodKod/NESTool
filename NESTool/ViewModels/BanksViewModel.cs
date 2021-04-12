@@ -479,15 +479,15 @@ namespace NESTool.ViewModels
             GroupMarkVisible = MainWindow.ToolBarBanksShowHideGroupMarks ? Visibility.Visible : Visibility.Hidden;
 
             #region Signals
-            SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
-            SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
-            SignalManager.Get<ProjectConfigurationSavedSignal>().AddListener(OnProjectConfigurationSaved);
-            SignalManager.Get<FileModelVOSelectionChangedSignal>().AddListener(OnFileModelVOSelectionChanged);
-            SignalManager.Get<BankImageUpdatedSignal>().AddListener(OnBankImageUpdated);
-            SignalManager.Get<SelectTileSetSignal>().AddListener(OnSelectTileSet);
-            SignalManager.Get<BankTileDeletedSignal>().AddListener(OnBankTileDeleted);
-            SignalManager.Get<ShowGroupMarksSignal>().AddListener(OnShowGroupMarks);
-            SignalManager.Get<HideGroupMarksSignal>().AddListener(OnHideGroupMarks);
+            SignalManager.Get<MouseWheelSignal>().Listener += OnMouseWheel;
+            SignalManager.Get<OutputSelectedQuadrantSignal>().Listener += OnOutputSelectedQuadrant;
+            SignalManager.Get<ProjectConfigurationSavedSignal>().Listener += OnProjectConfigurationSaved;
+            SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener += OnFileModelVOSelectionChanged;
+            SignalManager.Get<BankImageUpdatedSignal>().Listener += OnBankImageUpdated;
+            SignalManager.Get<SelectTileSetSignal>().Listener += OnSelectTileSet;
+            SignalManager.Get<BankTileDeletedSignal>().Listener += OnBankTileDeleted;
+            SignalManager.Get<ShowGroupMarksSignal>().Listener += OnShowGroupMarks;
+            SignalManager.Get<HideGroupMarksSignal>().Listener += OnHideGroupMarks;
             #endregion
 
             _doNotSave = true;
@@ -516,15 +516,15 @@ namespace NESTool.ViewModels
             base.OnDeactivate();
 
             #region Signals
-            SignalManager.Get<MouseWheelSignal>().RemoveListener(OnMouseWheel);
-            SignalManager.Get<OutputSelectedQuadrantSignal>().RemoveListener(OnOutputSelectedQuadrant);
-            SignalManager.Get<ProjectConfigurationSavedSignal>().RemoveListener(OnProjectConfigurationSaved);
-            SignalManager.Get<FileModelVOSelectionChangedSignal>().RemoveListener(OnFileModelVOSelectionChanged);
-            SignalManager.Get<BankImageUpdatedSignal>().RemoveListener(OnBankImageUpdated);
-            SignalManager.Get<SelectTileSetSignal>().RemoveListener(OnSelectTileSet);
-            SignalManager.Get<BankTileDeletedSignal>().RemoveListener(OnBankTileDeleted);
-            SignalManager.Get<ShowGroupMarksSignal>().RemoveListener(OnShowGroupMarks);
-            SignalManager.Get<HideGroupMarksSignal>().RemoveListener(OnHideGroupMarks);
+            SignalManager.Get<MouseWheelSignal>().Listener -= OnMouseWheel;
+            SignalManager.Get<OutputSelectedQuadrantSignal>().Listener -= OnOutputSelectedQuadrant;
+            SignalManager.Get<ProjectConfigurationSavedSignal>().Listener -= OnProjectConfigurationSaved;
+            SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener -= OnFileModelVOSelectionChanged;
+            SignalManager.Get<BankImageUpdatedSignal>().Listener -= OnBankImageUpdated;
+            SignalManager.Get<SelectTileSetSignal>().Listener -= OnSelectTileSet;
+            SignalManager.Get<BankTileDeletedSignal>().Listener -= OnBankTileDeleted;
+            SignalManager.Get<ShowGroupMarksSignal>().Listener -= OnShowGroupMarks;
+            SignalManager.Get<HideGroupMarksSignal>().Listener -= OnHideGroupMarks;
             #endregion
         }
 

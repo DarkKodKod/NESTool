@@ -41,14 +41,14 @@ namespace NESTool.ViewModels
 
         public ElementDialogViewModel()
         {
-            SignalManager.Get<CloseDialogSignal>().AddListener(OnCloseDialog);
+            SignalManager.Get<CloseDialogSignal>().Listener += OnCloseDialog;
 
             InitializeElements();
         }
 
         private void OnCloseDialog()
         {
-            SignalManager.Get<CloseDialogSignal>().RemoveListener(OnCloseDialog);
+            SignalManager.Get<CloseDialogSignal>().Listener -= OnCloseDialog;
         }
 
         private void InitializeElements()

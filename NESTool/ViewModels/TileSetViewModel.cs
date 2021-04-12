@@ -361,15 +361,15 @@ namespace NESTool.ViewModels
             GridVisibility = MainWindow.ToolBarTileSetShowHideGrid ? Visibility.Visible : Visibility.Hidden;
 
             #region Signals
-            SignalManager.Get<UpdateTileSetImageSignal>().AddListener(OnUpdateTileSetImage);
-            SignalManager.Get<MouseWheelSignal>().AddListener(OnMouseWheel);
-            SignalManager.Get<ShowGridSignal>().AddListener(OnShowGrid);
-            SignalManager.Get<HideGridSignal>().AddListener(OnHideGrid);
-            SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
-            SignalManager.Get<SelectedPixelSignal>().AddListener(OnSelectedPixel);
-            SignalManager.Get<ColorPaletteSelectSignal>().AddListener(OnColorPaletteSelect);
-            SignalManager.Get<SavedPixelChangesSignal>().AddListener(OnSavedPixelChanges);
-            SignalManager.Get<BrowseFileSuccessSignal>().AddListener(BrowseFileSuccess);
+            SignalManager.Get<UpdateTileSetImageSignal>().Listener += OnUpdateTileSetImage;
+            SignalManager.Get<MouseWheelSignal>().Listener += OnMouseWheel;
+            SignalManager.Get<ShowGridSignal>().Listener += OnShowGrid;
+            SignalManager.Get<HideGridSignal>().Listener += OnHideGrid;
+            SignalManager.Get<OutputSelectedQuadrantSignal>().Listener += OnOutputSelectedQuadrant;
+            SignalManager.Get<SelectedPixelSignal>().Listener += OnSelectedPixel;
+            SignalManager.Get<ColorPaletteSelectSignal>().Listener += OnColorPaletteSelect;
+            SignalManager.Get<SavedPixelChangesSignal>().Listener += OnSavedPixelChanges;
+            SignalManager.Get<BrowseFileSuccessSignal>().Listener += BrowseFileSuccess;
             #endregion
 
             if (!string.IsNullOrEmpty(GetModel().ImagePath))
@@ -394,15 +394,15 @@ namespace NESTool.ViewModels
             base.OnDeactivate();
 
             #region Signals
-            SignalManager.Get<UpdateTileSetImageSignal>().RemoveListener(OnUpdateTileSetImage);
-            SignalManager.Get<MouseWheelSignal>().RemoveListener(OnMouseWheel);
-            SignalManager.Get<ShowGridSignal>().RemoveListener(OnShowGrid);
-            SignalManager.Get<HideGridSignal>().RemoveListener(OnHideGrid);
-            SignalManager.Get<OutputSelectedQuadrantSignal>().RemoveListener(OnOutputSelectedQuadrant);
-            SignalManager.Get<SelectedPixelSignal>().RemoveListener(OnSelectedPixel);
-            SignalManager.Get<ColorPaletteSelectSignal>().RemoveListener(OnColorPaletteSelect);
-            SignalManager.Get<SavedPixelChangesSignal>().RemoveListener(OnSavedPixelChanges);
-            SignalManager.Get<BrowseFileSuccessSignal>().RemoveListener(BrowseFileSuccess);
+            SignalManager.Get<UpdateTileSetImageSignal>().Listener -= OnUpdateTileSetImage;
+            SignalManager.Get<MouseWheelSignal>().Listener -= OnMouseWheel;
+            SignalManager.Get<ShowGridSignal>().Listener -= OnShowGrid;
+            SignalManager.Get<HideGridSignal>().Listener -= OnHideGrid;
+            SignalManager.Get<OutputSelectedQuadrantSignal>().Listener -= OnOutputSelectedQuadrant;
+            SignalManager.Get<SelectedPixelSignal>().Listener -= OnSelectedPixel;
+            SignalManager.Get<ColorPaletteSelectSignal>().Listener -= OnColorPaletteSelect;
+            SignalManager.Get<SavedPixelChangesSignal>().Listener -= OnSavedPixelChanges;
+            SignalManager.Get<BrowseFileSuccessSignal>().Listener -= BrowseFileSuccess;
             #endregion
         }
 

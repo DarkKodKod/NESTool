@@ -24,7 +24,7 @@ namespace NESTool.Views
             InitializeComponent();
 
             #region Signals
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().AddListener(OnColorPaletteControlSelected);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Listener += OnColorPaletteControlSelected;
             #endregion
         }
 
@@ -85,7 +85,7 @@ namespace NESTool.Views
         {
             ColorPaletteCleanup();
 
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().RemoveListener(OnColorPaletteControlSelected);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Listener -= OnColorPaletteControlSelected;
         }
 
         private void ImgFrame_MouseUp(object sender, MouseButtonEventArgs e)

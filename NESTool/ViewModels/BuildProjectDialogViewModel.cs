@@ -51,8 +51,8 @@ namespace NESTool.ViewModels
         public BuildProjectDialogViewModel()
         {
 			#region Signals
-			SignalManager.Get<BrowseFolderSuccessSignal>().AddListener(BrowseFolderSuccess);
-            SignalManager.Get<CloseDialogSignal>().AddListener(OnCloseDialog);
+			SignalManager.Get<BrowseFolderSuccessSignal>().Listener += BrowseFolderSuccess;
+            SignalManager.Get<CloseDialogSignal>().Listener += OnCloseDialog;
             #endregion
 
             ProjectModel project = ModelManager.Get<ProjectModel>();
@@ -64,8 +64,8 @@ namespace NESTool.ViewModels
         private void OnCloseDialog()
         {
 			#region Signals
-			SignalManager.Get<BrowseFolderSuccessSignal>().RemoveListener(BrowseFolderSuccess);
-            SignalManager.Get<CloseDialogSignal>().RemoveListener(OnCloseDialog);
+			SignalManager.Get<BrowseFolderSuccessSignal>().Listener -= BrowseFolderSuccess;
+            SignalManager.Get<CloseDialogSignal>().Listener -= OnCloseDialog;
             #endregion
         }
 

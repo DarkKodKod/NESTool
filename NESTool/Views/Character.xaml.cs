@@ -23,7 +23,7 @@ namespace NESTool.Views
             actionTabs.ItemsSource = vmCharacterModel.Tabs;
 
             #region Signals
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().AddListener(OnColorPaletteControlSelected);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Listener += OnColorPaletteControlSelected;
             #endregion
         }
 
@@ -147,7 +147,7 @@ namespace NESTool.Views
             ColorPaletteCleanup();
 
             #region Signals
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().RemoveListener(OnColorPaletteControlSelected);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Listener -= OnColorPaletteControlSelected;
             #endregion
         }
     }

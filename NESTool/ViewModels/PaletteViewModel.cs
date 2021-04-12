@@ -16,7 +16,7 @@ namespace NESTool.ViewModels
             base.OnActivate();
 
 			#region Signals
-			SignalManager.Get<ColorPaletteControlSelectedSignal>().AddListener(OnColorPaletteControlSelected);
+			SignalManager.Get<ColorPaletteControlSelectedSignal>().Listener += OnColorPaletteControlSelected;
 			#endregion
 
 			LoadPalettes();
@@ -27,7 +27,7 @@ namespace NESTool.ViewModels
             base.OnDeactivate();
 
 			#region Signals
-			SignalManager.Get<ColorPaletteControlSelectedSignal>().RemoveListener(OnColorPaletteControlSelected);
+			SignalManager.Get<ColorPaletteControlSelectedSignal>().Listener -= OnColorPaletteControlSelected;
 			#endregion
 		}
 

@@ -22,14 +22,14 @@ namespace NESTool.UserControls.Views
 
         public void OnActivate()
         {
-            SignalManager.Get<NewAnimationFrameSignal>().AddListener(OnNewAnimationFrame);
-            SignalManager.Get<DeleteAnimationFrameSignal>().AddListener(OnDeleteAnimationFrame);
+            SignalManager.Get<NewAnimationFrameSignal>().Listener += OnNewAnimationFrame;
+            SignalManager.Get<DeleteAnimationFrameSignal>().Listener += OnDeleteAnimationFrame;
         }
 
         public void OnDeactivate()
         {
-            SignalManager.Get<NewAnimationFrameSignal>().RemoveListener(OnNewAnimationFrame);
-            SignalManager.Get<DeleteAnimationFrameSignal>().RemoveListener(OnDeleteAnimationFrame);
+            SignalManager.Get<NewAnimationFrameSignal>().Listener -= OnNewAnimationFrame;
+            SignalManager.Get<DeleteAnimationFrameSignal>().Listener -= OnDeleteAnimationFrame;
 
             FrameViewList.Clear();
             spFrames.Children.RemoveRange(0, spFrames.Children.Count - 1);

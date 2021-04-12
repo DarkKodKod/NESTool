@@ -5,12 +5,12 @@ namespace ArchitectureLibrary.History
 {
     public static class HistoryManager
     {
-        static Caretaker _caretaker = new Caretaker();
-        static Originator _mementoOriginator = new Originator();
+        static readonly Caretaker _caretaker = new Caretaker();
+        static readonly Originator _mementoOriginator = new Originator();
 
         public static void Initialize()
         {
-            SignalManager.Get<RegisterHistoryActionSignal>().AddListener(OnRegisterHistoryAction);
+            SignalManager.Get<RegisterHistoryActionSignal>().Listener += OnRegisterHistoryAction;
         }
 
         public static void Undo()

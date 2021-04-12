@@ -161,7 +161,7 @@ namespace NESTool.ViewModels
 
             ReadProjectData();
 
-            SignalManager.Get<CloseDialogSignal>().AddListener(OnCloseDialog);
+            SignalManager.Get<CloseDialogSignal>().Listener += OnCloseDialog;
 
             _changed = false;
         }
@@ -184,7 +184,7 @@ namespace NESTool.ViewModels
                 project.Save();
             }
 
-            SignalManager.Get<CloseDialogSignal>().RemoveListener(OnCloseDialog);
+            SignalManager.Get<CloseDialogSignal>().Listener -= OnCloseDialog;
         }
 
         private void ReadProjectData()

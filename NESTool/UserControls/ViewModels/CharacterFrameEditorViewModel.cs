@@ -372,9 +372,9 @@ namespace NESTool.UserControls.ViewModels
             base.OnActivate();
 
             #region Signals
-            SignalManager.Get<FileModelVOSelectionChangedSignal>().AddListener(OnFileModelVOSelectionChanged);
-            SignalManager.Get<OutputSelectedQuadrantSignal>().AddListener(OnOutputSelectedQuadrant);
-            SignalManager.Get<UpdateCharacterImageSignal>().AddListener(OnUpdateCharacterImage);
+            SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener += OnFileModelVOSelectionChanged;
+            SignalManager.Get<OutputSelectedQuadrantSignal>().Listener += OnOutputSelectedQuadrant;
+            SignalManager.Get<UpdateCharacterImageSignal>().Listener += OnUpdateCharacterImage;
             #endregion
 
             EditFrameTools = EditFrameTools.Select;
@@ -389,9 +389,9 @@ namespace NESTool.UserControls.ViewModels
             base.OnDeactivate();
 
             #region Signals
-            SignalManager.Get<FileModelVOSelectionChangedSignal>().RemoveListener(OnFileModelVOSelectionChanged);
-            SignalManager.Get<OutputSelectedQuadrantSignal>().RemoveListener(OnOutputSelectedQuadrant);
-            SignalManager.Get<UpdateCharacterImageSignal>().RemoveListener(OnUpdateCharacterImage);
+            SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener -= OnFileModelVOSelectionChanged;
+            SignalManager.Get<OutputSelectedQuadrantSignal>().Listener -= OnOutputSelectedQuadrant;
+            SignalManager.Get<UpdateCharacterImageSignal>().Listener -= OnUpdateCharacterImage;
             #endregion
         }
 

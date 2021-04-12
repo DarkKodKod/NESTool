@@ -214,13 +214,13 @@ namespace NESTool.ViewModels
             GroupedPalettes = new Dictionary<Tuple<int, PaletteIndex>, Dictionary<Color, Color>>();
 
             #region Signals
-            SignalManager.Get<AnimationTabDeletedSignal>().AddListener(OnAnimationTabDeleted);
-            SignalManager.Get<AnimationTabNewSignal>().AddListener(OnAnimationTabNew);
-            SignalManager.Get<RenamedAnimationTabSignal>().AddListener(OnRenamedAnimationTab);
-            SignalManager.Get<SwitchCharacterFrameViewSignal>().AddListener(OnSwitchCharacterFrameView);
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().AddListener(OnColorPaletteControlSelected);
-            SignalManager.Get<UpdateCharacterImageSignal>().AddListener(OnUpdateCharacterImage);
-            SignalManager.Get<SelectPaletteIndexSignal>().AddListener(OnSelectPaletteIndex);
+            SignalManager.Get<AnimationTabDeletedSignal>().Listener += OnAnimationTabDeleted;
+            SignalManager.Get<AnimationTabNewSignal>().Listener += OnAnimationTabNew;
+            SignalManager.Get<RenamedAnimationTabSignal>().Listener += OnRenamedAnimationTab;
+            SignalManager.Get<SwitchCharacterFrameViewSignal>().Listener += OnSwitchCharacterFrameView;
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Listener += OnColorPaletteControlSelected;
+            SignalManager.Get<UpdateCharacterImageSignal>().Listener += OnUpdateCharacterImage;
+            SignalManager.Get<SelectPaletteIndexSignal>().Listener += OnSelectPaletteIndex;
             #endregion
 
             PopulateTabs();
@@ -411,13 +411,13 @@ namespace NESTool.ViewModels
             base.OnDeactivate();
 
             #region Signals
-            SignalManager.Get<AnimationTabDeletedSignal>().RemoveListener(OnAnimationTabDeleted);
-            SignalManager.Get<AnimationTabNewSignal>().RemoveListener(OnAnimationTabNew);
-            SignalManager.Get<RenamedAnimationTabSignal>().RemoveListener(OnRenamedAnimationTab);
-            SignalManager.Get<SwitchCharacterFrameViewSignal>().RemoveListener(OnSwitchCharacterFrameView);
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().RemoveListener(OnColorPaletteControlSelected);
-            SignalManager.Get<UpdateCharacterImageSignal>().RemoveListener(OnUpdateCharacterImage);
-            SignalManager.Get<SelectPaletteIndexSignal>().RemoveListener(OnSelectPaletteIndex);
+            SignalManager.Get<AnimationTabDeletedSignal>().Listener -= OnAnimationTabDeleted;
+            SignalManager.Get<AnimationTabNewSignal>().Listener -= OnAnimationTabNew;
+            SignalManager.Get<RenamedAnimationTabSignal>().Listener -= OnRenamedAnimationTab;
+            SignalManager.Get<SwitchCharacterFrameViewSignal>().Listener -= OnSwitchCharacterFrameView;
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Listener -= OnColorPaletteControlSelected;
+            SignalManager.Get<UpdateCharacterImageSignal>().Listener -= OnUpdateCharacterImage;
+            SignalManager.Get<SelectPaletteIndexSignal>().Listener -= OnSelectPaletteIndex;
             #endregion
 
             foreach (ActionTabItem tab in Tabs)

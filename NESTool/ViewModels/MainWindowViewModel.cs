@@ -123,23 +123,23 @@ namespace NESTool.ViewModels
             Title = _appName;
 
             #region Signals
-            SignalManager.Get<OpenProjectSuccessSignal>().AddListener(OpenProjectSuccess);
-            SignalManager.Get<CloseProjectSuccessSignal>().AddListener(OnCloseProjectSuccess);
-            SignalManager.Get<ExitSuccessSignal>().AddListener(OnExitSuccess);
-            SignalManager.Get<LoadConfigSuccessSignal>().AddListener(OnLoadConfigSuccess);
-            SignalManager.Get<UpdateRecentProjectsSignal>().AddListener(OnUpdateRecentProjects);
-            SignalManager.Get<MouseLeftButtonDownSignal>().AddListener(OnMouseLeftButtonDown);
-            SignalManager.Get<MouseLeftButtonUpSignal>().AddListener(OnMouseLeftButtonUp);
-            SignalManager.Get<MouseMoveSignal>().AddListener(OnMouseMove);
-            SignalManager.Get<UpdateAdornersSignal>().AddListener(OnUpdateAdorners);
-            SignalManager.Get<InitializeAdornersSignal>().AddListener(OnInitializeAdorners);
-            SignalManager.Get<DetachAdornersSignal>().AddListener(OnDetachAdorners);
-            SignalManager.Get<SizeChangedSignal>().AddListener(OnSizeChanged);
-            SignalManager.Get<CreateProjectSuccessSignal>().AddListener(OnCreateProjectSuccess);
-            SignalManager.Get<DeleteElementSignal>().AddListener(OnDeleteElement);
-            SignalManager.Get<PasteElementSignal>().AddListener(OnPasteElement);
-            SignalManager.Get<FindAndCreateElementSignal>().AddListener(OnFindAndCreateElement);
-            SignalManager.Get<DropElementSignal>().AddListener(OnDropElement);
+            SignalManager.Get<OpenProjectSuccessSignal>().Listener += OpenProjectSuccess;
+            SignalManager.Get<CloseProjectSuccessSignal>().Listener += OnCloseProjectSuccess;
+            SignalManager.Get<ExitSuccessSignal>().Listener += OnExitSuccess;
+            SignalManager.Get<LoadConfigSuccessSignal>().Listener += OnLoadConfigSuccess;
+            SignalManager.Get<UpdateRecentProjectsSignal>().Listener += OnUpdateRecentProjects;
+            SignalManager.Get<MouseLeftButtonDownSignal>().Listener += OnMouseLeftButtonDown;
+            SignalManager.Get<MouseLeftButtonUpSignal>().Listener += OnMouseLeftButtonUp;
+            SignalManager.Get<MouseMoveSignal>().Listener += OnMouseMove;
+            SignalManager.Get<UpdateAdornersSignal>().Listener += OnUpdateAdorners;
+            SignalManager.Get<InitializeAdornersSignal>().Listener += OnInitializeAdorners;
+            SignalManager.Get<DetachAdornersSignal>().Listener += OnDetachAdorners;
+            SignalManager.Get<SizeChangedSignal>().Listener += OnSizeChanged;
+            SignalManager.Get<CreateProjectSuccessSignal>().Listener += OnCreateProjectSuccess;
+            SignalManager.Get<DeleteElementSignal>().Listener += OnDeleteElement;
+            SignalManager.Get<PasteElementSignal>().Listener += OnPasteElement;
+            SignalManager.Get<FindAndCreateElementSignal>().Listener += OnFindAndCreateElement;
+            SignalManager.Get<DropElementSignal>().Listener += OnDropElement;
             #endregion
         }
 
