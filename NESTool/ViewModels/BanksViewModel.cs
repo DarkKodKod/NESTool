@@ -79,6 +79,7 @@ namespace NESTool.ViewModels
         private BankModel _model = null;
         private Dictionary<string, WriteableBitmap> _bitmapCache = new Dictionary<string, WriteableBitmap>();
         private Visibility _groupMarkVisible = Visibility.Hidden;
+        private int _canvasHeght = 128;
 
         #region Commands
         public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
@@ -100,6 +101,20 @@ namespace NESTool.ViewModels
                 _projectGridSize = value;
 
                 OnPropertyChanged("ProjectGridSize");
+            }
+        }
+
+        public int CanvasHeight
+        {
+            get
+            {
+                return _canvasHeght;
+            }
+            set
+            {
+                _canvasHeght = value;
+
+                OnPropertyChanged("CanvasHeight");
             }
         }
 
@@ -175,6 +190,8 @@ namespace NESTool.ViewModels
                     _selectedBankSize = value;
 
                     OnPropertyChanged("SelectedBankSize");
+
+                    AdjustCanvasHeight();
 
                     Save();
                 }
@@ -497,6 +514,8 @@ namespace NESTool.ViewModels
                 SelectedBankUseType = Model.BankUseType;
                 SelectedBankSize = Model.BankSize;
 
+                AdjustCanvasHeight();
+
                 for (int i = 0; i < Model.PTTiles.Length; i++)
                 {
                     CellGroup[i] = Model.PTTiles[i].Group;
@@ -526,6 +545,22 @@ namespace NESTool.ViewModels
             SignalManager.Get<ShowGroupMarksSignal>().Listener -= OnShowGroupMarks;
             SignalManager.Get<HideGroupMarksSignal>().Listener -= OnHideGroupMarks;
             #endregion
+        }
+
+        private void AdjustCanvasHeight()
+        {
+            switch (SelectedBankSize)
+            {
+                case BankSize.Size4Kb:
+                    CanvasHeight = 128;
+                    break;
+                case BankSize.Size2Kb:
+                    CanvasHeight = 64;
+                    break;
+                case BankSize.Size1Kb:
+                    CanvasHeight = 32;
+                    break;
+            }
         }
 
         private void LoadTileSetImage()

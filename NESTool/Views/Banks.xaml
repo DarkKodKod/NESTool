@@ -91,7 +91,7 @@
                 </StackPanel>
                 <Border Grid.Row="6" Width="510" Height="510"
                         VerticalAlignment="Top">
-                    <Canvas Width="128" Height="128" 
+                    <Canvas Width="128" Height="{Binding CanvasHeight}" 
 		                Background="DarkGray"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top">
@@ -101,7 +101,7 @@
                         <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
                                Source="{Binding PTImage}"
 	                           Width="128"
-	                           Height="128"
+	                           Height="{Binding CanvasHeight}"
                                Name="imgBank"
 	                           Stretch="UniformToFill">
                             <i:Interaction.Behaviors>
@@ -397,7 +397,7 @@
                                     </VisualBrush.Visual>
                                 </VisualBrush>
                             </Border.Background>
-                            <Canvas Width="128" Height="128" Background="Transparent">
+                            <Canvas Width="128" Height="{Binding CanvasHeight}" Background="Transparent">
                                 <i:Interaction.Behaviors>
                                     <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgBank}"/>
                                 </i:Interaction.Behaviors>
