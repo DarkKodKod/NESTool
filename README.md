@@ -184,8 +184,6 @@ There can only be two [Pattern Tables](#Banks), one for sprites and one for back
 ## 4. Future features
 
 + Support 8x16 sprites
-+ Support multiple banks with different sizes.
-+ Way more tools to manipulate tiles in the map editor. Now it is just the bare minimum to paint one tile at a time.
 + Support for palette animations.
 
 <a name="Knownbugs"/>
