@@ -14,7 +14,6 @@ namespace NESTool.Models
             public int INesMapper { get; set; }
             public int CHRSize { get; set; }
             public int PRGSize { get; set; }
-            public SpriteSize SpriteSize { get; set; }
             public bool Battery { get; set; }
             public FrameTiming FrameTiming { get; set; }
             public MirroringType MirroringType { get; set; }
@@ -24,7 +23,6 @@ namespace NESTool.Models
                 INesMapper = 0;
                 CHRSize = 0;
                 PRGSize = 0;
-                SpriteSize = SpriteSize.s8x8;
                 Battery = false;
                 FrameTiming = FrameTiming.NTSC;
                 MirroringType = MirroringType.Vertical;
@@ -95,7 +93,6 @@ namespace NESTool.Models
             Header.INesMapper = copy.Header.INesMapper;
             Header.CHRSize = copy.Header.CHRSize;
             Header.PRGSize = copy.Header.PRGSize;
-            Header.SpriteSize = copy.Header.SpriteSize;
             Header.FrameTiming = copy.Header.FrameTiming;
             Header.MirroringType = copy.Header.MirroringType;
             Header.Battery = copy.Header.Battery;

@@ -15,6 +15,7 @@
              d:DesignHeight="750" d:DesignWidth="850">
     <UserControl.Resources>
         <cv:ParametersConverter x:Key="parametersConverter"/>
+        <cv:EnumMatchToBooleanConverter x:Key="enumConverter" />
     </UserControl.Resources>
     <UserControl.DataContext>
         <vm:BanksViewModel />
@@ -48,16 +49,10 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Row="0">
-                    <Border BorderThickness="0.8" BorderBrush="Gray">
-                        <TextBlock Width="80" Background="White"
-                                   Foreground="Gray"
-                                   VerticalAlignment="Stretch"
-                                   TextAlignment="Center"
-                                   Text="{Binding ProjectGridSize}">
-                        </TextBlock>
-                    </Border>
                     <RadioButton GroupName="Grouped" Margin="10,0,0,0" IsChecked="True">Compact</RadioButton>
                     <RadioButton GroupName="Grouped" Margin="10,0,0,0" Focusable="False" IsHitTestVisible="False">Free form</RadioButton>
+                    <RadioButton Margin="10,0,0,0" Content="Sprite 8x8" GroupName="SpriteSize" IsChecked="{Binding Path=SpriteSize, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=s8x8}"/>
+                    <RadioButton Margin="10,0,0,0" Content="Sprite 8x16" GroupName="SpriteSize" IsChecked="{Binding Path=SpriteSize, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=s8x16}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Grid.Row="2">
                     <TextBlock Margin="0,0,0,0" VerticalAlignment="Center">Use:</TextBlock>

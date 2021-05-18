@@ -103,18 +103,6 @@ namespace NESTool.ViewModels
             }
         }
 
-        public SpriteSize SpriteSize
-        {
-            get { return _spriteSize; }
-            set
-            {
-                _spriteSize = value;
-                OnPropertyChanged("SpriteSize");
-
-                _changed = true;
-            }
-        }
-
         public MapperModel[] Mappers
         {
             get { return _mappers; }
@@ -142,7 +130,6 @@ namespace NESTool.ViewModels
 
         private bool _battery;
         private FrameTiming _frameTiming;
-        private SpriteSize _spriteSize;
         private int[] _chrSizes;
         private int[] _prgSizes;
         private MirroringType[] _mirrorings;
@@ -177,7 +164,6 @@ namespace NESTool.ViewModels
                 project.Header.CHRSize = SelectedCHRSize;
                 project.Header.PRGSize = SelectedPRGSize;
                 project.Header.FrameTiming = FrameTiming;
-                project.Header.SpriteSize = SpriteSize;
                 project.Header.MirroringType = SelectedMirroring;
                 project.Header.Battery = Battery;
 
@@ -198,7 +184,6 @@ namespace NESTool.ViewModels
             SelectedCHRSize = project.Header.CHRSize;
             SelectedPRGSize = project.Header.PRGSize;
             FrameTiming = project.Header.FrameTiming;
-            SpriteSize = project.Header.SpriteSize;
             Mirrorings = mappers.Mappers[SelectedMapper].Mirroring;
             SelectedMirroring = project.Header.MirroringType;
             Battery = project.Header.Battery;

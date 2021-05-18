@@ -424,15 +424,7 @@ namespace NESTool.UserControls.ViewModels
                 index++;
             }
 
-            ProjectModel project = ModelManager.Get<ProjectModel>();
-
-            switch (project.Header.SpriteSize)
-            {
-                case SpriteSize.s8x8: ProjectGridSize = "8x8"; break;
-                case SpriteSize.s8x16: ProjectGridSize = "8x16"; break;
-            }
-
-            LoadBankImage();
+            LoadBankData();
         }
 
         private void OnFileModelVOSelectionChanged(FileModelVO fileModel)
@@ -442,7 +434,7 @@ namespace NESTool.UserControls.ViewModels
                 return;
             }
 
-            LoadBankImage();
+            LoadBankData();
         }
 
         private void OnUpdateCharacterImage()
@@ -603,7 +595,7 @@ namespace NESTool.UserControls.ViewModels
             }
         }
 
-        private void LoadBankImage()
+        private void LoadBankData()
         {
             if (Banks.Length == 0)
             {
@@ -613,6 +605,12 @@ namespace NESTool.UserControls.ViewModels
             if (!(Banks[SelectedBank].Model is BankModel model))
             {
                 return;
+            }
+
+            switch (model.SpriteSize)
+            {
+                case SpriteSize.s8x8: ProjectGridSize = "8x8"; break;
+                case SpriteSize.s8x16: ProjectGridSize = "8x16"; break;
             }
 
             WriteableBitmap bankBitmap = BanksUtils.CreateImage(model, ref _bitmapCache);

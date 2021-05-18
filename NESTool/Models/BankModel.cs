@@ -31,6 +31,7 @@ namespace NESTool.Models
         }
 
         public BankSize BankSize { get; set; }
+        public SpriteSize SpriteSize { get; set; } = SpriteSize.s8x8;
         public BankUseType BankUseType { get; set; }
         public BankTileDistribution Distribution { get; set; }
         public PTTileModel[] PTTiles { get; set; } = new PTTileModel[256];

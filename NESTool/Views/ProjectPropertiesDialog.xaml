@@ -66,12 +66,6 @@
                       SelectedItem="{Binding Path=SelectedMirroring}"/>
         </Grid>
         <StackPanel Grid.Column="2" Grid.Row="1">
-            <GroupBox Header="Sprite Size" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="10">
-                <StackPanel>
-                    <RadioButton Content="8x8" GroupName="SpriteSize" IsChecked="{Binding Path=SpriteSize, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=s8x8}"/>
-                    <RadioButton Content="8x16" GroupName="SpriteSize" IsChecked="{Binding Path=SpriteSize, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=s8x16}"/>
-                </StackPanel>
-            </GroupBox>
             <GroupBox Header="Frame Timing" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="10">
                 <StackPanel>
                     <RadioButton Content="NTSC" GroupName="FrameTiming" Grid.Column="1" Grid.Row="1" IsChecked="{Binding Path=FrameTiming, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=NTSC}"/>

@@ -62,7 +62,6 @@ namespace NESTool.ViewModels
         private BankUseType _selectedBankUseType = BankUseType.None;
         private BankSize _selectedBankSize = BankSize.Size4Kb;
         private WriteableBitmap _croppedImage;
-        private string _projectGridSize;
         private string _selectedGroup;
         private string _selectedIndex;
         private FileModelVO[] _tileSets;
@@ -80,6 +79,7 @@ namespace NESTool.ViewModels
         private Dictionary<string, WriteableBitmap> _bitmapCache = new Dictionary<string, WriteableBitmap>();
         private Visibility _groupMarkVisible = Visibility.Hidden;
         private int _canvasHeght = 128;
+        private SpriteSize _spriteSize = SpriteSize.s8x8;
 
         #region Commands
         public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
@@ -90,20 +90,6 @@ namespace NESTool.ViewModels
         #endregion
 
         #region get/set
-        public string ProjectGridSize
-        {
-            get
-            {
-                return _projectGridSize;
-            }
-            set
-            {
-                _projectGridSize = value;
-
-                OnPropertyChanged("ProjectGridSize");
-            }
-        }
-
         public int CanvasHeight
         {
             get
@@ -115,6 +101,22 @@ namespace NESTool.ViewModels
                 _canvasHeght = value;
 
                 OnPropertyChanged("CanvasHeight");
+            }
+        }
+
+        public SpriteSize SpriteSize
+        {
+            get { return _spriteSize; }
+            set
+            {
+                if (_spriteSize != value)
+                {
+                    _spriteSize = value;
+
+                    OnPropertyChanged("SpriteSize");
+
+                    Save();
+                }
             }
         }
 
@@ -478,14 +480,6 @@ namespace NESTool.ViewModels
 
         private void UpdateDialogInfo()
         {
-            ProjectModel project = ModelManager.Get<ProjectModel>();
-
-            switch (project.Header.SpriteSize)
-            {
-                case SpriteSize.s8x8: ProjectGridSize = "8x8"; break;
-                case SpriteSize.s8x16: ProjectGridSize = "8x16"; break;
-            }
-
             TileSets = ProjectFiles.GetModels<TileSetModel>().ToArray();
         }
 
@@ -515,6 +509,8 @@ namespace NESTool.ViewModels
                 SelectedBankSize = Model.BankSize;
 
                 AdjustCanvasHeight();
+
+                SpriteSize = Model.SpriteSize;
 
                 for (int i = 0; i < Model.PTTiles.Length; i++)
                 {
@@ -706,6 +702,7 @@ namespace NESTool.ViewModels
             Model.BankUseType = SelectedBankUseType;
             Model.BankSize = SelectedBankSize;
             Model.Distribution = BankTileDistribution.Compact;
+            Model.SpriteSize = SpriteSize;
 
             ProjectItem.FileHandler.Save();
         }
