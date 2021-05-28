@@ -134,7 +134,7 @@
                             </ComboBox>
                         </StackPanel>
 						<StackPanel Orientation="Horizontal" Grid.Row="1">
-							<TextBlock Margin="10" FontSize="22">1</TextBlock>
+                            <TextBlock Margin="10" FontSize="22">0</TextBlock>
 							<local:PaletteView PaletteIndex="0" x:Name="palette0"/>
 						</StackPanel>
                     </Grid>
@@ -159,7 +159,7 @@
                             </ComboBox>
                         </StackPanel>
 						<StackPanel Orientation="Horizontal" Grid.Row="1">
-							<TextBlock Margin="10" FontSize="22">2</TextBlock>
+							<TextBlock Margin="10" FontSize="22">1</TextBlock>
 							<local:PaletteView PaletteIndex="1" x:Name="palette1"/>
 						</StackPanel>
                     </Grid>
@@ -184,7 +184,7 @@
                             </ComboBox>
                         </StackPanel>
 						<StackPanel Orientation="Horizontal" Grid.Row="1">
-							<TextBlock Margin="10" FontSize="22">3</TextBlock>
+							<TextBlock Margin="10" FontSize="22">2</TextBlock>
 							<local:PaletteView PaletteIndex="2" x:Name="palette2"/>
 						</StackPanel>
                     </Grid>
@@ -209,7 +209,7 @@
                             </ComboBox>
                         </StackPanel>
 						<StackPanel Orientation="Horizontal" Grid.Row="1">
-							<TextBlock Margin="10" FontSize="22">4</TextBlock>
+							<TextBlock Margin="10" FontSize="22">3</TextBlock>
 							<local:PaletteView PaletteIndex="3" x:Name="palette3"/>
 						</StackPanel>
                     </Grid>
