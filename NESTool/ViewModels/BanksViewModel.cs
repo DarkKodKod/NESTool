@@ -77,7 +77,9 @@ namespace NESTool.ViewModels
         private double _selectionRectangleLeft = 0.0;
         private BankModel _model = null;
         private Dictionary<string, WriteableBitmap> _bitmapCache = new Dictionary<string, WriteableBitmap>();
-        private Visibility _groupMarkVisible = Visibility.Hidden;
+        private Visibility _groupMarkVisible1k = Visibility.Hidden;
+        private Visibility _groupMarkVisible2k = Visibility.Hidden;
+        private Visibility _groupMarkVisible4k = Visibility.Hidden;
         private int _canvasHeght = 128;
         private SpriteSize _spriteSize = SpriteSize.s8x8;
 
@@ -92,10 +94,7 @@ namespace NESTool.ViewModels
         #region get/set
         public int CanvasHeight
         {
-            get
-            {
-                return _canvasHeght;
-            }
+            get => _canvasHeght;
             set
             {
                 _canvasHeght = value;
@@ -106,7 +105,7 @@ namespace NESTool.ViewModels
 
         public SpriteSize SpriteSize
         {
-            get { return _spriteSize; }
+            get => _spriteSize;
             set
             {
                 if (_spriteSize != value)
@@ -124,10 +123,7 @@ namespace NESTool.ViewModels
 
         public string SelectedIndex
         {
-            get
-            {
-                return _selectedIndex;
-            }
+            get => _selectedIndex;
             set
             {
                 if (!string.IsNullOrEmpty(value))
@@ -139,26 +135,42 @@ namespace NESTool.ViewModels
             }
         }
 
-        public Visibility GroupMarkVisible
+        public Visibility GroupMarkVisible1k
         {
-            get
-            {
-                return _groupMarkVisible;
-            }
+            get => _groupMarkVisible1k;
             set
             {
-                _groupMarkVisible = value;
+                _groupMarkVisible1k = value;
 
-                OnPropertyChanged("GroupMarkVisible");
+                OnPropertyChanged("GroupMarkVisible1k");
+            }
+        }
+
+        public Visibility GroupMarkVisible2k
+        {
+            get => _groupMarkVisible2k;
+            set
+            {
+                _groupMarkVisible2k = value;
+
+                OnPropertyChanged("GroupMarkVisible2k");
+            }
+        }
+
+        public Visibility GroupMarkVisible4k
+        {
+            get => _groupMarkVisible4k;
+            set
+            {
+                _groupMarkVisible4k = value;
+
+                OnPropertyChanged("GroupMarkVisible4k");
             }
         }
 
         public string SelectedGroup
         {
-            get
-            {
-                return _selectedGroup;
-            }
+            get => _selectedGroup;
             set
             {
                 if (!string.IsNullOrEmpty(value))
@@ -184,7 +196,7 @@ namespace NESTool.ViewModels
 
         public BankSize SelectedBankSize
         {
-            get { return _selectedBankSize; }
+            get => _selectedBankSize;
             set
             {
                 if (_selectedBankSize != value)
@@ -194,6 +206,7 @@ namespace NESTool.ViewModels
                     OnPropertyChanged("SelectedBankSize");
 
                     AdjustCanvasHeight();
+                    SetMarksVisibility();
 
                     Save();
                 }
@@ -202,7 +215,7 @@ namespace NESTool.ViewModels
 
         public BankUseType SelectedBankUseType
         {
-            get { return _selectedBankUseType; }
+            get => _selectedBankUseType;
             set
             {
                 if (_selectedBankUseType != value)
@@ -218,7 +231,7 @@ namespace NESTool.ViewModels
 
         public double RectangleLeft
         {
-            get { return _rectangleLeft; }
+            get => _rectangleLeft;
             set
             {
                 _rectangleLeft = value;
@@ -229,7 +242,7 @@ namespace NESTool.ViewModels
 
         public double RectangleTop
         {
-            get { return _rectangleTop; }
+            get => _rectangleTop;
             set
             {
                 _rectangleTop = value;
@@ -240,7 +253,7 @@ namespace NESTool.ViewModels
 
         public Visibility RectangleVisibility
         {
-            get { return _rectangleVisibility; }
+            get => _rectangleVisibility;
             set
             {
                 _rectangleVisibility = value;
@@ -251,7 +264,7 @@ namespace NESTool.ViewModels
 
         public double SelectionRectangleLeft
         {
-            get { return _selectionRectangleLeft; }
+            get => _selectionRectangleLeft;
             set
             {
                 _selectionRectangleLeft = value;
@@ -262,7 +275,7 @@ namespace NESTool.ViewModels
 
         public double SelectionRectangleTop
         {
-            get { return _selectionRectangleTop; }
+            get => _selectionRectangleTop;
             set
             {
                 _selectionRectangleTop = value;
@@ -273,7 +286,7 @@ namespace NESTool.ViewModels
 
         public Visibility SelectionRectangleVisibility
         {
-            get { return _selectionRectangleVisibility; }
+            get => _selectionRectangleVisibility;
             set
             {
                 _selectionRectangleVisibility = value;
@@ -284,10 +297,7 @@ namespace NESTool.ViewModels
 
         public ImageSource PTImage
         {
-            get
-            {
-                return _pTImage;
-            }
+            get => _pTImage;
             set
             {
                 _pTImage = value;
@@ -298,10 +308,7 @@ namespace NESTool.ViewModels
 
         public ImageSource ImgSource
         {
-            get
-            {
-                return _imgSource;
-            }
+            get => _imgSource;
             set
             {
                 _imgSource = value;
@@ -312,10 +319,7 @@ namespace NESTool.ViewModels
 
         public Point CroppedPoint
         {
-            get
-            {
-                return _croppedPoint;
-            }
+            get => _croppedPoint;
             set
             {
                 _croppedPoint = value;
@@ -326,10 +330,7 @@ namespace NESTool.ViewModels
 
         public double ActualHeight
         {
-            get
-            {
-                return _actualHeight;
-            }
+            get => _actualHeight;
             set
             {
                 _actualHeight = value;
@@ -340,10 +341,7 @@ namespace NESTool.ViewModels
 
         public double ActualWidth
         {
-            get
-            {
-                return _actualWidth;
-            }
+            get => _actualWidth;
             set
             {
                 _actualWidth = value;
@@ -354,10 +352,7 @@ namespace NESTool.ViewModels
 
         public WriteableBitmap CroppedImage
         {
-            get
-            {
-                return _croppedImage;
-            }
+            get => _croppedImage;
             set
             {
                 _croppedImage = value;
@@ -368,7 +363,7 @@ namespace NESTool.ViewModels
 
         public FileModelVO[] TileSets
         {
-            get { return _tileSets; }
+            get => _tileSets;
             set
             {
                 _tileSets = value;
@@ -379,7 +374,7 @@ namespace NESTool.ViewModels
 
         public int SelectedTileSet
         {
-            get { return _selectedTileSet; }
+            get => _selectedTileSet;
             set
             {
                 _selectedTileSet = value;
@@ -390,7 +385,7 @@ namespace NESTool.ViewModels
 
         public int SelectedBankTile
         {
-            get { return _selectedBankTile; }
+            get => _selectedBankTile;
             set
             {
                 _selectedBankTile = value;
@@ -487,8 +482,6 @@ namespace NESTool.ViewModels
         {
             base.OnActivate();
 
-            GroupMarkVisible = MainWindow.ToolBarBanksShowHideGroupMarks ? Visibility.Visible : Visibility.Hidden;
-
             #region Signals
             SignalManager.Get<MouseWheelSignal>().Listener += OnMouseWheel;
             SignalManager.Get<OutputSelectedQuadrantSignal>().Listener += OnOutputSelectedQuadrant;
@@ -509,6 +502,7 @@ namespace NESTool.ViewModels
                 SelectedBankSize = Model.BankSize;
 
                 AdjustCanvasHeight();
+                SetMarksVisibility();
 
                 SpriteSize = Model.SpriteSize;
 
@@ -541,6 +535,28 @@ namespace NESTool.ViewModels
             SignalManager.Get<ShowGroupMarksSignal>().Listener -= OnShowGroupMarks;
             SignalManager.Get<HideGroupMarksSignal>().Listener -= OnHideGroupMarks;
             #endregion
+        }
+
+        private void SetMarksVisibility()
+        {
+            if (SelectedBankSize == BankSize.Size4Kb)
+            {
+                GroupMarkVisible1k = MainWindow.ToolBarBanksShowHideGroupMarks ? Visibility.Visible : Visibility.Hidden;
+                GroupMarkVisible2k = MainWindow.ToolBarBanksShowHideGroupMarks ? Visibility.Visible : Visibility.Hidden;
+                GroupMarkVisible4k = MainWindow.ToolBarBanksShowHideGroupMarks ? Visibility.Visible : Visibility.Hidden;
+            }
+            else if (SelectedBankSize == BankSize.Size2Kb)
+            {
+                GroupMarkVisible1k = MainWindow.ToolBarBanksShowHideGroupMarks ? Visibility.Visible : Visibility.Hidden;
+                GroupMarkVisible2k = MainWindow.ToolBarBanksShowHideGroupMarks ? Visibility.Visible : Visibility.Hidden;
+                GroupMarkVisible4k = Visibility.Hidden;
+            }
+            else
+            {
+                GroupMarkVisible1k = MainWindow.ToolBarBanksShowHideGroupMarks ? Visibility.Visible : Visibility.Hidden;
+                GroupMarkVisible2k = Visibility.Hidden;
+                GroupMarkVisible4k = Visibility.Hidden;
+            }
         }
 
         private void AdjustCanvasHeight()
@@ -608,7 +624,7 @@ namespace NESTool.ViewModels
                 SelectionRectangleLeft = point.X;
                 SelectionRectangleTop = point.Y;
 
-                int index = ((int)point.X / 8) + (((int)point.Y / 8) * 16);
+                int index = ((int)point.X / 8) + ((int)point.Y / 8 * 16);
 
                 SelectedBankTile = index;
 
@@ -633,7 +649,7 @@ namespace NESTool.ViewModels
                 return;
             }
 
-            GroupMarkVisible = Visibility.Hidden;
+            SetMarksVisibility();
         }
 
         private void OnShowGroupMarks()
@@ -643,7 +659,7 @@ namespace NESTool.ViewModels
                 return;
             }
 
-            GroupMarkVisible = Visibility.Visible;
+            SetMarksVisibility();
         }
 
         private void OnBankTileDeleted()

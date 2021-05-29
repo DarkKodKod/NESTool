@@ -422,7 +422,6 @@ namespace NESTool.ViewModels
             SignalManager.Get<SelectPaletteIndexSignal>().Listener += OnSelectPaletteIndex;
             SignalManager.Get<MapPaintToolSignal>().Listener += OnMapPaintTool;
             SignalManager.Get<MapEraseToolSignal>().Listener += OnMapEraseTool;
-            SignalManager.Get<ProjectItemLoadedSignal>().Listener += OnProjectItemLoaded;
             SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener += OnFileModelVOSelectionChanged;
             SignalManager.Get<ShowGridSignal>().Listener += OnShowGrid;
             SignalManager.Get<HideGridSignal>().Listener += OnHideGrid;
@@ -461,7 +460,6 @@ namespace NESTool.ViewModels
             SignalManager.Get<MapEraseToolSignal>().Listener -= OnMapEraseTool;
             SignalManager.Get<ShowGridSignal>().Listener -= OnShowGrid;
             SignalManager.Get<HideGridSignal>().Listener -= OnHideGrid;
-            SignalManager.Get<ProjectItemLoadedSignal>().Listener -= OnProjectItemLoaded;
             SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener -= OnFileModelVOSelectionChanged;
             #endregion
         }
@@ -544,19 +542,6 @@ namespace NESTool.ViewModels
             for (int i = 0; i < GetModel().AttributeTable.Length; ++i)
             {
                 _spritePaletteIndices[i] = (PaletteIndex)GetModel().AttributeTable[i].PaletteIndex;
-            }
-        }
-
-        private void OnProjectItemLoaded(string id)
-        {
-            if (!IsActive)
-            {
-                return;
-            }
-
-            if (GetModel().GUID != id)
-            {
-                return;
             }
         }
 

@@ -66,21 +66,16 @@ namespace NESTool.FileSystem
 
         private static async Task<string> ReadTextAsync(string filePath)
         {
+            byte[] result;
+
             using (FileStream sourceStream = File.Open(filePath, FileMode.Open))
             {
-                StringBuilder sb = new StringBuilder();
+                result = new byte[sourceStream.Length];
 
-                byte[] buffer = new byte[sourceStream.Length];
-                int numRead;
-
-                while ((numRead = await sourceStream.ReadAsync(buffer, 0, buffer.Length).ConfigureAwait(false)) != 0)
-                {
-                    string text = Encoding.UTF8.GetString(buffer, 0, numRead);
-                    sb.Append(text);
-                }
-
-                return sb.ToString();
+                await sourceStream.ReadAsync(result, 0, (int)sourceStream.Length).ConfigureAwait(false);
             }
+
+            return Encoding.UTF8.GetString(result);
         }
 
         private static Task<AFileModel> ReadFileModel(ProjectItemType type, string content)
@@ -110,35 +105,41 @@ namespace NESTool.FileSystem
 
             item.FileHandler = fileHandler;
 
-            if (!item.IsFolder)
+            if (item.IsFolder)
             {
-                AFileModel model = Util.FileModelFactory(item.Type);
+                return;
+            }
 
-                string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name + model.FileExtension);
+            AFileModel model = Util.FileModelFactory(item.Type);
 
-                if (File.Exists(itemPath))
-                {
-                    fileHandler.FileModel = await ReadFileAndLoadModelAsync(itemPath, item.Type);
+            string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name + model.FileExtension);
 
-                    if (string.IsNullOrEmpty(fileHandler.FileModel.GUID))
-                    {
-                        fileHandler.FileModel.GUID = Guid.NewGuid().ToString();
-                    }
+            if (!File.Exists(itemPath))
+            {
+                return;
+            }
 
-                    if (!ProjectFiles.Handlers.ContainsKey(fileHandler.FileModel.GUID))
-                    {
-                        ProjectFiles.Handlers.Add(fileHandler.FileModel.GUID, fileHandler);
+            fileHandler.FileModel = await ReadFileAndLoadModelAsync(itemPath, item.Type);
 
-                        SignalManager.Get<ProjectItemLoadedSignal>().Dispatch(fileHandler.FileModel.GUID);
+            if (string.IsNullOrEmpty(fileHandler.FileModel.GUID))
+            {
+                fileHandler.FileModel.GUID = Guid.NewGuid().ToString();
+            }
 
-                        ProjectFiles.ObjectsLoading--;
+            if (ProjectFiles.Handlers.ContainsKey(fileHandler.FileModel.GUID))
+            {
+                return;
+            }
 
-                        if (ProjectFiles.ObjectsLoading <= 0)
-                        {
-                            SignalManager.Get<HideLoadingDialogSignal>().Dispatch();
-                        }
-                    }
-                }
+            ProjectFiles.Handlers.Add(fileHandler.FileModel.GUID, fileHandler);
+
+            SignalManager.Get<ProjectItemLoadedSignal>().Dispatch(fileHandler.FileModel.GUID);
+
+            ProjectFiles.ObjectsLoading--;
+
+            if (ProjectFiles.ObjectsLoading <= 0)
+            {
+                SignalManager.Get<HideLoadingDialogSignal>().Dispatch();
             }
         }
 
