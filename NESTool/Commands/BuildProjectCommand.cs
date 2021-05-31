@@ -270,6 +270,8 @@ namespace NESTool.Commands
                     int bigCellPosX = 0;
                     int bigCellPosY = 0;
                     int type = 0;
+                    bool secondToLast = false;
+                    bool last = false;
 
                     for (int j = 0; j < bytes.Length; ++j)
                     {
@@ -278,7 +280,19 @@ namespace NESTool.Commands
                             continue;
                         }
 
+                        if (j == bytes.Length - 2)
+                        {
+                            secondToLast = true;
+                        }
+                        
+                        if (j == bytes.Length - 1)
+                        {
+                            secondToLast = false;
+                            last = true;
+                        }
+
                         // This is not generic at all, but I need it for my game
+
                         if (j == 0)
                         {
                             type = nValue;
@@ -369,9 +383,23 @@ namespace NESTool.Commands
                         }
                         else
                         {
+                            if (secondToLast)
+                            {
+                                outputFile.Write("(");
+                            }
+
                             outputFile.Write($"${nValue:X2}");
 
-                            if (j < bytes.Length - 1)
+                            if (secondToLast)
+                            {
+                                outputFile.Write(" | ");
+                            }
+                            else if (last)
+                            {
+                                outputFile.Write("<<4)");
+                            }
+
+                            if (j < bytes.Length - 1 && !secondToLast)
                             {
                                 outputFile.Write(", ");
                             }
