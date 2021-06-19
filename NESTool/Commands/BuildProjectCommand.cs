@@ -19,6 +19,36 @@ namespace NESTool.Commands
     {
         private const int NESFPS = 60;
 
+        private enum MetaType : byte
+        {
+            Bat                 = 0,
+            Snake               = 1,
+            Spider              = 2,
+            Skull               = 3,
+            JumpingSkull        = 4,
+            WhiteKey            = 5,
+            BlueKey             = 6,
+            RedKey              = 7,
+            GoldenKey           = 8,
+            Talisman            = 9,
+            Sword               = 10,
+            Crystal             = 11,
+            Torch               = 12,
+            NotUsed             = 13,
+            DoorWhiteElement    = 14,
+            DoorBlueElement     = 15,
+            DoorRedElement      = 16,
+            AddBrick            = 17,
+            AddHalfBrick        = 18,
+            AddChain            = 19,
+            AddLadderLeft       = 20,
+            AddLadderRight      = 21,
+            AddTopLadderLeft    = 22,
+            AddTopLadderRight   = 23,
+            AddBlank            = 24,
+            Door                = 32
+        }
+
         public override void Execute(object parameter)
         {
             if (!CheckValidOutputFolder())
@@ -243,6 +273,22 @@ namespace NESTool.Commands
             outputFile.Write(Environment.NewLine);
         }
 
+        private bool IsDoor(MetaType type)
+        {
+            return type == MetaType.DoorWhiteElement || type == MetaType.DoorBlueElement || type == MetaType.DoorRedElement;
+        }
+
+        private bool IsAddElement(MetaType type)
+        {
+            return type == MetaType.AddBrick ||
+                type == MetaType.AddHalfBrick ||
+                type == MetaType.AddChain ||
+                type == MetaType.AddLadderLeft ||
+                type == MetaType.AddLadderRight ||
+                type == MetaType.AddTopLadderLeft ||
+                type == MetaType.AddTopLadderRight;
+        }
+
         private void PrintMetaData(MapModel model, FileModelVO item, StreamWriter outputFile)
         {
             if (!string.IsNullOrEmpty(model.MetaData))
@@ -269,7 +315,7 @@ namespace NESTool.Commands
                     int cacheY = 0;
                     int bigCellPosX = 0;
                     int bigCellPosY = 0;
-                    int type = 0;
+                    MetaType type = MetaType.Bat;
                     bool secondToLast = false;
                     bool last = false;
 
@@ -291,13 +337,11 @@ namespace NESTool.Commands
                             last = true;
                         }
 
-                        // This is not generic at all, but I need it for my game
-
                         if (j == 0)
                         {
-                            type = nValue;
+                            type = (MetaType)nValue;
 
-                            if (nValue >= 5 && nValue <= 14)
+                            if (type >= MetaType.WhiteKey)
                             {
                                 mapElement = true;
                             }
@@ -312,7 +356,7 @@ namespace NESTool.Commands
                             cacheY = nValue;
 
                             // write PPU name table addresses
-                            int dec = 8192 + (32 * nValue) + cacheX;
+                            int dec = /*PPU address = $2000*/8192 + (32 * cacheY) + cacheX;
                             string str = $"{dec:X4}";
 
                             string strLow = str.Substring(2, 2);
@@ -320,11 +364,11 @@ namespace NESTool.Commands
                             
                             outputFile.Write($"${strLow}, ${strHigh}, ");
 
-                            if (type != 13 /* 13 = "add element" type */)
+                            if (!IsAddElement(type))
                             {
                                 // write PPU attribute table addresses
                                 bigCellPosX = (int)Math.Floor(cacheX / 32.0f * 8.0f);
-                                bigCellPosY = (int)Math.Floor(nValue / 32.0f * 8.0f);
+                                bigCellPosY = (int)Math.Floor(cacheY / 32.0f * 8.0f);
 
                                 dec = /*PPU address = $23C0*/9152 + (8 * bigCellPosY) + bigCellPosX;
                                 str = $"{dec:X4}";
@@ -336,13 +380,9 @@ namespace NESTool.Commands
                             }
 
                             // write x, y coordinates
-                            outputFile.Write($"${cacheX:X2}, ${nValue:X2}, ");
+                            outputFile.Write($"${cacheX:X2}, ${cacheY:X2}, ");
                         }
-                        else if (mapElement && j == 3 && (type == 14 || type == 13) /* 14 = "Door", 13 = "add element" */)
-                        {
-                            outputFile.Write($"${nValue:X2}, ");
-                        }
-                        else if (mapElement && j == 3 && type != 14 /* 14 = "Door" */)
+                        else if (mapElement && j == 3 && !IsDoor(type) && !IsAddElement(type))
                         {
                             // check if is left or right and bottom or top
                             int middleX = (4 * bigCellPosX) + 2;
@@ -388,7 +428,14 @@ namespace NESTool.Commands
                                 outputFile.Write("(");
                             }
 
-                            outputFile.Write($"${nValue:X2}");
+                            if (j == 0)
+                            {
+                                outputFile.Write(Enum.GetName(typeof(MetaType), type));
+                            }
+                            else
+                            {
+                                outputFile.Write($"${nValue:X2}");
+                            }
 
                             if (secondToLast)
                             {
