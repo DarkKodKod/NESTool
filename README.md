@@ -8,14 +8,16 @@ This tool is far from comlete. Current version is 1.0.0.0
 [1.1. Menu](#Menu)   
 [1.2. Toolbar](#Toolbar)   
 [2. Getting started](#Gettingstarted)    
-[2.1. Tile Sets](#TileSets)    
-[2.2. Banks](#Banks)    
-[2.3. Palettes](#Palettes)    
-[2.4. Characters](#Characters)    
-[2.5. Maps](#Maps)    
-[3. Building the project](#Buildingtheproject)    
-[4. Future features](#Futurefeatures)     
-[5. Known bugs](#Knownbugs)     
+[2.1 Create project elements](#CreateElements)    
+[3. Managing resources](#ManagingResources)    
+[3.1. Tile Sets](#TileSets)    
+[3.2. Banks](#Banks)    
+[3.3. Palettes](#Palettes)    
+[3.4. Characters](#Characters)    
+[3.5. Maps](#Maps)    
+[4. Building the project](#Buildingtheproject)    
+[5. Future features](#Futurefeatures)     
+[6. Known bugs](#Knownbugs)     
 
 <a name="Overview"/>
 
@@ -85,7 +87,11 @@ At any time is possible to change the project configurations from the menu Proje
 
 ![](/Images/projectproperties.png)
 
-From Project properties is possible to change the Mapper type, PRG size, CHR size, mirroring, sprite size between 8x8 or 8x16, etc.
+From Project properties is possible to change the Mapper type, PRG size, CHR size, mirroring. For now Battery is listed here as a possible future feature. The whole idea is maybe the tool can generate a header file based on this information.
+
+<a name="CreateElements"/>
+
+### 2.1 Create project elements
 
 ![](/Images/newelement.png)
 
@@ -99,13 +105,17 @@ Is possible to create folders inside each root folder and move elements of the s
 
 To start creating assets for the NES, the very first thing to create is the Tile Set explained in the section below.
 
+<a name="ManagingResources"/>
+
+## 3. Managing resources
+
 <a name="TileSets"/>
 
-### 2.1 Tile Sets
+### 3.1 Tile Sets
 
 Tile Sets are the basic element to start constructing NES assets but they are not exported directly, they are only used to build [Banks](#Banks), those are exported. This is explained more in depth in the [Building the project](#Buildingtheproject) section. Tile Sets are images from these formats: *.png, .bmp, .gif, .jpg, .jpeg, .jpe, .jfif, .tif, .tiff, .tga*. The image will reduce the colors with a Palette Quantizer algorithm to match the number of colors the NES can reproduce. Once is imported, it is possible to use each 8x8 or 8x16 pixels of the image as sprites to construct a character meta sprite including its animation or a map.
 
-![](/Images/mario.png)
+![](/Images/pedro.png)
 
 Let´s pick up this image from Super Mario World. Ideally should be an image with the right size to be use because this tool does not support scaling.
 
@@ -127,7 +137,7 @@ Clicking any 8x8 cell in the image will show it in the zoon in quadrant at the l
 
 <a name="Banks"/>
 
-### 2.2 Banks
+### 3.2 Banks
 
 Banks are tiles grouped together. Is possible to have banks in different sizes (1kb, 2kb, 4kb). **Pattern Tables** are 4kb banks used as the main source for NES graphics. Pattern Tables can be either background or sprites. Banks are constructed from [Tile Sets](#TileSets). This will form a link inside the banks to each Tile Set used. If a Tile Set changes its tiles, it is renamed or removed, it will automatically update the bank.
 
@@ -135,7 +145,7 @@ Banks are tiles grouped together. Is possible to have banks in different sizes (
 
 <a name="Palettes"/>
 
-### 2.3 Palettes
+### 3.3 Palettes
 
 Here it is just simply, one four color palette where is possible to pick colors. This palettes are referenced by name for the [Characters](#Characters) and [Maps](#Maps).
 
@@ -143,7 +153,7 @@ Here it is just simply, one four color palette where is possible to pick colors.
 
 <a name="Characters"/>
 
-### 2.4 Characters
+### 3.4 Characters
 
 Characters are created by using banks. The tiles from this bank will be stored as a link to them, if one of those banks changes, it is renamed or deleted it will automatically updates the character.
 
@@ -163,7 +173,7 @@ Here is also possible to set the animation speed. This value is in seconds per f
 
 <a name="Maps"/>
 
-### 2.5 Maps
+### 3.5 Maps
 
 Maps are created by using banks. If the bank is set to pattern table for sprite tiles, it won't appear as an option for map creation.
 
@@ -171,7 +181,7 @@ Maps are created by using banks. If the bank is set to pattern table for sprite 
 
 <a name="Buildingtheproject"/>
 
-## 3. Building the project
+## 4. Building the project
 
 ![](/Images/build.png)
 
@@ -181,14 +191,14 @@ There can only be two [Pattern Tables](#Banks), one for sprites and one for back
 
 <a name="Futurefeatures"/>
 
-## 4. Future features
+## 5. Future features
 
 + Support 8x16 sprites
 + Support for palette animations.
 
 <a name="Knownbugs"/>
 
-## 5. Known bugs
+## 6. Known bugs
 
 Real Github's Issues are needed here. For now the list is just here with no real ticket created.
 
