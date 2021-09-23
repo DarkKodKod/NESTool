@@ -208,7 +208,7 @@ Building the project will create a bunch of files in the output directory:
 + For each [Bank](#Banks) element, it will generate a .bin file.
 + A .s file for each [Map](#Maps) element. This will use the field **Use RLE on maps** to compress or not the maps.
 + A .s file containing all the [Palette](#Palettes) elements called **palettes.s**.
-+ A .s file containing all the tiles used by the banks called **tile_definition.s".
++ A .s file containing all the tiles used by the banks called **tile_definition.s**.
 
 <a name="Futurefeatures"/>
 
