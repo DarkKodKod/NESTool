@@ -147,7 +147,7 @@ When building the project, see: [Building the project](#Buildingtheproject), it 
 
 ![](/Images/bank2.png)
 
-In the image above, we can have a bank for the sprties with 2kb of size. Then later in the code we can for example use this 2kb of a bank along side with music in the CHR Rom chip. Like this example using CA65:
+In the image above, we can have a bank for the sprites with 2kb of size. Then later in the code we can for example use this 2kb of a bank along side with music in the CHR Rom chip. Like this example using CA65:
 
 ```
 .segment "CHARS"
