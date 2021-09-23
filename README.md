@@ -1,7 +1,7 @@
 # NESTool
-Tool written in C# and WPF to manage asset for a NES game by Felipe Reinaud. Current implementation only supports NROM (Mapper 0). Resources files are in TOML format, [https://github.com/toml-lang/toml](https://github.com/toml-lang/toml). 
+Tool written in C# and WPF to manage asset for a NES game by Felipe Reinaud. Resources files are in TOML format, [https://github.com/toml-lang/toml](https://github.com/toml-lang/toml). 
 
-This tool is far from comlete. Current version is 1.0.0.0
+This tool is far from comlete. Current version is 1.0.0
 
 ### Table of Content  
 [1. Overview](#Overview)   
@@ -85,7 +85,7 @@ Once the project is created, NESTool will always open the last opened project.
 
 At any time is possible to change the project configurations from the menu Project > Project Properties...
 
-![](/Images/projectproperties.png)
+![](/Images/projectproperties2.png)
 
 From Project properties is possible to change the Mapper type, PRG size, CHR size, mirroring. For now Battery is listed here as a possible future feature. The whole idea is maybe the tool can generate a header file based on this information.
 
@@ -117,31 +117,44 @@ Tile Sets are the basic element to start constructing NES assets but they are no
 
 ![](/Images/pedro.png)
 
-Let´s pick up this image from Super Mario World. Ideally should be an image with the right size to be use because this tool does not support scaling.
+Let´s pick up this image or sprite sheet from Montezuma's Revenge.
 
-![](/Images/importimage.png)
+![](/Images/importimage2.png)
 
 There are two ways to import a new image to a *Tile Set* element, first one is to use File > Import > Image... (Ctrl + I). This will create a *Tile Set* element with the name of the image. The second way to import an image is to create a *Tile Set* element, explained the the [Getting started](#Gettingstarted) section and then click over the new element and then click the *tree dots* button on the top part of the element window to browse your computer for an image.
 
 All images after being imported will create if it doesn't exist already a folder name **Images** in the project root directory and I will copy the new imported image there with the extension *.bmp*.
 
-![](/Images/importedimage.png)
+![](/Images/importedimage2.png)
 
 After the image is imported it is possible to zoom in/out with the mouse's scroll wheel and it will appear a new toobar button to hide or show the 8x8/8x16 grid.
 
-![](/Images/changingcolors.png)
+![](/Images/changingcolors2.png)
 
 Clicking any 8x8 cell in the image will show it in the zoon in quadrant at the left where is possible to change the colors. It is important to press the button save to apply the changes.
 
 > ⚠️**WARNING**: Each 8x8/8x16 cell must be 4 colors maximum. Transparent color counts as one color leaving 3 colors left. This tool does not check if a cell has more than 4 colors.
 
+The field **Pseudonym** is to give a name to any 8x8 cell. This is helpful when the proyect is exported, it will create a .asm file with all the cells used by the [Banks](#Banks) with this pseudonym as a constant value so you dont have to hardcode the actual tile index in the code. The value is taken from the [Bank](#Banks) itself. To know more about the generated files read the [Building the project](#Buildingtheproject) section.
+
 <a name="Banks"/>
 
 ### 3.2 Banks
 
-Banks are tiles grouped together. Is possible to have banks in different sizes (1kb, 2kb, 4kb). **Pattern Tables** are 4kb banks used as the main source for NES graphics. Pattern Tables can be either background or sprites. Banks are constructed from [Tile Sets](#TileSets). This will form a link inside the banks to each Tile Set used. If a Tile Set changes its tiles, it is renamed or removed, it will automatically update the bank.
+Banks are tiles grouped together. Is possible to have banks in different sizes (1kb, 2kb, 4kb). **Pattern Tables** are 4kb banks used as the main source for NES graphics. Pattern Tables can be either background or sprites. Banks are constructed from [Tile Sets](#TileSets). This will form a link inside the banks to each Tile Set used. If a Tile Set changes its tiles, it is renamed or removed, it will automatically update the bank. The field **Group** is to group tiles to share the same color order. By default each cell has its own group index but if one or more cells share the same group index then the colors they share, they will have the exact same order of appearance. The **Use** dropdown button is just to categorize the bank, later when you are creating a [Character](#Characters) for example, it will display only banks with type **Characters**.
 
-![](/Images/bank.png)
+When building the project, see: [Building the project](#Buildingtheproject), it will generate bank files for each bank object in the project.
+
+![](/Images/bank2.png)
+
+In the image above, we can have a bank for the sprties with 2kb of size. Then later in the code we can for example use this 2kb of a bank along side with music in the CHR Rom chip. Like this example using CA65:
+
+```
+.segment "CHARS"
+    .incbin "../assets/sprites.bin"       ; 2kb for the sprites bank
+    .include "sound/musicData.asm"        ; 2kb for music data
+    .incbin "../assets/background.bin"    ; 4kb for bankground bank
+```
 
 <a name="Palettes"/>
 
@@ -163,13 +176,13 @@ If the bank is set to pattern table for background tiles, it won't appear as an 
 
 Press the plus button in the tab to create a new animation.
 
-![](/Images/emptyFrame.png)
+![](/Images/emptyFrame2.png)
 
 From here it is possible to create frames for the animation. Clicking the plus button will create a new frame of the animation. When there is more than one frame, the play button, stop, pause, previous frame and next frame are available.
 
 Here is also possible to set the animation speed. This value is in seconds per frame and this is also used when building the project to be used in the assembly. More details explained in [Building the project](#Buildingtheproject) section.
 
-![](/Images/editframe.png)
+![](/Images/editframe2.png)
 
 <a name="Maps"/>
 
@@ -177,17 +190,22 @@ Here is also possible to set the animation speed. This value is in seconds per f
 
 Maps are created by using banks. If the bank is set to pattern table for sprite tiles, it won't appear as an option for map creation.
 
-![](/Images/map.png)
+From the tool bar is possible to Select a 16x16 quadrant and assing a pallete number from 0 to 3. Here is imposed the NES hardware restriction that palettes are only assigned to 16x16 pixel cells. Next to the selection tool is the paint tool and by selecting any cell from the [Bank](#Banks) area it is possible to "paint" over the map area. Keeping the mouse down will help the "paint" of multiple 8x8 cells at a time. Next is the **erase** tool. This tool will erase and will leave no data to that cell.
+
+![](/Images/map2.png)
 
 <a name="Buildingtheproject"/>
 
 ## 4. Building the project
 
-![](/Images/build.png)
+![](/Images/build2.png)
 
-Building the project will create a bunch of files in the output directory. 
+Building the project will create a bunch of files in the output directory:
 
-There can only be two [Pattern Tables](#Banks), one for sprites and one for backgrounds.
++ For each [Bank](#Banks) element, it will generate a .bin file.
++ A .s file for each [Map](#Maps) element. This will use the field **Use RLE on maps** to compress or not the maps.
++ A .s file containing all the [Palette](#Palettes) elements called **palettes.s**.
++ A .s file containing all the tiles used by the banks called **tile_definition.s".
 
 <a name="Futurefeatures"/>
 
@@ -195,6 +213,7 @@ There can only be two [Pattern Tables](#Banks), one for sprites and one for back
 
 + Support 8x16 sprites
 + Support for palette animations.
++ Potentially add Python support to elimiate the hardcoded process of exporting the files and for example the RLE compression can be adjusted as a script or something else custom needed depending on the current game project.
 
 <a name="Knownbugs"/>
 
@@ -202,6 +221,7 @@ There can only be two [Pattern Tables](#Banks), one for sprites and one for back
 
 Real Github's Issues are needed here. For now the list is just here with no real ticket created.
 
++ Only one tile_definitions.s is created but if there are more Background banks, it should be one for each one of those at least.
 + Reimporting the same image to a TileSet element will make the tool crash.
 + Undo, Redo is not working inside each element.
 + After an image is imported, the source image is not released.
