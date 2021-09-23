@@ -155,6 +155,9 @@ In the image above, we can have a bank for the sprites with 2kb of size. Then la
     .include "sound/musicData.asm"        ; 2kb for music data
     .incbin "../assets/background.bin"    ; 4kb for bankground bank
 ```
+Then it will look like this:
+
+![](/Images/charsmemory.png)
 
 <a name="Palettes"/>
 
