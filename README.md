@@ -155,6 +155,9 @@ In the image above, we can have a bank for the sprites with 2kb of size. Then la
     .include "sound/musicData.asm"        ; 2kb for music data
     .incbin "../assets/background.bin"    ; 4kb for bankground bank
 ```
+Then it will look like this:
+
+![](/Images/charsmemory.png)
 
 <a name="Palettes"/>
 
@@ -205,7 +208,7 @@ Building the project will create a bunch of files in the output directory:
 + For each [Bank](#Banks) element, it will generate a .bin file.
 + A .s file for each [Map](#Maps) element. This will use the field **Use RLE on maps** to compress or not the maps.
 + A .s file containing all the [Palette](#Palettes) elements called **palettes.s**.
-+ A .s file containing all the tiles used by the banks called **tile_definition.s".
++ A .s file containing all the tiles used by the banks called **tile_definition.s**.
 
 <a name="Futurefeatures"/>
 
