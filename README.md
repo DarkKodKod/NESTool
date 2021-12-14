@@ -1,5 +1,5 @@
 # NESTool
-Tool written in C# and WPF to manage asset for a NES game by Felipe Reinaud. Resources files are in TOML format, [https://github.com/toml-lang/toml](https://github.com/toml-lang/toml). 
+Tool written in C# and WPF using the MVVM design pattern to manage asset for a NES game by Felipe Reinaud. Resources files are in TOML format, [https://github.com/toml-lang/toml](https://github.com/toml-lang/toml). 
 
 This tool is far from comlete. Current version is 1.0.0
 
