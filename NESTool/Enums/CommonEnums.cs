@@ -2,38 +2,38 @@
 {
     public enum SpriteSize
     {
-        s8x8    = 0,
-        s8x16   = 1
+        s8x8 = 0,
+        s8x16 = 1
     }
 
     public enum BankTileDistribution
     {
-        Compact     = 0,
-        FreeForm    = 1
+        Compact = 0,
+        FreeForm = 1
     }
 
     public enum FrameTiming
     {
-        NTSC    = 0,
-        PAL     = 1
+        NTSC = 0,
+        PAL = 1
     }
 
     public enum MirroringType
     {
-        Vertical    = 0,
-        Horizontal  = 1,
+        Vertical = 0,
+        Horizontal = 1,
         FourScreens = 2
     }
 
     public enum ProjectItemType
     {
-        None        = 0,
-        Bank        = 1,
-        Character   = 2,
-        Map         = 3,
-        TileSet     = 4,
-        Palette     = 5,
-        World       = 6
+        None = 0,
+        Bank = 1,
+        Character = 2,
+        Map = 3,
+        TileSet = 4,
+        Palette = 5,
+        World = 6
     }
 
     public enum BankSize
@@ -45,17 +45,17 @@
 
     public enum BankUseType
     {
-        None        = 0,
-        Background  = 1,
-        Characters  = 2
+        None = 0,
+        Background = 1,
+        Characters = 2
     }
 
     public enum EditFrameTools
     {
-        None    = 0,
-        Select  = 1,
-        Paint   = 2,
-        Erase   = 3
+        None = 0,
+        Select = 1,
+        Paint = 2,
+        Erase = 3
     }
 
     public enum PaletteIndex

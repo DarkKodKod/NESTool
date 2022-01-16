@@ -73,7 +73,7 @@ namespace NESTool.Utils
                     if (!isRepeting && repetitionCount >= 3)
                     {
                         FlushLiterals(data, ref cache, ref outputData, repetitionCount);
-                        
+
                         isRepeting = true;      // now start the repeating process
                     }
                 }

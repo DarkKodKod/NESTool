@@ -74,9 +74,9 @@ namespace NESTool.ViewModels
                 {
                     animationView.OnActivate();
 
-					CharacterAnimationViewModel viewModel = animationView.DataContext as CharacterAnimationViewModel;
-					viewModel.OnActivate();
-				}
+                    CharacterAnimationViewModel viewModel = animationView.DataContext as CharacterAnimationViewModel;
+                    viewModel.OnActivate();
+                }
             }
             else
             {
@@ -84,9 +84,9 @@ namespace NESTool.ViewModels
                 {
                     animationView.OnDeactivate();
 
-					CharacterAnimationViewModel viewModel = animationView.DataContext as CharacterAnimationViewModel;
-					viewModel.OnDeactivate();
-				}
+                    CharacterAnimationViewModel viewModel = animationView.DataContext as CharacterAnimationViewModel;
+                    viewModel.OnDeactivate();
+                }
 
                 Content = PixelsView;
 

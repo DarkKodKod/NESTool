@@ -24,9 +24,9 @@ namespace NESTool.Models
     {
         public int Width { get; set; }
         public int Height { get; set; }
-		public int OffsetX { get; set; }
-		public int OffsetY { get; set; }
-	}
+        public int OffsetX { get; set; }
+        public int OffsetY { get; set; }
+    }
 
     public struct CharacterAnimation
     {
@@ -34,7 +34,7 @@ namespace NESTool.Models
         public string Name { get; set; }
         public float Speed { get; set; }
         public Frame[] Frames { get; set; }
-		public CollisionInfo CollisionInfo { get; set; }
+        public CollisionInfo CollisionInfo { get; set; }
     }
 
     public class CharacterModel : AFileModel

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:NESTool.ViewModels"
         xmlns:cv="clr-namespace:NESTool.Utils.Converters"
-        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Name="ImportImageDialogView"
         ShowInTaskbar="False"

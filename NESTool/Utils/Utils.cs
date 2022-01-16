@@ -100,7 +100,7 @@ namespace NESTool.Utils
         public static string ColorToColorHex(Color color)
         {
             int index = Array.FindIndex(ColorPaletteControl.Colors, element => element == color);
-            
+
             if (index != -1)
             {
                 return ColorPaletteControl.HexColors[index];
@@ -109,14 +109,14 @@ namespace NESTool.Utils
             return "--";
         }
 
-		public static Color GetColorFromInt(int colorInt)
-		{
-			byte R = (byte)(colorInt >> 16);
-			byte G = (byte)(colorInt >> 8);
-			byte B = (byte)colorInt;
+        public static Color GetColorFromInt(int colorInt)
+        {
+            byte R = (byte)(colorInt >> 16);
+            byte G = (byte)(colorInt >> 8);
+            byte B = (byte)colorInt;
 
-			return Color.FromRgb(R, G, B);
-		}
+            return Color.FromRgb(R, G, B);
+        }
 
         public static string GetFolderExtension(string folderName)
         {

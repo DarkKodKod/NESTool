@@ -1,14 +1,14 @@
 ﻿using ArchitectureLibrary.Signals;
+using NESTool.Enums;
 using NESTool.Signals;
 using NESTool.UserControls;
 using NESTool.UserControls.Views;
-using NESTool.ViewModels;
-using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Input;
-using System.Windows;
 using NESTool.Utils;
-using NESTool.Enums;
+using NESTool.ViewModels;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace NESTool.Views
 {

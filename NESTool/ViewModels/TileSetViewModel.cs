@@ -15,7 +15,7 @@ namespace NESTool.ViewModels
 {
     public class TileSetViewModel : ItemViewModel
     {
-		private static readonly Color NullColor = Color.FromArgb(0, 255, 255, 255);
+        private static readonly Color NullColor = Color.FromArgb(0, 255, 255, 255);
 
         private string _imagePath;
         private ImageSource _imgSource;

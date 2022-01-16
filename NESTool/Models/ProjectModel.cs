@@ -35,15 +35,15 @@ namespace NESTool.Models
             public bool UseRLEOnMaps { get; set; }
 
             public BuildConfig()
-			{
-				Reset();
-			}
+            {
+                Reset();
+            }
 
-			public void Reset()
+            public void Reset()
             {
                 UseRLEOnMaps = false;
                 OutputFilePath = "";
-			}
+            }
         }
 
         public int Version { get; set; }

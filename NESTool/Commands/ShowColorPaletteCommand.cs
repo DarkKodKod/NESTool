@@ -16,10 +16,10 @@ namespace NESTool.Commands
 
             PaletteIndex paletteIndex = PaletteIndex.Palette0;
 
-			if (values.Length > 2)
-			{
-				paletteIndex = (PaletteIndex)values[2];
-			}
+            if (values.Length > 2)
+            {
+                paletteIndex = (PaletteIndex)values[2];
+            }
 
             Window window = Window.GetWindow(userControl);
 

@@ -40,19 +40,19 @@ namespace NESTool.Views
 
             switch (colorPosition)
             {
-                case 0: 
+                case 0:
                     palette.cvsColor0.Background = scb;
                     palette.hexColor0.Text = Util.ColorToColorHex(color);
                     break;
-                case 1: 
+                case 1:
                     palette.cvsColor1.Background = scb;
                     palette.hexColor1.Text = Util.ColorToColorHex(color);
                     break;
-                case 2: 
+                case 2:
                     palette.cvsColor2.Background = scb;
                     palette.hexColor2.Text = Util.ColorToColorHex(color);
                     break;
-                case 3: 
+                case 3:
                     palette.cvsColor3.Background = scb;
                     palette.hexColor3.Text = Util.ColorToColorHex(color);
                     break;

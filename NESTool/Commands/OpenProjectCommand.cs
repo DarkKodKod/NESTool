@@ -96,7 +96,7 @@ namespace NESTool.Commands
                 using (BrowseFolderCommand browseFolder = new BrowseFolderCommand())
                 {
                     browseFolder.Execute(null);
-                }   
+                }
 
                 SignalManager.Get<BrowseFolderSuccessSignal>().Listener += BrowseFolderSuccess;
             }

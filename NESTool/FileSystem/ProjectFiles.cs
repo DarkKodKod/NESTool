@@ -31,26 +31,26 @@ namespace NESTool.FileSystem
             return models;
         }
 
-		public static void SaveModel<T>(string guid, T model) where T : AFileModel
-		{
-			if (string.IsNullOrEmpty(guid))
-			{
-				return;
-			}
+        public static void SaveModel<T>(string guid, T model) where T : AFileModel
+        {
+            if (string.IsNullOrEmpty(guid))
+            {
+                return;
+            }
 
-			foreach (KeyValuePair<string, FileHandler> pair in Handlers)
-			{
-				if (pair.Key == guid)
-				{
-					pair.Value.FileModel = model;
-					pair.Value.Save();
+            foreach (KeyValuePair<string, FileHandler> pair in Handlers)
+            {
+                if (pair.Key == guid)
+                {
+                    pair.Value.FileModel = model;
+                    pair.Value.Save();
 
-					break;
-				}
-			}
-		}
+                    break;
+                }
+            }
+        }
 
-		public static FileModelVO GetFileModel(string guid)
+        public static FileModelVO GetFileModel(string guid)
         {
             if (string.IsNullOrEmpty(guid))
             {
@@ -83,7 +83,7 @@ namespace NESTool.FileSystem
             foreach (KeyValuePair<string, FileHandler> pair in Handlers)
             {
                 if (pair.Key == guid &&
-					pair.Value.FileModel is T model)
+                    pair.Value.FileModel is T model)
                 {
                     return model;
                 }

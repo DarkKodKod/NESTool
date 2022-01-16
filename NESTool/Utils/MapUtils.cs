@@ -56,7 +56,7 @@ namespace NESTool.Utils
                             {
                                 continue;
                             }
-                        }   
+                        }
 
                         if (string.IsNullOrEmpty(tile.BankID) || string.IsNullOrEmpty(tile.BankTileID))
                         {

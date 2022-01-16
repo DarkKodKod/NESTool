@@ -12,14 +12,14 @@ namespace NESTool.ViewModels
         private string _folderPath;
         private bool _useRLEOnMaps = false;
 
-		#region Commands
-		public BuildProjectCommand BuildProjectCommand { get; } = new BuildProjectCommand();
+        #region Commands
+        public BuildProjectCommand BuildProjectCommand { get; } = new BuildProjectCommand();
         public BrowseFolderCommand BrowseFolderCommand { get; } = new BrowseFolderCommand();
         public CloseDialogCommand CloseDialogCommand { get; } = new CloseDialogCommand();
         #endregion
 
         #region get/set
-		public string FolderPath
+        public string FolderPath
         {
             get { return _folderPath; }
             set
@@ -32,7 +32,7 @@ namespace NESTool.ViewModels
         public bool UseRLEOnMaps
         {
             get { return _useRLEOnMaps; }
-            set 
+            set
             {
                 if (_useRLEOnMaps != value)
                 {
@@ -46,12 +46,12 @@ namespace NESTool.ViewModels
                 }
             }
         }
-		#endregion
+        #endregion
 
         public BuildProjectDialogViewModel()
         {
-			#region Signals
-			SignalManager.Get<BrowseFolderSuccessSignal>().Listener += BrowseFolderSuccess;
+            #region Signals
+            SignalManager.Get<BrowseFolderSuccessSignal>().Listener += BrowseFolderSuccess;
             SignalManager.Get<CloseDialogSignal>().Listener += OnCloseDialog;
             #endregion
 
@@ -59,12 +59,12 @@ namespace NESTool.ViewModels
 
             FolderPath = project.Build.OutputFilePath;
             UseRLEOnMaps = project.Build.UseRLEOnMaps;
-		}
+        }
 
         private void OnCloseDialog()
         {
-			#region Signals
-			SignalManager.Get<BrowseFolderSuccessSignal>().Listener -= BrowseFolderSuccess;
+            #region Signals
+            SignalManager.Get<BrowseFolderSuccessSignal>().Listener -= BrowseFolderSuccess;
             SignalManager.Get<CloseDialogSignal>().Listener -= OnCloseDialog;
             #endregion
         }

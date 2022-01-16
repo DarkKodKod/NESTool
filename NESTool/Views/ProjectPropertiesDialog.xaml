@@ -7,7 +7,7 @@
         xmlns:cv="clr-namespace:NESTool.Utils.Converters"
         xmlns:enum="clr-namespace:NESTool.Enums"
         xmlns:ex="clr-namespace:NESTool.Utils.Extensions"
-        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         Title="Project properties" Height="271" Width="357"
         ShowInTaskbar="False"

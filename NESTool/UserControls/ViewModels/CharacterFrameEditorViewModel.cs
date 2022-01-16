@@ -1,5 +1,4 @@
-﻿using ArchitectureLibrary.Model;
-using ArchitectureLibrary.Signals;
+﻿using ArchitectureLibrary.Signals;
 using ArchitectureLibrary.ViewModel;
 using NESTool.Commands;
 using NESTool.Enums;
@@ -127,7 +126,7 @@ namespace NESTool.UserControls.ViewModels
 
                     OnPropertyChanged("BackBackground");
 
-                    SaveProperty(SpriteProperties.BackBackground, new ValueUnion { boolean = value } );
+                    SaveProperty(SpriteProperties.BackBackground, new ValueUnion { boolean = value });
                 }
             }
         }

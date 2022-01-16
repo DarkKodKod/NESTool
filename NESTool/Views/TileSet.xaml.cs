@@ -4,12 +4,12 @@ using NESTool.Signals;
 using NESTool.UserControls;
 using NESTool.ViewModels;
 using NESTool.VOs;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System;
 
 namespace NESTool.Views
 {
@@ -26,7 +26,7 @@ namespace NESTool.Views
             InitializeComponent();
 
             SignalManager.Get<MouseWheelSignal>().Listener += OnMouseWheel;
-            SignalManager.Get<ColorPaletteSelectSignal>().Listener +=OnColorPaletteSelect;
+            SignalManager.Get<ColorPaletteSelectSignal>().Listener += OnColorPaletteSelect;
         }
 
         private void OnColorPaletteSelect(Color color)

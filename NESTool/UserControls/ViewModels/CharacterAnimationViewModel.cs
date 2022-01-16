@@ -28,10 +28,10 @@ namespace NESTool.UserControls.ViewModels
         private int _animationIndex = -1;
         private bool _dontSave = false;
         private DispatcherTimer _dispatcherTimer;
-		private int _collisionWidth;
-		private int _collisionHeight;
-		private int _collisionOffsetX;
-		private int _collisionOffsetY;
+        private int _collisionWidth;
+        private int _collisionHeight;
+        private int _collisionOffsetX;
+        private int _collisionOffsetY;
         private Visibility _rectangleVisibility = Visibility.Hidden;
         private double _rectangleWidth;
         private double _rectangleHeight;
@@ -175,21 +175,21 @@ namespace NESTool.UserControls.ViewModels
             }
         }
 
-		public int CollisionWidth
-		{
-			get { return _collisionWidth; }
-			set
-			{
-				_collisionWidth = value;
+        public int CollisionWidth
+        {
+            get { return _collisionWidth; }
+            set
+            {
+                _collisionWidth = value;
 
-				if (_animationIndex != -1)
-				{
-					if (CharacterModel.Animations[_animationIndex].CollisionInfo == null)
-					{
-						CharacterModel.Animations[_animationIndex].CollisionInfo = new CollisionInfo();
-					}
+                if (_animationIndex != -1)
+                {
+                    if (CharacterModel.Animations[_animationIndex].CollisionInfo == null)
+                    {
+                        CharacterModel.Animations[_animationIndex].CollisionInfo = new CollisionInfo();
+                    }
 
-					CharacterModel.Animations[_animationIndex].CollisionInfo.Width = value;
+                    CharacterModel.Animations[_animationIndex].CollisionInfo.Width = value;
 
                     RectangleWidth = value;
 
@@ -199,25 +199,25 @@ namespace NESTool.UserControls.ViewModels
                     }
                 }
 
-				OnPropertyChanged("CollisionWidth");
-			}
-		}
+                OnPropertyChanged("CollisionWidth");
+            }
+        }
 
-		public int CollisionHeight
-		{
-			get { return _collisionHeight; }
-			set
-			{
-				_collisionHeight = value;
+        public int CollisionHeight
+        {
+            get { return _collisionHeight; }
+            set
+            {
+                _collisionHeight = value;
 
-				if (_animationIndex != -1)
-				{
-					if (CharacterModel.Animations[_animationIndex].CollisionInfo == null)
-					{
-						CharacterModel.Animations[_animationIndex].CollisionInfo = new CollisionInfo();
-					}
+                if (_animationIndex != -1)
+                {
+                    if (CharacterModel.Animations[_animationIndex].CollisionInfo == null)
+                    {
+                        CharacterModel.Animations[_animationIndex].CollisionInfo = new CollisionInfo();
+                    }
 
-					CharacterModel.Animations[_animationIndex].CollisionInfo.Height = value;
+                    CharacterModel.Animations[_animationIndex].CollisionInfo.Height = value;
 
                     RectangleHeight = value;
 
@@ -227,25 +227,25 @@ namespace NESTool.UserControls.ViewModels
                     }
                 }
 
-				OnPropertyChanged("CollisionHeight");
-			}
-		}
+                OnPropertyChanged("CollisionHeight");
+            }
+        }
 
-		public int CollisionOffsetX
-		{
-			get { return _collisionOffsetX; }
-			set
-			{
-				_collisionOffsetX = value;
+        public int CollisionOffsetX
+        {
+            get { return _collisionOffsetX; }
+            set
+            {
+                _collisionOffsetX = value;
 
-				if (_animationIndex != -1)
-				{
-					if (CharacterModel.Animations[_animationIndex].CollisionInfo == null)
-					{
-						CharacterModel.Animations[_animationIndex].CollisionInfo = new CollisionInfo();
-					}
+                if (_animationIndex != -1)
+                {
+                    if (CharacterModel.Animations[_animationIndex].CollisionInfo == null)
+                    {
+                        CharacterModel.Animations[_animationIndex].CollisionInfo = new CollisionInfo();
+                    }
 
-					CharacterModel.Animations[_animationIndex].CollisionInfo.OffsetX = value;
+                    CharacterModel.Animations[_animationIndex].CollisionInfo.OffsetX = value;
 
                     RectangleLeft = value;
 
@@ -255,25 +255,25 @@ namespace NESTool.UserControls.ViewModels
                     }
                 }
 
-				OnPropertyChanged("CollisionOffsetX");
-			}
-		}
+                OnPropertyChanged("CollisionOffsetX");
+            }
+        }
 
-		public int CollisionOffsetY
-		{
-			get { return _collisionOffsetY; }
-			set
-			{
-				_collisionOffsetY = value;
+        public int CollisionOffsetY
+        {
+            get { return _collisionOffsetY; }
+            set
+            {
+                _collisionOffsetY = value;
 
-				if (_animationIndex != -1)
-				{
-					if (CharacterModel.Animations[_animationIndex].CollisionInfo == null)
-					{
-						CharacterModel.Animations[_animationIndex].CollisionInfo = new CollisionInfo();
-					}
+                if (_animationIndex != -1)
+                {
+                    if (CharacterModel.Animations[_animationIndex].CollisionInfo == null)
+                    {
+                        CharacterModel.Animations[_animationIndex].CollisionInfo = new CollisionInfo();
+                    }
 
-					CharacterModel.Animations[_animationIndex].CollisionInfo.OffsetY = value;
+                    CharacterModel.Animations[_animationIndex].CollisionInfo.OffsetY = value;
 
                     RectangleTop = value;
 
@@ -283,11 +283,11 @@ namespace NESTool.UserControls.ViewModels
                     }
                 }
 
-				OnPropertyChanged("CollisionOffsetY");
-			}
-		}
+                OnPropertyChanged("CollisionOffsetY");
+            }
+        }
 
-		public float Speed
+        public float Speed
         {
             get { return _speed; }
             set
@@ -394,12 +394,12 @@ namespace NESTool.UserControls.ViewModels
 
                     Speed = CharacterModel.Animations[_animationIndex].Speed;
 
-					CollisionInfo cInfo = CharacterModel.Animations[_animationIndex].CollisionInfo;
+                    CollisionInfo cInfo = CharacterModel.Animations[_animationIndex].CollisionInfo;
 
-					CollisionWidth = cInfo == null ? 0 : cInfo.Width;
-					CollisionHeight = cInfo == null ? 0 : cInfo.Height;
-					CollisionOffsetX = cInfo == null ? 0 : cInfo.OffsetX;
-					CollisionOffsetY = cInfo == null ? 0 : cInfo.OffsetY;
+                    CollisionWidth = cInfo == null ? 0 : cInfo.Width;
+                    CollisionHeight = cInfo == null ? 0 : cInfo.Height;
+                    CollisionOffsetX = cInfo == null ? 0 : cInfo.OffsetX;
+                    CollisionOffsetY = cInfo == null ? 0 : cInfo.OffsetY;
 
                     break;
                 }
@@ -455,7 +455,7 @@ namespace NESTool.UserControls.ViewModels
                 }
 
                 _bitmapImages[FrameIndex] = Util.ConvertWriteableBitmapToBitmapImage(frameBitmap);
-                _reloadImages[FrameIndex] = true;                
+                _reloadImages[FrameIndex] = true;
             }
 
             FrameImage = _bitmapImages[FrameIndex];

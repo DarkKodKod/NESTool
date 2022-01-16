@@ -50,12 +50,7 @@ namespace NESTool.ViewModels
 
         public MapModel GetModel()
         {
-            if (ProjectItem?.FileHandler.FileModel is MapModel model)
-            {
-                return model;
-            }
-
-            return null;
+            return ProjectItem?.FileHandler.FileModel is MapModel model ? model : null;
         }
 
         #region Commands
@@ -66,7 +61,7 @@ namespace NESTool.ViewModels
         #region get/set
         public int SelectedBankTile
         {
-            get { return _selectedBankTile; }
+            get => _selectedBankTile;
             set
             {
                 _selectedBankTile = value;
@@ -77,10 +72,7 @@ namespace NESTool.ViewModels
 
         public Visibility GridVisibility
         {
-            get
-            {
-                return _gridVisibility;
-            }
+            get => _gridVisibility;
             set
             {
                 _gridVisibility = value;
@@ -91,12 +83,9 @@ namespace NESTool.ViewModels
 
         public bool ExportAttributeTable
         {
-            get
-            {
-                return _exportAttributeTable;
-            }
+            get => _exportAttributeTable;
             set
-            { 
+            {
                 if (_exportAttributeTable != value)
                 {
                     _exportAttributeTable = value;
@@ -110,10 +99,7 @@ namespace NESTool.ViewModels
 
         public string MetaData
         {
-            get
-            {
-                return _metaData;
-            }
+            get => _metaData;
             set
             {
                 if (_metaData != value)
@@ -129,10 +115,7 @@ namespace NESTool.ViewModels
 
         public ImageSource FrameImage
         {
-            get
-            {
-                return _frameImage;
-            }
+            get => _frameImage;
             set
             {
                 _frameImage = value;
@@ -143,7 +126,7 @@ namespace NESTool.ViewModels
 
         public int SelectedAttributeTile
         {
-            get { return _selectedAttributeTile; }
+            get => _selectedAttributeTile;
             set
             {
                 _selectedAttributeTile = value;
@@ -154,7 +137,7 @@ namespace NESTool.ViewModels
 
         public int SelectedPalette1
         {
-            get { return _selectedPalette1; }
+            get => _selectedPalette1;
             set
             {
                 if (_selectedPalette1 != value)
@@ -278,7 +261,7 @@ namespace NESTool.ViewModels
 
         public int SelectedBank
         {
-            get { return _selectedBank; }
+            get => _selectedBank;
             set
             {
                 _selectedBank = value;
@@ -289,10 +272,7 @@ namespace NESTool.ViewModels
 
         public ImageSource BankImage
         {
-            get
-            {
-                return _bankImage;
-            }
+            get => _bankImage;
             set
             {
                 _bankImage = value;
@@ -466,7 +446,7 @@ namespace NESTool.ViewModels
 
         private void SetPaletteEmpty(PaletteIndex index)
         {
-			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 0);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 0);
             SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 1);
             SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 2);
             SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 3);

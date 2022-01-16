@@ -74,14 +74,14 @@
     <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unofficial.Blend.Interactivity.1.0.0\lib\net45\Microsoft.Expression.Interactions.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack, Version=1.1.4.0, Culture=neutral, PublicKeyToken=8985beaab7ea3f04, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft-WindowsAPICodePack-Core.1.1.4\lib\net472\Microsoft.WindowsAPICodePack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAPICodePack.Shell, Version=1.1.4.0, Culture=neutral, PublicKeyToken=8985beaab7ea3f04, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft-WindowsAPICodePack-Shell.1.1.4\lib\net472\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="Nett, Version=0.15.0.0, Culture=neutral, PublicKeyToken=605dcfe7a1d3365b, processorArchitecture=MSIL">
       <HintPath>..\packages\Nett.0.15.0\lib\net40\Nett.dll</HintPath>
@@ -90,9 +90,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.4.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />

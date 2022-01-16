@@ -6,12 +6,7 @@ namespace NESTool.ViewModels
     {
         public WorldModel GetModel()
         {
-            if (ProjectItem?.FileHandler.FileModel is WorldModel model)
-            {
-                return model;
-            }
-
-            return null;
+            return ProjectItem?.FileHandler.FileModel is WorldModel model ? model : null;
         }
 
         #region Commands

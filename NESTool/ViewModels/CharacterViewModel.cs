@@ -67,12 +67,12 @@ namespace NESTool.ViewModels
             get { return _selectedPalette1; }
             set
             {
-				if (_selectedPalette1 != value)
-				{
-					_selectedPalette1 = value;
+                if (_selectedPalette1 != value)
+                {
+                    _selectedPalette1 = value;
 
-					UpdateAndSavePalette(value, PaletteIndex.Palette0);
-				}
+                    UpdateAndSavePalette(value, PaletteIndex.Palette0);
+                }
 
                 OnPropertyChanged("SelectedPalette1");
             }
@@ -83,12 +83,12 @@ namespace NESTool.ViewModels
             get { return _selectedPalette2; }
             set
             {
-				if (_selectedPalette2 != value)
-				{
-					_selectedPalette2 = value;
+                if (_selectedPalette2 != value)
+                {
+                    _selectedPalette2 = value;
 
-					UpdateAndSavePalette(value, PaletteIndex.Palette1);
-				}
+                    UpdateAndSavePalette(value, PaletteIndex.Palette1);
+                }
 
                 OnPropertyChanged("SelectedPalette2");
             }
@@ -99,12 +99,12 @@ namespace NESTool.ViewModels
             get { return _selectedPalette3; }
             set
             {
-				if (_selectedPalette3 != value)
-				{
-					_selectedPalette3 = value;
+                if (_selectedPalette3 != value)
+                {
+                    _selectedPalette3 = value;
 
-					UpdateAndSavePalette(value, PaletteIndex.Palette2);
-				}
+                    UpdateAndSavePalette(value, PaletteIndex.Palette2);
+                }
 
                 OnPropertyChanged("SelectedPalette3");
             }
@@ -116,11 +116,11 @@ namespace NESTool.ViewModels
             set
             {
                 if (_selectedPalette4 != value)
-				{
-					_selectedPalette4 = value;
+                {
+                    _selectedPalette4 = value;
 
-					UpdateAndSavePalette(value, PaletteIndex.Palette3);
-				}
+                    UpdateAndSavePalette(value, PaletteIndex.Palette3);
+                }
 
                 OnPropertyChanged("SelectedPalette4");
             }
@@ -166,32 +166,32 @@ namespace NESTool.ViewModels
         }
         #endregion
 
-		private void UpdateAndSavePalette(int newValue, PaletteIndex index)
-		{
-			if (newValue == -1)
-			{
-				GetModel().PaletteIDs[(int)index] = string.Empty;
-			}
-			else
-			{
-				GetModel().PaletteIDs[(int)index] = Palettes[newValue + 1].Model.GUID;
-			}
+        private void UpdateAndSavePalette(int newValue, PaletteIndex index)
+        {
+            if (newValue == -1)
+            {
+                GetModel().PaletteIDs[(int)index] = string.Empty;
+            }
+            else
+            {
+                GetModel().PaletteIDs[(int)index] = Palettes[newValue + 1].Model.GUID;
+            }
 
-			if (!_doNotSavePalettes)
-			{
-				PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(GetModel().PaletteIDs[(int)index]);
-				if (paletteModel != null)
-				{
-					SetPalleteWithColors(paletteModel, index);
-				}
-				else
-				{
-					SetPaletteEmpty(index);
-				}
+            if (!_doNotSavePalettes)
+            {
+                PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(GetModel().PaletteIDs[(int)index]);
+                if (paletteModel != null)
+                {
+                    SetPalleteWithColors(paletteModel, index);
+                }
+                else
+                {
+                    SetPaletteEmpty(index);
+                }
 
-				ProjectItem.FileHandler.Save();
-			}
-		}
+                ProjectItem.FileHandler.Save();
+            }
+        }
 
         public override void OnActivate()
         {
@@ -233,44 +233,44 @@ namespace NESTool.ViewModels
                 }
             }
 
-			_doNotSavePalettes = true;
+            _doNotSavePalettes = true;
 
-			LoadPalettes();
+            LoadPalettes();
 
-			LoadPaletteIndex(0);
-			LoadPaletteIndex(1);
-			LoadPaletteIndex(2);
-			LoadPaletteIndex(3);
+            LoadPaletteIndex(0);
+            LoadPaletteIndex(1);
+            LoadPaletteIndex(2);
+            LoadPaletteIndex(3);
 
-			_doNotSavePalettes = false;
-		}
+            _doNotSavePalettes = false;
+        }
 
-		private void LoadPaletteIndex(int index)
-		{
-			if (!string.IsNullOrEmpty(GetModel().PaletteIDs[index]))
-			{
-				for (int i = 0; i < Palettes.Length; ++i)
-				{
-					FileModelVO item = Palettes[i];
+        private void LoadPaletteIndex(int index)
+        {
+            if (!string.IsNullOrEmpty(GetModel().PaletteIDs[index]))
+            {
+                for (int i = 0; i < Palettes.Length; ++i)
+                {
+                    FileModelVO item = Palettes[i];
 
-					if (item.Model == null)
-					{
-						continue;
-					}
+                    if (item.Model == null)
+                    {
+                        continue;
+                    }
 
-					if (item.Model.GUID == GetModel().PaletteIDs[index])
-					{
-						switch (index)
-						{
-							case 0: SelectedPalette1 = i - 1; break;
-							case 1: SelectedPalette2 = i - 1; break;
-							case 2: SelectedPalette3 = i - 1; break;
-							case 3: SelectedPalette4 = i - 1; break;
-						}
-					}
-				}
-			}
-		}
+                    if (item.Model.GUID == GetModel().PaletteIDs[index])
+                    {
+                        switch (index)
+                        {
+                            case 0: SelectedPalette1 = i - 1; break;
+                            case 1: SelectedPalette2 = i - 1; break;
+                            case 2: SelectedPalette3 = i - 1; break;
+                            case 3: SelectedPalette4 = i - 1; break;
+                        }
+                    }
+                }
+            }
+        }
 
         private void LoadPalettes()
         {
@@ -281,30 +281,30 @@ namespace NESTool.ViewModels
                 PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
                 if (paletteModel == null)
                 {
-					SetPaletteEmpty((PaletteIndex)i);
+                    SetPaletteEmpty((PaletteIndex)i);
                 }
-				else
-				{
-					SetPalleteWithColors(paletteModel, (PaletteIndex)i);
-				}
-			}
+                else
+                {
+                    SetPalleteWithColors(paletteModel, (PaletteIndex)i);
+                }
+            }
         }
 
-		private void SetPaletteEmpty(PaletteIndex index)
-		{
-			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 0);
-			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 1);
-			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 2);
-			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 3);
-		}
+        private void SetPaletteEmpty(PaletteIndex index)
+        {
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 0);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 1);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 2);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 3);
+        }
 
-		private void SetPalleteWithColors(PaletteModel paletteModel, PaletteIndex index)
-		{
-			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(paletteModel.Color0), index, 0);
-			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(paletteModel.Color1), index, 1);
-			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(paletteModel.Color2), index, 2);
-			SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(paletteModel.Color3), index, 3);
-		}
+        private void SetPalleteWithColors(PaletteModel paletteModel, PaletteIndex index)
+        {
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(paletteModel.Color0), index, 0);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(paletteModel.Color1), index, 1);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(paletteModel.Color2), index, 2);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(paletteModel.Color3), index, 3);
+        }
 
         private void OnColorPaletteControlSelected(Color color, PaletteIndex paletteIndex, int colorPosition)
         {
@@ -318,37 +318,37 @@ namespace NESTool.ViewModels
                 return;
             }
 
-			int colorInt = ((color.R & 0xff) << 16) | ((color.G & 0xff) << 8) | (color.B & 0xff);
+            int colorInt = ((color.R & 0xff) << 16) | ((color.G & 0xff) << 8) | (color.B & 0xff);
 
-			int prevColorInt = 0;
+            int prevColorInt = 0;
 
-			string paletteId = GetModel().PaletteIDs[(int)paletteIndex];
+            string paletteId = GetModel().PaletteIDs[(int)paletteIndex];
 
             PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
             if (paletteModel != null)
             {
-				switch (colorPosition)
-				{
-					case 0:
-						prevColorInt = paletteModel.Color0;
-						paletteModel.Color0 = colorInt;
-						break;
-					case 1:
-						prevColorInt = paletteModel.Color1;
-						paletteModel.Color1 = colorInt;
-						break;
-					case 2:
-						prevColorInt = paletteModel.Color2;
-						paletteModel.Color2 = colorInt;
-						break;
-					case 3:
-						prevColorInt = paletteModel.Color3;
-						paletteModel.Color3 = colorInt;
-						break;
-				}
+                switch (colorPosition)
+                {
+                    case 0:
+                        prevColorInt = paletteModel.Color0;
+                        paletteModel.Color0 = colorInt;
+                        break;
+                    case 1:
+                        prevColorInt = paletteModel.Color1;
+                        paletteModel.Color1 = colorInt;
+                        break;
+                    case 2:
+                        prevColorInt = paletteModel.Color2;
+                        paletteModel.Color2 = colorInt;
+                        break;
+                    case 3:
+                        prevColorInt = paletteModel.Color3;
+                        paletteModel.Color3 = colorInt;
+                        break;
+                }
 
-				ProjectFiles.SaveModel(paletteId, paletteModel);
-			}
+                ProjectFiles.SaveModel(paletteId, paletteModel);
+            }
 
             Color prevColor = Util.GetColorFromInt(prevColorInt);
 
@@ -382,9 +382,9 @@ namespace NESTool.ViewModels
 
         private void OnUpdateCharacterImage()
         {
-			GroupedPalettes = new Dictionary<Tuple<int, PaletteIndex>, Dictionary<Color, Color>>();
+            GroupedPalettes = new Dictionary<Tuple<int, PaletteIndex>, Dictionary<Color, Color>>();
 
-			foreach (ActionTabItem tab in Tabs)
+            foreach (ActionTabItem tab in Tabs)
             {
                 if (tab.FramesView is CharacterAnimationView frameView)
                 {
@@ -543,17 +543,17 @@ namespace NESTool.ViewModels
                     model.Animations[index].Name = tab.Header;
                     model.Animations[index].Speed = viewModel.Speed;
 
-					if (model.Animations[index].CollisionInfo == null)
-					{
-						model.Animations[index].CollisionInfo = new CollisionInfo();
-					}
+                    if (model.Animations[index].CollisionInfo == null)
+                    {
+                        model.Animations[index].CollisionInfo = new CollisionInfo();
+                    }
 
-					model.Animations[index].CollisionInfo.Width = viewModel.CollisionWidth;
-					model.Animations[index].CollisionInfo.Height = viewModel.CollisionHeight;
-					model.Animations[index].CollisionInfo.OffsetX = viewModel.CollisionOffsetX;
-					model.Animations[index].CollisionInfo.OffsetY = viewModel.CollisionOffsetY;
+                    model.Animations[index].CollisionInfo.Width = viewModel.CollisionWidth;
+                    model.Animations[index].CollisionInfo.Height = viewModel.CollisionHeight;
+                    model.Animations[index].CollisionInfo.OffsetX = viewModel.CollisionOffsetX;
+                    model.Animations[index].CollisionInfo.OffsetY = viewModel.CollisionOffsetY;
 
-					index++;
+                    index++;
                 }
 
                 for (int i = index; i < model.Animations.Length; ++i)

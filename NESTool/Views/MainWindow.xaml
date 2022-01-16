@@ -6,7 +6,7 @@
         xmlns:vm="clr-namespace:NESTool.ViewModels"
 		xmlns:cv="clr-namespace:NESTool.Utils.Converters"
 		xmlns:enum="clr-namespace:NESTool.Enums"
-        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:fx="clr-namespace:ArchitectureLibrary.FXs;assembly=ArchitectureLibrary"
         xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
         mc:Ignorable="d"

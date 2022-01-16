@@ -91,7 +91,7 @@ namespace NESTool.ViewModels
                 Path = Path.Combine(projectModel.ProjectPath, tileSets)
             });
             ElementTypes.Add(new ElementTypeModel()
-            { 
+            {
                 Name = palettes,
                 Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/palette.png", UriKind.RelativeOrAbsolute)),
                 Type = ProjectItemType.Palette,

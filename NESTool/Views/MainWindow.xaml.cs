@@ -175,7 +175,7 @@ namespace NESTool
 
                     tbShowHideGroupMarks.IsChecked = ToolBarBanksShowHideGroupMarks;
 
-                    view = new Banks(); 
+                    view = new Banks();
                     break;
                 case ProjectItemType.Character: view = new Character(); break;
                 case ProjectItemType.Map:
@@ -313,7 +313,7 @@ namespace NESTool
             mi.cbSize = Marshal.SizeOf(mi);
             GetMonitorInfoEx(MonitorFromWindow(hWnd, MONITOR_DEFAULTTOPRIMARY), ref mi);
 
-             GetWindowRect(hWnd, out Rect appBounds);
+            GetWindowRect(hWnd, out Rect appBounds);
 
             double windowHeight = appBounds.Right - appBounds.Left;
             double windowWidth = appBounds.Bottom - appBounds.Top;

@@ -48,7 +48,7 @@ namespace NESTool.Utils
                     }
 
                     TileSetModel.BitmapCache.TryGetValue(bankModel.TileSetID, out WriteableBitmap sourceBitmap);
-                    
+
                     if (sourceBitmap == null)
                     {
                         continue;
@@ -103,7 +103,7 @@ namespace NESTool.Utils
             {
                 for (int x = 0; x < 8; ++x)
                 {
-					Color color = bitmap.GetPixel(x, y);
+                    Color color = bitmap.GetPixel(x, y);
                     color.A = 255;
 
                     if (!colors.TryGetValue(color, out Color newColor))
@@ -145,7 +145,7 @@ namespace NESTool.Utils
                     }
 
                     TileSetModel.BitmapCache.TryGetValue(tile.TileSetID, out WriteableBitmap tileSetBitmap);
-                    
+
                     if (tileSetBitmap == null)
                     {
                         continue;

@@ -1,6 +1,6 @@
-﻿using System.Reflection;
+﻿using Microsoft.Xaml.Behaviors;
+using System.Reflection;
 using System.Windows;
-using System.Windows.Interactivity;
 
 namespace NESTool.Utils.Behaviors
 {

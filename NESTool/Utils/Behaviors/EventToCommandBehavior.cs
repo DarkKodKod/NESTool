@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.Xaml.Behaviors;
+using System;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Interactivity;
 
 namespace NESTool.Utils.Behaviors
 {
@@ -16,7 +16,7 @@ namespace NESTool.Utils.Behaviors
         private EventInfo _oldEvent;
 
         // Event
-        public string Event { get { return (string)GetValue(EventProperty); } set { SetValue(EventProperty, value); } }
+        public string Event { get => (string)GetValue(EventProperty); set { SetValue(EventProperty, value); } }
         public static readonly DependencyProperty EventProperty = DependencyProperty.Register("Event", typeof(string), typeof(EventToCommandBehavior), new PropertyMetadata(null, OnEventChanged));
 
         // Command
@@ -24,12 +24,12 @@ namespace NESTool.Utils.Behaviors
         public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(EventToCommandBehavior), new PropertyMetadata(null));
 
         // PassArguments (default: false)
-        public bool PassArguments { get { return (bool)GetValue(PassArgumentsProperty); } set { SetValue(PassArgumentsProperty, value); } }
+        public bool PassArguments { get => (bool)GetValue(PassArgumentsProperty); set { SetValue(PassArgumentsProperty, value); } }
         public static readonly DependencyProperty PassArgumentsProperty = DependencyProperty.Register("PassArguments", typeof(bool), typeof(EventToCommandBehavior), new PropertyMetadata(false));
 
         private static void OnEventChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var beh = (EventToCommandBehavior)d;
+            EventToCommandBehavior beh = (EventToCommandBehavior)d;
 
             if (beh.AssociatedObject != null) // is not yet attached at initial load
             {
@@ -39,7 +39,7 @@ namespace NESTool.Utils.Behaviors
 
         protected override void OnAttached()
         {
-            AttachHandler(this.Event); // initial set
+            AttachHandler(Event); // initial set
         }
 
         /// <summary>
@@ -50,27 +50,27 @@ namespace NESTool.Utils.Behaviors
             // detach old event
             if (_oldEvent != null)
             {
-                _oldEvent.RemoveEventHandler(this.AssociatedObject, _handler);
+                _oldEvent.RemoveEventHandler(AssociatedObject, _handler);
             }
 
             // attach new event
             if (!string.IsNullOrEmpty(eventName))
             {
-                EventInfo ei = this.AssociatedObject.GetType().GetEvent(eventName);
+                EventInfo ei = AssociatedObject.GetType().GetEvent(eventName);
 
                 if (ei != null)
                 {
-                    MethodInfo mi = this.GetType().GetMethod("ExecuteCommand", BindingFlags.Instance | BindingFlags.NonPublic);
+                    MethodInfo mi = GetType().GetMethod("ExecuteCommand", BindingFlags.Instance | BindingFlags.NonPublic);
 
                     _handler = Delegate.CreateDelegate(ei.EventHandlerType, this, mi);
 
-                    ei.AddEventHandler(this.AssociatedObject, _handler);
+                    ei.AddEventHandler(AssociatedObject, _handler);
 
                     _oldEvent = ei; // store to detach in case the Event property changes
                 }
                 else
                 {
-                    throw new ArgumentException(string.Format("The event '{0}' was not found on type '{1}'", eventName, this.AssociatedObject.GetType().Name));
+                    throw new ArgumentException(string.Format("The event '{0}' was not found on type '{1}'", eventName, AssociatedObject.GetType().Name));
                 }
             }
         }
@@ -80,13 +80,13 @@ namespace NESTool.Utils.Behaviors
         /// </summary>
         private void ExecuteCommand(object sender, EventArgs e)
         {
-            object parameter = this.PassArguments ? e : null;
+            object parameter = PassArguments ? e : null;
 
-            if (this.Command != null)
+            if (Command != null)
             {
-                if (this.Command.CanExecute(parameter))
+                if (Command.CanExecute(parameter))
                 {
-                    this.Command.Execute(parameter);
+                    Command.Execute(parameter);
                 }
             }
         }
