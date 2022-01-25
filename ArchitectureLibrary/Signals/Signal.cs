@@ -8,7 +8,7 @@ namespace ArchitectureLibrary.Signals
 
         public void Dispatch()
         {
-            var handler = Listener;
+            Action handler = Listener;
             handler?.Invoke();
         }
     }
@@ -19,7 +19,7 @@ namespace ArchitectureLibrary.Signals
 
         public void Dispatch(T1 t1)
         {
-            var handler = Listener;
+            Action<T1> handler = Listener;
             handler?.Invoke(t1);
         }
     }
@@ -30,7 +30,7 @@ namespace ArchitectureLibrary.Signals
 
         public void Dispatch(T1 t1, T2 t2)
         {
-            var handler = Listener;
+            Action<T1, T2> handler = Listener;
             handler?.Invoke(t1, t2);
         }
     }
@@ -41,7 +41,7 @@ namespace ArchitectureLibrary.Signals
 
         public void Dispatch(T1 t1, T2 t2, T3 t3)
         {
-            var handler = Listener;
+            Action<T1, T2, T3> handler = Listener;
             handler?.Invoke(t1, t2, t3);
         }
     }
@@ -52,7 +52,7 @@ namespace ArchitectureLibrary.Signals
 
         public void Dispatch(T1 t1, T2 t2, T3 t3, T4 t4)
         {
-            var handler = Listener;
+            Action<T1, T2, T3, T4> handler = Listener;
             handler?.Invoke(t1, t2, t3, t4);
         }
     }
@@ -63,7 +63,7 @@ namespace ArchitectureLibrary.Signals
 
         public void Dispatch(T1 t1, T2 t2, T3 t3, T4 t4, T5 t5)
         {
-            var handler = Listener;
+            Action<T1, T2, T3, T4, T5> handler = Listener;
             handler?.Invoke(t1, t2, t3, t4, t5);
         }
     }

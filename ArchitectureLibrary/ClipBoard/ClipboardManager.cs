@@ -5,7 +5,7 @@ namespace ArchitectureLibrary.Clipboard
 {
     public static class ClipboardManager
     {
-        private static ClipboardData _data = new ClipboardData();
+        private static readonly ClipboardData _data = new ClipboardData();
 
         public static object GetData()
         {
