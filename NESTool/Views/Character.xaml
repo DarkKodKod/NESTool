@@ -21,13 +21,14 @@
             <StackPanel Orientation="Horizontal" Height="21" Width="100">
                 <ContentControl MouseDoubleClick="ContentControl_MouseDoubleClick">
                     <TextBlock Name="txtDisplayName" 
-                           Width="80" 
-                           Text="{Binding Header}"/>
+                                Width="80" 
+                                Text="{Binding Header}"/>
                 </ContentControl>
                 <TextBox Name="editableTextBox" Visibility="Collapsed" MinWidth="80" 
-                         Text="{Binding Header, UpdateSourceTrigger=LostFocus}"
-                         IsVisibleChanged="EditableTextBox_IsVisibleChanged"
-                         KeyDown="EditableTextBox_KeyDown"/>
+                            Text="{Binding Header, UpdateSourceTrigger=LostFocus}"
+                            LostFocus="EditableTextBox_LostFocus"
+                            IsVisibleChanged="EditableTextBox_IsVisibleChanged"
+                            KeyDown="EditableTextBox_KeyDown"/>
                 <Image Source="/resources/tab_cross.png" Width="10" Height="10" ToolTip="Delete animation">
                     <i:Interaction.Behaviors>
                         <behaviors:EventToCommandBehavior Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type UserControl}}, Path=DataContext.CharacterCloseTabCommand}" Event="MouseUp" PassArguments="True" />

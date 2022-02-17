@@ -4,10 +4,12 @@ using NESTool.Signals;
 using NESTool.UserControls;
 using NESTool.UserControls.Views;
 using NESTool.ViewModels;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace NESTool.Views
 {
@@ -39,11 +41,33 @@ namespace NESTool.Views
             }
         }
 
+        private void EditableTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+
+            if (tb.DataContext is ActionTabItem item)
+            {
+                tb.Text = item.OldCaptionValue;
+
+                item.IsInEditMode = false;
+            }
+        }
+
         private void EditableTextBox_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             TextBox tb = sender as TextBox;
+
             if (tb.IsVisible)
             {
+                // the method to set the focus to the TextBox
+                _ = Dispatcher.BeginInvoke(
+                    DispatcherPriority.ContextIdle,
+                    new Action(delegate ()
+                    {
+                        _ = tb.Focus();
+                        tb.SelectAll();
+                    }));
+
                 if (tb.DataContext is ActionTabItem item)
                 {
                     // back up - for possible cancelling
