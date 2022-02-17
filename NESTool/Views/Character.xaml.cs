@@ -31,9 +31,7 @@ namespace NESTool.Views
 
         private void ActionTabs_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            MouseButtonEventArgs args = e as MouseButtonEventArgs;
-
-            FrameworkElement source = (FrameworkElement)args.OriginalSource;
+            FrameworkElement source = (FrameworkElement)e.OriginalSource;
 
             if (source.DataContext.ToString() == "{NewItemPlaceholder}")
             {

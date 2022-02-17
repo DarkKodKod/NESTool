@@ -44,7 +44,6 @@ namespace NESTool.Commands
         public override void Execute(object parameter)
         {
             object[] values = (object[])parameter;
-            CharacterModel model = (CharacterModel)values[0];
             string tabID = (string)values[1];
 
             SignalManager.Get<PauseCharacterAnimationSignal>().Dispatch(tabID);
