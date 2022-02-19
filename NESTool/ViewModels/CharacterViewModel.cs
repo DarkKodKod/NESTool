@@ -292,10 +292,10 @@ namespace NESTool.ViewModels
 
         private void SetPaletteEmpty(PaletteIndex index)
         {
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 0);
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 1);
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 2);
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 3);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.NullColor, index, 0);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.NullColor, index, 1);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.NullColor, index, 2);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.NullColor, index, 3);
         }
 
         private void SetPalleteWithColors(PaletteModel paletteModel, PaletteIndex index)

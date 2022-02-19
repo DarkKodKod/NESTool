@@ -17,7 +17,8 @@ namespace NESTool.Commands
 {
     public class BuildProjectCommand : Command
     {
-        private const int NESFPS = 60;
+        private const int NTSC = 60;
+        private const int PAL = 50;
 
         private enum MetaType : byte
         {
@@ -53,7 +54,7 @@ namespace NESTool.Commands
         {
             if (!CheckValidOutputFolder())
             {
-                MessageBox.Show("Invalid output folder!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show("Invalid output folder!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -63,7 +64,7 @@ namespace NESTool.Commands
             BuildBackgrounds();
             BuildTilesDefinitions();
 
-            MessageBox.Show("Build completed!", "Build", MessageBoxButton.OK, MessageBoxImage.Information);
+            _ = MessageBox.Show("Build completed!", "Build", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private bool CheckValidOutputFolder()
@@ -571,6 +572,10 @@ namespace NESTool.Commands
 
         private void WriteMetaSprites(StreamWriter outputFile, CharacterModel model, string name)
         {
+            ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+
+            int nesFPS = projectModel.Header.FrameTiming == FrameTiming.NTSC ? NTSC : PAL;
+
             List<string> animationIndices = new List<string>();
 
             foreach (CharacterAnimation animation in model.Animations)
@@ -629,7 +634,7 @@ namespace NESTool.Commands
                         outputFile.WriteLine($"    .byte   ${vert:X2},   ${tile:X2},   ${attrs:X2},   ${horiz:X2}");
                     }
 
-                    if (foundFrame == true)
+                    if (foundFrame)
                     {
                         // Add the termination byte
                         outputFile.WriteLine("    .byte   $FF");
@@ -641,7 +646,7 @@ namespace NESTool.Commands
 
                 animationIndices.Add($"{animation.Name}");
 
-                int frameDuration = (int)(NESFPS * animation.Speed);
+                int frameDuration = (int)(nesFPS * animation.Speed);
 
                 int colBoxAx = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetX;
                 int colBoxAy = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetY;
@@ -775,7 +780,7 @@ namespace NESTool.Commands
 
         private void Reverse(ref BitArray array, int start, int length)
         {
-            int mid = (length / 2);
+            int mid = length / 2;
 
             for (int i = start; i < start + mid; i++)
             {

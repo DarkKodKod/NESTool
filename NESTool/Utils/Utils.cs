@@ -16,7 +16,7 @@ namespace NESTool.Utils
 {
     public static class Util
     {
-        public static Color NullColor = GetColorFromInt(0);
+        public static readonly Color NullColor = Color.FromRgb(0, 0, 0);
 
         private static readonly Regex _regex = new Regex(@"^[A-Za-z_][a-zA-Z0-9_\-\x20]*$");
 
@@ -40,7 +40,7 @@ namespace NESTool.Utils
                 return true;
             }
 
-            return _regex != null ? _regex.IsMatch(fileName) : false;
+            return _regex != null && _regex.IsMatch(fileName);
         }
 
         public static AFileModel FileModelFactory(ProjectItemType type)
@@ -233,11 +233,11 @@ namespace NESTool.Utils
             dest.WritePixels(new Int32Rect(nXDest, nYDest, src.PixelWidth, src.PixelHeight), dest_buffer, dest_stride, 0);
         }
 
-        public static bool SendSelectedQuadrantSignal(Image image, Point point)
+        public static void SendSelectedQuadrantSignal(Image image, Point point)
         {
             if (image.ActualWidth == 0 || image.ActualHeight == 0)
             {
-                return false;
+                return;
             }
 
             int imageWidth = (int)Math.Ceiling(image.ActualWidth);
@@ -256,13 +256,11 @@ namespace NESTool.Utils
 
                 if (cropped.PixelHeight != 8 || cropped.PixelWidth != 8)
                 {
-                    return false;
+                    return;
                 }
 
                 SignalManager.Get<OutputSelectedQuadrantSignal>().Dispatch(image, cropped, new Point(x, y));
             }
-
-            return true;
         }
 
         public static void GenerateBitmapFromTileSet(TileSetModel model, out WriteableBitmap bitmap)

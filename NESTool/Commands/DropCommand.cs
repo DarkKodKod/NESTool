@@ -55,8 +55,8 @@ namespace NESTool.Commands
                 // It is important to deselect the dragged object to select it again when the whole process finishes
                 draggingObject.IsSelected = false;
 
-                string name = string.Empty;
-                string destinationFolder = string.Empty;
+                string name;
+                string destinationFolder;
 
                 if (dropTarget.IsFolder)
                 {
