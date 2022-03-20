@@ -47,7 +47,7 @@ namespace NESTool.Utils
                         continue;
                     }
 
-                    TileSetModel.BitmapCache.TryGetValue(bankModel.TileSetID, out WriteableBitmap sourceBitmap);
+                    WriteableBitmap sourceBitmap = GetCacheBitmap(bankModel.TileSetID);
 
                     if (sourceBitmap == null)
                     {
@@ -85,6 +85,19 @@ namespace NESTool.Utils
             bankBitmap.Freeze();
 
             return bankBitmap;
+        }
+
+        private static WriteableBitmap GetCacheBitmap(string tileSetID)
+        {
+            if (!TileSetModel.BitmapCache.TryGetValue(tileSetID, out WriteableBitmap tileSetBitmap))
+            {
+                // The tileset exists but the bitmap is not in the cache, so I will try to load it here
+                TileSetModel tileSetModel = ProjectFiles.GetModel<TileSetModel>(tileSetID);
+
+                return tileSetModel != null ? TileSetModel.LoadBitmap(tileSetModel) : null;
+            }
+
+            return tileSetBitmap;
         }
 
         private static void PaintPixelsBasedOnPalettes(ref WriteableBitmap bitmap, CharacterTile tile, CharacterModel model, int group)

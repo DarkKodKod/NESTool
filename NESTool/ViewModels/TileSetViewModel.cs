@@ -39,12 +39,7 @@ namespace NESTool.ViewModels
 
         public TileSetModel GetModel()
         {
-            if (ProjectItem?.FileHandler.FileModel is TileSetModel model)
-            {
-                return model;
-            }
-
-            return null;
+            return ProjectItem?.FileHandler.FileModel is TileSetModel model ? model : null;
         }
 
         #region get/set
@@ -54,10 +49,7 @@ namespace NESTool.ViewModels
 
         public Point CroppedPoint
         {
-            get
-            {
-                return _croppedPoint;
-            }
+            get => _croppedPoint;
             set
             {
                 _croppedPoint = value;
@@ -68,10 +60,7 @@ namespace NESTool.ViewModels
 
         public bool PixelsChanged
         {
-            get
-            {
-                return _pixelsChanged;
-            }
+            get => _pixelsChanged;
             set
             {
                 _pixelsChanged = value;
@@ -82,10 +71,7 @@ namespace NESTool.ViewModels
 
         public Visibility GridVisibility
         {
-            get
-            {
-                return _gridVisibility;
-            }
+            get => _gridVisibility;
             set
             {
                 _gridVisibility = value;
@@ -96,10 +82,7 @@ namespace NESTool.ViewModels
 
         public WriteableBitmap CroppedImage
         {
-            get
-            {
-                return _croppedImage;
-            }
+            get => _croppedImage;
             set
             {
                 _croppedImage = value;
@@ -110,10 +93,7 @@ namespace NESTool.ViewModels
 
         public ImageSource ImgSource
         {
-            get
-            {
-                return _imgSource;
-            }
+            get => _imgSource;
             set
             {
                 _imgSource = value;
@@ -130,10 +110,7 @@ namespace NESTool.ViewModels
 
         public string Pseudonym
         {
-            get
-            {
-                return _pseudonym;
-            }
+            get => _pseudonym;
             set
             {
                 if (_pseudonym != value)
@@ -433,23 +410,14 @@ namespace NESTool.ViewModels
             UpdateImage(true);
         }
 
-        private void UpdateImage(bool redraw = false)
+        private void UpdateImage(bool forceRedraw = false)
         {
             if (GetModel() == null)
             {
                 return;
             }
 
-            ImgSource = null;
-
-            if (redraw || !TileSetModel.BitmapCache.TryGetValue(GetModel().GUID, out WriteableBitmap bitmap))
-            {
-                Util.GenerateBitmapFromTileSet(GetModel(), out bitmap);
-
-                TileSetModel.BitmapCache[GetModel().GUID] = bitmap;
-            }
-
-            ImgSource = bitmap;
+            ImgSource = TileSetModel.LoadBitmap(GetModel(), forceRedraw);
         }
     }
 }

@@ -63,5 +63,19 @@ namespace NESTool.Models
 
             return (lengthWidth * yPos) + xPos;
         }
+
+        public static WriteableBitmap LoadBitmap(TileSetModel tileSetModel, bool forceRedraw = false)
+        {
+            bool exists = BitmapCache.TryGetValue(tileSetModel.GUID, out WriteableBitmap bitmap);
+
+            if (!exists || forceRedraw)
+            {
+                Util.GenerateBitmapFromTileSet(tileSetModel, out bitmap);
+
+                BitmapCache[tileSetModel.GUID] = bitmap;
+            }
+
+            return bitmap;
+        }
     }
 }

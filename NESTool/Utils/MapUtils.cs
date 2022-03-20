@@ -34,7 +34,7 @@ namespace NESTool.Utils
                     bool erased = false;
                     bool updateTile = false;
 
-                    if (isUpdate == true)
+                    if (isUpdate)
                     {
                         // Only update the tiles that were affected by the change
                         if (MapViewModel.FlagMapBitmapChanges[i] == TileUpdate.None)
@@ -77,8 +77,8 @@ namespace NESTool.Utils
                             continue;
                         }
 
-                        TileSetModel.BitmapCache.TryGetValue(ptTileModel.TileSetID, out WriteableBitmap tileSetBitmap);
-
+                        WriteableBitmap tileSetBitmap = GetCacheBitmap(ptTileModel.TileSetID);
+                        
                         if (tileSetBitmap == null)
                         {
                             continue;
@@ -113,6 +113,19 @@ namespace NESTool.Utils
                     }
                 }
             }
+        }
+
+        private static WriteableBitmap GetCacheBitmap(string tileSetID)
+        {
+            if (!TileSetModel.BitmapCache.TryGetValue(tileSetID, out WriteableBitmap tileSetBitmap))
+            {
+                // The tileset exists but the bitmap is not in the cache, so I will try to load it here
+                TileSetModel tileSetModel = ProjectFiles.GetModel<TileSetModel>(tileSetID);
+
+                return tileSetModel != null ? TileSetModel.LoadBitmap(tileSetModel) : null;
+            }
+
+            return tileSetBitmap;
         }
 
         private static void CacheColorsFromBank(int group, AttributeTable attributeTable, MapModel mapModel, BankModel bankModel)
