@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+    <assembly>
+        <name>CommunityToolkit.Mvvm.SourceGenerators</name>
+    </assembly>
+    <members>
+        <member name="T:System.Diagnostics.CodeAnalysis.NotNullWhenAttribute">
+            <summary>Specifies that when a method returns <see cref="P:System.Diagnostics.CodeAnalysis.NotNullWhenAttribute.ReturnValue" />, the parameter will not be null even if the corresponding type allows it.</summary>
+        </member>
+        <member name="M:System.Diagnostics.CodeAnalysis.NotNullWhenAttribute.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Diagnostics.CodeAnalysis.NotNullWhenAttribute" /> class.
+            </summary>
+            <param name="returnValue">The return value condition. If the method returns this value, the associated parameter will not be null.</param>
+        </member>
+        <member name="P:System.Diagnostics.CodeAnalysis.NotNullWhenAttribute.ReturnValue">
+            <summary>
+            Gets a value indicating whether the annotated parameter will be null depending on the return value.
+            </summary>
+        </member>
+        <member name="T:System.Runtime.CompilerServices.IsExternalInit">
+            <summary>
+            Reserved to be used by the compiler for tracking metadata.
+            This class should not be used by developers in source code.
+            </summary>
+            <summary>
+            Reserved to be used by the compiler for tracking metadata.
+            This class should not be used by developers in source code.
+            </summary>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.NullabilityAttributesGenerator">
+            <summary>
+            A source generator for necessary nullability attributes.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.NullabilityAttributesGenerator.Initialize(Microsoft.CodeAnalysis.GeneratorInitializationContext)" />
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.NullabilityAttributesGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)" />
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.NullabilityAttributesGenerator.AddSourceCodeIfTypeIsNotPresent(Microsoft.CodeAnalysis.GeneratorExecutionContext,System.String)">
+            <summary>
+            Adds the source for a given attribute type if it's not present already in the compilation.
+            </summary>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.INotifyPropertyChangedGenerator">
+            <summary>
+            A source generator for the <c>INotifyPropertyChangedAttribute</c> type.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.INotifyPropertyChangedGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommunityToolkit.Mvvm.SourceGenerators.INotifyPropertyChangedGenerator" /> class.
+            </summary>
+        </member>
+        <member name="P:CommunityToolkit.Mvvm.SourceGenerators.INotifyPropertyChangedGenerator.TargetTypeErrorDescriptor">
+            <summary>
+            Gets a <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> indicating when the generation failed for a given type.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.INotifyPropertyChangedGenerator.ValidateTargetType(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.AttributeData,Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.INamedTypeSymbol,Microsoft.CodeAnalysis.DiagnosticDescriptor@)">
+            <summary>
+            Validates a target type being processed.
+            </summary>
+            <param name="context">The input <see cref="T:Microsoft.CodeAnalysis.GeneratorExecutionContext" /> instance to use.</param>
+            <param name="attributeData">The <see cref="T:Microsoft.CodeAnalysis.AttributeData" /> for the current attribute being processed.</param>
+            <param name="classDeclaration">The <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax" /> node to process.</param>
+            <param name="classDeclarationSymbol">The <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> for <paramref name="classDeclaration" />.</param>
+            <param name="descriptor">The resulting <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> to emit in case the target type isn't valid.</param>
+            <returns>Whether or not the target type is valid and can be processed normally.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.INotifyPropertyChangedGenerator.FilterDeclaredMembers(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.AttributeData,Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.INamedTypeSymbol,Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax)">
+            <summary>
+            Filters the <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax" /> nodes to generate from the input parsed tree.
+            </summary>
+            <param name="context">The input <see cref="T:Microsoft.CodeAnalysis.GeneratorExecutionContext" /> instance to use.</param>
+            <param name="attributeData">The <see cref="T:Microsoft.CodeAnalysis.AttributeData" /> for the current attribute being processed.</param>
+            <param name="classDeclaration">The <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax" /> node to process.</param>
+            <param name="classDeclarationSymbol">The <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> for <paramref name="classDeclaration" />.</param>
+            <param name="sourceDeclaration">The parsed <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax" /> instance with the source nodes.</param>
+            <returns>A sequence of <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax" /> nodes to emit in the generated file.</returns>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.ObservableObjectGenerator">
+            <summary>
+            A source generator for the <c>ObservableObjectAttribute</c> type.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservableObjectGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommunityToolkit.Mvvm.SourceGenerators.ObservableObjectGenerator" /> class.
+            </summary>
+        </member>
+        <member name="P:CommunityToolkit.Mvvm.SourceGenerators.ObservableObjectGenerator.TargetTypeErrorDescriptor">
+            <summary>
+            Gets a <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> indicating when the generation failed for a given type.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservableObjectGenerator.ValidateTargetType(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.AttributeData,Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.INamedTypeSymbol,Microsoft.CodeAnalysis.DiagnosticDescriptor@)">
+            <summary>
+            Validates a target type being processed.
+            </summary>
+            <param name="context">The input <see cref="T:Microsoft.CodeAnalysis.GeneratorExecutionContext" /> instance to use.</param>
+            <param name="attributeData">The <see cref="T:Microsoft.CodeAnalysis.AttributeData" /> for the current attribute being processed.</param>
+            <param name="classDeclaration">The <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax" /> node to process.</param>
+            <param name="classDeclarationSymbol">The <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> for <paramref name="classDeclaration" />.</param>
+            <param name="descriptor">The resulting <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> to emit in case the target type isn't valid.</param>
+            <returns>Whether or not the target type is valid and can be processed normally.</returns>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator" />
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator.Initialize(Microsoft.CodeAnalysis.GeneratorInitializationContext)" />
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)" />
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator.OnExecuteForProperties(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.INamedTypeSymbol,System.Collections.Generic.IEnumerable{CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator.SyntaxReceiver.Item},System.Collections.Generic.ICollection{System.String},System.Collections.Generic.ICollection{System.String})">
+            <summary>
+            Processes a given target type for declared observable properties.
+            </summary>
+            <param name="context">The input <see cref="T:Microsoft.CodeAnalysis.GeneratorExecutionContext" /> instance to use.</param>
+            <param name="classDeclaration">The <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax" /> node to process.</param>
+            <param name="classDeclarationSymbol">The <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> for <paramref name="classDeclaration" />.</param>
+            <param name="items">The sequence of fields to process.</param>
+            <param name="propertyChangedNames">The collection of discovered property changed names.</param>
+            <param name="propertyChangingNames">The collection of discovered property changing names.</param>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator.CreatePropertyDeclaration(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.SyntaxTriviaList,Microsoft.CodeAnalysis.IFieldSymbol,System.Boolean,System.Boolean,System.Collections.Generic.ICollection{System.String},System.Collections.Generic.ICollection{System.String})">
+            <summary>
+            Creates a <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.PropertyDeclarationSyntax" /> instance for a specified field.
+            </summary>
+            <param name="context">The input <see cref="T:Microsoft.CodeAnalysis.GeneratorExecutionContext" /> instance to use.</param>
+            <param name="leadingTrivia">The leading trivia for the field to process.</param>
+            <param name="fieldSymbol">The input <see cref="T:Microsoft.CodeAnalysis.IFieldSymbol" /> instance to process.</param>
+            <param name="isNotifyPropertyChanging">Indicates whether or not <see cref="T:System.ComponentModel.INotifyPropertyChanging" /> is also implemented.</param>
+            <param name="isObservableValidator">Indicates whether or not the containing type inherits from <c>ObservableValidator</c>.</param>
+            <param name="propertyChangedNames">The collection of discovered property changed names.</param>
+            <param name="propertyChangingNames">The collection of discovered property changing names.</param>
+            <returns>A generated <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.PropertyDeclarationSyntax" /> instance for the input field.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator.GetGeneratedPropertyName(Microsoft.CodeAnalysis.IFieldSymbol)">
+            <summary>
+            Get the generated property name for an input field.
+            </summary>
+            <param name="fieldSymbol">The input <see cref="T:Microsoft.CodeAnalysis.IFieldSymbol" /> instance to process.</param>
+            <returns>The generated property name for <paramref name="fieldSymbol" />.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator.OnExecuteForPropertyArgs(Microsoft.CodeAnalysis.GeneratorExecutionContext,System.Collections.Generic.IReadOnlyCollection{System.String},System.Collections.Generic.IReadOnlyCollection{System.String})">
+            <summary>
+            Processes the cached property changed/changing args.
+            </summary>
+            <param name="context">The input <see cref="T:Microsoft.CodeAnalysis.GeneratorExecutionContext" /> instance to use.</param>
+            <param name="propertyChangedNames">The collection of discovered property changed names.</param>
+            <param name="propertyChangingNames">The collection of discovered property changing names.</param>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator.CreateFieldDeclaration(Microsoft.CodeAnalysis.INamedTypeSymbol,System.String)">
+            <summary>
+            Creates a field declaration for a cached property change name.
+            </summary>
+            <param name="type">The type of cached property change argument (either <see cref="T:System.ComponentModel.PropertyChangedEventArgs" /> or <see cref="T:System.ComponentModel.PropertyChangingEventArgs" />).</param>
+            <param name="propertyName">The name of the cached property name.</param>
+            <returns>A <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.FieldDeclarationSyntax" /> instance for the input cached property name.</returns>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator.SyntaxReceiver">
+            <summary>
+            An <see cref="T:Microsoft.CodeAnalysis.ISyntaxContextReceiver" /> that selects candidate nodes to process.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator.SyntaxReceiver.gatheredInfo">
+            <summary>
+            The list of info gathered during exploration.
+            </summary>
+        </member>
+        <member name="P:CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator.SyntaxReceiver.GatheredInfo">
+            <summary>
+            Gets the collection of gathered info to process.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator.SyntaxReceiver.OnVisitSyntaxNode(Microsoft.CodeAnalysis.GeneratorSyntaxContext)" />
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator.SyntaxReceiver.Item">
+            <summary>
+            A model for a group of item representing a discovered type to process.
+            </summary>
+            <param name="LeadingTrivia">The leading trivia for the field declaration.</param>
+            <param name="FieldSymbol">The <see cref="T:Microsoft.CodeAnalysis.IFieldSymbol" /> instance for the target field.</param>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator.SyntaxReceiver.Item.#ctor(Microsoft.CodeAnalysis.SyntaxTriviaList,Microsoft.CodeAnalysis.IFieldSymbol)">
+            <summary>
+            A model for a group of item representing a discovered type to process.
+            </summary>
+            <param name="LeadingTrivia">The leading trivia for the field declaration.</param>
+            <param name="FieldSymbol">The <see cref="T:Microsoft.CodeAnalysis.IFieldSymbol" /> instance for the target field.</param>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.ObservableRecipientGenerator">
+            <summary>
+            A source generator for the <c>ObservableRecipientAttribute</c> type.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservableRecipientGenerator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommunityToolkit.Mvvm.SourceGenerators.ObservableRecipientGenerator" /> class.
+            </summary>
+        </member>
+        <member name="P:CommunityToolkit.Mvvm.SourceGenerators.ObservableRecipientGenerator.TargetTypeErrorDescriptor">
+            <summary>
+            Gets a <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> indicating when the generation failed for a given type.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservableRecipientGenerator.ValidateTargetType(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.AttributeData,Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.INamedTypeSymbol,Microsoft.CodeAnalysis.DiagnosticDescriptor@)">
+            <summary>
+            Validates a target type being processed.
+            </summary>
+            <param name="context">The input <see cref="T:Microsoft.CodeAnalysis.GeneratorExecutionContext" /> instance to use.</param>
+            <param name="attributeData">The <see cref="T:Microsoft.CodeAnalysis.AttributeData" /> for the current attribute being processed.</param>
+            <param name="classDeclaration">The <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax" /> node to process.</param>
+            <param name="classDeclarationSymbol">The <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> for <paramref name="classDeclaration" />.</param>
+            <param name="descriptor">The resulting <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> to emit in case the target type isn't valid.</param>
+            <returns>Whether or not the target type is valid and can be processed normally.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservableRecipientGenerator.FilterDeclaredMembers(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.AttributeData,Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.INamedTypeSymbol,Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax)">
+            <summary>
+            Filters the <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax" /> nodes to generate from the input parsed tree.
+            </summary>
+            <param name="context">The input <see cref="T:Microsoft.CodeAnalysis.GeneratorExecutionContext" /> instance to use.</param>
+            <param name="attributeData">The <see cref="T:Microsoft.CodeAnalysis.AttributeData" /> for the current attribute being processed.</param>
+            <param name="classDeclaration">The <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax" /> node to process.</param>
+            <param name="classDeclarationSymbol">The <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> for <paramref name="classDeclaration" />.</param>
+            <param name="sourceDeclaration">The parsed <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax" /> instance with the source nodes.</param>
+            <returns>A sequence of <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax" /> nodes to emit in the generated file.</returns>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.ObservableValidatorValidateAllPropertiesGenerator" />
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservableValidatorValidateAllPropertiesGenerator.Initialize(Microsoft.CodeAnalysis.GeneratorInitializationContext)" />
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservableValidatorValidateAllPropertiesGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)" />
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservableValidatorValidateAllPropertiesGenerator.EnumerateValidationStatements(Microsoft.CodeAnalysis.INamedTypeSymbol,Microsoft.CodeAnalysis.INamedTypeSymbol,Microsoft.CodeAnalysis.INamedTypeSymbol)">
+            <summary>
+            Gets a sequence of statements to validate declared properties (including generated ones).
+            </summary>
+            <param name="classSymbol">The input <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> instance to process.</param>
+            <param name="validationSymbol">The type symbol for the <c>ValidationAttribute</c> type.</param>
+            <param name="observablePropertySymbol">The type symbol for the <c>ObservablePropertyAttribute</c> type.</param>
+            <returns>The sequence of <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.StatementSyntax" /> instances to validate declared properties.</returns>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.ObservableValidatorValidateAllPropertiesGenerator.SyntaxReceiver">
+            <summary>
+            An <see cref="T:Microsoft.CodeAnalysis.ISyntaxContextReceiver" /> that selects candidate nodes to process.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.ObservableValidatorValidateAllPropertiesGenerator.SyntaxReceiver.gatheredInfo">
+            <summary>
+            The list of info gathered during exploration.
+            </summary>
+        </member>
+        <member name="P:CommunityToolkit.Mvvm.SourceGenerators.ObservableValidatorValidateAllPropertiesGenerator.SyntaxReceiver.GatheredInfo">
+            <summary>
+            Gets the collection of gathered info to process.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ObservableValidatorValidateAllPropertiesGenerator.SyntaxReceiver.OnVisitSyntaxNode(Microsoft.CodeAnalysis.GeneratorSyntaxContext)" />
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator" />
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.attributeTypeFullName">
+            <summary>
+            The fully qualified name of the attribute type to look for.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.attributeTypeName">
+            <summary>
+            The name of the attribute type to look for.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator" /> class.
+            </summary>
+            <param name="attributeTypeFullName">The fully qualified name of the attribute type to look for.</param>
+        </member>
+        <member name="P:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.TargetTypeErrorDescriptor">
+            <summary>
+            Gets a <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> indicating when the generation failed for a given type.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.Initialize(Microsoft.CodeAnalysis.GeneratorInitializationContext)" />
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)" />
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.LoadSourceSyntaxTree">
+            <summary>
+            Loads the source syntax tree for the current generator.
+            </summary>
+            <returns>The syntax tree with the elements to emit in the generated code.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.OnExecute(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.AttributeData,Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.INamedTypeSymbol,Microsoft.CodeAnalysis.SyntaxTree)">
+            <summary>
+            Processes a given target type.
+            </summary>
+            <param name="context">The input <see cref="T:Microsoft.CodeAnalysis.GeneratorExecutionContext" /> instance to use.</param>
+            <param name="attributeData">The <see cref="T:Microsoft.CodeAnalysis.AttributeData" /> for the current attribute being processed.</param>
+            <param name="classDeclaration">The <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax" /> node to process.</param>
+            <param name="classDeclarationSymbol">The <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> for <paramref name="classDeclaration" />.</param>
+            <param name="sourceSyntaxTree">The <see cref="T:Microsoft.CodeAnalysis.SyntaxTree" /> for the target parsed source.</param>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.OnLoadDeclaredMembers(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.AttributeData,Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.INamedTypeSymbol,Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax)">
+            <summary>
+            Loads the <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax" /> nodes to generate from the input parsed tree.
+            </summary>
+            <param name="context">The input <see cref="T:Microsoft.CodeAnalysis.GeneratorExecutionContext" /> instance to use.</param>
+            <param name="attributeData">The <see cref="T:Microsoft.CodeAnalysis.AttributeData" /> for the current attribute being processed.</param>
+            <param name="classDeclaration">The <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax" /> node to process.</param>
+            <param name="classDeclarationSymbol">The <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> for <paramref name="classDeclaration" />.</param>
+            <param name="sourceDeclaration">The parsed <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax" /> instance with the source nodes.</param>
+            <returns>A sequence of <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax" /> nodes to emit in the generated file.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.ValidateTargetType(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.AttributeData,Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.INamedTypeSymbol,Microsoft.CodeAnalysis.DiagnosticDescriptor@)">
+            <summary>
+            Validates a target type being processed.
+            </summary>
+            <param name="context">The input <see cref="T:Microsoft.CodeAnalysis.GeneratorExecutionContext" /> instance to use.</param>
+            <param name="attributeData">The <see cref="T:Microsoft.CodeAnalysis.AttributeData" /> for the current attribute being processed.</param>
+            <param name="classDeclaration">The <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax" /> node to process.</param>
+            <param name="classDeclarationSymbol">The <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> for <paramref name="classDeclaration" />.</param>
+            <param name="descriptor">The resulting <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> to emit in case the target type isn't valid.</param>
+            <returns>Whether or not the target type is valid and can be processed normally.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.FilterDeclaredMembers(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.AttributeData,Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.INamedTypeSymbol,Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax)">
+            <summary>
+            Filters the <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax" /> nodes to generate from the input parsed tree.
+            </summary>
+            <param name="context">The input <see cref="T:Microsoft.CodeAnalysis.GeneratorExecutionContext" /> instance to use.</param>
+            <param name="attributeData">The <see cref="T:Microsoft.CodeAnalysis.AttributeData" /> for the current attribute being processed.</param>
+            <param name="classDeclaration">The <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax" /> node to process.</param>
+            <param name="classDeclarationSymbol">The <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> for <paramref name="classDeclaration" />.</param>
+            <param name="sourceDeclaration">The parsed <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax" /> instance with the source nodes.</param>
+            <returns>A sequence of <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax" /> nodes to emit in the generated file.</returns>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.SyntaxReceiver">
+            <summary>
+            An <see cref="T:Microsoft.CodeAnalysis.ISyntaxContextReceiver" /> that selects candidate nodes to process.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.SyntaxReceiver.attributeTypeFullName">
+            <summary>
+            The fully qualified name of the attribute type to look for.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.SyntaxReceiver.gatheredInfo">
+            <summary>
+            The list of info gathered during exploration.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.SyntaxReceiver.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.SyntaxReceiver" /> class.
+            </summary>
+            <param name="attributeTypeFullName">The fully qualified name of the attribute type to look for.</param>
+        </member>
+        <member name="P:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.SyntaxReceiver.GatheredInfo">
+            <summary>
+            Gets the collection of gathered info to process.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.SyntaxReceiver.OnVisitSyntaxNode(Microsoft.CodeAnalysis.GeneratorSyntaxContext)" />
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.SyntaxReceiver.Item">
+            <summary>
+            A model for a group of item representing a discovered type to process.
+            </summary>
+            <param name="ClassDeclaration">The <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax" /> instance for the target class declaration.</param>
+            <param name="ClassSymbol">The <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> instance for <paramref name="ClassDeclaration" />.</param>
+            <param name="AttributeSyntax">The <see cref="P:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.SyntaxReceiver.Item.AttributeSyntax" /> instance for the target attribute over <paramref name="ClassDeclaration" />.</param>
+            <param name="AttributeData">The <see cref="P:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.SyntaxReceiver.Item.AttributeData" /> instance for <paramref name="AttributeSyntax" />.</param>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.SyntaxReceiver.Item.#ctor(Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.INamedTypeSymbol,Microsoft.CodeAnalysis.CSharp.Syntax.AttributeSyntax,Microsoft.CodeAnalysis.AttributeData)">
+            <summary>
+            A model for a group of item representing a discovered type to process.
+            </summary>
+            <param name="ClassDeclaration">The <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax" /> instance for the target class declaration.</param>
+            <param name="ClassSymbol">The <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> instance for <paramref name="ClassDeclaration" />.</param>
+            <param name="AttributeSyntax">The <see cref="P:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.SyntaxReceiver.Item.AttributeSyntax" /> instance for the target attribute over <paramref name="ClassDeclaration" />.</param>
+            <param name="AttributeData">The <see cref="P:CommunityToolkit.Mvvm.SourceGenerators.TransitiveMembersGenerator.SyntaxReceiver.Item.AttributeData" /> instance for <paramref name="AttributeSyntax" />.</param>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.Diagnostics.DiagnosticDescriptors">
+            <summary>
+            A container for all <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> instances for errors reported by analyzers in this project.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.Diagnostics.DiagnosticDescriptors.INotifyPropertyChangedGeneratorError">
+            <summary>
+            Gets a <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> indicating when <see cref="T:CommunityToolkit.Mvvm.SourceGenerators.INotifyPropertyChangedGenerator" /> failed to run on a given type.
+            <para>
+            Format: <c>"The generator INotifyPropertyChangedGenerator failed to execute on type {0}"</c>.
+            </para></summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.Diagnostics.DiagnosticDescriptors.ObservableObjectGeneratorError">
+            <summary>
+            Gets a <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> indicating when <see cref="T:CommunityToolkit.Mvvm.SourceGenerators.ObservableObjectGenerator" /> failed to run on a given type.
+            <para>
+            Format: <c>"The generator ObservableObjectGenerator failed to execute on type {0}"</c>.
+            </para></summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.Diagnostics.DiagnosticDescriptors.ObservableRecipientGeneratorError">
+            <summary>
+            Gets a <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> indicating when <see cref="T:CommunityToolkit.Mvvm.SourceGenerators.ObservableRecipientGenerator" /> failed to run on a given type.
+            <para>
+            Format: <c>"The generator ObservableRecipientGenerator failed to execute on type {0}"</c>.
+            </para></summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.Diagnostics.DiagnosticDescriptors.DuplicateINotifyPropertyChangedInterfaceForINotifyPropertyChangedAttributeError">
+            <summary>
+            Gets a <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> indicating when a duplicate declaration of <see cref="T:System.ComponentModel.INotifyPropertyChanged" /> would happen.
+            <para>
+            Format: <c>"Cannot apply [INotifyPropertyChangedAttribute] to type {0}, as it already declares the INotifyPropertyChanged interface"</c>.
+            </para></summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.Diagnostics.DiagnosticDescriptors.DuplicateINotifyPropertyChangedInterfaceForObservableObjectAttributeError">
+            <summary>
+            Gets a <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> indicating when a duplicate declaration of <see cref="T:System.ComponentModel.INotifyPropertyChanged" /> would happen.
+            <para>
+            Format: <c>"Cannot apply [ObservableObjectAttribute] to type {0}, as it already declares the INotifyPropertyChanged interface"</c>.
+            </para></summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.Diagnostics.DiagnosticDescriptors.DuplicateINotifyPropertyChangingInterfaceForObservableObjectAttributeError">
+            <summary>
+            Gets a <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> indicating when a duplicate declaration of <see cref="T:System.ComponentModel.INotifyPropertyChanging" /> would happen.
+            <para>
+            Format: <c>"Cannot apply [ObservableObjectAttribute] to type {0}, as it already declares the INotifyPropertyChanging interface"</c>.
+            </para></summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.Diagnostics.DiagnosticDescriptors.DuplicateObservableRecipientError">
+            <summary>
+            Gets a <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> indicating when a duplicate declaration of <see cref="T:System.ComponentModel.INotifyPropertyChanging" /> would happen.
+            <para>
+            Format: <c>"Cannot apply [ObservableRecipientAttribute] to type {0}, as it already inherits from the ObservableRecipient class"</c>.
+            </para></summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.Diagnostics.DiagnosticDescriptors.MissingBaseObservableObjectFunctionalityError">
+            <summary>
+            Gets a <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> indicating when there is a missing base functionality to enable <c>ObservableRecipientAttribute</c>.
+            <para>
+            Format: <c>"Cannot apply [ObservableRecipientAttribute] to type {0}, as it lacks necessary base functionality (it should either inherit from ObservableObject, or be annotated with [ObservableObjectAttribute] or [INotifyPropertyChangedAttribute])"</c>.
+            </para></summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.Diagnostics.DiagnosticDescriptors.MissingObservableValidatorInheritanceError">
+            <summary>
+            Gets a <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> indicating when the target type doesn't inherit from the <c>ObservableValidator</c> class.
+            <para>
+            Format: <c>"The field {0}.{1} cannot be used to generate an observable property, as it has {2} validation attribute(s) but is declared in a type that doesn't inherit from ObservableValidator"</c>.
+            </para></summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.Diagnostics.DiagnosticDescriptors.ObservablePropertyGeneratorError">
+            <summary>
+            Gets a <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> indicating when <see cref="T:CommunityToolkit.Mvvm.SourceGenerators.ObservablePropertyGenerator" /> failed to run on a given type.
+            <para>
+            Format: <c>"The generator ObservablePropertyGenerator failed to execute on type {0}"</c>.
+            </para></summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.Diagnostics.DiagnosticDescriptors.ICommandGeneratorError">
+            <summary>
+            Gets a <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> indicating when <see cref="T:CommunityToolkit.Mvvm.SourceGenerators.ICommandGenerator" /> failed to run on a given type.
+            <para>
+            Format: <c>"The generator ICommandGenerator failed to execute on type {0}"</c>.
+            </para></summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.Diagnostics.DiagnosticDescriptors.InvalidICommandMethodSignatureError">
+            <summary>
+            Gets a <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> indicating when an annotated method to generate a command for has an invalid signature.
+            <para>
+            Format: <c>"The method {0}.{1} cannot be used to generate a command property, as its signature isn't compatible with any of the existing relay command types"</c>.
+            </para></summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.Diagnostics.DiagnosticDescriptors.UnsupportedCSharpLanguageVersionError">
+            <summary>
+            Gets a <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> indicating when an unsupported C# language version is being used.
+            <para>
+            Format: <c>"The method {0}.{1} cannot be used to generate a command property, as its signature isn't compatible with any of the existing relay command types"</c>.
+            </para></summary>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.Diagnostics.DiagnosticExtensions">
+            <summary>
+            Extension methods for <see cref="T:Microsoft.CodeAnalysis.GeneratorExecutionContext" />, specifically for reporting diagnostics.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.Diagnostics.DiagnosticExtensions.ReportDiagnostic(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.DiagnosticDescriptor,Microsoft.CodeAnalysis.ISymbol,System.Object[])">
+            <summary>
+            Adds a new diagnostics to the current compilation.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.CodeAnalysis.GeneratorEditContext" /> instance currently in use.</param>
+            <param name="descriptor">The input <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> for the diagnostics to create.</param>
+            <param name="symbol">The source <see cref="T:Microsoft.CodeAnalysis.ISymbol" /> to attach the diagnostics to.</param>
+            <param name="args">The optional arguments for the formatted message to include.</param>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.Diagnostics.DiagnosticExtensions.ReportDiagnostic(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.DiagnosticDescriptor,Microsoft.CodeAnalysis.SyntaxNode,System.Object[])">
+            <summary>
+            Adds a new diagnostics to the current compilation.
+            </summary>
+            <param name="context">The <see cref="T:Microsoft.CodeAnalysis.GeneratorEditContext" /> instance currently in use.</param>
+            <param name="descriptor">The input <see cref="T:Microsoft.CodeAnalysis.DiagnosticDescriptor" /> for the diagnostics to create.</param>
+            <param name="node">The source <see cref="T:Microsoft.CodeAnalysis.SyntaxNode" /> to attach the diagnostics to.</param>
+            <param name="args">The optional arguments for the formatted message to include.</param>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.Extensions.AttributeDataExtensions">
+            <summary>
+            Extension methods for the <see cref="T:Microsoft.CodeAnalysis.AttributeData" /> type.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.Extensions.AttributeDataExtensions.HasNamedArgument``1(Microsoft.CodeAnalysis.AttributeData,System.String,``0)">
+            <summary>
+            Checks whether a given <see cref="T:Microsoft.CodeAnalysis.AttributeData" /> instance contains a specified named argument.
+            </summary>
+            <typeparam name="T">The type of argument to check.</typeparam>
+            <param name="attributeData">The target <see cref="T:Microsoft.CodeAnalysis.AttributeData" /> instance to check.</param>
+            <param name="name">The name of the argument to check.</param>
+            <param name="value">The expected value for the target named argument.</param>
+            <returns>Whether or not <paramref name="attributeData" /> contains an argument named <paramref name="name" /> with the expected value.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.Extensions.AttributeDataExtensions.AsAttributeSyntax(Microsoft.CodeAnalysis.AttributeData)">
+            <summary>
+            Creates an <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.AttributeSyntax" /> node that is equivalent to the input <see cref="T:Microsoft.CodeAnalysis.AttributeData" /> instance.
+            </summary>
+            <param name="attributeData">The input <see cref="T:Microsoft.CodeAnalysis.AttributeData" /> instance to process.</param>
+            <returns>An <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.AttributeSyntax" /> replicating the data in <paramref name="attributeData" />.</returns>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.Extensions.INamedTypeSymbolExtensions">
+            <summary>
+            Extension methods for the <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> type.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.Extensions.INamedTypeSymbolExtensions.GetFullMetadataName(Microsoft.CodeAnalysis.INamedTypeSymbol)">
+            <summary>
+            Gets the full metadata name for a given <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> instance.
+            </summary>
+            <param name="symbol">The input <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> instance.</param>
+            <returns>The full metadata name for <paramref name="symbol" />.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.Extensions.INamedTypeSymbolExtensions.GetFullMetadataNameForFileName(Microsoft.CodeAnalysis.INamedTypeSymbol)">
+            <summary>
+            Gets a valid filename for a given <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> instance.
+            </summary>
+            <param name="symbol">The input <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> instance.</param>
+            <returns>The full metadata name for <paramref name="symbol" /> that is also a valid filename.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.Extensions.INamedTypeSymbolExtensions.InheritsFrom(Microsoft.CodeAnalysis.INamedTypeSymbol,Microsoft.CodeAnalysis.INamedTypeSymbol)">
+            <summary>
+            Checks whether or not a given <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> inherits from a specified type.
+            </summary>
+            <param name="typeSymbol">The target <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> instance to check.</param>
+            <param name="targetTypeSymbol">The type symbol of the type to check for inheritance.</param>
+            <returns>Whether or not <paramref name="typeSymbol" /> inherits from <paramref name="targetTypeSymbol" />.</returns>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.Extensions.MemberDeclarationSyntaxExtensions">
+            <summary>
+            Extension methods for the <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax" /> type.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.Extensions.MemberDeclarationSyntaxExtensions.ReplaceModifier(Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax,Microsoft.CodeAnalysis.CSharp.SyntaxKind,Microsoft.CodeAnalysis.CSharp.SyntaxKind)">
+            <summary>
+            Replaces a specific modifier.
+            </summary>
+            <param name="memberDeclaration">The input <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax" /> instance.</param>
+            <param name="oldKind">The target modifier kind to replace.</param>
+            <param name="newKind">The new modifier kind to add or replace.</param>
+            <returns>A <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax" /> instance with the target modifier.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.Extensions.MemberDeclarationSyntaxExtensions.RemoveModifier(Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax,Microsoft.CodeAnalysis.CSharp.SyntaxKind)">
+            <summary>
+            Removes a specific modifier.
+            </summary>
+            <param name="memberDeclaration">The input <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax" /> instance.</param>
+            <param name="kind">The modifier kind to remove.</param>
+            <returns>A <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax" /> instance without the specified modifier.</returns>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.ICommandGenerator" />
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ICommandGenerator.Initialize(Microsoft.CodeAnalysis.GeneratorInitializationContext)" />
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ICommandGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)" />
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ICommandGenerator.OnExecute(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax,Microsoft.CodeAnalysis.INamedTypeSymbol,System.Collections.Generic.IEnumerable{CommunityToolkit.Mvvm.SourceGenerators.ICommandGenerator.SyntaxReceiver.Item})">
+            <summary>
+            Processes a given target type.
+            </summary>
+            <param name="context">The input <see cref="T:Microsoft.CodeAnalysis.GeneratorExecutionContext" /> instance to use.</param>
+            <param name="classDeclaration">The <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ClassDeclarationSyntax" /> node to process.</param>
+            <param name="classDeclarationSymbol">The <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> for <paramref name="classDeclaration" />.</param>
+            <param name="items">The sequence of <see cref="T:Microsoft.CodeAnalysis.IMethodSymbol" /> instances to process.</param>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ICommandGenerator.CreateCommandMembers(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.SyntaxTriviaList,Microsoft.CodeAnalysis.IMethodSymbol)">
+            <summary>
+            Creates the <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax" /> instances for a specified command.
+            </summary>
+            <param name="context">The input <see cref="T:Microsoft.CodeAnalysis.GeneratorExecutionContext" /> instance to use.</param>
+            <param name="leadingTrivia">The leading trivia for the field to process.</param>
+            <param name="methodSymbol">The input <see cref="T:Microsoft.CodeAnalysis.IMethodSymbol" /> instance to process.</param>
+            <returns>The <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberDeclarationSyntax" /> instances for the input command.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ICommandGenerator.GetGeneratedFieldAndPropertyNames(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.IMethodSymbol)">
+            <summary>
+            Get the generated field and property names for the input method.
+            </summary>
+            <param name="context">The input <see cref="T:Microsoft.CodeAnalysis.GeneratorExecutionContext" /> instance to use.</param>
+            <param name="methodSymbol">The input <see cref="T:Microsoft.CodeAnalysis.IMethodSymbol" /> instance to process.</param>
+            <returns>The generated field and property names for <paramref name="methodSymbol" />.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ICommandGenerator.TryMapCommandTypesFromMethod(Microsoft.CodeAnalysis.GeneratorExecutionContext,Microsoft.CodeAnalysis.IMethodSymbol,Microsoft.CodeAnalysis.ITypeSymbol@,Microsoft.CodeAnalysis.ITypeSymbol@,Microsoft.CodeAnalysis.ITypeSymbol@)">
+            <summary>
+            Gets the type symbols for the input method, if supported.
+            </summary>
+            <param name="context">The input <see cref="T:Microsoft.CodeAnalysis.GeneratorExecutionContext" /> instance to use.</param>
+            <param name="methodSymbol">The input <see cref="T:Microsoft.CodeAnalysis.IMethodSymbol" /> instance to process.</param>
+            <param name="commandInterfaceTypeSymbol">The command interface type symbol.</param>
+            <param name="commandClassTypeSymbol">The command class type symbol.</param>
+            <param name="delegateTypeSymbol">The delegate type symbol for the wrapped method.</param>
+            <returns>Whether or not <paramref name="methodSymbol" /> was valid and the requested types have been set.</returns>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.ICommandGenerator.SyntaxReceiver">
+            <summary>
+            An <see cref="T:Microsoft.CodeAnalysis.ISyntaxContextReceiver" /> that selects candidate nodes to process.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.ICommandGenerator.SyntaxReceiver.gatheredInfo">
+            <summary>
+            The list of info gathered during exploration.
+            </summary>
+        </member>
+        <member name="P:CommunityToolkit.Mvvm.SourceGenerators.ICommandGenerator.SyntaxReceiver.GatheredInfo">
+            <summary>
+            Gets the collection of gathered info to process.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ICommandGenerator.SyntaxReceiver.OnVisitSyntaxNode(Microsoft.CodeAnalysis.GeneratorSyntaxContext)" />
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.ICommandGenerator.SyntaxReceiver.Item">
+            <summary>
+            A model for a group of item representing a discovered type to process.
+            </summary>
+            <param name="LeadingTrivia">The leading trivia for the field declaration.</param>
+            <param name="MethodSymbol">The <see cref="T:Microsoft.CodeAnalysis.IMethodSymbol" /> instance for the target method.</param>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.ICommandGenerator.SyntaxReceiver.Item.#ctor(Microsoft.CodeAnalysis.SyntaxTriviaList,Microsoft.CodeAnalysis.IMethodSymbol)">
+            <summary>
+            A model for a group of item representing a discovered type to process.
+            </summary>
+            <param name="LeadingTrivia">The leading trivia for the field declaration.</param>
+            <param name="MethodSymbol">The <see cref="T:Microsoft.CodeAnalysis.IMethodSymbol" /> instance for the target method.</param>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.IMessengerRegisterAllGenerator" />
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.IMessengerRegisterAllGenerator.Initialize(Microsoft.CodeAnalysis.GeneratorInitializationContext)" />
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.IMessengerRegisterAllGenerator.Execute(Microsoft.CodeAnalysis.GeneratorExecutionContext)" />
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.IMessengerRegisterAllGenerator.EnumerateRegistrationStatements(Microsoft.CodeAnalysis.INamedTypeSymbol,Microsoft.CodeAnalysis.INamedTypeSymbol)">
+            <summary>
+            Gets a sequence of statements to register declared message handlers.
+            </summary>
+            <param name="classSymbol">The input <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> instance to process.</param>
+            <param name="iRecipientSymbol">The type symbol for the <c>IRecipient&lt;T&gt;</c> interface.</param>
+            <returns>The sequence of <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.StatementSyntax" /> instances to register message handleers.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.IMessengerRegisterAllGenerator.EnumerateRegistrationStatementsWithTokens(Microsoft.CodeAnalysis.INamedTypeSymbol,Microsoft.CodeAnalysis.INamedTypeSymbol)">
+            <summary>
+            Gets a sequence of statements to register declared message handlers with custom tokens.
+            </summary>
+            <param name="classSymbol">The input <see cref="T:Microsoft.CodeAnalysis.INamedTypeSymbol" /> instance to process.</param>
+            <param name="iRecipientSymbol">The type symbol for the <c>IRecipient&lt;T&gt;</c> interface.</param>
+            <returns>The sequence of <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.StatementSyntax" /> instances to register message handleers.</returns>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.SourceGenerators.IMessengerRegisterAllGenerator.SyntaxReceiver">
+            <summary>
+            An <see cref="T:Microsoft.CodeAnalysis.ISyntaxContextReceiver" /> that selects candidate nodes to process.
+            </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.SourceGenerators.IMessengerRegisterAllGenerator.SyntaxReceiver.gatheredInfo">
+            <summary>
+            The list of info gathered during exploration.
+            </summary>
+        </member>
+        <member name="P:CommunityToolkit.Mvvm.SourceGenerators.IMessengerRegisterAllGenerator.SyntaxReceiver.GatheredInfo">
+            <summary>
+            Gets the collection of gathered info to process.
+            </summary>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.SourceGenerators.IMessengerRegisterAllGenerator.SyntaxReceiver.OnVisitSyntaxNode(Microsoft.CodeAnalysis.GeneratorSyntaxContext)" />
+    </members>
+</doc>
