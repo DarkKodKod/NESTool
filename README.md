@@ -224,7 +224,6 @@ Building the project will create a bunch of files in the output directory:
 
 Real Github's Issues are needed here. For now the list is just here with no real ticket created.
 
-+ Only one tile_definitions.s is created but if there are more Background banks, it should be one for each one of those at least.
 + Reimporting the same image to a TileSet element will make the tool crash.
 + Undo, Redo is not working inside each element.
 + After an image is imported, the source image is not released.
