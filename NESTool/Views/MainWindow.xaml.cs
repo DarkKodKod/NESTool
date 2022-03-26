@@ -207,6 +207,7 @@ namespace NESTool
                     break;
                 case ProjectItemType.Palette: view = new Palette(); break;
                 case ProjectItemType.World: view = new World(); break;
+                case ProjectItemType.Entity: view = new Entity(); break;
             }
 
             if (view != null)

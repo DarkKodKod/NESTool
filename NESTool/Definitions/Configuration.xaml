@@ -9,6 +9,7 @@
 	<system:String x:Key="folderCharacters">Characters</system:String>
 	<system:String x:Key="folderMaps">Maps</system:String>
     <system:String x:Key="folderWorlds">Worlds</system:String>
+    <system:String x:Key="folderEntities">Entities</system:String>
 	<system:String x:Key="folderTileSets">TileSets</system:String>
     <system:String x:Key="folderPalettes">Palettes</system:String>
     <system:String x:Key="folderImages">Images</system:String>
@@ -18,6 +19,7 @@
     <system:String x:Key="extensionTileSets">.tileset</system:String>
     <system:String x:Key="extensionPalettes">.palette</system:String>
     <system:String x:Key="extensionWorlds">.world</system:String>
+    <system:String x:Key="extensionEntities">.entity</system:String>
 	<system:Int32 x:Key="projectVersion">1</system:Int32>
 	<system:Int32 x:Key="toolVersion">1</system:Int32>
     <system:String x:Key="mappersFileName">mappers</system:String>

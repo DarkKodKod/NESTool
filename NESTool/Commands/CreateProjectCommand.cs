@@ -17,6 +17,7 @@ namespace NESTool.Commands
         private const string _folderTileSetsKey = "folderTileSets";
         private const string _folderPalettesKey = "folderPalettes";
         private const string _folderWorldsKey = "folderWorlds";
+        private const string _folderEntitiesKey = "folderEntities";
 
         public override bool CanExecute(object parameter)
         {
@@ -71,7 +72,7 @@ namespace NESTool.Commands
 
         private void CreateProject(string projectFullPath, int prgSize, int chrSize, int mapperIndex)
         {
-            Directory.CreateDirectory(projectFullPath);
+            _ = Directory.CreateDirectory(projectFullPath);
 
             string projectFileName = (string)Application.Current.FindResource(_projectFileNameKey);
 
@@ -81,6 +82,7 @@ namespace NESTool.Commands
             string folderTileSets = (string)Application.Current.FindResource(_folderTileSetsKey);
             string folderPalettes = (string)Application.Current.FindResource(_folderPalettesKey);
             string folderWorlds = (string)Application.Current.FindResource(_folderWorldsKey);
+            string folderEntities = (string)Application.Current.FindResource(_folderEntitiesKey);
 
             string fullPathToProjectFile = Path.Combine(projectFullPath, projectFileName);
 
@@ -92,6 +94,7 @@ namespace NESTool.Commands
             Directory.CreateDirectory(Path.Combine(projectFullPath, folderTileSets));
             Directory.CreateDirectory(Path.Combine(projectFullPath, folderPalettes));
             Directory.CreateDirectory(Path.Combine(projectFullPath, folderWorlds));
+            Directory.CreateDirectory(Path.Combine(projectFullPath, folderEntities));
 
             ProjectModel model = ModelManager.Get<ProjectModel>();
 

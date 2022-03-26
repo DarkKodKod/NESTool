@@ -26,12 +26,14 @@ namespace NESTool.Utils
         private const string _folderTileSetsKey = "folderTileSets";
         private const string _folderPalettesKey = "folderPalettes";
         private const string _folderWorldsKey = "folderWorlds";
+        private const string _folderEntitiesKey = "folderEntities";
         private const string _extensionBanksKey = "extensionBanks";
         private const string _extensionCharactersKey = "extensionCharacters";
         private const string _extensionMapsKey = "extensionMaps";
         private const string _extensionTileSetsKey = "extensionTileSets";
         private const string _extensionPalettesKey = "extensionPalettes";
         private const string _extensionWorldsKey = "extensionWorlds";
+        private const string _extensionEntitiesKey = "extensionEntities";
 
         public static bool ValidFileName(string fileName)
         {
@@ -53,6 +55,7 @@ namespace NESTool.Utils
                 case ProjectItemType.TileSet: return new TileSetModel();
                 case ProjectItemType.Palette: return new PaletteModel();
                 case ProjectItemType.World: return new WorldModel();
+                case ProjectItemType.Entity: return new EntityModel();
                 default: return null;
             }
         }
@@ -65,6 +68,7 @@ namespace NESTool.Utils
             string extensionTileSets = (string)Application.Current.FindResource(_extensionTileSetsKey);
             string extensionPalettes = (string)Application.Current.FindResource(_extensionPalettesKey);
             string extensionWorld = (string)Application.Current.FindResource(_extensionWorldsKey);
+            string extensionEntities = (string)Application.Current.FindResource(_extensionEntitiesKey);
 
             if (extension == extensionBanks) return ProjectItemType.Bank;
             if (extension == extensionCharacters) return ProjectItemType.Character;
@@ -72,6 +76,7 @@ namespace NESTool.Utils
             if (extension == extensionTileSets) return ProjectItemType.TileSet;
             if (extension == extensionPalettes) return ProjectItemType.Palette;
             if (extension == extensionWorld) return ProjectItemType.World;
+            if (extension == extensionEntities) return ProjectItemType.Entity;
 
             return ProjectItemType.None;
         }
@@ -84,6 +89,7 @@ namespace NESTool.Utils
             string extensionTileSets = (string)Application.Current.FindResource(_extensionTileSetsKey);
             string extensionPalettes = (string)Application.Current.FindResource(_extensionPalettesKey);
             string extensionWorlds = (string)Application.Current.FindResource(_extensionWorldsKey);
+            string extensionEntities = (string)Application.Current.FindResource(_extensionEntitiesKey);
 
             switch (type)
             {
@@ -93,6 +99,8 @@ namespace NESTool.Utils
                 case ProjectItemType.TileSet: return extensionTileSets;
                 case ProjectItemType.Palette: return extensionPalettes;
                 case ProjectItemType.World: return extensionWorlds;
+                case ProjectItemType.Entity: return extensionEntities;
+                case ProjectItemType.None:
                 default: return string.Empty;
             }
         }
@@ -101,12 +109,7 @@ namespace NESTool.Utils
         {
             int index = Array.FindIndex(ColorPaletteControl.Colors, element => element == color);
 
-            if (index != -1)
-            {
-                return ColorPaletteControl.HexColors[index];
-            }
-
-            return "--";
+            return index != -1 ? ColorPaletteControl.HexColors[index] : "--";
         }
 
         public static Color GetColorFromInt(int colorInt)
@@ -126,6 +129,7 @@ namespace NESTool.Utils
             string folderTileSets = (string)Application.Current.FindResource(_folderTileSetsKey);
             string folderPalettes = (string)Application.Current.FindResource(_folderPalettesKey);
             string folderWorlds = (string)Application.Current.FindResource(_folderWorldsKey);
+            string folderEntities = (string)Application.Current.FindResource(_folderEntitiesKey);
 
             string extensionBanks = (string)Application.Current.FindResource(_extensionBanksKey);
             string extensionCharacters = (string)Application.Current.FindResource(_extensionCharactersKey);
@@ -133,6 +137,7 @@ namespace NESTool.Utils
             string extensionTileSets = (string)Application.Current.FindResource(_extensionTileSetsKey);
             string extensionPalettes = (string)Application.Current.FindResource(_extensionPalettesKey);
             string extensionWorlds = (string)Application.Current.FindResource(_extensionWorldsKey);
+            string extensionEntities = (string)Application.Current.FindResource(_extensionEntitiesKey);
 
             if (folderName == folderBanks) return extensionBanks;
             if (folderName == folderCharacters) return extensionCharacters;
@@ -140,6 +145,7 @@ namespace NESTool.Utils
             if (folderName == folderTileSets) return extensionTileSets;
             if (folderName == folderPalettes) return extensionPalettes;
             if (folderName == folderWorlds) return extensionWorlds;
+            if (folderName == folderEntities) return extensionEntities;
 
             return string.Empty;
         }

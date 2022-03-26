@@ -183,6 +183,7 @@
     <Compile Include="Commands\UndoCommand.cs" />
     <Compile Include="FileSystem\ProjectFiles.cs" />
     <Compile Include="FrameworkElement\OutlinedTextBlock.cs" />
+    <Compile Include="Models\EntityModel.cs" />
     <Compile Include="Models\PaletteModel.cs" />
     <Compile Include="Models\WorldModel.cs" />
     <Compile Include="UserControls\ICleanable.cs" />
@@ -255,6 +256,7 @@
     <Compile Include="ViewModels\CharacterViewModel.cs" />
     <Compile Include="ViewModels\ElementDialogViewModel.cs" />
     <Compile Include="Utils\Behaviors\EventToCommandBehavior.cs" />
+    <Compile Include="ViewModels\EntityViewModel.cs" />
     <Compile Include="ViewModels\ImportImageDialogViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\LoadingDialogViewModel.cs" />
@@ -282,6 +284,9 @@
     </Compile>
     <Compile Include="Views\ElementDialog.xaml.cs">
       <DependentUpon>ElementDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Entity.xaml.cs">
+      <DependentUpon>Entity.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ImportImageDialog.xaml.cs">
       <DependentUpon>ImportImageDialog.xaml</DependentUpon>
@@ -367,6 +372,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ElementDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Entity.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -517,6 +526,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\world.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\entity.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

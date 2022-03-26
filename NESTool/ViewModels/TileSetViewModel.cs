@@ -3,7 +3,6 @@ using ArchitectureLibrary.Signals;
 using NESTool.Commands;
 using NESTool.Models;
 using NESTool.Signals;
-using NESTool.Utils;
 using NESTool.VOs;
 using System.IO;
 using System.Windows;

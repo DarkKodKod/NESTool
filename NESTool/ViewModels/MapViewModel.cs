@@ -393,8 +393,6 @@ namespace NESTool.ViewModels
 
             GroupedPalettes = new Dictionary<Tuple<int, PaletteIndex>, Dictionary<Color, Color>>();
 
-            ExportAttributeTable = GetModel().ExportAttributeTable;
-
             #region Signals
             SignalManager.Get<OutputSelectedQuadrantSignal>().Listener += OnOutputSelectedQuadrant;
             SignalManager.Get<ColorPaletteControlSelectedSignal>().Listener += OnColorPaletteControlSelected;
@@ -411,6 +409,7 @@ namespace NESTool.ViewModels
 
             if (GetModel() != null)
             {
+                ExportAttributeTable = GetModel().ExportAttributeTable;
                 MetaData = GetModel().MetaData;
             }
 

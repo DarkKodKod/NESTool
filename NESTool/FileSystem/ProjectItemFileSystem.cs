@@ -94,6 +94,8 @@ namespace NESTool.FileSystem
                     return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<PaletteModel>(content));
                 case ProjectItemType.World:
                     return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<WorldModel>(content));
+                case ProjectItemType.Entity:
+                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<EntityModel>(content));
             }
 
             return Task.FromResult<AFileModel>(null);

@@ -735,6 +735,9 @@
                             <DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.World}">
                                 <Setter Property="Source" TargetName="itemImage" Value="/Resources/world.png" />
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Entity}">
+                                <Setter Property="Source" TargetName="itemImage" Value="/Resources/entity.png" />
+                            </DataTrigger>
                             <DataTrigger Binding="{Binding IsFolder}" Value="True">
                                 <Setter Property="Source" TargetName="itemImage" Value="/Resources/closed_folder.png" />
                             </DataTrigger>
@@ -786,6 +789,9 @@
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.World}">
                                 <Setter Property="ContextMenu" Value="{StaticResource ItemPopup}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Type}" Value="{x:Static enum:ProjectItemType.Entity}">
+                                <Setter Property="ContextMenu" Value="{StaticResource ItemPopup}" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding IsFolder}" Value="True">
                                 <Setter Property="ContextMenu" Value="{StaticResource FolderPopup}"/>

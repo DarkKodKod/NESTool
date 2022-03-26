@@ -2,11 +2,11 @@
 
 namespace NESTool.ViewModels
 {
-    public class WorldViewModel : ItemViewModel
+    public class EntityViewModel : ItemViewModel
     {
-        public WorldModel GetModel()
+        public EntityModel GetModel()
         {
-            return ProjectItem?.FileHandler.FileModel is WorldModel model ? model : null;
+            return ProjectItem?.FileHandler.FileModel is EntityModel model ? model : null;
         }
 
         #region Commands
@@ -15,7 +15,7 @@ namespace NESTool.ViewModels
         #region get/set
         #endregion
 
-        public WorldViewModel()
+        public EntityViewModel()
         {
             UpdateDialogInfo();
         }

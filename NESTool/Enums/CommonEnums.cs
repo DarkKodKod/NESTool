@@ -33,7 +33,8 @@
         Map = 3,
         TileSet = 4,
         Palette = 5,
-        World = 6
+        World = 6,
+        Entity = 7
     }
 
     public enum BankSize

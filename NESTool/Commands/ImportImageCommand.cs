@@ -79,7 +79,7 @@ namespace NESTool.Commands
 
             if (!Directory.Exists(imageFolderFullPath))
             {
-                Directory.CreateDirectory(imageFolderFullPath);
+                _ = Directory.CreateDirectory(imageFolderFullPath);
             }
 
             PaletteQuantizer quantizer = new PaletteQuantizer
