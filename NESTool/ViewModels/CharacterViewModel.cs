@@ -168,14 +168,7 @@ namespace NESTool.ViewModels
 
         private void UpdateAndSavePalette(int newValue, PaletteIndex index)
         {
-            if (newValue == -1)
-            {
-                GetModel().PaletteIDs[(int)index] = string.Empty;
-            }
-            else
-            {
-                GetModel().PaletteIDs[(int)index] = Palettes[newValue + 1].Model.GUID;
-            }
+            GetModel().PaletteIDs[(int)index] = newValue == -1 ? string.Empty : Palettes[newValue + 1].Model.GUID;
 
             if (!_doNotSavePalettes)
             {

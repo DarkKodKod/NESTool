@@ -23,7 +23,7 @@ namespace NESTool.UserControls.Views
         #region get/set
         public SolidColorBrush Color0
         {
-            get { return _color0; }
+            get => _color0;
             set
             {
                 _color0 = value;
@@ -34,7 +34,7 @@ namespace NESTool.UserControls.Views
 
         public SolidColorBrush Color1
         {
-            get { return _color1; }
+            get => _color1;
             set
             {
                 _color1 = value;
@@ -45,7 +45,7 @@ namespace NESTool.UserControls.Views
 
         public SolidColorBrush Color2
         {
-            get { return _color2; }
+            get => _color2;
             set
             {
                 _color2 = value;
@@ -56,7 +56,7 @@ namespace NESTool.UserControls.Views
 
         public SolidColorBrush Color3
         {
-            get { return _color3; }
+            get => _color3;
             set
             {
                 _color3 = value;
@@ -67,7 +67,7 @@ namespace NESTool.UserControls.Views
 
         public int PaletteIndex
         {
-            get { return _paletteIndex; }
+            get => _paletteIndex;
             set
             {
                 _paletteIndex = value;

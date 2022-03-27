@@ -19,10 +19,7 @@ namespace NESTool.ViewModels
 
         public string Header
         {
-            get
-            {
-                return _header;
-            }
+            get => _header;
             set
             {
                 if (_header != value)
@@ -43,10 +40,7 @@ namespace NESTool.ViewModels
 
         public UserControl Content
         {
-            get
-            {
-                return _content;
-            }
+            get => _content;
             set
             {
                 _content = value;
@@ -104,7 +98,7 @@ namespace NESTool.ViewModels
 
         public bool IsInEditMode
         {
-            get { return _isInEditMode; }
+            get => _isInEditMode;
             set
             {
                 if (_isInEditMode != value)

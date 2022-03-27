@@ -10,7 +10,7 @@ namespace NESTool.UserControls.ViewModels
 
         public string Caption
         {
-            get { return _caption; }
+            get => _caption;
             set
             {
                 _caption = value;
@@ -21,7 +21,7 @@ namespace NESTool.UserControls.ViewModels
 
         public string TileSetId
         {
-            get { return _tileSetId; }
+            get => _tileSetId;
             set
             {
                 _tileSetId = value;

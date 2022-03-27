@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -20,12 +19,6 @@ namespace NESTool.ViewModels
     {
         private FileModelVO[] _banks;
         private int _selectedBank;
-        private Dictionary<string, WriteableBitmap> _bitmapCache = new Dictionary<string, WriteableBitmap>();
-        private ImageSource _bankImage;
-        private Visibility _selectionRectangleVisibility = Visibility.Hidden;
-        private double _selectionRectangleTop = 0.0;
-        private double _selectionRectangleLeft = 0.0;
-        private int _selectedBankTile;
         private PaletteIndex _paletteIndex = 0;
         private double _rectangleTop = 0.0;
         private double _rectangleLeft = 0.0;
@@ -36,7 +29,6 @@ namespace NESTool.ViewModels
         private Visibility _gridVisibility = Visibility.Visible;
         private string _metaData = string.Empty;
         private bool _exportAttributeTable = true;
-        private readonly PaletteIndex[] _spritePaletteIndices = new PaletteIndex[MapModel.MetaTileMax];
         private WriteableBitmap _mapBitmap;
         private FileModelVO[] _palettes;
         private int _selectedPalette1 = -1;
@@ -47,6 +39,8 @@ namespace NESTool.ViewModels
         public static Dictionary<Tuple<int, PaletteIndex>, Dictionary<Color, Color>> GroupedPalettes;
         public static TileUpdate[] FlagMapBitmapChanges;
         public static Point[] PointMapBitmapChanges;
+
+        public PaletteIndex[] SpritePaletteIndices { get; } = new PaletteIndex[MapModel.MetaTileMax];
 
         public MapModel GetModel()
         {
@@ -59,17 +53,6 @@ namespace NESTool.ViewModels
         #endregion
 
         #region get/set
-        public int SelectedBankTile
-        {
-            get => _selectedBankTile;
-            set
-            {
-                _selectedBankTile = value;
-
-                OnPropertyChanged("SelectedBankTile");
-            }
-        }
-
         public Visibility GridVisibility
         {
             get => _gridVisibility;
@@ -153,7 +136,7 @@ namespace NESTool.ViewModels
 
         public int SelectedPalette2
         {
-            get { return _selectedPalette2; }
+            get => _selectedPalette2;
             set
             {
                 if (_selectedPalette2 != value)
@@ -169,7 +152,7 @@ namespace NESTool.ViewModels
 
         public int SelectedPalette3
         {
-            get { return _selectedPalette3; }
+            get => _selectedPalette3;
             set
             {
                 if (_selectedPalette3 != value)
@@ -185,7 +168,7 @@ namespace NESTool.ViewModels
 
         public int SelectedPalette4
         {
-            get { return _selectedPalette4; }
+            get => _selectedPalette4;
             set
             {
                 if (_selectedPalette4 != value)
@@ -201,7 +184,7 @@ namespace NESTool.ViewModels
 
         public FileModelVO[] Palettes
         {
-            get { return _palettes; }
+            get => _palettes;
             set
             {
                 _palettes = value;
@@ -212,7 +195,7 @@ namespace NESTool.ViewModels
 
         public PaletteIndex PaletteIndex
         {
-            get { return _paletteIndex; }
+            get => _paletteIndex;
             set
             {
                 if (_paletteIndex != value)
@@ -223,39 +206,6 @@ namespace NESTool.ViewModels
                 }
 
                 OnPropertyChanged("PaletteIndex");
-            }
-        }
-
-        public double SelectionRectangleLeft
-        {
-            get { return _selectionRectangleLeft; }
-            set
-            {
-                _selectionRectangleLeft = value;
-
-                OnPropertyChanged("SelectionRectangleLeft");
-            }
-        }
-
-        public double SelectionRectangleTop
-        {
-            get { return _selectionRectangleTop; }
-            set
-            {
-                _selectionRectangleTop = value;
-
-                OnPropertyChanged("SelectionRectangleTop");
-            }
-        }
-
-        public Visibility SelectionRectangleVisibility
-        {
-            get { return _selectionRectangleVisibility; }
-            set
-            {
-                _selectionRectangleVisibility = value;
-
-                OnPropertyChanged("SelectionRectangleVisibility");
             }
         }
 
@@ -270,20 +220,9 @@ namespace NESTool.ViewModels
             }
         }
 
-        public ImageSource BankImage
-        {
-            get => _bankImage;
-            set
-            {
-                _bankImage = value;
-
-                OnPropertyChanged("BankImage");
-            }
-        }
-
         public FileModelVO[] Banks
         {
-            get { return _banks; }
+            get => _banks;
             set
             {
                 _banks = value;
@@ -294,7 +233,7 @@ namespace NESTool.ViewModels
 
         public double RectangleLeft
         {
-            get { return _rectangleLeft; }
+            get => _rectangleLeft;
             set
             {
                 _rectangleLeft = value;
@@ -305,7 +244,7 @@ namespace NESTool.ViewModels
 
         public double RectangleTop
         {
-            get { return _rectangleTop; }
+            get => _rectangleTop;
             set
             {
                 _rectangleTop = value;
@@ -347,14 +286,7 @@ namespace NESTool.ViewModels
 
         private void UpdateAndSavePalette(int newValue, PaletteIndex index)
         {
-            if (newValue == -1)
-            {
-                GetModel().PaletteIDs[(int)index] = string.Empty;
-            }
-            else
-            {
-                GetModel().PaletteIDs[(int)index] = Palettes[newValue + 1].Model.GUID;
-            }
+            GetModel().PaletteIDs[(int)index] = newValue == -1 ? string.Empty : Palettes[newValue + 1].Model.GUID;
 
             if (!_doNotSave)
             {
@@ -394,7 +326,6 @@ namespace NESTool.ViewModels
             GroupedPalettes = new Dictionary<Tuple<int, PaletteIndex>, Dictionary<Color, Color>>();
 
             #region Signals
-            SignalManager.Get<OutputSelectedQuadrantSignal>().Listener += OnOutputSelectedQuadrant;
             SignalManager.Get<ColorPaletteControlSelectedSignal>().Listener += OnColorPaletteControlSelected;
             SignalManager.Get<UpdateMapImageSignal>().Listener += OnUpdateMapImage;
             SignalManager.Get<SelectPaletteIndexSignal>().Listener += OnSelectPaletteIndex;
@@ -431,7 +362,6 @@ namespace NESTool.ViewModels
             base.OnDeactivate();
 
             #region Signals
-            SignalManager.Get<OutputSelectedQuadrantSignal>().Listener -= OnOutputSelectedQuadrant;
             SignalManager.Get<ColorPaletteControlSelectedSignal>().Listener -= OnColorPaletteControlSelected;
             SignalManager.Get<UpdateMapImageSignal>().Listener -= OnUpdateMapImage;
             SignalManager.Get<SelectPaletteIndexSignal>().Listener -= OnSelectPaletteIndex;
@@ -520,7 +450,7 @@ namespace NESTool.ViewModels
 
             for (int i = 0; i < GetModel().AttributeTable.Length; ++i)
             {
-                _spritePaletteIndices[i] = (PaletteIndex)GetModel().AttributeTable[i].PaletteIndex;
+                SpritePaletteIndices[i] = (PaletteIndex)GetModel().AttributeTable[i].PaletteIndex;
             }
         }
 
@@ -671,11 +601,6 @@ namespace NESTool.ViewModels
 
         private void UpdateDialogInfo()
         {
-            IEnumerable<FileModelVO> banks = ProjectFiles.GetModels<BankModel>().ToArray()
-                .Where(p => (p.Model as BankModel).BankUseType == BankUseType.Background);
-
-            Banks = new FileModelVO[banks.Count()];
-
             List<FileModelVO> list = new List<FileModelVO>
             {
                 new FileModelVO()
@@ -692,6 +617,11 @@ namespace NESTool.ViewModels
 
             int index = 0;
 
+            IEnumerable<FileModelVO> banks = ProjectFiles.GetModels<BankModel>().ToArray()
+                .Where(p => (p.Model as BankModel).BankUseType == BankUseType.Background);
+
+            Banks = new FileModelVO[banks.Count()];
+
             foreach (FileModelVO item in banks)
             {
                 item.Index = index;
@@ -700,147 +630,6 @@ namespace NESTool.ViewModels
 
                 index++;
             }
-
-            LoadBankImage();
-        }
-
-        private void LoadBankImage()
-        {
-            if (Banks.Length == 0)
-            {
-                return;
-            }
-
-            if (!(Banks[SelectedBank].Model is BankModel model))
-            {
-                return;
-            }
-
-            WriteableBitmap bankBitmap = BanksUtils.CreateImage(model, ref _bitmapCache);
-
-            BankImage = Util.ConvertWriteableBitmapToBitmapImage(bankBitmap);
-        }
-
-        private void OnOutputSelectedQuadrant(Image sender, WriteableBitmap bitmap, Point point)
-        {
-            if (!IsActive)
-            {
-                return;
-            }
-
-            if (point.X < 0 || point.Y < 0)
-            {
-                return;
-            }
-
-            if (sender.Name == "imgFrame")
-            {
-                int index = ((int)point.X / 8) + (((int)point.Y / 8) * 32);
-
-                RectangleLeft = point.X;
-                RectangleTop = point.Y;
-
-                (int, int) tuple = GetModel().GetAttributeTileIndex(index);
-
-                SelectedAttributeTile = tuple.Item1;
-
-                if (MainWindow.ToolBarMapTool == EditFrameTools.Paint && SelectionRectangleVisibility == Visibility.Visible)
-                {
-                    PaintTile(index);
-                }
-                else if (MainWindow.ToolBarMapTool == EditFrameTools.Erase)
-                {
-                    EraseTile(index);
-                }
-                else if (MainWindow.ToolBarMapTool == EditFrameTools.Select)
-                {
-                    // get the first element in the selected meta tile
-                    int[] array = GetModel().GetMetaTableArray(tuple.Item1);
-
-                    if (array != null)
-                    {
-                        // from the first element, get the corresponding X, Y coordinates to put the rectangle in the right place
-                        int y = (array[0] / 32) * 8;
-                        int x = (array[0] - (32 * (array[0] / 32))) * 8;
-
-                        RectangleLeft = x;
-                        RectangleTop = y;
-
-                        SelectTile();
-                    }
-                }
-            }
-            else if (sender.Name == "imgBank")
-            {
-                SelectionRectangleVisibility = Visibility.Visible;
-                SelectionRectangleLeft = point.X;
-                SelectionRectangleTop = point.Y;
-
-                int index = ((int)point.X / 8) + (((int)point.Y / 8) * 16);
-
-                SelectedBankTile = index;
-            }
-        }
-
-        private void SelectTile()
-        {
-            if (SelectedAttributeTile == -1)
-            {
-                return;
-            }
-
-            RectangleVisibility = Visibility.Visible;
-
-            SignalManager.Get<SelectPaletteIndexSignal>().Dispatch((PaletteIndex)_spritePaletteIndices[SelectedAttributeTile]);
-        }
-
-        private void PaintTile(int index)
-        {
-            FlagMapBitmapChanges[SelectedAttributeTile] = TileUpdate.Normal;
-
-            Point selectedTilePoint = new Point
-            {
-                X = RectangleLeft,
-                Y = RectangleTop
-            };
-
-            BankModel model = Banks[SelectedBank].Model as BankModel;
-
-            string guid = model.PTTiles[SelectedBankTile].GUID;
-
-            ref MapTile tile = ref GetModel().GetTile(index);
-
-            tile.Point = selectedTilePoint;
-            tile.BankID = model.GUID;
-            tile.BankTileID = guid;
-
-            PointMapBitmapChanges[SelectedAttributeTile] = selectedTilePoint;
-
-            ProjectItem?.FileHandler.Save();
-
-            LoadFrameImage(true);
-        }
-
-        private void EraseTile(int index)
-        {
-            FlagMapBitmapChanges[SelectedAttributeTile] = TileUpdate.Erased;
-
-            Point selectedTilePoint = new Point
-            {
-                X = RectangleLeft,
-                Y = RectangleTop
-            };
-
-            PointMapBitmapChanges[SelectedAttributeTile] = selectedTilePoint;
-
-            ref MapTile tile = ref GetModel().GetTile(index);
-
-            LoadFrameImage(true);
-
-            tile.BankID = string.Empty;
-            tile.BankTileID = string.Empty;
-
-            ProjectItem?.FileHandler.Save();
         }
 
         private void OnUpdateMapImage()
@@ -853,7 +642,7 @@ namespace NESTool.ViewModels
             LoadFrameImage(false);
         }
 
-        private void LoadFrameImage(bool update)
+        public void LoadFrameImage(bool update)
         {
             if (GetModel() == null)
             {
@@ -872,9 +661,9 @@ namespace NESTool.ViewModels
                 return;
             }
 
-            if (_spritePaletteIndices[SelectedAttributeTile] != index)
+            if (SpritePaletteIndices[SelectedAttributeTile] != index)
             {
-                _spritePaletteIndices[SelectedAttributeTile] = index;
+                SpritePaletteIndices[SelectedAttributeTile] = index;
 
                 GetModel().AttributeTable[SelectedAttributeTile].PaletteIndex = (int)index;
 

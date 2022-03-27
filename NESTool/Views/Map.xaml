@@ -107,49 +107,12 @@
                             </i:Interaction.Behaviors>
                         </ComboBox>
                     </StackPanel>
-                    <Border Grid.Row="2" Width="384" Height="384"
-                            VerticalAlignment="Top" HorizontalAlignment="Left">
-                        <Canvas Width="128" Height="128" 
-		                        Background="DarkGray"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top">
-                            <Canvas.RenderTransform>
-                                <ScaleTransform ScaleX="3" ScaleY="3"/>
-                            </Canvas.RenderTransform>
-                            <Image RenderOptions.BitmapScalingMode="NearestNeighbor"
-                                   Source="{Binding BankImage}"
-	                               Width="128"
-	                               Height="128"
-                                   Name="imgBank"
-	                               Stretch="UniformToFill">
-                                <i:Interaction.Behaviors>
-                                    <behaviors:EventToCommandBehavior Command="{Binding ImageMouseDownCommand}" Event="MouseDown" PassArguments="True" />
-                                </i:Interaction.Behaviors>
-                            </Image>
-                            <Border>
-                                <Border.Background>
-                                    <VisualBrush TileMode="Tile"
-					                             Viewport="0,0,8,8" ViewportUnits="Absolute" 
-					                             Viewbox="0,0,8,8" ViewboxUnits="Absolute">
-                                        <VisualBrush.Visual>
-                                            <Rectangle Stroke="Magenta" StrokeThickness="0.1" Height="100" Width="100"/>
-                                        </VisualBrush.Visual>
-                                    </VisualBrush>
-                                </Border.Background>
-                                <Canvas Width="128" Height="128" Background="Transparent">
-                                    <i:Interaction.Behaviors>
-                                        <behaviors:RedirectRoutedEventBehavior RoutedEvent="UIElement.MouseDown" RedirectTarget="{Binding ElementName=imgBank}"/>
-                                    </i:Interaction.Behaviors>
-                                    <Rectangle Width="8" Height="8" 
-                                               Stroke="Red" 
-                                               StrokeThickness="0.5"
-                                               Canvas.Top="{Binding SelectionRectangleTop}"
-                                               Canvas.Left="{Binding SelectionRectangleLeft}"
-                                               Visibility="{Binding SelectionRectangleVisibility}"/>
-                                </Canvas>
-                            </Border>
-                        </Canvas>
-                    </Border>
+                    <uc:BankViewer 
+                        Grid.Row="2"
+                        Width="384" Height="384" 
+                        Scale="3"
+                        x:Name="bankViewer"
+                        VerticalAlignment="Top" HorizontalAlignment="Left"/>
                 </Grid>
             </GroupBox>
             <GroupBox Header="Palettes" Grid.Row="1" Margin="0,2,0,0">

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -38,13 +37,7 @@ namespace NESTool.UserControls.ViewModels
         private int _selectedBank;
         private string _tabId;
         private int _frameIndex;
-        private string _projectGridSize;
-        private Dictionary<string, WriteableBitmap> _bitmapCache = new Dictionary<string, WriteableBitmap>();
-        private ImageSource _bankImage;
-        private Visibility _selectionRectangleVisibility = Visibility.Hidden;
-        private double _selectionRectangleTop = 0.0;
-        private double _selectionRectangleLeft = 0.0;
-        private int _selectedBankTile;
+        private string _projectGridSize = "8x8";
         private int _selectedFrameTile = -1;
         private CharacterModel _characterModel;
         private FileHandler _fileHandler;
@@ -56,21 +49,22 @@ namespace NESTool.UserControls.ViewModels
         private bool _flipX = false;
         private bool _flipY = false;
         private bool _backBackground = false;
-        private readonly bool[] _spritePropertiesX = new bool[64];
-        private readonly bool[] _spritePropertiesY = new bool[64];
-        private readonly PaletteIndex[] _spritePaletteIndices = new PaletteIndex[64];
-        private readonly bool[] _spritePropertiesBack = new bool[64];
+
+        public bool[] SpritePropertiesX { get; } = new bool[64];
+        public bool[] SpritePropertiesY { get; } = new bool[64];
+        public PaletteIndex[] SpritePaletteIndices { get; } = new PaletteIndex[64];
+        public bool[] SpritePropertiesBack { get; } = new bool[64];
 
         #region Commands
+        public ImageMouseDownCommand ImageMouseDownCommand { get; } = new ImageMouseDownCommand();
         public SwitchCharacterFrameViewCommand SwitchCharacterFrameViewCommand { get; } = new SwitchCharacterFrameViewCommand();
         public FileModelVOSelectionChangedCommand FileModelVOSelectionChangedCommand { get; } = new FileModelVOSelectionChangedCommand();
-        public ImageMouseDownCommand ImageMouseDownCommand { get; } = new ImageMouseDownCommand();
         #endregion
 
         #region get/set
         public bool FlipX
         {
-            get { return _flipX; }
+            get => _flipX;
             set
             {
                 if (EditFrameTools != EditFrameTools.Select)
@@ -91,7 +85,7 @@ namespace NESTool.UserControls.ViewModels
 
         public bool FlipY
         {
-            get { return _flipY; }
+            get => _flipY;
             set
             {
                 if (EditFrameTools != EditFrameTools.Select)
@@ -112,7 +106,7 @@ namespace NESTool.UserControls.ViewModels
 
         public bool BackBackground
         {
-            get { return _backBackground; }
+            get => _backBackground;
             set
             {
                 if (EditFrameTools != EditFrameTools.Select)
@@ -133,7 +127,7 @@ namespace NESTool.UserControls.ViewModels
 
         public FileHandler FileHandler
         {
-            get { return _fileHandler; }
+            get => _fileHandler;
             set
             {
                 _fileHandler = value;
@@ -144,7 +138,7 @@ namespace NESTool.UserControls.ViewModels
 
         public CharacterModel CharacterModel
         {
-            get { return _characterModel; }
+            get => _characterModel;
             set
             {
                 _characterModel = value;
@@ -155,10 +149,7 @@ namespace NESTool.UserControls.ViewModels
 
         public EditFrameTools EditFrameTools
         {
-            get
-            {
-                return _editFrameTools;
-            }
+            get => _editFrameTools;
             set
             {
                 if (_editFrameTools != value)
@@ -177,10 +168,7 @@ namespace NESTool.UserControls.ViewModels
 
         public ImageSource FrameImage
         {
-            get
-            {
-                return _frameImage;
-            }
+            get => _frameImage;
             set
             {
                 _frameImage = value;
@@ -189,23 +177,9 @@ namespace NESTool.UserControls.ViewModels
             }
         }
 
-        public ImageSource BankImage
-        {
-            get
-            {
-                return _bankImage;
-            }
-            set
-            {
-                _bankImage = value;
-
-                OnPropertyChanged("BankImage");
-            }
-        }
-
         public int SelectedFrameTile
         {
-            get { return _selectedFrameTile; }
+            get => _selectedFrameTile;
             set
             {
                 _selectedFrameTile = value;
@@ -214,20 +188,9 @@ namespace NESTool.UserControls.ViewModels
             }
         }
 
-        public int SelectedBankTile
-        {
-            get { return _selectedBankTile; }
-            set
-            {
-                _selectedBankTile = value;
-
-                OnPropertyChanged("SelectedBankTile");
-            }
-        }
-
         public FileModelVO[] Banks
         {
-            get { return _banks; }
+            get => _banks;
             set
             {
                 _banks = value;
@@ -238,7 +201,7 @@ namespace NESTool.UserControls.ViewModels
 
         public int SelectedBank
         {
-            get { return _selectedBank; }
+            get => _selectedBank;
             set
             {
                 _selectedBank = value;
@@ -249,10 +212,7 @@ namespace NESTool.UserControls.ViewModels
 
         public string ProjectGridSize
         {
-            get
-            {
-                return _projectGridSize;
-            }
+            get => _projectGridSize;
             set
             {
                 _projectGridSize = value;
@@ -263,7 +223,7 @@ namespace NESTool.UserControls.ViewModels
 
         public string TabID
         {
-            get { return _tabId; }
+            get => _tabId;
             set
             {
                 _tabId = value;
@@ -285,7 +245,7 @@ namespace NESTool.UserControls.ViewModels
 
         public int FrameIndex
         {
-            get { return _frameIndex; }
+            get => _frameIndex;
             set
             {
                 _frameIndex = value;
@@ -294,42 +254,9 @@ namespace NESTool.UserControls.ViewModels
             }
         }
 
-        public double SelectionRectangleLeft
-        {
-            get { return _selectionRectangleLeft; }
-            set
-            {
-                _selectionRectangleLeft = value;
-
-                OnPropertyChanged("SelectionRectangleLeft");
-            }
-        }
-
-        public double SelectionRectangleTop
-        {
-            get { return _selectionRectangleTop; }
-            set
-            {
-                _selectionRectangleTop = value;
-
-                OnPropertyChanged("SelectionRectangleTop");
-            }
-        }
-
-        public Visibility SelectionRectangleVisibility
-        {
-            get { return _selectionRectangleVisibility; }
-            set
-            {
-                _selectionRectangleVisibility = value;
-
-                OnPropertyChanged("SelectionRectangleVisibility");
-            }
-        }
-
         public double RectangleLeft
         {
-            get { return _rectangleLeft; }
+            get => _rectangleLeft;
             set
             {
                 _rectangleLeft = value;
@@ -340,7 +267,7 @@ namespace NESTool.UserControls.ViewModels
 
         public double RectangleTop
         {
-            get { return _rectangleTop; }
+            get => _rectangleTop;
             set
             {
                 _rectangleTop = value;
@@ -371,8 +298,6 @@ namespace NESTool.UserControls.ViewModels
             base.OnActivate();
 
             #region Signals
-            SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener += OnFileModelVOSelectionChanged;
-            SignalManager.Get<OutputSelectedQuadrantSignal>().Listener += OnOutputSelectedQuadrant;
             SignalManager.Get<UpdateCharacterImageSignal>().Listener += OnUpdateCharacterImage;
             #endregion
 
@@ -388,8 +313,6 @@ namespace NESTool.UserControls.ViewModels
             base.OnDeactivate();
 
             #region Signals
-            SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener -= OnFileModelVOSelectionChanged;
-            SignalManager.Get<OutputSelectedQuadrantSignal>().Listener -= OnOutputSelectedQuadrant;
             SignalManager.Get<UpdateCharacterImageSignal>().Listener -= OnUpdateCharacterImage;
             #endregion
         }
@@ -398,10 +321,10 @@ namespace NESTool.UserControls.ViewModels
         {
             for (int i = 0; i < CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles.Length; ++i)
             {
-                _spritePropertiesX[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].FlipX;
-                _spritePropertiesY[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].FlipY;
-                _spritePaletteIndices[i] = (PaletteIndex)CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].PaletteIndex;
-                _spritePropertiesBack[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].BackBackground;
+                SpritePropertiesX[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].FlipX;
+                SpritePropertiesY[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].FlipY;
+                SpritePaletteIndices[i] = (PaletteIndex)CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].PaletteIndex;
+                SpritePropertiesBack[i] = CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[i].BackBackground;
             }
         }
 
@@ -422,18 +345,6 @@ namespace NESTool.UserControls.ViewModels
 
                 index++;
             }
-
-            LoadBankData();
-        }
-
-        private void OnFileModelVOSelectionChanged(FileModelVO fileModel)
-        {
-            if (!IsActive)
-            {
-                return;
-            }
-
-            LoadBankData();
         }
 
         private void OnUpdateCharacterImage()
@@ -442,89 +353,6 @@ namespace NESTool.UserControls.ViewModels
             {
                 return;
             }
-
-            LoadFrameImage();
-        }
-
-        private void OnOutputSelectedQuadrant(Image sender, WriteableBitmap bitmap, Point point)
-        {
-            if (!IsActive)
-            {
-                return;
-            }
-
-            if (sender.Name == "imgFrame")
-            {
-                RectangleLeft = point.X;
-                RectangleTop = point.Y;
-
-                int index = ((int)point.X / 8) + (((int)point.Y / 8) * 8);
-
-                SelectedFrameTile = index;
-
-                if (EditFrameTools == EditFrameTools.Select)
-                {
-                    SelectTile();
-                }
-                else if (EditFrameTools == EditFrameTools.Paint && SelectionRectangleVisibility == Visibility.Visible)
-                {
-                    PaintTile();
-                }
-                else if (EditFrameTools == EditFrameTools.Erase)
-                {
-                    EraseTile();
-                }
-            }
-            else if (sender.Name == "imgBank")
-            {
-                SelectionRectangleVisibility = Visibility.Visible;
-                SelectionRectangleLeft = point.X;
-                SelectionRectangleTop = point.Y;
-
-                int index = ((int)point.X / 8) + (((int)point.Y / 8) * 16);
-
-                SelectedBankTile = index;
-            }
-        }
-
-        private void SelectTile()
-        {
-            RectangleVisibility = Visibility.Visible;
-
-            FlipX = _spritePropertiesX[SelectedFrameTile];
-            FlipY = _spritePropertiesY[SelectedFrameTile];
-            BackBackground = _spritePropertiesBack[SelectedFrameTile];
-
-            SignalManager.Get<SelectPaletteIndexSignal>().Dispatch(_spritePaletteIndices[SelectedFrameTile]);
-        }
-
-        private void PaintTile()
-        {
-            Point characterPoint = new Point
-            {
-                X = RectangleLeft,
-                Y = RectangleTop
-            };
-
-            BankModel model = Banks[SelectedBank].Model as BankModel;
-
-            string guid = model.PTTiles[SelectedBankTile].GUID;
-
-            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].Point = characterPoint;
-            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankID = model.GUID;
-            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankTileID = guid;
-
-            FileHandler.Save();
-
-            LoadFrameImage();
-        }
-
-        private void EraseTile()
-        {
-            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankID = string.Empty;
-            CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BankTileID = string.Empty;
-
-            FileHandler.Save();
 
             LoadFrameImage();
         }
@@ -542,9 +370,9 @@ namespace NESTool.UserControls.ViewModels
             {
                 case SpriteProperties.FlipX:
 
-                    if (_spritePropertiesX[SelectedFrameTile] != value.boolean)
+                    if (SpritePropertiesX[SelectedFrameTile] != value.boolean)
                     {
-                        _spritePropertiesX[SelectedFrameTile] = value.boolean;
+                        SpritePropertiesX[SelectedFrameTile] = value.boolean;
 
                         CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].FlipX = FlipX;
 
@@ -553,9 +381,9 @@ namespace NESTool.UserControls.ViewModels
                     break;
                 case SpriteProperties.FlipY:
 
-                    if (_spritePropertiesY[SelectedFrameTile] != value.boolean)
+                    if (SpritePropertiesY[SelectedFrameTile] != value.boolean)
                     {
-                        _spritePropertiesY[SelectedFrameTile] = value.boolean;
+                        SpritePropertiesY[SelectedFrameTile] = value.boolean;
 
                         CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].FlipY = FlipY;
 
@@ -564,9 +392,9 @@ namespace NESTool.UserControls.ViewModels
                     break;
                 case SpriteProperties.PaletteIndex:
 
-                    if (_spritePaletteIndices[SelectedFrameTile] != (PaletteIndex)value.integer)
+                    if (SpritePaletteIndices[SelectedFrameTile] != (PaletteIndex)value.integer)
                     {
-                        _spritePaletteIndices[SelectedFrameTile] = (PaletteIndex)value.integer;
+                        SpritePaletteIndices[SelectedFrameTile] = (PaletteIndex)value.integer;
 
                         CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].PaletteIndex = value.integer;
 
@@ -575,9 +403,9 @@ namespace NESTool.UserControls.ViewModels
                     break;
                 case SpriteProperties.BackBackground:
 
-                    if (_spritePropertiesBack[SelectedFrameTile] != value.boolean)
+                    if (SpritePropertiesBack[SelectedFrameTile] != value.boolean)
                     {
-                        _spritePropertiesBack[SelectedFrameTile] = value.boolean;
+                        SpritePropertiesBack[SelectedFrameTile] = value.boolean;
 
                         CharacterModel.Animations[AnimationIndex].Frames[FrameIndex].Tiles[SelectedFrameTile].BackBackground = BackBackground;
 
@@ -594,30 +422,7 @@ namespace NESTool.UserControls.ViewModels
             }
         }
 
-        private void LoadBankData()
-        {
-            if (Banks.Length == 0)
-            {
-                return;
-            }
-
-            if (!(Banks[SelectedBank].Model is BankModel model))
-            {
-                return;
-            }
-
-            switch (model.SpriteSize)
-            {
-                case SpriteSize.s8x8: ProjectGridSize = "8x8"; break;
-                case SpriteSize.s8x16: ProjectGridSize = "8x16"; break;
-            }
-
-            WriteableBitmap bankBitmap = BanksUtils.CreateImage(model, ref _bitmapCache);
-
-            BankImage = Util.ConvertWriteableBitmapToBitmapImage(bankBitmap);
-        }
-
-        private void LoadFrameImage()
+        public void LoadFrameImage()
         {
             if (CharacterModel == null)
             {

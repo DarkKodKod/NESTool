@@ -190,6 +190,9 @@
     <Compile Include="UserControls\ViewModels\CharacterAnimationViewModel.cs" />
     <Compile Include="UserControls\ViewModels\CharacterFrameEditorViewModel.cs" />
     <Compile Include="UserControls\ViewModels\BankLinkViewModel.cs" />
+    <Compile Include="UserControls\Views\BankViewer.xaml.cs">
+      <DependentUpon>BankViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Views\CharacterAnimationView.xaml.cs">
       <DependentUpon>CharacterAnimationView.xaml</DependentUpon>
     </Compile>
@@ -324,6 +327,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Style_Dark.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Views\BankViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

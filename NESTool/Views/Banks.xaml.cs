@@ -50,7 +50,7 @@ namespace NESTool.Views
                 ((BankLinkViewModel)link.DataContext).Caption = vo.Caption;
                 ((BankLinkViewModel)link.DataContext).TileSetId = vo.Id;
 
-                wpLinks.Children.Add(link);
+                _ = wpLinks.Children.Add(link);
             }
         }
 

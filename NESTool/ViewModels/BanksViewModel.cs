@@ -33,10 +33,7 @@ namespace NESTool.ViewModels
 
         public int this[int i]
         {
-            get
-            {
-                return _items[i];
-            }
+            get => _items[i];
             set
             {
                 _items[i] = value;

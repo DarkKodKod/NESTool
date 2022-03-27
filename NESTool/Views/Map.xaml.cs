@@ -1,5 +1,6 @@
 ﻿using ArchitectureLibrary.Signals;
 using NESTool.Enums;
+using NESTool.Models;
 using NESTool.Signals;
 using NESTool.UserControls;
 using NESTool.UserControls.Views;
@@ -9,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace NESTool.Views
 {
@@ -23,9 +25,34 @@ namespace NESTool.Views
         {
             InitializeComponent();
 
+            bankViewer.OnActivate();
+
             #region Signals
+            SignalManager.Get<OutputSelectedQuadrantSignal>().Listener += OnOutputSelectedQuadrant;
             SignalManager.Get<ColorPaletteControlSelectedSignal>().Listener += OnColorPaletteControlSelected;
             #endregion
+
+            LoadBankImage();
+        }
+
+        private void LoadBankImage()
+        {
+            if (DataContext is MapViewModel viewModel)
+            {
+                if (viewModel.Banks.Length == 0)
+                {
+                    return;
+                }
+
+                if (!(viewModel.Banks[viewModel.SelectedBank].Model is BankModel model))
+                {
+                    return;
+                }
+
+                WriteableBitmap bankBitmap = BanksUtils.CreateImage(model, ref bankViewer.BitmapCache);
+
+                bankViewer.BankImage = Util.ConvertWriteableBitmapToBitmapImage(bankBitmap);
+            }
         }
 
         private void OnColorPaletteControlSelected(Color color, PaletteIndex paletteIndex, int colorPosition)
@@ -85,7 +112,12 @@ namespace NESTool.Views
         {
             ColorPaletteCleanup();
 
+            bankViewer.OnDeactivate();
+
+            #region Signals
+            SignalManager.Get<OutputSelectedQuadrantSignal>().Listener -= OnOutputSelectedQuadrant;
             SignalManager.Get<ColorPaletteControlSelectedSignal>().Listener -= OnColorPaletteControlSelected;
+            #endregion
         }
 
         private void ImgFrame_MouseUp(object sender, MouseButtonEventArgs e)
@@ -145,6 +177,123 @@ namespace NESTool.Views
             }
 
             _mouseDown = true;
+        }
+
+        private void OnOutputSelectedQuadrant(Image sender, WriteableBitmap bitmap, Point point)
+        {
+            if (point.X < 0 || point.Y < 0)
+            {
+                return;
+            }
+
+            if (sender.Name != "imgFrame")
+            {
+                return;
+            }
+
+            if (DataContext is MapViewModel viewModel)
+            {
+                if (!viewModel.IsActive)
+                {
+                    return;
+                }
+
+                int index = ((int)point.X / 8) + ((int)point.Y / 8 * 32);
+
+                viewModel.RectangleLeft = point.X;
+                viewModel.RectangleTop = point.Y;
+
+                (int, int) tuple = viewModel.GetModel().GetAttributeTileIndex(index);
+
+                viewModel.SelectedAttributeTile = tuple.Item1;
+
+                if (MainWindow.ToolBarMapTool == EditFrameTools.Paint && bankViewer.SelectionRectangleVisibility == Visibility.Visible)
+                {
+                    PaintTile(index, viewModel);
+                }
+                else if (MainWindow.ToolBarMapTool == EditFrameTools.Erase)
+                {
+                    EraseTile(index, viewModel);
+                }
+                else if (MainWindow.ToolBarMapTool == EditFrameTools.Select)
+                {
+                    // get the first element in the selected meta tile
+                    int[] array = viewModel.GetModel().GetMetaTableArray(tuple.Item1);
+
+                    if (array != null)
+                    {
+                        // from the first element, get the corresponding X, Y coordinates to put the rectangle in the right place
+                        int y = array[0] / 32 * 8;
+                        int x = (array[0] - (32 * (array[0] / 32))) * 8;
+
+                        viewModel.RectangleLeft = x;
+                        viewModel.RectangleTop = y;
+
+                        SelectTile(viewModel);
+                    }
+                }
+            }
+        }
+
+        private void SelectTile(MapViewModel viewModel)
+        {
+            if (viewModel.SelectedAttributeTile == -1)
+            {
+                return;
+            }
+
+            viewModel.RectangleVisibility = Visibility.Visible;
+
+            SignalManager.Get<SelectPaletteIndexSignal>().Dispatch(viewModel.SpritePaletteIndices[viewModel.SelectedAttributeTile]);
+        }
+
+        private void PaintTile(int index, MapViewModel viewModel)
+        {
+            MapViewModel.FlagMapBitmapChanges[viewModel.SelectedAttributeTile] = TileUpdate.Normal;
+
+            Point selectedTilePoint = new Point
+            {
+                X = viewModel.RectangleLeft,
+                Y = viewModel.RectangleTop
+            };
+
+            BankModel model = viewModel.Banks[viewModel.SelectedBank].Model as BankModel;
+
+            string guid = model.PTTiles[bankViewer.SelectedBankTile].GUID;
+
+            ref MapTile tile = ref viewModel.GetModel().GetTile(index);
+
+            tile.Point = selectedTilePoint;
+            tile.BankID = model.GUID;
+            tile.BankTileID = guid;
+
+            MapViewModel.PointMapBitmapChanges[viewModel.SelectedAttributeTile] = selectedTilePoint;
+
+            viewModel.ProjectItem?.FileHandler.Save();
+
+            viewModel.LoadFrameImage(true);
+        }
+
+        private void EraseTile(int index, MapViewModel viewModel)
+        {
+            MapViewModel.FlagMapBitmapChanges[viewModel.SelectedAttributeTile] = TileUpdate.Erased;
+
+            Point selectedTilePoint = new Point
+            {
+                X = viewModel.RectangleLeft,
+                Y = viewModel.RectangleTop
+            };
+
+            MapViewModel.PointMapBitmapChanges[viewModel.SelectedAttributeTile] = selectedTilePoint;
+
+            ref MapTile tile = ref viewModel.GetModel().GetTile(index);
+
+            viewModel.LoadFrameImage(true);
+
+            tile.BankID = string.Empty;
+            tile.BankTileID = string.Empty;
+
+            viewModel.ProjectItem?.FileHandler.Save();
         }
     }
 }
