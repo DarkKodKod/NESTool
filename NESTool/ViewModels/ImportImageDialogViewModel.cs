@@ -14,7 +14,7 @@ namespace NESTool.ViewModels
         #region get/set
         public string FilePath
         {
-            get { return _filePath; }
+            get => _filePath;
             set
             {
                 _filePath = value;

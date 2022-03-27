@@ -83,10 +83,7 @@ namespace NESTool.ViewModels
 
         public bool IsSelected
         {
-            get
-            {
-                return _isSelected;
-            }
+            get => _isSelected;
             set
             {
                 if (value != _isSelected)
@@ -109,7 +106,7 @@ namespace NESTool.ViewModels
 
         public string DisplayName
         {
-            get { return _displayName; }
+            get => _displayName;
             set
             {
                 if (_displayName != value)
@@ -139,7 +136,7 @@ namespace NESTool.ViewModels
 
         public bool IsInEditMode
         {
-            get { return _isInEditMode; }
+            get => _isInEditMode;
             set
             {
                 if (_isInEditMode != value)
@@ -153,7 +150,7 @@ namespace NESTool.ViewModels
 
         public object SelectedItem
         {
-            get { return _selectedItem; }
+            get => _selectedItem;
             private set
             {
                 if (_selectedItem != value)

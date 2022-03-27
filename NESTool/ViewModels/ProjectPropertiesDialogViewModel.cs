@@ -155,7 +155,7 @@ namespace NESTool.ViewModels
 
         private void OnCloseDialog()
         {
-            if (_changed == true)
+            if (_changed)
             {
                 // Save all changes
                 ProjectModel project = ModelManager.Get<ProjectModel>();

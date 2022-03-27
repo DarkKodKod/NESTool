@@ -22,7 +22,7 @@ namespace NESTool.ViewModels
 
         public ElementTypeModel SelectedType
         {
-            get { return _selectedType; }
+            get => _selectedType;
             set
             {
                 _selectedType = value;

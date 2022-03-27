@@ -21,7 +21,7 @@ namespace NESTool.ViewModels
         #region get/set
         public string FolderPath
         {
-            get { return _folderPath; }
+            get => _folderPath;
             set
             {
                 _folderPath = value;
@@ -31,7 +31,7 @@ namespace NESTool.ViewModels
 
         public bool UseRLEOnMaps
         {
-            get { return _useRLEOnMaps; }
+            get => _useRLEOnMaps;
             set
             {
                 if (_useRLEOnMaps != value)

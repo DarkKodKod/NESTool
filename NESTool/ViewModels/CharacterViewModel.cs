@@ -64,7 +64,7 @@ namespace NESTool.ViewModels
 
         public int SelectedPalette1
         {
-            get { return _selectedPalette1; }
+            get => _selectedPalette1;
             set
             {
                 if (_selectedPalette1 != value)
@@ -80,7 +80,7 @@ namespace NESTool.ViewModels
 
         public int SelectedPalette2
         {
-            get { return _selectedPalette2; }
+            get => _selectedPalette2;
             set
             {
                 if (_selectedPalette2 != value)
@@ -96,7 +96,7 @@ namespace NESTool.ViewModels
 
         public int SelectedPalette3
         {
-            get { return _selectedPalette3; }
+            get => _selectedPalette3;
             set
             {
                 if (_selectedPalette3 != value)
@@ -112,7 +112,7 @@ namespace NESTool.ViewModels
 
         public int SelectedPalette4
         {
-            get { return _selectedPalette4; }
+            get => _selectedPalette4;
             set
             {
                 if (_selectedPalette4 != value)
@@ -128,7 +128,7 @@ namespace NESTool.ViewModels
 
         public FileModelVO[] Palettes
         {
-            get { return _palettes; }
+            get => _palettes;
             set
             {
                 _palettes = value;
@@ -139,7 +139,7 @@ namespace NESTool.ViewModels
 
         public PaletteIndex PaletteIndex
         {
-            get { return _paletteIndex; }
+            get => _paletteIndex;
             set
             {
                 if (_paletteIndex != value)
@@ -569,7 +569,7 @@ namespace NESTool.ViewModels
             {
                 if (tab == tabItem)
                 {
-                    Tabs.Remove(tab);
+                    _ = Tabs.Remove(tab);
 
                     Save();
 

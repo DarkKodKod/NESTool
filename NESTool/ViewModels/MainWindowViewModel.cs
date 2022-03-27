@@ -77,7 +77,7 @@ namespace NESTool.ViewModels
         #region get/set
         public string ProjectName
         {
-            get { return _projectName; }
+            get => _projectName;
             set
             {
                 _projectName = value;
@@ -87,7 +87,7 @@ namespace NESTool.ViewModels
 
         public List<RecentProjectModel> RecentProjects
         {
-            get { return _recentProjects; }
+            get => _recentProjects;
             set
             {
                 _recentProjects = value;
@@ -97,7 +97,7 @@ namespace NESTool.ViewModels
 
         public List<ProjectItem> ProjectItems
         {
-            get { return _projectItems; }
+            get => _projectItems;
             set
             {
                 _projectItems = value;
@@ -107,7 +107,7 @@ namespace NESTool.ViewModels
 
         public string Title
         {
-            get { return _title; }
+            get => _title;
             set
             {
                 _title = value;
@@ -148,7 +148,7 @@ namespace NESTool.ViewModels
         {
             bool res = items.Contains(aPath[index]);
 
-            if (res == true && index > 0)
+            if (res && index > 0)
             {
                 return FindInItemsAndDelete(aPath[index].Items, aPath, index - 1);
             }

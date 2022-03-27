@@ -18,7 +18,7 @@ namespace NESTool.ViewModels
         #region get/set
         public string ProjectName
         {
-            get { return _projectName; }
+            get => _projectName;
             set
             {
                 if (Util.ValidFileName(value))
@@ -36,7 +36,7 @@ namespace NESTool.ViewModels
 
         public string FolderPath
         {
-            get { return _folderPath; }
+            get => _folderPath;
             set
             {
                 _folderPath = value;
@@ -46,7 +46,7 @@ namespace NESTool.ViewModels
 
         public MapperModel[] Mappers
         {
-            get { return _mappers; }
+            get => _mappers;
             set
             {
                 _mappers = value;
@@ -56,7 +56,7 @@ namespace NESTool.ViewModels
 
         public int SelectedMapper
         {
-            get { return _selectedMapper; }
+            get => _selectedMapper;
             set
             {
                 _selectedMapper = value;
@@ -66,7 +66,7 @@ namespace NESTool.ViewModels
 
         public MirroringType[] Mirrorings
         {
-            get { return _mirrorings; }
+            get => _mirrorings;
             set
             {
                 _mirrorings = value;
@@ -76,7 +76,7 @@ namespace NESTool.ViewModels
 
         public int[] CHRSizes
         {
-            get { return _chrSizes; }
+            get => _chrSizes;
             set
             {
                 _chrSizes = value;
@@ -86,7 +86,7 @@ namespace NESTool.ViewModels
 
         public int SelectedCHRSize
         {
-            get { return _selectedCHRSize; }
+            get => _selectedCHRSize;
             set
             {
                 _selectedCHRSize = value;
@@ -96,7 +96,7 @@ namespace NESTool.ViewModels
 
         public int[] PRGSizes
         {
-            get { return _prgSizes; }
+            get => _prgSizes;
             set
             {
                 _prgSizes = value;
@@ -106,7 +106,7 @@ namespace NESTool.ViewModels
 
         public int SelectedPRGSize
         {
-            get { return _selectedPRGSize; }
+            get => _selectedPRGSize;
             set
             {
                 _selectedPRGSize = value;

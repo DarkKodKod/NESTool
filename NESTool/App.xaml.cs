@@ -35,7 +35,7 @@ namespace NESTool
 
             if (assemblyName.CultureInfo.Equals(CultureInfo.InvariantCulture) == false)
             {
-                path = String.Format(@"{0}\{1}", assemblyName.CultureInfo, path);
+                path = string.Format(@"{0}\{1}", assemblyName.CultureInfo, path);
             }
 
             using (Stream stream = executingAssembly.GetManifestResourceStream(path))
@@ -46,7 +46,7 @@ namespace NESTool
                 }
 
                 byte[] assemblyRawBytes = new byte[stream.Length];
-                stream.Read(assemblyRawBytes, 0, assemblyRawBytes.Length);
+                _ = stream.Read(assemblyRawBytes, 0, assemblyRawBytes.Length);
 
                 return Assembly.Load(assemblyRawBytes);
             }
