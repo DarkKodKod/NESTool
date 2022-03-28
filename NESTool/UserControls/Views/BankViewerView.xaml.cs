@@ -13,7 +13,7 @@ namespace NESTool.UserControls.Views
     /// <summary>
     /// Interaction logic for BankViewer.xaml
     /// </summary>
-    public partial class BankViewer : UserControl, INotifyPropertyChanged
+    public partial class BankViewerView : UserControl, INotifyPropertyChanged
     {
         private int _scale = 3;
         private ImageSource _bankImage;
@@ -97,11 +97,9 @@ namespace NESTool.UserControls.Views
         }
         #endregion
 
-        public BankViewer()
+        public BankViewerView()
         {
             InitializeComponent();
-
-            OnActivate();
         }
 
         public void OnActivate()

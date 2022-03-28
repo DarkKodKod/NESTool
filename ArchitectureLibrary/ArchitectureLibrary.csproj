@@ -63,6 +63,7 @@
     <Compile Include="Signals\Signal.cs" />
     <Compile Include="Signals\SignalManager.cs" />
     <Compile Include="Utils\Global.cs" />
+    <Compile Include="Utils\ValueUnion.cs" />
     <Compile Include="ViewModel\AActivate.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
   </ItemGroup>

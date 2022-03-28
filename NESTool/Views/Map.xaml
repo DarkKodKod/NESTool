@@ -107,7 +107,7 @@
                             </i:Interaction.Behaviors>
                         </ComboBox>
                     </StackPanel>
-                    <uc:BankViewer 
+                    <uc:BankViewerView 
                         Grid.Row="2"
                         Width="384" Height="384" 
                         Scale="3"

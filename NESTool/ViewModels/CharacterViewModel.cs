@@ -1,4 +1,5 @@
 ﻿using ArchitectureLibrary.Signals;
+using ArchitectureLibrary.Utils;
 using ArchitectureLibrary.ViewModel;
 using NESTool.Commands;
 using NESTool.Enums;
@@ -39,12 +40,7 @@ namespace NESTool.ViewModels
 
         public CharacterModel GetModel()
         {
-            if (ProjectItem?.FileHandler.FileModel is CharacterModel model)
-            {
-                return model;
-            }
-
-            return null;
+            return ProjectItem?.FileHandler.FileModel is CharacterModel model ? model : null;
         }
 
         #region get/set
@@ -147,22 +143,10 @@ namespace NESTool.ViewModels
                 {
                     _paletteIndex = value;
 
-                    foreach (ActionTabItem tab in Tabs)
-                    {
-                        if (tab.Content is CharacterFrameEditorView frameView)
-                        {
-                            if (frameView.DataContext is CharacterFrameEditorViewModel viewmodel)
-                            {
-                                if (viewmodel.IsActive)
-                                {
-                                    viewmodel.SaveProperty(SpriteProperties.PaletteIndex, new ValueUnion { integer = (int)value });
-                                }
-                            }
-                        }
-                    }
-                }
+                    OnPropertyChanged("PaletteIndex");
 
-                OnPropertyChanged("PaletteIndex");
+                    SignalManager.Get<CharacterPaletteIndexSignal>().Dispatch(value);
+                }
             }
         }
         #endregion

@@ -73,4 +73,12 @@
         Normal,
         Erased
     }
+
+    public enum SpriteProperties
+    {
+        FlipX,
+        FlipY,
+        PaletteIndex,
+        BackBackground
+    }
 }

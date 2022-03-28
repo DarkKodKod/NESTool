@@ -191,8 +191,8 @@
     <Compile Include="UserControls\ViewModels\CharacterAnimationViewModel.cs" />
     <Compile Include="UserControls\ViewModels\CharacterFrameEditorViewModel.cs" />
     <Compile Include="UserControls\ViewModels\BankLinkViewModel.cs" />
-    <Compile Include="UserControls\Views\BankViewer.xaml.cs">
-      <DependentUpon>BankViewer.xaml</DependentUpon>
+    <Compile Include="UserControls\Views\BankViewerView.xaml.cs">
+      <DependentUpon>BankViewerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Views\CharacterAnimationView.xaml.cs">
       <DependentUpon>CharacterAnimationView.xaml</DependentUpon>
@@ -202,6 +202,9 @@
     </Compile>
     <Compile Include="UserControls\Views\CharacterFrameView.xaml.cs">
       <DependentUpon>CharacterFrameView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Views\FrameView.xaml.cs">
+      <DependentUpon>FrameView.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Views\PaletteView.xaml.cs">
       <DependentUpon>PaletteView.xaml</DependentUpon>
@@ -331,7 +334,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\Views\BankViewer.xaml">
+    <Page Include="UserControls\Views\BankViewerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -344,6 +347,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Views\CharacterFrameView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Views\FrameView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

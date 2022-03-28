@@ -85,6 +85,10 @@ namespace NESTool.Signals
     public class ColorPaletteControlSelectedSignal : Signal<Color, PaletteIndex, int> { }
     public class UpdateCharacterImageSignal : Signal { }
     public class SelectPaletteIndexSignal : Signal<PaletteIndex> { }
+    public class PaintTileSignal : Signal<int, Point> { }
+    public class EraseTileSignal : Signal<int> { }
+    public class SavePropertySignal : Signal<int, bool, bool, int, bool> { }
+    public class CharacterPaletteIndexSignal : Signal<PaletteIndex> { }
 
     // Map
     public class UpdateMapImageSignal : Signal { }
