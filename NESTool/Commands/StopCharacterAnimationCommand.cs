@@ -28,7 +28,7 @@ namespace NESTool.Commands
             {
                 if (anim.ID == tabID && anim.Frames != null)
                 {
-                    foreach (Frame frame in anim.Frames)
+                    foreach (FrameModel frame in anim.Frames)
                     {
                         if (frame.Tiles != null)
                         {

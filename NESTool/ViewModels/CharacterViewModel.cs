@@ -32,6 +32,7 @@ namespace NESTool.ViewModels
         public static Dictionary<Tuple<int, PaletteIndex>, Dictionary<Color, Color>> GroupedPalettes;
 
         #region Commands
+        public FileModelVOSelectionChangedCommand FileModelVOSelectionChangedCommand { get; } = new FileModelVOSelectionChangedCommand();
         public CharacterCloseTabCommand CharacterCloseTabCommand { get; } = new CharacterCloseTabCommand();
         public CharacterNewTabCommand CharacterNewTabCommand { get; } = new CharacterNewTabCommand();
         #endregion

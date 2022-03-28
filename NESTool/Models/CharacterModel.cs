@@ -3,23 +3,6 @@ using System.Windows;
 
 namespace NESTool.Models
 {
-    public struct CharacterTile
-    {
-        public Point Point { get; set; }
-        public bool FlipX { get; set; }
-        public bool FlipY { get; set; }
-        public int PaletteIndex { get; set; }
-        public string BankID { get; set; }
-        public string BankTileID { get; set; }
-        public bool BackBackground { get; set; }
-    }
-
-    public struct Frame
-    {
-        public CharacterTile[] Tiles { get; set; }
-        public bool FixToGrid { get; set; }
-    }
-
     public class CollisionInfo
     {
         public int Width { get; set; }
@@ -33,7 +16,7 @@ namespace NESTool.Models
         public string ID { get; set; }
         public string Name { get; set; }
         public float Speed { get; set; }
-        public Frame[] Frames { get; set; }
+        public FrameModel[] Frames { get; set; }
         public CollisionInfo CollisionInfo { get; set; }
     }
 

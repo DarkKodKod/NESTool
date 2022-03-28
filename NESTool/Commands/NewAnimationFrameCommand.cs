@@ -24,12 +24,12 @@ namespace NESTool.Commands
                 {
                     if (animation.Frames == null)
                     {
-                        animation.Frames = new Frame[64];
+                        animation.Frames = new FrameModel[64];
                     }
 
                     for (int j = 0; j < animation.Frames.Length; ++j)
                     {
-                        Frame frame = animation.Frames[j];
+                        FrameModel frame = animation.Frames[j];
 
                         if (frame.Tiles == null)
                         {

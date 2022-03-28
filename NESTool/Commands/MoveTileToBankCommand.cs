@@ -23,12 +23,7 @@ namespace NESTool.Commands
             WriteableBitmap cropperImage = (WriteableBitmap)values[0];
             BankModel model = (BankModel)values[3];
 
-            if (cropperImage == null || model == null || model.IsFull())
-            {
-                return false;
-            }
-
-            return true;
+            return cropperImage != null && model != null && !model.IsFull();
         }
 
         public override void Execute(object parameter)
@@ -39,16 +34,17 @@ namespace NESTool.Commands
             int selectedTileSet = (int)values[2];
             BankModel model = (BankModel)values[3];
 
-            int index = model.GetEmptyTileIndex();
+            if (model.GetEmptyTileIndex(out int index))
+            {
+                FileModelVO[] tileSets = ProjectFiles.GetModels<TileSetModel>().ToArray();
 
-            FileModelVO[] tileSets = ProjectFiles.GetModels<TileSetModel>().ToArray();
+                model.PTTiles[index].GUID = Guid.NewGuid().ToString();
+                model.PTTiles[index].TileSetID = tileSets[selectedTileSet].Model.GUID;
+                model.PTTiles[index].Point = croppedPoint;
+                model.PTTiles[index].Group = index;
 
-            model.PTTiles[index].GUID = Guid.NewGuid().ToString();
-            model.PTTiles[index].TileSetID = tileSets[selectedTileSet].Model.GUID;
-            model.PTTiles[index].Point = croppedPoint;
-            model.PTTiles[index].Group = index;
-
-            SignalManager.Get<BankImageUpdatedSignal>().Dispatch();
+                SignalManager.Get<BankImageUpdatedSignal>().Dispatch();
+            }
         }
     }
 }

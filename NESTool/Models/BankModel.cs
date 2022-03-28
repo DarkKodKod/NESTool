@@ -38,11 +38,21 @@ namespace NESTool.Models
 
         public bool IsFull()
         {
+            int count = 0;
+            int maxTilesPerBank = GetNumberTilesPerBank();
+
             foreach (PTTileModel tile in PTTiles)
             {
                 if (string.IsNullOrEmpty(tile.GUID))
                 {
                     return false;
+                }
+
+                count++;
+
+                if (count >= maxTilesPerBank)
+                {
+                    break;
                 }
             }
 
@@ -79,21 +89,39 @@ namespace NESTool.Models
             return new PTTileModel();
         }
 
-        public int GetEmptyTileIndex()
+        private int GetNumberTilesPerBank()
         {
+            switch (BankSize)
+            {
+                case BankSize.Size4Kb: return 256;
+                case BankSize.Size2Kb: return 128;
+                case BankSize.Size1Kb: return 64;
+                default: return 0;
+            }
+        }
+
+        public bool GetEmptyTileIndex(out int index)
+        {
+            int maxTilesPerBank = GetNumberTilesPerBank();
             int i = 0;
 
             foreach (PTTileModel tile in PTTiles)
             {
                 if (string.IsNullOrEmpty(tile.GUID))
                 {
-                    return i;
+                    index = i;
+                    return true;
                 }
 
                 i++;
+
+                if (i >= maxTilesPerBank)
+                {
+                    break;
+                }
             }
 
-            return -1;
+            return false;
         }
     }
 }

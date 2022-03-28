@@ -371,7 +371,7 @@ namespace NESTool.UserControls.ViewModels
                 {
                     for (int j = 0; j < animation.Frames.Length; ++j)
                     {
-                        Frame frame = animation.Frames[j];
+                        FrameModel frame = animation.Frames[j];
 
                         if (frame.Tiles != null)
                         {

@@ -184,6 +184,7 @@
     <Compile Include="FileSystem\ProjectFiles.cs" />
     <Compile Include="FrameworkElement\OutlinedTextBlock.cs" />
     <Compile Include="Models\EntityModel.cs" />
+    <Compile Include="Models\FrameModel.cs" />
     <Compile Include="Models\PaletteModel.cs" />
     <Compile Include="Models\WorldModel.cs" />
     <Compile Include="UserControls\ICleanable.cs" />
