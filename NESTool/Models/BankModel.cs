@@ -121,6 +121,7 @@ namespace NESTool.Models
                 }
             }
 
+            index = -1;
             return false;
         }
     }
