@@ -20,5 +20,10 @@ namespace NESTool.Models
                 return _fileExtension;
             }
         }
+
+        public bool FromCharacters { get; set; } = false;
+        public string CharacterId { get; set; }
+        public string CharacterAnimationId { get; set; }
+        public FrameModel[] Frames { get; set; }
     }
 }
