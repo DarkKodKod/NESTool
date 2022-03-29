@@ -36,7 +36,7 @@ namespace NESTool.UserControls.ViewModels
         private double _rectangleWidth;
         private double _rectangleHeight;
         private readonly bool[] _reloadImages = new bool[CharacterModel.AnimationSize];
-        private readonly BitmapImage[] _bitmapImages = new BitmapImage[CharacterModel.AnimationSize];
+        private readonly ImageSource[] _bitmapImages = new ImageSource[CharacterModel.AnimationSize];
 
         #region Commands
         public PauseCharacterAnimationCommand PauseCharacterAnimationCommand { get; } = new PauseCharacterAnimationCommand();
@@ -454,7 +454,7 @@ namespace NESTool.UserControls.ViewModels
                     return;
                 }
 
-                _bitmapImages[FrameIndex] = Util.ConvertWriteableBitmapToBitmapImage(frameBitmap);
+                _bitmapImages[FrameIndex] = frameBitmap;
                 _reloadImages[FrameIndex] = true;
             }
 

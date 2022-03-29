@@ -72,12 +72,11 @@ namespace NESTool.Utils
                     using (sourceBitmap.GetBitmapContext())
                     {
                         WriteableBitmap cropped = sourceBitmap.Crop((int)tile.Point.X, (int)tile.Point.Y, 8, 8);
-                        BitmapImage croppedBitmap = Util.ConvertWriteableBitmapToBitmapImage(cropped);
 
-                        int destX = (index % 16) * 8;
-                        int destY = (index / 16) * 8;
+                        int destX = index % 16 * 8;
+                        int destY = index / 16 * 8;
 
-                        Util.CopyBitmapImageToWriteableBitmap(ref bankBitmap, destX, destY, croppedBitmap);
+                        Util.CopyBitmapImageToWriteableBitmap(ref bankBitmap, destX, destY, cropped);
                     }
 
                     index++;

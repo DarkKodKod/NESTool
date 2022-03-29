@@ -197,26 +197,7 @@ namespace NESTool.Utils
             return null;
         }
 
-        public static BitmapImage ConvertWriteableBitmapToBitmapImage(WriteableBitmap wbm)
-        {
-            BitmapImage bmImage = new BitmapImage();
-            using (MemoryStream stream = new MemoryStream())
-            {
-                PngBitmapEncoder encoder = new PngBitmapEncoder();
-
-                encoder.Frames.Add(BitmapFrame.Create(wbm));
-                encoder.Save(stream);
-
-                bmImage.BeginInit();
-                bmImage.CacheOption = BitmapCacheOption.OnLoad;
-                bmImage.StreamSource = stream;
-                bmImage.EndInit();
-                bmImage.Freeze();
-            }
-            return bmImage;
-        }
-
-        public static void CopyBitmapImageToWriteableBitmap(ref WriteableBitmap dest, int nXDest, int nYDest, BitmapImage src)
+        public static void CopyBitmapImageToWriteableBitmap(ref WriteableBitmap dest, int nXDest, int nYDest, WriteableBitmap src)
         {
             // copy the source image into a byte buffer
             int src_stride = src.PixelWidth * (src.Format.BitsPerPixel >> 3);

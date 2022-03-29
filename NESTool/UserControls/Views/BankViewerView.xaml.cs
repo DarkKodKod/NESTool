@@ -1,12 +1,12 @@
-﻿using System.ComponentModel;
+﻿using ArchitectureLibrary.Signals;
+using NESTool.Commands;
+using NESTool.Signals;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Collections.Generic;
-using NESTool.Commands;
-using NESTool.Signals;
-using ArchitectureLibrary.Signals;
-using System.Windows;
 
 namespace NESTool.UserControls.Views
 {

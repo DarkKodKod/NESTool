@@ -133,7 +133,7 @@ namespace NESTool.UserControls.Views
                 return;
             }
 
-            FrameImage = Util.ConvertWriteableBitmapToBitmapImage(frameBitmap);
+            FrameImage = frameBitmap;
         }
     }
 }

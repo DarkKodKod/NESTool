@@ -651,7 +651,7 @@ namespace NESTool.ViewModels
 
             MapUtils.CreateImage(GetModel(), ref _mapBitmap, update);
 
-            FrameImage = Util.ConvertWriteableBitmapToBitmapImage(_mapBitmap);
+            FrameImage = _mapBitmap;
         }
 
         public void SavePaletteIndex(PaletteIndex index)

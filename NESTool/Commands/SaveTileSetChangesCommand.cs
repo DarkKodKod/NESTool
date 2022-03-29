@@ -43,13 +43,11 @@ namespace NESTool.Commands
 
         private void Merge(WriteableBitmap croppedImage, BitmapSource originalImage, Point croppedPoint, string outputPath)
         {
-            BitmapImage srcImage = Util.ConvertWriteableBitmapToBitmapImage(croppedImage);
-
-            originalImage = new FormatConvertedBitmap(originalImage, srcImage.Format, null, 0);
+            originalImage = new FormatConvertedBitmap(originalImage, croppedImage.Format, null, 0);
 
             WriteableBitmap cImage = new WriteableBitmap(originalImage);
 
-            Util.CopyBitmapImageToWriteableBitmap(ref cImage, (int)croppedPoint.X, (int)croppedPoint.Y, srcImage);
+            Util.CopyBitmapImageToWriteableBitmap(ref cImage, (int)croppedPoint.X, (int)croppedPoint.Y, croppedImage);
 
             SaveFile(outputPath, cImage);
         }

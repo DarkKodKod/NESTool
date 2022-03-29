@@ -1,13 +1,13 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-using ArchitectureLibrary.Signals;
+﻿using ArchitectureLibrary.Signals;
 using NESTool.Enums;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.UserControls.ViewModels;
 using NESTool.Utils;
 using NESTool.VOs;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace NESTool.UserControls.Views
 {
@@ -87,9 +87,7 @@ namespace NESTool.UserControls.Views
                     return;
                 }
 
-                WriteableBitmap bankBitmap = BanksUtils.CreateImage(model, ref bankViewer.BitmapCache);
-
-                bankViewer.BankImage = Util.ConvertWriteableBitmapToBitmapImage(bankBitmap);
+                bankViewer.BankImage = BanksUtils.CreateImage(model, ref bankViewer.BitmapCache);
             }
         }
 
@@ -165,7 +163,7 @@ namespace NESTool.UserControls.Views
 
                 if (frameBitmap != null)
                 {
-                    frameView.FrameImage = Util.ConvertWriteableBitmapToBitmapImage(frameBitmap);
+                    frameView.FrameImage = frameBitmap;
                 }
             }
         }

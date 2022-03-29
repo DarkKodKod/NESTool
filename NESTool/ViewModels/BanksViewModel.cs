@@ -729,7 +729,7 @@ namespace NESTool.ViewModels
 
             WriteableBitmap bitmap = BanksUtils.CreateImage(Model, ref _bitmapCache);
 
-            PTImage = Util.ConvertWriteableBitmapToBitmapImage(bitmap);
+            PTImage = bitmap;
         }
     }
 }

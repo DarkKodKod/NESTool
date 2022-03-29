@@ -49,9 +49,7 @@ namespace NESTool.Views
                     return;
                 }
 
-                WriteableBitmap bankBitmap = BanksUtils.CreateImage(model, ref bankViewer.BitmapCache);
-
-                bankViewer.BankImage = Util.ConvertWriteableBitmapToBitmapImage(bankBitmap);
+                bankViewer.BankImage = BanksUtils.CreateImage(model, ref bankViewer.BitmapCache);
             }
         }
 

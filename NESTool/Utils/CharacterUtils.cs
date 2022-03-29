@@ -72,12 +72,10 @@ namespace NESTool.Utils
 
                         cropped.Freeze();
 
-                        BitmapImage croppedBitmap = Util.ConvertWriteableBitmapToBitmapImage(cropped);
-
                         int destX = (int)Math.Floor(tile.Point.X / 8) * 8;
                         int destY = (int)Math.Floor(tile.Point.Y / 8) * 8;
 
-                        Util.CopyBitmapImageToWriteableBitmap(ref bankBitmap, destX, destY, croppedBitmap);
+                        Util.CopyBitmapImageToWriteableBitmap(ref bankBitmap, destX, destY, cropped);
                     }
                 }
             }
