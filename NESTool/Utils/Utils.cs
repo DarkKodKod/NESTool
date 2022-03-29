@@ -56,6 +56,7 @@ namespace NESTool.Utils
                 case ProjectItemType.Palette: return new PaletteModel();
                 case ProjectItemType.World: return new WorldModel();
                 case ProjectItemType.Entity: return new EntityModel();
+                case ProjectItemType.None:
                 default: return null;
             }
         }
@@ -199,25 +200,28 @@ namespace NESTool.Utils
 
         public static void CopyBitmapImageToWriteableBitmap(ref WriteableBitmap dest, int nXDest, int nYDest, WriteableBitmap src)
         {
-            // copy the source image into a byte buffer
-            int src_stride = src.PixelWidth * (src.Format.BitsPerPixel >> 3);
-            byte[] src_buffer = new byte[src_stride * src.PixelHeight];
-            src.CopyPixels(src_buffer, src_stride, 0);
-
-            int dest_stride = src.PixelWidth * (dest.Format.BitsPerPixel >> 3);
-            byte[] dest_buffer = new byte[(src.PixelWidth * src.PixelHeight) << 2];
-
-            // do merge (could be made faster through parallelization), alpha channel is not used at all
-            for (int i = 0; i < src_buffer.Length; i += 4)
+            using (dest.GetBitmapContext())
             {
-                dest_buffer[i + 0] = src_buffer[i + 0];
-                dest_buffer[i + 1] = src_buffer[i + 1];
-                dest_buffer[i + 2] = src_buffer[i + 2];
-                dest_buffer[i + 3] = 255;
-            }
+                // copy the source image into a byte buffer
+                int src_stride = src.PixelWidth * (src.Format.BitsPerPixel >> 3);
+                byte[] src_buffer = new byte[src_stride * src.PixelHeight];
+                src.CopyPixels(src_buffer, src_stride, 0);
 
-            // copy dest buffer back to the dest WriteableBitmap
-            dest.WritePixels(new Int32Rect(nXDest, nYDest, src.PixelWidth, src.PixelHeight), dest_buffer, dest_stride, 0);
+                int dest_stride = src.PixelWidth * (dest.Format.BitsPerPixel >> 3);
+                byte[] dest_buffer = new byte[(src.PixelWidth * src.PixelHeight) << 2];
+
+                // do merge (could be made faster through parallelization), alpha channel is not used at all
+                for (int i = 0; i < src_buffer.Length; i += 4)
+                {
+                    dest_buffer[i + 0] = src_buffer[i + 0];
+                    dest_buffer[i + 1] = src_buffer[i + 1];
+                    dest_buffer[i + 2] = src_buffer[i + 2];
+                    dest_buffer[i + 3] = 255;
+                }
+
+                // copy dest buffer back to the dest WriteableBitmap
+                dest.WritePixels(new Int32Rect(nXDest, nYDest, src.PixelWidth, src.PixelHeight), dest_buffer, dest_stride, 0);
+            }
         }
 
         public static void SendSelectedQuadrantSignal(Image image, Point point)
@@ -227,27 +231,19 @@ namespace NESTool.Utils
                 return;
             }
 
-            int imageWidth = (int)Math.Ceiling(image.ActualWidth);
-            int imageHeight = (int)Math.Ceiling(image.ActualHeight);
+            WriteableBitmap writeableBmp = BitmapFactory.ConvertToPbgra32Format(image.Source as BitmapSource);
 
-            WriteableBitmap writeableBmp = BitmapFactory.New(imageWidth, imageHeight);
+            int x = (int)Math.Floor(point.X / 8) * 8;
+            int y = (int)Math.Floor(point.Y / 8) * 8;
 
-            using (writeableBmp.GetBitmapContext())
+            WriteableBitmap cropped = writeableBmp.Crop(x, y, 8, 8);
+
+            if (cropped.PixelHeight != 8 || cropped.PixelWidth != 8)
             {
-                writeableBmp = BitmapFactory.ConvertToPbgra32Format(image.Source as BitmapSource);
-
-                int x = (int)Math.Floor(point.X / 8) * 8;
-                int y = (int)Math.Floor(point.Y / 8) * 8;
-
-                WriteableBitmap cropped = writeableBmp.Crop(x, y, 8, 8);
-
-                if (cropped.PixelHeight != 8 || cropped.PixelWidth != 8)
-                {
-                    return;
-                }
-
-                SignalManager.Get<OutputSelectedQuadrantSignal>().Dispatch(image, cropped, new Point(x, y));
+                return;
             }
+
+            SignalManager.Get<OutputSelectedQuadrantSignal>().Dispatch(image, cropped, new Point(x, y));
         }
 
         public static void GenerateBitmapFromTileSet(TileSetModel model, out WriteableBitmap bitmap)

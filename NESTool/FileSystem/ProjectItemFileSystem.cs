@@ -72,7 +72,7 @@ namespace NESTool.FileSystem
             {
                 result = new byte[sourceStream.Length];
 
-                await sourceStream.ReadAsync(result, 0, (int)sourceStream.Length).ConfigureAwait(false);
+                _ = await sourceStream.ReadAsync(result, 0, (int)sourceStream.Length).ConfigureAwait(false);
             }
 
             return Encoding.UTF8.GetString(result);
@@ -96,9 +96,10 @@ namespace NESTool.FileSystem
                     return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<WorldModel>(content));
                 case ProjectItemType.Entity:
                     return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<EntityModel>(content));
+                case ProjectItemType.None:
+                default:
+                    return Task.FromResult<AFileModel>(null);
             }
-
-            return Task.FromResult<AFileModel>(null);
         }
 
         private static async void OnRegisterFileHandler(ProjectItem item, string path)
@@ -113,6 +114,11 @@ namespace NESTool.FileSystem
             }
 
             AFileModel model = Util.FileModelFactory(item.Type);
+
+            if (model == null)
+            {
+                return;
+            }
 
             string itemPath = Path.Combine(fileHandler.Path, fileHandler.Name + model.FileExtension);
 
@@ -237,7 +243,7 @@ namespace NESTool.FileSystem
             {
                 string folderPath = Path.Combine(path, name);
 
-                Directory.CreateDirectory(folderPath);
+                _ = Directory.CreateDirectory(folderPath);
             }
         }
 
@@ -318,7 +324,7 @@ namespace NESTool.FileSystem
                     File.Delete(itemPath);
                 }
 
-                ProjectFiles.Handlers.Remove(fileHandler.FileModel.GUID);
+                _ = ProjectFiles.Handlers.Remove(fileHandler.FileModel.GUID);
             }
             else
             {
