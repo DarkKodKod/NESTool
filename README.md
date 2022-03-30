@@ -14,7 +14,9 @@ This tool is far from comlete. Current version is 1.0.0
 [3.2. Banks](#Banks)    
 [3.3. Palettes](#Palettes)    
 [3.4. Characters](#Characters)    
-[3.5. Maps](#Maps)    
+[3.5. Entities](#Entities)    
+[3.6. Maps](#Maps)  
+[3.7. Worlds](#Worlds)  
 [4. Building the project](#Buildingtheproject)    
 [5. Future features](#Futurefeatures)     
 [6. Known bugs](#Knownbugs)     
@@ -189,7 +191,11 @@ Here is also possible to set the animation speed. This value is in seconds per f
 
 <a name="Maps"/>
 
-### 3.5 Maps
+### 3.5 Entities
+
+todo: work in progress
+
+### 3.6 Maps
 
 Maps are created by using banks. If the bank is set to pattern table for sprite tiles, it won't appear as an option for map creation.
 
@@ -211,6 +217,10 @@ Building the project will create a bunch of files in the output directory:
 + A .s file containing all the tiles used by the banks called **tile_definition.s**.
 
 <a name="Futurefeatures"/>
+
+### 3.7 Worlds
+
+todo: work in progress
 
 ## 5. Future features
 
