@@ -207,6 +207,12 @@ From the tool bar is possible to Select a 16x16 quadrant and assing a pallete nu
 
 <a name="Buildingtheproject"/>
 
+<a name="Worlds"/>
+
+### 3.7 Worlds
+
+todo: work in progress
+
 ## 4. Building the project
 
 ![](/Images/build2.png)
@@ -217,12 +223,6 @@ Building the project will create a bunch of files in the output directory:
 + A .s file for each [Map](#Maps) element. This will use the field **Use RLE on maps** to compress or not the maps.
 + A .s file containing all the [Palette](#Palettes) elements called **palettes.s**.
 + A .s file containing all the tiles used by the banks called **tile_definition.s**.
-
-<a name="Worlds"/>
-
-### 3.7 Worlds
-
-todo: work in progress
 
 <a name="Futurefeatures"/>
 
