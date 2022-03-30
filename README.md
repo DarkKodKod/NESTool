@@ -189,11 +189,13 @@ Here is also possible to set the animation speed. This value is in seconds per f
 
 ![](/Images/editframe2.png)
 
-<a name="Maps"/>
+<a name="Entities"/>
 
 ### 3.5 Entities
 
 todo: work in progress
+
+<a name="Maps"/>
 
 ### 3.6 Maps
 
@@ -216,11 +218,13 @@ Building the project will create a bunch of files in the output directory:
 + A .s file containing all the [Palette](#Palettes) elements called **palettes.s**.
 + A .s file containing all the tiles used by the banks called **tile_definition.s**.
 
-<a name="Futurefeatures"/>
+<a name="Worlds"/>
 
 ### 3.7 Worlds
 
 todo: work in progress
+
+<a name="Futurefeatures"/>
 
 ## 5. Future features
 
