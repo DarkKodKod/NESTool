@@ -95,4 +95,7 @@ namespace NESTool.Signals
     public class MapPaintToolSignal : Signal { }
     public class MapSelectToolSignal : Signal { }
     public class MapEraseToolSignal : Signal { }
+
+    // Entity
+    public class EntitySourceSelectionChangedSignal : Signal<EntitySource> { }
 }

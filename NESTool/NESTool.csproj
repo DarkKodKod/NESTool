@@ -157,6 +157,7 @@
     <Compile Include="Commands\OpenBuildProjectCommand.cs" />
     <Compile Include="Commands\ShowColorPaletteCommand.cs" />
     <Compile Include="Commands\ShowGroupMarksCommand.cs" />
+    <Compile Include="Commands\SourceSelectionChangedCommand.cs" />
     <Compile Include="Commands\SwitchCharacterFrameViewCommand.cs" />
     <Compile Include="Commands\OpenImportImageDialogCommand.cs" />
     <Compile Include="Commands\ItemSelectedCommand.cs" />

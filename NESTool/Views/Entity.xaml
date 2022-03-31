@@ -3,14 +3,85 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
+             xmlns:uc="clr-namespace:NESTool.UserControls.Views"
+             xmlns:enum="clr-namespace:NESTool.Enums"
+             xmlns:cv="clr-namespace:NESTool.Utils.Converters"
+             xmlns:ex="clr-namespace:NESTool.Utils.Extensions"
              xmlns:local="clr-namespace:NESTool.Views"
              xmlns:vm="clr-namespace:NESTool.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="720" d:DesignWidth="1050"
+             Loaded="UserControl_Loaded"
+             Unloaded="UserControl_Unloaded">
     <UserControl.DataContext>
         <vm:EntityViewModel />
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <cv:ParametersConverter x:Key="parametersConverter"/>
+    </UserControl.Resources>
     <Grid Background="LightGray">
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="10,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" VerticalAlignment="Center">Source</Label>
+            <ComboBox 
+                Grid.Column="1"
+                Width="200"
+                Grid.Row="0"
+                HorizontalAlignment="Left"
+                ItemsSource="{Binding Source={ex:EnumBindingSource {x:Type enum:EntitySource}}}"
+                SelectedItem="{Binding Path=SelectedSourceType}">
+                <i:Interaction.Behaviors>
+                    <behaviors:EventToCommandBehavior Command="{Binding SourceSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />
+                </i:Interaction.Behaviors>
+            </ComboBox>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Grid.Column="0" Header="Animation Frame" Margin="10" Padding="10">
+                <uc:FrameView x:Name="frameView" />
+            </GroupBox>
+            <GroupBox Grid.Column="1" Header="Banks" Margin="10" Padding="10">
+                <Grid HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="3"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Grid.Row="0">
+                        <ComboBox Width="200"
+                                  ItemsSource="{Binding Banks}" 
+                                  DisplayMemberPath="Name"
+                                  SelectedValuePath="Index"
+                                  SelectedValue="{Binding Path=SelectedBank}">
+                            <i:Interaction.Behaviors>
+                                <behaviors:EventToCommandBehavior Command="{Binding FileModelVOSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />
+                            </i:Interaction.Behaviors>
+                        </ComboBox>
+                    </StackPanel>
+                    <uc:BankViewerView 
+                        Grid.Row="2"
+                        Width="510"
+                        Height="510"
+                        x:Name="bankViewer"
+                        Scale="4"
+                        VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                </Grid>
+            </GroupBox>
+        </Grid>
     </Grid>
 </UserControl>

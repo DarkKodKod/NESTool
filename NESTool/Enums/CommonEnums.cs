@@ -81,4 +81,10 @@
         PaletteIndex,
         BackBackground
     }
+
+    public enum EntitySource
+    {
+        Character,
+        Bank
+    }
 }

@@ -1,4 +1,5 @@
-﻿using Nett;
+﻿using NESTool.Enums;
+using Nett;
 using System.Windows;
 
 namespace NESTool.Models
@@ -21,7 +22,7 @@ namespace NESTool.Models
             }
         }
 
-        public bool FromCharacters { get; set; } = false;
+        public EntitySource Source { get; set; } = EntitySource.Character;
         public string CharacterId { get; set; }
         public string CharacterAnimationId { get; set; }
         public FrameModel[] Frames { get; set; }
