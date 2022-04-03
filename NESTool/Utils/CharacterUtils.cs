@@ -47,17 +47,17 @@ namespace NESTool.Utils
                         continue;
                     }
 
-                    WriteableBitmap sourceBitmap = GetCacheBitmap(bankModel.TileSetID);
+                    WriteableBitmap sourceBitmap = CreateImageUtil.GetCacheBitmap(bankModel.TileSetID);
 
                     if (sourceBitmap == null)
                     {
                         continue;
                     }
 
-                    using (sourceBitmap.GetBitmapContext())
-                    {
-                        WriteableBitmap cropped = sourceBitmap.Crop((int)bankModel.Point.X, (int)bankModel.Point.Y, 8, 8);
+                    WriteableBitmap cropped = sourceBitmap.Crop((int)bankModel.Point.X, (int)bankModel.Point.Y, 8, 8);
 
+                    using (cropped.GetBitmapContext())
+                    {
                         if (tile.FlipX)
                         {
                             cropped = WriteableBitmapExtensions.Flip(cropped, WriteableBitmapExtensions.FlipMode.Vertical);
@@ -68,15 +68,22 @@ namespace NESTool.Utils
                             cropped = WriteableBitmapExtensions.Flip(cropped, WriteableBitmapExtensions.FlipMode.Horizontal);
                         }
 
-                        PaintPixelsBasedOnPalettes(ref cropped, tile, characterModel, bankModel.Group);
+                        Tuple<int, PaletteIndex> tuple = Tuple.Create(bankModel.Group, (PaletteIndex)tile.PaletteIndex);
 
-                        cropped.Freeze();
+                        if (!CharacterViewModel.GroupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))
+                        {
+                            colors = FillColorCacheByGroup(tile, bankModel.Group, characterModel.PaletteIDs[tile.PaletteIndex]);
 
-                        int destX = (int)Math.Floor(tile.Point.X / 8) * 8;
-                        int destY = (int)Math.Floor(tile.Point.Y / 8) * 8;
+                            CharacterViewModel.GroupedPalettes.Add(tuple, colors);
+                        }
 
-                        Util.CopyBitmapImageToWriteableBitmap(ref bankBitmap, destX, destY, cropped);
+                        CreateImageUtil.PaintPixelsBasedOnPalettes(ref cropped, ref colors);
                     }
+
+                    int destX = (int)Math.Floor(tile.Point.X / 8) * 8;
+                    int destY = (int)Math.Floor(tile.Point.Y / 8) * 8;
+
+                    Util.CopyBitmapImageToWriteableBitmap(ref bankBitmap, destX, destY, cropped);
                 }
             }
 
@@ -85,113 +92,66 @@ namespace NESTool.Utils
             return bankBitmap;
         }
 
-        private static WriteableBitmap GetCacheBitmap(string tileSetID)
-        {
-            if (!TileSetModel.BitmapCache.TryGetValue(tileSetID, out WriteableBitmap tileSetBitmap))
-            {
-                // The tileset exists but the bitmap is not in the cache, so I will try to load it here
-                TileSetModel tileSetModel = ProjectFiles.GetModel<TileSetModel>(tileSetID);
-
-                return tileSetModel != null ? TileSetModel.LoadBitmap(tileSetModel) : null;
-            }
-
-            return tileSetBitmap;
-        }
-
-        private static void PaintPixelsBasedOnPalettes(ref WriteableBitmap bitmap, CharacterTile tile, CharacterModel model, int group)
-        {
-            Tuple<int, PaletteIndex> tuple = Tuple.Create(group, (PaletteIndex)tile.PaletteIndex);
-
-            if (!CharacterViewModel.GroupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))
-            {
-                colors = FillColorCacheByGroup(tile, group, model.PaletteIDs[(int)tile.PaletteIndex]);
-
-                CharacterViewModel.GroupedPalettes.Add(tuple, colors);
-            }
-
-            // read pixels in the 8x8 quadrant
-            for (int y = 0; y < 8; ++y)
-            {
-                for (int x = 0; x < 8; ++x)
-                {
-                    Color color = bitmap.GetPixel(x, y);
-                    color.A = 255;
-
-                    if (!colors.TryGetValue(color, out Color newColor))
-                    {
-                        newColor = Util.NullColor;
-                    }
-
-                    bitmap.SetPixel(x, y, newColor);
-                }
-            }
-        }
-
         private static Dictionary<Color, Color> FillColorCacheByGroup(CharacterTile characterTile, int group, string paletteId)
         {
             Color nullColor = Util.NullColor;
 
-            BankModel bank = ProjectFiles.GetModel<BankModel>(characterTile.BankID);
+            BankModel bankModel = ProjectFiles.GetModel<BankModel>(characterTile.BankID);
 
             PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
 
             Dictionary<Color, Color> colors = new Dictionary<Color, Color>() { { nullColor, nullColor } };
 
-            for (int i = 0; i < bank.PTTiles.Length; ++i)
+            foreach (PTTileModel tile in bankModel.PTTiles)
             {
-                PTTileModel tile = bank.PTTiles[i];
-
                 if (string.IsNullOrEmpty(tile.GUID))
                 {
                     continue;
                 }
 
-                if (tile.Group == group)
+                if (tile.Group != group)
                 {
-                    TileSetModel model = ProjectFiles.GetModel<TileSetModel>(tile.TileSetID);
+                    continue;
+                }
 
-                    if (model == null)
+                TileSetModel model = ProjectFiles.GetModel<TileSetModel>(tile.TileSetID);
+
+                if (model == null)
+                {
+                    continue;
+                }
+
+                if (!TileSetModel.BitmapCache.TryGetValue(tile.TileSetID, out WriteableBitmap tileSetBitmap))
+                {
+                    continue;
+                }
+
+                WriteableBitmap cropped = tileSetBitmap.Crop((int)tile.Point.X, (int)tile.Point.Y, 8, 8);
+
+                for (int y = 0; y < 8; ++y)
+                {
+                    for (int x = 0; x < 8; ++x)
                     {
-                        continue;
-                    }
+                        Color color = cropped.GetPixel(x, y);
+                        color.A = 255;
 
-                    TileSetModel.BitmapCache.TryGetValue(tile.TileSetID, out WriteableBitmap tileSetBitmap);
-
-                    if (tileSetBitmap == null)
-                    {
-                        continue;
-                    }
-
-                    using (tileSetBitmap.GetBitmapContext())
-                    {
-                        WriteableBitmap cropped = tileSetBitmap.Crop((int)tile.Point.X, (int)tile.Point.Y, 8, 8);
-
-                        for (int y = 0; y < 8; ++y)
+                        if (!colors.TryGetValue(color, out Color newColor))
                         {
-                            for (int x = 0; x < 8; ++x)
+                            if (paletteModel == null)
                             {
-                                Color color = cropped.GetPixel(x, y);
-                                color.A = 255;
-
-                                if (!colors.TryGetValue(color, out Color newColor))
+                                newColor = nullColor;
+                            }
+                            else
+                            {
+                                switch (colors.Count)
                                 {
-                                    if (paletteModel == null)
-                                    {
-                                        newColor = nullColor;
-                                    }
-                                    else
-                                    {
-                                        switch (colors.Count)
-                                        {
-                                            case 1: newColor = Util.GetColorFromInt(paletteModel.Color1); break;
-                                            case 2: newColor = Util.GetColorFromInt(paletteModel.Color2); break;
-                                            case 3: newColor = Util.GetColorFromInt(paletteModel.Color3); break;
-                                        }
-                                    }
-
-                                    colors.Add(color, newColor);
+                                    case 1: newColor = Util.GetColorFromInt(paletteModel.Color1); break;
+                                    case 2: newColor = Util.GetColorFromInt(paletteModel.Color2); break;
+                                    case 3: newColor = Util.GetColorFromInt(paletteModel.Color3); break;
                                 }
                             }
+
+                            colors.Add(color, newColor);
                         }
                     }
                 }

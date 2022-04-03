@@ -52,7 +52,7 @@
                 <ColumnDefinition Width="400"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <GroupBox Grid.Column="0" Header="Animation Frame" Margin="10" Padding="10">
+            <GroupBox Grid.Column="0" Header="Image representation" Margin="10" Padding="10">
                 <uc:FrameView x:Name="frameView" />
             </GroupBox>
             <GroupBox Grid.Column="1" Header="Banks" Margin="10" Padding="10">

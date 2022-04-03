@@ -22,9 +22,15 @@ namespace NESTool.Models
             }
         }
 
+        public EntityModel()
+        {
+            Frame.FixToGrid = true;
+            Frame.Tiles = new CharacterTile[64];
+        }
+
         public EntitySource Source { get; set; } = EntitySource.Character;
         public string CharacterId { get; set; }
         public string CharacterAnimationId { get; set; }
-        public FrameModel[] Frames { get; set; }
+        public FrameModel Frame { get; set; } = new FrameModel();
     }
 }

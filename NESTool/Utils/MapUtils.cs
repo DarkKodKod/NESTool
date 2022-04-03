@@ -77,7 +77,7 @@ namespace NESTool.Utils
                             continue;
                         }
 
-                        WriteableBitmap tileSetBitmap = GetCacheBitmap(ptTileModel.TileSetID);
+                        WriteableBitmap tileSetBitmap = CreateImageUtil.GetCacheBitmap(ptTileModel.TileSetID);
 
                         if (tileSetBitmap == null)
                         {
@@ -86,10 +86,10 @@ namespace NESTool.Utils
 
                         CacheColorsFromBank(ptTileModel.Group, attTable, mapModel, bankModel);
 
-                        using (tileSetBitmap.GetBitmapContext())
-                        {
-                            WriteableBitmap cropped = tileSetBitmap.Crop((int)ptTileModel.Point.X, (int)ptTileModel.Point.Y, 8, 8);
+                        WriteableBitmap cropped = tileSetBitmap.Crop((int)ptTileModel.Point.X, (int)ptTileModel.Point.Y, 8, 8);
 
+                        using (cropped.GetBitmapContext())
+                        {
                             if (erased)
                             {
                                 cropped.Clear(BackgroundColor);
@@ -98,32 +98,22 @@ namespace NESTool.Utils
                             {
                                 Tuple<int, PaletteIndex> colorsKey = Tuple.Create(ptTileModel.Group, (PaletteIndex)attTable.PaletteIndex);
 
-                                PaintPixelsBasedOnPalettes(ref cropped, colorsKey);
+                                if (!MapViewModel.GroupedPalettes.TryGetValue(colorsKey, out Dictionary<Color, Color> colors))
+                                {
+                                    colors = new Dictionary<Color, Color>();
+                                }
+
+                                CreateImageUtil.PaintPixelsBasedOnPalettes(ref cropped, ref colors);
                             }
-
-                            cropped.Freeze();
-
-                            int destX = (int)Math.Floor(tile.Point.X / 8) * 8;
-                            int destY = (int)Math.Floor(tile.Point.Y / 8) * 8;
-
-                            Util.CopyBitmapImageToWriteableBitmap(ref mapBitmap, destX, destY, cropped);
                         }
+
+                        int destX = (int)Math.Floor(tile.Point.X / 8) * 8;
+                        int destY = (int)Math.Floor(tile.Point.Y / 8) * 8;
+
+                        Util.CopyBitmapImageToWriteableBitmap(ref mapBitmap, destX, destY, cropped);
                     }
                 }
             }
-        }
-
-        private static WriteableBitmap GetCacheBitmap(string tileSetID)
-        {
-            if (!TileSetModel.BitmapCache.TryGetValue(tileSetID, out WriteableBitmap tileSetBitmap))
-            {
-                // The tileset exists but the bitmap is not in the cache, so I will try to load it here
-                TileSetModel tileSetModel = ProjectFiles.GetModel<TileSetModel>(tileSetID);
-
-                return tileSetModel != null ? TileSetModel.LoadBitmap(tileSetModel) : null;
-            }
-
-            return tileSetBitmap;
         }
 
         private static void CacheColorsFromBank(int group, AttributeTable attributeTable, MapModel mapModel, BankModel bankModel)
@@ -155,25 +145,28 @@ namespace NESTool.Utils
 
             foreach (PTTileModel tile in bankModel.PTTiles)
             {
+                if (string.IsNullOrEmpty(tile.GUID))
+                {
+                    continue;
+                }
+
                 if (tile.Group != group)
                 {
                     continue;
                 }
 
-                TileSetModel.BitmapCache.TryGetValue(tile.TileSetID, out WriteableBitmap tileSetBitmap);
-
-                if (tileSetBitmap == null)
+                if (!TileSetModel.BitmapCache.TryGetValue(tile.TileSetID, out WriteableBitmap tileSetBitmap))
                 {
                     continue;
                 }
 
-                WriteableBitmap bitmap = tileSetBitmap.Crop((int)tile.Point.X, (int)tile.Point.Y, 8, 8);
+                WriteableBitmap cropped = tileSetBitmap.Crop((int)tile.Point.X, (int)tile.Point.Y, 8, 8);
 
                 for (int y = 0; y < 8; ++y)
                 {
                     for (int x = 0; x < 8; ++x)
                     {
-                        Color color = bitmap.GetPixel(x, y);
+                        Color color = cropped.GetPixel(x, y);
                         color.A = 255;
 
                         if (!colors.TryGetValue(color, out _))
@@ -197,31 +190,6 @@ namespace NESTool.Utils
                             return;
                         }
                     }
-                }
-            }
-        }
-
-        private static void PaintPixelsBasedOnPalettes(ref WriteableBitmap bitmap, Tuple<int, PaletteIndex> colorsKey)
-        {
-            if (!MapViewModel.GroupedPalettes.TryGetValue(colorsKey, out Dictionary<Color, Color> colors))
-            {
-                colors = new Dictionary<Color, Color>();
-            }
-
-            // read pixels in the 8x8 quadrant
-            for (int y = 0; y < 8; ++y)
-            {
-                for (int x = 0; x < 8; ++x)
-                {
-                    Color color = bitmap.GetPixel(x, y);
-                    color.A = 255;
-
-                    if (!colors.TryGetValue(color, out Color newColor))
-                    {
-                        newColor = Util.NullColor;
-                    }
-
-                    bitmap.SetPixel(x, y, newColor);
                 }
             }
         }

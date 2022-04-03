@@ -74,6 +74,8 @@ namespace NESTool.ViewModels
             #region Signals
             SignalManager.Get<EntitySourceSelectionChangedSignal>().Listener += OnEntitySourceSelectionChanged;
             #endregion
+
+            SelectedSourceType = GetModel().Source;
         }
 
         public override void OnDeactivate()
@@ -103,7 +105,7 @@ namespace NESTool.ViewModels
             }
         }
 
-        private void Save()
+        public void Save()
         {
             if (GetModel() == null)
             {
