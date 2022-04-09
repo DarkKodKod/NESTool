@@ -28,7 +28,8 @@ namespace NESTool.Models
             Frame.Tiles = new CharacterTile[64];
         }
 
-        public EntitySource Source { get; set; } = EntitySource.Character;
+        public EntitySource Source { get; set; }
+        public int EntityId { get; set; }
         public string CharacterId { get; set; }
         public string CharacterAnimationId { get; set; }
         public FrameModel Frame { get; set; } = new FrameModel();

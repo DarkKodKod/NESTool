@@ -5,14 +5,19 @@ using NESTool.FileSystem;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.VOs;
+using System.Windows;
 
 namespace NESTool.ViewModels
 {
     public class EntityViewModel : ItemViewModel
     {
-        private EntitySource _selectedSourceType = EntitySource.Character;
+        private EntitySource _selectedSourceType;
         private FileModelVO[] _banks;
         private int _selectedBank;
+        private bool _cantSave = false;
+        private Visibility _showBankView;
+        private Visibility _showcharacterView;
+        private int _entityId;
 
         #region Commands
         public SourceSelectionChangedCommand SourceSelectionChangedCommand { get; } = new SourceSelectionChangedCommand();
@@ -25,12 +30,49 @@ namespace NESTool.ViewModels
             get => _selectedSourceType;
             set
             {
-                if (_selectedSourceType != value)
-                {
-                    _selectedSourceType = value;
+                _selectedSourceType = value;
 
-                    OnPropertyChanged("SelectedSourceType");
+                OnPropertyChanged("SelectedSourceType");
+
+                Save();
+            }
+        }
+
+        public int EntityId
+        {
+            get => _entityId;
+            set
+            {
+                if (_entityId != value)
+                {
+                    _entityId = value;
+
+                    OnPropertyChanged("EntityId");
+
+                    Save();
                 }
+            }
+        }
+
+        public Visibility ShowBankView
+        {
+            get => _showBankView;
+            set
+            {
+                _showBankView = value;
+
+                OnPropertyChanged("ShowBankView");
+            }
+        }
+
+        public Visibility ShowcharacterView
+        {
+            get => _showcharacterView;
+            set
+            {
+                _showcharacterView = value;
+
+                OnPropertyChanged("ShowcharacterView");
             }
         }
 
@@ -69,6 +111,8 @@ namespace NESTool.ViewModels
 
         public override void OnActivate()
         {
+            _cantSave = true;
+
             base.OnActivate();
 
             #region Signals
@@ -76,6 +120,25 @@ namespace NESTool.ViewModels
             #endregion
 
             SelectedSourceType = GetModel().Source;
+            EntityId = GetModel().EntityId;
+
+            ShowHidePanel();
+
+            _cantSave = false;
+        }
+
+        private void ShowHidePanel()
+        {
+            if (SelectedSourceType == EntitySource.Bank)
+            {
+                ShowBankView = Visibility.Visible;
+                ShowcharacterView = Visibility.Collapsed;
+            }
+            else
+            {
+                ShowBankView = Visibility.Collapsed;
+                ShowcharacterView = Visibility.Visible;
+            }
         }
 
         public override void OnDeactivate()
@@ -107,19 +170,25 @@ namespace NESTool.ViewModels
 
         public void Save()
         {
+            if (_cantSave)
+            {
+                return;
+            }
+
             if (GetModel() == null)
             {
                 return;
             }
 
             GetModel().Source = SelectedSourceType;
+            GetModel().EntityId = EntityId;
 
             ProjectItem.FileHandler.Save();
         }
 
         private void OnEntitySourceSelectionChanged(EntitySource entitySource)
         {
-            Save();
+            ShowHidePanel();
         }
     }
 }

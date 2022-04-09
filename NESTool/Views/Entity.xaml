@@ -23,22 +23,24 @@
     </UserControl.Resources>
     <Grid Background="LightGray">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="10,10,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Label Grid.Column="0" VerticalAlignment="Center">Source</Label>
+            <Label Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">Source</Label>
             <ComboBox 
                 Grid.Column="1"
                 Width="200"
                 Grid.Row="0"
+                VerticalAlignment="Center"
                 HorizontalAlignment="Left"
                 ItemsSource="{Binding Source={ex:EnumBindingSource {x:Type enum:EntitySource}}}"
                 SelectedItem="{Binding Path=SelectedSourceType}">
@@ -46,17 +48,23 @@
                     <behaviors:EventToCommandBehavior Command="{Binding SourceSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />
                 </i:Interaction.Behaviors>
             </ComboBox>
+            <Label Grid.Column="0" Grid.Row="1">Id :</Label>
+            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding EntityId, UpdateSourceTrigger=PropertyChanged}" Width="200" VerticalAlignment="Center"/>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="400"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <GroupBox Grid.Column="0" Header="Image representation" Margin="10" Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <GroupBox Grid.Row="0" Grid.Column="0" Visibility="{Binding ShowBankView}" Header="Image representation" Margin="10" Padding="10">
                 <uc:FrameView x:Name="frameView" />
             </GroupBox>
-            <GroupBox Grid.Column="1" Header="Banks" Margin="10" Padding="10">
-                <Grid HorizontalAlignment="Center">
+            <GroupBox Grid.Row="0" Grid.Column="1" Visibility="{Binding ShowBankView}" Header="Banks" Margin="10" Padding="10">
+                <Grid HorizontalAlignment="Left">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
                         <RowDefinition Height="3"/>
@@ -75,11 +83,11 @@
                     </StackPanel>
                     <uc:BankViewerView 
                         Grid.Row="2"
-                        Width="510"
-                        Height="510"
+                        Width="384" Height="384"
                         x:Name="bankViewer"
-                        Scale="4"
-                        VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                        Scale="3"
+                        VerticalAlignment="Top" 
+                        HorizontalAlignment="Left"/>
                 </Grid>
             </GroupBox>
         </Grid>
