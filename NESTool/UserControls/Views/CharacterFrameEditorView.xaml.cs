@@ -4,6 +4,7 @@ using NESTool.Models;
 using NESTool.Signals;
 using NESTool.UserControls.ViewModels;
 using NESTool.Utils;
+using NESTool.ViewModels;
 using NESTool.VOs;
 using System.Windows;
 using System.Windows.Controls;
@@ -159,7 +160,7 @@ namespace NESTool.UserControls.Views
                     return;
                 }
 
-                WriteableBitmap frameBitmap = CharacterUtils.CreateImage(viewModel.CharacterModel, viewModel.AnimationIndex, viewModel.FrameIndex);
+                WriteableBitmap frameBitmap = CharacterUtils.CreateImage(viewModel.CharacterModel, viewModel.AnimationIndex, viewModel.FrameIndex, ref CharacterViewModel.GroupedPalettes);
 
                 if (frameBitmap != null)
                 {

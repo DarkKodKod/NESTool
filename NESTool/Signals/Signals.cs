@@ -1,5 +1,6 @@
 ﻿using ArchitectureLibrary.Signals;
 using NESTool.Enums;
+using NESTool.Models;
 using NESTool.ViewModels;
 using NESTool.VOs;
 using System.Windows;
@@ -98,4 +99,5 @@ namespace NESTool.Signals
 
     // Entity
     public class EntitySourceSelectionChangedSignal : Signal<EntitySource> { }
+    public class CharacterAnimationVOSelectionChangedSignal : Signal<CharacterAnimationVO> { }
 }

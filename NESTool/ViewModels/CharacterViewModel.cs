@@ -16,6 +16,8 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Media;
 
+using GroupedPalettes = System.Collections.Generic.Dictionary<System.Tuple<int, NESTool.Enums.PaletteIndex>, System.Collections.Generic.Dictionary<System.Windows.Media.Color, System.Windows.Media.Color>>;
+
 namespace NESTool.ViewModels
 {
     public class CharacterViewModel : ItemViewModel
@@ -29,7 +31,7 @@ namespace NESTool.ViewModels
         private int _selectedPalette3 = -1;
         private int _selectedPalette4 = -1;
 
-        public static Dictionary<Tuple<int, PaletteIndex>, Dictionary<Color, Color>> GroupedPalettes;
+        public static GroupedPalettes GroupedPalettes;
 
         #region Commands
         public FileModelVOSelectionChangedCommand FileModelVOSelectionChangedCommand { get; } = new FileModelVOSelectionChangedCommand();
@@ -188,7 +190,7 @@ namespace NESTool.ViewModels
 
             Palettes = list.ToArray();
 
-            GroupedPalettes = new Dictionary<Tuple<int, PaletteIndex>, Dictionary<Color, Color>>();
+            GroupedPalettes = new GroupedPalettes();
 
             #region Signals
             SignalManager.Get<AnimationTabDeletedSignal>().Listener += OnAnimationTabDeleted;
@@ -359,7 +361,7 @@ namespace NESTool.ViewModels
 
         private void OnUpdateCharacterImage()
         {
-            GroupedPalettes = new Dictionary<Tuple<int, PaletteIndex>, Dictionary<Color, Color>>();
+            GroupedPalettes = new GroupedPalettes();
 
             foreach (ActionTabItem tab in Tabs)
             {

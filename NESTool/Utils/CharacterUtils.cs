@@ -1,17 +1,18 @@
 ﻿using NESTool.Enums;
 using NESTool.FileSystem;
 using NESTool.Models;
-using NESTool.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
+using GroupedPalettes = System.Collections.Generic.Dictionary<System.Tuple<int, NESTool.Enums.PaletteIndex>, System.Collections.Generic.Dictionary<System.Windows.Media.Color, System.Windows.Media.Color>>;
+
 namespace NESTool.Utils
 {
     public static class CharacterUtils
     {
-        public static WriteableBitmap CreateImage(CharacterModel characterModel, int animationIndex, int frameIndex)
+        public static WriteableBitmap CreateImage(CharacterModel characterModel, int animationIndex, int frameIndex, ref GroupedPalettes groupedPalettes)
         {
             if (characterModel.Animations[animationIndex].Frames == null)
             {
@@ -70,11 +71,11 @@ namespace NESTool.Utils
 
                         Tuple<int, PaletteIndex> tuple = Tuple.Create(bankModel.Group, (PaletteIndex)tile.PaletteIndex);
 
-                        if (!CharacterViewModel.GroupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))
+                        if (!groupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))
                         {
                             colors = FillColorCacheByGroup(tile, bankModel.Group, characterModel.PaletteIDs[tile.PaletteIndex]);
 
-                            CharacterViewModel.GroupedPalettes.Add(tuple, colors);
+                            groupedPalettes.Add(tuple, colors);
                         }
 
                         CreateImageUtil.PaintPixelsBasedOnPalettes(ref cropped, ref colors);

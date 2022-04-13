@@ -54,7 +54,18 @@ namespace NESTool.Views
 
         private void OnFileModelVOSelectionChanged(FileModelVO fileModel)
         {
-            LoadBankImage();
+            if (!(fileModel.Model is BankModel))
+            {
+                return;
+            }
+
+            if (DataContext is EntityViewModel viewModel)
+            {
+                if (viewModel.ShowBankView == Visibility.Visible)
+                {
+                    LoadBankImage();
+                }
+            }
         }
 
         private void LoadBankImage()

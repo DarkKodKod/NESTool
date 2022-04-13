@@ -127,6 +127,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\BrowseFileCommand.cs" />
+    <Compile Include="Commands\CharacterAnimationVOSelectionChangedCommand.cs" />
     <Compile Include="Commands\CharacterCloseTabCommand.cs" />
     <Compile Include="Commands\CharacterNewTabCommand.cs" />
     <Compile Include="Commands\CloseDialogCommand.cs" />
@@ -322,6 +323,7 @@
     <Compile Include="Views\World.xaml.cs">
       <DependentUpon>World.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VOs\CharacterAnimationVO.cs" />
     <Compile Include="VOs\EventVO.cs" />
     <Compile Include="VOs\MouseMoveVO.cs" />
     <Compile Include="VOs\MouseWheelVO.cs" />

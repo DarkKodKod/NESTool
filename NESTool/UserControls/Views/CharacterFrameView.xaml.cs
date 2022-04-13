@@ -1,6 +1,7 @@
 ﻿using NESTool.Commands;
 using NESTool.Models;
 using NESTool.Utils;
+using NESTool.ViewModels;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -126,7 +127,7 @@ namespace NESTool.UserControls.Views
                 return;
             }
 
-            WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, animationIndex, FrameIndex);
+            WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, animationIndex, FrameIndex, ref CharacterViewModel.GroupedPalettes);
 
             if (frameBitmap == null)
             {

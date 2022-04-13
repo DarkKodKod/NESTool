@@ -4,6 +4,7 @@ using NESTool.Commands;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
+using NESTool.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Media;
@@ -447,7 +448,7 @@ namespace NESTool.UserControls.ViewModels
 
             if (_reloadImages[FrameIndex] == false)
             {
-                WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, _animationIndex, FrameIndex);
+                WriteableBitmap frameBitmap = CharacterUtils.CreateImage(CharacterModel, _animationIndex, FrameIndex, ref CharacterViewModel.GroupedPalettes);
 
                 if (frameBitmap == null)
                 {
