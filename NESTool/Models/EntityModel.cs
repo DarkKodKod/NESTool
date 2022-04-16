@@ -1,5 +1,6 @@
 ﻿using NESTool.Enums;
 using Nett;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace NESTool.Models
@@ -33,5 +34,6 @@ namespace NESTool.Models
         public string CharacterId { get; set; }
         public string CharacterAnimationId { get; set; }
         public FrameModel Frame { get; set; } = new FrameModel();
+        public List<string> Properties { get; set; }
     }
 }

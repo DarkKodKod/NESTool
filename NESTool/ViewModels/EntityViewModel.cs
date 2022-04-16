@@ -7,6 +7,7 @@ using NESTool.Signals;
 using NESTool.Utils;
 using NESTool.VOs;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
@@ -25,8 +26,8 @@ namespace NESTool.ViewModels
         private int _selectedCharacter = 0;
         private int _selectedAnimation = 0;
         private bool _cantSave = false;
-        private Visibility _showBankView = Visibility.Collapsed;
-        private Visibility _showcharacterView = Visibility.Visible;
+        private Visibility _showBankView;
+        private Visibility _showcharacterView;
         private int _entityId;
         private string _characterId;
         private string _characterAnimationId;
@@ -38,6 +39,8 @@ namespace NESTool.ViewModels
         public SourceSelectionChangedCommand SourceSelectionChangedCommand { get; } = new SourceSelectionChangedCommand();
         public FileModelVOSelectionChangedCommand FileModelVOSelectionChangedCommand { get; } = new FileModelVOSelectionChangedCommand();
         public CharacterAnimationVOSelectionChangedCommand CharacterAnimationVOSelectionChangedCommand { get; } = new CharacterAnimationVOSelectionChangedCommand();
+        public OpenAddPropertyCommand OpenAddPropertyCommand { get; } = new OpenAddPropertyCommand();
+        public DeleteSelectedProperty DeleteSelectedProperty { get; } = new DeleteSelectedProperty();
         #endregion
 
         #region get/set
@@ -428,8 +431,14 @@ namespace NESTool.ViewModels
             GetModel().EntityId = EntityId;
             GetModel().CharacterId = _characterId;
             GetModel().CharacterAnimationId = _characterAnimationId;
+            GetModel().Properties = CompileProperties();
 
             ProjectItem.FileHandler.Save();
+        }
+
+        private List<string> CompileProperties()
+        {
+            return new List<string>() { "gato", "gatito" };
         }
 
         private void OnEntitySourceSelectionChanged(EntitySource entitySource)

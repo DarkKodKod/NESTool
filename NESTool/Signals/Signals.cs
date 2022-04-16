@@ -1,6 +1,5 @@
 ﻿using ArchitectureLibrary.Signals;
 using NESTool.Enums;
-using NESTool.Models;
 using NESTool.ViewModels;
 using NESTool.VOs;
 using System.Windows;

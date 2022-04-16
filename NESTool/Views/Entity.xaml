@@ -12,7 +12,7 @@
              xmlns:local="clr-namespace:NESTool.Views"
              xmlns:vm="clr-namespace:NESTool.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="950" d:DesignWidth="1050"
+             d:DesignHeight="1250" d:DesignWidth="1050"
              Loaded="UserControl_Loaded"
              Unloaded="UserControl_Unloaded">
     <UserControl.DataContext>
@@ -23,6 +23,7 @@
     </UserControl.Resources>
     <Grid Background="LightGray">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -144,6 +145,49 @@
                     </ListBox>
                 </Grid>
             </GroupBox>
+        </Grid>
+        <Grid Grid.Row="2" Margin="10,10,10,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0">Properties</TextBlock>
+                <Separator Grid.Column="1"/>
+            </Grid>
+            <ListBox
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                Grid.Row="2" 
+                Grid.Column="0">
+            </ListBox>
+            <Grid Grid.Row="2" Grid.Column="1" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Button 
+                    Width="100" 
+                    Grid.Row="0"
+                    Content="Add" 
+                    Command="{Binding OpenAddPropertyCommand}">
+                </Button>
+                <Button 
+                    Width="100" 
+                    Grid.Row="2"
+                    Content="Remove"
+                    Command="{Binding DeleteSelectedProperty}">
+                </Button>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>
