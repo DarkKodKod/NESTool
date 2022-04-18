@@ -126,6 +126,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\AddPropertyCommand.cs" />
     <Compile Include="Commands\BrowseFileCommand.cs" />
     <Compile Include="Commands\CharacterAnimationVOSelectionChangedCommand.cs" />
     <Compile Include="Commands\CharacterCloseTabCommand.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="Utils\WindowUtility.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\ActionTabItem.cs" />
+    <Compile Include="ViewModels\AddPropertyDialogViewModel.cs" />
     <Compile Include="ViewModels\BanksViewModel.cs" />
     <Compile Include="ViewModels\BuildProjectDialogViewModel.cs" />
     <Compile Include="ViewModels\CharacterViewModel.cs" />
@@ -282,6 +284,9 @@
     <Compile Include="ViewModels\WorldViewModel.cs" />
     <Compile Include="Views\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddPropertyDialog.xaml.cs">
+      <DependentUpon>AddPropertyDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Banks.xaml.cs">
       <DependentUpon>Banks.xaml</DependentUpon>
@@ -374,6 +379,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AboutDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddPropertyDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

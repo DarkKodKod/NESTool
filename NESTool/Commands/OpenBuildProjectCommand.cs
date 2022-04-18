@@ -36,7 +36,7 @@ namespace NESTool.Commands
             object[] values = (object[])parameter;
 
             Window window = (Window)values[0];
-            string projectName = (string)values[1];
+            _ = (string)values[1];
 
             BuildProjectDialog dialog = new BuildProjectDialog
             {

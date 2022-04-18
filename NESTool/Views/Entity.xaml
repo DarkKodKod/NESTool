@@ -12,6 +12,7 @@
              xmlns:local="clr-namespace:NESTool.Views"
              xmlns:vm="clr-namespace:NESTool.ViewModels"
              mc:Ignorable="d" 
+             Name="EntityView"
              d:DesignHeight="1250" d:DesignWidth="1050"
              Loaded="UserControl_Loaded"
              Unloaded="UserControl_Unloaded">
@@ -167,7 +168,16 @@
             <ListBox
                 ScrollViewer.VerticalScrollBarVisibility="Auto"
                 Grid.Row="2" 
-                Grid.Column="0">
+                Grid.Column="0"
+                ItemsSource="{Binding Properties}"
+                SelectedValue="{Binding Path=SelectedProperty}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
             <Grid Grid.Row="2" Grid.Column="1" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Grid.RowDefinitions>
@@ -179,13 +189,15 @@
                     Width="100" 
                     Grid.Row="0"
                     Content="Add" 
-                    Command="{Binding OpenAddPropertyCommand}">
+                    Command="{Binding OpenAddPropertyCommand}"
+                    CommandParameter="{Binding ElementName=EntityView}">
                 </Button>
                 <Button 
                     Width="100" 
                     Grid.Row="2"
                     Content="Remove"
-                    Command="{Binding DeleteSelectedProperty}">
+                    Command="{Binding DeleteSelectedProperty}"
+                    CommandParameter="{Binding SelectedProperty}">
                 </Button>
             </Grid>
         </Grid>

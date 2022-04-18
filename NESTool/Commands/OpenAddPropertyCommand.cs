@@ -1,17 +1,18 @@
 ﻿using ArchitectureLibrary.Commands;
+using NESTool.Views;
+using System.Windows;
 
 namespace NESTool.Commands
 {
     public class OpenAddPropertyCommand : Command
     {
-        public override bool CanExecute(object parameter)
-        {
-            return base.CanExecute(parameter);
-        }
-
         public override void Execute(object parameter)
         {
-            base.Execute(parameter);
+            Window parentWindow = Window.GetWindow((DependencyObject)parameter);
+
+            AddPropertyDialog dialog = new AddPropertyDialog();
+            dialog.Owner = parentWindow;
+            dialog.ShowDialog();
         }
     }
 }

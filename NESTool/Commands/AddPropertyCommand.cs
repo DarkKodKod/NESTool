@@ -4,7 +4,7 @@ using NESTool.Signals;
 
 namespace NESTool.Commands
 {
-    public class DeleteSelectedProperty : Command
+    public class AddPropertyCommand : Command
     {
         public override bool CanExecute(object parameter)
         {
@@ -13,9 +13,9 @@ namespace NESTool.Commands
                 return false;
             }
 
-            string selectedProperty = (string)parameter;
+            string property = (string)parameter;
 
-            if (string.IsNullOrEmpty(selectedProperty))
+            if (string.IsNullOrEmpty(property))
             {
                 return false;
             }
@@ -25,9 +25,9 @@ namespace NESTool.Commands
 
         public override void Execute(object parameter)
         {
-            string selectedProperty = (string)parameter;
+            string property = (string)parameter;
 
-            SignalManager.Get<DeleteSelectedPropertySignal>().Dispatch(selectedProperty);
+            SignalManager.Get<AddPropertySignal>().Dispatch(property);
         }
     }
 }

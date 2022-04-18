@@ -99,4 +99,6 @@ namespace NESTool.Signals
     // Entity
     public class EntitySourceSelectionChangedSignal : Signal<EntitySource> { }
     public class CharacterAnimationVOSelectionChangedSignal : Signal<CharacterAnimationVO> { }
+    public class DeleteSelectedPropertySignal : Signal<string> { }
+    public class AddPropertySignal : Signal<string> { }
 }

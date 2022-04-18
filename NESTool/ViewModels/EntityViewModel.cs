@@ -7,7 +7,7 @@ using NESTool.Signals;
 using NESTool.Utils;
 using NESTool.VOs;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
@@ -32,6 +32,8 @@ namespace NESTool.ViewModels
         private string _characterId;
         private string _characterAnimationId;
         private ImageSource _characterImage;
+        private ObservableCollection<string> _properties = new ObservableCollection<string>();
+        private string _selectedProperty;
 
         public static GroupedPalettes GroupedPalettes;
 
@@ -54,6 +56,17 @@ namespace NESTool.ViewModels
                 OnPropertyChanged("SelectedSourceType");
 
                 Save();
+            }
+        }
+
+        public string SelectedProperty
+        {
+            get => _selectedProperty;
+            set
+            {
+                _selectedProperty = value;
+
+                OnPropertyChanged("SelectedProperty");
             }
         }
 
@@ -81,6 +94,17 @@ namespace NESTool.ViewModels
 
                     Save();
                 }
+            }
+        }
+
+        public ObservableCollection<string> Properties
+        {
+            get => _properties;
+            set 
+            {
+                _properties = value;
+
+                OnPropertyChanged("Properties");
             }
         }
 
@@ -199,13 +223,21 @@ namespace NESTool.ViewModels
             SignalManager.Get<EntitySourceSelectionChangedSignal>().Listener += OnEntitySourceSelectionChanged;
             SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener += OnFileModelVOSelectionChanged;
             SignalManager.Get<CharacterAnimationVOSelectionChangedSignal>().Listener += OnCharacterAnimationVOSelectionChanged;
+            SignalManager.Get<DeleteSelectedPropertySignal>().Listener += OnDeleteSelectedProperty;
+            SignalManager.Get<AddPropertySignal>().Listener += OnAddProperty;
             #endregion
 
             SelectedSourceType = GetModel().Source;
             EntityId = GetModel().EntityId;
 
+            foreach (string item in GetModel().Properties)
+            {
+                Properties.Add(item);
+            }
+
             _characterId = GetModel().CharacterId;
             _characterAnimationId = GetModel().CharacterAnimationId;
+
 
             // Select the character on the list
             if (_characterId != null)
@@ -249,6 +281,8 @@ namespace NESTool.ViewModels
             SignalManager.Get<EntitySourceSelectionChangedSignal>().Listener -= OnEntitySourceSelectionChanged;
             SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener -= OnFileModelVOSelectionChanged;
             SignalManager.Get<CharacterAnimationVOSelectionChangedSignal>().Listener -= OnCharacterAnimationVOSelectionChanged;
+            SignalManager.Get<DeleteSelectedPropertySignal>().Listener -= OnDeleteSelectedProperty;
+            SignalManager.Get<AddPropertySignal>().Listener -= OnAddProperty;
             #endregion
         }
 
@@ -431,19 +465,39 @@ namespace NESTool.ViewModels
             GetModel().EntityId = EntityId;
             GetModel().CharacterId = _characterId;
             GetModel().CharacterAnimationId = _characterAnimationId;
-            GetModel().Properties = CompileProperties();
+            GetModel().Properties = Properties.ToList();
 
             ProjectItem.FileHandler.Save();
-        }
-
-        private List<string> CompileProperties()
-        {
-            return new List<string>() { "gato", "gatito" };
         }
 
         private void OnEntitySourceSelectionChanged(EntitySource entitySource)
         {
             ShowHidePanel();
+        }
+
+        private void OnAddProperty(string property)
+        {
+            if (string.IsNullOrEmpty(property))
+            {
+                return;
+            }
+
+            Properties.Add(property);
+
+            Save();
+        }
+
+        private void OnDeleteSelectedProperty(string selectedProperty)
+        {
+            if (string.IsNullOrEmpty(selectedProperty))
+            {
+                return;
+            }
+
+            if (Properties.Remove(selectedProperty))
+            {
+                Save();
+            }
         }
     }
 }

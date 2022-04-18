@@ -34,6 +34,6 @@ namespace NESTool.Models
         public string CharacterId { get; set; }
         public string CharacterAnimationId { get; set; }
         public FrameModel Frame { get; set; } = new FrameModel();
-        public List<string> Properties { get; set; }
+        public List<string> Properties { get; set; } = new List<string>();
     }
 }
