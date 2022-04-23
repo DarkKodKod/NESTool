@@ -12,7 +12,9 @@ namespace NESTool.Commands
 
             AddPropertyDialog dialog = new AddPropertyDialog();
             dialog.Owner = parentWindow;
+            dialog.OnActivate();
             dialog.ShowDialog();
+            dialog.OnDeactivate();
         }
     }
 }

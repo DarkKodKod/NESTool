@@ -19,7 +19,14 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Margin="0,0,0,5">New property:</TextBlock>
-        <TextBox Grid.Row="1" Text="{Binding NewProperty, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox 
+            Grid.Row="1" 
+            x:Name="txtPropertyName" 
+            Text="{Binding NewProperty, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding AddPropertyCommand}" CommandParameter="{Binding NewProperty}" />
+            </TextBox.InputBindings>
+        </TextBox>
         <StackPanel 
             Grid.Row="2" 
             VerticalAlignment="Bottom" 
@@ -30,8 +37,7 @@
                 Margin="0,0,10,0" 
                 Content="Add"
                 Command="{Binding AddPropertyCommand}"
-                CommandParameter="{Binding NewProperty}"
-                Click="OnClickAdd"/>
+                CommandParameter="{Binding NewProperty}"/>
             <Button Width="70" IsCancel="True" Content="Close"/>
         </StackPanel>
     </Grid>
