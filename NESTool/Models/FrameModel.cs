@@ -4,6 +4,8 @@ namespace NESTool.Models
 {
     public struct CharacterTile
     {
+        public static readonly int MaxCharacterTiles = 64;
+
         public Point Point { get; set; }
         public bool FlipX { get; set; }
         public bool FlipY { get; set; }

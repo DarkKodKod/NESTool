@@ -33,7 +33,7 @@ namespace NESTool.Commands
 
                         if (frame.Tiles == null)
                         {
-                            animation.Frames[j].Tiles = new CharacterTile[64];
+                            animation.Frames[j].Tiles = new CharacterTile[CharacterTile.MaxCharacterTiles];
                             animation.Frames[j].FixToGrid = true;
 
                             fileHandler.Save();

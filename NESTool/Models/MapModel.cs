@@ -1,9 +1,18 @@
 ﻿using Nett;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 
 namespace NESTool.Models
 {
+    public struct Entity
+    {
+        public string EntityGUID { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public Dictionary<string, string> Properties { get; set; }
+    }
+
     public struct MapTile
     {
         public Point Point { get; set; }
@@ -93,8 +102,8 @@ namespace NESTool.Models
             }
 
             return Enumerable.Range(0, IndicesCache.GetLength(1))
-                .Select(x => IndicesCache[index, x])
-                .ToArray();
+                             .Select(x => IndicesCache[index, x])
+                             .ToArray();
         }
 
         // First number is: Meta table index
@@ -136,5 +145,6 @@ namespace NESTool.Models
         public string[] PaletteIDs { get; set; } = new string[4] { string.Empty, string.Empty, string.Empty, string.Empty };
         public string MetaData { get; set; }
         public bool ExportAttributeTable { get; set; } = true;
+        public List<Entity> Entities { get; set; } = new List<Entity>();
     }
 }

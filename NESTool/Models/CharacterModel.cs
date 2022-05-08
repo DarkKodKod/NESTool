@@ -22,7 +22,7 @@ namespace NESTool.Models
 
     public class CharacterModel : AFileModel
     {
-        public static int AnimationSize = 64;
+        public static readonly int AnimationSize = 64;
 
         private const string _extensionKey = "extensionCharacters";
 
