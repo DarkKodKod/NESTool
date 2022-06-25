@@ -18,6 +18,13 @@
         PAL = 1
     }
 
+    public enum OutputMessageType
+    {
+        Information = 0,
+        Warning,
+        Error
+    }
+
     public enum MirroringType
     {
         Vertical = 0,

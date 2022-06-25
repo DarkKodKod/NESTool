@@ -11,8 +11,9 @@
         xmlns:cv="clr-namespace:NESTool.Utils.Converters"
         xmlns:enum="clr-namespace:NESTool.Enums"
         ShowInTaskbar="False"
-        Title="Build" Height="216" Width="550"
-        ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+        Title="Build" Height="366" Width="651"
+        ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
+        Closing="Window_Closing">
     <Window.DataContext>
         <vm:BuildProjectDialogViewModel />
     </Window.DataContext>
@@ -29,13 +30,14 @@
             <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
-        <GroupBox Grid.Row="1" Grid.Column="1" Header="Output" Margin="5" Padding="5">
+        <GroupBox Grid.Row="1" Grid.Column="1" Header="Configuration" Margin="5" Padding="5">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -53,7 +55,21 @@
                 <CheckBox Grid.Row="2" Margin="0,20,0,0" Content="Use RLE on maps" IsChecked="{Binding UseRLEOnMaps, Mode=TwoWay}"/>
             </Grid>
         </GroupBox>
-        <Grid Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom">
+        <GroupBox Grid.Row="2" Grid.Column="1" Header="Output" Margin="5" Padding="5">
+            <RichTextBox
+                ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                ScrollViewer.VerticalScrollBarVisibility="Visible"
+                IsReadOnly="True"
+                Background="LightGray"
+                x:Name="tbOutput">
+                <RichTextBox.Resources>
+                    <Style TargetType="{x:Type Paragraph}">
+                        <Setter Property="Margin" Value="0"/>
+                    </Style>
+                </RichTextBox.Resources>
+            </RichTextBox>
+        </GroupBox>
+        <Grid Grid.Row="3" Grid.Column="1" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="100"/>
@@ -64,7 +80,7 @@
 					IsCancel="True"/>
             <Button Grid.Column="2" Content="Build" 
 					HorizontalAlignment="center" VerticalAlignment="center" Width="100" 
-					Command="{Binding BuildProjectCommand}" Click="OnClickOK">
+					Command="{Binding BuildProjectCommand}">
             </Button>
         </Grid>
     </Grid>

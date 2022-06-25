@@ -1,15 +1,16 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Model;
+using ArchitectureLibrary.Signals;
 using NESTool.Enums;
 using NESTool.FileSystem;
 using NESTool.Models;
+using NESTool.Signals;
 using NESTool.Utils;
 using NESTool.VOs;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -17,6 +18,8 @@ namespace NESTool.Commands
 {
     public class BuildProjectCommand : Command
     {
+        private bool _building = false;
+
         private const int NTSC = 60;
         private const int PAL = 50;
 
@@ -50,13 +53,29 @@ namespace NESTool.Commands
             Door = 32
         }
 
+        public override bool CanExecute(object parameter)
+        {
+            return !_building;
+        }
+
         public override void Execute(object parameter)
         {
-            if (!CheckValidOutputFolder())
+            if (_building)
             {
-                _ = MessageBox.Show("Invalid output folder!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+
+            _building = true;
+
+            if (!CheckValidOutputFolder())
+            {
+                SignalManager.Get<WriteBuildOutputSignal>().Dispatch("Invalid output folder", OutputMessageType.Error);
+                
+                _building = false;
+                return;
+            }
+
+            SignalManager.Get<WriteBuildOutputSignal>().Dispatch("Build started", OutputMessageType.Information);
 
             BuildPalettes();
             BuildBanks();
@@ -64,7 +83,9 @@ namespace NESTool.Commands
             BuildBackgrounds();
             BuildTilesDefinitions();
 
-            _ = MessageBox.Show("Build completed!", "Build", MessageBoxButton.OK, MessageBoxImage.Information);
+            SignalManager.Get<WriteBuildOutputSignal>().Dispatch("Build completed", OutputMessageType.Information);
+
+            _building = false;
         }
 
         private bool CheckValidOutputFolder()
@@ -85,6 +106,8 @@ namespace NESTool.Commands
 
         private void BuildPalettes()
         {
+            SignalManager.Get<WriteBuildOutputSignal>().Dispatch("Building palettes", OutputMessageType.Information);
+
             ProjectModel projectModel = ModelManager.Get<ProjectModel>();
 
             string fullPath = Path.Combine(Path.GetFullPath(projectModel.Build.OutputFilePath), "palettes.s");
@@ -128,10 +151,14 @@ namespace NESTool.Commands
                     outputFile.Write(Environment.NewLine);
                 }
             }
+
+            SignalManager.Get<WriteBuildOutputSignal>().Dispatch("Finished building palettes", OutputMessageType.Information);
         }
 
         private void BuildTilesDefinitions()
         {
+            SignalManager.Get<WriteBuildOutputSignal>().Dispatch("Building tiles definitions", OutputMessageType.Information);
+
             List<FileModelVO> bankModelVOs = ProjectFiles.GetModels<BankModel>();
 
             foreach (FileModelVO bankVO in bankModelVOs)
@@ -145,6 +172,8 @@ namespace NESTool.Commands
 
                 BuildTilesDefinition(bankVO.Name, bank);
             }
+
+            SignalManager.Get<WriteBuildOutputSignal>().Dispatch("Finishing building tiles definitions", OutputMessageType.Information);
         }
 
         private void BuildTilesDefinition(string bankName, BankModel bankModel)
@@ -193,6 +222,8 @@ namespace NESTool.Commands
 
         private void BuildBackgrounds()
         {
+            SignalManager.Get<WriteBuildOutputSignal>().Dispatch("Building background", OutputMessageType.Information);
+
             ProjectModel projectModel = ModelManager.Get<ProjectModel>();
 
             List<FileModelVO> models = ProjectFiles.GetModels<MapModel>();
@@ -243,6 +274,8 @@ namespace NESTool.Commands
                     PrintMetaData(model, item, outputFile);
                 }
             }
+
+            SignalManager.Get<WriteBuildOutputSignal>().Dispatch("Finishing building background", OutputMessageType.Information);
         }
 
         private void FormatBytes(List<byte> data, StreamWriter outputFile, int rowSize)
@@ -552,6 +585,8 @@ namespace NESTool.Commands
 
         private void BuildMetaSprites()
         {
+            SignalManager.Get<WriteBuildOutputSignal>().Dispatch("Building meta sprites", OutputMessageType.Information);
+
             ProjectModel projectModel = ModelManager.Get<ProjectModel>();
 
             List<FileModelVO> models = ProjectFiles.GetModels<CharacterModel>();
@@ -568,6 +603,8 @@ namespace NESTool.Commands
                     WriteMetaSprites(outputFile, model, item.Name);
                 }
             }
+
+            SignalManager.Get<WriteBuildOutputSignal>().Dispatch("Finishing building meta sprites", OutputMessageType.Information);
         }
 
         private void WriteMetaSprites(StreamWriter outputFile, CharacterModel model, string name)
@@ -727,6 +764,8 @@ namespace NESTool.Commands
 
         private void BuildBanks()
         {
+            SignalManager.Get<WriteBuildOutputSignal>().Dispatch("Building banks", OutputMessageType.Information);
+
             ProjectModel projectModel = ModelManager.Get<ProjectModel>();
 
             string outputPath = Path.GetFullPath(projectModel.Build.OutputFilePath);
@@ -776,6 +815,8 @@ namespace NESTool.Commands
 
                 File.WriteAllBytes(fullPath, bytes);
             }
+
+            SignalManager.Get<WriteBuildOutputSignal>().Dispatch("Finishing building banks", OutputMessageType.Information);
         }
 
         private void Reverse(ref BitArray array, int start, int length)
