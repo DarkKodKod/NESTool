@@ -21,7 +21,7 @@ namespace NESTool.Signals
     public class ProjectConfigurationSavedSignal : Signal { }
     public class ProjectItemLoadedSignal : Signal<string> { }
     public class ShowLoadingDialogSignal : Signal { }
-    public class HideLoadingDialogSignal : Signal { }
+    public class FinishedLoadingProjectSignal : Signal { }
     public class WriteBuildOutputSignal : Signal<string, OutputMessageType> { }
 
     // Edit
@@ -96,6 +96,10 @@ namespace NESTool.Signals
     public class MapPaintToolSignal : Signal { }
     public class MapSelectToolSignal : Signal { }
     public class MapEraseToolSignal : Signal { }
+    public class DeleteSelectedMapElementSignal : Signal<int> { }
+    public class MoveUpSelectedMapElementSignal : Signal<int> { }
+    public class MoveDownSelectedMapElementSignal : Signal<int> { }
+    public class AddMapElementSignal : Signal<string> { }
 
     // Entity
     public class EntitySourceSelectionChangedSignal : Signal<EntitySource> { }

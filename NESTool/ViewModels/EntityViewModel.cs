@@ -472,11 +472,21 @@ namespace NESTool.ViewModels
 
         private void OnEntitySourceSelectionChanged(EntitySource entitySource)
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             ShowHidePanel();
         }
 
         private void OnAddProperty(string property)
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             if (string.IsNullOrEmpty(property))
             {
                 return;
@@ -489,6 +499,11 @@ namespace NESTool.ViewModels
 
         private void OnDeleteSelectedProperty(string selectedProperty)
         {
+            if (!IsActive)
+            {
+                return;
+            }
+
             if (string.IsNullOrEmpty(selectedProperty))
             {
                 return;

@@ -147,7 +147,7 @@ namespace NESTool.FileSystem
 
             if (ProjectFiles.ObjectsLoading <= 0)
             {
-                SignalManager.Get<HideLoadingDialogSignal>().Dispatch();
+                SignalManager.Get<FinishedLoadingProjectSignal>().Dispatch();
             }
         }
 

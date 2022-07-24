@@ -8,6 +8,7 @@ using NESTool.Utils;
 using NESTool.VOs;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
@@ -35,6 +36,10 @@ namespace NESTool.ViewModels
         private int _selectedPalette2 = -1;
         private int _selectedPalette3 = -1;
         private int _selectedPalette4 = -1;
+        private ObservableCollection<FileModelVO> _mapElements = new ObservableCollection<FileModelVO>();
+        private ObservableCollection<KeyValuePair<string, string>> _properties = new ObservableCollection<KeyValuePair<string, string>>();
+        private KeyValuePair<string, string> _selectedProperty;
+        private int _selectedMapElement = -1;
 
         public static Dictionary<Tuple<int, PaletteIndex>, Dictionary<Color, Color>> GroupedPalettes;
         public static TileUpdate[] FlagMapBitmapChanges;
@@ -50,6 +55,10 @@ namespace NESTool.ViewModels
         #region Commands
         public ImageMouseDownCommand ImageMouseDownCommand { get; } = new ImageMouseDownCommand();
         public FileModelVOSelectionChangedCommand FileModelVOSelectionChangedCommand { get; } = new FileModelVOSelectionChangedCommand();
+        public OpenAddMapElementCommand OpenAddMapElementCommand { get; } = new OpenAddMapElementCommand();
+        public DeleteSelectedMapElement DeleteSelectedMapElement { get; } = new DeleteSelectedMapElement();
+        public MoveUpSelectedMapElement MoveUpSelectedMapElement { get; } = new MoveUpSelectedMapElement();
+        public MoveDownSelectedMapElement MoveDownSelectedMapElement { get; } = new MoveDownSelectedMapElement();
         #endregion
 
         #region get/set
@@ -61,6 +70,28 @@ namespace NESTool.ViewModels
                 _gridVisibility = value;
 
                 OnPropertyChanged("GridVisibility");
+            }
+        }
+
+        public KeyValuePair<string, string> SelectedProperty
+        {
+            get => _selectedProperty;
+            set
+            {
+                _selectedProperty = value;
+
+                OnPropertyChanged("SelectedProperty");
+            }
+        }
+
+        public ObservableCollection<KeyValuePair<string, string>> Properties
+        {
+            get => _properties;
+            set
+            {
+                _properties = value;
+
+                OnPropertyChanged("Properties");
             }
         }
 
@@ -77,6 +108,50 @@ namespace NESTool.ViewModels
                 }
 
                 OnPropertyChanged("ExportAttributeTable");
+            }
+        }
+
+        public ObservableCollection<FileModelVO> MapElements
+        {
+            get => _mapElements;
+            set
+            {
+                _mapElements = value;
+
+                OnPropertyChanged("MapElements");
+            }
+        }
+
+        public int SelectedMapElement
+        {
+            get => _selectedMapElement;
+            set
+            {
+                _selectedMapElement = value;
+
+                OnPropertyChanged("SelectedMapElement");
+
+                SelectedProperty = new KeyValuePair<string, string>();
+
+                if (SelectedMapElement != -1)
+                {
+                    for (int i = 0; i < GetModel().Entities.Count; i++)
+                    {
+                        Entity entity = GetModel().Entities[i];
+
+                        if (entity.SortIndex == SelectedMapElement)
+                        {
+                            Properties = new ObservableCollection<KeyValuePair<string, string>>(GetModel().Entities[i].Properties);
+                        }
+                    }
+                }
+                else
+                {
+                    if (Properties.Count > 0)
+                    {
+                        Properties.Clear();
+                    }
+                }
             }
         }
 
@@ -334,6 +409,10 @@ namespace NESTool.ViewModels
             SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener += OnFileModelVOSelectionChanged;
             SignalManager.Get<ShowGridSignal>().Listener += OnShowGrid;
             SignalManager.Get<HideGridSignal>().Listener += OnHideGrid;
+            SignalManager.Get<DeleteSelectedMapElementSignal>().Listener += OnDeleteSelectedMapElement;
+            SignalManager.Get<MoveUpSelectedMapElementSignal>().Listener += OnMoveUpSelectedMapElement;
+            SignalManager.Get<MoveDownSelectedMapElementSignal>().Listener += OnMoveDownSelectedMapElement;
+            SignalManager.Get<AddMapElementSignal>().Listener += OnAddMapElement;
             #endregion
 
             _doNotSave = true;
@@ -345,6 +424,7 @@ namespace NESTool.ViewModels
             }
 
             LoadPalettes();
+            LoadEntities();
 
             LoadPaletteIndex(0);
             LoadPaletteIndex(1);
@@ -370,6 +450,10 @@ namespace NESTool.ViewModels
             SignalManager.Get<ShowGridSignal>().Listener -= OnShowGrid;
             SignalManager.Get<HideGridSignal>().Listener -= OnHideGrid;
             SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener -= OnFileModelVOSelectionChanged;
+            SignalManager.Get<DeleteSelectedMapElementSignal>().Listener -= OnDeleteSelectedMapElement;
+            SignalManager.Get<MoveUpSelectedMapElementSignal>().Listener -= OnMoveUpSelectedMapElement;
+            SignalManager.Get<MoveDownSelectedMapElementSignal>().Listener -= OnMoveDownSelectedMapElement;
+            SignalManager.Get<AddMapElementSignal>().Listener -= OnAddMapElement;
             #endregion
         }
 
@@ -521,6 +605,184 @@ namespace NESTool.ViewModels
                     SetPalleteWithColors(paletteModel, (PaletteIndex)i);
                 }
             }
+        }
+
+        private void LoadEntities()
+        {
+            if (GetModel() == null)
+            {
+                return;
+            }
+
+            foreach (Entity entity in GetModel().Entities)
+            {
+                FileModelVO fileModelVO = ProjectFiles.GetFileModel(entity.GUID);
+
+                if (fileModelVO == null)
+                {
+                    return;
+                }
+
+                fileModelVO.Index = entity.SortIndex;
+
+                MapElements.Add(fileModelVO);
+            } 
+        }
+
+        private void OnAddMapElement(string entityId)
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+
+            if (string.IsNullOrEmpty(entityId))
+            {
+                return;
+            }
+
+            FileModelVO fileModelVO = ProjectFiles.GetFileModel(entityId);
+
+            if (fileModelVO == null)
+            {
+                return;
+            }
+
+            fileModelVO.Index = MapElements.Count + 1;
+
+            MapElements.Add(fileModelVO);
+
+            Entity entity = new Entity()
+            {
+                GUID = entityId,
+                SortIndex = fileModelVO.Index,
+                X = 0,
+                Y = 0,
+                Properties = new Dictionary<string, string>()
+            };
+
+            EntityModel entityModel = fileModelVO.Model as EntityModel;
+
+            foreach (string property in entityModel.Properties)
+            {
+                entity.Properties.Add(property, string.Empty);
+            }
+
+            GetModel().Entities.Add(entity);
+
+            ProjectItem.FileHandler.Save();
+        }
+
+        private void OnMoveDownSelectedMapElement(int selectedElementIndex)
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+
+            if (SelectedMapElement < MapElements.Count)
+            {
+                AdjustOrderOfMapElements(selectedElementIndex, selectedElementIndex - 1);
+
+                SelectedMapElement = selectedElementIndex + 1;
+            }
+        }
+
+        private void OnMoveUpSelectedMapElement(int selectedElementIndex)
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+
+            if (SelectedMapElement > 1)
+            {
+                AdjustOrderOfMapElements(selectedElementIndex - 2, selectedElementIndex - 1);
+
+                SelectedMapElement = selectedElementIndex - 1;
+            }
+        }
+
+        private void AdjustOrderOfMapElements(int newSelectedIndex, int selectedElementIndex)
+        {
+            ObservableCollection<FileModelVO> cacheList = new ObservableCollection<FileModelVO>(MapElements);
+
+            FileModelVO cacheElement = cacheList[newSelectedIndex];
+            cacheList[newSelectedIndex] = cacheList[selectedElementIndex];
+            cacheList[newSelectedIndex].Index = newSelectedIndex + 1;
+
+            cacheList[selectedElementIndex] = cacheElement;
+            cacheList[selectedElementIndex].Index = selectedElementIndex + 1;
+
+            MapElements = cacheList;
+
+            Entity cacheEntity = GetModel().Entities[newSelectedIndex];
+
+            Entity tmp = GetModel().Entities[selectedElementIndex];
+            tmp.SortIndex = newSelectedIndex + 1;
+            GetModel().Entities[newSelectedIndex] = tmp;
+
+            cacheEntity.SortIndex = selectedElementIndex + 1;
+            GetModel().Entities[selectedElementIndex] = cacheEntity;
+
+            ProjectItem.FileHandler.Save();
+        }
+
+        private void OnDeleteSelectedMapElement(int selectedElementIndex)
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+
+            // remove the element in the view
+            foreach (FileModelVO vo in MapElements)
+            {
+                if (vo.Index == selectedElementIndex)
+                {
+                    if (MapElements.Remove(vo))
+                    {
+                        SelectedMapElement = -1;
+
+                        break;
+                    }
+                }
+            }
+
+            // adjust the indeces in the view
+            foreach (FileModelVO vo in MapElements)
+            {
+                if (vo.Index > selectedElementIndex)
+                {
+                    vo.Index--;
+                }
+            }
+
+            // now update the model
+            foreach (Entity entity in GetModel().Entities)
+            {
+                if (entity.SortIndex == selectedElementIndex)
+                {
+                    if (GetModel().Entities.Remove(entity))
+                    {
+                        break;
+                    }
+                }
+            }
+
+            for (int i = 0; i < GetModel().Entities.Count; i++)
+            {
+                Entity entity = GetModel().Entities[i];
+
+                if (entity.SortIndex > selectedElementIndex)
+                {
+                    entity.SortIndex--;
+
+                    GetModel().Entities[i] = entity;
+                }
+            }
+
+            ProjectItem.FileHandler.Save();
         }
 
         private void OnColorPaletteControlSelected(Color color, PaletteIndex paletteIndex, int colorPosition)

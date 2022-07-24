@@ -80,7 +80,7 @@ namespace NESTool
             SignalManager.Get<MapEraseToolSignal>().Listener += OnMapEraseTool;
             SignalManager.Get<CloseProjectSuccessSignal>().Listener += OnCloseProjectSuccess;
             SignalManager.Get<ShowLoadingDialogSignal>().Listener += OnShowLoadingDialog;
-            SignalManager.Get<HideLoadingDialogSignal>().Listener += OnHideLoadingDialog;
+            SignalManager.Get<FinishedLoadingProjectSignal>().Listener += OnFinishedLoadingProject;
 
             // Initialize visibility statte of the toolbars
             tbrTileSet.Visibility = Visibility.Collapsed;
@@ -256,7 +256,7 @@ namespace NESTool
             _loadingDialog.Show();
         }
 
-        private void OnHideLoadingDialog()
+        private void OnFinishedLoadingProject()
         {
             _loadingDialog.Hide();
         }

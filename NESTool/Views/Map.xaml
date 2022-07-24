@@ -3,14 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:fx="clr-namespace:ArchitectureLibrary.FXs;assembly=ArchitectureLibrary"             
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
              xmlns:local="clr-namespace:NESTool.Views"
              xmlns:uc="clr-namespace:NESTool.UserControls.Views"
              xmlns:cv="clr-namespace:NESTool.Utils.Converters"
 			 xmlns:vm="clr-namespace:NESTool.ViewModels"
+             Name="MapView"
              mc:Ignorable="d" 
-             d:DesignHeight="790" d:DesignWidth="1300">
+             d:DesignHeight="890" d:DesignWidth="1300">
     <UserControl.DataContext>
         <vm:MapViewModel />
     </UserControl.DataContext>
@@ -28,6 +30,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="10"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
             <Border Grid.Row="1"
@@ -81,12 +84,125 @@
                     </Border>
                 </Canvas>
             </Border>
+            <GroupBox Header="Palettes" Grid.Row="2" Margin="0,2,0,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+                            <RadioButton GroupName="palettes" Grid.Row="0"
+                                         VerticalAlignment="Center"
+                                         IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette0}"
+                                         Margin="0,0,8,0"/>
+                            <ComboBox Width="150" Grid.Row="0"
+                                      ItemsSource="{Binding Palettes}" 
+                                      DisplayMemberPath="Name"
+                                      SelectedValuePath="Index"
+                                      SelectedValue="{Binding Path=SelectedPalette1}">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:EventToCommandBehavior Command="{Binding FileModelVOSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />
+                                </i:Interaction.Behaviors>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <TextBlock Margin="10" FontSize="22">0</TextBlock>
+                            <uc:PaletteView PaletteIndex="0" x:Name="palette0"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+                            <RadioButton GroupName="palettes" Grid.Row="0"
+                                         VerticalAlignment="Center"
+                                         IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette1}"
+                                         Margin="0,0,8,0"/>
+                            <ComboBox Width="150" Grid.Row="0"
+                                      ItemsSource="{Binding Palettes}" 
+                                      DisplayMemberPath="Name"
+                                      SelectedValuePath="Index"
+                                      SelectedValue="{Binding Path=SelectedPalette2}">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:EventToCommandBehavior Command="{Binding FileModelVOSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />
+                                </i:Interaction.Behaviors>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <TextBlock Margin="10" FontSize="22">1</TextBlock>
+                            <uc:PaletteView PaletteIndex="1" x:Name="palette1"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+                            <RadioButton GroupName="palettes" Grid.Row="0"
+                                         VerticalAlignment="Center" 
+                                         IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette2}"
+                                         Margin="0,0,8,0"/>
+                            <ComboBox Width="150" Grid.Row="0"
+                                      ItemsSource="{Binding Palettes}" 
+                                      DisplayMemberPath="Name"
+                                      SelectedValuePath="Index"
+                                      SelectedValue="{Binding Path=SelectedPalette3}">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:EventToCommandBehavior Command="{Binding FileModelVOSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />
+                                </i:Interaction.Behaviors>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <TextBlock Margin="10" FontSize="22">2</TextBlock>
+                            <uc:PaletteView PaletteIndex="2" x:Name="palette2"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+                            <RadioButton GroupName="palettes" Grid.Row="0"
+                                         VerticalAlignment="Center" 
+                                         IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette3}"
+                                         Margin="0,0,8,0"/>
+                            <ComboBox Width="150" Grid.Row="0"
+                                      ItemsSource="{Binding Palettes}" 
+                                      DisplayMemberPath="Name"
+                                      SelectedValuePath="Index"
+                                      SelectedValue="{Binding Path=SelectedPalette4}">
+                                <i:Interaction.Behaviors>
+                                    <behaviors:EventToCommandBehavior Command="{Binding FileModelVOSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />
+                                </i:Interaction.Behaviors>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Grid.Row="1">
+                            <TextBlock Margin="10" FontSize="22">3</TextBlock>
+                            <uc:PaletteView PaletteIndex="3" x:Name="palette3"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </GroupBox>
         </Grid>
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="450"/>
-                <RowDefinition Height="200" />
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="100" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <GroupBox Grid.Row="0" Header="Banks" Margin="0,10,0,0">
@@ -115,128 +231,158 @@
                         VerticalAlignment="Top" HorizontalAlignment="Left"/>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="Palettes" Grid.Row="1" Margin="0,2,0,0">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
-                            <RadioButton GroupName="palettes" Grid.Row="0"
-                                         VerticalAlignment="Center"
-                                         IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette0}"
-                                         Margin="0,0,8,0"/>
-                            <ComboBox Width="150" Grid.Row="0"
-                                      ItemsSource="{Binding Palettes}" 
-                                      DisplayMemberPath="Name"
-                                      SelectedValuePath="Index"
-                                      SelectedValue="{Binding Path=SelectedPalette1}">
-                                <i:Interaction.Behaviors>
-                                    <behaviors:EventToCommandBehavior Command="{Binding FileModelVOSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />
-                                </i:Interaction.Behaviors>
-                            </ComboBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Row="1">
-                            <TextBlock Margin="10" FontSize="22">0</TextBlock>
-                            <uc:PaletteView PaletteIndex="0" x:Name="palette0"/>
-                        </StackPanel>
-                    </Grid>
-                    <Grid Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
-                            <RadioButton GroupName="palettes" Grid.Row="0"
-                                         VerticalAlignment="Center"
-                                         IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette1}"
-                                         Margin="0,0,8,0"/>
-                            <ComboBox Width="150" Grid.Row="0"
-                                      ItemsSource="{Binding Palettes}" 
-                                      DisplayMemberPath="Name"
-                                      SelectedValuePath="Index"
-                                      SelectedValue="{Binding Path=SelectedPalette2}">
-                                <i:Interaction.Behaviors>
-                                    <behaviors:EventToCommandBehavior Command="{Binding FileModelVOSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />
-                                </i:Interaction.Behaviors>
-                            </ComboBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Row="1">
-                            <TextBlock Margin="10" FontSize="22">1</TextBlock>
-                            <uc:PaletteView PaletteIndex="1" x:Name="palette1"/>
-                        </StackPanel>
-                    </Grid>
-                    <Grid Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
-                            <RadioButton GroupName="palettes" Grid.Row="0"
-                                         VerticalAlignment="Center" 
-                                         IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette2}"
-                                         Margin="0,0,8,0"/>
-                            <ComboBox Width="150" Grid.Row="0"
-                                      ItemsSource="{Binding Palettes}" 
-                                      DisplayMemberPath="Name"
-                                      SelectedValuePath="Index"
-                                      SelectedValue="{Binding Path=SelectedPalette3}">
-                                <i:Interaction.Behaviors>
-                                    <behaviors:EventToCommandBehavior Command="{Binding FileModelVOSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />
-                                </i:Interaction.Behaviors>
-                            </ComboBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Row="1">
-                            <TextBlock Margin="10" FontSize="22">2</TextBlock>
-                            <uc:PaletteView PaletteIndex="2" x:Name="palette2"/>
-                        </StackPanel>
-                    </Grid>
-                    <Grid Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
-                            <RadioButton GroupName="palettes" Grid.Row="0"
-                                         VerticalAlignment="Center" 
-                                         IsChecked="{Binding Path=PaletteIndex, Mode=TwoWay, Converter={StaticResource enumConverter}, ConverterParameter=Palette3}"
-                                         Margin="0,0,8,0"/>
-                            <ComboBox Width="150" Grid.Row="0"
-                                      ItemsSource="{Binding Palettes}" 
-                                      DisplayMemberPath="Name"
-                                      SelectedValuePath="Index"
-                                      SelectedValue="{Binding Path=SelectedPalette4}">
-                                <i:Interaction.Behaviors>
-                                    <behaviors:EventToCommandBehavior Command="{Binding FileModelVOSelectionChangedCommand}" Event="SelectionChanged" PassArguments="True" />
-                                </i:Interaction.Behaviors>
-                            </ComboBox>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Grid.Row="1">
-                            <TextBlock Margin="10" FontSize="22">3</TextBlock>
-                            <uc:PaletteView PaletteIndex="3" x:Name="palette3"/>
-                        </StackPanel>
-                    </Grid>
-                </Grid>
-            </GroupBox>
-            <GroupBox Header="Options" Grid.Row="2" Margin="0,2,0,0">
+            <GroupBox Header="Options" Grid.Row="1" Margin="0,2,0,0">
                 <Grid>
                     <CheckBox IsChecked="{Binding ExportAttributeTable, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Row="2">Export Attribute Table</CheckBox>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="Meta Data" Grid.Row="3" Margin="0,2,0,10">
+            <GroupBox Header="Meta Data" Grid.Row="2" Margin="0,2,0,10">
                 <Grid>
                     <TextBox AcceptsReturn="True" TextWrapping="NoWrap" Text="{Binding Path=MetaData,Mode=TwoWay}" />
+                </Grid>
+            </GroupBox>
+            <GroupBox Header="Map elements" Grid.Row="3" Margin="0,2,0,10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <ListBox
+                            Width="150"
+                            HorizontalAlignment="Stretch"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            Grid.Row="1" 
+                            Grid.Column="0"
+                            ItemsSource="{Binding MapElements}"
+                            DisplayMemberPath="Name"
+                            SelectedValuePath="Index"
+                            SelectedValue="{Binding Path=SelectedMapElement}">
+                        </ListBox>
+                        <Grid 
+                            Grid.Row="1" 
+                            Grid.Column="1" 
+                            Margin="10,10,10,0" 
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Top">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="10"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="30"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="10"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Button 
+                                Width="70" 
+                                Grid.Row="0"
+                                Content="Add" 
+                                Command="{Binding OpenAddMapElementCommand}"
+                                CommandParameter="{Binding ElementName=MapView}">
+                            </Button>
+                            <Button 
+                                Width="70" 
+                                Grid.Row="2"
+                                Content="Remove"
+                                Command="{Binding DeleteSelectedMapElement}"
+                                CommandParameter="{Binding SelectedMapElement}">
+                            </Button>
+                            <Button 
+                                Width="70" 
+                                Grid.Row="4"
+                                Command="{Binding MoveUpSelectedMapElement}"
+                                CommandParameter="{Binding SelectedMapElement}">
+                                <Image Width="16" Height="16" 
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Source="/resources/up.png">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter Property="Effect">
+                                                        <Setter.Value>
+                                                            <fx:GrayscaleEffect />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Setter Property="Opacity" Value="0.5"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                            </Button>
+                            <Button 
+                                Width="70" 
+                                Grid.Row="6"
+                                Command="{Binding MoveDownSelectedMapElement}"
+                                CommandParameter="{Binding SelectedMapElement}">
+                                <Image Width="16" Height="16" 
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Source="/resources/down.png">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter Property="Effect">
+                                                        <Setter.Value>
+                                                            <fx:GrayscaleEffect />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                    <Setter Property="Opacity" Value="0.5"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                    <GroupBox Header="Properties" Grid.Column="1">
+                        <ListView ItemsSource="{Binding Properties}"
+                                  SelectedValue="{Binding Path=SelectedProperty}"
+                                  HorizontalContentAlignment="Stretch"
+                                  BorderBrush="Gray"
+                                  BorderThickness="1"
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Stretch">
+                            <ListView.Resources>
+                                <Style TargetType="GridViewColumnHeader">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </Style>
+                                <DataTemplate x:Key="ValueTemplate">
+                                    <Border BorderBrush="Gray" BorderThickness="1,0,0,0" Margin="-6,-2,-8,-2">
+                                        <StackPanel Margin="6,2,6,2">
+                                            <TextBlock Text="{Binding Value}" HorizontalAlignment="Center" TextAlignment="Center"  />
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ListView.Resources>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="BorderBrush" Value="Gray"></Setter>
+                                    <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Key}" />
+                                    <GridViewColumn CellTemplate="{StaticResource ValueTemplate}" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </GroupBox>
                 </Grid>
             </GroupBox>
         </Grid>

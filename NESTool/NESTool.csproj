@@ -126,6 +126,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\AddMapElementCommand.cs" />
     <Compile Include="Commands\AddPropertyCommand.cs" />
     <Compile Include="Commands\BrowseFileCommand.cs" />
     <Compile Include="Commands\CharacterAnimationVOSelectionChangedCommand.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Commands\DeleteAnimationFrameCommand.cs" />
     <Compile Include="Commands\DeleteElementCommand.cs" />
     <Compile Include="Commands\DeleteBankTileCommand.cs" />
+    <Compile Include="Commands\DeleteSelectedMapElement.cs" />
     <Compile Include="Commands\DeleteSelectedProperty.cs" />
     <Compile Include="Commands\DragEnterCommand.cs" />
     <Compile Include="Commands\DragLeaveCommand.cs" />
@@ -154,9 +156,12 @@
     <Compile Include="Commands\MapEraseToolCommand.cs" />
     <Compile Include="Commands\MapPaintToolCommand.cs" />
     <Compile Include="Commands\MapSelectToolCommand.cs" />
+    <Compile Include="Commands\MoveDownSelectedMapElement.cs" />
     <Compile Include="Commands\MoveTileToBankCommand.cs" />
+    <Compile Include="Commands\MoveUpSelectedMapElement.cs" />
     <Compile Include="Commands\NewAnimationFrameCommand.cs" />
     <Compile Include="Commands\NextFrameCharacterAnimationCommand.cs" />
+    <Compile Include="Commands\OpenAddMapElementCommand.cs" />
     <Compile Include="Commands\OpenAddPropertyCommand.cs" />
     <Compile Include="Commands\OpenBuildProjectCommand.cs" />
     <Compile Include="Commands\ShowColorPaletteCommand.cs" />
@@ -265,6 +270,7 @@
     <Compile Include="Utils\WindowUtility.cs" />
     <Compile Include="ViewModels\AboutDialogViewModel.cs" />
     <Compile Include="ViewModels\ActionTabItem.cs" />
+    <Compile Include="ViewModels\AddMapElementDialogViewModel.cs" />
     <Compile Include="ViewModels\AddPropertyDialogViewModel.cs" />
     <Compile Include="ViewModels\BanksViewModel.cs" />
     <Compile Include="ViewModels\BuildProjectDialogViewModel.cs" />
@@ -284,6 +290,9 @@
     <Compile Include="ViewModels\WorldViewModel.cs" />
     <Compile Include="Views\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddMapElementDialog.xaml.cs">
+      <DependentUpon>AddMapElementDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AddPropertyDialog.xaml.cs">
       <DependentUpon>AddPropertyDialog.xaml</DependentUpon>
@@ -379,6 +388,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AboutDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddMapElementDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -560,6 +573,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\entity.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\down.png" />
+    <Resource Include="Resources\up.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterResolveReferences">
