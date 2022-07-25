@@ -626,7 +626,7 @@ namespace NESTool.ViewModels
                 fileModelVO.Index = entity.SortIndex;
 
                 MapElements.Add(fileModelVO);
-            } 
+            }
         }
 
         private void OnAddMapElement(string entityId)

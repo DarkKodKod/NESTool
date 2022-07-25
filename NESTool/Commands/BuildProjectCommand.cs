@@ -70,7 +70,7 @@ namespace NESTool.Commands
             if (!CheckValidOutputFolder())
             {
                 SignalManager.Get<WriteBuildOutputSignal>().Dispatch("Invalid output folder", OutputMessageType.Error);
-                
+
                 _building = false;
                 return;
             }

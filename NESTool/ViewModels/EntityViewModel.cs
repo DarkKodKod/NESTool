@@ -100,7 +100,7 @@ namespace NESTool.ViewModels
         public ObservableCollection<string> Properties
         {
             get => _properties;
-            set 
+            set
             {
                 _properties = value;
 

@@ -41,7 +41,7 @@ namespace NESTool.Views
             };
 
             string color = "";
-            switch(messageType)
+            switch (messageType)
             {
                 case OutputMessageType.Information: color = "Black"; break;
                 case OutputMessageType.Warning: color = "Yellow"; break;

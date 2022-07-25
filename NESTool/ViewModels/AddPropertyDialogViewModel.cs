@@ -13,14 +13,14 @@ namespace NESTool.ViewModels
 
         #region get/set
         public string NewProperty
-        { 
+        {
             get => _newProperty;
-            set 
-            { 
+            set
+            {
                 _newProperty = value;
 
                 OnPropertyChanged("NewProperty");
-            } 
+            }
         }
         #endregion
     }

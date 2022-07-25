@@ -261,7 +261,7 @@ namespace NESTool.ViewModels
                     list.Add(new RecentProjectModel()
                     {
                         Path = project,
-                        DisplayName = $"_{ index } {projectName} ({project})"
+                        DisplayName = $"_{index} {projectName} ({project})"
                     });
 
                     index++;
@@ -277,7 +277,7 @@ namespace NESTool.ViewModels
 
             ProjectName = vo.ProjectName;
 
-            Title = $"{ vo.ProjectName } - { _appName }";
+            Title = $"{vo.ProjectName} - {_appName}";
 
             ProjectModel project = ModelManager.Get<ProjectModel>();
 
@@ -297,7 +297,7 @@ namespace NESTool.ViewModels
 
             ProjectName = "";
 
-            Title = $"{ _appName }";
+            Title = $"{_appName}";
         }
 
         private void OnExitSuccess()
