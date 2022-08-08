@@ -299,6 +299,7 @@
                             <Button 
                                 Width="70" 
                                 Grid.Row="4"
+                                ToolTip="Move Up"
                                 Command="{Binding MoveUpSelectedMapElement}"
                                 CommandParameter="{Binding SelectedMapElement}">
                                 <Image Width="16" Height="16" 
@@ -324,6 +325,7 @@
                             <Button 
                                 Width="70" 
                                 Grid.Row="6"
+                                ToolTip="Move down"
                                 Command="{Binding MoveDownSelectedMapElement}"
                                 CommandParameter="{Binding SelectedMapElement}">
                                 <Image Width="16" Height="16" 
