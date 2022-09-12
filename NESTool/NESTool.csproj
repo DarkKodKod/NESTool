@@ -164,6 +164,7 @@
     <Compile Include="Commands\OpenAddMapElementCommand.cs" />
     <Compile Include="Commands\OpenAddPropertyCommand.cs" />
     <Compile Include="Commands\OpenBuildProjectCommand.cs" />
+    <Compile Include="Commands\SaveSelectedPropertyValue.cs" />
     <Compile Include="Commands\ShowColorPaletteCommand.cs" />
     <Compile Include="Commands\ShowGroupMarksCommand.cs" />
     <Compile Include="Commands\SourceSelectionChangedCommand.cs" />
@@ -227,6 +228,7 @@
     </Compile>
     <Compile Include="Utils\Behaviors\RedirectRoutedEventBehavior.cs" />
     <Compile Include="Utils\CharacterUtils.cs" />
+    <Compile Include="Utils\Converters\WidthConverter.cs" />
     <Compile Include="Utils\CreateImageUtil.cs" />
     <Compile Include="Utils\EntityUtils.cs" />
     <Compile Include="Utils\MapUtils.cs" />

@@ -18,6 +18,7 @@
     </UserControl.DataContext>
     <UserControl.Resources>
         <cv:EnumMatchToBooleanConverter x:Key="enumConverter" />
+        <cv:WidthConverter x:Key="widthConverter" />
     </UserControl.Resources>
     <Grid Background="LightGray">
         <Grid.ColumnDefinitions>
@@ -351,39 +352,72 @@
                         </Grid>
                     </Grid>
                     <GroupBox Header="Properties" Grid.Column="1">
-                        <ListView ItemsSource="{Binding Properties}"
-                                  SelectedValue="{Binding Path=SelectedProperty}"
-                                  HorizontalContentAlignment="Stretch"
-                                  BorderBrush="Gray"
-                                  BorderThickness="1"
-                                  HorizontalAlignment="Stretch" 
-                                  VerticalAlignment="Stretch">
-                            <ListView.Resources>
-                                <Style TargetType="GridViewColumnHeader">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </Style>
-                                <DataTemplate x:Key="ValueTemplate">
-                                    <Border BorderBrush="Gray" BorderThickness="1,0,0,0" Margin="-6,-2,-8,-2">
-                                        <StackPanel Margin="6,2,6,2">
-                                            <TextBlock Text="{Binding Value}" HorizontalAlignment="Center" TextAlignment="Center"  />
-                                        </StackPanel>
-                                    </Border>
-                                </DataTemplate>
-                            </ListView.Resources>
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                    <Setter Property="BorderBrush" Value="Gray"></Setter>
-                                    <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Key}" />
-                                    <GridViewColumn CellTemplate="{StaticResource ValueTemplate}" />
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="auto" />
+                            </Grid.ColumnDefinitions>
+                            <ListView ItemsSource="{Binding Properties}"
+                                      SelectedValue="{Binding SelectedProperty}"
+                                      SelectedIndex="{Binding SelectedPropertyIndex}"
+                                      HorizontalContentAlignment="Stretch"
+                                      BorderBrush="Gray"
+                                      BorderThickness="1"
+                                      Grid.Row="0"
+                                      Grid.Column="0"
+                                      Grid.ColumnSpan="2"
+                                      HorizontalAlignment="Stretch" 
+                                      VerticalAlignment="Stretch">
+                                <ListView.Resources>
+                                    <Style TargetType="GridViewColumnHeader">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </Style>
+                                    <DataTemplate x:Key="ValueTemplate">
+                                        <Border BorderBrush="Gray" BorderThickness="1,0,0,0" Margin="-6,-2,-8,-2">
+                                            <StackPanel Margin="6,2,6,2">
+                                                <TextBlock Text="{Binding Value}" />
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListView.Resources>
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                        <Setter Property="BorderBrush" Value="Gray"></Setter>
+                                        <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+                                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.View>
+                                    <GridView>
+                                        <GridViewColumn Width="90" DisplayMemberBinding="{Binding Key}" />
+                                        <GridViewColumn Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView} }, Converter={StaticResource widthConverter}}"  CellTemplate="{StaticResource ValueTemplate}" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                            <TextBox 
+                                Name="tbEditableSelectedProperty"
+                                Text="{Binding EditableSelectedProperty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                Margin="0,3,10,3" 
+                                Width="200" 
+                                HorizontalAlignment="Left" 
+                                Height="23"
+                                Grid.Row="1" 
+                                Grid.Column="0"/>
+                            <Button 
+                                Margin="0,3,10,3" 
+                                Grid.Row="1" 
+                                HorizontalAlignment="Right" 
+                                Grid.Column="1" 
+                                Content="Save"
+                                Command="{Binding SaveSelectedPropertyValue}"
+                                CommandParameter="{Binding EditableSelectedProperty}"
+                                Width="70" />
+                        </Grid>
                     </GroupBox>
                 </Grid>
             </GroupBox>

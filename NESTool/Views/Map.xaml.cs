@@ -293,5 +293,21 @@ namespace NESTool.Views
 
             viewModel.ProjectItem?.FileHandler.Save();
         }
+
+        delegate void TestDelegate();
+
+        private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is ListViewItem)
+            {
+                TestDelegate myDel = () => 
+                {
+                    _ = tbEditableSelectedProperty.Focus();
+                    tbEditableSelectedProperty.SelectAll();
+                };
+
+                Dispatcher.BeginInvoke(myDel, null);
+            }
+        }
     }
 }

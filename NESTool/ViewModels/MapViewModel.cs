@@ -39,6 +39,8 @@ namespace NESTool.ViewModels
         private ObservableCollection<FileModelVO> _mapElements = new ObservableCollection<FileModelVO>();
         private ObservableCollection<KeyValuePair<string, string>> _properties = new ObservableCollection<KeyValuePair<string, string>>();
         private KeyValuePair<string, string> _selectedProperty;
+        private int _selectedPropertyIndex;
+        private string _editableSelectedProperty;
         private int _selectedMapElement = -1;
 
         public static Dictionary<Tuple<int, PaletteIndex>, Dictionary<Color, Color>> GroupedPalettes;
@@ -59,6 +61,7 @@ namespace NESTool.ViewModels
         public DeleteSelectedMapElement DeleteSelectedMapElement { get; } = new DeleteSelectedMapElement();
         public MoveUpSelectedMapElement MoveUpSelectedMapElement { get; } = new MoveUpSelectedMapElement();
         public MoveDownSelectedMapElement MoveDownSelectedMapElement { get; } = new MoveDownSelectedMapElement();
+        public SaveSelectedPropertyValue SaveSelectedPropertyValue { get; } = new SaveSelectedPropertyValue();
         #endregion
 
         #region get/set
@@ -73,6 +76,28 @@ namespace NESTool.ViewModels
             }
         }
 
+        public string EditableSelectedProperty
+        {
+            get => _editableSelectedProperty;
+            set
+            {
+                _editableSelectedProperty = value;
+
+                OnPropertyChanged("EditableSelectedProperty");
+            }
+        }
+
+        public int SelectedPropertyIndex
+        {
+            get => _selectedPropertyIndex;
+            set
+            {
+                _selectedPropertyIndex = value;
+
+                OnPropertyChanged("SelectedPropertyIndex");
+            }
+        }
+
         public KeyValuePair<string, string> SelectedProperty
         {
             get => _selectedProperty;
@@ -81,6 +106,11 @@ namespace NESTool.ViewModels
                 _selectedProperty = value;
 
                 OnPropertyChanged("SelectedProperty");
+
+                if (_selectedProperty.Key != null && _selectedProperty.Value != null)
+                {
+                    EditableSelectedProperty = _selectedProperty.Value;
+                }
             }
         }
 
@@ -130,6 +160,8 @@ namespace NESTool.ViewModels
                 _selectedMapElement = value;
 
                 OnPropertyChanged("SelectedMapElement");
+
+                EditableSelectedProperty = "";
 
                 SelectedProperty = new KeyValuePair<string, string>();
 
@@ -413,6 +445,7 @@ namespace NESTool.ViewModels
             SignalManager.Get<MoveUpSelectedMapElementSignal>().Listener += OnMoveUpSelectedMapElement;
             SignalManager.Get<MoveDownSelectedMapElementSignal>().Listener += OnMoveDownSelectedMapElement;
             SignalManager.Get<AddMapElementSignal>().Listener += OnAddMapElement;
+            SignalManager.Get<SaveSelectedPropertyValueSignal>().Listener += OnSaveSelectedPropertyValue;
             #endregion
 
             _doNotSave = true;
@@ -454,6 +487,7 @@ namespace NESTool.ViewModels
             SignalManager.Get<MoveUpSelectedMapElementSignal>().Listener -= OnMoveUpSelectedMapElement;
             SignalManager.Get<MoveDownSelectedMapElementSignal>().Listener -= OnMoveDownSelectedMapElement;
             SignalManager.Get<AddMapElementSignal>().Listener -= OnAddMapElement;
+            SignalManager.Get<SaveSelectedPropertyValueSignal>().Listener -= OnSaveSelectedPropertyValue;
             #endregion
         }
 
@@ -627,6 +661,38 @@ namespace NESTool.ViewModels
 
                 MapElements.Add(fileModelVO);
             }
+        }
+
+        private void OnSaveSelectedPropertyValue(string newPropertyValue)
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+
+            if (string.IsNullOrEmpty(newPropertyValue))
+            {
+                return;
+            }
+
+            Dictionary<string, string> properties = GetModel().Entities[SelectedMapElement - 1].Properties;
+
+            int count = 0;
+            foreach (KeyValuePair<string, string> property in properties)
+            {
+                if (count == SelectedPropertyIndex)
+                {
+                    properties[property.Key] = newPropertyValue;
+                    break;
+                }
+
+                count++;
+            }
+
+            // setting the same value to trigger the population of the properties in the view again.
+            SelectedMapElement = SelectedMapElement;
+
+            ProjectItem.FileHandler.Save();
         }
 
         private void OnAddMapElement(string entityId)

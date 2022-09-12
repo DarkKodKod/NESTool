@@ -100,6 +100,7 @@ namespace NESTool.Signals
     public class MoveUpSelectedMapElementSignal : Signal<int> { }
     public class MoveDownSelectedMapElementSignal : Signal<int> { }
     public class AddMapElementSignal : Signal<string> { }
+    public class SaveSelectedPropertyValueSignal : Signal<string> { }
 
     // Entity
     public class EntitySourceSelectionChangedSignal : Signal<EntitySource> { }
