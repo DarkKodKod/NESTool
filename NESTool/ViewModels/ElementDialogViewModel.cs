@@ -15,7 +15,7 @@ namespace NESTool.ViewModels
 {
     public class ElementDialogViewModel : ViewModel
     {
-        public CloseDialogCommand CloseDialogCommand { get; } = new CloseDialogCommand();
+        public DispatchSignalCommand<CloseDialogSignal> CloseDialogCommand { get; } = new DispatchSignalCommand<CloseDialogSignal>();
         public CreateElementCommand CreateElementCommand { get; } = new CreateElementCommand();
 
         public List<ElementTypeModel> ElementTypes { get; set; } = new List<ElementTypeModel>();

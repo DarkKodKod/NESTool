@@ -1,14 +1,13 @@
 ﻿using ArchitectureLibrary.Commands;
 using ArchitectureLibrary.Signals;
-using NESTool.Signals;
 
 namespace NESTool.Commands
 {
-    public class HideGridCommand : Command
+    public class DispatchSignalCommand<T> : Command where T : ISignal, new()
     {
         public override void Execute(object parameter)
         {
-            SignalManager.Get<HideGridSignal>().Dispatch();
+            SignalManager.Get<T>().Dispatch();
         }
     }
 }

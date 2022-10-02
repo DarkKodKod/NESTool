@@ -7,7 +7,8 @@ namespace NESTool.Models
 {
     public struct Entity
     {
-        public string GUID { get; set; }
+        public string InstanceID { get; set; }
+        public string EntityID { get; set; }
         public int SortIndex { get; set; }
         public int X { get; set; }
         public int Y { get; set; }

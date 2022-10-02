@@ -28,6 +28,7 @@ namespace NESTool.ViewModels
         private Visibility _rectangleVisibility = Visibility.Hidden;
         private bool _doNotSave = false;
         private Visibility _gridVisibility = Visibility.Visible;
+        private Visibility _spriteLayerVisibility = Visibility.Visible;
         private string _metaData = string.Empty;
         private bool _exportAttributeTable = true;
         private WriteableBitmap _mapBitmap;
@@ -73,6 +74,17 @@ namespace NESTool.ViewModels
                 _gridVisibility = value;
 
                 OnPropertyChanged("GridVisibility");
+            }
+        }
+
+        public Visibility SpriteLayerVisibility
+        {
+            get => _spriteLayerVisibility;
+            set
+            {
+                _spriteLayerVisibility = value;
+
+                OnPropertyChanged("SpriteLayerVisibility");
             }
         }
 
@@ -173,7 +185,15 @@ namespace NESTool.ViewModels
 
                         if (entity.SortIndex == SelectedMapElement)
                         {
-                            Properties = new ObservableCollection<KeyValuePair<string, string>>(GetModel().Entities[i].Properties);
+                            Dictionary<string, string> list = new Dictionary<string, string>
+                            {
+                                { "X", entity.X.ToString() },
+                                { "Y", entity.Y.ToString() }
+                            };
+
+                            GetModel().Entities[i].Properties.ToList().ForEach(x => list.Add(x.Key, x.Value));
+
+                            Properties = new ObservableCollection<KeyValuePair<string, string>>(list);
                         }
                     }
                 }
@@ -446,6 +466,10 @@ namespace NESTool.ViewModels
             SignalManager.Get<MoveDownSelectedMapElementSignal>().Listener += OnMoveDownSelectedMapElement;
             SignalManager.Get<AddMapElementSignal>().Listener += OnAddMapElement;
             SignalManager.Get<SaveSelectedPropertyValueSignal>().Listener += OnSaveSelectedPropertyValue;
+            SignalManager.Get<ShowSpriteSignal>().Listener += OnShowSprite;
+            SignalManager.Get<HideSpriteSignal>().Listener += OnHideSprite;
+            SignalManager.Get<MapElementSpriteSelecteedSignal>().Listener += OnMapElementSpriteSelecteed;
+            SignalManager.Get<MapElementSpritePosChangedSignal>().Listener += OnMapElementSpritePosChanged;
             #endregion
 
             _doNotSave = true;
@@ -488,6 +512,10 @@ namespace NESTool.ViewModels
             SignalManager.Get<MoveDownSelectedMapElementSignal>().Listener -= OnMoveDownSelectedMapElement;
             SignalManager.Get<AddMapElementSignal>().Listener -= OnAddMapElement;
             SignalManager.Get<SaveSelectedPropertyValueSignal>().Listener -= OnSaveSelectedPropertyValue;
+            SignalManager.Get<ShowSpriteSignal>().Listener -= OnShowSprite;
+            SignalManager.Get<HideSpriteSignal>().Listener -= OnHideSprite;
+            SignalManager.Get<MapElementSpriteSelecteedSignal>().Listener -= OnMapElementSpriteSelecteed;
+            SignalManager.Get<MapElementSpritePosChangedSignal>().Listener -= OnMapElementSpritePosChanged;
             #endregion
         }
 
@@ -525,6 +553,64 @@ namespace NESTool.ViewModels
             }
 
             GridVisibility = Visibility.Visible;
+        }
+
+        private void OnMapElementSpritePosChanged(string mapElementId, int xPosition, int yPosition)
+        {
+            for (int i = 0; i < GetModel().Entities.Count; ++i)
+            {
+                Entity entity = GetModel().Entities[i];
+
+                if (entity.InstanceID == mapElementId)
+                {
+                    entity.X = xPosition;
+                    entity.Y = yPosition;
+
+                    GetModel().Entities[SelectedMapElement - 1] = entity;
+
+                    // setting the same value to trigger the population of the properties in the view again.
+                    SelectedMapElement = SelectedMapElement;
+
+                    ProjectItem.FileHandler.Save();
+
+                    break;
+                }
+            }
+        }
+
+        private void OnMapElementSpriteSelecteed(string mapElementId)
+        {
+            int index = 1;
+
+            foreach (Entity entity in GetModel().Entities)
+            {
+                if (entity.InstanceID == mapElementId)
+                {
+                    SelectedMapElement = index;
+                }
+
+                index++;
+            }
+        }
+
+        private void OnHideSprite()
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+
+            SpriteLayerVisibility = Visibility.Hidden;
+        }
+
+        private void OnShowSprite()
+        {
+            if (!IsActive)
+            {
+                return;
+            }
+
+            SpriteLayerVisibility = Visibility.Visible;
         }
 
         private void LoadPaletteIndex(int index)
@@ -650,7 +736,7 @@ namespace NESTool.ViewModels
 
             foreach (Entity entity in GetModel().Entities)
             {
-                FileModelVO fileModelVO = ProjectFiles.GetFileModel(entity.GUID);
+                FileModelVO fileModelVO = ProjectFiles.GetFileModel(entity.EntityID);
 
                 if (fileModelVO == null)
                 {
@@ -660,33 +746,61 @@ namespace NESTool.ViewModels
                 fileModelVO.Index = entity.SortIndex;
 
                 MapElements.Add(fileModelVO);
+
+                SignalManager.Get<AddImageToMapSignal>().Dispatch(entity);
             }
         }
 
-        private void OnSaveSelectedPropertyValue(string newPropertyValue)
+        private void OnSaveSelectedPropertyValue(string propertyValue)
         {
             if (!IsActive)
             {
                 return;
             }
 
-            if (string.IsNullOrEmpty(newPropertyValue))
+            if (string.IsNullOrEmpty(propertyValue))
             {
                 return;
             }
 
-            Dictionary<string, string> properties = GetModel().Entities[SelectedMapElement - 1].Properties;
-
-            int count = 0;
-            foreach (KeyValuePair<string, string> property in properties)
+            if (!int.TryParse(propertyValue, out int newPropertyValue))
             {
-                if (count == SelectedPropertyIndex)
+                return;
+            }
+
+            // changing the X or Y position, not in the property list
+            if (SelectedPropertyIndex < 2)
+            {
+                Entity entity = GetModel().Entities[SelectedMapElement - 1];
+
+                if (SelectedPropertyIndex == 0)
                 {
-                    properties[property.Key] = newPropertyValue;
-                    break;
+                    entity.X = newPropertyValue;
+                }
+                else
+                {
+                    entity.Y = newPropertyValue;
                 }
 
-                count++;
+                GetModel().Entities[SelectedMapElement - 1] = entity;
+
+                SignalManager.Get<SetMapElementImagePosSignal>().Dispatch(entity.InstanceID, entity.X, entity.Y);
+            }
+            else
+            {
+                Dictionary<string, string> properties = GetModel().Entities[SelectedMapElement - 1].Properties;
+
+                int count = 0;
+                foreach (KeyValuePair<string, string> property in properties)
+                {
+                    if (count == SelectedPropertyIndex - 2)
+                    {
+                        properties[property.Key] = newPropertyValue.ToString();
+                        break;
+                    }
+
+                    count++;
+                }
             }
 
             // setting the same value to trigger the population of the properties in the view again.
@@ -720,7 +834,8 @@ namespace NESTool.ViewModels
 
             Entity entity = new Entity()
             {
-                GUID = entityId,
+                InstanceID = Guid.NewGuid().ToString(),
+                EntityID = entityId,
                 SortIndex = fileModelVO.Index,
                 X = 0,
                 Y = 0,
@@ -737,6 +852,8 @@ namespace NESTool.ViewModels
             GetModel().Entities.Add(entity);
 
             ProjectItem.FileHandler.Save();
+
+            SignalManager.Get<AddImageToMapSignal>().Dispatch(entity);
         }
 
         private void OnMoveDownSelectedMapElement(int selectedElementIndex)
@@ -831,6 +948,8 @@ namespace NESTool.ViewModels
                 {
                     if (GetModel().Entities.Remove(entity))
                     {
+                        SignalManager.Get<RemoveImageToMapSignal>().Dispatch(entity.InstanceID);
+
                         break;
                     }
                 }

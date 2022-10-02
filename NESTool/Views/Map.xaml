@@ -85,6 +85,23 @@
                     </Border>
                 </Canvas>
             </Border>
+            <Border Grid.Row="1"
+                    Width="768"
+                    Height="720"
+                    VerticalAlignment="Top" 
+                    HorizontalAlignment="Left">
+                <Canvas Width="256" Height="240" 
+                        Grid.Row="1"
+                        HorizontalAlignment="Left"
+                        RenderOptions.BitmapScalingMode="NearestNeighbor"
+                        Visibility="{Binding SpriteLayerVisibility}"
+                        x:Name="cOverlay"
+                        VerticalAlignment="Top">
+                    <Canvas.RenderTransform>
+                        <ScaleTransform ScaleX="3" ScaleY="3"/>
+                    </Canvas.RenderTransform>
+                </Canvas>
+            </Border>
             <GroupBox Header="Palettes" Grid.Row="2" Margin="0,2,0,0">
                 <Grid>
                     <Grid.RowDefinitions>

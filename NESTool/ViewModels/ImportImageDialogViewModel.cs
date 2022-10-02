@@ -8,7 +8,7 @@ namespace NESTool.ViewModels
     public class ImportImageDialogViewModel : ViewModel
     {
         public BrowseFileCommand BrowseFileCommand { get; } = new BrowseFileCommand();
-        public CloseDialogCommand CloseDialogCommand { get; } = new CloseDialogCommand();
+        public DispatchSignalCommand<CloseDialogSignal> CloseDialogCommand { get; } = new DispatchSignalCommand<CloseDialogSignal>();
         public ImportImageCommand ImportImageCommand { get; } = new ImportImageCommand();
 
         #region get/set

@@ -1,6 +1,7 @@
 ﻿using NESTool.Enums;
 using NESTool.FileSystem;
 using NESTool.Models;
+using NESTool.VOs;
 using System;
 using System.Collections.Generic;
 using System.Windows.Media;
@@ -12,7 +13,7 @@ namespace NESTool.Utils
 {
     public static class CharacterUtils
     {
-        public static WriteableBitmap CreateImage(CharacterModel characterModel, int animationIndex, int frameIndex, ref GroupedPalettes groupedPalettes)
+        public static ImageVO CreateImage(CharacterModel characterModel, int animationIndex, int frameIndex, ref GroupedPalettes groupedPalettes)
         {
             if (characterModel.Animations[animationIndex].Frames == null)
             {
@@ -23,6 +24,9 @@ namespace NESTool.Utils
             {
                 return null;
             }
+
+            int maxWidth = 0;
+            int maxHeight = 0;
 
             WriteableBitmap bankBitmap = BitmapFactory.New(64, 64);
 
@@ -84,13 +88,20 @@ namespace NESTool.Utils
                     int destX = (int)Math.Floor(tile.Point.X / 8) * 8;
                     int destY = (int)Math.Floor(tile.Point.Y / 8) * 8;
 
+                    if (destX + 8 > maxWidth)
+                    {
+                        maxWidth = destX + 8;
+                    }
+                    if (destY + 8 > maxHeight)
+                    {
+                        maxHeight = destY + 8;
+                    }
+
                     Util.CopyBitmapImageToWriteableBitmap(ref bankBitmap, destX, destY, cropped);
                 }
             }
 
-            bankBitmap.Freeze();
-
-            return bankBitmap;
+            return new ImageVO() { Image = bankBitmap, Width = maxWidth, Height = maxHeight };
         }
 
         private static Dictionary<Color, Color> FillColorCacheByGroup(CharacterTile characterTile, int group, string paletteId)

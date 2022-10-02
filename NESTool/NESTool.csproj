@@ -132,7 +132,6 @@
     <Compile Include="Commands\CharacterAnimationVOSelectionChangedCommand.cs" />
     <Compile Include="Commands\CharacterCloseTabCommand.cs" />
     <Compile Include="Commands\CharacterNewTabCommand.cs" />
-    <Compile Include="Commands\CloseDialogCommand.cs" />
     <Compile Include="Commands\ColorPaletteSelectCommand.cs" />
     <Compile Include="Commands\CopyElementCommand.cs" />
     <Compile Include="Commands\CreateElementCommand.cs" />
@@ -144,18 +143,14 @@
     <Compile Include="Commands\DeleteBankTileCommand.cs" />
     <Compile Include="Commands\DeleteSelectedMapElement.cs" />
     <Compile Include="Commands\DeleteSelectedProperty.cs" />
+    <Compile Include="Commands\DispatchSignalCommand.cs" />
     <Compile Include="Commands\DragEnterCommand.cs" />
     <Compile Include="Commands\DragLeaveCommand.cs" />
     <Compile Include="Commands\DragOverCommand.cs" />
     <Compile Include="Commands\DropCommand.cs" />
     <Compile Include="Commands\DuplicateElementCommand.cs" />
-    <Compile Include="Commands\HideGridCommand.cs" />
-    <Compile Include="Commands\HideGroupMarksCommand.cs" />
     <Compile Include="Commands\ImageMouseDownCommand.cs" />
     <Compile Include="Commands\ImportImageCommand.cs" />
-    <Compile Include="Commands\MapEraseToolCommand.cs" />
-    <Compile Include="Commands\MapPaintToolCommand.cs" />
-    <Compile Include="Commands\MapSelectToolCommand.cs" />
     <Compile Include="Commands\MoveDownSelectedMapElement.cs" />
     <Compile Include="Commands\MoveTileToBankCommand.cs" />
     <Compile Include="Commands\MoveUpSelectedMapElement.cs" />
@@ -166,7 +161,6 @@
     <Compile Include="Commands\OpenBuildProjectCommand.cs" />
     <Compile Include="Commands\SaveSelectedPropertyValue.cs" />
     <Compile Include="Commands\ShowColorPaletteCommand.cs" />
-    <Compile Include="Commands\ShowGroupMarksCommand.cs" />
     <Compile Include="Commands\SourceSelectionChangedCommand.cs" />
     <Compile Include="Commands\SwitchCharacterFrameViewCommand.cs" />
     <Compile Include="Commands\OpenImportImageDialogCommand.cs" />
@@ -178,7 +172,6 @@
     <Compile Include="Commands\PauseCharacterAnimationCommand.cs" />
     <Compile Include="Commands\PlayCharacterAnimationCommand.cs" />
     <Compile Include="Commands\PreviewMouseLeftButtonDownCommand.cs" />
-    <Compile Include="Commands\PreviewMouseLeftButtonUpCommand.cs" />
     <Compile Include="Commands\PreviewMouseMoveCommand.cs" />
     <Compile Include="Commands\PreviewMouseWheelCommand.cs" />
     <Compile Include="Commands\PreviousFrameCharacterAnimationCommand.cs" />
@@ -188,7 +181,6 @@
     <Compile Include="Commands\SaveTileSetChangesCommand.cs" />
     <Compile Include="Commands\SelectTileSetCommand.cs" />
     <Compile Include="Commands\FileModelVOSelectionChangedCommand.cs" />
-    <Compile Include="Commands\ShowGridCommand.cs" />
     <Compile Include="Commands\StopCharacterAnimationCommand.cs" />
     <Compile Include="Commands\TreeviewSelectedItemChanged.cs" />
     <Compile Include="Commands\UndoCommand.cs" />
@@ -343,6 +335,7 @@
     </Compile>
     <Compile Include="VOs\CharacterAnimationVO.cs" />
     <Compile Include="VOs\EventVO.cs" />
+    <Compile Include="VOs\ImageVO.cs" />
     <Compile Include="VOs\MouseMoveVO.cs" />
     <Compile Include="VOs\MouseWheelVO.cs" />
     <Compile Include="VOs\BankLinkVO.cs" />
@@ -442,7 +435,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Commands\CloseProjectCommand.cs" />
-    <Compile Include="Commands\ExitCommand.cs" />
     <Compile Include="Commands\NewProjectCommand.cs" />
     <Compile Include="Commands\OpenProjectCommand.cs" />
     <Compile Include="Models\NESToolConfigurationModel.cs" />
@@ -579,6 +571,9 @@
   <ItemGroup>
     <Resource Include="Resources\down.png" />
     <Resource Include="Resources\up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\showsprites.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterResolveReferences">

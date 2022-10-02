@@ -13,7 +13,7 @@ namespace NESTool.ViewModels
     {
         public CreateProjectCommand CreateProjectCommand { get; } = new CreateProjectCommand();
         public BrowseFolderCommand BrowseFolderCommand { get; } = new BrowseFolderCommand();
-        public CloseDialogCommand CloseDialogCommand { get; } = new CloseDialogCommand();
+        public DispatchSignalCommand<CloseDialogSignal> CloseDialogCommand { get; } = new DispatchSignalCommand<CloseDialogSignal>();
 
         #region get/set
         public string ProjectName

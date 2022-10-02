@@ -1,5 +1,6 @@
 ﻿using NESTool.FileSystem;
 using NESTool.Models;
+using NESTool.VOs;
 using System;
 using System.Windows.Media.Imaging;
 
@@ -7,9 +8,12 @@ namespace NESTool.Utils
 {
     public static class EntityUtils
     {
-        public static WriteableBitmap CreateImage(EntityModel entityModel)
+        public static ImageVO CreateImage(EntityModel entityModel)
         {
             WriteableBitmap bankBitmap = BitmapFactory.New(64, 64);
+
+            int maxWidth = 0;
+            int maxHeight = 0;
 
             using (bankBitmap.GetBitmapContext())
             {
@@ -57,12 +61,21 @@ namespace NESTool.Utils
                         int destX = (int)Math.Floor(tile.Point.X / 8) * 8;
                         int destY = (int)Math.Floor(tile.Point.Y / 8) * 8;
 
+                        if (destX + 8 > maxWidth)
+                        {
+                            maxWidth = destX + 8;
+                        }
+                        if (destY + 8 > maxHeight)
+                        {
+                            maxHeight = destY + 8;
+                        }
+
                         Util.CopyBitmapImageToWriteableBitmap(ref bankBitmap, destX, destY, cropped);
                     }
                 }
             }
 
-            return bankBitmap;
+            return new ImageVO() { Image = bankBitmap, Width = maxWidth, Height = maxHeight };
         }
     }
 }

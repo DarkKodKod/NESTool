@@ -569,6 +569,28 @@
                         </Image.Style>
                     </Image>
                 </ToggleButton>
+                <ToggleButton ToolTip="Show/Hide Sprites" ToolBar.OverflowMode="AsNeeded" Name="tbMapShowHideSprites">
+                    <i:Interaction.Behaviors>
+                        <behaviors:EventToCommandBehavior Command="{Binding ShowSpriteCommand}" Event="Checked" PassArguments="True" />
+                        <behaviors:EventToCommandBehavior Command="{Binding HideSpriteCommand}" Event="Unchecked" PassArguments="True" />
+                    </i:Interaction.Behaviors>
+                    <Image Width="16" Height="16" Source="/resources/showsprites.png">
+                        <Image.Style>
+                            <Style TargetType="Image">
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Effect">
+                                            <Setter.Value>
+                                                <fx:GrayscaleEffect />
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Opacity" Value="0.5"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Image.Style>
+                    </Image>
+                </ToggleButton>
             </ToolBar>
         </ToolBarTray>
 		<StatusBar DockPanel.Dock="Bottom">

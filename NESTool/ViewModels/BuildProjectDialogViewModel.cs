@@ -15,7 +15,7 @@ namespace NESTool.ViewModels
         #region Commands
         public BuildProjectCommand BuildProjectCommand { get; } = new BuildProjectCommand();
         public BrowseFolderCommand BrowseFolderCommand { get; } = new BrowseFolderCommand();
-        public CloseDialogCommand CloseDialogCommand { get; } = new CloseDialogCommand();
+        public DispatchSignalCommand<CloseDialogSignal> CloseDialogCommand { get; } = new DispatchSignalCommand<CloseDialogSignal>();
         #endregion
 
         #region get/set

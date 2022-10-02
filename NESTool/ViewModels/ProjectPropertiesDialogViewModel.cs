@@ -10,7 +10,7 @@ namespace NESTool.ViewModels
 {
     public class ProjectPropertiesDialogViewModel : ViewModel
     {
-        public CloseDialogCommand CloseDialogCommand { get; } = new CloseDialogCommand();
+        public DispatchSignalCommand<CloseDialogSignal> CloseDialogCommand { get; } = new DispatchSignalCommand<CloseDialogSignal>();
 
         #region get/set
         public bool Battery

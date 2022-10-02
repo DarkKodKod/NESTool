@@ -40,6 +40,7 @@ namespace NESTool
 
         public static bool ToolBarTileSetShowHideGrid = true;
         public static bool ToolBarMapShowHideGrid = true;
+        public static bool ToolBarMapShowHideSprite = true;
         public static bool ToolBarBanksShowHideGroupMarks = false;
         public static EditFrameTools ToolBarMapTool = EditFrameTools.Select;
 
@@ -81,11 +82,23 @@ namespace NESTool
             SignalManager.Get<CloseProjectSuccessSignal>().Listener += OnCloseProjectSuccess;
             SignalManager.Get<ShowLoadingDialogSignal>().Listener += OnShowLoadingDialog;
             SignalManager.Get<FinishedLoadingProjectSignal>().Listener += OnFinishedLoadingProject;
+            SignalManager.Get<ShowSpriteSignal>().Listener += OnShowSprite;
+            SignalManager.Get<HideSpriteSignal>().Listener += OnHideSprite;
 
             // Initialize visibility statte of the toolbars
             tbrTileSet.Visibility = Visibility.Collapsed;
             tbrMap.Visibility = Visibility.Collapsed;
             tbrBanks.Visibility = Visibility.Collapsed;
+        }
+
+        private void OnHideSprite()
+        {
+            ToolBarMapShowHideSprite = false;
+        }
+
+        private void OnShowSprite()
+        {
+            ToolBarMapShowHideSprite = true;
         }
 
         private void OnHideGrid()
@@ -182,6 +195,7 @@ namespace NESTool
                     tbrMap.Visibility = Visibility.Visible;
 
                     tbMapShowHideGrid.IsChecked = ToolBarMapShowHideGrid;
+                    tbMapShowHideSprites.IsChecked = ToolBarMapShowHideSprite;
 
                     switch (ToolBarMapTool)
                     {

@@ -154,11 +154,11 @@ namespace NESTool.Views
                     return;
                 }
 
-                WriteableBitmap frameBitmap = EntityUtils.CreateImage(viewModel.GetModel());
+                ImageVO vo = EntityUtils.CreateImage(viewModel.GetModel());
 
-                if (frameBitmap != null)
+                if (vo != null && vo.Image != null)
                 {
-                    frameView.FrameImage = frameBitmap;
+                    frameView.FrameImage = vo.Image;
                 }
             }
         }

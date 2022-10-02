@@ -20,7 +20,7 @@ namespace NESTool.ViewModels
         #region Commands
         public OpenProjectCommand OpenProjectCommand { get; } = new OpenProjectCommand();
         public CloseProjectCommand CloseProjectCommand { get; } = new CloseProjectCommand();
-        public ExitCommand ExitCommand { get; } = new ExitCommand();
+        public DispatchSignalCommand<ExitSuccessSignal> ExitCommand { get; } = new DispatchSignalCommand<ExitSuccessSignal>();
         public NewProjectCommand NewProjectCommand { get; } = new NewProjectCommand();
         public NewElementCommand NewElementCommand { get; } = new NewElementCommand();
         public LoadConfigsCommand LoadConfigsCommand { get; } = new LoadConfigsCommand();
@@ -36,7 +36,7 @@ namespace NESTool.ViewModels
         public CreateFolderCommand CreateFolderCommand { get; } = new CreateFolderCommand();
         public CreateElementFromMenuCommand CreateElementFromMenuCommand { get; } = new CreateElementFromMenuCommand();
         public PreviewMouseLeftButtonDownCommand PreviewMouseLeftButtonDownCommand { get; } = new PreviewMouseLeftButtonDownCommand();
-        public PreviewMouseLeftButtonUpCommand PreviewMouseLeftButtonUpCommand { get; } = new PreviewMouseLeftButtonUpCommand();
+        public DispatchSignalCommand<MouseLeftButtonUpSignal> PreviewMouseLeftButtonUpCommand { get; } = new DispatchSignalCommand<MouseLeftButtonUpSignal>();
         public PreviewMouseMoveCommand PreviewMouseMoveCommand { get; } = new PreviewMouseMoveCommand();
         public DragEnterCommand DragEnterCommand { get; } = new DragEnterCommand();
         public DragOverCommand DragOverCommand { get; } = new DragOverCommand();
@@ -49,13 +49,15 @@ namespace NESTool.ViewModels
         public UndoCommand UndoCommand { get; } = new UndoCommand();
         public RedoCommand RedoCommand { get; } = new RedoCommand();
         public TreeviewSelectedItemChangedCommand TreeviewSelectedItemChangedCommand { get; } = new TreeviewSelectedItemChangedCommand();
-        public ShowGridCommand ShowGridCommand { get; } = new ShowGridCommand();
-        public HideGridCommand HideGridCommand { get; } = new HideGridCommand();
-        public ShowGroupMarksCommand ShowGroupMarksCommand { get; } = new ShowGroupMarksCommand();
-        public HideGroupMarksCommand HideGroupMarksCommand { get; } = new HideGroupMarksCommand();
-        public MapPaintToolCommand MapPaintToolCommand { get; } = new MapPaintToolCommand();
-        public MapEraseToolCommand MapEraseToolCommand { get; } = new MapEraseToolCommand();
-        public MapSelectToolCommand MapSelectToolCommand { get; } = new MapSelectToolCommand();
+        public DispatchSignalCommand<ShowGridSignal> ShowGridCommand { get; } = new DispatchSignalCommand<ShowGridSignal>();
+        public DispatchSignalCommand<HideGridSignal> HideGridCommand { get; } = new DispatchSignalCommand<HideGridSignal>();
+        public DispatchSignalCommand<ShowSpriteSignal> ShowSpriteCommand { get; } = new DispatchSignalCommand<ShowSpriteSignal>();
+        public DispatchSignalCommand<HideSpriteSignal> HideSpriteCommand { get; } = new DispatchSignalCommand<HideSpriteSignal>();
+        public DispatchSignalCommand<ShowGroupMarksSignal> ShowGroupMarksCommand { get; } = new DispatchSignalCommand<ShowGroupMarksSignal>();
+        public DispatchSignalCommand<HideGroupMarksSignal> HideGroupMarksCommand { get; } = new DispatchSignalCommand<HideGroupMarksSignal>();
+        public DispatchSignalCommand<MapPaintToolSignal> MapPaintToolCommand { get; } = new DispatchSignalCommand<MapPaintToolSignal>();
+        public DispatchSignalCommand<MapEraseToolSignal> MapEraseToolCommand { get; } = new DispatchSignalCommand<MapEraseToolSignal>();
+        public DispatchSignalCommand<MapSelectToolSignal> MapSelectToolCommand { get; } = new DispatchSignalCommand<MapSelectToolSignal>();
         #endregion
 
         private const string _projectNameKey = "applicationTitle";

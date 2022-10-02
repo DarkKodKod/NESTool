@@ -357,11 +357,11 @@ namespace NESTool.ViewModels
 
                     if (index >= 0)
                     {
-                        WriteableBitmap frameBitmap = CharacterUtils.CreateImage(characterModel, index, 0, ref GroupedPalettes);
+                        ImageVO vo = CharacterUtils.CreateImage(characterModel, index, 0, ref GroupedPalettes);
 
-                        if (frameBitmap != null)
+                        if (vo != null && vo.Image != null)
                         {
-                            CharacterImage = frameBitmap;
+                            CharacterImage = vo.Image;
                         }
                     }
                 }

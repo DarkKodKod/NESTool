@@ -20,7 +20,7 @@ namespace NESTool.Views
 
         #region Commands
         public ColorPaletteSelectCommand ColorPaletteSelectCommand { get; } = new ColorPaletteSelectCommand();
-        public CloseDialogCommand CloseDialogCommand { get; } = new CloseDialogCommand();
+        public DispatchSignalCommand<CloseDialogSignal> CloseDialogCommand { get; } = new DispatchSignalCommand<CloseDialogSignal>();
         #endregion
 
         public ColorPaletteDialog(PaletteIndex paletteIndex, int colorPosition)

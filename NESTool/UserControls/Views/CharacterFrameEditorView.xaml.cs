@@ -160,11 +160,11 @@ namespace NESTool.UserControls.Views
                     return;
                 }
 
-                WriteableBitmap frameBitmap = CharacterUtils.CreateImage(viewModel.CharacterModel, viewModel.AnimationIndex, viewModel.FrameIndex, ref CharacterViewModel.GroupedPalettes);
+                ImageVO vo = CharacterUtils.CreateImage(viewModel.CharacterModel, viewModel.AnimationIndex, viewModel.FrameIndex, ref CharacterViewModel.GroupedPalettes);
 
-                if (frameBitmap != null)
+                if (vo != null && vo.Image != null)
                 {
-                    frameView.FrameImage = frameBitmap;
+                    frameView.FrameImage = vo.Image;
                 }
             }
         }

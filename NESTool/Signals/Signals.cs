@@ -1,5 +1,6 @@
 ﻿using ArchitectureLibrary.Signals;
 using NESTool.Enums;
+using NESTool.Models;
 using NESTool.ViewModels;
 using NESTool.VOs;
 using System.Windows;
@@ -101,6 +102,13 @@ namespace NESTool.Signals
     public class MoveDownSelectedMapElementSignal : Signal<int> { }
     public class AddMapElementSignal : Signal<string> { }
     public class SaveSelectedPropertyValueSignal : Signal<string> { }
+    public class AddImageToMapSignal : Signal<Entity> { }
+    public class RemoveImageToMapSignal : Signal<string> { }
+    public class ShowSpriteSignal : Signal { }
+    public class HideSpriteSignal : Signal { }
+    public class MapElementSpriteSelecteedSignal : Signal<string> { }
+    public class MapElementSpritePosChangedSignal : Signal<string, int, int> { }
+    public class SetMapElementImagePosSignal : Signal<string, int, int> { }
 
     // Entity
     public class EntitySourceSelectionChangedSignal : Signal<EntitySource> { }
