@@ -14,12 +14,12 @@ namespace NESTool.Utils.Converters
             GridView g = l.View as GridView;
 
             double total = 0;
-            
+
             for (int i = 0; i < g.Columns.Count - 1; i++)
             {
                 total += g.Columns[i].Width;
             }
-            
+
             return (l.ActualWidth - total);
         }
 

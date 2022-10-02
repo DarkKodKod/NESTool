@@ -559,7 +559,7 @@ namespace NESTool.Views
         {
             if (sender is ListViewItem)
             {
-                TestDelegate myDel = () => 
+                TestDelegate myDel = () =>
                 {
                     _ = tbEditableSelectedProperty.Focus();
                     tbEditableSelectedProperty.SelectAll();
