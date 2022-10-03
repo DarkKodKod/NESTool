@@ -25,6 +25,9 @@
             DisplayMemberPath="Name"
             SelectedValuePath="Index"
             SelectedValue="{Binding Path=SelectedEntity}">
+            <ComboBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding AddMapElementCommand}" CommandParameter="{Binding SelectedEntityId}" />
+            </ComboBox.InputBindings>
         </ComboBox>
         <StackPanel 
             Grid.Row="2" 

@@ -148,8 +148,8 @@ namespace NESTool.Views
                 int gridLeft = imageLeft < 0 ? 0 : Convert.ToInt32(imageLeft);
                 int gridTop = imageTop < 0 ? 0 : Convert.ToInt32(imageTop);
 
-                gridLeft = Math.Min(gridLeft, 30);
-                gridTop = Math.Min(gridTop, 28);
+                gridLeft = Math.Min(gridLeft, 31);
+                gridTop = Math.Min(gridTop, 29);
 
                 Canvas.SetLeft(image, gridLeft * CellSize + CellOffset);
                 Canvas.SetTop(image, gridTop * CellSize + CellOffset);

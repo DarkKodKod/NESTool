@@ -424,7 +424,11 @@
                                 HorizontalAlignment="Left" 
                                 Height="23"
                                 Grid.Row="1" 
-                                Grid.Column="0"/>
+                                Grid.Column="0">
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Enter" Command="{Binding SaveSelectedPropertyValue}" CommandParameter="{Binding EditableSelectedProperty}" />
+                                </TextBox.InputBindings>
+                            </TextBox>
                             <Button 
                                 Margin="0,3,10,3" 
                                 Grid.Row="1" 
