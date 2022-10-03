@@ -193,7 +193,10 @@ Here is also possible to set the animation speed. This value is in seconds per f
 
 ### 3.5 Entities
 
-todo: work in progress
+![](/Images/entities.png)
+![](/Images/entities_2.png)
+
+![](/Images/add_property.png)
 
 <a name="Maps"/>
 
@@ -215,7 +218,7 @@ todo: work in progress
 
 ## 4. Building the project
 
-![](/Images/build2.png)
+![](/Images/build3.png)
 
 Building the project will create a bunch of files in the output directory:
 
