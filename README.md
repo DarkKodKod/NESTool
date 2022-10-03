@@ -193,10 +193,23 @@ Here is also possible to set the animation speed. This value is in seconds per f
 
 ### 3.5 Entities
 
+Entities are here to add sprites or dynamic elements to each map. Each entity will have by default an X and Y coordinate property and this can be adjusted when this entity is added to a map (read the [Maps](#Maps) section for how to add entities in a map). The second thing is to give it a distintic numeric Id for further identification.
+
+An entity can be a meta sprite or a bunch of tiles from the background. That's why the first thing to do is to select the **Source** of the entity. This can be from a **Bank** or from a **Character**.
+
+From a Bank, you can just add tiles from the selected bank on the right.
+
 ![](/Images/entities.png)
+
+From a Character, you can select any already created character from the list under Characters and a different pose from the list of animation this character might have.
+
 ![](/Images/entities_2.png)
 
+To finish the entity configuration, you can add properties to each entity that are needed for your particular game. X and Y coordinates are already the defaults for each entity but here by pressing the **Add** button, you can add for example the level where this entity is going to appear or extra attributes that might use.
+
 ![](/Images/add_property.png)
+
+Once the entity is created, it will appear as an option under **Map elements** once you press the button **Add**.
 
 <a name="Maps"/>
 
