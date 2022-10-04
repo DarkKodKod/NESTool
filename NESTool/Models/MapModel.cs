@@ -145,7 +145,6 @@ namespace NESTool.Models
 
         public AttributeTable[] AttributeTable { get; set; } = new AttributeTable[MetaTileMax];
         public string[] PaletteIDs { get; set; } = new string[4] { string.Empty, string.Empty, string.Empty, string.Empty };
-        public string MetaData { get; set; }
         public bool ExportAttributeTable { get; set; } = true;
         public List<Entity> Entities { get; set; } = new List<Entity>();
     }

@@ -23,9 +23,8 @@ namespace NESTool.Commands
         private const int NTSC = 60;
         private const int PAL = 50;
 
-        private enum MetaType : byte
+        private enum MetaType : int
         {
-            Bat = 0,
             Snake = 1,
             Spider = 2,
             Skull = 3,
@@ -33,24 +32,18 @@ namespace NESTool.Commands
             WhiteKey = 5,
             BlueKey = 6,
             RedKey = 7,
-            GoldenKey = 8,
             Talisman = 9,
             Sword = 10,
             Crystal = 11,
-            Torch = 12,
-            NotUsed = 13,
             DoorWhiteElement = 14,
             DoorBlueElement = 15,
             DoorRedElement = 16,
             AddBrick = 17,
-            AddHalfBrick = 18,
             AddChain = 19,
             AddLadderLeft = 20,
             AddLadderRight = 21,
             AddTopLadderLeft = 22,
-            AddTopLadderRight = 23,
-            AddBlank = 24,
-            Door = 32
+            AddTopLadderRight = 23
         }
 
         public override bool CanExecute(object parameter)
@@ -271,7 +264,7 @@ namespace NESTool.Commands
                         FormatBytes(serializedMap, outputFile, 8);
                     }
 
-                    PrintMetaData(model, item, outputFile);
+                    PrintMapEntities(model, item, outputFile);
                 }
             }
 
@@ -304,193 +297,181 @@ namespace NESTool.Commands
             outputFile.Write(Environment.NewLine);
         }
 
-        private bool IsDoor(MetaType type)
+        private void PrintMapEntities(MapModel model, FileModelVO item, StreamWriter outputFile)
         {
-            return type == MetaType.DoorWhiteElement || type == MetaType.DoorBlueElement || type == MetaType.DoorRedElement;
-        }
-
-        private bool IsAddElement(MetaType type)
-        {
-            return type == MetaType.AddBrick ||
-                type == MetaType.AddHalfBrick ||
-                type == MetaType.AddChain ||
-                type == MetaType.AddLadderLeft ||
-                type == MetaType.AddLadderRight ||
-                type == MetaType.AddTopLadderLeft ||
-                type == MetaType.AddTopLadderRight;
-        }
-
-        private void PrintMetaData(MapModel model, FileModelVO item, StreamWriter outputFile)
-        {
-            if (!string.IsNullOrEmpty(model.MetaData))
+            void WriteData(string type, int x, int y, int palette, int lowLevel, int upperLevel, bool isItem, bool isMapElement)
             {
-                outputFile.WriteLine($"metadata_{item.Name}:");
+                // name
+                outputFile.Write(type);
+                outputFile.Write(", ");
 
-                string[] lines = model.MetaData.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+                // write PPU name table addresses
+                int dec = /*PPU address = $2000*/8192 + (32 * y) + x;
+                string str = $"{dec:X4}";
 
-                for (int i = 0; i < lines.Length; ++i)
+                string strLow = str.Substring(2, 2);
+                string strHigh = str.Substring(0, 2);
+
+                outputFile.Write($"${strLow}, ${strHigh}, ");
+
+                // write PPU attribute table addresses
+                int bigCellPosX = (int)Math.Floor(x / 32.0f * 8.0f);
+                int bigCellPosY = (int)Math.Floor(y / 32.0f * 8.0f);
+
+                if (!isMapElement)
                 {
-                    string line = lines[i].Trim();
+                    dec = /*PPU address = $23C0*/9152 + (8 * bigCellPosY) + bigCellPosX;
+                    str = $"{dec:X4}";
 
-                    if (string.IsNullOrWhiteSpace(line))
-                    {
-                        continue;
-                    }
+                    strLow = str.Substring(2, 2);
+                    strHigh = str.Substring(0, 2);
 
-                    string[] bytes = line.Split(new[] { "," }, StringSplitOptions.None);
-
-                    outputFile.Write("    .byte ");
-
-                    bool mapElement = false;
-                    int cacheX = 0;
-                    int cacheY = 0;
-                    int bigCellPosX = 0;
-                    int bigCellPosY = 0;
-                    MetaType type = MetaType.Bat;
-                    bool secondToLast = false;
-                    bool last = false;
-
-                    for (int j = 0; j < bytes.Length; ++j)
-                    {
-                        if (!int.TryParse(bytes[j], out int nValue))
-                        {
-                            continue;
-                        }
-
-                        if (j == bytes.Length - 2)
-                        {
-                            secondToLast = true;
-                        }
-
-                        if (j == bytes.Length - 1)
-                        {
-                            secondToLast = false;
-                            last = true;
-                        }
-
-                        if (j == 0)
-                        {
-                            type = (MetaType)nValue;
-
-                            if (type >= MetaType.WhiteKey)
-                            {
-                                mapElement = true;
-                            }
-                        }
-
-                        if (mapElement && j == 1)
-                        {
-                            cacheX = nValue;
-                        }
-                        else if (mapElement && j == 2)
-                        {
-                            cacheY = nValue;
-
-                            // write PPU name table addresses
-                            int dec = /*PPU address = $2000*/8192 + (32 * cacheY) + cacheX;
-                            string str = $"{dec:X4}";
-
-                            string strLow = str.Substring(2, 2);
-                            string strHigh = str.Substring(0, 2);
-
-                            outputFile.Write($"${strLow}, ${strHigh}, ");
-
-                            if (!IsAddElement(type))
-                            {
-                                // write PPU attribute table addresses
-                                bigCellPosX = (int)Math.Floor(cacheX / 32.0f * 8.0f);
-                                bigCellPosY = (int)Math.Floor(cacheY / 32.0f * 8.0f);
-
-                                dec = /*PPU address = $23C0*/9152 + (8 * bigCellPosY) + bigCellPosX;
-                                str = $"{dec:X4}";
-
-                                strLow = str.Substring(2, 2);
-                                strHigh = str.Substring(0, 2);
-
-                                outputFile.Write($"${strLow}, ${strHigh}, ");
-                            }
-
-                            // write x, y coordinates
-                            outputFile.Write($"${cacheX:X2}, ${cacheY:X2}, ");
-                        }
-                        else if (mapElement && j == 3 && !IsDoor(type) && !IsAddElement(type))
-                        {
-                            // check if is left or right and bottom or top
-                            int middleX = (4 * bigCellPosX) + 2;
-                            int middleY = (4 * bigCellPosY) + 2;
-
-                            int paletteIndex;
-
-                            // to the right
-                            if (cacheX >= middleX)
-                            {
-                                // to the top
-                                if (cacheY < middleY)
-                                {
-                                    paletteIndex = nValue << 2;
-                                }
-                                else
-                                // to the bottom
-                                {
-                                    paletteIndex = nValue << 6;
-                                }
-                            }
-                            // to the left
-                            else
-                            {
-                                // to the top
-                                if (cacheY < middleY)
-                                {
-                                    paletteIndex = nValue;
-                                }
-                                else
-                                // to the bottom
-                                {
-                                    paletteIndex = nValue << 4;
-                                }
-                            }
-
-                            outputFile.Write($"${paletteIndex:X2}, ");
-                        }
-                        else
-                        {
-                            if (secondToLast)
-                            {
-                                outputFile.Write("(");
-                            }
-
-                            if (j == 0)
-                            {
-                                outputFile.Write(Enum.GetName(typeof(MetaType), type));
-                            }
-                            else
-                            {
-                                outputFile.Write($"${nValue:X2}");
-                            }
-
-                            if (secondToLast)
-                            {
-                                outputFile.Write(" | ");
-                            }
-                            else if (last)
-                            {
-                                outputFile.Write("<<4)");
-                            }
-
-                            if (j < bytes.Length - 1 && !secondToLast)
-                            {
-                                outputFile.Write(", ");
-                            }
-                        }
-                    }
-
-                    outputFile.Write(Environment.NewLine);
+                    outputFile.Write($"${strLow}, ${strHigh}, ");
                 }
 
-                // Add always a null terminator
-                outputFile.Write("    .byte $00");
+                // write x, y coordinates
+                outputFile.Write($"${x:X2}, ${y:X2}, ");
+
+                // check if is left or right and bottom or top
+                int middleX = (4 * bigCellPosX) + 2;
+                int middleY = (4 * bigCellPosY) + 2;
+
+                if (isItem)
+                {
+                    int paletteIndex;
+
+                    // to the right
+                    if (x >= middleX)
+                    {
+                        // to the top
+                        if (y < middleY)
+                        {
+                            paletteIndex = palette << 2;
+                        }
+                        else
+                        // to the bottom
+                        {
+                            paletteIndex = palette << 6;
+                        }
+                    }
+                    // to the left
+                    else
+                    {
+                        // to the top
+                        if (y < middleY)
+                        {
+                            paletteIndex = palette;
+                        }
+                        else
+                        // to the bottom
+                        {
+                            paletteIndex = palette << 4;
+                        }
+                    }
+
+                    outputFile.Write($"${paletteIndex:X2}, ");
+                }
+
+                // Levels
+                outputFile.Write("(");
+                outputFile.Write($"${lowLevel:X2}");
+                outputFile.Write(" | ");
+                outputFile.Write($"${upperLevel:X2}");
+                outputFile.Write("<<4)");
+            }
+
+            void WriteEnemyData(string type, int x, int y, int att, int lowLevel, int upperLevel)
+            {
+                // name
+                outputFile.Write(type);
+                outputFile.Write(", ");
+                // X
+                outputFile.Write($"${x:X2}");
+                outputFile.Write(", ");
+                // Y
+                outputFile.Write($"${y:X2}");
+                outputFile.Write(", ");
+                // Attributes
+                outputFile.Write($"${att:X2}");
+                outputFile.Write(", ");
+                // Levels
+                outputFile.Write("(");
+                outputFile.Write($"${lowLevel:X2}");
+                outputFile.Write(" | ");
+                outputFile.Write($"${upperLevel:X2}");
+                outputFile.Write("<<4)");
+            }
+
+            if (model.Entities.Count == 0)
+            {
+                return;
+            }
+
+            outputFile.WriteLine($"metadata_{item.Name}:");
+
+            foreach (Models.Entity entity in model.Entities)
+            {
+                EntityModel entityModel = ProjectFiles.GetModel<EntityModel>(entity.EntityID);
+                
+                if (entityModel == null)
+                {
+                    continue;
+                }
+
+                outputFile.Write("    .byte ");
+
+                string typeName = Enum.GetName(typeof(MetaType), entityModel.EntityId);
+
+                int minLevel = int.Parse(entity.Properties["MinLevel"]);
+                int maxLevel = int.Parse(entity.Properties["MaxLevel"]);
+
+                switch ((MetaType)entityModel.EntityId)
+                {
+                    case MetaType.Snake:
+                    case MetaType.Spider:
+                    case MetaType.Skull:
+                    case MetaType.JumpingSkull:
+                        {
+                            string attributes = entity.Properties["Attributes"];
+
+                            WriteEnemyData(typeName, entity.X, entity.Y, int.Parse(attributes), minLevel, maxLevel);
+                        }
+                        break;
+                    case MetaType.WhiteKey:
+                    case MetaType.BlueKey:
+                    case MetaType.RedKey:
+                    case MetaType.Talisman:
+                    case MetaType.Sword:
+                    case MetaType.Crystal:
+                        {
+                            string paletteIndex = entity.Properties["PaletteIndex"];
+
+                            WriteData(typeName, entity.X, entity.Y, int.Parse(paletteIndex), minLevel, maxLevel, isItem: true, isMapElement: false);
+                        }
+                        break;
+                    case MetaType.DoorWhiteElement:
+                    case MetaType.DoorBlueElement:
+                    case MetaType.DoorRedElement:
+                        {
+                            WriteData(typeName, entity.X, entity.Y, 0, minLevel, maxLevel, isItem: false, isMapElement: false);
+                        }
+                        break;
+                    case MetaType.AddBrick:
+                    case MetaType.AddChain:
+                    case MetaType.AddLadderLeft:
+                    case MetaType.AddLadderRight:
+                    case MetaType.AddTopLadderLeft:
+                    case MetaType.AddTopLadderRight:
+                        WriteData(typeName, entity.X, entity.Y, 0, minLevel, maxLevel, isItem: false, isMapElement: true);
+                        break;
+                }
+
                 outputFile.Write(Environment.NewLine);
             }
+
+            // Add always a null terminator
+            outputFile.Write("    .byte $00");
+            outputFile.Write(Environment.NewLine);
         }
 
         private void SerializeNametable(MapModel model, ref List<byte> serializedData)

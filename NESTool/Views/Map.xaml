@@ -220,7 +220,6 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="450"/>
                 <RowDefinition Height="auto" />
-                <RowDefinition Height="100" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <GroupBox Grid.Row="0" Header="Banks" Margin="0,10,0,0">
@@ -254,12 +253,7 @@
                     <CheckBox IsChecked="{Binding ExportAttributeTable, Mode=TwoWay}" HorizontalAlignment="Left" Grid.Row="2">Export Attribute Table</CheckBox>
                 </Grid>
             </GroupBox>
-            <GroupBox Header="Meta Data" Grid.Row="2" Margin="0,2,0,10">
-                <Grid>
-                    <TextBox AcceptsReturn="True" TextWrapping="NoWrap" Text="{Binding Path=MetaData,Mode=TwoWay}" />
-                </Grid>
-            </GroupBox>
-            <GroupBox Header="Map elements" Grid.Row="3" Margin="0,2,0,10">
+            <GroupBox Header="Map elements" Grid.Row="2" Margin="0,2,0,10">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto"/>

@@ -29,7 +29,6 @@ namespace NESTool.ViewModels
         private bool _doNotSave = false;
         private Visibility _gridVisibility = Visibility.Visible;
         private Visibility _spriteLayerVisibility = Visibility.Visible;
-        private string _metaData = string.Empty;
         private bool _exportAttributeTable = true;
         private WriteableBitmap _mapBitmap;
         private FileModelVO[] _palettes;
@@ -207,22 +206,6 @@ namespace NESTool.ViewModels
             }
         }
 
-        public string MetaData
-        {
-            get => _metaData;
-            set
-            {
-                if (_metaData != value)
-                {
-                    _metaData = value;
-
-                    UpdateAndSaveMetaData(value);
-                }
-
-                OnPropertyChanged("MetaData");
-            }
-        }
-
         public ImageSource FrameImage
         {
             get => _frameImage;
@@ -392,18 +375,6 @@ namespace NESTool.ViewModels
         }
         #endregion
 
-        private void UpdateAndSaveMetaData(string metaData)
-        {
-            GetModel().MetaData = metaData;
-
-            if (_doNotSave)
-            {
-                return;
-            }
-
-            ProjectItem.FileHandler.Save();
-        }
-
         private void UpdateAndSaveExportAttributeTable(bool exportAttributeTable)
         {
             GetModel().ExportAttributeTable = exportAttributeTable;
@@ -477,7 +448,6 @@ namespace NESTool.ViewModels
             if (GetModel() != null)
             {
                 ExportAttributeTable = GetModel().ExportAttributeTable;
-                MetaData = GetModel().MetaData;
             }
 
             LoadPalettes();
