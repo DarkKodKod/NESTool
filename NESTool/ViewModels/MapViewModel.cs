@@ -853,6 +853,8 @@ namespace NESTool.ViewModels
 
             ProjectItem.FileHandler.Save();
 
+            SelectedMapElement = GetModel().Entities.Count;
+
             SignalManager.Get<AddImageToMapSignal>().Dispatch(entity);
         }
 
