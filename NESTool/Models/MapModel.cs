@@ -143,6 +143,16 @@ namespace NESTool.Models
             return ref AttributeTable[attributeTableIndex].MapTile[tileIndex];
         }
 
+        public string GetPropertyValue(Entity entity, string propertyKey)
+        {
+            if (entity.Properties.TryGetValue(propertyKey, out string value))
+            {
+                return value;
+            }
+
+            return string.Empty;
+        }
+
         public AttributeTable[] AttributeTable { get; set; } = new AttributeTable[MetaTileMax];
         public string[] PaletteIDs { get; set; } = new string[4] { string.Empty, string.Empty, string.Empty, string.Empty };
         public bool ExportAttributeTable { get; set; } = true;

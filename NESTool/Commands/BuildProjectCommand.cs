@@ -422,8 +422,8 @@ namespace NESTool.Commands
 
                 string typeName = Enum.GetName(typeof(MetaType), entityModel.EntityId);
 
-                int minLevel = int.Parse(entity.Properties["MinLevel"]);
-                int maxLevel = int.Parse(entity.Properties["MaxLevel"]);
+                int minLevel = int.Parse(model.GetPropertyValue(entity, "MinLevel"));
+                int maxLevel = int.Parse(model.GetPropertyValue(entity, "MaxLevel"));
 
                 switch ((MetaType)entityModel.EntityId)
                 {
@@ -432,7 +432,7 @@ namespace NESTool.Commands
                     case MetaType.Skull:
                     case MetaType.JumpingSkull:
                         {
-                            string attributes = entity.Properties["Attributes"];
+                            string attributes = model.GetPropertyValue(entity, "Attributes");
 
                             WriteEnemyData(typeName, entity.X, entity.Y, int.Parse(attributes), minLevel, maxLevel);
                         }
@@ -444,7 +444,7 @@ namespace NESTool.Commands
                     case MetaType.Sword:
                     case MetaType.Crystal:
                         {
-                            string paletteIndex = entity.Properties["PaletteIndex"];
+                            string paletteIndex = model.GetPropertyValue(entity, "PaletteIndex");
 
                             WriteData(typeName, entity.X, entity.Y, int.Parse(paletteIndex), minLevel, maxLevel, isItem: true, isMapElement: false);
                         }
