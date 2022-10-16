@@ -208,7 +208,7 @@ namespace NESTool.ViewModels
             OnPropertyChanged("Filters");
         }
 
-        private void BrowseFileSuccess(string filePath, bool newFile)
+        private void OnBrowseFileSuccess(string filePath, bool newFile)
         {
             if (!IsActive)
             {
@@ -345,7 +345,7 @@ namespace NESTool.ViewModels
             SignalManager.Get<SelectedPixelSignal>().Listener += OnSelectedPixel;
             SignalManager.Get<ColorPaletteSelectSignal>().Listener += OnColorPaletteSelect;
             SignalManager.Get<SavedPixelChangesSignal>().Listener += OnSavedPixelChanges;
-            SignalManager.Get<BrowseFileSuccessSignal>().Listener += BrowseFileSuccess;
+            SignalManager.Get<BrowseFileSuccessSignal>().Listener += OnBrowseFileSuccess;
             #endregion
 
             if (!string.IsNullOrEmpty(GetModel().ImagePath))
@@ -378,7 +378,7 @@ namespace NESTool.ViewModels
             SignalManager.Get<SelectedPixelSignal>().Listener -= OnSelectedPixel;
             SignalManager.Get<ColorPaletteSelectSignal>().Listener -= OnColorPaletteSelect;
             SignalManager.Get<SavedPixelChangesSignal>().Listener -= OnSavedPixelChanges;
-            SignalManager.Get<BrowseFileSuccessSignal>().Listener -= BrowseFileSuccess;
+            SignalManager.Get<BrowseFileSuccessSignal>().Listener -= OnBrowseFileSuccess;
             #endregion
         }
 

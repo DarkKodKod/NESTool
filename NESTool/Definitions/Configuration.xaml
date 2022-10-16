@@ -20,8 +20,6 @@
     <system:String x:Key="extensionPalettes">.palette</system:String>
     <system:String x:Key="extensionWorlds">.world</system:String>
     <system:String x:Key="extensionEntities">.entity</system:String>
-	<system:Int32 x:Key="projectVersion">1</system:Int32>
-	<system:Int32 x:Key="toolVersion">1</system:Int32>
     <system:String x:Key="mappersFileName">mappers</system:String>
     <system:Int32 x:Key="mappersVersion">1</system:Int32>
     <system:String x:Key="NewElementName">New Element</system:String>

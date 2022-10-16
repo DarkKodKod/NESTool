@@ -13,6 +13,9 @@ namespace NESTool.Commands
             object[] values = (object[])parameter;
             string path = (string)values[0];
             string[] filters = null;
+            // New file here is a hardcoded way to identify the origin of the call, so I dont execute new file in multiple locations
+            // When newFile is false, that means it was called by the TileSetViewModel and when is true it was called by
+            // ImportImageDialogViewModel (of course this is not ok).
             bool newFile = (bool)values[2];
 
             if (values.Length > 1)

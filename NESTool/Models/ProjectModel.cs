@@ -3,7 +3,6 @@ using ArchitectureLibrary.Signals;
 using NESTool.Enums;
 using NESTool.Signals;
 using Nett;
-using System.Windows;
 
 namespace NESTool.Models
 {
@@ -58,12 +57,8 @@ namespace NESTool.Models
         [TomlIgnore] public string ProjectFilePath { get; set; }
         [TomlIgnore] public string ProjectPath { get; set; }
 
-        private const string _projectVersionKey = "projectVersion";
-        private readonly int _projectVersion = 0;
-
         public ProjectModel()
         {
-            _projectVersion = (int)Application.Current.FindResource(_projectVersionKey);
         }
 
         public void Reset()
@@ -73,7 +68,7 @@ namespace NESTool.Models
             Name = "";
             RLECompression = false;
             Header.Reset();
-            Build.Reset(); ;
+            Build.Reset();
         }
 
         public bool IsOpen()

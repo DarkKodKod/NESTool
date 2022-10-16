@@ -31,7 +31,7 @@ namespace NESTool.ViewModels
 
         public ImportImageDialogViewModel()
         {
-            SignalManager.Get<BrowseFileSuccessSignal>().Listener += BrowseFileSuccess;
+            SignalManager.Get<BrowseFileSuccessSignal>().Listener += OnBrowseFileSuccess;
             SignalManager.Get<CloseDialogSignal>().Listener += OnCloseDialog;
 
             FillOutFilters();
@@ -59,10 +59,10 @@ namespace NESTool.ViewModels
 
         private void OnCloseDialog()
         {
-            SignalManager.Get<BrowseFileSuccessSignal>().Listener -= BrowseFileSuccess;
+            SignalManager.Get<BrowseFileSuccessSignal>().Listener -= OnBrowseFileSuccess;
             SignalManager.Get<CloseDialogSignal>().Listener -= OnCloseDialog;
         }
 
-        private void BrowseFileSuccess(string filePath, bool newFile) => FilePath = filePath;
+        private void OnBrowseFileSuccess(string filePath, bool newFile) => FilePath = filePath;
     }
 }
