@@ -1,4 +1,5 @@
 ﻿using ArchitectureLibrary.Commands;
+using NESTool.FileSystem;
 using NESTool.Views;
 using System.Windows;
 
@@ -8,6 +9,11 @@ namespace NESTool.Commands
     {
         public override bool CanExecute(object parameter)
         {
+            if (ProjectFiles.ObjectsLoading > 0)
+            {
+                return false;
+            }
+
             if (parameter == null)
             {
                 return false;

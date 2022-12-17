@@ -11,7 +11,7 @@
         xmlns:cv="clr-namespace:NESTool.Utils.Converters"
         xmlns:enum="clr-namespace:NESTool.Enums"
         ShowInTaskbar="False"
-        Title="Build" Height="366" Width="651"
+        Title="Build" Height="400" Width="700"
         ResizeMode="NoResize" WindowStartupLocation="CenterOwner"
         Closing="Window_Closing">
     <Window.DataContext>
