@@ -524,5 +524,12 @@ namespace NESTool
 
             e.Handled = !Util.ValidFileName(previousText + e.Text);
         }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            Application.Current.Shutdown();
+        }
     }
 }
