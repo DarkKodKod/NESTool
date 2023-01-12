@@ -12,6 +12,12 @@
         FreeForm = 1
     }
 
+    public enum TVStandard
+    {
+        PAL = 50,
+        NTSC = 60
+    }
+
     public enum FrameTiming
     {
         NTSC = 0,

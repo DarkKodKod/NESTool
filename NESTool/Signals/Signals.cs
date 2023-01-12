@@ -23,7 +23,7 @@ namespace NESTool.Signals
     public class ProjectItemLoadedSignal : Signal<string> { }
     public class ShowLoadingDialogSignal : Signal { }
     public class FinishedLoadingProjectSignal : Signal { }
-    public class WriteBuildOutputSignal : Signal<string, OutputMessageType> { }
+    public class WriteBuildOutputSignal : Signal<string, OutputMessageType, string> { }
 
     // Edit
     public class PasteElementSignal : Signal<ProjectItem, ProjectItem> { }

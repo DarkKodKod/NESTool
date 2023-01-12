@@ -31,7 +31,7 @@ namespace NESTool.Views
             WindowUtility.RemoveIcon(this);
         }
 
-        private void OnWriteBuildOutput(string newLine, OutputMessageType messageType)
+        private void OnWriteBuildOutput(string newLine, OutputMessageType messageType, string color = "")
         {
             BrushConverter bc = new BrushConverter();
 
@@ -40,12 +40,14 @@ namespace NESTool.Views
                 Text = newLine + Environment.NewLine
             };
 
-            string color = "";
-            switch (messageType)
+            if (string.IsNullOrEmpty(color))
             {
-                case OutputMessageType.Information: color = "Black"; break;
-                case OutputMessageType.Warning: color = "Yellow"; break;
-                case OutputMessageType.Error: color = "Red"; break;
+                switch (messageType)
+                {
+                    case OutputMessageType.Information: color = "Black"; break;
+                    case OutputMessageType.Warning: color = "Yellow"; break;
+                    case OutputMessageType.Error: color = "Red"; break;
+                }
             }
 
             tr.ApplyPropertyValue(TextElement.ForegroundProperty, bc.ConvertFromString(color));

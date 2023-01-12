@@ -6,10 +6,20 @@ namespace ArchitectureLibrary.Commands
 {
     public class Command : ICommand, IDisposable
     {
+        private EventHandler _internalCanExecuteChanged;
+
         public virtual event EventHandler CanExecuteChanged
         {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
+            add
+            {
+                _internalCanExecuteChanged += value;
+                CommandManager.RequerySuggested += value;
+            }
+            remove
+            {
+                _internalCanExecuteChanged -= value;
+                CommandManager.RequerySuggested -= value;
+            }
         }
 
         public virtual bool CanExecute(object parameter)
@@ -25,6 +35,11 @@ namespace ArchitectureLibrary.Commands
         public virtual async void Execute(object parameter)
         {
             await ExecuteAsync(parameter).ConfigureAwait(false);
+        }
+
+        public void RaiseCanExecuteChanged()
+        {
+            _internalCanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public virtual void Deactivate()

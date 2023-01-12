@@ -126,6 +126,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Building\BackgroundsBuilding.cs" />
+    <Compile Include="Building\BanksBuilding.cs" />
+    <Compile Include="Building\MetaSpritesBuilding.cs" />
+    <Compile Include="Building\PalettesBuilding.cs" />
+    <Compile Include="Building\TilesDefinitionsBuilding.cs" />
     <Compile Include="Commands\AddMapElementCommand.cs" />
     <Compile Include="Commands\AddPropertyCommand.cs" />
     <Compile Include="Commands\BrowseFileCommand.cs" />
