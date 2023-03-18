@@ -219,7 +219,7 @@ Maps are created by using banks. If the bank is set to pattern table for sprite 
 
 From the tool bar is possible to select a 16x16 quadrant and assing a palette number from 0 to 3. Here is imposed the NES hardware restriction that palettes are only assigned to 16x16 pixels cell. Next to the selection tool is the paint tool and by selecting any cell from the [Bank](#Banks) area it is possible to "paint" over the map area. Keeping the mouse down will help the "paint" of multiple 8x8 cells at a time. Next is the **erase** tool. This tool will erase and will leave no data to that cell.
 
-![](/Images/map2.png)
+![](/Images/map3.png)
 
 <a name="Buildingtheproject"/>
 
