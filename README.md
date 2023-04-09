@@ -25,7 +25,7 @@ This tool is far from comlete. Current version is 1.0.0
 
 ## 1. Overview
 
-I created this tool while developing Montezuma's Revenge for the NES. Here is the kickstarter page, https://www.kickstarter.com/projects/348297293/nes-montezumas-revenge. The idea was to create a tool game agnostic but I failed when it generates the character and map data. The plan was to use scripting for that using Python for example but it was to difficult to embed the scripting into the tool. I want a single file that creates what it needs to run and it doesn't depend on external files to function. 
+I created this tool while developing Montezuma's Revenge for the NES. Here is the kickstarter page, https://www.kickstarter.com/projects/348297293/nes-montezumas-revenge. The idea was to create a tool game agnostic but I failed when it generates the character and map data. The plan was to use scripting for that using Python for example but it was to difficult to embed the scripting into the tool. I want a single file that creates what it needs to run and it doesn't depend on external files to function. With this tool is possible to import sprite sheets and organize the imgames to form a pattern table. With the help of these pattern tables you can create Characters, animate them and also maps and add characters to them.
 
 ![](/Images/nestool.png)
 
