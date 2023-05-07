@@ -272,7 +272,7 @@ namespace NESTool
 
         private void OnFinishedLoadingProject()
         {
-            _loadingDialog.Hide();
+            _loadingDialog.Close();
         }
 
         private void OnCloseProjectSuccess()

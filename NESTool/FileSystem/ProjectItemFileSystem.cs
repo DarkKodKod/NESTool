@@ -59,12 +59,12 @@ namespace NESTool.FileSystem
 
         private static async Task<AFileModel> ReadFileAndLoadModelAsync(string filePath, ProjectItemType type)
         {
-            string content = await ReadTextAsync(filePath).ConfigureAwait(false);
+            byte[] content = await ReadTextAsync(filePath).ConfigureAwait(false);
 
             return await ReadFileModel(type, content).ConfigureAwait(false);
         }
 
-        private static async Task<string> ReadTextAsync(string filePath)
+        private static async Task<byte[]> ReadTextAsync(string filePath)
         {
             byte[] result;
 
@@ -75,27 +75,27 @@ namespace NESTool.FileSystem
                 _ = await sourceStream.ReadAsync(result, 0, (int)sourceStream.Length).ConfigureAwait(false);
             }
 
-            return Encoding.UTF8.GetString(result);
+            return result;
         }
 
-        private static Task<AFileModel> ReadFileModel(ProjectItemType type, string content)
+        private static Task<AFileModel> ReadFileModel(ProjectItemType type, byte[] content)
         {
             switch (type)
             {
                 case ProjectItemType.Bank:
-                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<BankModel>(content));
+                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadStream<BankModel>(new MemoryStream(content)));
                 case ProjectItemType.Character:
-                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<CharacterModel>(content));
+                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadStream<CharacterModel>(new MemoryStream(content)));
                 case ProjectItemType.Map:
-                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<MapModel>(content));
+                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadStream<MapModel>(new MemoryStream(content)));
                 case ProjectItemType.TileSet:
-                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<TileSetModel>(content));
+                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadStream<TileSetModel>(new MemoryStream(content)));
                 case ProjectItemType.Palette:
-                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<PaletteModel>(content));
+                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadStream<PaletteModel>(new MemoryStream(content)));
                 case ProjectItemType.World:
-                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<WorldModel>(content));
+                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadStream<WorldModel>(new MemoryStream(content)));
                 case ProjectItemType.Entity:
-                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadString<EntityModel>(content));
+                    return Task<AFileModel>.Factory.StartNew(() => Toml.ReadStream<EntityModel>(new MemoryStream(content)));
                 case ProjectItemType.None:
                 default:
                     return Task.FromResult<AFileModel>(null);
