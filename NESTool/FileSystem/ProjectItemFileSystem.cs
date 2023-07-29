@@ -7,7 +7,6 @@ using NESTool.ViewModels;
 using Nett;
 using System;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NESTool.FileSystem
