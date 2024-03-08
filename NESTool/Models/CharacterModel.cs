@@ -1,4 +1,5 @@
 ﻿using Nett;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace NESTool.Models
@@ -11,12 +12,12 @@ namespace NESTool.Models
         public int OffsetY { get; set; }
     }
 
-    public struct CharacterAnimation
+    public class CharacterAnimation
     {
         public string ID { get; set; }
         public string Name { get; set; }
         public float Speed { get; set; }
-        public FrameModel[] Frames { get; set; }
+        public List<FrameModel> Frames { get; set; } = [];
         public CollisionInfo CollisionInfo { get; set; }
     }
 
@@ -40,7 +41,7 @@ namespace NESTool.Models
             }
         }
 
-        public CharacterAnimation[] Animations { get; set; } = new CharacterAnimation[AnimationSize];
-        public string[] PaletteIDs { get; set; } = new string[4] { string.Empty, string.Empty, string.Empty, string.Empty };
+        public List<CharacterAnimation> Animations { get; set; } = [];
+        public string[] PaletteIDs { get; set; } = [string.Empty, string.Empty, string.Empty, string.Empty];
     }
 }

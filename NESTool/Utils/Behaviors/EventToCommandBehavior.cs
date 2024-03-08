@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xaml.Behaviors;
 using System;
 using System.Reflection;
+using System.Runtime.Versioning;
 using System.Windows;
 using System.Windows.Input;
 
@@ -10,6 +11,7 @@ namespace NESTool.Utils.Behaviors
     /// Behavior that will connect an UI event to a viewmodel Command,
     /// allowing the event arguments to be passed as the CommandParameter.
     /// </summary>
+    [SupportedOSPlatform("windows")]
     public class EventToCommandBehavior : Behavior<FrameworkElement>
     {
         private Delegate _handler;

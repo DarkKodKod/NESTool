@@ -15,7 +15,8 @@ namespace NESTool.Utils
     {
         public static ImageVO CreateImage(CharacterModel characterModel, int animationIndex, int frameIndex, ref GroupedPalettes groupedPalettes)
         {
-            if (characterModel.Animations[animationIndex].Frames == null)
+            if (characterModel.Animations[animationIndex].Frames == null ||
+                characterModel.Animations[animationIndex].Frames.Count == 0)
             {
                 return null;
             }

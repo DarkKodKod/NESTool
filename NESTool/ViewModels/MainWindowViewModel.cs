@@ -9,12 +9,14 @@ using NESTool.Utils.Adorners;
 using NESTool.VOs;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Versioning;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 
 namespace NESTool.ViewModels
 {
+    [SupportedOSPlatform("windows")]
     public class MainWindowViewModel : ViewModel
     {
         #region Commands

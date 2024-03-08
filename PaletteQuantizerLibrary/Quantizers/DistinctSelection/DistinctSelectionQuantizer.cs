@@ -129,7 +129,7 @@ namespace SimplePaletteQuantizer.Quantizers.DistinctSelection
                     ToList();
 
                 // workaround for backgrounds, the most prevalent color
-                DistinctColorInfo background = colorInfoList.MaxBy(info => info.Count);
+                DistinctColorInfo background = Enumerable.MaxBy(colorInfoList, info => info.Count);
                 colorInfoList.Remove(background);
                 colorCount--;
 

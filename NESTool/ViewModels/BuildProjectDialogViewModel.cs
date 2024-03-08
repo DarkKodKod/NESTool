@@ -4,9 +4,11 @@ using ArchitectureLibrary.ViewModel;
 using NESTool.Commands;
 using NESTool.Models;
 using NESTool.Signals;
+using System.Runtime.Versioning;
 
 namespace NESTool.ViewModels
 {
+    [SupportedOSPlatform("windows")]
     public class BuildProjectDialogViewModel : ViewModel
     {
         private string _folderPath;

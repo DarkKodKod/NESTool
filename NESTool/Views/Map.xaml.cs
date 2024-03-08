@@ -268,7 +268,7 @@ namespace NESTool.Views
                     return null;
                 }
 
-                int index = Array.FindIndex(characterModel.Animations, a => a.ID == entityModel.CharacterAnimationId);
+                int index = characterModel.Animations.FindIndex(a => a.ID == entityModel.CharacterAnimationId);
 
                 if (index >= 0)
                 {

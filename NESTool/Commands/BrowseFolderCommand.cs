@@ -2,9 +2,11 @@
 using ArchitectureLibrary.Signals;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using NESTool.Signals;
+using System.Runtime.Versioning;
 
 namespace NESTool.Commands
 {
+    [SupportedOSPlatform("windows")]
     public class BrowseFolderCommand : Command
     {
         public override void Execute(object parameter)

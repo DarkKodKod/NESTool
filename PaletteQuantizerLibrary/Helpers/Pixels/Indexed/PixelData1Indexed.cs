@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
 namespace SimplePaletteQuantizer.Helpers.Pixels.Indexed
 {
     [StructLayout(LayoutKind.Sequential, Size = 1)]
+    [SupportedOSPlatform("windows")]
     public struct PixelData1Indexed : IIndexedPixel
     {
         // raw component values

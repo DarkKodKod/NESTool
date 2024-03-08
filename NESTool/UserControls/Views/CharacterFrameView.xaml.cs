@@ -108,7 +108,7 @@ namespace NESTool.UserControls.Views
 
             int animationIndex = -1;
 
-            for (int i = 0; i < CharacterModel.Animations.Length; ++i)
+            for (int i = 0; i < CharacterModel.Animations.Count; ++i)
             {
                 if (CharacterModel.Animations[i].ID == TabID)
                 {

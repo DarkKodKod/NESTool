@@ -9,10 +9,12 @@ using NESTool.ViewModels;
 using NESTool.VOs;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.Versioning;
 using System.Windows;
 
 namespace NESTool.Commands
 {
+    [SupportedOSPlatform("windows")]
     public class OpenProjectCommand : Command
     {
         private const string _projectFileNameKey = "projectFileName";

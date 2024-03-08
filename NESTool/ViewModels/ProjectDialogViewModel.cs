@@ -6,9 +6,11 @@ using NESTool.Enums;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
+using System.Runtime.Versioning;
 
 namespace NESTool.ViewModels
 {
+    [SupportedOSPlatform("windows")]
     public class ProjectDialogViewModel : ViewModel
     {
         public CreateProjectCommand CreateProjectCommand { get; } = new CreateProjectCommand();

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Drawing.Imaging;
+using System.Runtime.Versioning;
 
 namespace SimplePaletteQuantizer.Extensions
 {
     /// <summary>
     /// The utility extender class.
     /// </summary>
+    [SupportedOSPlatform("windows")]
     public static partial class Extend
     {
         /// <summary>

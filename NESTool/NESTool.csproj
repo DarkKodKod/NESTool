@@ -1,23 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{53AFCE71-E574-49E4-ABCA-39CA1926A1AB}</ProjectGuid>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>NESTool</RootNamespace>
-    <AssemblyName>NESTool</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -32,26 +17,10 @@
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
@@ -60,420 +29,6 @@
   <PropertyGroup>
     <ApplicationIcon>nestool.ico</ApplicationIcon>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="CustomMarshalers" />
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsFormsIntegration" />
-  </ItemGroup>
-  <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="Building\BackgroundsBuilding.cs" />
-    <Compile Include="Building\BanksBuilding.cs" />
-    <Compile Include="Building\MetaSpritesBuilding.cs" />
-    <Compile Include="Building\PalettesBuilding.cs" />
-    <Compile Include="Building\TilesDefinitionsBuilding.cs" />
-    <Compile Include="Commands\AddMapElementCommand.cs" />
-    <Compile Include="Commands\AddPropertyCommand.cs" />
-    <Compile Include="Commands\BrowseFileCommand.cs" />
-    <Compile Include="Commands\CharacterAnimationVOSelectionChangedCommand.cs" />
-    <Compile Include="Commands\CharacterCloseTabCommand.cs" />
-    <Compile Include="Commands\CharacterNewTabCommand.cs" />
-    <Compile Include="Commands\ColorPaletteSelectCommand.cs" />
-    <Compile Include="Commands\CopyElementCommand.cs" />
-    <Compile Include="Commands\CreateElementCommand.cs" />
-    <Compile Include="Commands\CreateElementFromMenuCommand.cs" />
-    <Compile Include="Commands\CreateFolderCommand.cs" />
-    <Compile Include="Commands\CroppedImageMouseDownCommand.cs" />
-    <Compile Include="Commands\DeleteAnimationFrameCommand.cs" />
-    <Compile Include="Commands\DeleteElementCommand.cs" />
-    <Compile Include="Commands\DeleteBankTileCommand.cs" />
-    <Compile Include="Commands\DeleteSelectedMapElement.cs" />
-    <Compile Include="Commands\DeleteSelectedProperty.cs" />
-    <Compile Include="Commands\DispatchSignalCommand.cs" />
-    <Compile Include="Commands\DragEnterCommand.cs" />
-    <Compile Include="Commands\DragLeaveCommand.cs" />
-    <Compile Include="Commands\DragOverCommand.cs" />
-    <Compile Include="Commands\DropCommand.cs" />
-    <Compile Include="Commands\DuplicateElementCommand.cs" />
-    <Compile Include="Commands\ImageMouseDownCommand.cs" />
-    <Compile Include="Commands\ImportImageCommand.cs" />
-    <Compile Include="Commands\MoveDownSelectedMapElement.cs" />
-    <Compile Include="Commands\MoveTileToBankCommand.cs" />
-    <Compile Include="Commands\MoveUpSelectedMapElement.cs" />
-    <Compile Include="Commands\NewAnimationFrameCommand.cs" />
-    <Compile Include="Commands\NextFrameCharacterAnimationCommand.cs" />
-    <Compile Include="Commands\OpenAddMapElementCommand.cs" />
-    <Compile Include="Commands\OpenAddPropertyCommand.cs" />
-    <Compile Include="Commands\OpenBuildProjectCommand.cs" />
-    <Compile Include="Commands\SaveSelectedPropertyValue.cs" />
-    <Compile Include="Commands\ShowColorPaletteCommand.cs" />
-    <Compile Include="Commands\SourceSelectionChangedCommand.cs" />
-    <Compile Include="Commands\SwitchCharacterFrameViewCommand.cs" />
-    <Compile Include="Commands\OpenImportImageDialogCommand.cs" />
-    <Compile Include="Commands\ItemSelectedCommand.cs" />
-    <Compile Include="Commands\LoadMappersCommand.cs" />
-    <Compile Include="Commands\NewElementCommand.cs" />
-    <Compile Include="Commands\OpenLinkCommand.cs" />
-    <Compile Include="Commands\PasteElementCommand.cs" />
-    <Compile Include="Commands\PauseCharacterAnimationCommand.cs" />
-    <Compile Include="Commands\PlayCharacterAnimationCommand.cs" />
-    <Compile Include="Commands\PreviewMouseLeftButtonDownCommand.cs" />
-    <Compile Include="Commands\PreviewMouseMoveCommand.cs" />
-    <Compile Include="Commands\PreviewMouseWheelCommand.cs" />
-    <Compile Include="Commands\PreviousFrameCharacterAnimationCommand.cs" />
-    <Compile Include="Commands\QueryContinueDragCommand.cs" />
-    <Compile Include="Commands\RedoCommand.cs" />
-    <Compile Include="Commands\EnableRenameElementCommand.cs" />
-    <Compile Include="Commands\SaveTileSetChangesCommand.cs" />
-    <Compile Include="Commands\SelectTileSetCommand.cs" />
-    <Compile Include="Commands\FileModelVOSelectionChangedCommand.cs" />
-    <Compile Include="Commands\StopCharacterAnimationCommand.cs" />
-    <Compile Include="Commands\TreeviewSelectedItemChanged.cs" />
-    <Compile Include="Commands\UndoCommand.cs" />
-    <Compile Include="FileSystem\ProjectFiles.cs" />
-    <Compile Include="FrameworkElement\OutlinedTextBlock.cs" />
-    <Compile Include="Models\EntityModel.cs" />
-    <Compile Include="Models\FrameModel.cs" />
-    <Compile Include="Models\PaletteModel.cs" />
-    <Compile Include="Models\WorldModel.cs" />
-    <Compile Include="UserControls\ICleanable.cs" />
-    <Compile Include="UserControls\ViewModels\CharacterAnimationViewModel.cs" />
-    <Compile Include="UserControls\ViewModels\CharacterFrameEditorViewModel.cs" />
-    <Compile Include="UserControls\ViewModels\BankLinkViewModel.cs" />
-    <Compile Include="UserControls\Views\BankViewerView.xaml.cs">
-      <DependentUpon>BankViewerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Views\CharacterAnimationView.xaml.cs">
-      <DependentUpon>CharacterAnimationView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Views\CharacterFrameEditorView.xaml.cs">
-      <DependentUpon>CharacterFrameEditorView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Views\CharacterFrameView.xaml.cs">
-      <DependentUpon>CharacterFrameView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Views\FrameView.xaml.cs">
-      <DependentUpon>FrameView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Views\PaletteView.xaml.cs">
-      <DependentUpon>PaletteView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Views\PaletteViewBig.xaml.cs">
-      <DependentUpon>PaletteViewBig.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Views\BankLinkView.xaml.cs">
-      <DependentUpon>BankLinkView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Utils\Behaviors\RedirectRoutedEventBehavior.cs" />
-    <Compile Include="Utils\CharacterUtils.cs" />
-    <Compile Include="Utils\Converters\WidthConverter.cs" />
-    <Compile Include="Utils\CreateImageUtil.cs" />
-    <Compile Include="Utils\EntityUtils.cs" />
-    <Compile Include="Utils\MapUtils.cs" />
-    <Compile Include="Utils\PaletteQuantizer.cs" />
-    <Compile Include="Utils\CustomTypeConverter\ProjectItemTypeConverter.cs" />
-    <Compile Include="FileSystem\ProjectItemFileSystem.cs" />
-    <Compile Include="HistoryActions\CreateNewElementHistoryAction.cs" />
-    <Compile Include="HistoryActions\DeleteProjectItemHistoryAction.cs" />
-    <Compile Include="HistoryActions\DuplicateProjectItemHistoryAction.cs" />
-    <Compile Include="HistoryActions\MoveProjectItemHistoryAction.cs" />
-    <Compile Include="HistoryActions\PasteProjectItemHistoryAction.cs" />
-    <Compile Include="HistoryActions\RenameProjectItemHistoryAction.cs" />
-    <Compile Include="Models\AFileModel.cs" />
-    <Compile Include="Models\BankModel.cs" />
-    <Compile Include="Models\CharacterModel.cs" />
-    <Compile Include="Models\ElementTypeModel.cs" />
-    <Compile Include="Models\FileHandler.cs" />
-    <Compile Include="Models\MapModel.cs" />
-    <Compile Include="Models\MapperModel.cs" />
-    <Compile Include="Models\MappersModel.cs" />
-    <Compile Include="Models\TileSetModel.cs" />
-    <Compile Include="Utils\Adorners\TreeViewDragAdorner.cs" />
-    <Compile Include="Utils\Adorners\TreeViewInsertAdorner.cs" />
-    <Compile Include="Utils\Converters\EnumMatchToBooleanConverter.cs" />
-    <Compile Include="Utils\Extensions\EnumBindingSourceExtension.cs" />
-    <Compile Include="Utils\BanksUtils.cs" />
-    <Compile Include="Utils\RLE.cs" />
-    <Compile Include="Utils\Selectors\TemplateSelector.cs" />
-    <Compile Include="Utils\Utils.cs" />
-    <Compile Include="Commands\BrowseFolderCommand.cs" />
-    <Compile Include="Commands\BuildProjectCommand.cs" />
-    <Compile Include="Commands\CreateProjectCommand.cs" />
-    <Compile Include="Commands\LoadConfigsCommand.cs" />
-    <Compile Include="Commands\OpenProjectPropertiesCommand.cs" />
-    <Compile Include="Commands\ShowAboutDialogCommand.cs" />
-    <Compile Include="Commands\ViewHelpCommand.cs" />
-    <Compile Include="Commands\WindowsGetFocusCommand.cs" />
-    <Compile Include="Utils\Converters\ParametersConverter.cs" />
-    <Compile Include="Enums\CommonEnums.cs" />
-    <Compile Include="Models\RecentProjectModel.cs" />
-    <Compile Include="Utils\WindowUtility.cs" />
-    <Compile Include="ViewModels\AboutDialogViewModel.cs" />
-    <Compile Include="ViewModels\ActionTabItem.cs" />
-    <Compile Include="ViewModels\AddMapElementDialogViewModel.cs" />
-    <Compile Include="ViewModels\AddPropertyDialogViewModel.cs" />
-    <Compile Include="ViewModels\BanksViewModel.cs" />
-    <Compile Include="ViewModels\BuildProjectDialogViewModel.cs" />
-    <Compile Include="ViewModels\CharacterViewModel.cs" />
-    <Compile Include="ViewModels\ElementDialogViewModel.cs" />
-    <Compile Include="Utils\Behaviors\EventToCommandBehavior.cs" />
-    <Compile Include="ViewModels\EntityViewModel.cs" />
-    <Compile Include="ViewModels\ImportImageDialogViewModel.cs" />
-    <Compile Include="ViewModels\ItemViewModel.cs" />
-    <Compile Include="ViewModels\LoadingDialogViewModel.cs" />
-    <Compile Include="ViewModels\MapViewModel.cs" />
-    <Compile Include="ViewModels\PaletteViewModel.cs" />
-    <Compile Include="ViewModels\ProjectItem.cs" />
-    <Compile Include="ViewModels\ProjectDialogViewModel.cs" />
-    <Compile Include="ViewModels\ProjectPropertiesDialogViewModel.cs" />
-    <Compile Include="ViewModels\TileSetViewModel.cs" />
-    <Compile Include="ViewModels\WorldViewModel.cs" />
-    <Compile Include="Views\AboutDialog.xaml.cs">
-      <DependentUpon>AboutDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AddMapElementDialog.xaml.cs">
-      <DependentUpon>AddMapElementDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\AddPropertyDialog.xaml.cs">
-      <DependentUpon>AddPropertyDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Banks.xaml.cs">
-      <DependentUpon>Banks.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\BuildProjectDialog.xaml.cs">
-      <DependentUpon>BuildProjectDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Character.xaml.cs">
-      <DependentUpon>Character.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ColorPaletteDialog.xaml.cs">
-      <DependentUpon>ColorPaletteDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ElementDialog.xaml.cs">
-      <DependentUpon>ElementDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Entity.xaml.cs">
-      <DependentUpon>Entity.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ImportImageDialog.xaml.cs">
-      <DependentUpon>ImportImageDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\LoadingDialog.xaml.cs">
-      <DependentUpon>LoadingDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Map.xaml.cs">
-      <DependentUpon>Map.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Palette.xaml.cs">
-      <DependentUpon>Palette.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ProjectDialog.xaml.cs">
-      <DependentUpon>ProjectDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ProjectPropertiesDialog.xaml.cs">
-      <DependentUpon>ProjectPropertiesDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TileSet.xaml.cs">
-      <DependentUpon>TileSet.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\World.xaml.cs">
-      <DependentUpon>World.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="VOs\CharacterAnimationVO.cs" />
-    <Compile Include="VOs\EventVO.cs" />
-    <Compile Include="VOs\ImageVO.cs" />
-    <Compile Include="VOs\MouseMoveVO.cs" />
-    <Compile Include="VOs\MouseWheelVO.cs" />
-    <Compile Include="VOs\BankLinkVO.cs" />
-    <Compile Include="VOs\ProjectOpenVO.cs" />
-    <Compile Include="VOs\FileModelVO.cs" />
-    <Compile Include="VOs\WindowVO.cs" />
-    <Page Include="Definitions\Configuration.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\Style_Dark.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Views\BankViewerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Views\CharacterAnimationView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Views\CharacterFrameEditorView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Views\CharacterFrameView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Views\FrameView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Views\PaletteView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Views\PaletteViewBig.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Views\BankLinkView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AboutDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AddMapElementDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AddPropertyDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Banks.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\BuildProjectDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Character.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ColorPaletteDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ElementDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Entity.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ImportImageDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\LoadingDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Commands\CloseProjectCommand.cs" />
-    <Compile Include="Commands\NewProjectCommand.cs" />
-    <Compile Include="Commands\OpenProjectCommand.cs" />
-    <Compile Include="Models\NESToolConfigurationModel.cs" />
-    <Compile Include="Models\ProjectModel.cs" />
-    <Compile Include="Signals\Signals.cs" />
-    <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="Views\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Views\Map.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Palette.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ProjectDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ProjectPropertiesDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TileSet.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\World.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
   <ItemGroup>
     <Resource Include="nestool.ico" />
     <Resource Include="Resources\copy.png" />
@@ -508,18 +63,9 @@
     <Resource Include="Resources\select.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ArchitectureLibrary\ArchitectureLibrary.csproj">
-      <Project>{2d202bb4-f395-491a-889e-a3febddaff45}</Project>
-      <Name>ArchitectureLibrary</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ColorPalette\ColorPalette.csproj">
-      <Project>{6a4e4554-1518-4dc3-9a1c-b41c0e31bfec}</Project>
-      <Name>ColorPalette</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PaletteQuantizerLibrary\PaletteQuantizerLibrary.csproj">
-      <Project>{37DCDA26-34C9-489E-800B-0957FAC221E4}</Project>
-      <Name>PaletteQuantizerLibrary</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\ArchitectureLibrary\ArchitectureLibrary.csproj" />
+    <ProjectReference Include="..\ColorPalette\ColorPalette.csproj" />
+    <ProjectReference Include="..\PaletteQuantizerLibrary\PaletteQuantizerLibrary.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\palette.png" />
@@ -542,27 +88,22 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm">
-      <Version>8.2.1</Version>
+      <Version>8.2.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell">
       <Version>1.1.5</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
-      <Version>1.1.39</Version>
+      <Version>1.1.77</Version>
     </PackageReference>
     <PackageReference Include="Nett">
       <Version>0.15.0</Version>
     </PackageReference>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="WriteableBitmapEx">
       <Version>1.6.8</Version>
     </PackageReference>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="AfterResolveReferences">
-    <ItemGroup>
-      <EmbeddedResource Include="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.Extension)' == '.dll'">
-        <LogicalName>%(ReferenceCopyLocalPaths.DestinationSubDirectory)%(ReferenceCopyLocalPaths.Filename)%(ReferenceCopyLocalPaths.Extension)</LogicalName>
-      </EmbeddedResource>
-    </ItemGroup>
-  </Target>
 </Project>

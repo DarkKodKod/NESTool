@@ -12,10 +12,12 @@ using NESTool.ViewModels;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Runtime.Versioning;
 using System.Windows;
 
 namespace NESTool.Commands
 {
+    [SupportedOSPlatform("windows")]
     public class ImportImageCommand : Command
     {
         private const string _folderTileSetsKey = "folderTileSets";

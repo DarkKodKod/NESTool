@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xaml.Behaviors;
 using System.Reflection;
+using System.Runtime.Versioning;
 using System.Windows;
 
 namespace NESTool.Utils.Behaviors
 {
+    [SupportedOSPlatform("windows")]
     public class RedirectRoutedEventBehavior : Behavior<UIElement>
     {
         public static readonly DependencyProperty RedirectTargetProperty =

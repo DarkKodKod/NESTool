@@ -16,35 +16,27 @@ namespace NESTool.Commands
 
             CharacterModel model = fileHandler.FileModel as CharacterModel;
 
-            for (int i = 0; i < model.Animations.Length; ++i)
+            for (int i = 0; i < model.Animations.Count; ++i)
             {
-                ref CharacterAnimation animation = ref model.Animations[i];
+                CharacterAnimation animation = model.Animations[i];
 
                 if (animation.ID == tabID)
                 {
-                    if (animation.Frames == null)
+                    animation.Frames ??= [];
+
+                    FrameModel frame = new()
                     {
-                        animation.Frames = new FrameModel[64];
-                    }
+                        Tiles = [],
+                        FixToGrid = true
+                    };
 
-                    for (int j = 0; j < animation.Frames.Length; ++j)
-                    {
-                        FrameModel frame = animation.Frames[j];
+                    animation.Frames.Add(frame);
 
-                        if (frame.Tiles == null)
-                        {
-                            animation.Frames[j].Tiles = new CharacterTile[CharacterTile.MaxCharacterTiles];
-                            animation.Frames[j].FixToGrid = true;
+                    fileHandler.Save();
 
-                            fileHandler.Save();
+                    SignalManager.Get<NewAnimationFrameSignal>().Dispatch(tabID);
 
-                            SignalManager.Get<NewAnimationFrameSignal>().Dispatch(tabID);
-
-                            return;
-                        }
-                    }
-
-                    break;
+                    return;
                 }
             }
         }

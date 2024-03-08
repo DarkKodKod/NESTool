@@ -7,6 +7,7 @@ using NESTool.Utils;
 using NESTool.ViewModels;
 using NESTool.VOs;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -36,8 +37,7 @@ namespace NESTool.UserControls.ViewModels
         private Visibility _rectangleVisibility = Visibility.Hidden;
         private double _rectangleWidth;
         private double _rectangleHeight;
-        private readonly bool[] _reloadImages = new bool[CharacterModel.AnimationSize];
-        private readonly ImageSource[] _bitmapImages = new ImageSource[CharacterModel.AnimationSize];
+        private readonly Dictionary<int, ImageSource> _bitmapImages = [];
 
         #region Commands
         public PauseCharacterAnimationCommand PauseCharacterAnimationCommand { get; } = new PauseCharacterAnimationCommand();
@@ -349,28 +349,24 @@ namespace NESTool.UserControls.ViewModels
         {
             base.OnActivate();
 
-            for (int i = 0; i < _reloadImages.Length; i++)
-            {
-                _reloadImages[i] = false;
-            }
-
             #region Signals
             SignalManager.Get<PauseCharacterAnimationSignal>().Listener += OnPauseCharacterAnimation;
             SignalManager.Get<NextFrameCharacterAnimationSignal>().Listener += OnNextFrameCharacterAnimation;
             SignalManager.Get<StopCharacterAnimationSignal>().Listener += OnStopCharacterAnimation;
             SignalManager.Get<PlayCharacterAnimationSignal>().Listener += OnPlayCharacterAnimation;
             SignalManager.Get<PreviousFrameCharacterAnimationSignal>().Listener += OnPreviousFrameCharacterAnimation;
+            SignalManager.Get<DeleteAnimationFrameSignal>().Listener += OnDeleteAnimationFrame;
             #endregion
 
             _dontSave = true;
 
-            for (int i = 0; i < CharacterModel.Animations.Length; ++i)
+            for (int i = 0; i < CharacterModel.Animations.Count; ++i)
             {
                 CharacterAnimation animation = CharacterModel.Animations[i];
 
                 if (animation.ID == TabID && animation.Frames != null)
                 {
-                    for (int j = 0; j < animation.Frames.Length; ++j)
+                    for (int j = 0; j < animation.Frames.Count; ++j)
                     {
                         FrameModel frame = animation.Frames[j];
 
@@ -387,7 +383,7 @@ namespace NESTool.UserControls.ViewModels
             FrameIndex = 0;
             _animationIndex = -1;
 
-            for (int i = 0; i < CharacterModel.Animations.Length; ++i)
+            for (int i = 0; i < CharacterModel.Animations.Count; ++i)
             {
                 if (CharacterModel.Animations[i].ID == TabID)
                 {
@@ -428,6 +424,7 @@ namespace NESTool.UserControls.ViewModels
             SignalManager.Get<StopCharacterAnimationSignal>().Listener -= OnStopCharacterAnimation;
             SignalManager.Get<PlayCharacterAnimationSignal>().Listener -= OnPlayCharacterAnimation;
             SignalManager.Get<PreviousFrameCharacterAnimationSignal>().Listener -= OnPreviousFrameCharacterAnimation;
+            SignalManager.Get<DeleteAnimationFrameSignal>().Listener -= OnDeleteAnimationFrame;
             #endregion
 
             IsPlaying = false;
@@ -446,7 +443,7 @@ namespace NESTool.UserControls.ViewModels
                 return;
             }
 
-            if (_reloadImages[FrameIndex] == false)
+            if (!_bitmapImages.TryGetValue(FrameIndex, out _))
             {
                 ImageVO vo = CharacterUtils.CreateImage(CharacterModel, _animationIndex, FrameIndex, ref CharacterViewModel.GroupedPalettes);
 
@@ -455,11 +452,27 @@ namespace NESTool.UserControls.ViewModels
                     return;
                 }
 
-                _bitmapImages[FrameIndex] = vo.Image;
-                _reloadImages[FrameIndex] = true;
+                _bitmapImages.Add(FrameIndex, vo.Image);
             }
 
             FrameImage = _bitmapImages[FrameIndex];
+        }
+
+        private void OnDeleteAnimationFrame(string tabID, int frameIndex)
+        {
+            if (TabID != tabID)
+            {
+                return;
+            }
+
+            CharacterAnimation animation = CharacterModel.Animations.Find(anim => anim.ID == tabID);
+
+            animation.Frames.RemoveAt(frameIndex);
+
+            if (!_dontSave)
+            {
+                FileHandler.Save();
+            }
         }
 
         private void OnPauseCharacterAnimation(string tabId)
@@ -498,10 +511,7 @@ namespace NESTool.UserControls.ViewModels
                 return;
             }
 
-            for (int i = 0; i < _reloadImages.Length; i++)
-            {
-                _reloadImages[i] = false;
-            }
+            _bitmapImages.Clear();
 
             IsPlaying = false;
             IsPaused = false;
@@ -549,7 +559,7 @@ namespace NESTool.UserControls.ViewModels
             FrameIndex++;
 
             if (FrameIndex >= CharacterModel.AnimationSize ||
-                CharacterModel.Animations[_animationIndex].Frames[FrameIndex].Tiles == null)
+                FrameIndex >= CharacterModel.Animations[_animationIndex].Frames.Count)
             {
                 FrameIndex = 0;
             }
@@ -563,7 +573,7 @@ namespace NESTool.UserControls.ViewModels
 
             if (FrameIndex < 0)
             {
-                for (int i = CharacterModel.Animations[_animationIndex].Frames.Length - 1; i >= 0; --i)
+                for (int i = CharacterModel.Animations[_animationIndex].Frames.Count - 1; i >= 0; --i)
                 {
                     if (CharacterModel.Animations[_animationIndex].Frames[i].Tiles != null)
                     {

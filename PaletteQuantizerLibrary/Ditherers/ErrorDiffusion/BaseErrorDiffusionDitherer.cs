@@ -1,9 +1,11 @@
 ﻿using SimplePaletteQuantizer.Helpers;
 using System;
 using System.Drawing;
+using System.Runtime.Versioning;
 
 namespace SimplePaletteQuantizer.Ditherers.ErrorDiffusion
 {
+    [SupportedOSPlatform("windows")]
     public abstract class BaseErrorDistributionDitherer : BaseColorDitherer
     {
         #region | Properties |

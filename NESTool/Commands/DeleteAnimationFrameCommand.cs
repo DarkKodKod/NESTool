@@ -18,13 +18,13 @@ namespace NESTool.Commands
 
             bool frameDeleted = false;
 
-            for (int i = 0; i < model.Animations.Length; ++i)
+            for (int i = 0; i < model.Animations.Count; ++i)
             {
-                ref CharacterAnimation animation = ref model.Animations[i];
+                CharacterAnimation animation = model.Animations[i];
 
                 if (animation.ID == tabID && animation.Frames != null)
                 {
-                    for (int j = 0; j < animation.Frames.Length; ++j)
+                    for (int j = 0; j < animation.Frames.Count; ++j)
                     {
                         if (j == frameIndex)
                         {

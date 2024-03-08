@@ -70,7 +70,7 @@ namespace NESTool.Building
                 int frameIndex = 0;
                 List<string> frameNames = new List<string>();
 
-                for (int i = 0; i < animation.Frames.Length; ++i)
+                for (int i = 0; i < animation.Frames.Count; ++i)
                 {
                     if (animation.Frames[i].Tiles == null)
                     {
@@ -81,7 +81,7 @@ namespace NESTool.Building
 
                     bool foundFrame = false;
 
-                    for (int j = 0; j < animation.Frames[i].Tiles.Length; ++j)
+                    for (int j = 0; j < animation.Frames[i].Tiles.Count; ++j)
                     {
                         CharacterTile charTile = animation.Frames[i].Tiles[j];
 

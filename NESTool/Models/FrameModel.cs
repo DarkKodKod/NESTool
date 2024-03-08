@@ -1,8 +1,9 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 
 namespace NESTool.Models
 {
-    public struct CharacterTile
+    public class CharacterTile
     {
         public static readonly int MaxCharacterTiles = 64;
 
@@ -17,7 +18,7 @@ namespace NESTool.Models
 
     public class FrameModel
     {
-        public CharacterTile[] Tiles { get; set; }
+        public List<CharacterTile> Tiles { get; set; } = [];
         public bool FixToGrid { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
 namespace SimplePaletteQuantizer.Helpers.Pixels.NonIndexed
 {
@@ -10,6 +11,7 @@ namespace SimplePaletteQuantizer.Helpers.Pixels.NonIndexed
     /// Byte |00000000000000000000000|11111111111111111111111|
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Size = 2)]
+    [SupportedOSPlatform("windows")]
     public struct PixelDataGray16 : INonIndexedPixel
     {
         // raw component values

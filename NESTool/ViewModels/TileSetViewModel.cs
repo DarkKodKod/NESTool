@@ -5,6 +5,7 @@ using NESTool.Models;
 using NESTool.Signals;
 using NESTool.VOs;
 using System.IO;
+using System.Runtime.Versioning;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -12,6 +13,7 @@ using System.Windows.Media.Imaging;
 
 namespace NESTool.ViewModels
 {
+    [SupportedOSPlatform("windows")]
     public class TileSetViewModel : ItemViewModel
     {
         private static readonly Color NullColor = Color.FromArgb(0, 255, 255, 255);

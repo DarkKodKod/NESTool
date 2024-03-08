@@ -6,6 +6,7 @@ using NESTool.UserControls.ViewModels;
 using NESTool.Utils;
 using NESTool.ViewModels;
 using NESTool.VOs;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -63,7 +64,7 @@ namespace NESTool.UserControls.Views
         {
             if (DataContext is CharacterFrameEditorViewModel viewModel)
             {
-                for (int i = 0; i < viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles.Length; ++i)
+                for (int i = 0; i < viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles.Count; ++i)
                 {
                     frameView.SpritePropertiesX[i] = viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles[i].FlipX;
                     frameView.SpritePropertiesY[i] = viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles[i].FlipY;
@@ -99,9 +100,21 @@ namespace NESTool.UserControls.Views
 
                 string guid = model.PTTiles[bankViewer.SelectedBankTile].GUID;
 
-                viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles[selectedFrameTile].Point = framePoint;
-                viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles[selectedFrameTile].BankID = model.GUID;
-                viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles[selectedFrameTile].BankTileID = guid;
+                List<CharacterTile> tiles = viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles;
+
+                if (tiles.Count <= selectedFrameTile)
+                {
+                    int times = selectedFrameTile - tiles.Count + 1;
+
+                    for (int i = 0; i < times; i++)
+                    {
+                        tiles.Add(new CharacterTile());
+                    }
+                }
+
+                tiles[selectedFrameTile].Point = framePoint;
+                tiles[selectedFrameTile].BankID = model.GUID;
+                tiles[selectedFrameTile].BankTileID = guid;
 
                 viewModel.FileHandler.Save();
 
@@ -113,8 +126,20 @@ namespace NESTool.UserControls.Views
         {
             if (DataContext is CharacterFrameEditorViewModel viewModel)
             {
-                viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles[selectedFrameTile].BankID = string.Empty;
-                viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles[selectedFrameTile].BankTileID = string.Empty;
+                List<CharacterTile> tiles = viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles;
+
+                if (tiles.Count <= selectedFrameTile)
+                {
+                    int times = selectedFrameTile - tiles.Count + 1;
+
+                    for (int i = 0; i < times; i++)
+                    {
+                        tiles.Add(new CharacterTile());
+                    }
+                }
+
+                tiles[selectedFrameTile].BankID = string.Empty;
+                tiles[selectedFrameTile].BankTileID = string.Empty;
 
                 viewModel.FileHandler.Save();
 

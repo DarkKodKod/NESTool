@@ -1,9 +1,11 @@
 ﻿using SimplePaletteQuantizer.Helpers;
 using System;
 using System.Drawing;
+using System.Runtime.Versioning;
 
 namespace SimplePaletteQuantizer.Ditherers.Ordered
 {
+    [SupportedOSPlatform("windows")]
     public abstract class BaseOrderedDitherer : BaseColorDitherer
     {
         #region | Properties |

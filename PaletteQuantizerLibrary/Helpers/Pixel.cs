@@ -6,12 +6,14 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Linq.Expressions;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 
 namespace SimplePaletteQuantizer.Helpers
 {
     /// <summary>
     /// This is a pixel format independent pixel.
     /// </summary>
+    [SupportedOSPlatform("windows")]
     public class Pixel : IDisposable
     {
         #region | Constants |

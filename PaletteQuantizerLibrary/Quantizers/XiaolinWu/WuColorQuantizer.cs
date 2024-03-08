@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.Versioning;
 
 namespace SimplePaletteQuantizer.Quantizers.XiaolinWu
 {
@@ -12,6 +13,7 @@ namespace SimplePaletteQuantizer.Quantizers.XiaolinWu
     /// London, Ontario N6A 5B7
     /// wu@csd.uwo.ca
     /// </summary>
+    [SupportedOSPlatform("windows")]
     public class WuColorQuantizer : BaseColorQuantizer
     {
         #region | Constants |

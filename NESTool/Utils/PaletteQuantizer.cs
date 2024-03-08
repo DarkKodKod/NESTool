@@ -21,10 +21,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Runtime.Versioning;
 using System.Threading.Tasks;
 
 namespace NESTool.Utils
 {
+    [SupportedOSPlatform("windows")]
     public class PaletteQuantizer
     {
         public enum EColor

@@ -352,7 +352,7 @@ namespace NESTool.ViewModels
 
                 if (characterModel != null)
                 {
-                    int index = Array.FindIndex(characterModel.Animations, a => a.ID == _characterAnimationId);
+                    int index = characterModel.Animations.FindIndex(a => a.ID == _characterAnimationId);
 
                     if (index >= 0)
                     {

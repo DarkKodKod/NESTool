@@ -3,9 +3,11 @@ using ArchitectureLibrary.Signals;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using NESTool.Signals;
 using System.IO;
+using System.Runtime.Versioning;
 
 namespace NESTool.Commands
 {
+    [SupportedOSPlatform("windows")]
     public class BrowseFileCommand : Command
     {
         public override void Execute(object parameter)

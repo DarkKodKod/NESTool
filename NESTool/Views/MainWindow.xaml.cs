@@ -267,12 +267,12 @@ namespace NESTool
         private void OnShowLoadingDialog()
         {
             _loadingDialog.Owner = this;
-            _loadingDialog.Show();
+            //_loadingDialog.Show();
         }
 
         private void OnFinishedLoadingProject()
         {
-            _loadingDialog.Close();
+            //_loadingDialog.Close();
         }
 
         private void OnCloseProjectSuccess()

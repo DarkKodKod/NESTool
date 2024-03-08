@@ -8,10 +8,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using System.Threading.Tasks;
 
 namespace SimplePaletteQuantizer.Helpers
 {
+    [SupportedOSPlatform("windows")]
     public class ImageBuffer : IDisposable
     {
         #region | Fields |

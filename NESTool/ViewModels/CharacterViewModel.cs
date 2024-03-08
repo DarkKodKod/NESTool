@@ -515,6 +515,11 @@ namespace NESTool.ViewModels
 
                 foreach (ActionTabItem tab in Tabs)
                 {
+                    if (model.Animations.Count <= index)
+                    {
+                        model.Animations.Add(new CharacterAnimation());
+                    }
+
                     CharacterAnimationView view = tab.FramesView as CharacterAnimationView;
                     CharacterAnimationViewModel viewModel = view.DataContext as CharacterAnimationViewModel;
 
@@ -535,7 +540,7 @@ namespace NESTool.ViewModels
                     index++;
                 }
 
-                for (int i = index; i < model.Animations.Length; ++i)
+                for (int i = index; i < model.Animations.Count; ++i)
                 {
                     model.Animations[i].ID = string.Empty;
                 }

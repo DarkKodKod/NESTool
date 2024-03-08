@@ -26,7 +26,7 @@ namespace NESTool.Models
         public EntityModel()
         {
             Frame.FixToGrid = true;
-            Frame.Tiles = new CharacterTile[CharacterTile.MaxCharacterTiles];
+            Frame.Tiles = [];
         }
 
         public EntitySource Source { get; set; }
