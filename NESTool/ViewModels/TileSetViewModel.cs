@@ -276,13 +276,15 @@ namespace NESTool.ViewModels
             CroppedPoint = point;
             CroppedImage = bitmap;
 
-            if (GetModel() != null)
+            TileSetModel model = GetModel();
+
+            if (model != null)
             {
-                int index = GetModel().GetIndexFromPosition(point);
+                int index = model.GetIndexFromPosition(point);
 
                 TileSelected = index;
 
-                Pseudonym = GetModel().TilePseudonyms[index];
+                Pseudonym = model.TilePseudonyms[index];
             }
         }
 

@@ -11,7 +11,7 @@ namespace NESTool.Models
 {
     public class TileSetModel : AFileModel
     {
-        private const int MaxPseudonyms = 512;
+        private const int MaxPseudonyms = 1024;
         private const string _extensionKey = "extensionTileSets";
 
         [TomlIgnore]
