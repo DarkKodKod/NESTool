@@ -1,11 +1,10 @@
 ﻿using NESTool.ViewModels;
 using System.Collections.Generic;
 
-namespace NESTool.VOs
+namespace NESTool.VOs;
+
+public class ProjectOpenVO
 {
-    public class ProjectOpenVO
-    {
-        public List<ProjectItem> Items { get; set; }
-        public string ProjectName { get; set; }
-    }
+    public List<ProjectItem> Items { get; set; }
+    public string ProjectName { get; set; }
 }

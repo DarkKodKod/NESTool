@@ -2,13 +2,12 @@
 using ArchitectureLibrary.Model;
 using NESTool.Models;
 
-namespace NESTool.Commands
+namespace NESTool.Commands;
+
+public class LoadMappersCommand : Command
 {
-    public class LoadMappersCommand : Command
+    public override void Execute(object parameter)
     {
-        public override void Execute(object parameter)
-        {
-            ModelManager.Get<MappersModel>().Load();
-        }
+        ModelManager.Get<MappersModel>().Load();
     }
 }

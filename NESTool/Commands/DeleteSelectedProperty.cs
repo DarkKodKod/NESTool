@@ -2,32 +2,31 @@
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
 
-namespace NESTool.Commands
+namespace NESTool.Commands;
+
+public class DeleteSelectedProperty : Command
 {
-    public class DeleteSelectedProperty : Command
+    public override bool CanExecute(object parameter)
     {
-        public override bool CanExecute(object parameter)
+        if (parameter == null)
         {
-            if (parameter == null)
-            {
-                return false;
-            }
-
-            string selectedProperty = (string)parameter;
-
-            if (string.IsNullOrEmpty(selectedProperty))
-            {
-                return false;
-            }
-
-            return true;
+            return false;
         }
 
-        public override void Execute(object parameter)
-        {
-            string selectedProperty = (string)parameter;
+        string selectedProperty = (string)parameter;
 
-            SignalManager.Get<DeleteSelectedPropertySignal>().Dispatch(selectedProperty);
+        if (string.IsNullOrEmpty(selectedProperty))
+        {
+            return false;
         }
+
+        return true;
+    }
+
+    public override void Execute(object parameter)
+    {
+        string selectedProperty = (string)parameter;
+
+        SignalManager.Get<DeleteSelectedPropertySignal>().Dispatch(selectedProperty);
     }
 }

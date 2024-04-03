@@ -1,11 +1,10 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace ArchitectureLibrary.Utils
+namespace ArchitectureLibrary.Utils;
+
+[StructLayout(LayoutKind.Explicit)]
+public struct ValueUnion
 {
-    [StructLayout(LayoutKind.Explicit)]
-    public struct ValueUnion
-    {
-        [FieldOffset(0)] public int integer;
-        [FieldOffset(4)] public bool boolean;
-    }
+    [FieldOffset(0)] public int integer;
+    [FieldOffset(4)] public bool boolean;
 }

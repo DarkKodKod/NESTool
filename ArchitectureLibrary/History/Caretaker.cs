@@ -1,73 +1,72 @@
 ﻿using System.Collections.Generic;
 
-namespace ArchitectureLibrary.History
+namespace ArchitectureLibrary.History;
+
+public class Caretaker
 {
-    public class Caretaker
+    private readonly Stack<Memento> _undoStack = new();
+    private readonly Stack<Memento> _redoStack = new();
+
+    public Memento GetUndoMemento()
     {
-        private readonly Stack<Memento> _undoStack = new Stack<Memento>();
-        private readonly Stack<Memento> _redoStack = new Stack<Memento>();
-
-        public Memento GetUndoMemento()
+        if (_undoStack.Count > 0)
         {
-            if (_undoStack.Count > 0)
-            {
-                Memento memento = _undoStack.Pop();
+            Memento memento = _undoStack.Pop();
 
-                _redoStack.Push(memento);
+            _redoStack.Push(memento);
 
-                return memento;
-            }
-            else
-            {
-                return null;
-            }
+            return memento;
         }
-
-        public Memento GetRedoMemento()
+        else
         {
-            if (_redoStack.Count > 0)
-            {
-                Memento m = _redoStack.Pop();
-                _undoStack.Push(m);
-                return m;
-            }
-            else
-            {
-                return null;
-            }
+            return null;
         }
+    }
 
-        public void InsertMementoForUndoRedo(Memento memento)
+    public Memento GetRedoMemento()
+    {
+        if (_redoStack.Count > 0)
         {
-            if (memento != null)
-            {
-                _undoStack.Push(memento);
-                _redoStack.Clear();
-            }
+            Memento m = _redoStack.Pop();
+            _undoStack.Push(m);
+            return m;
         }
-
-        public bool IsUndoPossible()
+        else
         {
-            if (_undoStack.Count > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return null;
         }
+    }
 
-        public bool IsRedoPossible()
+    public void InsertMementoForUndoRedo(Memento memento)
+    {
+        if (memento != null)
         {
-            if (_redoStack.Count > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            _undoStack.Push(memento);
+            _redoStack.Clear();
+        }
+    }
+
+    public bool IsUndoPossible()
+    {
+        if (_undoStack.Count > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool IsRedoPossible()
+    {
+        if (_redoStack.Count > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 }

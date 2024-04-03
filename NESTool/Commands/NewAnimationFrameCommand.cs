@@ -3,41 +3,40 @@ using ArchitectureLibrary.Signals;
 using NESTool.Models;
 using NESTool.Signals;
 
-namespace NESTool.Commands
+namespace NESTool.Commands;
+
+public class NewAnimationFrameCommand : Command
 {
-    public class NewAnimationFrameCommand : Command
+    public override void Execute(object parameter)
     {
-        public override void Execute(object parameter)
+        object[] values = (object[])parameter;
+
+        FileHandler fileHandler = (FileHandler)values[0];
+        string tabID = (string)values[1];
+
+        CharacterModel model = fileHandler.FileModel as CharacterModel;
+
+        for (int i = 0; i < model.Animations.Count; ++i)
         {
-            object[] values = (object[])parameter;
+            CharacterAnimation animation = model.Animations[i];
 
-            FileHandler fileHandler = (FileHandler)values[0];
-            string tabID = (string)values[1];
-
-            CharacterModel model = fileHandler.FileModel as CharacterModel;
-
-            for (int i = 0; i < model.Animations.Count; ++i)
+            if (animation.ID == tabID)
             {
-                CharacterAnimation animation = model.Animations[i];
+                animation.Frames ??= [];
 
-                if (animation.ID == tabID)
+                FrameModel frame = new()
                 {
-                    animation.Frames ??= [];
+                    Tiles = [],
+                    FixToGrid = true
+                };
 
-                    FrameModel frame = new()
-                    {
-                        Tiles = [],
-                        FixToGrid = true
-                    };
+                animation.Frames.Add(frame);
 
-                    animation.Frames.Add(frame);
+                fileHandler.Save();
 
-                    fileHandler.Save();
+                SignalManager.Get<NewAnimationFrameSignal>().Dispatch(tabID);
 
-                    SignalManager.Get<NewAnimationFrameSignal>().Dispatch(tabID);
-
-                    return;
-                }
+                return;
             }
         }
     }

@@ -4,29 +4,28 @@ using NESTool.Models;
 using NESTool.Views;
 using System.Windows;
 
-namespace NESTool.Commands
+namespace NESTool.Commands;
+
+public class NewElementCommand : Command
 {
-    public class NewElementCommand : Command
+    public override bool CanExecute(object parameter)
     {
-        public override bool CanExecute(object parameter)
+        ProjectModel model = ModelManager.Get<ProjectModel>();
+
+        if (model != null && !string.IsNullOrEmpty(model.Name))
         {
-            ProjectModel model = ModelManager.Get<ProjectModel>();
-
-            if (model != null && !string.IsNullOrEmpty(model.Name))
-            {
-                return true;
-            }
-
-            return false;
+            return true;
         }
 
-        public override void Execute(object parameter)
-        {
-            Window window = parameter as Window;
+        return false;
+    }
 
-            ElementDialog dialog = new ElementDialog();
-            dialog.Owner = window;
-            dialog.ShowDialog();
-        }
+    public override void Execute(object parameter)
+    {
+        Window window = parameter as Window;
+
+        ElementDialog dialog = new();
+        dialog.Owner = window;
+        dialog.ShowDialog();
     }
 }

@@ -1,8 +1,7 @@
-﻿namespace NESTool.Models
+﻿namespace NESTool.Models;
+
+public class RecentProjectModel
 {
-    public class RecentProjectModel
-    {
-        public string DisplayName { get; set; }
-        public string Path { get; set; }
-    }
+    public string DisplayName { get; set; }
+    public string Path { get; set; }
 }

@@ -1,15 +1,14 @@
 ﻿using ArchitectureLibrary.Commands;
 using System.Diagnostics;
 
-namespace NESTool.Commands
-{
-    public class OpenLinkCommand : Command
-    {
-        public override void Execute(object parameter)
-        {
-            string url = parameter as string;
+namespace NESTool.Commands;
 
-            Process.Start(url);
-        }
+public class OpenLinkCommand : Command
+{
+    public override void Execute(object parameter)
+    {
+        string url = parameter as string;
+
+        Process.Start(url);
     }
 }

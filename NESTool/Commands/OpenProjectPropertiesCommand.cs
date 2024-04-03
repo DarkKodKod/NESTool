@@ -2,40 +2,39 @@
 using NESTool.Views;
 using System.Windows;
 
-namespace NESTool.Commands
+namespace NESTool.Commands;
+
+public class OpenProjectPropertiesCommand : Command
 {
-    public class OpenProjectPropertiesCommand : Command
+    public override bool CanExecute(object parameter)
     {
-        public override bool CanExecute(object parameter)
+        if (parameter == null)
         {
-            if (parameter == null)
-            {
-                return false;
-            }
-
-            object[] values = (object[])parameter;
-            Window window = (Window)values[0];
-            string projectName = (string)values[1];
-
-            if (string.IsNullOrEmpty(projectName))
-            {
-                return false;
-            }
-
-            return true;
+            return false;
         }
 
-        public override void Execute(object parameter)
-        {
-            object[] values = (object[])parameter;
-            Window window = (Window)values[0];
-            string projectName = (string)values[1];
+        object[] values = (object[])parameter;
+        Window window = (Window)values[0];
+        string projectName = (string)values[1];
 
-            ProjectPropertiesDialog dialog = new ProjectPropertiesDialog
-            {
-                Owner = window
-            };
-            dialog.ShowDialog();
+        if (string.IsNullOrEmpty(projectName))
+        {
+            return false;
         }
+
+        return true;
+    }
+
+    public override void Execute(object parameter)
+    {
+        object[] values = (object[])parameter;
+        Window window = (Window)values[0];
+        string projectName = (string)values[1];
+
+        ProjectPropertiesDialog dialog = new ProjectPropertiesDialog
+        {
+            Owner = window
+        };
+        dialog.ShowDialog();
     }
 }

@@ -1,20 +1,19 @@
-﻿namespace ArchitectureLibrary.History
+﻿namespace ArchitectureLibrary.History;
+
+public class Originator
 {
-    public class Originator
+    public Memento CreateMemento(IHistoryAction action)
     {
-        public Memento CreateMemento(IHistoryAction action)
-        {
-            return new Memento(action);
-        }
+        return new Memento(action);
+    }
 
-        public void ExecuteUndo(Memento memento)
-        {
-            memento.Action.Undo();
-        }
+    public void ExecuteUndo(Memento memento)
+    {
+        memento.Action.Undo();
+    }
 
-        public void ExecuteRedo(Memento memento)
-        {
-            memento.Action.Redo();
-        }
+    public void ExecuteRedo(Memento memento)
+    {
+        memento.Action.Redo();
     }
 }

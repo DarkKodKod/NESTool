@@ -3,15 +3,14 @@ using ArchitectureLibrary.Signals;
 using ColorPalette;
 using NESTool.Signals;
 
-namespace NESTool.Commands
-{
-    public class ColorPaletteSelectCommand : Command
-    {
-        public override void Execute(object parameter)
-        {
-            PaletteEventArgs palette = parameter as PaletteEventArgs;
+namespace NESTool.Commands;
 
-            SignalManager.Get<ColorPaletteSelectSignal>().Dispatch(palette.C);
-        }
+public class ColorPaletteSelectCommand : Command
+{
+    public override void Execute(object parameter)
+    {
+        PaletteEventArgs palette = parameter as PaletteEventArgs;
+
+        SignalManager.Get<ColorPaletteSelectSignal>().Dispatch(palette.C);
     }
 }

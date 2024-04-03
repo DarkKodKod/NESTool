@@ -4,32 +4,31 @@ using ArchitectureLibrary.Signals;
 using NESTool.Models;
 using NESTool.Signals;
 
-namespace NESTool.Commands
+namespace NESTool.Commands;
+
+public class CloseProjectCommand : Command
 {
-    public class CloseProjectCommand : Command
+    public override bool CanExecute(object parameter)
     {
-        public override bool CanExecute(object parameter)
+        string projectName = parameter as string;
+
+        if (string.IsNullOrEmpty(projectName))
         {
-            string projectName = parameter as string;
-
-            if (string.IsNullOrEmpty(projectName))
-            {
-                return false;
-            }
-
-            return true;
+            return false;
         }
 
-        public override void Execute(object parameter)
+        return true;
+    }
+
+    public override void Execute(object parameter)
+    {
+        ProjectModel model = ModelManager.Get<ProjectModel>();
+
+        if (model != null && !string.IsNullOrEmpty(model.Name))
         {
-            ProjectModel model = ModelManager.Get<ProjectModel>();
+            model.Reset();
 
-            if (model != null && !string.IsNullOrEmpty(model.Name))
-            {
-                model.Reset();
-
-                SignalManager.Get<CloseProjectSuccessSignal>().Dispatch();
-            }
+            SignalManager.Get<CloseProjectSuccessSignal>().Dispatch();
         }
     }
 }

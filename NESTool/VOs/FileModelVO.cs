@@ -1,33 +1,32 @@
 ﻿using NESTool.Models;
 using System.ComponentModel;
 
-namespace NESTool.VOs
+namespace NESTool.VOs;
+
+public class FileModelVO : INotifyPropertyChanged
 {
-    public class FileModelVO : INotifyPropertyChanged
+    private string _name;
+
+    public int Index { get; set; }
+    public string Name
     {
-        private string _name;
-
-        public int Index { get; set; }
-        public string Name
+        get { return _name; }
+        set
         {
-            get { return _name; }
-            set
+            if (_name != value)
             {
-                if (_name != value)
-                {
-                    _name = value;
+                _name = value;
 
-                    OnPropertyChanged("Name");
-                }
+                OnPropertyChanged("Name");
             }
         }
-        public AFileModel Model { get; set; }
+    }
+    public AFileModel Model { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged(string propname)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propname));
-        }
+    protected virtual void OnPropertyChanged(string propname)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propname));
     }
 }

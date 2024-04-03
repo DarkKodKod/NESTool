@@ -7,27 +7,26 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace NESTool.Commands
+namespace NESTool.Commands;
+
+public class PreviewMouseMoveCommand : Command
 {
-    public class PreviewMouseMoveCommand : Command
+    public override void Execute(object parameter)
     {
-        public override void Execute(object parameter)
+        MouseEventArgs mouseEvent = parameter as MouseEventArgs;
+
+        if (mouseEvent.LeftButton == MouseButtonState.Pressed)
         {
-            MouseEventArgs mouseEvent = parameter as MouseEventArgs;
+            TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)mouseEvent.OriginalSource);
 
-            if (mouseEvent.LeftButton == MouseButtonState.Pressed)
+            MouseMoveVO vo = new()
             {
-                TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)mouseEvent.OriginalSource);
+                Position = mouseEvent.GetPosition(treeViewItem),
+                OriginalSource = mouseEvent.OriginalSource,
+                Sender = mouseEvent.Source
+            };
 
-                MouseMoveVO vo = new MouseMoveVO
-                {
-                    Position = mouseEvent.GetPosition(treeViewItem),
-                    OriginalSource = mouseEvent.OriginalSource,
-                    Sender = mouseEvent.Source
-                };
-
-                SignalManager.Get<MouseMoveSignal>().Dispatch(vo);
-            }
+            SignalManager.Get<MouseMoveSignal>().Dispatch(vo);
         }
     }
 }

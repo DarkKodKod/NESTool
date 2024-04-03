@@ -1,8 +1,7 @@
 ﻿using ArchitectureLibrary.Managers;
 
-namespace ArchitectureLibrary.Model
+namespace ArchitectureLibrary.Model;
+
+public class ModelManager : AManager<ISingletonModel>
 {
-    public class ModelManager : AManager<ISingletonModel>
-    {
-    }
 }

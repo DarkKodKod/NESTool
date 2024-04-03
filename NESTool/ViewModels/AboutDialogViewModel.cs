@@ -2,27 +2,26 @@
 using NESTool.Commands;
 using System.Reflection;
 
-namespace NESTool.ViewModels
+namespace NESTool.ViewModels;
+
+public class AboutDialogViewModel : ViewModel
 {
-    public class AboutDialogViewModel : ViewModel
+    public OpenLinkCommand OpenLinkCommand { get; } = new();
+
+    public string Version
     {
-        public OpenLinkCommand OpenLinkCommand { get; } = new OpenLinkCommand();
-
-        public string Version
+        get => _version;
+        set
         {
-            get => _version;
-            set
-            {
-                _version = value;
-                OnPropertyChanged("Version");
-            }
+            _version = value;
+            OnPropertyChanged("Version");
         }
+    }
 
-        private string _version = "";
+    private string _version = "";
 
-        public AboutDialogViewModel()
-        {
-            Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-        }
+    public AboutDialogViewModel()
+    {
+        Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
     }
 }

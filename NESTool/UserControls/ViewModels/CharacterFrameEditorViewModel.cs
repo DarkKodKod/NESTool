@@ -7,112 +7,111 @@ using NESTool.VOs;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NESTool.UserControls.ViewModels
+namespace NESTool.UserControls.ViewModels;
+
+public class CharacterFrameEditorViewModel : ViewModel
 {
-    public class CharacterFrameEditorViewModel : ViewModel
+    private FileModelVO[] _banks;
+    private int _selectedBank;
+    private string _tabId;
+    private int _frameIndex;
+    private FileHandler _fileHandler;
+
+    #region Commands
+    public SwitchCharacterFrameViewCommand SwitchCharacterFrameViewCommand { get; } = new();
+    public FileModelVOSelectionChangedCommand FileModelVOSelectionChangedCommand { get; } = new();
+    #endregion
+
+    #region get/set
+    public FileHandler FileHandler
     {
-        private FileModelVO[] _banks;
-        private int _selectedBank;
-        private string _tabId;
-        private int _frameIndex;
-        private FileHandler _fileHandler;
-
-        #region Commands
-        public SwitchCharacterFrameViewCommand SwitchCharacterFrameViewCommand { get; } = new SwitchCharacterFrameViewCommand();
-        public FileModelVOSelectionChangedCommand FileModelVOSelectionChangedCommand { get; } = new FileModelVOSelectionChangedCommand();
-        #endregion
-
-        #region get/set
-        public FileHandler FileHandler
+        get => _fileHandler;
+        set
         {
-            get => _fileHandler;
-            set
-            {
-                _fileHandler = value;
+            _fileHandler = value;
 
-                OnPropertyChanged("FileHandler");
-            }
+            OnPropertyChanged("FileHandler");
         }
+    }
 
-        public FileModelVO[] Banks
+    public FileModelVO[] Banks
+    {
+        get => _banks;
+        set
         {
-            get => _banks;
-            set
-            {
-                _banks = value;
+            _banks = value;
 
-                OnPropertyChanged("Banks");
-            }
+            OnPropertyChanged("Banks");
         }
+    }
 
-        public int SelectedBank
+    public int SelectedBank
+    {
+        get => _selectedBank;
+        set
         {
-            get => _selectedBank;
-            set
-            {
-                _selectedBank = value;
+            _selectedBank = value;
 
-                OnPropertyChanged("SelectedBank");
-            }
+            OnPropertyChanged("SelectedBank");
         }
+    }
 
-        public string TabID
+    public string TabID
+    {
+        get => _tabId;
+        set
         {
-            get => _tabId;
-            set
+            _tabId = value;
+
+            OnPropertyChanged("TabID");
+
+            for (int i = 0; i < CharacterModel.Animations.Count; ++i)
             {
-                _tabId = value;
-
-                OnPropertyChanged("TabID");
-
-                for (int i = 0; i < CharacterModel.Animations.Count; ++i)
+                if (CharacterModel.Animations[i].ID == TabID)
                 {
-                    if (CharacterModel.Animations[i].ID == TabID)
-                    {
-                        AnimationIndex = i;
-                        break;
-                    }
+                    AnimationIndex = i;
+                    break;
                 }
             }
         }
+    }
 
-        public CharacterModel CharacterModel { get; set; }
-        public int AnimationIndex { get; set; }
+    public CharacterModel CharacterModel { get; set; }
+    public int AnimationIndex { get; set; }
 
-        public int FrameIndex
+    public int FrameIndex
+    {
+        get => _frameIndex;
+        set
         {
-            get => _frameIndex;
-            set
-            {
-                _frameIndex = value;
+            _frameIndex = value;
 
-                OnPropertyChanged("FrameIndex");
-            }
+            OnPropertyChanged("FrameIndex");
         }
-        #endregion
+    }
+    #endregion
 
-        public CharacterFrameEditorViewModel()
+    public CharacterFrameEditorViewModel()
+    {
+        UpdateDialogInfo();
+    }
+
+    private void UpdateDialogInfo()
+    {
+        IEnumerable<FileModelVO> banks = ProjectFiles.GetModels<BankModel>().ToArray()
+            .Where(p => (p.Model as BankModel).BankUseType == BankUseType.Characters);
+
+        Banks = new FileModelVO[banks.Count()];
+
+        int index = 0;
+
+        foreach (FileModelVO item in banks)
         {
-            UpdateDialogInfo();
-        }
+            item.Index = index;
 
-        private void UpdateDialogInfo()
-        {
-            IEnumerable<FileModelVO> banks = ProjectFiles.GetModels<BankModel>().ToArray()
-                .Where(p => (p.Model as BankModel).BankUseType == BankUseType.Characters);
+            Banks[index] = item;
 
-            Banks = new FileModelVO[banks.Count()];
-
-            int index = 0;
-
-            foreach (FileModelVO item in banks)
-            {
-                item.Index = index;
-
-                Banks[index] = item;
-
-                index++;
-            }
+            index++;
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using ArchitectureLibrary.ViewModel;
 
-namespace NESTool.ViewModels
+namespace NESTool.ViewModels;
+
+public class LoadingDialogViewModel : ViewModel
 {
-    public class LoadingDialogViewModel : ViewModel
-    {
-    }
 }

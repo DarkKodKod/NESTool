@@ -2,13 +2,12 @@
 using ArchitectureLibrary.Model;
 using NESTool.Models;
 
-namespace NESTool.Commands
+namespace NESTool.Commands;
+
+public class LoadConfigsCommand : Command
 {
-    public class LoadConfigsCommand : Command
+    public override void Execute(object parameter)
     {
-        public override void Execute(object parameter)
-        {
-            ModelManager.Get<NESToolConfigurationModel>().Load();
-        }
+        ModelManager.Get<NESToolConfigurationModel>().Load();
     }
 }

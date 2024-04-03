@@ -4,22 +4,21 @@ using NESTool.Signals;
 using NESTool.VOs;
 using System.Windows.Input;
 
-namespace NESTool.Commands
+namespace NESTool.Commands;
+
+public class PreviewMouseWheelCommand : Command
 {
-    public class PreviewMouseWheelCommand : Command
+    public override void Execute(object parameter)
     {
-        public override void Execute(object parameter)
+        MouseWheelEventArgs wheelEvent = parameter as MouseWheelEventArgs;
+
+        MouseWheelVO vo = new()
         {
-            MouseWheelEventArgs wheelEvent = parameter as MouseWheelEventArgs;
+            Delta = wheelEvent.Delta,
+            OriginalSource = wheelEvent.OriginalSource,
+            Sender = wheelEvent.Source
+        };
 
-            MouseWheelVO vo = new MouseWheelVO
-            {
-                Delta = wheelEvent.Delta,
-                OriginalSource = wheelEvent.OriginalSource,
-                Sender = wheelEvent.Source
-            };
-
-            SignalManager.Get<MouseWheelSignal>().Dispatch(vo);
-        }
+        SignalManager.Get<MouseWheelSignal>().Dispatch(vo);
     }
 }

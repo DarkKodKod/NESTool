@@ -1,24 +1,23 @@
 ﻿using Nett;
 using System.Windows;
 
-namespace NESTool.Models
+namespace NESTool.Models;
+
+public class WorldModel : AFileModel
 {
-    public class WorldModel : AFileModel
+    private const string _extensionKey = "extensionWorlds";
+
+    [TomlIgnore]
+    public override string FileExtension
     {
-        private const string _extensionKey = "extensionWorlds";
-
-        [TomlIgnore]
-        public override string FileExtension
+        get
         {
-            get
+            if (string.IsNullOrEmpty(_fileExtension))
             {
-                if (string.IsNullOrEmpty(_fileExtension))
-                {
-                    _fileExtension = (string)Application.Current.FindResource(_extensionKey);
-                }
-
-                return _fileExtension;
+                _fileExtension = (string)Application.Current.FindResource(_extensionKey);
             }
+
+            return _fileExtension;
         }
     }
 }

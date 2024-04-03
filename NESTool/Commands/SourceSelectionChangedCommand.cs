@@ -4,20 +4,19 @@ using NESTool.Enums;
 using NESTool.Signals;
 using System.Windows.Controls;
 
-namespace NESTool.Commands
-{
-    public class SourceSelectionChangedCommand : Command
-    {
-        public override void Execute(object parameter)
-        {
-            SelectionChangedEventArgs changedEvent = parameter as SelectionChangedEventArgs;
+namespace NESTool.Commands;
 
-            if (changedEvent.AddedItems.Count > 0)
+public class SourceSelectionChangedCommand : Command
+{
+    public override void Execute(object parameter)
+    {
+        SelectionChangedEventArgs changedEvent = parameter as SelectionChangedEventArgs;
+
+        if (changedEvent.AddedItems.Count > 0)
+        {
+            if (changedEvent.AddedItems[0] is EntitySource entitySource)
             {
-                if (changedEvent.AddedItems[0] is EntitySource entitySource)
-                {
-                    SignalManager.Get<EntitySourceSelectionChangedSignal>().Dispatch(entitySource);
-                }
+                SignalManager.Get<EntitySourceSelectionChangedSignal>().Dispatch(entitySource);
             }
         }
     }

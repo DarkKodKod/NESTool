@@ -9,44 +9,43 @@ using NESTool.Utils;
 using NESTool.ViewModels;
 using System.Windows;
 
-namespace NESTool.Commands
+namespace NESTool.Commands;
+
+public class CreateElementCommand : Command
 {
-    public class CreateElementCommand : Command
+    private const string _fileNameKey = "NewElementName";
+
+    private readonly string _newFileName;
+
+    public CreateElementCommand()
     {
-        private const string _fileNameKey = "NewElementName";
+        _newFileName = (string)Application.Current.FindResource(_fileNameKey);
+    }
 
-        private readonly string _newFileName;
-
-        public CreateElementCommand()
+    public override void Execute(object parameter)
+    {
+        if (!(parameter is ElementTypeModel element))
         {
-            _newFileName = (string)Application.Current.FindResource(_fileNameKey);
+            return;
         }
 
-        public override void Execute(object parameter)
+        string name = ProjectItemFileSystem.GetValidFileName(
+            element.Path,
+            _newFileName,
+            Util.GetExtensionByType(element.Type));
+
+        ProjectItem newElement = new()
         {
-            if (!(parameter is ElementTypeModel element))
-            {
-                return;
-            }
+            DisplayName = name,
+            IsFolder = false,
+            IsRoot = false,
+            Type = element.Type
+        };
 
-            string name = ProjectItemFileSystem.GetValidFileName(
-                element.Path,
-                _newFileName,
-                Util.GetExtensionByType(element.Type));
+        SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(new CreateNewElementHistoryAction(newElement));
 
-            ProjectItem newElement = new ProjectItem()
-            {
-                DisplayName = name,
-                IsFolder = false,
-                IsRoot = false,
-                Type = element.Type
-            };
+        SignalManager.Get<FindAndCreateElementSignal>().Dispatch(newElement);
 
-            SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(new CreateNewElementHistoryAction(newElement));
-
-            SignalManager.Get<FindAndCreateElementSignal>().Dispatch(newElement);
-
-            ProjectItemFileSystem.CreateFileElement(newElement, element.Path, name);
-        }
+        ProjectItemFileSystem.CreateFileElement(newElement, element.Path, name);
     }
 }

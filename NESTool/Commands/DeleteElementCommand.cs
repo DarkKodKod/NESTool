@@ -5,42 +5,41 @@ using NESTool.HistoryActions;
 using NESTool.Signals;
 using System.Windows;
 
-namespace NESTool.Commands
+namespace NESTool.Commands;
+
+public class DeleteElementCommand : ItemSelectedCommand
 {
-    public class DeleteElementCommand : ItemSelectedCommand
+    public override bool CanExecute(object parameter)
     {
-        public override bool CanExecute(object parameter)
+        if (ItemSelected == null)
         {
-            if (ItemSelected == null)
-            {
-                return false;
-            }
-
-            if (ItemSelected.IsRoot)
-            {
-                return false;
-            }
-
-            return true;
+            return false;
         }
 
-        public override void Execute(object parameter)
+        if (ItemSelected.IsRoot)
         {
-            if (ItemSelected == null)
-            {
-                return;
-            }
+            return false;
+        }
 
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this element?", "Delete", MessageBoxButton.YesNo);
+        return true;
+    }
 
-            if (result == MessageBoxResult.Yes)
-            {
-                SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(new DeleteProjectItemHitoryAction(ItemSelected));
+    public override void Execute(object parameter)
+    {
+        if (ItemSelected == null)
+        {
+            return;
+        }
 
-                ProjectItemFileSystem.DeteElement(ItemSelected);
+        MessageBoxResult result = MessageBox.Show("Are you sure you want to delete this element?", "Delete", MessageBoxButton.YesNo);
 
-                SignalManager.Get<DeleteElementSignal>().Dispatch(ItemSelected);
-            }
+        if (result == MessageBoxResult.Yes)
+        {
+            SignalManager.Get<RegisterHistoryActionSignal>().Dispatch(new DeleteProjectItemHitoryAction(ItemSelected));
+
+            ProjectItemFileSystem.DeteElement(ItemSelected);
+
+            SignalManager.Get<DeleteElementSignal>().Dispatch(ItemSelected);
         }
     }
 }

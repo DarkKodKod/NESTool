@@ -2,19 +2,18 @@
 using NESTool.Views;
 using System.Windows;
 
-namespace NESTool.Commands
-{
-    public class OpenAddPropertyCommand : Command
-    {
-        public override void Execute(object parameter)
-        {
-            Window parentWindow = Window.GetWindow((DependencyObject)parameter);
+namespace NESTool.Commands;
 
-            AddPropertyDialog dialog = new AddPropertyDialog();
-            dialog.Owner = parentWindow;
-            dialog.OnActivate();
-            dialog.ShowDialog();
-            dialog.OnDeactivate();
-        }
+public class OpenAddPropertyCommand : Command
+{
+    public override void Execute(object parameter)
+    {
+        Window parentWindow = Window.GetWindow((DependencyObject)parameter);
+
+        AddPropertyDialog dialog = new();
+        dialog.Owner = parentWindow;
+        dialog.OnActivate();
+        dialog.ShowDialog();
+        dialog.OnDeactivate();
     }
 }

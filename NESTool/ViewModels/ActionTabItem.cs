@@ -5,108 +5,107 @@ using NESTool.UserControls.ViewModels;
 using NESTool.UserControls.Views;
 using System.Windows.Controls;
 
-namespace NESTool.ViewModels
+namespace NESTool.ViewModels;
+
+public class ActionTabItem : ViewModel
 {
-    public class ActionTabItem : ViewModel
+    private bool _isInEditMode;
+    private string _header;
+    private UserControl _content;
+
+    public string ID { get; set; }
+    public UserControl FramesView { get; set; }
+    public UserControl PixelsView { get; set; }
+
+    public string Header
     {
-        private bool _isInEditMode;
-        private string _header;
-        private UserControl _content;
-
-        public string ID { get; set; }
-        public UserControl FramesView { get; set; }
-        public UserControl PixelsView { get; set; }
-
-        public string Header
+        get => _header;
+        set
         {
-            get => _header;
-            set
+            if (_header != value)
             {
-                if (_header != value)
+                bool changedName = !string.IsNullOrEmpty(_header);
+
+                _header = value;
+
+                OnPropertyChanged("Header");
+
+                if (changedName)
                 {
-                    bool changedName = !string.IsNullOrEmpty(_header);
-
-                    _header = value;
-
-                    OnPropertyChanged("Header");
-
-                    if (changedName)
-                    {
-                        SignalManager.Get<RenamedAnimationTabSignal>().Dispatch(value);
-                    }
+                    SignalManager.Get<RenamedAnimationTabSignal>().Dispatch(value);
                 }
             }
         }
+    }
 
-        public UserControl Content
+    public UserControl Content
+    {
+        get => _content;
+        set
         {
-            get => _content;
-            set
-            {
-                _content = value;
+            _content = value;
 
-                OnPropertyChanged("Content");
+            OnPropertyChanged("Content");
+        }
+    }
+
+    public string OldCaptionValue { get; set; } = "";
+
+    public void SwapContent(string tabId, int frameIndex)
+    {
+        if (Content != FramesView)
+        {
+            if (Content is CharacterFrameEditorView characterView)
+            {
+                CharacterFrameEditorViewModel currentFrameViewModel = characterView.DataContext as CharacterFrameEditorViewModel;
+
+                currentFrameViewModel.OnDeactivate();
+            }
+
+            Content = FramesView;
+
+            if (Content is CharacterAnimationView animationView)
+            {
+                animationView.OnActivate();
+
+                CharacterAnimationViewModel viewModel = animationView.DataContext as CharacterAnimationViewModel;
+                viewModel.OnActivate();
             }
         }
-
-        public string OldCaptionValue { get; set; } = "";
-
-        public void SwapContent(string tabId, int frameIndex)
+        else
         {
-            if (Content != FramesView)
+            if (Content is CharacterAnimationView animationView)
             {
-                if (Content is CharacterFrameEditorView characterView)
-                {
-                    CharacterFrameEditorViewModel currentFrameViewModel = characterView.DataContext as CharacterFrameEditorViewModel;
+                animationView.OnDeactivate();
 
-                    currentFrameViewModel.OnDeactivate();
-                }
-
-                Content = FramesView;
-
-                if (Content is CharacterAnimationView animationView)
-                {
-                    animationView.OnActivate();
-
-                    CharacterAnimationViewModel viewModel = animationView.DataContext as CharacterAnimationViewModel;
-                    viewModel.OnActivate();
-                }
+                CharacterAnimationViewModel viewModel = animationView.DataContext as CharacterAnimationViewModel;
+                viewModel.OnDeactivate();
             }
-            else
+
+            Content = PixelsView;
+
+            if (Content is CharacterFrameEditorView characterView)
             {
-                if (Content is CharacterAnimationView animationView)
-                {
-                    animationView.OnDeactivate();
+                CharacterFrameEditorViewModel currentFrameViewModel = characterView.DataContext as CharacterFrameEditorViewModel;
 
-                    CharacterAnimationViewModel viewModel = animationView.DataContext as CharacterAnimationViewModel;
-                    viewModel.OnDeactivate();
-                }
+                currentFrameViewModel.TabID = tabId;
+                currentFrameViewModel.FrameIndex = frameIndex;
 
-                Content = PixelsView;
-
-                if (Content is CharacterFrameEditorView characterView)
-                {
-                    CharacterFrameEditorViewModel currentFrameViewModel = characterView.DataContext as CharacterFrameEditorViewModel;
-
-                    currentFrameViewModel.TabID = tabId;
-                    currentFrameViewModel.FrameIndex = frameIndex;
-
-                    currentFrameViewModel.OnActivate();
-                }
+                currentFrameViewModel.OnActivate();
             }
         }
+    }
 
-        public bool IsInEditMode
+    public bool IsInEditMode
+    {
+        get => _isInEditMode;
+        set
         {
-            get => _isInEditMode;
-            set
+            if (_isInEditMode != value)
             {
-                if (_isInEditMode != value)
-                {
-                    _isInEditMode = value;
+                _isInEditMode = value;
 
-                    OnPropertyChanged("IsInEditMode");
-                }
+                OnPropertyChanged("IsInEditMode");
             }
         }
     }

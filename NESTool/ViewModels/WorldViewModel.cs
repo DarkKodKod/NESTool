@@ -1,44 +1,43 @@
 ﻿using NESTool.Models;
 
-namespace NESTool.ViewModels
+namespace NESTool.ViewModels;
+
+public class WorldViewModel : ItemViewModel
 {
-    public class WorldViewModel : ItemViewModel
+    public WorldModel GetModel()
     {
-        public WorldModel GetModel()
-        {
-            return ProjectItem?.FileHandler.FileModel is WorldModel model ? model : null;
-        }
+        return ProjectItem?.FileHandler.FileModel is WorldModel model ? model : null;
+    }
 
-        #region Commands
+    #region Commands
+    #endregion
+
+    #region get/set
+    #endregion
+
+    public WorldViewModel()
+    {
+        UpdateDialogInfo();
+    }
+
+    public override void OnActivate()
+    {
+        base.OnActivate();
+
+        #region Signals
         #endregion
+    }
 
-        #region get/set
+    public override void OnDeactivate()
+    {
+        base.OnDeactivate();
+
+        #region Signals
         #endregion
+    }
 
-        public WorldViewModel()
-        {
-            UpdateDialogInfo();
-        }
-
-        public override void OnActivate()
-        {
-            base.OnActivate();
-
-            #region Signals
-            #endregion
-        }
-
-        public override void OnDeactivate()
-        {
-            base.OnDeactivate();
-
-            #region Signals
-            #endregion
-        }
-
-        private void UpdateDialogInfo()
-        {
-            //
-        }
+    private void UpdateDialogInfo()
+    {
+        //
     }
 }

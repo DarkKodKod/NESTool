@@ -2,17 +2,16 @@
 using NESTool.Views;
 using System.Windows;
 
-namespace NESTool.Commands
-{
-    public class ShowAboutDialogCommand : Command
-    {
-        public override void Execute(object parameter)
-        {
-            Window window = parameter as Window;
+namespace NESTool.Commands;
 
-            AboutDialog dialog = new AboutDialog();
-            dialog.Owner = window;
-            dialog.ShowDialog();
-        }
+public class ShowAboutDialogCommand : Command
+{
+    public override void Execute(object parameter)
+    {
+        Window window = parameter as Window;
+
+        AboutDialog dialog = new();
+        dialog.Owner = window;
+        dialog.ShowDialog();
     }
 }

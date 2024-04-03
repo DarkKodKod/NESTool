@@ -2,32 +2,31 @@
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
 
-namespace NESTool.Commands
+namespace NESTool.Commands;
+
+public class AddMapElementCommand : Command
 {
-    public class AddMapElementCommand : Command
+    public override bool CanExecute(object parameter)
     {
-        public override bool CanExecute(object parameter)
+        if (parameter == null)
         {
-            if (parameter == null)
-            {
-                return false;
-            }
-
-            string mapElement = (string)parameter;
-
-            if (string.IsNullOrEmpty(mapElement))
-            {
-                return false;
-            }
-
-            return true;
+            return false;
         }
 
-        public override void Execute(object parameter)
-        {
-            string mapElementId = (string)parameter;
+        string mapElement = (string)parameter;
 
-            SignalManager.Get<AddMapElementSignal>().Dispatch(mapElementId);
+        if (string.IsNullOrEmpty(mapElement))
+        {
+            return false;
         }
+
+        return true;
+    }
+
+    public override void Execute(object parameter)
+    {
+        string mapElementId = (string)parameter;
+
+        SignalManager.Get<AddMapElementSignal>().Dispatch(mapElementId);
     }
 }

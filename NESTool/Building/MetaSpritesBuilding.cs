@@ -23,11 +23,10 @@ namespace NESTool.Building
 
                 string fullPath = Path.Combine(Path.GetFullPath(projectModel.Build.OutputFilePath), item.Name + ".s");
 
-                using (StreamWriter outputFile = new StreamWriter(fullPath))
-                {
-                    WriteMetaSpriteHeader(outputFile);
-                    WriteMetaSprites(outputFile, model, item.Name);
-                }
+                using StreamWriter outputFile = new(fullPath);
+                
+                WriteMetaSpriteHeader(outputFile);
+                WriteMetaSprites(outputFile, model, item.Name);
             }
         }
 
@@ -58,7 +57,7 @@ namespace NESTool.Building
 
             int nesFPS = projectModel.Header.FrameTiming == FrameTiming.NTSC ? (int)TVStandard.NTSC : (int)TVStandard.PAL;
 
-            List<string> animationIndices = new List<string>();
+            List<string> animationIndices = new();
 
             foreach (CharacterAnimation animation in model.Animations)
             {
@@ -68,7 +67,7 @@ namespace NESTool.Building
                 }
 
                 int frameIndex = 0;
-                List<string> frameNames = new List<string>();
+                List<string> frameNames = new();
 
                 for (int i = 0; i < animation.Frames.Count; ++i)
                 {

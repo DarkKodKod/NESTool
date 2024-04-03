@@ -11,108 +11,107 @@ using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace NESTool.ViewModels
+namespace NESTool.ViewModels;
+
+public class ElementDialogViewModel : ViewModel
 {
-    public class ElementDialogViewModel : ViewModel
+    public DispatchSignalCommand<CloseDialogSignal> CloseDialogCommand { get; } = new();
+    public CreateElementCommand CreateElementCommand { get; } = new();
+
+    public List<ElementTypeModel> ElementTypes { get; set; } = new();
+
+    public ElementTypeModel SelectedType
     {
-        public DispatchSignalCommand<CloseDialogSignal> CloseDialogCommand { get; } = new DispatchSignalCommand<CloseDialogSignal>();
-        public CreateElementCommand CreateElementCommand { get; } = new CreateElementCommand();
-
-        public List<ElementTypeModel> ElementTypes { get; set; } = new List<ElementTypeModel>();
-
-        public ElementTypeModel SelectedType
+        get => _selectedType;
+        set
         {
-            get => _selectedType;
-            set
-            {
-                _selectedType = value;
-                OnPropertyChanged("SelectedType");
-            }
+            _selectedType = value;
+            OnPropertyChanged("SelectedType");
         }
+    }
 
-        private const string _folderBanksKey = "folderBanks";
-        private const string _folderCharactersKey = "folderCharacters";
-        private const string _folderMapsKey = "folderMaps";
-        private const string _folderTileSetsKey = "folderTileSets";
-        private const string _folderPalettesKey = "folderPalettes";
-        private const string _folderWorldsKey = "folderWorlds";
-        private const string _folderEntitiesKey = "folderEntities";
+    private const string _folderBanksKey = "folderBanks";
+    private const string _folderCharactersKey = "folderCharacters";
+    private const string _folderMapsKey = "folderMaps";
+    private const string _folderTileSetsKey = "folderTileSets";
+    private const string _folderPalettesKey = "folderPalettes";
+    private const string _folderWorldsKey = "folderWorlds";
+    private const string _folderEntitiesKey = "folderEntities";
 
-        private ElementTypeModel _selectedType;
+    private ElementTypeModel _selectedType;
 
-        public ElementDialogViewModel()
+    public ElementDialogViewModel()
+    {
+        SignalManager.Get<CloseDialogSignal>().Listener += OnCloseDialog;
+
+        InitializeElements();
+    }
+
+    private void OnCloseDialog()
+    {
+        SignalManager.Get<CloseDialogSignal>().Listener -= OnCloseDialog;
+    }
+
+    private void InitializeElements()
+    {
+        ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+
+        string banks = (string)Application.Current.FindResource(_folderBanksKey);
+        string characters = (string)Application.Current.FindResource(_folderCharactersKey);
+        string maps = (string)Application.Current.FindResource(_folderMapsKey);
+        string tileSets = (string)Application.Current.FindResource(_folderTileSetsKey);
+        string palettes = (string)Application.Current.FindResource(_folderPalettesKey);
+        string worlds = (string)Application.Current.FindResource(_folderWorldsKey);
+        string entity = (string)Application.Current.FindResource(_folderEntitiesKey);
+
+        ElementTypes.Add(new ElementTypeModel()
         {
-            SignalManager.Get<CloseDialogSignal>().Listener += OnCloseDialog;
-
-            InitializeElements();
-        }
-
-        private void OnCloseDialog()
+            Name = banks,
+            Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/pattern_table.png", UriKind.RelativeOrAbsolute)),
+            Type = ProjectItemType.Bank,
+            Path = Path.Combine(projectModel.ProjectPath, banks)
+        });
+        ElementTypes.Add(new ElementTypeModel()
         {
-            SignalManager.Get<CloseDialogSignal>().Listener -= OnCloseDialog;
-        }
-
-        private void InitializeElements()
+            Name = characters,
+            Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/character.png", UriKind.RelativeOrAbsolute)),
+            Type = ProjectItemType.Character,
+            Path = Path.Combine(projectModel.ProjectPath, characters)
+        });
+        ElementTypes.Add(new ElementTypeModel()
         {
-            ProjectModel projectModel = ModelManager.Get<ProjectModel>();
-
-            string banks = (string)Application.Current.FindResource(_folderBanksKey);
-            string characters = (string)Application.Current.FindResource(_folderCharactersKey);
-            string maps = (string)Application.Current.FindResource(_folderMapsKey);
-            string tileSets = (string)Application.Current.FindResource(_folderTileSetsKey);
-            string palettes = (string)Application.Current.FindResource(_folderPalettesKey);
-            string worlds = (string)Application.Current.FindResource(_folderWorldsKey);
-            string entity = (string)Application.Current.FindResource(_folderEntitiesKey);
-
-            ElementTypes.Add(new ElementTypeModel()
-            {
-                Name = banks,
-                Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/pattern_table.png", UriKind.RelativeOrAbsolute)),
-                Type = ProjectItemType.Bank,
-                Path = Path.Combine(projectModel.ProjectPath, banks)
-            });
-            ElementTypes.Add(new ElementTypeModel()
-            {
-                Name = characters,
-                Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/character.png", UriKind.RelativeOrAbsolute)),
-                Type = ProjectItemType.Character,
-                Path = Path.Combine(projectModel.ProjectPath, characters)
-            });
-            ElementTypes.Add(new ElementTypeModel()
-            {
-                Name = maps,
-                Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/map.png", UriKind.RelativeOrAbsolute)),
-                Type = ProjectItemType.Map,
-                Path = Path.Combine(projectModel.ProjectPath, maps)
-            });
-            ElementTypes.Add(new ElementTypeModel()
-            {
-                Name = tileSets,
-                Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/tileset.png", UriKind.RelativeOrAbsolute)),
-                Type = ProjectItemType.TileSet,
-                Path = Path.Combine(projectModel.ProjectPath, tileSets)
-            });
-            ElementTypes.Add(new ElementTypeModel()
-            {
-                Name = palettes,
-                Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/palette.png", UriKind.RelativeOrAbsolute)),
-                Type = ProjectItemType.Palette,
-                Path = Path.Combine(projectModel.ProjectPath, palettes)
-            });
-            ElementTypes.Add(new ElementTypeModel()
-            {
-                Name = worlds,
-                Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/world.png", UriKind.RelativeOrAbsolute)),
-                Type = ProjectItemType.World,
-                Path = Path.Combine(projectModel.ProjectPath, worlds)
-            });
-            ElementTypes.Add(new ElementTypeModel()
-            {
-                Name = entity,
-                Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/entity.png", UriKind.RelativeOrAbsolute)),
-                Type = ProjectItemType.Entity,
-                Path = Path.Combine(projectModel.ProjectPath, entity)
-            });
-        }
+            Name = maps,
+            Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/map.png", UriKind.RelativeOrAbsolute)),
+            Type = ProjectItemType.Map,
+            Path = Path.Combine(projectModel.ProjectPath, maps)
+        });
+        ElementTypes.Add(new ElementTypeModel()
+        {
+            Name = tileSets,
+            Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/tileset.png", UriKind.RelativeOrAbsolute)),
+            Type = ProjectItemType.TileSet,
+            Path = Path.Combine(projectModel.ProjectPath, tileSets)
+        });
+        ElementTypes.Add(new ElementTypeModel()
+        {
+            Name = palettes,
+            Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/palette.png", UriKind.RelativeOrAbsolute)),
+            Type = ProjectItemType.Palette,
+            Path = Path.Combine(projectModel.ProjectPath, palettes)
+        });
+        ElementTypes.Add(new ElementTypeModel()
+        {
+            Name = worlds,
+            Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/world.png", UriKind.RelativeOrAbsolute)),
+            Type = ProjectItemType.World,
+            Path = Path.Combine(projectModel.ProjectPath, worlds)
+        });
+        ElementTypes.Add(new ElementTypeModel()
+        {
+            Name = entity,
+            Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/entity.png", UriKind.RelativeOrAbsolute)),
+            Type = ProjectItemType.Entity,
+            Path = Path.Combine(projectModel.ProjectPath, entity)
+        });
     }
 }

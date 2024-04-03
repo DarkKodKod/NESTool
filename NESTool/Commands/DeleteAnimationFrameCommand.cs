@@ -3,53 +3,52 @@ using ArchitectureLibrary.Signals;
 using NESTool.Models;
 using NESTool.Signals;
 
-namespace NESTool.Commands
+namespace NESTool.Commands;
+
+public class DeleteAnimationFrameCommand : Command
 {
-    public class DeleteAnimationFrameCommand : Command
+    public override void Execute(object parameter)
     {
-        public override void Execute(object parameter)
+        object[] values = (object[])parameter;
+        string tabID = (string)values[0];
+        int frameIndex = (int)values[1];
+        FileHandler fileHandler = (FileHandler)values[2];
+
+        CharacterModel model = fileHandler.FileModel as CharacterModel;
+
+        bool frameDeleted = false;
+
+        for (int i = 0; i < model.Animations.Count; ++i)
         {
-            object[] values = (object[])parameter;
-            string tabID = (string)values[0];
-            int frameIndex = (int)values[1];
-            FileHandler fileHandler = (FileHandler)values[2];
+            CharacterAnimation animation = model.Animations[i];
 
-            CharacterModel model = fileHandler.FileModel as CharacterModel;
-
-            bool frameDeleted = false;
-
-            for (int i = 0; i < model.Animations.Count; ++i)
+            if (animation.ID == tabID && animation.Frames != null)
             {
-                CharacterAnimation animation = model.Animations[i];
-
-                if (animation.ID == tabID && animation.Frames != null)
+                for (int j = 0; j < animation.Frames.Count; ++j)
                 {
-                    for (int j = 0; j < animation.Frames.Count; ++j)
+                    if (j == frameIndex)
                     {
-                        if (j == frameIndex)
-                        {
-                            animation.Frames[j].Tiles = null;
+                        animation.Frames[j].Tiles = null;
 
-                            SignalManager.Get<DeleteAnimationFrameSignal>().Dispatch(tabID, frameIndex);
+                        SignalManager.Get<DeleteAnimationFrameSignal>().Dispatch(tabID, frameIndex);
 
-                            frameDeleted = true;
-                        }
-                        else if (frameDeleted)
-                        {
-                            FrameModel prevFrame = animation.Frames[j - 1];
-                            animation.Frames[j - 1] = animation.Frames[j];
-                            animation.Frames[j] = prevFrame;
-                        }
+                        frameDeleted = true;
                     }
-
-                    break;
+                    else if (frameDeleted)
+                    {
+                        FrameModel prevFrame = animation.Frames[j - 1];
+                        animation.Frames[j - 1] = animation.Frames[j];
+                        animation.Frames[j] = prevFrame;
+                    }
                 }
-            }
 
-            if (frameDeleted)
-            {
-                fileHandler.Save();
+                break;
             }
+        }
+
+        if (frameDeleted)
+        {
+            fileHandler.Save();
         }
     }
 }

@@ -1,8 +1,7 @@
-﻿namespace ArchitectureLibrary.History
+﻿namespace ArchitectureLibrary.History;
+
+public interface IHistoryAction
 {
-    public interface IHistoryAction
-    {
-        void Undo();
-        void Redo();
-    }
+    void Undo();
+    void Redo();
 }

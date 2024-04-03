@@ -1,7 +1,6 @@
-﻿namespace ArchitectureLibrary.Clipboard
+﻿namespace ArchitectureLibrary.Clipboard;
+
+public interface IClipboardable
 {
-    public interface IClipboardable
-    {
-        string GetContent();
-    }
+    string GetContent();
 }

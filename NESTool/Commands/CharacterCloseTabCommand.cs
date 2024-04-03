@@ -5,23 +5,22 @@ using NESTool.ViewModels;
 using System.Windows;
 using System.Windows.Input;
 
-namespace NESTool.Commands
+namespace NESTool.Commands;
+
+public class CharacterCloseTabCommand : Command
 {
-    public class CharacterCloseTabCommand : Command
+    public override void Execute(object parameter)
     {
-        public override void Execute(object parameter)
+        MessageBoxResult result = MessageBox.Show("Are you sure you want to delete the animation tab?", "Delete", MessageBoxButton.YesNo);
+
+        if (result == MessageBoxResult.Yes)
         {
-            MessageBoxResult result = MessageBox.Show("Are you sure you want to delete the animation tab?", "Delete", MessageBoxButton.YesNo);
+            MouseButtonEventArgs args = parameter as MouseButtonEventArgs;
 
-            if (result == MessageBoxResult.Yes)
-            {
-                MouseButtonEventArgs args = parameter as MouseButtonEventArgs;
+            FrameworkElement source = (FrameworkElement)args.OriginalSource;
+            ActionTabItem tabItem = source.DataContext as ActionTabItem;
 
-                FrameworkElement source = (FrameworkElement)args.OriginalSource;
-                ActionTabItem tabItem = source.DataContext as ActionTabItem;
-
-                SignalManager.Get<AnimationTabDeletedSignal>().Dispatch(tabItem);
-            }
+            SignalManager.Get<AnimationTabDeletedSignal>().Dispatch(tabItem);
         }
     }
 }

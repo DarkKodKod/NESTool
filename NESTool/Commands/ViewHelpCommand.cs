@@ -1,13 +1,12 @@
 ﻿using ArchitectureLibrary.Commands;
 using System.Diagnostics;
 
-namespace NESTool.Commands
+namespace NESTool.Commands;
+
+public class ViewHelpCommand : Command
 {
-    public class ViewHelpCommand : Command
+    public override void Execute(object parameter)
     {
-        public override void Execute(object parameter)
-        {
-            Process.Start("https://github.com/DarkKodKod/NESTool");
-        }
+        Process.Start("https://github.com/DarkKodKod/NESTool");
     }
 }

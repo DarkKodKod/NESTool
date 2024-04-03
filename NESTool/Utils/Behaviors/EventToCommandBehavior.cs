@@ -5,91 +5,90 @@ using System.Runtime.Versioning;
 using System.Windows;
 using System.Windows.Input;
 
-namespace NESTool.Utils.Behaviors
+namespace NESTool.Utils.Behaviors;
+
+/// <summary>
+/// Behavior that will connect an UI event to a viewmodel Command,
+/// allowing the event arguments to be passed as the CommandParameter.
+/// </summary>
+[SupportedOSPlatform("windows")]
+public class EventToCommandBehavior : Behavior<FrameworkElement>
 {
-    /// <summary>
-    /// Behavior that will connect an UI event to a viewmodel Command,
-    /// allowing the event arguments to be passed as the CommandParameter.
-    /// </summary>
-    [SupportedOSPlatform("windows")]
-    public class EventToCommandBehavior : Behavior<FrameworkElement>
+    private Delegate _handler;
+    private EventInfo _oldEvent;
+
+    // Event
+    public string Event { get => (string)GetValue(EventProperty); set { SetValue(EventProperty, value); } }
+    public static readonly DependencyProperty EventProperty = DependencyProperty.Register("Event", typeof(string), typeof(EventToCommandBehavior), new PropertyMetadata(null, OnEventChanged));
+
+    // Command
+    public ICommand Command { get { return (ICommand)GetValue(CommandProperty); } set { SetValue(CommandProperty, value); } }
+    public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(EventToCommandBehavior), new PropertyMetadata(null));
+
+    // PassArguments (default: false)
+    public bool PassArguments { get => (bool)GetValue(PassArgumentsProperty); set { SetValue(PassArgumentsProperty, value); } }
+    public static readonly DependencyProperty PassArgumentsProperty = DependencyProperty.Register("PassArguments", typeof(bool), typeof(EventToCommandBehavior), new PropertyMetadata(false));
+
+    private static void OnEventChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        private Delegate _handler;
-        private EventInfo _oldEvent;
+        EventToCommandBehavior beh = (EventToCommandBehavior)d;
 
-        // Event
-        public string Event { get => (string)GetValue(EventProperty); set { SetValue(EventProperty, value); } }
-        public static readonly DependencyProperty EventProperty = DependencyProperty.Register("Event", typeof(string), typeof(EventToCommandBehavior), new PropertyMetadata(null, OnEventChanged));
-
-        // Command
-        public ICommand Command { get { return (ICommand)GetValue(CommandProperty); } set { SetValue(CommandProperty, value); } }
-        public static readonly DependencyProperty CommandProperty = DependencyProperty.Register("Command", typeof(ICommand), typeof(EventToCommandBehavior), new PropertyMetadata(null));
-
-        // PassArguments (default: false)
-        public bool PassArguments { get => (bool)GetValue(PassArgumentsProperty); set { SetValue(PassArgumentsProperty, value); } }
-        public static readonly DependencyProperty PassArgumentsProperty = DependencyProperty.Register("PassArguments", typeof(bool), typeof(EventToCommandBehavior), new PropertyMetadata(false));
-
-        private static void OnEventChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        if (beh.AssociatedObject != null) // is not yet attached at initial load
         {
-            EventToCommandBehavior beh = (EventToCommandBehavior)d;
+            beh.AttachHandler((string)e.NewValue);
+        }
+    }
 
-            if (beh.AssociatedObject != null) // is not yet attached at initial load
-            {
-                beh.AttachHandler((string)e.NewValue);
-            }
+    protected override void OnAttached()
+    {
+        AttachHandler(Event); // initial set
+    }
+
+    /// <summary>
+    /// Attaches the handler to the event
+    /// </summary>
+    private void AttachHandler(string eventName)
+    {
+        // detach old event
+        if (_oldEvent != null)
+        {
+            _oldEvent.RemoveEventHandler(AssociatedObject, _handler);
         }
 
-        protected override void OnAttached()
+        // attach new event
+        if (!string.IsNullOrEmpty(eventName))
         {
-            AttachHandler(Event); // initial set
-        }
+            EventInfo ei = AssociatedObject.GetType().GetEvent(eventName);
 
-        /// <summary>
-        /// Attaches the handler to the event
-        /// </summary>
-        private void AttachHandler(string eventName)
-        {
-            // detach old event
-            if (_oldEvent != null)
+            if (ei != null)
             {
-                _oldEvent.RemoveEventHandler(AssociatedObject, _handler);
+                MethodInfo mi = GetType().GetMethod("ExecuteCommand", BindingFlags.Instance | BindingFlags.NonPublic);
+
+                _handler = Delegate.CreateDelegate(ei.EventHandlerType, this, mi);
+
+                ei.AddEventHandler(AssociatedObject, _handler);
+
+                _oldEvent = ei; // store to detach in case the Event property changes
             }
-
-            // attach new event
-            if (!string.IsNullOrEmpty(eventName))
+            else
             {
-                EventInfo ei = AssociatedObject.GetType().GetEvent(eventName);
-
-                if (ei != null)
-                {
-                    MethodInfo mi = GetType().GetMethod("ExecuteCommand", BindingFlags.Instance | BindingFlags.NonPublic);
-
-                    _handler = Delegate.CreateDelegate(ei.EventHandlerType, this, mi);
-
-                    ei.AddEventHandler(AssociatedObject, _handler);
-
-                    _oldEvent = ei; // store to detach in case the Event property changes
-                }
-                else
-                {
-                    throw new ArgumentException(string.Format("The event '{0}' was not found on type '{1}'", eventName, AssociatedObject.GetType().Name));
-                }
+                throw new ArgumentException(string.Format("The event '{0}' was not found on type '{1}'", eventName, AssociatedObject.GetType().Name));
             }
         }
+    }
 
-        /// <summary>
-        /// Executes the Command
-        /// </summary>
-        private void ExecuteCommand(object sender, EventArgs e)
+    /// <summary>
+    /// Executes the Command
+    /// </summary>
+    private void ExecuteCommand(object sender, EventArgs e)
+    {
+        object parameter = PassArguments ? e : null;
+
+        if (Command != null)
         {
-            object parameter = PassArguments ? e : null;
-
-            if (Command != null)
+            if (Command.CanExecute(parameter))
             {
-                if (Command.CanExecute(parameter))
-                {
-                    Command.Execute(parameter);
-                }
+                Command.Execute(parameter);
             }
         }
     }

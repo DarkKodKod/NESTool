@@ -4,20 +4,19 @@ using NESTool.Signals;
 using NESTool.VOs;
 using System.Windows.Controls;
 
-namespace NESTool.Commands
-{
-    public class CharacterAnimationVOSelectionChangedCommand : Command
-    {
-        public override void Execute(object parameter)
-        {
-            SelectionChangedEventArgs changedEvent = parameter as SelectionChangedEventArgs;
+namespace NESTool.Commands;
 
-            if (changedEvent.AddedItems.Count > 0)
+public class CharacterAnimationVOSelectionChangedCommand : Command
+{
+    public override void Execute(object parameter)
+    {
+        SelectionChangedEventArgs changedEvent = parameter as SelectionChangedEventArgs;
+
+        if (changedEvent.AddedItems.Count > 0)
+        {
+            if (changedEvent.AddedItems[0] is CharacterAnimationVO animationVO)
             {
-                if (changedEvent.AddedItems[0] is CharacterAnimationVO animationVO)
-                {
-                    SignalManager.Get<CharacterAnimationVOSelectionChangedSignal>().Dispatch(animationVO);
-                }
+                SignalManager.Get<CharacterAnimationVOSelectionChangedSignal>().Dispatch(animationVO);
             }
         }
     }

@@ -6,187 +6,186 @@ using NESTool.Enums;
 using NESTool.Models;
 using NESTool.Signals;
 
-namespace NESTool.ViewModels
+namespace NESTool.ViewModels;
+
+public class ProjectPropertiesDialogViewModel : ViewModel
 {
-    public class ProjectPropertiesDialogViewModel : ViewModel
+    public DispatchSignalCommand<CloseDialogSignal> CloseDialogCommand { get; } = new DispatchSignalCommand<CloseDialogSignal>();
+
+    #region get/set
+    public bool Battery
     {
-        public DispatchSignalCommand<CloseDialogSignal> CloseDialogCommand { get; } = new DispatchSignalCommand<CloseDialogSignal>();
-
-        #region get/set
-        public bool Battery
+        get { return _battery; }
+        set
         {
-            get { return _battery; }
-            set
-            {
-                _battery = value;
-                OnPropertyChanged("Battery");
+            _battery = value;
+            OnPropertyChanged("Battery");
 
-                _changed = true;
-            }
+            _changed = true;
         }
+    }
 
-        public int[] CHRSizes
+    public int[] CHRSizes
+    {
+        get { return _chrSizes; }
+        set
         {
-            get { return _chrSizes; }
-            set
-            {
-                _chrSizes = value;
-                OnPropertyChanged("CHRSizes");
-            }
+            _chrSizes = value;
+            OnPropertyChanged("CHRSizes");
         }
+    }
 
-        public int SelectedCHRSize
+    public int SelectedCHRSize
+    {
+        get { return _selectedCHRSize; }
+        set
         {
-            get { return _selectedCHRSize; }
-            set
-            {
-                _selectedCHRSize = value;
-                OnPropertyChanged("SelectedCHRSize");
+            _selectedCHRSize = value;
+            OnPropertyChanged("SelectedCHRSize");
 
-                _changed = true;
-            }
+            _changed = true;
         }
+    }
 
-        public MirroringType SelectedMirroring
+    public MirroringType SelectedMirroring
+    {
+        get { return _selectedMirroring; }
+        set
         {
-            get { return _selectedMirroring; }
-            set
-            {
-                _selectedMirroring = value;
-                OnPropertyChanged("SelectedMirroring");
+            _selectedMirroring = value;
+            OnPropertyChanged("SelectedMirroring");
 
-                _changed = true;
-            }
+            _changed = true;
         }
+    }
 
-        public MirroringType[] Mirrorings
+    public MirroringType[] Mirrorings
+    {
+        get { return _mirrorings; }
+        set
         {
-            get { return _mirrorings; }
-            set
-            {
-                _mirrorings = value;
-                OnPropertyChanged("Mirrorings");
-            }
+            _mirrorings = value;
+            OnPropertyChanged("Mirrorings");
         }
+    }
 
-        public int[] PRGSizes
+    public int[] PRGSizes
+    {
+        get { return _prgSizes; }
+        set
         {
-            get { return _prgSizes; }
-            set
-            {
-                _prgSizes = value;
-                OnPropertyChanged("PRGSizes");
-            }
+            _prgSizes = value;
+            OnPropertyChanged("PRGSizes");
         }
+    }
 
-        public int SelectedPRGSize
+    public int SelectedPRGSize
+    {
+        get { return _selectedPRGSize; }
+        set
         {
-            get { return _selectedPRGSize; }
-            set
-            {
-                _selectedPRGSize = value;
-                OnPropertyChanged("SelectedPRGSize");
+            _selectedPRGSize = value;
+            OnPropertyChanged("SelectedPRGSize");
 
-                _changed = true;
-            }
+            _changed = true;
         }
+    }
 
-        public FrameTiming FrameTiming
+    public FrameTiming FrameTiming
+    {
+        get { return _frameTiming; }
+        set
         {
-            get { return _frameTiming; }
-            set
-            {
-                _frameTiming = value;
-                OnPropertyChanged("FrameTiming");
+            _frameTiming = value;
+            OnPropertyChanged("FrameTiming");
 
-                _changed = true;
-            }
+            _changed = true;
         }
+    }
 
-        public MapperModel[] Mappers
+    public MapperModel[] Mappers
+    {
+        get { return _mappers; }
+        set
         {
-            get { return _mappers; }
-            set
-            {
-                _mappers = value;
-                OnPropertyChanged("Mappers");
+            _mappers = value;
+            OnPropertyChanged("Mappers");
 
-                _changed = true;
-            }
+            _changed = true;
         }
+    }
 
-        public int SelectedMapper
+    public int SelectedMapper
+    {
+        get { return _selectedMapper; }
+        set
         {
-            get { return _selectedMapper; }
-            set
-            {
-                _selectedMapper = value;
-                OnPropertyChanged("SelectedMapper");
+            _selectedMapper = value;
+            OnPropertyChanged("SelectedMapper");
 
-                _changed = true;
-            }
+            _changed = true;
         }
-        #endregion
+    }
+    #endregion
 
-        private bool _battery;
-        private FrameTiming _frameTiming;
-        private int[] _chrSizes;
-        private int[] _prgSizes;
-        private MirroringType[] _mirrorings;
-        private MapperModel[] _mappers;
-        private int _selectedMapper;
-        private MirroringType _selectedMirroring = MirroringType.Vertical;
-        private int _selectedCHRSize;
-        private int _selectedPRGSize;
-        private bool _changed;
+    private bool _battery;
+    private FrameTiming _frameTiming;
+    private int[] _chrSizes;
+    private int[] _prgSizes;
+    private MirroringType[] _mirrorings;
+    private MapperModel[] _mappers;
+    private int _selectedMapper;
+    private MirroringType _selectedMirroring = MirroringType.Vertical;
+    private int _selectedCHRSize;
+    private int _selectedPRGSize;
+    private bool _changed;
 
-        public ProjectPropertiesDialogViewModel()
+    public ProjectPropertiesDialogViewModel()
+    {
+        MappersModel mappers = ModelManager.Get<MappersModel>();
+
+        Mappers = mappers.Mappers;
+
+        ReadProjectData();
+
+        SignalManager.Get<CloseDialogSignal>().Listener += OnCloseDialog;
+
+        _changed = false;
+    }
+
+    private void OnCloseDialog()
+    {
+        if (_changed)
         {
-            MappersModel mappers = ModelManager.Get<MappersModel>();
-
-            Mappers = mappers.Mappers;
-
-            ReadProjectData();
-
-            SignalManager.Get<CloseDialogSignal>().Listener += OnCloseDialog;
-
-            _changed = false;
-        }
-
-        private void OnCloseDialog()
-        {
-            if (_changed)
-            {
-                // Save all changes
-                ProjectModel project = ModelManager.Get<ProjectModel>();
-
-                project.Header.INesMapper = SelectedMapper;
-                project.Header.CHRSize = SelectedCHRSize;
-                project.Header.PRGSize = SelectedPRGSize;
-                project.Header.FrameTiming = FrameTiming;
-                project.Header.MirroringType = SelectedMirroring;
-                project.Header.Battery = Battery;
-
-                project.Save();
-            }
-
-            SignalManager.Get<CloseDialogSignal>().Listener -= OnCloseDialog;
-        }
-
-        private void ReadProjectData()
-        {
+            // Save all changes
             ProjectModel project = ModelManager.Get<ProjectModel>();
-            MappersModel mappers = ModelManager.Get<MappersModel>();
 
-            SelectedMapper = project.Header.INesMapper;
-            CHRSizes = mappers.Mappers[SelectedMapper].CHR;
-            PRGSizes = mappers.Mappers[SelectedMapper].PRG;
-            SelectedCHRSize = project.Header.CHRSize;
-            SelectedPRGSize = project.Header.PRGSize;
-            FrameTiming = project.Header.FrameTiming;
-            Mirrorings = mappers.Mappers[SelectedMapper].Mirroring;
-            SelectedMirroring = project.Header.MirroringType;
-            Battery = project.Header.Battery;
+            project.Header.INesMapper = SelectedMapper;
+            project.Header.CHRSize = SelectedCHRSize;
+            project.Header.PRGSize = SelectedPRGSize;
+            project.Header.FrameTiming = FrameTiming;
+            project.Header.MirroringType = SelectedMirroring;
+            project.Header.Battery = Battery;
+
+            project.Save();
         }
+
+        SignalManager.Get<CloseDialogSignal>().Listener -= OnCloseDialog;
+    }
+
+    private void ReadProjectData()
+    {
+        ProjectModel project = ModelManager.Get<ProjectModel>();
+        MappersModel mappers = ModelManager.Get<MappersModel>();
+
+        SelectedMapper = project.Header.INesMapper;
+        CHRSizes = mappers.Mappers[SelectedMapper].CHR;
+        PRGSizes = mappers.Mappers[SelectedMapper].PRG;
+        SelectedCHRSize = project.Header.CHRSize;
+        SelectedPRGSize = project.Header.PRGSize;
+        FrameTiming = project.Header.FrameTiming;
+        Mirrorings = mappers.Mappers[SelectedMapper].Mirroring;
+        SelectedMirroring = project.Header.MirroringType;
+        Battery = project.Header.Battery;
     }
 }

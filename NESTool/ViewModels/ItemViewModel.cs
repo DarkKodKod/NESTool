@@ -1,9 +1,8 @@
 ﻿using ArchitectureLibrary.ViewModel;
 
-namespace NESTool.ViewModels
+namespace NESTool.ViewModels;
+
+public class ItemViewModel : ViewModel
 {
-    public class ItemViewModel : ViewModel
-    {
-        public ProjectItem ProjectItem { get; set; }
-    }
+    public ProjectItem ProjectItem { get; set; }
 }

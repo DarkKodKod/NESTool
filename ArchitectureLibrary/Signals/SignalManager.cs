@@ -1,8 +1,7 @@
 ﻿using ArchitectureLibrary.Managers;
 
-namespace ArchitectureLibrary.Signals
+namespace ArchitectureLibrary.Signals;
+
+public class SignalManager : AManager<ISignalBase>
 {
-    public class SignalManager : AManager<ISignalBase>
-    {
-    }
 }

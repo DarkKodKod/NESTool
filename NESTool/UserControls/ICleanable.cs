@@ -1,7 +1,6 @@
-﻿namespace NESTool.UserControls
+﻿namespace NESTool.UserControls;
+
+public interface ICleanable
 {
-    public interface ICleanable
-    {
-        void CleanUp();
-    }
+    void CleanUp();
 }

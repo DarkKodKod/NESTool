@@ -4,20 +4,19 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace NESTool.Commands
+namespace NESTool.Commands;
+
+public class ImageMouseDownCommand : Command
 {
-    public class ImageMouseDownCommand : Command
+    public override void Execute(object parameter)
     {
-        public override void Execute(object parameter)
+        MouseButtonEventArgs mouseEvent = parameter as MouseButtonEventArgs;
+
+        if (mouseEvent.Source is Image image)
         {
-            MouseButtonEventArgs mouseEvent = parameter as MouseButtonEventArgs;
+            Point p = mouseEvent.GetPosition(image);
 
-            if (mouseEvent.Source is Image image)
-            {
-                Point p = mouseEvent.GetPosition(image);
-
-                Util.SendSelectedQuadrantSignal(image, p);
-            }
+            Util.SendSelectedQuadrantSignal(image, p);
         }
     }
 }

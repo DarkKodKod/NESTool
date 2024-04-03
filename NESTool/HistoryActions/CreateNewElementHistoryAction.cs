@@ -4,31 +4,30 @@ using NESTool.FileSystem;
 using NESTool.Signals;
 using NESTool.ViewModels;
 
-namespace NESTool.HistoryActions
+namespace NESTool.HistoryActions;
+
+public class CreateNewElementHistoryAction : IHistoryAction
 {
-    public class CreateNewElementHistoryAction : IHistoryAction
+    private readonly ProjectItem _item;
+
+    public CreateNewElementHistoryAction(ProjectItem item)
     {
-        private readonly ProjectItem _item;
+        _item = item;
+    }
 
-        public CreateNewElementHistoryAction(ProjectItem item)
-        {
-            _item = item;
-        }
+    public void Redo()
+    {
+        SignalManager.Get<PasteElementSignal>().Dispatch(_item.Parent, _item);
 
-        public void Redo()
-        {
-            SignalManager.Get<PasteElementSignal>().Dispatch(_item.Parent, _item);
+        SignalManager.Get<CreateNewElementSignal>().Dispatch(_item);
 
-            SignalManager.Get<CreateNewElementSignal>().Dispatch(_item);
+        ProjectItemFileSystem.CreateElement(_item, _item.FileHandler.Path, _item.DisplayName);
+    }
 
-            ProjectItemFileSystem.CreateElement(_item, _item.FileHandler.Path, _item.DisplayName);
-        }
+    public void Undo()
+    {
+        ProjectItemFileSystem.DeteElement(_item);
 
-        public void Undo()
-        {
-            ProjectItemFileSystem.DeteElement(_item);
-
-            SignalManager.Get<DeleteElementSignal>().Dispatch(_item);
-        }
+        SignalManager.Get<DeleteElementSignal>().Dispatch(_item);
     }
 }

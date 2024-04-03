@@ -2,30 +2,29 @@
 using ArchitectureLibrary.Signals;
 using NESTool.Signals;
 
-namespace NESTool.Commands
+namespace NESTool.Commands;
+
+public class MoveDownSelectedMapElement : Command
 {
-    public class MoveDownSelectedMapElement : Command
+    public override bool CanExecute(object parameter)
     {
-        public override bool CanExecute(object parameter)
+        if (parameter == null)
         {
-            if (parameter == null)
-            {
-                return false;
-            }
-
-            if ((int)parameter == -1)
-            {
-                return false;
-            }
-
-            return true;
+            return false;
         }
 
-        public override void Execute(object parameter)
+        if ((int)parameter == -1)
         {
-            int selectedPropertyIndex = (int)parameter;
-
-            SignalManager.Get<MoveDownSelectedMapElementSignal>().Dispatch(selectedPropertyIndex);
+            return false;
         }
+
+        return true;
+    }
+
+    public override void Execute(object parameter)
+    {
+        int selectedPropertyIndex = (int)parameter;
+
+        SignalManager.Get<MoveDownSelectedMapElementSignal>().Dispatch(selectedPropertyIndex);
     }
 }

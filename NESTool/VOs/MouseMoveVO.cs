@@ -1,9 +1,8 @@
 ﻿using System.Windows;
 
-namespace NESTool.VOs
+namespace NESTool.VOs;
+
+public class MouseMoveVO : EventVO
 {
-    public class MouseMoveVO : EventVO
-    {
-        public Point Position { get; set; }
-    }
+    public Point Position { get; set; }
 }
