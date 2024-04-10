@@ -30,7 +30,7 @@ public class ProjectModel : ISingletonModel
 
     public class BuildConfig
     {
-        public string OutputFilePath { get; set; }
+        public string OutputFilePath { get; set; } = string.Empty;
         public bool UseRLEOnMaps { get; set; }
 
         public BuildConfig()
@@ -54,8 +54,8 @@ public class ProjectModel : ISingletonModel
     public bool RLECompression { get; set; } = false;
     public BuildConfig Build { get; set; } = new BuildConfig();
 
-    [TomlIgnore] public string ProjectFilePath { get; set; }
-    [TomlIgnore] public string ProjectPath { get; set; }
+    [TomlIgnore] public string ProjectFilePath { get; set; } = string.Empty;
+    [TomlIgnore] public string ProjectPath { get; set; } = string.Empty;
 
     public ProjectModel()
     {

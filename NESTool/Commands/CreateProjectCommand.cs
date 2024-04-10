@@ -19,7 +19,7 @@ public class CreateProjectCommand : Command
     private const string _folderWorldsKey = "folderWorlds";
     private const string _folderEntitiesKey = "folderEntities";
 
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
         if (parameter == null)
         {
@@ -52,8 +52,11 @@ public class CreateProjectCommand : Command
         return true;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
+        if (parameter == null)
+            return;
+
         object[] values = (object[])parameter;
         string path = (string)values[0];
         string projectName = (string)values[1];

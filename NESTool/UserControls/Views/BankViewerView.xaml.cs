@@ -16,17 +16,17 @@ namespace NESTool.UserControls.Views
     public partial class BankViewerView : UserControl, INotifyPropertyChanged
     {
         private int _scale = 3;
-        private ImageSource _bankImage;
+        private ImageSource? _bankImage;
         private Visibility _selectionRectangleVisibility = Visibility.Hidden;
         private double _selectionRectangleTop = 0.0;
         private double _selectionRectangleLeft = 0.0;
         private int _selectedBankTile;
 
-        public Dictionary<string, WriteableBitmap> BitmapCache = new Dictionary<string, WriteableBitmap>();
-        public event PropertyChangedEventHandler PropertyChanged;
+        public Dictionary<string, WriteableBitmap> BitmapCache = new();
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         #region Commands
-        public ImageMouseDownCommand ImageMouseDownCommand { get; } = new ImageMouseDownCommand();
+        public ImageMouseDownCommand ImageMouseDownCommand { get; } = new();
         #endregion
 
         #region get/set
@@ -74,7 +74,7 @@ namespace NESTool.UserControls.Views
             }
         }
 
-        public ImageSource BankImage
+        public ImageSource? BankImage
         {
             get => _bankImage;
             set

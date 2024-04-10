@@ -8,17 +8,20 @@ namespace NESTool.Commands;
 
 public class PreviewMouseWheelCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        MouseWheelEventArgs wheelEvent = parameter as MouseWheelEventArgs;
+        MouseWheelEventArgs? wheelEvent = parameter as MouseWheelEventArgs;
 
-        MouseWheelVO vo = new()
+        if (wheelEvent != null)
         {
-            Delta = wheelEvent.Delta,
-            OriginalSource = wheelEvent.OriginalSource,
-            Sender = wheelEvent.Source
-        };
+            MouseWheelVO vo = new()
+            {
+                Delta = wheelEvent.Delta,
+                OriginalSource = wheelEvent.OriginalSource,
+                Sender = wheelEvent.Source
+            };
 
-        SignalManager.Get<MouseWheelSignal>().Dispatch(vo);
+            SignalManager.Get<MouseWheelSignal>().Dispatch(vo);
+        }
     }
 }

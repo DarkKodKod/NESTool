@@ -19,12 +19,17 @@ namespace NESTool.Building
 
             foreach (FileModelVO item in models)
             {
-                CharacterModel model = item.Model as CharacterModel;
+                CharacterModel? model = item.Model as CharacterModel;
+
+                if (model == null)
+                {
+                    continue;
+                }
 
                 string fullPath = Path.Combine(Path.GetFullPath(projectModel.Build.OutputFilePath), item.Name + ".s");
 
                 using StreamWriter outputFile = new(fullPath);
-                
+
                 WriteMetaSpriteHeader(outputFile);
                 WriteMetaSprites(outputFile, model, item.Name);
             }
@@ -80,9 +85,14 @@ namespace NESTool.Building
 
                     bool foundFrame = false;
 
-                    for (int j = 0; j < animation.Frames[i].Tiles.Count; ++j)
+                    List<CharacterTile>? listCharacterTile = animation.Frames[i].Tiles;
+
+                    if (listCharacterTile == null)
+                        continue;
+
+                    for (int j = 0; j < listCharacterTile.Count; ++j)
                     {
-                        CharacterTile charTile = animation.Frames[i].Tiles[j];
+                        CharacterTile? charTile = listCharacterTile[j];
 
                         if (string.IsNullOrEmpty(charTile.BankID) || string.IsNullOrEmpty(charTile.BankTileID))
                         {
@@ -102,7 +112,13 @@ namespace NESTool.Building
                         byte horiz = (byte)charTile.Point.X;
                         byte vert = (byte)charTile.Point.Y;
 
-                        BankModel bank = ProjectFiles.GetModel<BankModel>(charTile.BankID);
+                        BankModel? bank = ProjectFiles.GetModel<BankModel>(charTile.BankID);
+
+                        if (bank == null)
+                        {
+                            continue;
+                        }
+
                         byte tile = (byte)bank.GetTileIndex(charTile.BankTileID);
 
                         int paletteIndex = charTile.PaletteIndex;

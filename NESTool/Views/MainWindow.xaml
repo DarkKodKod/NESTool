@@ -4,19 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:NESTool.ViewModels"
-		xmlns:cv="clr-namespace:NESTool.Utils.Converters"
+		xmlns:fx="clr-namespace:ArchitectureLibrary.FXs;assembly=ArchitectureLibrary"
+        xmlns:cv="clr-namespace:ArchitectureLibrary.WPF.Converters;assembly=ArchitectureLibrary"
 		xmlns:enum="clr-namespace:NESTool.Enums"
+        xmlns:local="clr-namespace:NESTool"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:fx="clr-namespace:ArchitectureLibrary.FXs;assembly=ArchitectureLibrary"
         xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
         mc:Ignorable="d"
+        Name="MainWindowView"
+        Title="{Binding Title, Mode=OneWay}"
         Height="617.748" Width="939.57" 
-		Name="MainWindowView"
-		Title="{Binding Title, Mode=OneWay}"
 		WindowStartupLocation="CenterScreen" 
         FrameworkElement.SizeChanged="MainWindowView_SizeChanged">
 	<Window.Resources>
-		<cv:ParametersConverter x:Key="parametersConverter"/>
+        <cv:ParametersConverter x:Key="parametersConverter"/>
 	</Window.Resources>
     <Window.DataContext >
         <vm:MainWindowViewModel />

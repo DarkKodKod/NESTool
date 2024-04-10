@@ -6,12 +6,14 @@ namespace NESTool.Commands;
 
 public class OpenAddMapElementCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        Window parentWindow = Window.GetWindow((DependencyObject)parameter);
+        Window? parentWindow = Window.GetWindow((DependencyObject?)parameter);
 
-        AddMapElementDialog dialog = new();
-        dialog.Owner = parentWindow;
+        AddMapElementDialog dialog = new()
+        {
+            Owner = parentWindow
+        };
         dialog.OnActivate();
         dialog.ShowDialog();
         dialog.OnDeactivate();

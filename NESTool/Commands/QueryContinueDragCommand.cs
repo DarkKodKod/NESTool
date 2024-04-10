@@ -7,11 +7,11 @@ namespace NESTool.Commands;
 
 public class QueryContinueDragCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        QueryContinueDragEventArgs dragEvent = parameter as QueryContinueDragEventArgs;
+        QueryContinueDragEventArgs? dragEvent = parameter as QueryContinueDragEventArgs;
 
-        if (dragEvent.EscapePressed)
+        if (dragEvent != null && dragEvent.EscapePressed)
         {
             dragEvent.Action = DragAction.Cancel;
 

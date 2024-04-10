@@ -1,11 +1,11 @@
 ﻿using ArchitectureLibrary.Model;
 using ArchitectureLibrary.Signals;
 using ArchitectureLibrary.ViewModel;
+using ArchitectureLibrary.WPF.Adorners;
 using NESTool.Commands;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
-using NESTool.Utils.Adorners;
 using NESTool.VOs;
 using System;
 using System.Collections.Generic;
@@ -64,17 +64,17 @@ public class MainWindowViewModel : ViewModel
 
     private const string _projectNameKey = "applicationTitle";
 
-    private string _title = "";
-    private string _projectName;
-    private List<ProjectItem> _projectItems;
-    private List<RecentProjectModel> _recentProjects = new();
+    private string _title = string.Empty;
+    private string _projectName = string.Empty;
+    private List<ProjectItem>? _projectItems;
+    private List<RecentProjectModel> _recentProjects = [];
     private bool? _isFullscreen = null;
     private readonly string _appName;
 
     #region Drag & Drop
     private Point _startPoint;
-    private TreeViewInsertAdorner _insertAdorner;
-    private TreeViewDragAdorner _dragAdorner;
+    private TreeViewInsertAdorner? _insertAdorner;
+    private TreeViewDragAdorner? _dragAdorner;
     private bool _isDragging = false;
     #endregion
 
@@ -99,7 +99,7 @@ public class MainWindowViewModel : ViewModel
         }
     }
 
-    public List<ProjectItem> ProjectItems
+    public List<ProjectItem>? ProjectItems
     {
         get => _projectItems;
         set
@@ -159,7 +159,7 @@ public class MainWindowViewModel : ViewModel
 
         ProjectItem copy = aPath[index];
 
-        aPath[index].Parent.Items.Remove(aPath[index]);
+        aPath[index].Parent?.Items.Remove(aPath[index]);
 
         return copy;
     }
@@ -174,7 +174,7 @@ public class MainWindowViewModel : ViewModel
         else
         {
             newItem.Parent = item.Parent;
-            item.Parent.Items.Add(newItem);
+            item.Parent?.Items.Add(newItem);
         }
 
         OnPropertyChanged("ProjectItems");
@@ -190,9 +190,9 @@ public class MainWindowViewModel : ViewModel
         // Collect the chain of parents for later use
         List<ProjectItem> path = new List<ProjectItem>() { item };
 
-        ProjectItem originalParent = item.Parent;
+        ProjectItem? originalParent = item.Parent;
 
-        ProjectItem parent = item.Parent;
+        ProjectItem? parent = item.Parent;
 
         while (parent != null)
         {
@@ -201,13 +201,17 @@ public class MainWindowViewModel : ViewModel
             parent = parent.Parent;
         }
 
-        ProjectItem matchItem = FindInItemsAndDelete(_projectItems, path.ToArray(), path.ToArray().Length - 1);
-
-        if (matchItem != null)
+        if (_projectItems != null)
         {
-            OnPropertyChanged("ProjectItems");
+            ProjectItem matchItem = FindInItemsAndDelete(_projectItems, path.ToArray(), path.ToArray().Length - 1);
 
-            SignalManager.Get<UpdateFolderSignal>().Dispatch(originalParent);
+            if (matchItem != null)
+            {
+                OnPropertyChanged("ProjectItems");
+
+                if (originalParent != null)
+                    SignalManager.Get<UpdateFolderSignal>().Dispatch(originalParent);
+            }
         }
     }
 
@@ -327,7 +331,7 @@ public class MainWindowViewModel : ViewModel
 
         if ((_isDragging == false) && Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance)
         {
-            TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)vo.OriginalSource);
+            TreeViewItem? treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject?)vo.OriginalSource);
 
             if (!(vo.Sender is TreeView treeView) || treeViewItem == null)
             {
@@ -339,7 +343,7 @@ public class MainWindowViewModel : ViewModel
                 return;
             }
 
-            DataObject dragData = new DataObject(projectItem);
+            DataObject dragData = new(projectItem);
 
             DragDrop.DoDragDrop(treeViewItem, dragData, DragDropEffects.Move);
 
@@ -355,16 +359,19 @@ public class MainWindowViewModel : ViewModel
 
             Point startPosition = eventArgs.GetPosition(control);
 
-            object data = eventArgs.Data.GetData(typeof(ProjectItem));
+            object? data = eventArgs.Data.GetData(typeof(ProjectItem));
 
-            _dragAdorner = new TreeViewDragAdorner(data, (data as ProjectItem).GetHeaderTemplate(), control, adornerLayer);
+            if (data is ProjectItem d)
+            {
+                _dragAdorner = new TreeViewDragAdorner(data, d.GetHeaderTemplate(), control, adornerLayer);
 
-            _dragAdorner.UpdatePosition(startPosition.X, startPosition.Y);
+                _dragAdorner.UpdatePosition(startPosition.X, startPosition.Y);
+            }
         }
 
         if (_insertAdorner == null)
         {
-            UIElement itemContainer = Util.GetItemContainerFromPoint(control, eventArgs.GetPosition(control));
+            UIElement? itemContainer = Util.GetItemContainerFromPoint(control, eventArgs.GetPosition(control));
 
             if (itemContainer != null)
             {
@@ -444,6 +451,9 @@ public class MainWindowViewModel : ViewModel
 
     private void OnFindAndCreateElement(ProjectItem newElement)
     {
+        if (ProjectItems == null)
+            return;
+
         foreach (ProjectItem item in ProjectItems)
         {
             if (item.IsRoot == true && item.Type == newElement.Type)
@@ -461,9 +471,10 @@ public class MainWindowViewModel : ViewModel
 
     private void OnDropElement(ProjectItem targetElement, ProjectItem draggedElement)
     {
-        draggedElement.Parent.Items.Remove(draggedElement);
+        draggedElement.Parent?.Items.Remove(draggedElement);
 
-        SignalManager.Get<UpdateFolderSignal>().Dispatch(draggedElement.Parent);
+        if (draggedElement.Parent != null)
+            SignalManager.Get<UpdateFolderSignal>().Dispatch(draggedElement.Parent);
 
         if (targetElement.IsFolder)
         {
@@ -475,9 +486,10 @@ public class MainWindowViewModel : ViewModel
         else
         {
             draggedElement.Parent = targetElement.Parent;
-            targetElement.Parent.Items.Add(draggedElement);
+            targetElement.Parent?.Items.Add(draggedElement);
 
-            SignalManager.Get<UpdateFolderSignal>().Dispatch(targetElement.Parent);
+            if (targetElement.Parent != null)
+                SignalManager.Get<UpdateFolderSignal>().Dispatch(targetElement.Parent);
         }
 
         draggedElement.IsSelected = true;

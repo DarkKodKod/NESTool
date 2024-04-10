@@ -1,7 +1,7 @@
 ﻿namespace NESTool.VOs;
 
-public class EventVO
+public record EventVO
 {
-    public object OriginalSource { get; set; }
-    public object Sender { get; set; }
+    public object? OriginalSource { get; init; }
+    public object? Sender { get; init; }
 }

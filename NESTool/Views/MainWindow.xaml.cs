@@ -44,8 +44,8 @@ namespace NESTool
         public static bool ToolBarBanksShowHideGroupMarks = false;
         public static EditFrameTools ToolBarMapTool = EditFrameTools.Select;
 
-        private readonly LoadingDialog _loadingDialog = new LoadingDialog();
-        private readonly FieldInfo _menuDropAlignmentField;
+        private readonly LoadingDialog _loadingDialog = new();
+        private readonly FieldInfo? _menuDropAlignmentField;
 
         [DllImport("user32.dll")]
         public static extern bool GetWindowRect(IntPtr hWnd, out Rect lpRect);
@@ -145,7 +145,7 @@ namespace NESTool
             ToolBarMapTool = EditFrameTools.Erase;
         }
 
-        private void SystemParameters_StaticPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void SystemParameters_StaticPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             EnsureStandardPopupAlignment();
         }
@@ -175,7 +175,7 @@ namespace NESTool
                 dpItemPanel.Children.Clear();
             }
 
-            UserControl view = null;
+            UserControl? view = null;
 
             tbrTileSet.Visibility = Visibility.Collapsed;
             tbrMap.Visibility = Visibility.Collapsed;
@@ -296,9 +296,9 @@ namespace NESTool
             }
         }
 
-        static TreeViewItem VisualUpwardSearch(DependencyObject source)
+        static TreeViewItem? VisualUpwardSearch(DependencyObject source)
         {
-            while (source != null && !(source is TreeViewItem))
+            while (source != null && source is not TreeViewItem)
             {
                 source = VisualTreeHelper.GetParent(source);
             }
@@ -308,7 +308,10 @@ namespace NESTool
 
         private void TreeView_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            TreeViewItem treeViewItem = VisualUpwardSearch(e.OriginalSource as DependencyObject);
+            if (e.OriginalSource is not DependencyObject depenDencyObject)
+                return;
+
+            TreeViewItem? treeViewItem = VisualUpwardSearch(depenDencyObject);
 
             if (treeViewItem != null)
             {
@@ -319,12 +322,12 @@ namespace NESTool
 
         private void MainWindowView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Window window = Window.GetWindow(this);
-            WindowInteropHelper wih = new WindowInteropHelper(window);
+            Window window = GetWindow(this);
+            WindowInteropHelper wih = new(window);
             IntPtr hWnd = wih.Handle;
 
             const int MONITOR_DEFAULTTOPRIMARY = 1;
-            MonitorInfoEx mi = new MonitorInfoEx();
+            MonitorInfoEx mi = new();
             mi.cbSize = Marshal.SizeOf(mi);
             GetMonitorInfoEx(MonitorFromWindow(hWnd, MONITOR_DEFAULTTOPRIMARY), ref mi);
 
@@ -401,10 +404,10 @@ namespace NESTool
                 return;
             }
 
-            Stack<ProjectItem> queue = new Stack<ProjectItem>();
+            Stack<ProjectItem> queue = new();
             queue.Push(item);
 
-            ProjectItem parent = item.Parent;
+            ProjectItem? parent = item.Parent;
 
             while (parent != null)
             {
@@ -439,17 +442,14 @@ namespace NESTool
                 item.IsLoaded = true;
                 item.IsSelected = true;
 
-                using (EnableRenameElementCommand command = new EnableRenameElementCommand())
-                {
-                    command.Execute(item);
-                }
+                using EnableRenameElementCommand command = new EnableRenameElementCommand();
+                command.Execute(item);
             }
         }
 
         private void EditableTextBox_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            TextBox tb = sender as TextBox;
-            if (tb.IsVisible)
+            if (sender is TextBox tb && tb.IsVisible)
             {
                 tb.Focus();
                 tb.SelectAll();
@@ -464,9 +464,7 @@ namespace NESTool
 
         private void EditableTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            TextBox tb = sender as TextBox;
-
-            if (tb.DataContext is ProjectItem item)
+            if (sender is TextBox tb && tb.DataContext is ProjectItem item)
             {
                 item.IsInEditMode = false;
             }
@@ -474,9 +472,7 @@ namespace NESTool
 
         private void EditableTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            TextBox tb = sender as TextBox;
-
-            if (tb.DataContext is ProjectItem item)
+            if (sender is TextBox tb && tb.DataContext is ProjectItem item)
             {
                 if (e.Key == Key.Enter)
                 {
@@ -513,16 +509,17 @@ namespace NESTool
 
         private void EditableTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            TextBox tb = sender as TextBox;
-
-            string previousText = tb.Text;
-
-            if (tb.SelectedText.Length > 0)
+            if (sender is TextBox tb)
             {
-                previousText = tb.Text.Replace(tb.SelectedText, string.Empty);
-            }
+                string previousText = tb.Text;
 
-            e.Handled = !Util.ValidFileName(previousText + e.Text);
+                if (tb.SelectedText.Length > 0)
+                {
+                    previousText = tb.Text.Replace(tb.SelectedText, string.Empty);
+                }
+
+                e.Handled = !Util.ValidFileName(previousText + e.Text);
+            }
         }
 
         protected override void OnClosed(EventArgs e)

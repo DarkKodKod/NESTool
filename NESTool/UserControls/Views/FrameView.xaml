@@ -7,7 +7,7 @@
              xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
              xmlns:local="clr-namespace:NESTool.UserControls.Views"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
-             xmlns:cv="clr-namespace:NESTool.Utils.Converters"
+             xmlns:cv="clr-namespace:ArchitectureLibrary.WPF.Converters;assembly=ArchitectureLibrary"
              mc:Ignorable="d" 
              d:DesignHeight="390" d:DesignWidth="350">
     <UserControl.Resources>

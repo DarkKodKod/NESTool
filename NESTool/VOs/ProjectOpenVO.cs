@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace NESTool.VOs;
 
-public class ProjectOpenVO
+public record ProjectOpenVO
 {
-    public List<ProjectItem> Items { get; set; }
-    public string ProjectName { get; set; }
+    public List<ProjectItem>? Items { get; init; }
+    public string ProjectName { get; init; } = string.Empty;
 }

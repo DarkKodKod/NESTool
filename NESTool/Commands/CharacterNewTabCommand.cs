@@ -7,8 +7,11 @@ namespace NESTool.Commands;
 
 public class CharacterNewTabCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
+        if (parameter == null)
+            return;
+
         MessageBoxResult result = MessageBox.Show("Do you want to create a new animation?", "Create animation", MessageBoxButton.YesNo);
 
         if (result == MessageBoxResult.Yes)

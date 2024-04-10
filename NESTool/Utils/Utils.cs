@@ -45,7 +45,7 @@ public static class Util
         return _regex != null && _regex.IsMatch(fileName);
     }
 
-    public static AFileModel FileModelFactory(ProjectItemType type)
+    public static AFileModel? FileModelFactory(ProjectItemType type)
     {
         switch (type)
         {
@@ -151,7 +151,7 @@ public static class Util
         return string.Empty;
     }
 
-    public static T FindAncestor<T>(DependencyObject current) where T : DependencyObject
+    public static T? FindAncestor<T>(DependencyObject? current) where T : DependencyObject
     {
         do
         {
@@ -167,15 +167,18 @@ public static class Util
 
     public static bool IsPointInTopHalf(ItemsControl itemsControl, DragEventArgs e)
     {
-        UIElement selectedItemContainer = GetItemContainerFromPoint(itemsControl, e.GetPosition(itemsControl));
+        UIElement? selectedItemContainer = GetItemContainerFromPoint(itemsControl, e.GetPosition(itemsControl));
+
+        if (selectedItemContainer == null) return false;
+
         Point relativePosition = e.GetPosition(selectedItemContainer);
 
         return relativePosition.Y < ((FrameworkElement)selectedItemContainer).ActualHeight / 2;
     }
 
-    public static UIElement GetItemContainerFromPoint(ItemsControl itemsControl, Point p)
+    public static UIElement? GetItemContainerFromPoint(ItemsControl itemsControl, Point p)
     {
-        UIElement element = itemsControl.InputHitTest(p) as UIElement;
+        UIElement? element = itemsControl.InputHitTest(p) as UIElement;
         while (element != null)
         {
             if (element == itemsControl)
@@ -198,8 +201,11 @@ public static class Util
         return null;
     }
 
-    public static void CopyBitmapImageToWriteableBitmap(ref WriteableBitmap dest, int nXDest, int nYDest, WriteableBitmap src)
+    public static void CopyBitmapImageToWriteableBitmap(ref WriteableBitmap? dest, int nXDest, int nYDest, WriteableBitmap src)
     {
+        if (dest == null)
+            return;
+
         using (dest.GetBitmapContext())
         {
             // copy the source image into a byte buffer
@@ -246,7 +252,7 @@ public static class Util
         SignalManager.Get<OutputSelectedQuadrantSignal>().Dispatch(image, cropped, new Point(x, y));
     }
 
-    public static void GenerateBitmapFromTileSet(TileSetModel model, out WriteableBitmap bitmap)
+    public static void GenerateBitmapFromTileSet(TileSetModel model, out WriteableBitmap? bitmap)
     {
         bitmap = null;
 

@@ -8,9 +8,9 @@ namespace NESTool.Commands;
 
 public class NewElementCommand : Command
 {
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
-        ProjectModel model = ModelManager.Get<ProjectModel>();
+        ProjectModel? model = ModelManager.Get<ProjectModel>();
 
         if (model != null && !string.IsNullOrEmpty(model.Name))
         {
@@ -20,12 +20,14 @@ public class NewElementCommand : Command
         return false;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        Window window = parameter as Window;
+        Window? window = parameter as Window;
 
-        ElementDialog dialog = new();
-        dialog.Owner = window;
+        ElementDialog dialog = new()
+        {
+            Owner = window
+        };
         dialog.ShowDialog();
     }
 }

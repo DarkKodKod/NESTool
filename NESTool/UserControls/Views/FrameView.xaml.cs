@@ -16,7 +16,7 @@ namespace NESTool.UserControls.Views
     /// </summary>
     public partial class FrameView : UserControl, INotifyPropertyChanged
     {
-        private ImageSource _frameImage;
+        private ImageSource? _frameImage;
         private string _projectGridSize = "8x8";
         private Visibility _rectangleVisibility = Visibility.Hidden;
         private double _rectangleTop = 0.0;
@@ -31,14 +31,14 @@ namespace NESTool.UserControls.Views
         public PaletteIndex[] SpritePaletteIndices { get; } = new PaletteIndex[64];
         public bool[] SpritePropertiesBack { get; } = new bool[64];
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         #region Commands
         public ImageMouseDownCommand ImageMouseDownCommand { get; } = new ImageMouseDownCommand();
         #endregion
 
         #region get/set
-        public ImageSource FrameImage
+        public ImageSource? FrameImage
         {
             get => _frameImage;
             set

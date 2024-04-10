@@ -7,18 +7,21 @@ namespace NESTool.Commands;
 
 public class DeleteAnimationFrameCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
+        if (parameter == null)
+            return;
+
         object[] values = (object[])parameter;
         string tabID = (string)values[0];
         int frameIndex = (int)values[1];
         FileHandler fileHandler = (FileHandler)values[2];
 
-        CharacterModel model = fileHandler.FileModel as CharacterModel;
+        CharacterModel? model = fileHandler.FileModel as CharacterModel;
 
         bool frameDeleted = false;
 
-        for (int i = 0; i < model.Animations.Count; ++i)
+        for (int i = 0; i < model?.Animations.Count; ++i)
         {
             CharacterAnimation animation = model.Animations[i];
 

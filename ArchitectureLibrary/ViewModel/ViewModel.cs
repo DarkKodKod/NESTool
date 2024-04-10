@@ -4,7 +4,7 @@ namespace ArchitectureLibrary.ViewModel;
 
 public class ViewModel : AActivate, INotifyPropertyChanged
 {
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged(string propname)
     {

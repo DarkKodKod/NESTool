@@ -64,12 +64,22 @@ namespace NESTool.UserControls.Views
         {
             if (DataContext is CharacterFrameEditorViewModel viewModel)
             {
-                for (int i = 0; i < viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles.Count; ++i)
+                CharacterModel? charModel = viewModel.CharacterModel;
+
+                if (charModel == null)
+                    return;
+
+                List<CharacterTile>? listCharacterTile = charModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles;
+
+                if (listCharacterTile == null)
+                    return;
+
+                for (int i = 0; i < listCharacterTile.Count; ++i)
                 {
-                    frameView.SpritePropertiesX[i] = viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles[i].FlipX;
-                    frameView.SpritePropertiesY[i] = viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles[i].FlipY;
-                    frameView.SpritePaletteIndices[i] = (PaletteIndex)viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles[i].PaletteIndex;
-                    frameView.SpritePropertiesBack[i] = viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles[i].BackBackground;
+                    frameView.SpritePropertiesX[i] = listCharacterTile[i].FlipX;
+                    frameView.SpritePropertiesY[i] = listCharacterTile[i].FlipY;
+                    frameView.SpritePaletteIndices[i] = (PaletteIndex)listCharacterTile[i].PaletteIndex;
+                    frameView.SpritePropertiesBack[i] = listCharacterTile[i].BackBackground;
                 }
             }
         }
@@ -78,12 +88,12 @@ namespace NESTool.UserControls.Views
         {
             if (DataContext is CharacterFrameEditorViewModel viewModel)
             {
-                if (viewModel.Banks.Length == 0)
+                if (viewModel.Banks?.Length == 0)
                 {
                     return;
                 }
 
-                if (!(viewModel.Banks[viewModel.SelectedBank].Model is BankModel model))
+                if (viewModel.Banks?[viewModel.SelectedBank].Model is not BankModel model)
                 {
                     return;
                 }
@@ -96,13 +106,16 @@ namespace NESTool.UserControls.Views
         {
             if (DataContext is CharacterFrameEditorViewModel viewModel)
             {
-                BankModel model = viewModel.Banks[viewModel.SelectedBank].Model as BankModel;
+                if (viewModel.Banks?[viewModel.SelectedBank].Model is not BankModel model)
+                {
+                    return;
+                }
 
                 string guid = model.PTTiles[bankViewer.SelectedBankTile].GUID;
 
-                List<CharacterTile> tiles = viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles;
+                List<CharacterTile>? tiles = viewModel.CharacterModel?.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles;
 
-                if (tiles.Count <= selectedFrameTile)
+                if (tiles?.Count <= selectedFrameTile)
                 {
                     int times = selectedFrameTile - tiles.Count + 1;
 
@@ -112,11 +125,14 @@ namespace NESTool.UserControls.Views
                     }
                 }
 
-                tiles[selectedFrameTile].Point = framePoint;
-                tiles[selectedFrameTile].BankID = model.GUID;
-                tiles[selectedFrameTile].BankTileID = guid;
+                if (tiles != null)
+                {
+                    tiles[selectedFrameTile].Point = framePoint;
+                    tiles[selectedFrameTile].BankID = model.GUID;
+                    tiles[selectedFrameTile].BankTileID = guid;
+                }
 
-                viewModel.FileHandler.Save();
+                viewModel.FileHandler?.Save();
 
                 LoadFrameImage();
             }
@@ -126,9 +142,9 @@ namespace NESTool.UserControls.Views
         {
             if (DataContext is CharacterFrameEditorViewModel viewModel)
             {
-                List<CharacterTile> tiles = viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles;
+                List<CharacterTile>? tiles = viewModel.CharacterModel?.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles;
 
-                if (tiles.Count <= selectedFrameTile)
+                if (tiles?.Count <= selectedFrameTile)
                 {
                     int times = selectedFrameTile - tiles.Count + 1;
 
@@ -138,10 +154,13 @@ namespace NESTool.UserControls.Views
                     }
                 }
 
-                tiles[selectedFrameTile].BankID = string.Empty;
-                tiles[selectedFrameTile].BankTileID = string.Empty;
+                if (tiles != null)
+                {
+                    tiles[selectedFrameTile].BankID = string.Empty;
+                    tiles[selectedFrameTile].BankTileID = string.Empty;
+                }
 
-                viewModel.FileHandler.Save();
+                viewModel.FileHandler?.Save();
 
                 LoadFrameImage();
             }
@@ -151,12 +170,17 @@ namespace NESTool.UserControls.Views
         {
             if (DataContext is CharacterFrameEditorViewModel viewModel)
             {
-                viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles[selectedFrameTile].FlipX = flipX;
-                viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles[selectedFrameTile].FlipY = flipY;
-                viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles[selectedFrameTile].PaletteIndex = paletteIndex;
-                viewModel.CharacterModel.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles[selectedFrameTile].BackBackground = backBackground;
+                List<CharacterTile>? listCharacterTile = viewModel.CharacterModel?.Animations[viewModel.AnimationIndex].Frames[viewModel.FrameIndex].Tiles;
 
-                viewModel.FileHandler.Save();
+                if (listCharacterTile == null)
+                    return;
+
+                listCharacterTile[selectedFrameTile].FlipX = flipX;
+                listCharacterTile[selectedFrameTile].FlipY = flipY;
+                listCharacterTile[selectedFrameTile].PaletteIndex = paletteIndex;
+                listCharacterTile[selectedFrameTile].BackBackground = backBackground;
+
+                viewModel.FileHandler?.Save();
 
                 LoadFrameImage();
             }
@@ -184,7 +208,7 @@ namespace NESTool.UserControls.Views
                     return;
                 }
 
-                ImageVO vo = CharacterUtils.CreateImage(viewModel.CharacterModel, viewModel.AnimationIndex, viewModel.FrameIndex, ref CharacterViewModel.GroupedPalettes);
+                ImageVO? vo = CharacterUtils.CreateImage(viewModel.CharacterModel, viewModel.AnimationIndex, viewModel.FrameIndex, ref CharacterViewModel.GroupedPalettes);
 
                 if (vo != null && vo.Image != null)
                 {

@@ -3,24 +3,27 @@ using System.Globalization;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace NESTool.Utils.Converters;
+namespace ArchitectureLibrary.WPF.Converters;
 
 public class WidthConverter : IValueConverter
 {
     public object Convert(object o, Type type, object parameter, CultureInfo culture)
     {
-        ListView l = o as ListView;
+        ListView? l = o as ListView;
 
-        GridView g = l.View as GridView;
-
-        double total = 0;
-
-        for (int i = 0; i < g.Columns.Count - 1; i++)
+        if (l?.View is GridView g)
         {
-            total += g.Columns[i].Width;
+            double total = 0;
+
+            for (int i = 0; i < g.Columns.Count - 1; i++)
+            {
+                total += g.Columns[i].Width;
+            }
+
+            return (l.ActualWidth - total);
         }
 
-        return (l.ActualWidth - total);
+        return 0;
     }
 
     public object ConvertBack(object o, Type type, object parameter, CultureInfo culture)

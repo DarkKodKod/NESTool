@@ -5,16 +5,19 @@ namespace ArchitectureLibrary.Clipboard;
 
 public static class ClipboardManager
 {
-    private static readonly ClipboardData _data = new ClipboardData();
+    private static readonly ClipboardData _data = new();
 
-    public static object GetData()
+    public static object? GetData()
     {
         if (IsEmpty())
         {
             return null;
         }
 
-        Type type = Type.GetType(_data.Type + ", " + _data.Assembly);
+        Type? type = Type.GetType(_data.Type + ", " + _data.Assembly);
+
+        if (type == null)
+            return null;
 
         TypeConverter typeConverter = TypeDescriptor.GetConverter(type);
         return typeConverter.ConvertFromString(_data.Content);
@@ -25,8 +28,8 @@ public static class ClipboardManager
         Type type = obj.GetType();
 
         TypeConverter typeConverter = TypeDescriptor.GetConverter(type);
-        _data.Assembly = type.Assembly.FullName.ToString();
-        _data.Type = typeConverter.ConvertToString(obj);
+        _data.Assembly = type.Assembly.FullName ?? "";
+        _data.Type = typeConverter.ConvertToString(obj) ?? "";
         _data.Content = obj.GetContent();
     }
 

@@ -10,26 +10,30 @@ namespace NESTool.Commands;
 
 public class DragEnterCommand : Command
 {
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
-        DragEventArgs dragEvent = parameter as DragEventArgs;
+        if (parameter is not DragEventArgs dragEvent)
+            return false;
 
-        ProjectItem draggingItem = dragEvent.Data.GetData(typeof(ProjectItem)) as ProjectItem;
+        ProjectItem? draggingItem = dragEvent?.Data.GetData(typeof(ProjectItem)) as ProjectItem;
 
-        TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)dragEvent.OriginalSource);
+        TreeViewItem? treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject?)dragEvent?.OriginalSource);
 
         if (treeViewItem == null)
         {
             return false;
         }
 
-        if (treeViewItem.DataContext is ProjectItem item && item.Type != draggingItem.Type)
+        if (treeViewItem.DataContext is ProjectItem item && item.Type != draggingItem?.Type)
         {
-            dragEvent.Handled = true;
+            if (dragEvent != null)
+            {
+                dragEvent.Handled = true;
 
-            SignalManager.Get<DetachAdornersSignal>().Dispatch();
+                SignalManager.Get<DetachAdornersSignal>().Dispatch();
 
-            dragEvent.Effects = DragDropEffects.None;
+                dragEvent.Effects = DragDropEffects.None;
+            }
 
             return false;
         }
@@ -37,11 +41,17 @@ public class DragEnterCommand : Command
         return true;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        DragEventArgs dragEvent = parameter as DragEventArgs;
+        if (parameter == null)
+            return;
 
-        TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)dragEvent.OriginalSource);
+        DragEventArgs? dragEvent = parameter as DragEventArgs;
+
+        TreeViewItem? treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject?)dragEvent?.OriginalSource);
+
+        if (dragEvent == null)
+            return;
 
         if (treeViewItem != null)
         {

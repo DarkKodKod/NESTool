@@ -50,7 +50,7 @@ public static class ProjectFiles
         }
     }
 
-    public static FileModelVO GetFileModel(string guid)
+    public static FileModelVO? GetFileModel(string guid)
     {
         if (string.IsNullOrEmpty(guid))
         {
@@ -73,7 +73,7 @@ public static class ProjectFiles
         return null;
     }
 
-    public static T GetModel<T>(string guid) where T : AFileModel
+    public static T? GetModel<T>(string guid) where T : AFileModel
     {
         if (string.IsNullOrEmpty(guid))
         {

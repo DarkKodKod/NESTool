@@ -29,7 +29,7 @@ public class ImportImageDialogViewModel : ViewModel
     public bool NewFile { get; } = true;
     #endregion
 
-    private string _filePath;
+    private string _filePath = string.Empty;
 
     public ImportImageDialogViewModel()
     {

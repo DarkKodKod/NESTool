@@ -33,9 +33,9 @@ namespace NESTool.Views
 
         private void OnWriteBuildOutput(string newLine, OutputMessageType messageType, string color = "")
         {
-            BrushConverter bc = new BrushConverter();
+            BrushConverter bc = new();
 
-            TextRange tr = new TextRange(tbOutput.Document.ContentEnd, tbOutput.Document.ContentEnd)
+            TextRange tr = new(tbOutput.Document.ContentEnd, tbOutput.Document.ContentEnd)
             {
                 Text = newLine + Environment.NewLine
             };

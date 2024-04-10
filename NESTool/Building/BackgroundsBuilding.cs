@@ -42,7 +42,7 @@ public static class BackgroundsBuilding
 
         foreach (FileModelVO item in models)
         {
-            MapModel model = item.Model as MapModel;
+            MapModel? model = item.Model as MapModel;
 
             string fullPath = Path.Combine(Path.GetFullPath(projectModel.Build.OutputFilePath), item.Name + ".s");
 
@@ -54,7 +54,8 @@ public static class BackgroundsBuilding
 
                 List<byte> serializedMap = [];
 
-                SerializeNametable(model, ref serializedMap);
+                if (model != null)
+                    SerializeNametable(model, ref serializedMap);
 
                 if (projectModel.Build.UseRLEOnMaps)
                 {
@@ -67,7 +68,7 @@ public static class BackgroundsBuilding
 
                 serializedMap.Clear();
 
-                if (model.ExportAttributeTable)
+                if (model != null && model.ExportAttributeTable)
                 {
                     outputFile.WriteLine($"att_{item.Name}:");
 
@@ -83,7 +84,8 @@ public static class BackgroundsBuilding
                     FormatBytes(serializedMap, outputFile, 8);
                 }
 
-                PrintMapEntities(model, item, outputFile);
+                if (model != null)
+                    PrintMapEntities(model, item, outputFile);
             }
         }
     }
@@ -226,9 +228,9 @@ public static class BackgroundsBuilding
 
         outputFile.WriteLine($"metadata_{item.Name}:");
 
-        foreach (Models.Entity entity in model.Entities)
+        foreach (Entity entity in model.Entities)
         {
-            EntityModel entityModel = ProjectFiles.GetModel<EntityModel>(entity.EntityID);
+            EntityModel? entityModel = ProjectFiles.GetModel<EntityModel>(entity.EntityID);
 
             if (entityModel == null)
             {
@@ -237,7 +239,7 @@ public static class BackgroundsBuilding
 
             outputFile.Write("    .byte ");
 
-            string typeName = Enum.GetName(typeof(MetaType), entityModel.EntityId);
+            string? typeName = Enum.GetName(typeof(MetaType), entityModel.EntityId);
 
             int minLevel = int.Parse(model.GetPropertyValue(entity, "MinLevel"));
             int maxLevel = int.Parse(model.GetPropertyValue(entity, "MaxLevel"));
@@ -251,7 +253,8 @@ public static class BackgroundsBuilding
                     {
                         string attributes = model.GetPropertyValue(entity, "Attributes");
 
-                        WriteEnemyData(typeName, entity.X, entity.Y, int.Parse(attributes), minLevel, maxLevel);
+                        if (typeName != null)
+                            WriteEnemyData(typeName, entity.X, entity.Y, int.Parse(attributes), minLevel, maxLevel);
                     }
                     break;
                 case MetaType.WhiteKey:
@@ -263,14 +266,16 @@ public static class BackgroundsBuilding
                     {
                         string paletteIndex = model.GetPropertyValue(entity, "PaletteIndex");
 
-                        WriteData(typeName, entity.X, entity.Y, int.Parse(paletteIndex), minLevel, maxLevel, isItem: true, isMapElement: false);
+                        if (typeName != null)
+                            WriteData(typeName, entity.X, entity.Y, int.Parse(paletteIndex), minLevel, maxLevel, isItem: true, isMapElement: false);
                     }
                     break;
                 case MetaType.DoorWhiteElement:
                 case MetaType.DoorBlueElement:
                 case MetaType.DoorRedElement:
                     {
-                        WriteData(typeName, entity.X, entity.Y, 0, minLevel, maxLevel, isItem: false, isMapElement: false);
+                        if (typeName != null)
+                            WriteData(typeName, entity.X, entity.Y, 0, minLevel, maxLevel, isItem: false, isMapElement: false);
                     }
                     break;
                 case MetaType.AddBrick:
@@ -279,7 +284,10 @@ public static class BackgroundsBuilding
                 case MetaType.AddLadderRight:
                 case MetaType.AddTopLadderLeft:
                 case MetaType.AddTopLadderRight:
-                    WriteData(typeName, entity.X, entity.Y, 0, minLevel, maxLevel, isItem: false, isMapElement: true);
+                    {
+                        if (typeName != null)
+                            WriteData(typeName, entity.X, entity.Y, 0, minLevel, maxLevel, isItem: false, isMapElement: true);
+                    }
                     break;
             }
 
@@ -325,7 +333,7 @@ public static class BackgroundsBuilding
 
         void SerializeMapTile(ref List<byte> serialized, MapTile mapTile)
         {
-            BankModel bank = ProjectFiles.GetModel<BankModel>(mapTile.BankID);
+            BankModel? bank = ProjectFiles.GetModel<BankModel>(mapTile.BankID);
 
             if (bank == null)
             {

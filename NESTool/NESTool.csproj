@@ -6,6 +6,7 @@
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
+	<Nullable>enable</Nullable>
     <UpdateEnabled>false</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
@@ -28,6 +29,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>nestool.ico</ApplicationIcon>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Resource Include="nestool.ico" />

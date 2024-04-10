@@ -6,7 +6,7 @@ namespace NESTool.Commands;
 
 public class MoveDownSelectedMapElement : Command
 {
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
         if (parameter == null)
         {
@@ -21,8 +21,11 @@ public class MoveDownSelectedMapElement : Command
         return true;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
+        if (parameter == null)
+            return;
+
         int selectedPropertyIndex = (int)parameter;
 
         SignalManager.Get<MoveDownSelectedMapElementSignal>().Dispatch(selectedPropertyIndex);

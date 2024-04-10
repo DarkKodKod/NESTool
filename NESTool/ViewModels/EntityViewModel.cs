@@ -18,9 +18,9 @@ namespace NESTool.ViewModels;
 public class EntityViewModel : ItemViewModel
 {
     private EntitySource _selectedSourceType;
-    private FileModelVO[] _banks;
-    private FileModelVO[] _characters;
-    private CharacterAnimationVO[] _animations;
+    private FileModelVO[]? _banks;
+    private FileModelVO[]? _characters;
+    private CharacterAnimationVO[]? _animations;
     private int _selectedBank = 0;
     private int _selectedCharacter = 0;
     private int _selectedAnimation = 0;
@@ -28,13 +28,13 @@ public class EntityViewModel : ItemViewModel
     private Visibility _showBankView;
     private Visibility _showcharacterView;
     private int _entityId;
-    private string _characterId;
-    private string _characterAnimationId;
-    private ImageSource _characterImage;
-    private ObservableCollection<string> _properties = new();
-    private string _selectedProperty;
+    private string _characterId = string.Empty;
+    private string _characterAnimationId = string.Empty;
+    private ImageSource? _characterImage;
+    private ObservableCollection<string> _properties = [];
+    private string _selectedProperty = string.Empty;
 
-    public static GroupedPalettes GroupedPalettes;
+    public static GroupedPalettes? GroupedPalettes;
 
     #region Commands
     public SourceSelectionChangedCommand SourceSelectionChangedCommand { get; } = new SourceSelectionChangedCommand();
@@ -69,7 +69,7 @@ public class EntityViewModel : ItemViewModel
         }
     }
 
-    public ImageSource CharacterImage
+    public ImageSource? CharacterImage
     {
         get => _characterImage;
         set
@@ -129,7 +129,7 @@ public class EntityViewModel : ItemViewModel
         }
     }
 
-    public FileModelVO[] Characters
+    public FileModelVO[]? Characters
     {
         get => _characters;
         set
@@ -143,7 +143,7 @@ public class EntityViewModel : ItemViewModel
         }
     }
 
-    public CharacterAnimationVO[] Animations
+    public CharacterAnimationVO[]? Animations
     {
         get => _animations;
         set
@@ -157,7 +157,7 @@ public class EntityViewModel : ItemViewModel
         }
     }
 
-    public FileModelVO[] Banks
+    public FileModelVO[]? Banks
     {
         get => _banks;
         set
@@ -202,7 +202,7 @@ public class EntityViewModel : ItemViewModel
     }
     #endregion
 
-    public EntityModel GetModel()
+    public EntityModel? GetModel()
     {
         return ProjectItem?.FileHandler.FileModel is EntityModel model ? model : null;
     }
@@ -226,24 +226,28 @@ public class EntityViewModel : ItemViewModel
         SignalManager.Get<AddPropertySignal>().Listener += OnAddProperty;
         #endregion
 
-        SelectedSourceType = GetModel().Source;
-        EntityId = GetModel().EntityId;
+        EntityModel? model = GetModel();
 
-        foreach (string item in GetModel().Properties)
+        if (model != null)
         {
-            Properties.Add(item);
+            SelectedSourceType = model.Source;
+            EntityId = model.EntityId;
+
+            foreach (string item in model.Properties)
+            {
+                Properties.Add(item);
+            }
+
+            _characterId = model.CharacterId;
+            _characterAnimationId = model.CharacterAnimationId;
         }
 
-        _characterId = GetModel().CharacterId;
-        _characterAnimationId = GetModel().CharacterAnimationId;
-
-
         // Select the character on the list
-        if (_characterId != null)
+        if (_characterId != null && Characters != null)
         {
             foreach (FileModelVO vo in Characters)
             {
-                if (vo.Model.GUID == _characterId)
+                if (vo.Model?.GUID == _characterId)
                 {
                     SelectedCharacter = vo.Index;
                     break;
@@ -287,14 +291,25 @@ public class EntityViewModel : ItemViewModel
 
     private void SelectCharacterAndAnimation()
     {
+        if (Characters == null)
+            return;
+
         foreach (FileModelVO vo in Characters)
         {
             if (vo.Index == SelectedCharacter)
             {
-                _characterId = Characters[SelectedCharacter].Model.GUID;
+                AFileModel? fileModel = Characters[SelectedCharacter].Model;
+
+                if (fileModel == null)
+                    continue;
+
+                _characterId = fileModel.GUID;
 
                 // Now fill the list with animations
-                CharacterModel model = Characters[SelectedCharacter].Model as CharacterModel;
+                CharacterModel? model = Characters[SelectedCharacter].Model as CharacterModel;
+
+                if (model == null)
+                    continue;
 
                 int count = model.Animations.Count(e => !string.IsNullOrEmpty(e.ID));
 
@@ -344,11 +359,11 @@ public class EntityViewModel : ItemViewModel
 
     private void LoadCharacterSprite()
     {
-        GroupedPalettes = new GroupedPalettes();
+        GroupedPalettes = new();
 
         if (!string.IsNullOrEmpty(_characterId))
         {
-            CharacterModel characterModel = ProjectFiles.GetModel<CharacterModel>(_characterId);
+            CharacterModel? characterModel = ProjectFiles.GetModel<CharacterModel>(_characterId);
 
             if (characterModel != null)
             {
@@ -356,7 +371,7 @@ public class EntityViewModel : ItemViewModel
 
                 if (index >= 0)
                 {
-                    ImageVO vo = CharacterUtils.CreateImage(characterModel, index, 0, ref GroupedPalettes);
+                    ImageVO? vo = CharacterUtils.CreateImage(characterModel, index, 0, ref GroupedPalettes);
 
                     if (vo != null && vo.Image != null)
                     {
@@ -375,7 +390,13 @@ public class EntityViewModel : ItemViewModel
             return;
         }
 
-        CharacterModel model = Characters[SelectedCharacter].Model as CharacterModel;
+        if (Characters == null)
+            return;
+
+        CharacterModel? model = Characters[SelectedCharacter].Model as CharacterModel;
+
+        if (model == null)
+            return;
 
         foreach (CharacterAnimation anim in model.Animations)
         {
@@ -383,16 +404,19 @@ public class EntityViewModel : ItemViewModel
             {
                 SelectedAnimation = animationVO.Index;
 
-                foreach (CharacterAnimationVO animVo in Animations)
+                if (Animations != null)
                 {
-                    if (animVo.Index == SelectedAnimation)
+                    foreach (CharacterAnimationVO animVo in Animations)
                     {
-                        _characterAnimationId = animVo.ID;
+                        if (animVo.Index == SelectedAnimation)
+                        {
+                            _characterAnimationId = animVo.ID;
 
-                        LoadCharacterSprite();
+                            LoadCharacterSprite();
 
-                        Save();
-                        break;
+                            Save();
+                            break;
+                        }
                     }
                 }
 
@@ -455,18 +479,20 @@ public class EntityViewModel : ItemViewModel
             return;
         }
 
-        if (GetModel() == null)
+        EntityModel? model = GetModel();
+
+        if (model == null)
         {
             return;
         }
 
-        GetModel().Source = SelectedSourceType;
-        GetModel().EntityId = EntityId;
-        GetModel().CharacterId = _characterId;
-        GetModel().CharacterAnimationId = _characterAnimationId;
-        GetModel().Properties = Properties.ToList();
+        model.Source = SelectedSourceType;
+        model.EntityId = EntityId;
+        model.CharacterId = _characterId;
+        model.CharacterAnimationId = _characterAnimationId;
+        model.Properties = [.. Properties];
 
-        ProjectItem.FileHandler.Save();
+        ProjectItem?.FileHandler.Save();
     }
 
     private void OnEntitySourceSelectionChanged(EntitySource entitySource)

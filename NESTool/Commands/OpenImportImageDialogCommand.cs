@@ -8,7 +8,7 @@ namespace NESTool.Commands;
 
 public class OpenImportImageDialogCommand : Command
 {
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
         ProjectModel model = ModelManager.Get<ProjectModel>();
 
@@ -20,12 +20,17 @@ public class OpenImportImageDialogCommand : Command
         return false;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        Window window = parameter as Window;
+        if (parameter == null)
+            return;
 
-        ImportImageDialog dialog = new ImportImageDialog();
-        dialog.Owner = window;
+        Window? window = parameter as Window;
+
+        ImportImageDialog dialog = new()
+        {
+            Owner = window
+        };
         dialog.ShowDialog();
     }
 }

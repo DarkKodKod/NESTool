@@ -8,11 +8,14 @@ namespace NESTool.Commands;
 
 public class CharacterAnimationVOSelectionChangedCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        SelectionChangedEventArgs changedEvent = parameter as SelectionChangedEventArgs;
+        if (parameter == null)
+            return;
 
-        if (changedEvent.AddedItems.Count > 0)
+        SelectionChangedEventArgs? changedEvent = parameter as SelectionChangedEventArgs;
+
+        if (changedEvent?.AddedItems.Count > 0)
         {
             if (changedEvent.AddedItems[0] is CharacterAnimationVO animationVO)
             {

@@ -14,13 +14,13 @@ namespace NESTool.UserControls.Views
     /// </summary>
     public partial class CharacterFrameView : UserControl, INotifyPropertyChanged
     {
-        private string _tabId;
+        private string _tabId = string.Empty;
         private int _frameIndex;
-        private ImageSource _frameImage;
-        private CharacterModel _characterModel;
+        private ImageSource? _frameImage;
+        private CharacterModel? _characterModel;
 
         #region get/set
-        public CharacterModel CharacterModel
+        public CharacterModel? CharacterModel
         {
             get { return _characterModel; }
             set
@@ -55,7 +55,7 @@ namespace NESTool.UserControls.Views
             }
         }
 
-        public ImageSource FrameImage
+        public ImageSource? FrameImage
         {
             get
             {
@@ -75,7 +75,7 @@ namespace NESTool.UserControls.Views
         public DeleteAnimationFrameCommand DeleteAnimationFrameCommand { get; } = new DeleteAnimationFrameCommand();
         #endregion
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propname)
         {
@@ -127,7 +127,7 @@ namespace NESTool.UserControls.Views
                 return;
             }
 
-            ImageVO vo = CharacterUtils.CreateImage(CharacterModel, animationIndex, FrameIndex, ref CharacterViewModel.GroupedPalettes);
+            ImageVO? vo = CharacterUtils.CreateImage(CharacterModel, animationIndex, FrameIndex, ref CharacterViewModel.GroupedPalettes);
 
             if (vo == null || vo.Image == null)
             {

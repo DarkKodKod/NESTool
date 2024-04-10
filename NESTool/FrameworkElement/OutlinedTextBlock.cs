@@ -116,10 +116,10 @@ public class OutlinedTextBlock : FrameworkElement
       typeof(OutlinedTextBlock),
       new FrameworkPropertyMetadata(TextWrapping.NoWrap, OnFormattedTextUpdated));
 
-    private FormattedText _FormattedText;
-    private Geometry _TextGeometry;
-    private Pen _Pen;
-    private PathGeometry _clipGeometry;
+    private FormattedText? _FormattedText;
+    private Geometry? _TextGeometry;
+    private Pen? _Pen;
+    private PathGeometry? _clipGeometry;
 
     public Brush Fill
     {
@@ -203,7 +203,7 @@ public class OutlinedTextBlock : FrameworkElement
     public OutlinedTextBlock()
     {
         UpdatePen();
-        TextDecorations = new TextDecorationCollection();
+        TextDecorations = new();
     }
 
     protected override void OnRender(DrawingContext drawingContext)
@@ -238,22 +238,30 @@ public class OutlinedTextBlock : FrameworkElement
         double w = availableSize.Width;
         double h = availableSize.Height;
 
-        // the Math.Min call is important - without this constraint (which seems arbitrary, but is the maximum allowable text width), things blow up when availableSize is infinite in both directions
-        // the Math.Max call is to ensure we don't hit zero, which will cause MaxTextHeight to throw
-        _FormattedText.MaxTextWidth = Math.Min(3579139, w);
-        _FormattedText.MaxTextHeight = Math.Max(0.0001d, h);
+        if (_FormattedText != null)
+        {
+            // the Math.Min call is important - without this constraint (which seems arbitrary, but is the maximum allowable text width), things blow up when availableSize is infinite in both directions
+            // the Math.Max call is to ensure we don't hit zero, which will cause MaxTextHeight to throw
+            _FormattedText.MaxTextWidth = Math.Min(3579139, w);
+            _FormattedText.MaxTextHeight = Math.Max(0.0001d, h);
 
-        // return the desired size
-        return new Size(Math.Ceiling(_FormattedText.Width), Math.Ceiling(_FormattedText.Height));
+            // return the desired size
+            return new Size(Math.Ceiling(_FormattedText.Width), Math.Ceiling(_FormattedText.Height));
+        }
+
+        return new Size();
     }
 
     protected override Size ArrangeOverride(Size finalSize)
     {
         EnsureFormattedText();
 
-        // update the formatted text with the final size
-        _FormattedText.MaxTextWidth = finalSize.Width;
-        _FormattedText.MaxTextHeight = Math.Max(0.0001d, finalSize.Height);
+        if (_FormattedText != null)
+        {
+            // update the formatted text with the final size
+            _FormattedText.MaxTextWidth = finalSize.Width;
+            _FormattedText.MaxTextHeight = Math.Max(0.0001d, finalSize.Height);
+        }
 
         // need to re-generate the geometry now that the dimensions have changed
         _TextGeometry = null;
@@ -329,12 +337,16 @@ public class OutlinedTextBlock : FrameworkElement
         }
 
         EnsureFormattedText();
-        _TextGeometry = _FormattedText.BuildGeometry(new Point(0, 0));
 
-        if (StrokePosition == StrokePosition.Outside)
+        if (_FormattedText != null)
         {
-            var boundsGeo = new RectangleGeometry(new Rect(0, 0, ActualWidth, ActualHeight));
-            _clipGeometry = Geometry.Combine(boundsGeo, _TextGeometry, GeometryCombineMode.Exclude, null);
+            _TextGeometry = _FormattedText.BuildGeometry(new Point(0, 0));
+
+            if (StrokePosition == StrokePosition.Outside)
+            {
+                var boundsGeo = new RectangleGeometry(new Rect(0, 0, ActualWidth, ActualHeight));
+                _clipGeometry = Geometry.Combine(boundsGeo, _TextGeometry, GeometryCombineMode.Exclude, null);
+            }
         }
     }
 }

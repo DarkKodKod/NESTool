@@ -22,16 +22,16 @@ namespace NESTool.ViewModels;
 
 public class CharacterViewModel : ItemViewModel
 {
-    private ObservableCollection<ActionTabItem> _tabs;
+    private ObservableCollection<ActionTabItem>? _tabs;
     private bool _doNotSavePalettes = false;
     private PaletteIndex _paletteIndex = 0;
-    private FileModelVO[] _palettes;
+    private FileModelVO[]? _palettes;
     private int _selectedPalette1 = -1;
     private int _selectedPalette2 = -1;
     private int _selectedPalette3 = -1;
     private int _selectedPalette4 = -1;
 
-    public static GroupedPalettes GroupedPalettes;
+    public static GroupedPalettes? GroupedPalettes;
 
     #region Commands
     public FileModelVOSelectionChangedCommand FileModelVOSelectionChangedCommand { get; } = new FileModelVOSelectionChangedCommand();
@@ -39,7 +39,7 @@ public class CharacterViewModel : ItemViewModel
     public CharacterNewTabCommand CharacterNewTabCommand { get; } = new CharacterNewTabCommand();
     #endregion
 
-    public CharacterModel GetModel()
+    public CharacterModel? GetModel()
     {
         return ProjectItem?.FileHandler.FileModel is CharacterModel model ? model : null;
     }
@@ -124,7 +124,7 @@ public class CharacterViewModel : ItemViewModel
         }
     }
 
-    public FileModelVO[] Palettes
+    public FileModelVO[]? Palettes
     {
         get => _palettes;
         set
@@ -154,11 +154,29 @@ public class CharacterViewModel : ItemViewModel
 
     private void UpdateAndSavePalette(int newValue, PaletteIndex index)
     {
-        GetModel().PaletteIDs[(int)index] = newValue == -1 ? string.Empty : Palettes[newValue + 1].Model.GUID;
+        CharacterModel? model = GetModel();
+
+        if (model == null)
+            return;
+
+        if (Palettes != null)
+        {
+            if (newValue == -1)
+            {
+                model.PaletteIDs[(int)index] = string.Empty;
+            }
+            else
+            {
+                AFileModel? fileModel = Palettes[newValue + 1].Model;
+
+                if (fileModel != null)
+                    model.PaletteIDs[(int)index] = fileModel.GUID;
+            }
+        }
 
         if (!_doNotSavePalettes)
         {
-            PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(GetModel().PaletteIDs[(int)index]);
+            PaletteModel? paletteModel = ProjectFiles.GetModel<PaletteModel>(model.PaletteIDs[(int)index]);
             if (paletteModel != null)
             {
                 SetPalleteWithColors(paletteModel, index);
@@ -168,7 +186,7 @@ public class CharacterViewModel : ItemViewModel
                 SetPaletteEmpty(index);
             }
 
-            ProjectItem.FileHandler.Save();
+            ProjectItem?.FileHandler.Save();
         }
     }
 
@@ -206,7 +224,7 @@ public class CharacterViewModel : ItemViewModel
 
         foreach (ActionTabItem tab in Tabs)
         {
-            if (tab.Content.DataContext is AActivate vm)
+            if (tab.Content?.DataContext is AActivate vm)
             {
                 vm.OnActivate();
             }
@@ -226,9 +244,14 @@ public class CharacterViewModel : ItemViewModel
 
     private void LoadPaletteIndex(int index)
     {
-        if (!string.IsNullOrEmpty(GetModel().PaletteIDs[index]))
+        CharacterModel? model = GetModel();
+
+        if (model == null)
+            return;
+
+        if (!string.IsNullOrEmpty(model.PaletteIDs[index]))
         {
-            for (int i = 0; i < Palettes.Length; ++i)
+            for (int i = 0; i < Palettes?.Length; ++i)
             {
                 FileModelVO item = Palettes[i];
 
@@ -237,7 +260,7 @@ public class CharacterViewModel : ItemViewModel
                     continue;
                 }
 
-                if (item.Model.GUID == GetModel().PaletteIDs[index])
+                if (item.Model.GUID == model.PaletteIDs[index])
                 {
                     switch (index)
                     {
@@ -253,11 +276,16 @@ public class CharacterViewModel : ItemViewModel
 
     private void LoadPalettes()
     {
+        CharacterModel? model = GetModel();
+
+        if (model == null)
+            return;
+
         for (int i = 0; i < 4; ++i)
         {
-            string paletteId = GetModel().PaletteIDs[i];
+            string paletteId = model.PaletteIDs[i];
 
-            PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
+            PaletteModel? paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
             if (paletteModel == null)
             {
                 SetPaletteEmpty((PaletteIndex)i);
@@ -301,9 +329,14 @@ public class CharacterViewModel : ItemViewModel
 
         int prevColorInt = 0;
 
-        string paletteId = GetModel().PaletteIDs[(int)paletteIndex];
+        CharacterModel? model = GetModel();
 
-        PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
+        if (model == null)
+            return;
+
+        string paletteId = model.PaletteIDs[(int)paletteIndex];
+
+        PaletteModel? paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
         if (paletteModel != null)
         {
             switch (colorPosition)
@@ -338,6 +371,9 @@ public class CharacterViewModel : ItemViewModel
 
     private void AdjustPaletteCache(PaletteIndex paletteIndex, int colorPosition, Color prevColor, Color color)
     {
+        if (GroupedPalettes == null)
+            return;
+
         foreach (KeyValuePair<Tuple<int, PaletteIndex>, Dictionary<Color, Color>> entry in GroupedPalettes)
         {
             Tuple<int, PaletteIndex> tuple = entry.Key;
@@ -361,7 +397,7 @@ public class CharacterViewModel : ItemViewModel
 
     private void OnUpdateCharacterImage()
     {
-        GroupedPalettes = new GroupedPalettes();
+        GroupedPalettes = new();
 
         foreach (ActionTabItem tab in Tabs)
         {
@@ -406,7 +442,7 @@ public class CharacterViewModel : ItemViewModel
                 animationView.OnDeactivate();
             }
 
-            if (tab.Content.DataContext is AActivate vm)
+            if (tab.Content?.DataContext is AActivate vm)
             {
                 vm.OnDeactivate();
             }
@@ -415,7 +451,7 @@ public class CharacterViewModel : ItemViewModel
 
     public void PopulateTabs()
     {
-        CharacterModel model = GetModel();
+        CharacterModel? model = GetModel();
 
         if (model == null)
         {
@@ -459,14 +495,19 @@ public class CharacterViewModel : ItemViewModel
 
     private void AddNewAnimation(string id, string animationName)
     {
-        CharacterAnimationView animationView = new CharacterAnimationView();
-        ((CharacterAnimationViewModel)animationView.DataContext).CharacterModel = GetModel();
-        ((CharacterAnimationViewModel)animationView.DataContext).FileHandler = ProjectItem.FileHandler;
+        CharacterModel? model = GetModel();
+
+        if (model == null)
+            return;
+
+        CharacterAnimationView animationView = new();
+        ((CharacterAnimationViewModel)animationView.DataContext).CharacterModel = model;
+        ((CharacterAnimationViewModel)animationView.DataContext).FileHandler = ProjectItem?.FileHandler;
         ((CharacterAnimationViewModel)animationView.DataContext).TabID = id;
 
-        CharacterFrameEditorView frameView = new CharacterFrameEditorView();
-        ((CharacterFrameEditorViewModel)frameView.DataContext).CharacterModel = GetModel();
-        ((CharacterFrameEditorViewModel)frameView.DataContext).FileHandler = ProjectItem.FileHandler;
+        CharacterFrameEditorView frameView = new();
+        ((CharacterFrameEditorViewModel)frameView.DataContext).CharacterModel = model;
+        ((CharacterFrameEditorViewModel)frameView.DataContext).FileHandler = ProjectItem?.FileHandler;
         ((CharacterFrameEditorViewModel)frameView.DataContext).TabID = id;
 
         Tabs.Add(new ActionTabItem
@@ -507,7 +548,7 @@ public class CharacterViewModel : ItemViewModel
 
     private void Save()
     {
-        CharacterModel model = GetModel();
+        CharacterModel? model = GetModel();
 
         if (model != null)
         {
@@ -520,22 +561,29 @@ public class CharacterViewModel : ItemViewModel
                     model.Animations.Add(new CharacterAnimation());
                 }
 
-                CharacterAnimationView view = tab.FramesView as CharacterAnimationView;
-                CharacterAnimationViewModel viewModel = view.DataContext as CharacterAnimationViewModel;
+                CharacterAnimationView? view = tab.FramesView as CharacterAnimationView;
+                CharacterAnimationViewModel? viewModel = view?.DataContext as CharacterAnimationViewModel;
 
                 model.Animations[index].ID = tab.ID;
                 model.Animations[index].Name = tab.Header;
-                model.Animations[index].Speed = viewModel.Speed;
+
+                if (viewModel != null)
+                    model.Animations[index].Speed = viewModel.Speed;
 
                 if (model.Animations[index].CollisionInfo == null)
                 {
                     model.Animations[index].CollisionInfo = new CollisionInfo();
                 }
 
-                model.Animations[index].CollisionInfo.Width = viewModel.CollisionWidth;
-                model.Animations[index].CollisionInfo.Height = viewModel.CollisionHeight;
-                model.Animations[index].CollisionInfo.OffsetX = viewModel.CollisionOffsetX;
-                model.Animations[index].CollisionInfo.OffsetY = viewModel.CollisionOffsetY;
+                CollisionInfo? collInfo = model.Animations[index].CollisionInfo;
+
+                if (collInfo != null && viewModel != null)
+                {
+                    collInfo.Width = viewModel.CollisionWidth;
+                    collInfo.Height = viewModel.CollisionHeight;
+                    collInfo.OffsetX = viewModel.CollisionOffsetX;
+                    collInfo.OffsetY = viewModel.CollisionOffsetY;
+                }
 
                 index++;
             }
@@ -545,7 +593,7 @@ public class CharacterViewModel : ItemViewModel
                 model.Animations[i].ID = string.Empty;
             }
 
-            ProjectItem.FileHandler.Save();
+            ProjectItem?.FileHandler.Save();
         }
     }
 

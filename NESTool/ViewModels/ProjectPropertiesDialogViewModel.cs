@@ -5,12 +5,13 @@ using NESTool.Commands;
 using NESTool.Enums;
 using NESTool.Models;
 using NESTool.Signals;
+using System.Collections.Generic;
 
 namespace NESTool.ViewModels;
 
 public class ProjectPropertiesDialogViewModel : ViewModel
 {
-    public DispatchSignalCommand<CloseDialogSignal> CloseDialogCommand { get; } = new DispatchSignalCommand<CloseDialogSignal>();
+    public DispatchSignalCommand<CloseDialogSignal> CloseDialogCommand { get; } = new();
 
     #region get/set
     public bool Battery
@@ -25,7 +26,7 @@ public class ProjectPropertiesDialogViewModel : ViewModel
         }
     }
 
-    public int[] CHRSizes
+    public int[]? CHRSizes
     {
         get { return _chrSizes; }
         set
@@ -59,7 +60,7 @@ public class ProjectPropertiesDialogViewModel : ViewModel
         }
     }
 
-    public MirroringType[] Mirrorings
+    public MirroringType[]? Mirrorings
     {
         get { return _mirrorings; }
         set
@@ -69,7 +70,7 @@ public class ProjectPropertiesDialogViewModel : ViewModel
         }
     }
 
-    public int[] PRGSizes
+    public int[]? PRGSizes
     {
         get { return _prgSizes; }
         set
@@ -103,7 +104,7 @@ public class ProjectPropertiesDialogViewModel : ViewModel
         }
     }
 
-    public MapperModel[] Mappers
+    public List<MapperModel> Mappers
     {
         get { return _mappers; }
         set
@@ -130,10 +131,10 @@ public class ProjectPropertiesDialogViewModel : ViewModel
 
     private bool _battery;
     private FrameTiming _frameTiming;
-    private int[] _chrSizes;
-    private int[] _prgSizes;
-    private MirroringType[] _mirrorings;
-    private MapperModel[] _mappers;
+    private int[]? _chrSizes;
+    private int[]? _prgSizes;
+    private MirroringType[]? _mirrorings;
+    private List<MapperModel> _mappers = [];
     private int _selectedMapper;
     private MirroringType _selectedMirroring = MirroringType.Vertical;
     private int _selectedCHRSize;
@@ -179,13 +180,17 @@ public class ProjectPropertiesDialogViewModel : ViewModel
         MappersModel mappers = ModelManager.Get<MappersModel>();
 
         SelectedMapper = project.Header.INesMapper;
-        CHRSizes = mappers.Mappers[SelectedMapper].CHR;
-        PRGSizes = mappers.Mappers[SelectedMapper].PRG;
         SelectedCHRSize = project.Header.CHRSize;
         SelectedPRGSize = project.Header.PRGSize;
         FrameTiming = project.Header.FrameTiming;
-        Mirrorings = mappers.Mappers[SelectedMapper].Mirroring;
         SelectedMirroring = project.Header.MirroringType;
         Battery = project.Header.Battery;
+
+        if (mappers.Mappers.Count > 0)
+        {
+            Mirrorings = mappers.Mappers[SelectedMapper].Mirroring;
+            CHRSizes = mappers.Mappers[SelectedMapper].CHR;
+            PRGSizes = mappers.Mappers[SelectedMapper].PRG;
+        }
     }
 }

@@ -97,7 +97,7 @@ public static class ProjectItemFileSystem
                 return Task<AFileModel>.Factory.StartNew(() => Toml.ReadStream<EntityModel>(new MemoryStream(content)));
             case ProjectItemType.None:
             default:
-                return Task.FromResult<AFileModel>(null);
+                throw new Exception("Invalid file model type");
         }
     }
 
@@ -112,7 +112,7 @@ public static class ProjectItemFileSystem
             return;
         }
 
-        AFileModel model = Util.FileModelFactory(item.Type);
+        AFileModel? model = Util.FileModelFactory(item.Type);
 
         if (model == null)
         {
@@ -225,7 +225,7 @@ public static class ProjectItemFileSystem
 
         if (!item.IsFolder)
         {
-            AFileModel model = Util.FileModelFactory(item.Type);
+            AFileModel? model = Util.FileModelFactory(item.Type);
 
             if (model != null)
             {
@@ -270,7 +270,7 @@ public static class ProjectItemFileSystem
         }
         else
         {
-            string fileName = draggedElement.FileHandler.Name + draggedElement.FileHandler.FileModel.FileExtension;
+            string? fileName = draggedElement.FileHandler.Name + draggedElement.FileHandler.FileModel?.FileExtension;
 
             string originalFile = Path.Combine(draggedElement.FileHandler.Path, fileName);
             string destinationFile = Path.Combine(destFolder, fileName);

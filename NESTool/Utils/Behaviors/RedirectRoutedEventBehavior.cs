@@ -29,9 +29,7 @@ public class RedirectRoutedEventBehavior : Behavior<UIElement>
         set => this.SetValue(RoutedEventProperty, value);
     }
 
-    private static MethodInfo MemberwiseCloneMethod { get; }
-        = typeof(object)
-            .GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
+    private static MethodInfo? MemberwiseCloneMethod { get; } = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic | BindingFlags.Instance);
 
     private static void OnRoutedEventChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -75,20 +73,24 @@ public class RedirectRoutedEventBehavior : Behavior<UIElement>
         base.OnDetaching();
     }
 
-    private static RoutedEventArgs CloneEvent(RoutedEventArgs e)
+    private static RoutedEventArgs? CloneEvent(RoutedEventArgs e)
     {
-        return (RoutedEventArgs)MemberwiseCloneMethod.Invoke(e, null);
+        return (RoutedEventArgs?)MemberwiseCloneMethod?.Invoke(e, null);
     }
 
     private void EventHandler(object sender, RoutedEventArgs e)
     {
-        RoutedEventArgs newEvent = CloneEvent(e);
-        e.Handled = true;
+        RoutedEventArgs? newEvent = CloneEvent(e);
 
-        if (this.RedirectTarget != null)
+        if (newEvent != null)
         {
-            newEvent.Source = this.RedirectTarget;
-            this.RedirectTarget.RaiseEvent(newEvent);
+            e.Handled = true;
+
+            if (this.RedirectTarget != null)
+            {
+                newEvent.Source = this.RedirectTarget;
+                this.RedirectTarget.RaiseEvent(newEvent);
+            }
         }
     }
 }

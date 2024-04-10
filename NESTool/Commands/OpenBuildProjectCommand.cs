@@ -7,7 +7,7 @@ namespace NESTool.Commands;
 
 public class OpenBuildProjectCommand : Command
 {
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
         if (ProjectFiles.ObjectsLoading > 0)
         {
@@ -20,9 +20,8 @@ public class OpenBuildProjectCommand : Command
         }
 
         object[] values = (object[])parameter;
-        Window window = (Window)values[0];
 
-        if (window == null)
+        if (values[0] is not Window _)
         {
             return false;
         }
@@ -37,14 +36,19 @@ public class OpenBuildProjectCommand : Command
         return true;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
+        if (parameter == null)
+        {
+            return;
+        }
+
         object[] values = (object[])parameter;
 
         Window window = (Window)values[0];
         _ = (string)values[1];
 
-        BuildProjectDialog dialog = new BuildProjectDialog
+        BuildProjectDialog dialog = new()
         {
             Owner = window
         };

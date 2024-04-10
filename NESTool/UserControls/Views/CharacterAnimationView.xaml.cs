@@ -77,7 +77,10 @@ namespace NESTool.UserControls.Views
                     return;
                 }
 
-                CharacterFrameView frame = new CharacterFrameView(tabID, spFrames.Children.Count - 1, viewModel.FileHandler, viewModel.CharacterModel);
+                if (viewModel.FileHandler == null || viewModel.CharacterModel == null)
+                    return;
+
+                CharacterFrameView frame = new(tabID, spFrames.Children.Count - 1, viewModel.FileHandler, viewModel.CharacterModel);
 
                 FrameViewList.Add(frame);
 

@@ -17,7 +17,10 @@ public class CreateNewElementHistoryAction : IHistoryAction
 
     public void Redo()
     {
-        SignalManager.Get<PasteElementSignal>().Dispatch(_item.Parent, _item);
+        if (_item.Parent != null)
+        {
+            SignalManager.Get<PasteElementSignal>().Dispatch(_item.Parent, _item);
+        }
 
         SignalManager.Get<CreateNewElementSignal>().Dispatch(_item);
 

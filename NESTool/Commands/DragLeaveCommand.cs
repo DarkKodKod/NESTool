@@ -7,12 +7,16 @@ namespace NESTool.Commands;
 
 public class DragLeaveCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        DragEventArgs dragEvent = parameter as DragEventArgs;
+        if (parameter == null)
+            return;
+
+        DragEventArgs? dragEvent = parameter as DragEventArgs;
 
         SignalManager.Get<DetachAdornersSignal>().Dispatch();
 
-        dragEvent.Handled = true;
+        if (dragEvent != null)
+            dragEvent.Handled = true;
     }
 }

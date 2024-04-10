@@ -31,7 +31,7 @@ public class PaletteViewModel : ItemViewModel
         #endregion
     }
 
-    public PaletteModel GetModel()
+    public PaletteModel? GetModel()
     {
         if (ProjectItem?.FileHandler.FileModel is PaletteModel model)
         {
@@ -43,7 +43,9 @@ public class PaletteViewModel : ItemViewModel
 
     private void LoadPalettes()
     {
-        if (GetModel() == null)
+        PaletteModel? model = GetModel();
+
+        if (model == null)
         {
             return;
         }
@@ -53,10 +55,10 @@ public class PaletteViewModel : ItemViewModel
         // Load palettes
         for (int i = 0; i < 4; ++i)
         {
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(GetModel().Color0), (PaletteIndex)i, 0);
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(GetModel().Color1), (PaletteIndex)i, 1);
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(GetModel().Color2), (PaletteIndex)i, 2);
-            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(GetModel().Color3), (PaletteIndex)i, 3);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(model.Color0), (PaletteIndex)i, 0);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(model.Color1), (PaletteIndex)i, 1);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(model.Color2), (PaletteIndex)i, 2);
+            SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(model.Color3), (PaletteIndex)i, 3);
         }
 
         _doNotSavePalettes = false;
@@ -74,12 +76,19 @@ public class PaletteViewModel : ItemViewModel
             return;
         }
 
+        PaletteModel? model = GetModel();
+
+        if (model == null)
+        {
+            return;
+        }
+
         int colorInt = ((color.R & 0xff) << 16) | ((color.G & 0xff) << 8) | (color.B & 0xff);
 
-        int color0 = GetModel().Color0;
-        int color1 = GetModel().Color1;
-        int color2 = GetModel().Color2;
-        int color3 = GetModel().Color3;
+        int color0 = model.Color0;
+        int color1 = model.Color1;
+        int color2 = model.Color2;
+        int color3 = model.Color3;
 
         switch (colorPosition)
         {
@@ -89,11 +98,11 @@ public class PaletteViewModel : ItemViewModel
             case 3: color3 = colorInt; break;
         }
 
-        GetModel().Color0 = color0;
-        GetModel().Color1 = color1;
-        GetModel().Color2 = color2;
-        GetModel().Color3 = color3;
+        model.Color0 = color0;
+        model.Color1 = color1;
+        model.Color2 = color2;
+        model.Color3 = color3;
 
-        ProjectItem.FileHandler.Save();
+        ProjectItem?.FileHandler.Save();
     }
 }

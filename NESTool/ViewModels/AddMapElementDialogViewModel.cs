@@ -9,9 +9,9 @@ namespace NESTool.ViewModels;
 
 public class AddMapElementDialogViewModel : ViewModel
 {
-    private FileModelVO[] _entities;
+    private List<FileModelVO> _entities = [];
     private int _selectedEntity = 0;
-    private string _selectedEntityId;
+    private string _selectedEntityId = string.Empty;
 
     #region Commands
     public AddMapElementCommand AddMapElementCommand { get; } = new();
@@ -19,17 +19,19 @@ public class AddMapElementDialogViewModel : ViewModel
 
     public AddMapElementDialogViewModel()
     {
-        List<FileModelVO> list = new List<FileModelVO>();
+        Entities.AddRange(ProjectFiles.GetModels<EntityModel>());
 
-        list.AddRange(ProjectFiles.GetModels<EntityModel>());
+        if (Entities.Count > 0)
+        {
+            AFileModel? fileModel = Entities[SelectedEntity].Model;
 
-        Entities = list.ToArray();
-
-        SelectedEntityId = Entities[SelectedEntity].Model.GUID;
+            if (fileModel != null)
+                SelectedEntityId = fileModel.GUID;
+        }
     }
 
     #region get/set
-    public FileModelVO[] Entities
+    public List<FileModelVO> Entities
     {
         get => _entities;
         set
@@ -47,7 +49,12 @@ public class AddMapElementDialogViewModel : ViewModel
         {
             _selectedEntity = value;
 
-            SelectedEntityId = Entities[SelectedEntity].Model.GUID;
+            AFileModel? fileModel = Entities[SelectedEntity].Model;
+
+            if (fileModel != null)
+            {
+                SelectedEntityId = fileModel.GUID;
+            }
 
             OnPropertyChanged("SelectedEntity");
         }

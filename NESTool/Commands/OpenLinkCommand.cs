@@ -5,10 +5,13 @@ namespace NESTool.Commands;
 
 public class OpenLinkCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        string url = parameter as string;
+        string? url = parameter as string;
 
-        Process.Start(url);
+        if (url != null)
+        {
+            Process.Start(url);
+        }
     }
 }

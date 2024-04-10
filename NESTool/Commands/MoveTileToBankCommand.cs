@@ -12,7 +12,7 @@ namespace NESTool.Commands;
 
 public class MoveTileToBankCommand : Command
 {
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
         if (parameter == null)
         {
@@ -26,8 +26,11 @@ public class MoveTileToBankCommand : Command
         return cropperImage != null && model != null && !model.IsFull();
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
+        if (parameter == null)
+            return;
+
         object[] values = (object[])parameter;
 
         Point croppedPoint = (Point)values[1];
@@ -38,10 +41,15 @@ public class MoveTileToBankCommand : Command
         {
             FileModelVO[] tileSets = ProjectFiles.GetModels<TileSetModel>().ToArray();
 
-            model.PTTiles[index].GUID = Guid.NewGuid().ToString();
-            model.PTTiles[index].TileSetID = tileSets[selectedTileSet].Model.GUID;
-            model.PTTiles[index].Point = croppedPoint;
-            model.PTTiles[index].Group = index;
+            AFileModel? theModel = tileSets[selectedTileSet].Model;
+
+            if (theModel != null)
+            {
+                model.PTTiles[index].GUID = Guid.NewGuid().ToString();
+                model.PTTiles[index].TileSetID = theModel.GUID;
+                model.PTTiles[index].Point = croppedPoint;
+                model.PTTiles[index].Group = index;
+            }
 
             SignalManager.Get<BankImageUpdatedSignal>().Dispatch();
         }

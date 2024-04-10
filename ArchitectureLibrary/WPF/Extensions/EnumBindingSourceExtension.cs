@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Windows.Markup;
 
-namespace NESTool.Utils.Extensions;
+namespace ArchitectureLibrary.WPF.Extensions;
 
 public class EnumBindingSourceExtension : MarkupExtension
 {
-    private Type _enumType;
-    public Type EnumType
+    private Type? _enumType;
+    public Type? EnumType
     {
         get { return _enumType; }
         set

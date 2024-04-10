@@ -7,7 +7,7 @@ namespace NESTool.Commands;
 
 public abstract class ItemSelectedCommand : Command
 {
-    protected ProjectItem ItemSelected = null;
+    protected ProjectItem? ItemSelected = null;
 
     public ItemSelectedCommand()
     {

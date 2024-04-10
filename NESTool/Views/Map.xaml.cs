@@ -24,7 +24,7 @@ namespace NESTool.Views
     public partial class Map : UserControl, ICleanable
     {
         private bool _mouseDown = false;
-        private Image _draggingSprite;
+        private Image? _draggingSprite;
         private Point _draggingSpriteInitPos;
 
         private const int CellSize = 8;
@@ -51,12 +51,12 @@ namespace NESTool.Views
         {
             if (DataContext is MapViewModel viewModel)
             {
-                if (viewModel.Banks.Length == 0)
+                if (viewModel.Banks?.Length == 0)
                 {
                     return;
                 }
 
-                if (!(viewModel.Banks[viewModel.SelectedBank].Model is BankModel model))
+                if (!(viewModel.Banks?[viewModel.SelectedBank].Model is BankModel model))
                 {
                     return;
                 }
@@ -67,7 +67,7 @@ namespace NESTool.Views
 
         private void Sprite_MouseMove(object sender, MouseEventArgs e)
         {
-            Image image = sender as Image;
+            Image? image = sender as Image;
 
             if (image != _draggingSprite)
             {
@@ -87,7 +87,10 @@ namespace NESTool.Views
         {
             if (_draggingSprite == null)
             {
-                Image image = sender as Image;
+                Image? image = sender as Image;
+
+                if (image == null)
+                    return;
 
                 _draggingSprite = image;
                 _draggingSpriteInitPos = Mouse.GetPosition(cOverlay);
@@ -98,13 +101,19 @@ namespace NESTool.Views
                 _draggingSpriteInitPos.X -= imageLeft;
                 _draggingSpriteInitPos.Y -= imageTop;
 
-                SignalManager.Get<MapElementSpriteSelecteedSignal>().Dispatch(image.Tag.ToString());
+                string? s = image.Tag.ToString();
+
+                if (s != null)
+                    SignalManager.Get<MapElementSpriteSelecteedSignal>().Dispatch(s);
             }
         }
 
         private void Sprite_MouseLeave(object sender, MouseEventArgs e)
         {
-            Image image = sender as Image;
+            Image? image = sender as Image;
+
+            if (image == null)
+                return;
 
             if (image == _draggingSprite)
             {
@@ -116,7 +125,10 @@ namespace NESTool.Views
 
         private void Sprite_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Image image = sender as Image;
+            Image? image = sender as Image;
+
+            if (image == null)
+                return;
 
             if (image == _draggingSprite)
             {
@@ -128,12 +140,15 @@ namespace NESTool.Views
 
         private void Sprite_MouseEnter(object sender, MouseEventArgs e)
         {
-            Image image = sender as Image;
+            Image? image = sender as Image;
 
-            int imageLeft = Convert.ToInt32(Canvas.GetLeft(image) / CellSize);
-            int imageTop = Convert.ToInt32(Canvas.GetTop(image) / CellSize);
+            if (image != null)
+            {
+                int imageLeft = Convert.ToInt32(Canvas.GetLeft(image) / CellSize);
+                int imageTop = Convert.ToInt32(Canvas.GetTop(image) / CellSize);
 
-            image.ToolTip = image.Name + Environment.NewLine + $"x: {imageLeft}" + Environment.NewLine + $"y: {imageTop}";
+                image.ToolTip = image.Name + Environment.NewLine + $"x: {imageLeft}" + Environment.NewLine + $"y: {imageTop}";
+            }
         }
 
         private void AdjustImagePositionToGrid(Image image)
@@ -154,7 +169,10 @@ namespace NESTool.Views
                 Canvas.SetLeft(image, gridLeft * CellSize + CellOffset);
                 Canvas.SetTop(image, gridTop * CellSize + CellOffset);
 
-                SignalManager.Get<MapElementSpritePosChangedSignal>().Dispatch(image.Tag.ToString(), gridLeft, gridTop);
+                string? s = image.Tag.ToString();
+
+                if (s != null)
+                    SignalManager.Get<MapElementSpritePosChangedSignal>().Dispatch(s, gridLeft, gridTop);
             }
         }
 
@@ -192,7 +210,7 @@ namespace NESTool.Views
                 }
             }
 
-            FileModelVO fileModelVO = ProjectFiles.GetFileModel(entity.EntityID);
+            FileModelVO? fileModelVO = ProjectFiles.GetFileModel(entity.EntityID);
 
             if (fileModelVO == null)
             {
@@ -202,9 +220,12 @@ namespace NESTool.Views
             int x = entity.X;
             int y = entity.Y;
 
-            EntityModel entityModel = fileModelVO.Model as EntityModel;
+            EntityModel? entityModel = fileModelVO.Model as EntityModel;
 
-            Image sprite = GetImageFromFileModel(entityModel);
+            if (entityModel == null)
+                return;
+
+            Image? sprite = GetImageFromFileModel(entityModel);
 
             if (sprite == null)
             {
@@ -250,18 +271,18 @@ namespace NESTool.Views
             }
         }
 
-        private Image GetImageFromFileModel(EntityModel entityModel)
+        private Image? GetImageFromFileModel(EntityModel entityModel)
         {
             if (entityModel.Source == EntitySource.Character)
             {
-                GroupedPalettes GroupedPalettes = new GroupedPalettes();
+                GroupedPalettes? GroupedPalettes = new();
 
                 if (string.IsNullOrEmpty(entityModel.CharacterId))
                 {
                     return null;
                 }
 
-                CharacterModel characterModel = ProjectFiles.GetModel<CharacterModel>(entityModel.CharacterId);
+                CharacterModel? characterModel = ProjectFiles.GetModel<CharacterModel>(entityModel.CharacterId);
 
                 if (characterModel == null)
                 {
@@ -272,7 +293,7 @@ namespace NESTool.Views
 
                 if (index >= 0)
                 {
-                    ImageVO vo = CharacterUtils.CreateImage(characterModel, index, 0, ref GroupedPalettes);
+                    ImageVO? vo = CharacterUtils.CreateImage(characterModel, index, 0, ref GroupedPalettes);
 
                     if (vo != null && vo.Image != null)
                     {
@@ -319,12 +340,12 @@ namespace NESTool.Views
                 }
             }
 
-            SolidColorBrush scb = new SolidColorBrush
+            SolidColorBrush scb = new()
             {
                 Color = color
             };
 
-            PaletteView palette = null;
+            PaletteView? palette = null;
 
             switch (paletteIndex)
             {
@@ -334,12 +355,15 @@ namespace NESTool.Views
                 case PaletteIndex.Palette3: palette = palette3; break;
             }
 
-            switch (colorPosition)
+            if (palette != null)
             {
-                case 0: palette.cvsColor0.Background = scb; break;
-                case 1: palette.cvsColor1.Background = scb; break;
-                case 2: palette.cvsColor2.Background = scb; break;
-                case 3: palette.cvsColor3.Background = scb; break;
+                switch (colorPosition)
+                {
+                    case 0: palette.cvsColor0.Background = scb; break;
+                    case 1: palette.cvsColor1.Background = scb; break;
+                    case 2: palette.cvsColor2.Background = scb; break;
+                    case 3: palette.cvsColor3.Background = scb; break;
+                }
             }
         }
 
@@ -460,7 +484,12 @@ namespace NESTool.Views
                 viewModel.RectangleLeft = point.X;
                 viewModel.RectangleTop = point.Y;
 
-                (int, int) tuple = viewModel.GetModel().GetAttributeTileIndex(index);
+                MapModel? mapModel = viewModel.GetModel();
+
+                if (mapModel == null)
+                    return;
+
+                (int, int) tuple = mapModel.GetAttributeTileIndex(index);
 
                 viewModel.SelectedAttributeTile = tuple.Item1;
 
@@ -475,7 +504,7 @@ namespace NESTool.Views
                 else if (MainWindow.ToolBarMapTool == EditFrameTools.Select)
                 {
                     // get the first element in the selected meta tile
-                    int[] array = viewModel.GetModel().GetMetaTableArray(tuple.Item1);
+                    int[]? array = mapModel?.GetMetaTableArray(tuple.Item1);
 
                     if (array != null)
                     {
@@ -506,51 +535,68 @@ namespace NESTool.Views
 
         private void PaintTile(int index, MapViewModel viewModel)
         {
-            MapViewModel.FlagMapBitmapChanges[viewModel.SelectedAttributeTile] = TileUpdate.Normal;
+            if (MapViewModel.FlagMapBitmapChanges != null)
+                MapViewModel.FlagMapBitmapChanges[viewModel.SelectedAttributeTile] = TileUpdate.Normal;
 
-            Point selectedTilePoint = new Point
+            Point selectedTilePoint = new()
             {
                 X = viewModel.RectangleLeft,
                 Y = viewModel.RectangleTop
             };
 
-            BankModel model = viewModel.Banks[viewModel.SelectedBank].Model as BankModel;
+            BankModel? model = viewModel.Banks?[viewModel.SelectedBank].Model as BankModel;
 
-            string guid = model.PTTiles[bankViewer.SelectedBankTile].GUID;
+            if (model != null)
+            {
+                string guid = model.PTTiles[bankViewer.SelectedBankTile].GUID;
 
-            ref MapTile tile = ref viewModel.GetModel().GetTile(index);
+                MapModel? mapModel = viewModel.GetModel();
 
-            tile.Point = selectedTilePoint;
-            tile.BankID = model.GUID;
-            tile.BankTileID = guid;
+                if (mapModel != null)
+                {
+                    ref MapTile tile = ref mapModel.GetTile(index);
 
-            MapViewModel.PointMapBitmapChanges[viewModel.SelectedAttributeTile] = selectedTilePoint;
+                    tile.Point = selectedTilePoint;
+                    tile.BankID = model.GUID;
+                    tile.BankTileID = guid;
 
-            viewModel.ProjectItem?.FileHandler.Save();
+                    if (MapViewModel.PointMapBitmapChanges != null)
+                        MapViewModel.PointMapBitmapChanges[viewModel.SelectedAttributeTile] = selectedTilePoint;
 
-            viewModel.LoadFrameImage(true);
+                    viewModel.ProjectItem?.FileHandler.Save();
+
+                    viewModel.LoadFrameImage(true);
+                }
+            }
         }
 
         private void EraseTile(int index, MapViewModel viewModel)
         {
-            MapViewModel.FlagMapBitmapChanges[viewModel.SelectedAttributeTile] = TileUpdate.Erased;
+            if (MapViewModel.FlagMapBitmapChanges != null)
+                MapViewModel.FlagMapBitmapChanges[viewModel.SelectedAttributeTile] = TileUpdate.Erased;
 
-            Point selectedTilePoint = new Point
+            Point selectedTilePoint = new()
             {
                 X = viewModel.RectangleLeft,
                 Y = viewModel.RectangleTop
             };
 
-            MapViewModel.PointMapBitmapChanges[viewModel.SelectedAttributeTile] = selectedTilePoint;
+            if (MapViewModel.PointMapBitmapChanges != null)
+                MapViewModel.PointMapBitmapChanges[viewModel.SelectedAttributeTile] = selectedTilePoint;
 
-            ref MapTile tile = ref viewModel.GetModel().GetTile(index);
+            MapModel? mapModel = viewModel.GetModel();
 
-            viewModel.LoadFrameImage(true);
+            if (mapModel != null)
+            {
+                ref MapTile tile = ref mapModel.GetTile(index);
 
-            tile.BankID = string.Empty;
-            tile.BankTileID = string.Empty;
+                viewModel.LoadFrameImage(true);
 
-            viewModel.ProjectItem?.FileHandler.Save();
+                tile.BankID = string.Empty;
+                tile.BankTileID = string.Empty;
+
+                viewModel.ProjectItem?.FileHandler.Save();
+            }
         }
 
         delegate void TestDelegate();

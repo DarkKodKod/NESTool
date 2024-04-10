@@ -9,11 +9,11 @@ public class MoveProjectItemHistoryAction : IHistoryAction
 {
     private readonly ProjectItem _item;
     private readonly ProjectItem _dropTarget;
-    private readonly ProjectItem _origin;
+    private readonly ProjectItem? _origin;
     private readonly string _newName;
     private readonly string _oldName;
 
-    public MoveProjectItemHistoryAction(ProjectItem dropTarget, ProjectItem item, ProjectItem origin, string newName, string oldName)
+    public MoveProjectItemHistoryAction(ProjectItem dropTarget, ProjectItem item, ProjectItem? origin, string newName, string oldName)
     {
         _item = item;
         _dropTarget = dropTarget;
@@ -40,7 +40,10 @@ public class MoveProjectItemHistoryAction : IHistoryAction
         _item.RenamedFromAction = true;
         _item.DisplayName = _oldName;
 
-        SignalManager.Get<DropElementSignal>().Dispatch(_origin, _item);
-        SignalManager.Get<MoveElementSignal>().Dispatch(_origin, _item);
+        if (_origin != null)
+        {
+            SignalManager.Get<DropElementSignal>().Dispatch(_origin, _item);
+            SignalManager.Get<MoveElementSignal>().Dispatch(_origin, _item);
+        }
     }
 }

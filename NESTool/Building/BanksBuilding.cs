@@ -26,7 +26,10 @@ public static class BanksBuilding
 
         foreach (FileModelVO vo in bankModelVOs)
         {
-            BankModel bank = vo.Model as BankModel;
+            BankModel? bank = vo.Model as BankModel;
+
+            if (bank == null)
+                continue;
 
             int cellsCount = 0;
 
@@ -44,11 +47,14 @@ public static class BanksBuilding
 
             int currentIndex = 0;
 
-            WriteableBitmap bitmap = BanksUtils.CreateImage(bank, ref bitmapCache, false);
+            WriteableBitmap? bitmap = BanksUtils.CreateImage(bank, ref bitmapCache, false);
 
-            using (bitmap.GetBitmapContext())
+            if (bitmap != null)
             {
-                WriteIntoBitArray(bank, bitmap, ref outputBits, ref currentIndex);
+                using (bitmap.GetBitmapContext())
+                {
+                    WriteIntoBitArray(bank, bitmap, ref outputBits, ref currentIndex);
+                }
             }
 
             for (int i = 0; i < cellSizeInBytes * cellsCount;)
@@ -94,7 +100,7 @@ public static class BanksBuilding
             {
                 int group = model.PTTiles[matrixIndex++].Group;
 
-                if (!groupedPalettes.TryGetValue(group, out Dictionary<Color, int> colors))
+                if (!groupedPalettes.TryGetValue(group, out Dictionary<Color, int>? colors))
                 {
                     colors = new Dictionary<Color, int> { { Util.NullColor, 0 } };
 

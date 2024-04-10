@@ -7,7 +7,7 @@
              xmlns:local="clr-namespace:NESTool.UserControls.Views"
              mc:Ignorable="d" 
              xmlns:vm="clr-namespace:NESTool.UserControls.ViewModels"
-             xmlns:cv="clr-namespace:NESTool.Utils.Converters"
+             xmlns:cv="clr-namespace:ArchitectureLibrary.WPF.Converters;assembly=ArchitectureLibrary"
              d:DesignHeight="720" d:DesignWidth="1050">
     <UserControl.DataContext>
         <vm:CharacterAnimationViewModel />

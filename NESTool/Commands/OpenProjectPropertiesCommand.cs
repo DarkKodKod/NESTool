@@ -6,7 +6,7 @@ namespace NESTool.Commands;
 
 public class OpenProjectPropertiesCommand : Command
 {
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
         if (parameter == null)
         {
@@ -25,8 +25,11 @@ public class OpenProjectPropertiesCommand : Command
         return true;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
+        if (parameter == null)
+            return;
+
         object[] values = (object[])parameter;
         Window window = (Window)values[0];
         string projectName = (string)values[1];

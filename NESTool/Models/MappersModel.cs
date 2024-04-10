@@ -1,6 +1,7 @@
 ﻿using ArchitectureLibrary.Model;
 using NESTool.Enums;
 using Nett;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 
@@ -8,7 +9,7 @@ namespace NESTool.Models;
 
 public class MappersModel : ISingletonModel
 {
-    public MapperModel[] Mappers { get; set; }
+    public List<MapperModel> Mappers { get; set; } = new(1);
 
     private const string _mappersfileNameKey = "mappersFileName";
     private const string _versionKey = "mappersVersion";
@@ -19,8 +20,6 @@ public class MappersModel : ISingletonModel
     {
         _configFileName = @".\" + (string)Application.Current.FindResource(_mappersfileNameKey) + Toml.FileExtension;
         _version = (int)Application.Current.FindResource(_versionKey);
-
-        Mappers = new MapperModel[1];
     }
 
     public void Copy(MappersModel copy)
@@ -44,14 +43,14 @@ public class MappersModel : ISingletonModel
 
     private void LoadDefaultMappers()
     {
-        Mappers[0] = new MapperModel()
+        Mappers.Add(new()
         {
             Id = 0,
             Name = "None",
-            PRG = new int[] { 16, 32 },
-            CHR = new int[] { 8 },
-            Mirroring = new MirroringType[] { MirroringType.Horizontal, MirroringType.Vertical }
-        };
+            PRG = [16, 32],
+            CHR = [8],
+            Mirroring = [MirroringType.Horizontal, MirroringType.Vertical]
+        });
     }
 
     private void CreateAndLoadDefault()

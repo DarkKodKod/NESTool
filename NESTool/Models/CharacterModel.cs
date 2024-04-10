@@ -14,11 +14,11 @@ public class CollisionInfo
 
 public class CharacterAnimation
 {
-    public string ID { get; set; }
-    public string Name { get; set; }
+    public string ID { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
     public float Speed { get; set; }
     public List<FrameModel> Frames { get; set; } = [];
-    public CollisionInfo CollisionInfo { get; set; }
+    public CollisionInfo? CollisionInfo { get; set; }
 }
 
 public class CharacterModel : AFileModel

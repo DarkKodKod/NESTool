@@ -17,9 +17,9 @@ public static class TilesDefinitionsBuilding
 
         foreach (FileModelVO bankVO in bankModelVOs)
         {
-            BankModel bank = bankVO.Model as BankModel;
+            BankModel? bank = bankVO.Model as BankModel;
 
-            if (bank.BankUseType != BankUseType.Background)
+            if (bank?.BankUseType != BankUseType.Background)
             {
                 continue;
             }
@@ -45,7 +45,7 @@ public static class TilesDefinitionsBuilding
             {
                 PTTileModel tile = bankModel.PTTiles[i];
 
-                FileModelVO tileSetModelVo = ProjectFiles.GetFileModel(tile.TileSetID);
+                FileModelVO? tileSetModelVo = ProjectFiles.GetFileModel(tile.TileSetID);
 
                 if (tileSetModelVo != null && tileSetModelVo.Model is TileSetModel tileSetModel)
                 {

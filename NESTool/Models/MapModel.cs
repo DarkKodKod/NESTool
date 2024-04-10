@@ -31,7 +31,7 @@ public struct AttributeTable
 public class MapModel : AFileModel
 {
     private const string _extensionKey = "extensionMaps";
-    private int[,] _indicesCache = null;
+    private int[,]? _indicesCache = null;
 
     [TomlIgnore]
     public static int MetaTileMax = 16 * 15; // 16 tiles horizontal * 15 tiles vertical
@@ -96,7 +96,7 @@ public class MapModel : AFileModel
         }
     }
 
-    public int[] GetMetaTableArray(int index)
+    public int[]? GetMetaTableArray(int index)
     {
         if (index == -1)
         {
@@ -145,7 +145,7 @@ public class MapModel : AFileModel
 
     public string GetPropertyValue(Entity entity, string propertyKey)
     {
-        if (entity.Properties.TryGetValue(propertyKey, out string value))
+        if (entity.Properties.TryGetValue(propertyKey, out string? value))
         {
             return value;
         }
@@ -154,7 +154,7 @@ public class MapModel : AFileModel
     }
 
     public AttributeTable[] AttributeTable { get; set; } = new AttributeTable[MetaTileMax];
-    public string[] PaletteIDs { get; set; } = new string[4] { string.Empty, string.Empty, string.Empty, string.Empty };
+    public string[] PaletteIDs { get; set; } = { string.Empty, string.Empty, string.Empty, string.Empty };
     public bool ExportAttributeTable { get; set; } = true;
-    public List<Entity> Entities { get; set; } = new List<Entity>();
+    public List<Entity> Entities { get; set; } = [];
 }

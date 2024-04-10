@@ -5,13 +5,14 @@ using NESTool.Commands;
 using NESTool.Models;
 using NESTool.Signals;
 using System.Runtime.Versioning;
+using System.Windows.Controls;
 
 namespace NESTool.ViewModels;
 
 [SupportedOSPlatform("windows")]
 public class BuildProjectDialogViewModel : ViewModel
 {
-    private string _folderPath;
+    private string _folderPath = string.Empty;
     private bool _useRLEOnMaps = false;
 
     #region Commands
@@ -71,7 +72,7 @@ public class BuildProjectDialogViewModel : ViewModel
         #endregion
     }
 
-    private void BrowseFolderSuccess(string folderPath)
+    private void BrowseFolderSuccess(Control owner, string folderPath)
     {
         ProjectModel project = ModelManager.Get<ProjectModel>();
 

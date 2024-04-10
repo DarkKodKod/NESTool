@@ -20,7 +20,7 @@ public class CreateFolderCommand : ItemSelectedCommand
         _newFolderName = (string)Application.Current.FindResource(_folderNameKey);
     }
 
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
         if (ItemSelected != null)
         {
@@ -33,7 +33,7 @@ public class CreateFolderCommand : ItemSelectedCommand
         return false;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
         if (ItemSelected == null || ItemSelected.FileHandler == null)
         {
@@ -44,7 +44,7 @@ public class CreateFolderCommand : ItemSelectedCommand
 
         string name = ProjectItemFileSystem.GetValidFolderName(path, _newFolderName);
 
-        ProjectItem newFolder = new ProjectItem()
+        ProjectItem newFolder = new()
         {
             DisplayName = name,
             IsFolder = true,

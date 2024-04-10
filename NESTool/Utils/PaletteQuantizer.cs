@@ -95,28 +95,28 @@ public class PaletteQuantizer
         RGB = 0
     }
 
-    private Image sourceImage;
-    private Image targetImage;
+    private Image? sourceImage;
+    private Image? targetImage;
 
     private ColorModel activeColorModel;
-    private IColorCache activeColorCache;
-    private IColorDitherer activeDitherer;
-    private IColorQuantizer activeQuantizer;
+    private IColorCache? activeColorCache;
+    private IColorDitherer? activeDitherer;
+    private IColorQuantizer? activeQuantizer;
 
-    private readonly List<ColorModel> colorModelList = new List<ColorModel>
+    private readonly List<ColorModel> colorModelList = new()
         {
             ColorModel.RedGreenBlue,
             ColorModel.LabColorSpace,
         };
 
-    private readonly List<IColorCache> colorCacheList = new List<IColorCache>
+    private readonly List<IColorCache> colorCacheList = new()
         {
             new EuclideanDistanceColorCache(),
             new LshColorCache(),
             new OctreeColorCache()
         };
 
-    private readonly List<IColorDitherer> dithererList = new List<IColorDitherer>
+    private readonly List<IColorDitherer?> dithererList = new()
         {
             null,
             new BayerDitherer4(),
@@ -134,7 +134,7 @@ public class PaletteQuantizer
             new JarvisJudiceNinkeDitherer()
         };
 
-    private readonly List<IColorQuantizer> quantizerList = new List<IColorQuantizer>
+    private readonly List<IColorQuantizer> quantizerList = new()
         {
             new DistinctSelectionQuantizer(),
             new UniformQuantizer(),
@@ -147,7 +147,7 @@ public class PaletteQuantizer
             new NESQuantizer()
         };
 
-    public string InputFileName { get; set; }
+    public string InputFileName { get; set; } = string.Empty;
     public EColor ColorCount { get; set; } = EColor.Color256;
     public EParallel Parallel { get; set; } = EParallel.Parallel8;
     public EMethod Method { get; set; } = EMethod.HSLDistictSelection;
@@ -155,12 +155,15 @@ public class PaletteQuantizer
     public EColorCache ColorCache { get; set; } = EColorCache.EuclideanDistance;
     public EColorModel ColourModel { get; set; } = EColorModel.RGB;
 
-    public async Task<Image> Convert()
+    public async Task<Image?> Convert()
     {
         ChangeDitherer();
         ChangeQuantizer();
         ChangeColorCache();
         ChangeColorModel();
+
+        if (activeQuantizer == null)
+            return null;
 
         // tries to retrieve an image based on HSB quantization
         int parallelTaskCount = activeQuantizer.AllowParallel ? GetParallelCount() : 1;
@@ -181,8 +184,11 @@ public class PaletteQuantizer
             // detects error and color count
             int originalColorCount = activeQuantizer.GetColorCount();
 
-            // retrieves a BMP image based on our HSB-quantized one
-            GetConvertedImage(targetImage, ImageFormat.Bmp, out int newBmpSize);
+            if (targetImage != null)
+            {
+                // retrieves a BMP image based on our HSB-quantized one
+                GetConvertedImage(targetImage, ImageFormat.Bmp, out int newBmpSize);
+            }
 
         }, uiScheduler);
 

@@ -10,7 +10,7 @@ namespace NESTool.Commands;
 
 public class SaveTileSetChangesCommand : Command
 {
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
         if (parameter == null)
         {
@@ -23,7 +23,7 @@ public class SaveTileSetChangesCommand : Command
         return changed;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
         if (parameter == null)
         {
@@ -45,23 +45,23 @@ public class SaveTileSetChangesCommand : Command
     {
         originalImage = new FormatConvertedBitmap(originalImage, croppedImage.Format, null, 0);
 
-        WriteableBitmap cImage = new WriteableBitmap(originalImage);
+        WriteableBitmap? cImage = new(originalImage);
 
         Util.CopyBitmapImageToWriteableBitmap(ref cImage, (int)croppedPoint.X, (int)croppedPoint.Y, croppedImage);
 
         SaveFile(outputPath, cImage);
     }
 
-    private void SaveFile(string filename, WriteableBitmap image)
+    private void SaveFile(string filename, WriteableBitmap? image)
     {
         if (filename == string.Empty)
         {
             return;
         }
 
-        using (FileStream stream = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
+        using (FileStream stream = new(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
         {
-            BmpBitmapEncoder encoder = new BmpBitmapEncoder();
+            BmpBitmapEncoder encoder = new();
 
             BitmapFrame frame = BitmapFrame.Create(image);
 

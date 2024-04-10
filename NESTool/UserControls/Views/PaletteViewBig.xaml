@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:NESTool.UserControls.Views"
 			 xmlns:local2="clr-namespace:NESTool"
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
-             xmlns:cv="clr-namespace:NESTool.Utils.Converters"
+             xmlns:cv="clr-namespace:ArchitectureLibrary.WPF.Converters;assembly=ArchitectureLibrary"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              Name="PaletteViewControl"
              mc:Ignorable="d" Width="400" Height="400">

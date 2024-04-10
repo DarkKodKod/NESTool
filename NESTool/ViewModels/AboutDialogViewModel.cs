@@ -1,5 +1,6 @@
 ﻿using ArchitectureLibrary.ViewModel;
 using NESTool.Commands;
+using System;
 using System.Reflection;
 
 namespace NESTool.ViewModels;
@@ -22,6 +23,9 @@ public class AboutDialogViewModel : ViewModel
 
     public AboutDialogViewModel()
     {
-        Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        Version? version = Assembly.GetExecutingAssembly().GetName().Version;
+
+        if (version != null)
+            Version = version.ToString();
     }
 }

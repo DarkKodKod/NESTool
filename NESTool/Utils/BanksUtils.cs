@@ -13,11 +13,11 @@ namespace NESTool.Utils;
 
 public static class BanksUtils
 {
-    public static WriteableBitmap CreateImage(BankModel bankModel, ref Dictionary<string, WriteableBitmap> bitmapCache, bool sendSignals = true)
+    public static WriteableBitmap? CreateImage(BankModel bankModel, ref Dictionary<string, WriteableBitmap> bitmapCache, bool sendSignals = true)
     {
         FileModelVO[] tileSets = ProjectFiles.GetModels<TileSetModel>().ToArray();
 
-        WriteableBitmap bankBitmap = BitmapFactory.New(128, 128);
+        WriteableBitmap? bankBitmap = BitmapFactory.New(128, 128);
 
         int index = 0;
 
@@ -28,9 +28,9 @@ public static class BanksUtils
                 continue;
             }
 
-            if (!bitmapCache.TryGetValue(tile.TileSetID, out WriteableBitmap sourceBitmap))
+            if (!bitmapCache.TryGetValue(tile.TileSetID, out WriteableBitmap? sourceBitmap))
             {
-                TileSetModel model = ProjectFiles.GetModel<TileSetModel>(tile.TileSetID);
+                TileSetModel? model = ProjectFiles.GetModel<TileSetModel>(tile.TileSetID);
 
                 if (model == null)
                 {
@@ -57,7 +57,7 @@ public static class BanksUtils
                     // Add the link object
                     foreach (FileModelVO tileset in tileSets)
                     {
-                        if (tileset.Model.GUID == tile.TileSetID)
+                        if (tileset.Model?.GUID == tile.TileSetID)
                         {
                             SignalManager.Get<AddNewTileSetLinkSignal>().Dispatch(new BankLinkVO() { Caption = tileset.Name, Id = tile.TileSetID });
                             break;

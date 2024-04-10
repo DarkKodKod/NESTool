@@ -18,20 +18,20 @@ namespace NESTool.ViewModels;
 
 public class MapViewModel : ItemViewModel
 {
-    private FileModelVO[] _banks;
+    private FileModelVO[]? _banks;
     private int _selectedBank;
     private PaletteIndex _paletteIndex = 0;
     private double _rectangleTop = 0.0;
     private double _rectangleLeft = 0.0;
     private int _selectedAttributeTile = -1;
-    private ImageSource _frameImage;
+    private ImageSource? _frameImage;
     private Visibility _rectangleVisibility = Visibility.Hidden;
     private bool _doNotSave = false;
     private Visibility _gridVisibility = Visibility.Visible;
     private Visibility _spriteLayerVisibility = Visibility.Visible;
     private bool _exportAttributeTable = true;
-    private WriteableBitmap _mapBitmap;
-    private FileModelVO[] _palettes;
+    private WriteableBitmap? _mapBitmap;
+    private FileModelVO[]? _palettes;
     private int _selectedPalette1 = -1;
     private int _selectedPalette2 = -1;
     private int _selectedPalette3 = -1;
@@ -40,16 +40,16 @@ public class MapViewModel : ItemViewModel
     private ObservableCollection<KeyValuePair<string, string>> _properties = new();
     private KeyValuePair<string, string> _selectedProperty;
     private int _selectedPropertyIndex;
-    private string _editableSelectedProperty;
+    private string _editableSelectedProperty = string.Empty;
     private int _selectedMapElement = -1;
 
-    public static Dictionary<Tuple<int, PaletteIndex>, Dictionary<Color, Color>> GroupedPalettes;
-    public static TileUpdate[] FlagMapBitmapChanges;
-    public static Point[] PointMapBitmapChanges;
+    public static Dictionary<Tuple<int, PaletteIndex>, Dictionary<Color, Color>>? GroupedPalettes;
+    public static TileUpdate[]? FlagMapBitmapChanges;
+    public static Point[]? PointMapBitmapChanges;
 
     public PaletteIndex[] SpritePaletteIndices { get; } = new PaletteIndex[MapModel.MetaTileMax];
 
-    public MapModel GetModel()
+    public MapModel? GetModel()
     {
         return ProjectItem?.FileHandler.FileModel is MapModel model ? model : null;
     }
@@ -178,21 +178,26 @@ public class MapViewModel : ItemViewModel
 
             if (SelectedMapElement != -1)
             {
-                for (int i = 0; i < GetModel().Entities.Count; i++)
-                {
-                    Entity entity = GetModel().Entities[i];
+                MapModel? mapModel = GetModel();
 
-                    if (entity.SortIndex == SelectedMapElement)
+                if (mapModel != null)
+                {
+                    for (int i = 0; i < mapModel.Entities.Count; i++)
                     {
-                        Dictionary<string, string> list = new Dictionary<string, string>
+                        Entity entity = mapModel.Entities[i];
+
+                        if (entity.SortIndex == SelectedMapElement)
+                        {
+                            Dictionary<string, string> list = new Dictionary<string, string>
                         {
                             { "X", entity.X.ToString() },
                             { "Y", entity.Y.ToString() }
                         };
 
-                        GetModel().Entities[i].Properties.ToList().ForEach(x => list.Add(x.Key, x.Value));
+                            mapModel.Entities[i].Properties.ToList().ForEach(x => list.Add(x.Key, x.Value));
 
-                        Properties = new ObservableCollection<KeyValuePair<string, string>>(list);
+                            Properties = new ObservableCollection<KeyValuePair<string, string>>(list);
+                        }
                     }
                 }
             }
@@ -206,7 +211,7 @@ public class MapViewModel : ItemViewModel
         }
     }
 
-    public ImageSource FrameImage
+    public ImageSource? FrameImage
     {
         get => _frameImage;
         set
@@ -292,7 +297,7 @@ public class MapViewModel : ItemViewModel
         }
     }
 
-    public FileModelVO[] Palettes
+    public FileModelVO[]? Palettes
     {
         get => _palettes;
         set
@@ -330,7 +335,7 @@ public class MapViewModel : ItemViewModel
         }
     }
 
-    public FileModelVO[] Banks
+    public FileModelVO[]? Banks
     {
         get => _banks;
         set
@@ -377,18 +382,40 @@ public class MapViewModel : ItemViewModel
 
     private void UpdateAndSaveExportAttributeTable(bool exportAttributeTable)
     {
-        GetModel().ExportAttributeTable = exportAttributeTable;
+        MapModel? mapModel = GetModel();
 
-        ProjectItem.FileHandler.Save();
+        if (mapModel == null)
+            return;
+
+        mapModel.ExportAttributeTable = exportAttributeTable;
+
+        ProjectItem?.FileHandler.Save();
     }
 
     private void UpdateAndSavePalette(int newValue, PaletteIndex index)
     {
-        GetModel().PaletteIDs[(int)index] = newValue == -1 ? string.Empty : Palettes[newValue + 1].Model.GUID;
+        MapModel? mapModel = GetModel();
+
+        if (mapModel == null)
+            return;
+
+        if (newValue == -1)
+        {
+            mapModel.PaletteIDs[(int)index] = string.Empty;
+        }
+        else
+        {
+            AFileModel? fileModel = Palettes?[newValue + 1].Model;
+
+            if (fileModel != null)
+            {
+                mapModel.PaletteIDs[(int)index] = fileModel.GUID;
+            }
+        }
 
         if (!_doNotSave)
         {
-            PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(GetModel().PaletteIDs[(int)index]);
+            PaletteModel? paletteModel = ProjectFiles.GetModel<PaletteModel>(mapModel.PaletteIDs[(int)index]);
             if (paletteModel != null)
             {
                 SetPalleteWithColors(paletteModel, index);
@@ -398,7 +425,7 @@ public class MapViewModel : ItemViewModel
                 SetPaletteEmpty(index);
             }
 
-            ProjectItem.FileHandler.Save();
+            ProjectItem?.FileHandler.Save();
         }
     }
 
@@ -445,9 +472,11 @@ public class MapViewModel : ItemViewModel
 
         _doNotSave = true;
 
-        if (GetModel() != null)
+        MapModel? mapModel = GetModel();
+
+        if (mapModel != null)
         {
-            ExportAttributeTable = GetModel().ExportAttributeTable;
+            ExportAttributeTable = mapModel.ExportAttributeTable;
         }
 
         LoadPalettes();
@@ -527,21 +556,26 @@ public class MapViewModel : ItemViewModel
 
     private void OnMapElementSpritePosChanged(string mapElementId, int xPosition, int yPosition)
     {
-        for (int i = 0; i < GetModel().Entities.Count; ++i)
+        MapModel? mapModel = GetModel();
+
+        if (mapModel == null)
+            return;
+
+        for (int i = 0; i < mapModel.Entities.Count; ++i)
         {
-            Entity entity = GetModel().Entities[i];
+            Entity entity = mapModel.Entities[i];
 
             if (entity.InstanceID == mapElementId)
             {
                 entity.X = xPosition;
                 entity.Y = yPosition;
 
-                GetModel().Entities[SelectedMapElement - 1] = entity;
+                mapModel.Entities[SelectedMapElement - 1] = entity;
 
                 // setting the same value to trigger the population of the properties in the view again.
                 SelectedMapElement = SelectedMapElement;
 
-                ProjectItem.FileHandler.Save();
+                ProjectItem?.FileHandler.Save();
 
                 break;
             }
@@ -552,7 +586,12 @@ public class MapViewModel : ItemViewModel
     {
         int index = 1;
 
-        foreach (Entity entity in GetModel().Entities)
+        MapModel? mapModel = GetModel();
+
+        if (mapModel == null)
+            return;
+
+        foreach (Entity entity in mapModel.Entities)
         {
             if (entity.InstanceID == mapElementId)
             {
@@ -585,14 +624,14 @@ public class MapViewModel : ItemViewModel
 
     private void LoadPaletteIndex(int index)
     {
-        if (GetModel() == null)
-        {
-            return;
-        }
+        MapModel? mapModel = GetModel();
 
-        if (!string.IsNullOrEmpty(GetModel().PaletteIDs[index]))
+        if (mapModel == null)
+            return;
+
+        if (!string.IsNullOrEmpty(mapModel.PaletteIDs[index]))
         {
-            for (int i = 0; i < Palettes.Length; ++i)
+            for (int i = 0; i < Palettes?.Length; ++i)
             {
                 FileModelVO item = Palettes[i];
 
@@ -601,7 +640,7 @@ public class MapViewModel : ItemViewModel
                     continue;
                 }
 
-                if (item.Model.GUID == GetModel().PaletteIDs[index])
+                if (item.Model.GUID == mapModel.PaletteIDs[index])
                 {
                     switch (index)
                     {
@@ -617,14 +656,14 @@ public class MapViewModel : ItemViewModel
 
     private void LoadMetaTileProperties()
     {
-        if (GetModel() == null)
-        {
-            return;
-        }
+        MapModel? mapModel = GetModel();
 
-        for (int i = 0; i < GetModel().AttributeTable.Length; ++i)
+        if (mapModel == null)
+            return;
+
+        for (int i = 0; i < mapModel.AttributeTable.Length; ++i)
         {
-            SpritePaletteIndices[i] = (PaletteIndex)GetModel().AttributeTable[i].PaletteIndex;
+            SpritePaletteIndices[i] = (PaletteIndex)mapModel.AttributeTable[i].PaletteIndex;
         }
     }
 
@@ -640,7 +679,7 @@ public class MapViewModel : ItemViewModel
             return;
         }
 
-        GroupedPalettes.Clear();
+        GroupedPalettes?.Clear();
 
         LoadFrameImage(false);
     }
@@ -676,16 +715,16 @@ public class MapViewModel : ItemViewModel
 
     private void LoadPalettes()
     {
-        if (GetModel() == null)
-        {
+        MapModel? mapModel = GetModel();
+
+        if (mapModel == null)
             return;
-        }
 
         for (int i = 0; i < 4; ++i)
         {
-            string paletteId = GetModel().PaletteIDs[i];
+            string paletteId = mapModel.PaletteIDs[i];
 
-            PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
+            PaletteModel? paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
             if (paletteModel == null)
             {
                 SetPaletteEmpty((PaletteIndex)i);
@@ -699,14 +738,14 @@ public class MapViewModel : ItemViewModel
 
     private void LoadEntities()
     {
-        if (GetModel() == null)
-        {
-            return;
-        }
+        MapModel? mapModel = GetModel();
 
-        foreach (Entity entity in GetModel().Entities)
+        if (mapModel == null)
+            return;
+
+        foreach (Entity entity in mapModel.Entities)
         {
-            FileModelVO fileModelVO = ProjectFiles.GetFileModel(entity.EntityID);
+            FileModelVO? fileModelVO = ProjectFiles.GetFileModel(entity.EntityID);
 
             if (fileModelVO == null)
             {
@@ -738,45 +777,50 @@ public class MapViewModel : ItemViewModel
             return;
         }
 
-        // changing the X or Y position, not in the property list
-        if (SelectedPropertyIndex < 2)
-        {
-            Entity entity = GetModel().Entities[SelectedMapElement - 1];
+        MapModel? mapModel = GetModel();
 
-            if (SelectedPropertyIndex == 0)
+        if (mapModel != null)
+        {
+            // changing the X or Y position, not in the property list
+            if (SelectedPropertyIndex < 2)
             {
-                entity.X = newPropertyValue;
+                Entity entity = mapModel.Entities[SelectedMapElement - 1];
+
+                if (SelectedPropertyIndex == 0)
+                {
+                    entity.X = newPropertyValue;
+                }
+                else
+                {
+                    entity.Y = newPropertyValue;
+                }
+
+                mapModel.Entities[SelectedMapElement - 1] = entity;
+
+                SignalManager.Get<SetMapElementImagePosSignal>().Dispatch(entity.InstanceID, entity.X, entity.Y);
             }
             else
             {
-                entity.Y = newPropertyValue;
-            }
+                Dictionary<string, string> properties = mapModel.Entities[SelectedMapElement - 1].Properties;
 
-            GetModel().Entities[SelectedMapElement - 1] = entity;
-
-            SignalManager.Get<SetMapElementImagePosSignal>().Dispatch(entity.InstanceID, entity.X, entity.Y);
-        }
-        else
-        {
-            Dictionary<string, string> properties = GetModel().Entities[SelectedMapElement - 1].Properties;
-
-            int count = 0;
-            foreach (KeyValuePair<string, string> property in properties)
-            {
-                if (count == SelectedPropertyIndex - 2)
+                int count = 0;
+                foreach (KeyValuePair<string, string> property in properties)
                 {
-                    properties[property.Key] = newPropertyValue.ToString();
-                    break;
-                }
+                    if (count == SelectedPropertyIndex - 2)
+                    {
+                        properties[property.Key] = newPropertyValue.ToString();
+                        break;
+                    }
 
-                count++;
+                    count++;
+                }
             }
         }
 
         // setting the same value to trigger the population of the properties in the view again.
         SelectedMapElement = SelectedMapElement;
 
-        ProjectItem.FileHandler.Save();
+        ProjectItem?.FileHandler.Save();
     }
 
     private void OnAddMapElement(string entityId)
@@ -791,7 +835,7 @@ public class MapViewModel : ItemViewModel
             return;
         }
 
-        FileModelVO fileModelVO = ProjectFiles.GetFileModel(entityId);
+        FileModelVO? fileModelVO = ProjectFiles.GetFileModel(entityId);
 
         if (fileModelVO == null)
         {
@@ -802,30 +846,38 @@ public class MapViewModel : ItemViewModel
 
         MapElements.Add(fileModelVO);
 
-        Entity entity = new Entity()
+        Entity entity = new()
         {
             InstanceID = Guid.NewGuid().ToString(),
             EntityID = entityId,
             SortIndex = fileModelVO.Index,
             X = 0,
             Y = 0,
-            Properties = new Dictionary<string, string>()
+            Properties = []
         };
 
-        EntityModel entityModel = fileModelVO.Model as EntityModel;
+        EntityModel? entityModel = fileModelVO.Model as EntityModel;
 
-        foreach (string property in entityModel.Properties)
+        if (entityModel != null)
         {
-            entity.Properties.Add(property, string.Empty);
+            foreach (string property in entityModel.Properties)
+            {
+                entity.Properties.Add(property, string.Empty);
+            }
         }
 
-        GetModel().Entities.Add(entity);
+        MapModel? mapModel = GetModel();
 
-        ProjectItem.FileHandler.Save();
+        if (mapModel != null)
+        {
+            mapModel.Entities.Add(entity);
 
-        SelectedMapElement = GetModel().Entities.Count;
+            ProjectItem?.FileHandler.Save();
 
-        SignalManager.Get<AddImageToMapSignal>().Dispatch(entity);
+            SelectedMapElement = mapModel.Entities.Count;
+
+            SignalManager.Get<AddImageToMapSignal>().Dispatch(entity);
+        }
     }
 
     private void OnMoveDownSelectedMapElement(int selectedElementIndex)
@@ -860,7 +912,7 @@ public class MapViewModel : ItemViewModel
 
     private void AdjustOrderOfMapElements(int newSelectedIndex, int selectedElementIndex)
     {
-        ObservableCollection<FileModelVO> cacheList = new ObservableCollection<FileModelVO>(MapElements);
+        ObservableCollection<FileModelVO> cacheList = new(MapElements);
 
         FileModelVO cacheElement = cacheList[newSelectedIndex];
         cacheList[newSelectedIndex] = cacheList[selectedElementIndex];
@@ -871,16 +923,21 @@ public class MapViewModel : ItemViewModel
 
         MapElements = cacheList;
 
-        Entity cacheEntity = GetModel().Entities[newSelectedIndex];
+        MapModel? mapModel = GetModel();
 
-        Entity tmp = GetModel().Entities[selectedElementIndex];
-        tmp.SortIndex = newSelectedIndex + 1;
-        GetModel().Entities[newSelectedIndex] = tmp;
+        if (mapModel != null)
+        {
+            Entity cacheEntity = mapModel.Entities[newSelectedIndex];
 
-        cacheEntity.SortIndex = selectedElementIndex + 1;
-        GetModel().Entities[selectedElementIndex] = cacheEntity;
+            Entity tmp = mapModel.Entities[selectedElementIndex];
+            tmp.SortIndex = newSelectedIndex + 1;
+            mapModel.Entities[newSelectedIndex] = tmp;
 
-        ProjectItem.FileHandler.Save();
+            cacheEntity.SortIndex = selectedElementIndex + 1;
+            mapModel.Entities[selectedElementIndex] = cacheEntity;
+
+            ProjectItem?.FileHandler.Save();
+        }
     }
 
     private void OnDeleteSelectedMapElement(int selectedElementIndex)
@@ -913,33 +970,38 @@ public class MapViewModel : ItemViewModel
             }
         }
 
-        // now update the model
-        foreach (Entity entity in GetModel().Entities)
-        {
-            if (entity.SortIndex == selectedElementIndex)
-            {
-                if (GetModel().Entities.Remove(entity))
-                {
-                    SignalManager.Get<RemoveImageToMapSignal>().Dispatch(entity.InstanceID);
+        MapModel? mapModel = GetModel();
 
-                    break;
+        if (mapModel != null)
+        {
+            // now update the model
+            foreach (Entity entity in mapModel.Entities)
+            {
+                if (entity.SortIndex == selectedElementIndex)
+                {
+                    if (mapModel.Entities.Remove(entity))
+                    {
+                        SignalManager.Get<RemoveImageToMapSignal>().Dispatch(entity.InstanceID);
+
+                        break;
+                    }
+                }
+            }
+
+            for (int i = 0; i < mapModel.Entities.Count; i++)
+            {
+                Entity entity = mapModel.Entities[i];
+
+                if (entity.SortIndex > selectedElementIndex)
+                {
+                    entity.SortIndex--;
+
+                    mapModel.Entities[i] = entity;
                 }
             }
         }
 
-        for (int i = 0; i < GetModel().Entities.Count; i++)
-        {
-            Entity entity = GetModel().Entities[i];
-
-            if (entity.SortIndex > selectedElementIndex)
-            {
-                entity.SortIndex--;
-
-                GetModel().Entities[i] = entity;
-            }
-        }
-
-        ProjectItem.FileHandler.Save();
+        ProjectItem?.FileHandler.Save();
     }
 
     private void OnColorPaletteControlSelected(Color color, PaletteIndex paletteIndex, int colorPosition)
@@ -958,9 +1020,14 @@ public class MapViewModel : ItemViewModel
 
         int prevColorInt = 0;
 
-        string paletteId = GetModel().PaletteIDs[(int)paletteIndex];
+        MapModel? mapModel = GetModel();
 
-        PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
+        if (mapModel == null)
+            return;
+
+        string paletteId = mapModel.PaletteIDs[(int)paletteIndex];
+
+        PaletteModel? paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
         if (paletteModel != null)
         {
             switch (colorPosition)
@@ -986,7 +1053,7 @@ public class MapViewModel : ItemViewModel
             ProjectFiles.SaveModel(paletteId, paletteModel);
         }
 
-        ProjectItem.FileHandler.Save();
+        ProjectItem?.FileHandler.Save();
 
         Color prevColor = Util.GetColorFromInt(prevColorInt);
 
@@ -997,6 +1064,9 @@ public class MapViewModel : ItemViewModel
 
     private void AdjustPaletteCache(PaletteIndex paletteIndex, int colorPosition, Color prevColor, Color color)
     {
+        if (GroupedPalettes == null)
+            return;
+
         foreach (KeyValuePair<Tuple<int, PaletteIndex>, Dictionary<Color, Color>> entry in GroupedPalettes)
         {
             Tuple<int, PaletteIndex> tuple = entry.Key;
@@ -1032,12 +1102,21 @@ public class MapViewModel : ItemViewModel
 
         list.AddRange(ProjectFiles.GetModels<PaletteModel>());
 
-        Palettes = list.ToArray();
+        Palettes = [.. list];
 
         int index = 0;
 
-        IEnumerable<FileModelVO> banks = ProjectFiles.GetModels<BankModel>().ToArray()
-            .Where(p => (p.Model as BankModel).BankUseType == BankUseType.Background);
+        FileModelVO[] fileModelVO = ProjectFiles.GetModels<BankModel>().ToArray();
+
+        IEnumerable<FileModelVO> banks = fileModelVO.Where(p =>
+        {
+            if (p.Model is BankModel bankModel)
+            {
+                return (bankModel.BankUseType == BankUseType.Background);
+            }
+
+            return false;
+        });
 
         Banks = new FileModelVO[banks.Count()];
 
@@ -1063,12 +1142,14 @@ public class MapViewModel : ItemViewModel
 
     public void LoadFrameImage(bool update)
     {
-        if (GetModel() == null)
+        MapModel? mapModel = GetModel();
+
+        if (mapModel == null)
         {
             return;
         }
 
-        MapUtils.CreateImage(GetModel(), ref _mapBitmap, update);
+        MapUtils.CreateImage(mapModel, ref _mapBitmap, update);
 
         FrameImage = _mapBitmap;
     }
@@ -1084,11 +1165,17 @@ public class MapViewModel : ItemViewModel
         {
             SpritePaletteIndices[SelectedAttributeTile] = index;
 
-            GetModel().AttributeTable[SelectedAttributeTile].PaletteIndex = (int)index;
+            MapModel? mapModel = GetModel();
 
-            ProjectItem.FileHandler.Save();
+            if (mapModel != null)
+            {
+                mapModel.AttributeTable[SelectedAttributeTile].PaletteIndex = (int)index;
+            }
 
-            FlagMapBitmapChanges[SelectedAttributeTile] = TileUpdate.Normal;
+            ProjectItem?.FileHandler.Save();
+
+            if (FlagMapBitmapChanges != null)
+                FlagMapBitmapChanges[SelectedAttributeTile] = TileUpdate.Normal;
 
             LoadFrameImage(true);
         }

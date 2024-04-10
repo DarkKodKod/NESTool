@@ -4,7 +4,7 @@ namespace NESTool.Commands;
 
 public class CopyElementCommand : ItemSelectedCommand
 {
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
         if (ItemSelected == null)
         {
@@ -19,8 +19,12 @@ public class CopyElementCommand : ItemSelectedCommand
         return true;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        ClipboardManager.SetData(ItemSelected);
+        if (parameter == null)
+            return;
+
+        if (ItemSelected != null)
+            ClipboardManager.SetData(ItemSelected);
     }
 }

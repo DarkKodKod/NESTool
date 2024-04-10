@@ -18,16 +18,16 @@ public class TileSetViewModel : ItemViewModel
 {
     private static readonly Color NullColor = Color.FromArgb(0, 255, 255, 255);
 
-    private string _imagePath;
-    private ImageSource _imgSource;
+    private string _imagePath = string.Empty;
+    private ImageSource? _imgSource;
     private double _actualWidth;
     private double _actualHeight;
     private Visibility _gridVisibility = Visibility.Visible;
-    private WriteableBitmap _croppedImage;
+    private WriteableBitmap? _croppedImage;
     private Color _color = NullColor;
     private bool _pixelsChanged = false;
     private Point _croppedPoint;
-    private string _pseudonym;
+    private string _pseudonym = string.Empty;
 
     #region Commands
     public PreviewMouseWheelCommand PreviewMouseWheelCommand { get; } = new PreviewMouseWheelCommand();
@@ -38,7 +38,7 @@ public class TileSetViewModel : ItemViewModel
     public BrowseFileCommand BrowseFileCommand { get; } = new BrowseFileCommand();
     #endregion
 
-    public TileSetModel GetModel()
+    public TileSetModel? GetModel()
     {
         return ProjectItem?.FileHandler.FileModel is TileSetModel model ? model : null;
     }
@@ -81,7 +81,7 @@ public class TileSetViewModel : ItemViewModel
         }
     }
 
-    public WriteableBitmap CroppedImage
+    public WriteableBitmap? CroppedImage
     {
         get => _croppedImage;
         set
@@ -92,7 +92,7 @@ public class TileSetViewModel : ItemViewModel
         }
     }
 
-    public ImageSource ImgSource
+    public ImageSource? ImgSource
     {
         get => _imgSource;
         set
@@ -120,12 +120,18 @@ public class TileSetViewModel : ItemViewModel
 
                 OnPropertyChanged("Pseudonym");
 
-                if (TileSelected >= 0 && GetModel() != null)
-                {
-                    GetModel().TilePseudonyms[TileSelected] = value;
+                TileSetModel? model = GetModel();
 
-                    ProjectItem.FileHandler.Save();
+                if (model != null)
+                {
+                    if (TileSelected >= 0)
+                    {
+                        model.TilePseudonyms[TileSelected] = value;
+
+                        ProjectItem?.FileHandler.Save();
+                    }
                 }
+
             }
         }
     }
@@ -227,14 +233,9 @@ public class TileSetViewModel : ItemViewModel
 
         ImagePath = filePath;
 
-        using (ImportImageCommand command = new ImportImageCommand())
-        {
-            object[] parameters = new object[2];
-            parameters[0] = filePath;
-            parameters[1] = ProjectItem;
-
-            command.Execute(parameters);
-        }
+        using ImportImageCommand command = new();
+        object?[] parameters = [filePath, ProjectItem];
+        command.Execute(parameters);
     }
 
     private void OnColorPaletteSelect(Color color)
@@ -276,7 +277,7 @@ public class TileSetViewModel : ItemViewModel
         CroppedPoint = point;
         CroppedImage = bitmap;
 
-        TileSetModel model = GetModel();
+        TileSetModel? model = GetModel();
 
         if (model != null)
         {
@@ -352,17 +353,22 @@ public class TileSetViewModel : ItemViewModel
         SignalManager.Get<BrowseFileSuccessSignal>().Listener += OnBrowseFileSuccess;
         #endregion
 
-        if (!string.IsNullOrEmpty(GetModel().ImagePath))
+        TileSetModel? model = GetModel();
+
+        if (model != null)
         {
-            ProjectModel projectModel = ModelManager.Get<ProjectModel>();
+            if (!string.IsNullOrEmpty(model.ImagePath))
+            {
+                ProjectModel projectModel = ModelManager.Get<ProjectModel>();
 
-            string path = Path.Combine(projectModel.ProjectPath, GetModel().ImagePath);
+                string path = Path.Combine(projectModel.ProjectPath, model.ImagePath);
 
-            ImagePath = path;
+                ImagePath = path;
+            }
+
+            ActualWidth = model.ImageWidth;
+            ActualHeight = model.ImageHeight;
         }
-
-        ActualWidth = GetModel().ImageWidth;
-        ActualHeight = GetModel().ImageHeight;
 
         UpdateImage();
 
@@ -393,33 +399,37 @@ public class TileSetViewModel : ItemViewModel
             return;
         }
 
-        if (GetModel() == null)
+        TileSetModel? model = GetModel();
+
+        if (model == null)
         {
             return;
         }
 
-        if (!string.IsNullOrEmpty(GetModel().ImagePath))
+        if (!string.IsNullOrEmpty(model.ImagePath))
         {
             ProjectModel projectModel = ModelManager.Get<ProjectModel>();
 
-            string path = Path.Combine(projectModel.ProjectPath, GetModel().ImagePath);
+            string path = Path.Combine(projectModel.ProjectPath, model.ImagePath);
 
             ImagePath = path;
         }
 
-        ActualWidth = GetModel().ImageWidth;
-        ActualHeight = GetModel().ImageHeight;
+        ActualWidth = model.ImageWidth;
+        ActualHeight = model.ImageHeight;
 
         UpdateImage(true);
     }
 
     private void UpdateImage(bool forceRedraw = false)
     {
-        if (GetModel() == null)
+        TileSetModel? model = GetModel();
+
+        if (model == null)
         {
             return;
         }
 
-        ImgSource = TileSetModel.LoadBitmap(GetModel(), forceRedraw);
+        ImgSource = TileSetModel.LoadBitmap(model, forceRedraw);
     }
 }

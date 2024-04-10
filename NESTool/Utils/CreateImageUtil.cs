@@ -8,12 +8,12 @@ namespace NESTool.Utils;
 
 public static class CreateImageUtil
 {
-    public static WriteableBitmap GetCacheBitmap(string tileSetID)
+    public static WriteableBitmap? GetCacheBitmap(string tileSetID)
     {
-        if (!TileSetModel.BitmapCache.TryGetValue(tileSetID, out WriteableBitmap tileSetBitmap))
+        if (!TileSetModel.BitmapCache.TryGetValue(tileSetID, out WriteableBitmap? tileSetBitmap))
         {
             // The tileset exists but the bitmap is not in the cache, so I will try to load it here
-            TileSetModel tileSetModel = ProjectFiles.GetModel<TileSetModel>(tileSetID);
+            TileSetModel? tileSetModel = ProjectFiles.GetModel<TileSetModel>(tileSetID);
 
             return tileSetModel != null ? TileSetModel.LoadBitmap(tileSetModel) : null;
         }

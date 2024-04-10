@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Versioning;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace NESTool.Commands;
 
@@ -45,9 +46,9 @@ public class OpenProjectCommand : Command
         _folderEntities = (string)Application.Current.FindResource(_folderEntitiesKey);
     }
 
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
-        string path = parameter as string;
+        string? path = parameter as string;
 
         bool pathIsNull = string.IsNullOrWhiteSpace(path);
 
@@ -56,7 +57,7 @@ public class OpenProjectCommand : Command
         {
             return true;
         }
-        else
+        else if (path != null)
         {
             // Check if the project file exists in the folder before open the project
             string projectFileName = (string)Application.Current.FindResource(_projectFileNameKey);
@@ -65,11 +66,13 @@ public class OpenProjectCommand : Command
 
             return File.Exists(path);
         }
+
+        return false;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        string path = parameter as string;
+        string? path = parameter as string;
 
         // if there is something to load
         if (!string.IsNullOrWhiteSpace(path))
@@ -93,16 +96,16 @@ public class OpenProjectCommand : Command
             // We want to capture the browse folder signal to open the project
             SignalManager.Get<BrowseFolderSuccessSignal>().Listener += BrowseFolderSuccess;
 
-            using (BrowseFolderCommand browseFolder = new BrowseFolderCommand())
+            using (BrowseFolderCommand browseFolder = new())
             {
-                browseFolder.Execute(null);
+                browseFolder.Execute(new object[2] { new Control(), string.Empty });
             }
 
             SignalManager.Get<BrowseFolderSuccessSignal>().Listener += BrowseFolderSuccess;
         }
     }
 
-    private void BrowseFolderSuccess(string path)
+    private void BrowseFolderSuccess(Control owner, string path)
     {
         if (CanExecute(path))
         {
@@ -141,7 +144,7 @@ public class OpenProjectCommand : Command
         UpdateConfigurations(directoryPath);
     }
 
-    private void ScanDirectories(DirectoryInfo[] directories, ref List<ProjectItem> projectItems, ProjectItem parent = null, string extension = "")
+    private void ScanDirectories(DirectoryInfo[] directories, ref List<ProjectItem> projectItems, ProjectItem? parent = null, string extension = "")
     {
         bool filesToLoad = false;
 
@@ -186,9 +189,12 @@ public class OpenProjectCommand : Command
             item.Type = Util.GetItemType(ext);
             item.IsFolder = true;
 
-            DirectoryInfo parentFolder = Directory.GetParent(directory.FullName);
+            DirectoryInfo? parentFolder = Directory.GetParent(directory.FullName);
 
-            SignalManager.Get<RegisterFileHandlerSignal>().Dispatch(item, parentFolder.FullName);
+            if (parentFolder != null)
+            {
+                SignalManager.Get<RegisterFileHandlerSignal>().Dispatch(item, parentFolder.FullName);
+            }
 
             // Check if it was some folders inside
             DirectoryInfo[] subFolders = directory.GetDirectories();
@@ -211,7 +217,7 @@ public class OpenProjectCommand : Command
             {
                 string displayName = Path.GetFileNameWithoutExtension(file.Name);
 
-                ProjectItem fileItem = new ProjectItem()
+                ProjectItem fileItem = new()
                 {
                     DisplayName = displayName,
                     Type = Util.GetItemType(ext),
@@ -222,7 +228,10 @@ public class OpenProjectCommand : Command
 
                 item.Items.Add(fileItem);
 
-                SignalManager.Get<RegisterFileHandlerSignal>().Dispatch(fileItem, file.DirectoryName);
+                if (file.DirectoryName != null)
+                {
+                    SignalManager.Get<RegisterFileHandlerSignal>().Dispatch(fileItem, file.DirectoryName);
+                }
 
                 ProjectFiles.ObjectsLoading++;
 

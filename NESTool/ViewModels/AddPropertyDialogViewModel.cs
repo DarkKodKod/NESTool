@@ -5,7 +5,7 @@ namespace NESTool.ViewModels;
 
 public class AddPropertyDialogViewModel : ViewModel
 {
-    private string _newProperty;
+    private string _newProperty = string.Empty;
 
     #region Commands
     public AddPropertyCommand AddPropertyCommand { get; } = new();

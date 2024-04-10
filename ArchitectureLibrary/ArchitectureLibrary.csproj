@@ -4,6 +4,7 @@
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWPF>true</UseWPF>
+	<Nullable>enable</Nullable>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
 	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>

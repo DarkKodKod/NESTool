@@ -6,12 +6,14 @@ namespace NESTool.Commands;
 
 public class NewProjectCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        Window window = parameter as Window;
+        Window? window = parameter as Window;
 
-        ProjectDialog dialog = new();
-        dialog.Owner = window;
+        ProjectDialog? dialog = new()
+        {
+            Owner = window
+        };
         dialog.ShowDialog();
     }
 }

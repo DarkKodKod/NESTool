@@ -11,11 +11,14 @@ namespace NESTool.Commands;
 
 public class CroppedImageMouseDownCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        MouseButtonEventArgs mouseEvent = parameter as MouseButtonEventArgs;
+        if (parameter == null)
+            return;
 
-        if (mouseEvent.Source is Image image)
+        MouseButtonEventArgs? mouseEvent = parameter as MouseButtonEventArgs;
+
+        if (mouseEvent?.Source is Image image)
         {
             Point p = mouseEvent.GetPosition(image);
 

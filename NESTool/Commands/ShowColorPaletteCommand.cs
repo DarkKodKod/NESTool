@@ -8,8 +8,11 @@ namespace NESTool.Commands;
 
 public class ShowColorPaletteCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
+        if (parameter == null)
+            return;
+
         object[] values = (object[])parameter;
         UserControl userControl = (UserControl)values[0];
         int colorPosition = (int)values[1];

@@ -1,6 +1,6 @@
 ﻿namespace NESTool.VOs;
 
-public class MouseWheelVO : EventVO
+public record MouseWheelVO : EventVO
 {
-    public int Delta { get; set; }
+    public int Delta { get; init; }
 }

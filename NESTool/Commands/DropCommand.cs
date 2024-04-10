@@ -14,15 +14,13 @@ namespace NESTool.Commands;
 
 public class DropCommand : Command
 {
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
         SignalManager.Get<DetachAdornersSignal>().Dispatch();
 
-        DragEventArgs dragEvent = parameter as DragEventArgs;
+        DragEventArgs? dragEvent = parameter as DragEventArgs;
 
-        ProjectItem item = dragEvent.Data.GetData(typeof(ProjectItem)) as ProjectItem;
-
-        if (item.IsRoot)
+        if (dragEvent?.Data.GetData(typeof(ProjectItem)) is not ProjectItem item || item.IsRoot)
         {
             return false;
         }
@@ -30,24 +28,23 @@ public class DropCommand : Command
         return true;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        DragEventArgs dragEvent = parameter as DragEventArgs;
+        if (parameter is not DragEventArgs dragEvent)
+            return;
 
         dragEvent.Handled = true;
 
         if (dragEvent.Data.GetDataPresent(typeof(ProjectItem)))
         {
-            ProjectItem draggingObject = dragEvent.Data.GetData(typeof(ProjectItem)) as ProjectItem;
-
-            TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)dragEvent.OriginalSource);
+            TreeViewItem? treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)dragEvent.OriginalSource);
 
             if (treeViewItem == null)
             {
                 return;
             }
 
-            if (!(treeViewItem.Header is ProjectItem dropTarget) || draggingObject == null)
+            if (treeViewItem.Header is not ProjectItem dropTarget || dragEvent.Data.GetData(typeof(ProjectItem)) is not ProjectItem draggingObject)
             {
                 return;
             }

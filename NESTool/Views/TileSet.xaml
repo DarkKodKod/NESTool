@@ -6,7 +6,7 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:NESTool.Views"
              xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
-             xmlns:cv="clr-namespace:NESTool.Utils.Converters"
+             xmlns:cv="clr-namespace:ArchitectureLibrary.WPF.Converters;assembly=ArchitectureLibrary"
              xmlns:my="clr-namespace:ColorPalette;assembly=ColorPalette"
              mc:Ignorable="d" 
 			 xmlns:vm="clr-namespace:NESTool.ViewModels"

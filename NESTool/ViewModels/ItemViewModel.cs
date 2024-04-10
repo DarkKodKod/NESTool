@@ -4,5 +4,5 @@ namespace NESTool.ViewModels;
 
 public class ItemViewModel : ViewModel
 {
-    public ProjectItem ProjectItem { get; set; }
+    public ProjectItem? ProjectItem { get; set; }
 }

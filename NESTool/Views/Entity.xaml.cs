@@ -71,12 +71,12 @@ namespace NESTool.Views
         {
             if (DataContext is EntityViewModel viewModel)
             {
-                if (viewModel.Banks.Length == 0)
+                if (viewModel.Banks?.Length == 0)
                 {
                     return;
                 }
 
-                if (!(viewModel.Banks[viewModel.SelectedBank].Model is BankModel model))
+                if (!(viewModel.Banks?[viewModel.SelectedBank].Model is BankModel model))
                 {
                     return;
                 }
@@ -89,14 +89,19 @@ namespace NESTool.Views
         {
             if (DataContext is EntityViewModel viewModel)
             {
-                viewModel.GetModel().Frame.Tiles[selectedFrameTile].FlipX = flipX;
-                viewModel.GetModel().Frame.Tiles[selectedFrameTile].FlipY = flipY;
-                viewModel.GetModel().Frame.Tiles[selectedFrameTile].PaletteIndex = paletteIndex;
-                viewModel.GetModel().Frame.Tiles[selectedFrameTile].BackBackground = backBackground;
+                EntityModel? model = viewModel.GetModel();
 
-                viewModel.Save();
+                if (model != null && model.Frame.Tiles != null)
+                {
+                    model.Frame.Tiles[selectedFrameTile].FlipX = flipX;
+                    model.Frame.Tiles[selectedFrameTile].FlipY = flipY;
+                    model.Frame.Tiles[selectedFrameTile].PaletteIndex = paletteIndex;
+                    model.Frame.Tiles[selectedFrameTile].BackBackground = backBackground;
 
-                LoadFrameImage();
+                    viewModel.Save();
+
+                    LoadFrameImage();
+                }
             }
         }
 
@@ -104,17 +109,26 @@ namespace NESTool.Views
         {
             if (DataContext is EntityViewModel viewModel)
             {
-                BankModel model = viewModel.Banks[viewModel.SelectedBank].Model as BankModel;
+                BankModel? model = viewModel.Banks?[viewModel.SelectedBank].Model as BankModel;
 
-                string guid = model.PTTiles[bankViewer.SelectedBankTile].GUID;
+                string? guid = model?.PTTiles[bankViewer.SelectedBankTile].GUID;
 
-                viewModel.GetModel().Frame.Tiles[selectedFrameTile].Point = framePoint;
-                viewModel.GetModel().Frame.Tiles[selectedFrameTile].BankID = model.GUID;
-                viewModel.GetModel().Frame.Tiles[selectedFrameTile].BankTileID = guid;
+                EntityModel? entityModel = viewModel.GetModel();
 
-                viewModel.Save();
+                if (entityModel != null && entityModel.Frame.Tiles != null)
+                {
+                    entityModel.Frame.Tiles[selectedFrameTile].Point = framePoint;
 
-                LoadFrameImage();
+                    if (model != null)
+                        entityModel.Frame.Tiles[selectedFrameTile].BankID = model.GUID;
+
+                    if (guid != null)
+                        entityModel.Frame.Tiles[selectedFrameTile].BankTileID = guid;
+
+                    viewModel.Save();
+
+                    LoadFrameImage();
+                }
             }
         }
 
@@ -122,12 +136,17 @@ namespace NESTool.Views
         {
             if (DataContext is EntityViewModel viewModel)
             {
-                viewModel.GetModel().Frame.Tiles[selectedFrameTile].BankID = string.Empty;
-                viewModel.GetModel().Frame.Tiles[selectedFrameTile].BankTileID = string.Empty;
+                EntityModel? model = viewModel.GetModel();
 
-                viewModel.Save();
+                if (model != null && model.Frame.Tiles != null)
+                {
+                    model.Frame.Tiles[selectedFrameTile].BankID = string.Empty;
+                    model.Frame.Tiles[selectedFrameTile].BankTileID = string.Empty;
 
-                LoadFrameImage();
+                    viewModel.Save();
+
+                    LoadFrameImage();
+                }
             }
         }
 
@@ -148,12 +167,14 @@ namespace NESTool.Views
         {
             if (DataContext is EntityViewModel viewModel)
             {
-                if (viewModel.GetModel() == null)
+                EntityModel? model = viewModel.GetModel();
+
+                if (model == null)
                 {
                     return;
                 }
 
-                ImageVO vo = EntityUtils.CreateImage(viewModel.GetModel());
+                ImageVO vo = EntityUtils.CreateImage(model);
 
                 if (vo != null && vo.Image != null)
                 {

@@ -6,9 +6,21 @@ namespace ArchitectureLibrary.Commands;
 
 public class Command : ICommand, IDisposable
 {
-    private EventHandler _internalCanExecuteChanged;
+    private bool _isExecuting = false;
 
-    public virtual event EventHandler CanExecuteChanged
+    public bool IsExecuting
+    {
+        get => _isExecuting;
+        set
+        {
+            _isExecuting = value;
+            RaiseCanExecuteChanged();
+        }
+    }
+
+    private EventHandler? _internalCanExecuteChanged;
+
+    public virtual event EventHandler? CanExecuteChanged
     {
         add
         {
@@ -22,19 +34,21 @@ public class Command : ICommand, IDisposable
         }
     }
 
-    public virtual bool CanExecute(object parameter)
+    public virtual bool CanExecute(object? parameter)
     {
-        return true;
+        return !IsExecuting;
     }
 
-    public virtual Task ExecuteAsync(object parameter)
+    public virtual Task ExecuteAsync(object? parameter)
     {
-        return Task.FromResult<object>(null);
+        return Task.FromResult<object?>(null);
     }
 
-    public virtual async void Execute(object parameter)
+    public virtual async void Execute(object? parameter)
     {
+        IsExecuting = true;
         await ExecuteAsync(parameter).ConfigureAwait(false);
+        IsExecuting = false;
     }
 
     public void RaiseCanExecuteChanged()

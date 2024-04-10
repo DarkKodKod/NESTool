@@ -7,10 +7,14 @@ namespace NESTool.Commands;
 
 public class ColorPaletteSelectCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        PaletteEventArgs palette = parameter as PaletteEventArgs;
+        if (parameter == null)
+            return;
 
-        SignalManager.Get<ColorPaletteSelectSignal>().Dispatch(palette.C);
+        PaletteEventArgs? palette = parameter as PaletteEventArgs;
+
+        if (palette != null)
+            SignalManager.Get<ColorPaletteSelectSignal>().Dispatch(palette.C);
     }
 }

@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace NESTool.Utils.Converters;
+namespace ArchitectureLibrary.WPF.Converters;
 
 public class ParametersConverter : IMultiValueConverter
 {

@@ -10,11 +10,14 @@ namespace NESTool.Commands;
 [SupportedOSPlatform("windows")]
 public class BrowseFileCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
+        if (parameter == null)
+            return;
+
         object[] values = (object[])parameter;
-        string path = (string)values[0];
-        string[] filters = null;
+        string? path = (string)values[0];
+        string[]? filters = null;
         // New file here is a hardcoded way to identify the origin of the call, so I dont execute new file in multiple locations
         // When newFile is false, that means it was called by the TileSetViewModel and when is true it was called by
         // ImportImageDialogViewModel (of course this is not ok).
@@ -31,7 +34,7 @@ public class BrowseFileCommand : Command
             path = Path.GetDirectoryName(path);
         }
 
-        CommonOpenFileDialog dialog = new CommonOpenFileDialog
+        CommonOpenFileDialog dialog = new()
         {
             Title = "Select File",
             IsFolderPicker = false,

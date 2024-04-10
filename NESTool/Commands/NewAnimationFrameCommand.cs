@@ -7,14 +7,20 @@ namespace NESTool.Commands;
 
 public class NewAnimationFrameCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
+        if (parameter == null)
+            return;
+
         object[] values = (object[])parameter;
 
         FileHandler fileHandler = (FileHandler)values[0];
         string tabID = (string)values[1];
 
-        CharacterModel model = fileHandler.FileModel as CharacterModel;
+        CharacterModel? model = fileHandler.FileModel as CharacterModel;
+
+        if (model == null)
+            return;
 
         for (int i = 0; i < model.Animations.Count; ++i)
         {

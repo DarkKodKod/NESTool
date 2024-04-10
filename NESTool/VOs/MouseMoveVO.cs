@@ -2,7 +2,7 @@
 
 namespace NESTool.VOs;
 
-public class MouseMoveVO : EventVO
+public record MouseMoveVO : EventVO
 {
-    public Point Position { get; set; }
+    public Point Position { get; init; }
 }

@@ -11,13 +11,13 @@ public class CharacterTile
     public bool FlipX { get; set; }
     public bool FlipY { get; set; }
     public int PaletteIndex { get; set; }
-    public string BankID { get; set; }
-    public string BankTileID { get; set; }
+    public string BankID { get; set; } = string.Empty;
+    public string BankTileID { get; set; } = string.Empty;
     public bool BackBackground { get; set; }
 }
 
 public class FrameModel
 {
-    public List<CharacterTile> Tiles { get; set; } = [];
+    public List<CharacterTile>? Tiles { get; set; } = [];
     public bool FixToGrid { get; set; }
 }

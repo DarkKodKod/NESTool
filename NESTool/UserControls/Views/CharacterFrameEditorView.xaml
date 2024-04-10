@@ -6,7 +6,7 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
              xmlns:uc="clr-namespace:NESTool.UserControls.Views"
-             xmlns:cv="clr-namespace:NESTool.Utils.Converters"
+             xmlns:cv="clr-namespace:ArchitectureLibrary.WPF.Converters;assembly=ArchitectureLibrary"
              xmlns:vm="clr-namespace:NESTool.UserControls.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1050"

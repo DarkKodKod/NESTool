@@ -5,8 +5,8 @@ namespace NESTool.UserControls.ViewModels;
 
 public class BankLinkViewModel : ViewModel
 {
-    private string _caption;
-    private string _tileSetId;
+    private string _caption = string.Empty;
+    private string _tileSetId = string.Empty;
 
     public string Caption
     {

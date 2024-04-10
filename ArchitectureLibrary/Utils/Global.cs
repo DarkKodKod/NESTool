@@ -31,5 +31,5 @@ public static class Global
         }
     }
 
-    private static string _assemblyShortName;
+    private static string? _assemblyShortName;
 }

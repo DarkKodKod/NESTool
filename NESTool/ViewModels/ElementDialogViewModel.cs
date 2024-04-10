@@ -8,6 +8,7 @@ using NESTool.Signals;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -18,9 +19,9 @@ public class ElementDialogViewModel : ViewModel
     public DispatchSignalCommand<CloseDialogSignal> CloseDialogCommand { get; } = new();
     public CreateElementCommand CreateElementCommand { get; } = new();
 
-    public List<ElementTypeModel> ElementTypes { get; set; } = new();
+    public List<ElementTypeModel> ElementTypes { get; set; } = [];
 
-    public ElementTypeModel SelectedType
+    public ElementTypeModel? SelectedType
     {
         get => _selectedType;
         set
@@ -38,7 +39,7 @@ public class ElementDialogViewModel : ViewModel
     private const string _folderWorldsKey = "folderWorlds";
     private const string _folderEntitiesKey = "folderEntities";
 
-    private ElementTypeModel _selectedType;
+    private ElementTypeModel? _selectedType;
 
     public ElementDialogViewModel()
     {
@@ -67,49 +68,49 @@ public class ElementDialogViewModel : ViewModel
         ElementTypes.Add(new ElementTypeModel()
         {
             Name = banks,
-            Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/pattern_table.png", UriKind.RelativeOrAbsolute)),
+            Image = new BitmapImage(new Uri(@"pack://application:,,,/" + Assembly.GetExecutingAssembly().GetName().Name + ";component/Resources/pattern_table.png", UriKind.RelativeOrAbsolute)),
             Type = ProjectItemType.Bank,
             Path = Path.Combine(projectModel.ProjectPath, banks)
         });
         ElementTypes.Add(new ElementTypeModel()
         {
             Name = characters,
-            Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/character.png", UriKind.RelativeOrAbsolute)),
+            Image = new BitmapImage(new Uri(@"pack://application:,,,/" + Assembly.GetExecutingAssembly().GetName().Name + ";component/Resources/character.png", UriKind.RelativeOrAbsolute)),
             Type = ProjectItemType.Character,
             Path = Path.Combine(projectModel.ProjectPath, characters)
         });
         ElementTypes.Add(new ElementTypeModel()
         {
             Name = maps,
-            Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/map.png", UriKind.RelativeOrAbsolute)),
+            Image = new BitmapImage(new Uri(@"pack://application:,,,/" + Assembly.GetExecutingAssembly().GetName().Name + ";component/Resources/map.png", UriKind.RelativeOrAbsolute)),
             Type = ProjectItemType.Map,
             Path = Path.Combine(projectModel.ProjectPath, maps)
         });
         ElementTypes.Add(new ElementTypeModel()
         {
             Name = tileSets,
-            Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/tileset.png", UriKind.RelativeOrAbsolute)),
+            Image = new BitmapImage(new Uri(@"pack://application:,,,/" + Assembly.GetExecutingAssembly().GetName().Name + ";component/Resources/tileset.png", UriKind.RelativeOrAbsolute)),
             Type = ProjectItemType.TileSet,
             Path = Path.Combine(projectModel.ProjectPath, tileSets)
         });
         ElementTypes.Add(new ElementTypeModel()
         {
             Name = palettes,
-            Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/palette.png", UriKind.RelativeOrAbsolute)),
+            Image = new BitmapImage(new Uri(@"pack://application:,,,/" + Assembly.GetExecutingAssembly().GetName().Name + ";component/Resources/palette.png", UriKind.RelativeOrAbsolute)),
             Type = ProjectItemType.Palette,
             Path = Path.Combine(projectModel.ProjectPath, palettes)
         });
         ElementTypes.Add(new ElementTypeModel()
         {
             Name = worlds,
-            Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/world.png", UriKind.RelativeOrAbsolute)),
+            Image = new BitmapImage(new Uri(@"pack://application:,,,/" + Assembly.GetExecutingAssembly().GetName().Name + ";component/Resources/world.png", UriKind.RelativeOrAbsolute)),
             Type = ProjectItemType.World,
             Path = Path.Combine(projectModel.ProjectPath, worlds)
         });
         ElementTypes.Add(new ElementTypeModel()
         {
             Name = entity,
-            Image = new BitmapImage(new Uri(@"pack://application:,,,/Resources/entity.png", UriKind.RelativeOrAbsolute)),
+            Image = new BitmapImage(new Uri(@"pack://application:,,,/" + Assembly.GetExecutingAssembly().GetName().Name + ";component/Resources/entity.png", UriKind.RelativeOrAbsolute)),
             Type = ProjectItemType.Entity,
             Path = Path.Combine(projectModel.ProjectPath, entity)
         });

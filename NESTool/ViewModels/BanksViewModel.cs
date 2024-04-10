@@ -47,7 +47,7 @@ public class CellGroup : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propname));
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 }
 
 public class BanksViewModel : ItemViewModel
@@ -58,22 +58,22 @@ public class BanksViewModel : ItemViewModel
     private bool _doNotSave = false;
     private BankUseType _selectedBankUseType = BankUseType.None;
     private BankSize _selectedBankSize = BankSize.Size4Kb;
-    private WriteableBitmap _croppedImage;
-    private string _selectedGroup;
-    private string _selectedIndex;
-    private FileModelVO[] _tileSets;
+    private WriteableBitmap? _croppedImage;
+    private string _selectedGroup = string.Empty;
+    private string _selectedIndex = string.Empty;
+    private FileModelVO[]? _tileSets;
     private int _selectedTileSet;
     private int _selectedBankTile;
-    private ImageSource _imgSource;
-    private ImageSource _pTImage;
+    private ImageSource? _imgSource;
+    private ImageSource? _pTImage;
     private Visibility _rectangleVisibility = Visibility.Hidden;
     private double _rectangleTop = 0.0;
     private double _rectangleLeft = 0.0;
     private Visibility _selectionRectangleVisibility = Visibility.Hidden;
     private double _selectionRectangleTop = 0.0;
     private double _selectionRectangleLeft = 0.0;
-    private BankModel _model = null;
-    private Dictionary<string, WriteableBitmap> _bitmapCache = new Dictionary<string, WriteableBitmap>();
+    private BankModel? _model = null;
+    private Dictionary<string, WriteableBitmap> _bitmapCache = [];
     private Visibility _groupMarkVisible1k = Visibility.Hidden;
     private Visibility _groupMarkVisible2k = Visibility.Hidden;
     private Visibility _groupMarkVisible4k = Visibility.Hidden;
@@ -178,9 +178,12 @@ public class BanksViewModel : ItemViewModel
                     {
                         CellGroup[SelectedBankTile] = intValue;
 
-                        Model.PTTiles[SelectedBankTile].Group = intValue;
+                        BankModel? model = Model;
 
-                        ProjectItem.FileHandler.Save();
+                        if (model != null)
+                            model.PTTiles[SelectedBankTile].Group = intValue;
+
+                        ProjectItem?.FileHandler.Save();
                     }
                 }
 
@@ -292,7 +295,7 @@ public class BanksViewModel : ItemViewModel
         }
     }
 
-    public ImageSource PTImage
+    public ImageSource? PTImage
     {
         get => _pTImage;
         set
@@ -303,7 +306,7 @@ public class BanksViewModel : ItemViewModel
         }
     }
 
-    public ImageSource ImgSource
+    public ImageSource? ImgSource
     {
         get => _imgSource;
         set
@@ -347,7 +350,7 @@ public class BanksViewModel : ItemViewModel
         }
     }
 
-    public WriteableBitmap CroppedImage
+    public WriteableBitmap? CroppedImage
     {
         get => _croppedImage;
         set
@@ -358,7 +361,7 @@ public class BanksViewModel : ItemViewModel
         }
     }
 
-    public FileModelVO[] TileSets
+    public FileModelVO[]? TileSets
     {
         get => _tileSets;
         set
@@ -391,7 +394,7 @@ public class BanksViewModel : ItemViewModel
         }
     }
 
-    public BankModel Model
+    public BankModel? Model
     {
         get
         {
@@ -423,9 +426,12 @@ public class BanksViewModel : ItemViewModel
     {
         int index = 0;
 
+        if (TileSets == null)
+            return;
+
         foreach (FileModelVO tileset in TileSets)
         {
-            if (tileset.Model.GUID == id)
+            if (tileset.Model?.GUID == id)
             {
                 SelectedTileSet = index;
                 break;
@@ -442,7 +448,7 @@ public class BanksViewModel : ItemViewModel
             return;
         }
 
-        ProjectItem.FileHandler.Save();
+        ProjectItem?.FileHandler.Save();
 
         LoadImage();
 
@@ -574,7 +580,7 @@ public class BanksViewModel : ItemViewModel
 
     private void LoadTileSetImage()
     {
-        if (TileSets.Length == 0)
+        if (TileSets?.Length == 0)
         {
             return;
         }
@@ -582,7 +588,15 @@ public class BanksViewModel : ItemViewModel
         RectangleVisibility = Visibility.Hidden;
         CroppedImage = null;
 
-        TileSetModel model = TileSets[SelectedTileSet].Model as TileSetModel;
+        if (TileSets == null)
+        {
+            return;
+        }
+
+        TileSetModel? model = TileSets[SelectedTileSet].Model as TileSetModel;
+
+        if (model == null)
+            return;
 
         ProjectModel projectModel = ModelManager.Get<ProjectModel>();
 
@@ -625,7 +639,13 @@ public class BanksViewModel : ItemViewModel
 
             SelectedBankTile = index;
 
-            SelectedGroup = Model.PTTiles[index].Group.ToString();
+            BankModel? model = Model;
+
+            if (model != null)
+            {
+                SelectedGroup = model.PTTiles[index].Group.ToString();
+            }
+
             SelectedIndex = $"${index:X2}";
         }
         else if (sender.Name == "imgBig")
@@ -717,7 +737,7 @@ public class BanksViewModel : ItemViewModel
         Model.Distribution = BankTileDistribution.Compact;
         Model.SpriteSize = SpriteSize;
 
-        ProjectItem.FileHandler.Save();
+        ProjectItem?.FileHandler.Save();
     }
 
     private void LoadImage()
@@ -727,8 +747,9 @@ public class BanksViewModel : ItemViewModel
             return;
         }
 
-        WriteableBitmap bitmap = BanksUtils.CreateImage(Model, ref _bitmapCache);
+        WriteableBitmap? bitmap = BanksUtils.CreateImage(Model, ref _bitmapCache);
 
-        PTImage = bitmap;
+        if (bitmap != null)
+            PTImage = bitmap;
     }
 }

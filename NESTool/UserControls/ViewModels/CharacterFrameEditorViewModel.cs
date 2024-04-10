@@ -11,11 +11,11 @@ namespace NESTool.UserControls.ViewModels;
 
 public class CharacterFrameEditorViewModel : ViewModel
 {
-    private FileModelVO[] _banks;
+    private FileModelVO[]? _banks;
     private int _selectedBank;
-    private string _tabId;
+    private string _tabId = string.Empty;
     private int _frameIndex;
-    private FileHandler _fileHandler;
+    private FileHandler? _fileHandler;
 
     #region Commands
     public SwitchCharacterFrameViewCommand SwitchCharacterFrameViewCommand { get; } = new();
@@ -23,7 +23,7 @@ public class CharacterFrameEditorViewModel : ViewModel
     #endregion
 
     #region get/set
-    public FileHandler FileHandler
+    public FileHandler? FileHandler
     {
         get => _fileHandler;
         set
@@ -34,7 +34,7 @@ public class CharacterFrameEditorViewModel : ViewModel
         }
     }
 
-    public FileModelVO[] Banks
+    public FileModelVO[]? Banks
     {
         get => _banks;
         set
@@ -65,7 +65,7 @@ public class CharacterFrameEditorViewModel : ViewModel
 
             OnPropertyChanged("TabID");
 
-            for (int i = 0; i < CharacterModel.Animations.Count; ++i)
+            for (int i = 0; i < CharacterModel?.Animations.Count; ++i)
             {
                 if (CharacterModel.Animations[i].ID == TabID)
                 {
@@ -76,7 +76,7 @@ public class CharacterFrameEditorViewModel : ViewModel
         }
     }
 
-    public CharacterModel CharacterModel { get; set; }
+    public CharacterModel? CharacterModel { get; set; }
     public int AnimationIndex { get; set; }
 
     public int FrameIndex
@@ -98,8 +98,17 @@ public class CharacterFrameEditorViewModel : ViewModel
 
     private void UpdateDialogInfo()
     {
-        IEnumerable<FileModelVO> banks = ProjectFiles.GetModels<BankModel>().ToArray()
-            .Where(p => (p.Model as BankModel).BankUseType == BankUseType.Characters);
+        FileModelVO[] filemodelVo = ProjectFiles.GetModels<BankModel>().ToArray();
+
+        IEnumerable<FileModelVO> banks = filemodelVo.Where(p =>
+        {
+            BankModel? gato = p.Model as BankModel;
+
+            if (gato != null)
+                return gato.BankUseType == BankUseType.Characters;
+            else
+                return false;
+        });
 
         Banks = new FileModelVO[banks.Count()];
 

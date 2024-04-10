@@ -15,13 +15,16 @@ public class BuildProjectCommand : Command
 {
     private bool _building = false;
 
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
         return !_building;
     }
 
-    public override async void Execute(object parameter)
+    public override async void Execute(object? parameter)
     {
+        if (parameter == null)
+            return;
+
         if (_building)
         {
             return;

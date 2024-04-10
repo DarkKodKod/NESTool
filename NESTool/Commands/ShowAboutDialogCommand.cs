@@ -6,9 +6,12 @@ namespace NESTool.Commands;
 
 public class ShowAboutDialogCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        Window window = parameter as Window;
+        if (parameter == null)
+            return;
+
+        Window? window = parameter as Window;
 
         AboutDialog dialog = new();
         dialog.Owner = window;

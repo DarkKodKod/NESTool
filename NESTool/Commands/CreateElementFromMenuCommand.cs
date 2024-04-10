@@ -21,7 +21,7 @@ public class CreateElementFromMenuCommand : ItemSelectedCommand
         _newFileName = (string)Application.Current.FindResource(_fileNameKey);
     }
 
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
         if (ItemSelected != null)
         {
@@ -34,7 +34,7 @@ public class CreateElementFromMenuCommand : ItemSelectedCommand
         return false;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
         if (ItemSelected == null || ItemSelected.FileHandler == null)
         {

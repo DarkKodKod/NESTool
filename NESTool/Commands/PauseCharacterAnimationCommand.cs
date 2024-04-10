@@ -7,7 +7,7 @@ namespace NESTool.Commands;
 
 public class PauseCharacterAnimationCommand : Command
 {
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
         if (parameter == null)
         {
@@ -41,8 +41,11 @@ public class PauseCharacterAnimationCommand : Command
         return false;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
+        if (parameter == null)
+            return;
+
         object[] values = (object[])parameter;
         string tabID = (string)values[1];
 

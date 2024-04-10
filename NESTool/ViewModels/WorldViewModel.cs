@@ -4,7 +4,7 @@ namespace NESTool.ViewModels;
 
 public class WorldViewModel : ItemViewModel
 {
-    public WorldModel GetModel()
+    public WorldModel? GetModel()
     {
         return ProjectItem?.FileHandler.FileModel is WorldModel model ? model : null;
     }

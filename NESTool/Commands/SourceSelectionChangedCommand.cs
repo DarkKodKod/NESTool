@@ -8,11 +8,11 @@ namespace NESTool.Commands;
 
 public class SourceSelectionChangedCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        SelectionChangedEventArgs changedEvent = parameter as SelectionChangedEventArgs;
+        SelectionChangedEventArgs? changedEvent = parameter as SelectionChangedEventArgs;
 
-        if (changedEvent.AddedItems.Count > 0)
+        if (changedEvent?.AddedItems.Count > 0)
         {
             if (changedEvent.AddedItems[0] is EntitySource entitySource)
             {

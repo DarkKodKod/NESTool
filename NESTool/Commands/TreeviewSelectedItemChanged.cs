@@ -8,11 +8,14 @@ namespace NESTool.Commands;
 
 public class TreeviewSelectedItemChangedCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        RoutedPropertyChangedEventArgs<object> selectedItemChangedEvent = parameter as RoutedPropertyChangedEventArgs<object>;
+        if (parameter == null)
+            return;
 
-        if (selectedItemChangedEvent.NewValue is ProjectItem item)
+        RoutedPropertyChangedEventArgs<object>? selectedItemChangedEvent = parameter as RoutedPropertyChangedEventArgs<object>;
+
+        if (selectedItemChangedEvent?.NewValue is ProjectItem item)
         {
             SignalManager.Get<LoadProjectItemSignal>().Dispatch(item);
         }

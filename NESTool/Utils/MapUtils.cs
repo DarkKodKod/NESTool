@@ -13,7 +13,7 @@ public static class MapUtils
 {
     private static Color BackgroundColor = Color.FromRgb(System.Drawing.Color.DarkGray.R, System.Drawing.Color.DarkGray.G, System.Drawing.Color.DarkGray.B);
 
-    public static void CreateImage(MapModel mapModel, ref WriteableBitmap mapBitmap, bool isUpdate)
+    public static void CreateImage(MapModel mapModel, ref WriteableBitmap? mapBitmap, bool isUpdate)
     {
         if (!isUpdate)
         {
@@ -37,22 +37,23 @@ public static class MapUtils
                 if (isUpdate)
                 {
                     // Only update the tiles that were affected by the change
-                    if (MapViewModel.FlagMapBitmapChanges[i] == TileUpdate.None)
+                    if (MapViewModel.FlagMapBitmapChanges?[i] == TileUpdate.None)
                     {
                         continue;
                     }
 
-                    erased = MapViewModel.FlagMapBitmapChanges[i] == TileUpdate.Erased;
-                    updateTile = MapViewModel.FlagMapBitmapChanges[i] == TileUpdate.Normal;
+                    erased = MapViewModel.FlagMapBitmapChanges?[i] == TileUpdate.Erased;
+                    updateTile = MapViewModel.FlagMapBitmapChanges?[i] == TileUpdate.Normal;
 
-                    MapViewModel.FlagMapBitmapChanges[i] = TileUpdate.None;
+                    if (MapViewModel.FlagMapBitmapChanges != null)
+                        MapViewModel.FlagMapBitmapChanges[i] = TileUpdate.None;
                 }
 
                 foreach (MapTile tile in attTable.MapTile)
                 {
                     if (isUpdate && !updateTile)
                     {
-                        if (tile.Point != MapViewModel.PointMapBitmapChanges[i])
+                        if (tile.Point != MapViewModel.PointMapBitmapChanges?[i])
                         {
                             continue;
                         }
@@ -63,7 +64,7 @@ public static class MapUtils
                         continue;
                     }
 
-                    BankModel bankModel = ProjectFiles.GetModel<BankModel>(tile.BankID);
+                    BankModel? bankModel = ProjectFiles.GetModel<BankModel>(tile.BankID);
 
                     if (bankModel == null)
                     {
@@ -77,7 +78,7 @@ public static class MapUtils
                         continue;
                     }
 
-                    WriteableBitmap tileSetBitmap = CreateImageUtil.GetCacheBitmap(ptTileModel.TileSetID);
+                    WriteableBitmap? tileSetBitmap = CreateImageUtil.GetCacheBitmap(ptTileModel.TileSetID);
 
                     if (tileSetBitmap == null)
                     {
@@ -98,9 +99,9 @@ public static class MapUtils
                         {
                             Tuple<int, PaletteIndex> colorsKey = Tuple.Create(ptTileModel.Group, (PaletteIndex)attTable.PaletteIndex);
 
-                            if (!MapViewModel.GroupedPalettes.TryGetValue(colorsKey, out Dictionary<Color, Color> colors))
+                            if (MapViewModel.GroupedPalettes == null || !MapViewModel.GroupedPalettes.TryGetValue(colorsKey, out Dictionary<Color, Color>? colors))
                             {
-                                colors = new Dictionary<Color, Color>();
+                                colors = [];
                             }
 
                             CreateImageUtil.PaintPixelsBasedOnPalettes(ref cropped, ref colors);
@@ -120,21 +121,22 @@ public static class MapUtils
     {
         string paletteId = mapModel.PaletteIDs[(int)attributeTable.PaletteIndex];
 
-        PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
+        PaletteModel? paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
 
         Color firstColor = paletteModel == null ? Util.NullColor : Util.GetColorFromInt(paletteModel.Color0);
 
         Tuple<int, PaletteIndex> tuple = Tuple.Create(group, (PaletteIndex)attributeTable.PaletteIndex);
 
-        if (!MapViewModel.GroupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))
+        if (MapViewModel.GroupedPalettes == null || !MapViewModel.GroupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color>? colors))
         {
-            colors = new Dictionary<Color, Color>
+            colors = new()
             {
                 // always add the first color of the palette as the background color
                 { Util.NullColor, firstColor }
             };
 
-            MapViewModel.GroupedPalettes.Add(tuple, colors);
+            if (MapViewModel.GroupedPalettes != null)
+                MapViewModel.GroupedPalettes.Add(tuple, colors);
         }
 
         // only 4 color per tile
@@ -155,7 +157,7 @@ public static class MapUtils
                 continue;
             }
 
-            if (!TileSetModel.BitmapCache.TryGetValue(tile.TileSetID, out WriteableBitmap tileSetBitmap))
+            if (!TileSetModel.BitmapCache.TryGetValue(tile.TileSetID, out WriteableBitmap? tileSetBitmap))
             {
                 continue;
             }

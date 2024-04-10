@@ -14,20 +14,23 @@ public class DragOverCommand : Command
     private DateTime _startTime;
     private string _folderId = string.Empty;
 
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
-        DragEventArgs dragEvent = parameter as DragEventArgs;
+        if (parameter is not DragEventArgs dragEvent)
+            return false;
 
-        ProjectItem draggingItem = dragEvent.Data.GetData(typeof(ProjectItem)) as ProjectItem;
+        if (dragEvent == null) return false;
 
-        TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)dragEvent.OriginalSource);
+        TreeViewItem? treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)dragEvent.OriginalSource);
 
         if (treeViewItem == null)
         {
             return false;
         }
 
-        if (treeViewItem.DataContext is ProjectItem item && item.Type != draggingItem.Type)
+        ProjectItem? draggingItem = dragEvent?.Data.GetData(typeof(ProjectItem)) as ProjectItem;
+
+        if (treeViewItem.DataContext is ProjectItem item && item.Type != draggingItem?.Type && dragEvent != null)
         {
             dragEvent.Handled = true;
 
@@ -41,11 +44,12 @@ public class DragOverCommand : Command
         return true;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        DragEventArgs dragEvent = parameter as DragEventArgs;
+        if (parameter is not DragEventArgs dragEvent)
+            return;
 
-        TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)dragEvent.OriginalSource);
+        TreeViewItem? treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)dragEvent.OriginalSource);
 
         if (treeViewItem != null)
         {

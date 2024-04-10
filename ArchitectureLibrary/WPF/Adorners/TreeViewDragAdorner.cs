@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace NESTool.Utils.Adorners;
+namespace ArchitectureLibrary.WPF.Adorners;
 
 public class TreeViewDragAdorner : Adorner
 {

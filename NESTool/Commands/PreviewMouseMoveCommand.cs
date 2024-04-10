@@ -11,13 +11,13 @@ namespace NESTool.Commands;
 
 public class PreviewMouseMoveCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        MouseEventArgs mouseEvent = parameter as MouseEventArgs;
+        MouseEventArgs? mouseEvent = parameter as MouseEventArgs;
 
-        if (mouseEvent.LeftButton == MouseButtonState.Pressed)
+        if (mouseEvent?.LeftButton == MouseButtonState.Pressed)
         {
-            TreeViewItem treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)mouseEvent.OriginalSource);
+            TreeViewItem? treeViewItem = Util.FindAncestor<TreeViewItem>((DependencyObject)mouseEvent.OriginalSource);
 
             MouseMoveVO vo = new()
             {

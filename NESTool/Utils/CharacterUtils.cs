@@ -13,7 +13,7 @@ namespace NESTool.Utils;
 
 public static class CharacterUtils
 {
-    public static ImageVO CreateImage(CharacterModel characterModel, int animationIndex, int frameIndex, ref GroupedPalettes groupedPalettes)
+    public static ImageVO? CreateImage(CharacterModel characterModel, int animationIndex, int frameIndex, ref GroupedPalettes? groupedPalettes)
     {
         if (characterModel.Animations[animationIndex].Frames == null ||
             characterModel.Animations[animationIndex].Frames.Count == 0)
@@ -29,18 +29,23 @@ public static class CharacterUtils
         int maxWidth = 0;
         int maxHeight = 0;
 
-        WriteableBitmap bankBitmap = BitmapFactory.New(64, 64);
+        WriteableBitmap? bankBitmap = BitmapFactory.New(64, 64);
 
         using (bankBitmap.GetBitmapContext())
         {
-            foreach (CharacterTile tile in characterModel.Animations[animationIndex].Frames[frameIndex].Tiles)
+            List<CharacterTile>? listCharacterTile = characterModel.Animations[animationIndex].Frames[frameIndex].Tiles;
+
+            if (listCharacterTile == null)
+                return null;
+
+            foreach (CharacterTile tile in listCharacterTile)
             {
                 if (string.IsNullOrEmpty(tile.BankID) || string.IsNullOrEmpty(tile.BankTileID))
                 {
                     continue;
                 }
 
-                BankModel ptModel = ProjectFiles.GetModel<BankModel>(tile.BankID);
+                BankModel? ptModel = ProjectFiles.GetModel<BankModel>(tile.BankID);
                 if (ptModel == null)
                 {
                     continue;
@@ -53,7 +58,7 @@ public static class CharacterUtils
                     continue;
                 }
 
-                WriteableBitmap sourceBitmap = CreateImageUtil.GetCacheBitmap(bankModel.TileSetID);
+                WriteableBitmap? sourceBitmap = CreateImageUtil.GetCacheBitmap(bankModel.TileSetID);
 
                 if (sourceBitmap == null)
                 {
@@ -76,14 +81,17 @@ public static class CharacterUtils
 
                     Tuple<int, PaletteIndex> tuple = Tuple.Create(bankModel.Group, (PaletteIndex)tile.PaletteIndex);
 
-                    if (!groupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color> colors))
+                    if (groupedPalettes != null)
                     {
-                        colors = FillColorCacheByGroup(tile, bankModel.Group, characterModel.PaletteIDs[tile.PaletteIndex]);
+                        if (!groupedPalettes.TryGetValue(tuple, out Dictionary<Color, Color>? colors))
+                        {
+                            colors = FillColorCacheByGroup(tile, bankModel.Group, characterModel.PaletteIDs[tile.PaletteIndex]);
 
-                        groupedPalettes.Add(tuple, colors);
+                            groupedPalettes.Add(tuple, colors);
+                        }
+
+                        CreateImageUtil.PaintPixelsBasedOnPalettes(ref cropped, ref colors);
                     }
-
-                    CreateImageUtil.PaintPixelsBasedOnPalettes(ref cropped, ref colors);
                 }
 
                 int destX = (int)Math.Floor(tile.Point.X / 8) * 8;
@@ -109,11 +117,14 @@ public static class CharacterUtils
     {
         Color nullColor = Util.NullColor;
 
-        BankModel bankModel = ProjectFiles.GetModel<BankModel>(characterTile.BankID);
+        BankModel? bankModel = ProjectFiles.GetModel<BankModel>(characterTile.BankID);
 
-        PaletteModel paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
+        PaletteModel? paletteModel = ProjectFiles.GetModel<PaletteModel>(paletteId);
 
-        Dictionary<Color, Color> colors = new Dictionary<Color, Color>() { { nullColor, nullColor } };
+        Dictionary<Color, Color> colors = new() { { nullColor, nullColor } };
+
+        if (bankModel == null)
+            return colors;
 
         foreach (PTTileModel tile in bankModel.PTTiles)
         {
@@ -127,14 +138,14 @@ public static class CharacterUtils
                 continue;
             }
 
-            TileSetModel model = ProjectFiles.GetModel<TileSetModel>(tile.TileSetID);
+            TileSetModel? model = ProjectFiles.GetModel<TileSetModel>(tile.TileSetID);
 
             if (model == null)
             {
                 continue;
             }
 
-            if (!TileSetModel.BitmapCache.TryGetValue(tile.TileSetID, out WriteableBitmap tileSetBitmap))
+            if (!TileSetModel.BitmapCache.TryGetValue(tile.TileSetID, out WriteableBitmap? tileSetBitmap))
             {
                 continue;
             }

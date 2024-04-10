@@ -17,7 +17,8 @@ public class DuplicateProjectItemHistoryAction : IHistoryAction
 
     public void Redo()
     {
-        SignalManager.Get<PasteElementSignal>().Dispatch(_item.Parent, _item);
+        if (_item.Parent != null)
+            SignalManager.Get<PasteElementSignal>().Dispatch(_item.Parent, _item);
 
         ProjectItemFileSystem.CreateElement(_item, _item.FileHandler.Path, _item.DisplayName);
     }

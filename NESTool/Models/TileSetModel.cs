@@ -28,12 +28,12 @@ public class TileSetModel : AFileModel
         }
     }
 
-    public string ImagePath { get; set; }
+    public string ImagePath { get; set; } = string.Empty;
     public int ImageWidth { get; set; }
     public int ImageHeight { get; set; }
     public string[] TilePseudonyms { get; set; } = Enumerable.Repeat(string.Empty, MaxPseudonyms).ToArray();
 
-    public static Dictionary<string, WriteableBitmap> BitmapCache = new Dictionary<string, WriteableBitmap>();
+    public static Dictionary<string, WriteableBitmap?> BitmapCache = new();
 
     public TileSetModel()
     {
@@ -47,7 +47,7 @@ public class TileSetModel : AFileModel
             return;
         }
 
-        Util.GenerateBitmapFromTileSet(this, out WriteableBitmap bitmap);
+        Util.GenerateBitmapFromTileSet(this, out WriteableBitmap? bitmap);
 
         if (!BitmapCache.ContainsKey(GUID))
         {
@@ -64,9 +64,9 @@ public class TileSetModel : AFileModel
         return (lengthWidth * yPos) + xPos;
     }
 
-    public static WriteableBitmap LoadBitmap(TileSetModel tileSetModel, bool forceRedraw = false)
+    public static WriteableBitmap? LoadBitmap(TileSetModel tileSetModel, bool forceRedraw = false)
     {
-        bool exists = BitmapCache.TryGetValue(tileSetModel.GUID, out WriteableBitmap bitmap);
+        bool exists = BitmapCache.TryGetValue(tileSetModel.GUID, out WriteableBitmap? bitmap);
 
         if (!exists || forceRedraw)
         {

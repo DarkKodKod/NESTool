@@ -23,7 +23,7 @@ public class ImportImageCommand : Command
     private const string _folderTileSetsKey = "folderTileSets";
     private const string _folderImagesKey = "folderImages";
 
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
         if (parameter == null)
         {
@@ -46,12 +46,15 @@ public class ImportImageCommand : Command
         return true;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
+        if (parameter == null)
+            return;
+
         object[] values = (object[])parameter;
         string filePath = (string)values[0];
 
-        ProjectItem item = null;
+        ProjectItem? item = null;
 
         if (values.Length > 1)
         {
@@ -92,19 +95,23 @@ public class ImportImageCommand : Command
         };
 
         // todo: If the source image is the same as the output image, Crash!!
-        Image outputImage = await quantizer.Convert();
+        Image? outputImage = await quantizer.Convert();
 
         string outputImagePath = Path.Combine(imageFolderFullPath, item.DisplayName + ".bmp");
 
         tileSet.ImagePath = Path.Combine(imagesFolder, item.DisplayName + ".bmp");
-        tileSet.ImageWidth = outputImage.Width;
-        tileSet.ImageHeight = outputImage.Height;
 
-        item.FileHandler.Save();
+        if (outputImage != null)
+        {
+            tileSet.ImageWidth = outputImage.Width;
+            tileSet.ImageHeight = outputImage.Height;
 
-        outputImage.Save(outputImagePath, ImageFormat.Bmp);
+            item.FileHandler.Save();
 
-        SignalManager.Get<UpdateTileSetImageSignal>().Dispatch();
+            outputImage.Save(outputImagePath, ImageFormat.Bmp);
+
+            SignalManager.Get<UpdateTileSetImageSignal>().Dispatch();
+        }
     }
 
     private ProjectItem CreateTileSetElement(string name)

@@ -5,7 +5,7 @@ namespace NESTool.VOs;
 
 public class FileModelVO : INotifyPropertyChanged
 {
-    private string _name;
+    private string _name = string.Empty;
 
     public int Index { get; set; }
     public string Name
@@ -21,9 +21,9 @@ public class FileModelVO : INotifyPropertyChanged
             }
         }
     }
-    public AFileModel Model { get; set; }
+    public AFileModel? Model { get; set; }
 
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged(string propname)
     {

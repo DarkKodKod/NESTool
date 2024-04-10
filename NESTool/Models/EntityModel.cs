@@ -31,8 +31,8 @@ public class EntityModel : AFileModel
 
     public EntitySource Source { get; set; }
     public int EntityId { get; set; }
-    public string CharacterId { get; set; }
-    public string CharacterAnimationId { get; set; }
-    public FrameModel Frame { get; set; } = new FrameModel();
-    public List<string> Properties { get; set; } = new List<string>();
+    public string CharacterId { get; set; } = string.Empty;
+    public string CharacterAnimationId { get; set; } = string.Empty;
+    public FrameModel Frame { get; set; } = new();
+    public List<string> Properties { get; set; } = [];
 }

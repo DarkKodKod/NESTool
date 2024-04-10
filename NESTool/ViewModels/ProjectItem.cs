@@ -24,26 +24,29 @@ public class ProjectItem : ViewModel, IClipboardable
 {
     public ProjectItem()
     {
-        Items = new ObservableCollection<ProjectItem>();
+        Items = [];
     }
 
     public ProjectItem(string content)
     {
-        Copy(ParseAndCreateObject(content));
+        ProjectItem? item = ParseAndCreateObject(content);
+
+        if (item != null)
+            Copy(item);
     }
 
     public ProjectItemType Type { get; set; }
     public bool IsRoot { get; set; } = false;
     public bool IsFolder { get; set; } = false;
-    public ProjectItem Parent = null;
-    public ObservableCollection<ProjectItem> Items { get; set; }
+    public ProjectItem? Parent = null;
+    public ObservableCollection<ProjectItem> Items { get; set; } = [];
     public string OldCaptionValue { get; set; } = "";
-    public FileHandler FileHandler { get; set; }
+    public FileHandler FileHandler { get; set; } = new();
     public bool RenamedFromAction { private get; set; } = false;
 
     virtual public string GetContent()
     {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new();
         sb.Append("Type:" + Type.ToString());
         sb.Append(";");
         sb.Append("DisplayName:" + DisplayName);
@@ -75,7 +78,7 @@ public class ProjectItem : ViewModel, IClipboardable
     }
 
     private bool _isSelected;
-    private object _selectedItem = null;
+    private object? _selectedItem = null;
     private bool _isInEditMode;
     private string _displayName = "";
 
@@ -148,7 +151,7 @@ public class ProjectItem : ViewModel, IClipboardable
         }
     }
 
-    public object SelectedItem
+    public object? SelectedItem
     {
         get => _selectedItem;
         private set
@@ -161,9 +164,9 @@ public class ProjectItem : ViewModel, IClipboardable
         }
     }
 
-    private ProjectItem ParseAndCreateObject(string content)
+    private ProjectItem? ParseAndCreateObject(string content)
     {
-        ProjectItem item = new ProjectItem
+        ProjectItem item = new()
         {
             IsLoaded = true
         };
@@ -200,7 +203,7 @@ public class ProjectItem : ViewModel, IClipboardable
                     item.IsFolder = value == "true";
                     break;
                 case "Items":
-                    Items = new ObservableCollection<ProjectItem>();
+                    Items = new();
 
                     if (value != "null")
                     {
@@ -211,9 +214,9 @@ public class ProjectItem : ViewModel, IClipboardable
                         int countOpenBrakets = 0;
                         int countObjectsCreated = 0;
 
-                        using (StringReader reader = new StringReader(braketsContent))
+                        using (StringReader reader = new(braketsContent))
                         {
-                            StringBuilder sb = new StringBuilder();
+                            StringBuilder sb = new();
 
                             int intChar;
                             while ((intChar = reader.Read()) != -1)
@@ -245,9 +248,13 @@ public class ProjectItem : ViewModel, IClipboardable
                                     // last braket?
                                     if (countOpenBrakets == 0)
                                     {
-                                        ProjectItem itm = ParseAndCreateObject(sb.ToString());
-                                        itm.Parent = item;
-                                        item.Items.Add(itm);
+                                        ProjectItem? itm = ParseAndCreateObject(sb.ToString());
+
+                                        if (itm != null)
+                                        {
+                                            itm.Parent = item;
+                                            item.Items.Add(itm);
+                                        }
 
                                         sb.Clear();
 
@@ -281,15 +288,15 @@ public class ProjectItem : ViewModel, IClipboardable
     public DataTemplate GetHeaderTemplate()
     {
         //create the data template
-        DataTemplate dataTemplate = new DataTemplate();
+        DataTemplate dataTemplate = new();
 
         //create stack pane;
-        FrameworkElementFactory stackPanel = new FrameworkElementFactory(typeof(StackPanel));
+        FrameworkElementFactory stackPanel = new(typeof(StackPanel));
         stackPanel.SetValue(StackPanel.OrientationProperty, Orientation.Horizontal);
         stackPanel.SetValue(StackPanel.BackgroundProperty, new SolidColorBrush(Colors.Black));
 
         // create text
-        FrameworkElementFactory label = new FrameworkElementFactory(typeof(TextBlock));
+        FrameworkElementFactory label = new(typeof(TextBlock));
         label.SetBinding(TextBlock.TextProperty, new Binding() { Path = new PropertyPath("DisplayName") });
         label.SetValue(TextBlock.MarginProperty, new Thickness(2));
         label.SetValue(TextBlock.FontWeightProperty, FontWeights.Bold);

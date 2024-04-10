@@ -11,17 +11,17 @@ namespace NESTool.UserControls.Views
     public partial class PaletteView : UserControl, INotifyPropertyChanged
     {
         private int _paletteIndex;
-        private SolidColorBrush _color0;
-        private SolidColorBrush _color1;
-        private SolidColorBrush _color2;
-        private SolidColorBrush _color3;
+        private SolidColorBrush? _color0;
+        private SolidColorBrush? _color1;
+        private SolidColorBrush? _color2;
+        private SolidColorBrush? _color3;
 
         #region Commands
         public ShowColorPaletteCommand ShowColorPaletteCommand { get; } = new ShowColorPaletteCommand();
         #endregion
 
         #region get/set
-        public SolidColorBrush Color0
+        public SolidColorBrush? Color0
         {
             get => _color0;
             set
@@ -32,7 +32,7 @@ namespace NESTool.UserControls.Views
             }
         }
 
-        public SolidColorBrush Color1
+        public SolidColorBrush? Color1
         {
             get => _color1;
             set
@@ -43,7 +43,7 @@ namespace NESTool.UserControls.Views
             }
         }
 
-        public SolidColorBrush Color2
+        public SolidColorBrush? Color2
         {
             get => _color2;
             set
@@ -54,7 +54,7 @@ namespace NESTool.UserControls.Views
             }
         }
 
-        public SolidColorBrush Color3
+        public SolidColorBrush? Color3
         {
             get => _color3;
             set
@@ -82,7 +82,7 @@ namespace NESTool.UserControls.Views
             InitializeComponent();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propname)
         {

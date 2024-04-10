@@ -6,7 +6,9 @@ using NESTool.Enums;
 using NESTool.Models;
 using NESTool.Signals;
 using NESTool.Utils;
+using System.Collections.Generic;
 using System.Runtime.Versioning;
+using System.Windows.Controls;
 
 namespace NESTool.ViewModels;
 
@@ -46,7 +48,7 @@ public class ProjectDialogViewModel : ViewModel
         }
     }
 
-    public MapperModel[] Mappers
+    public List<MapperModel> Mappers
     {
         get => _mappers;
         set
@@ -66,7 +68,7 @@ public class ProjectDialogViewModel : ViewModel
         }
     }
 
-    public MirroringType[] Mirrorings
+    public MirroringType[]? Mirrorings
     {
         get => _mirrorings;
         set
@@ -76,7 +78,7 @@ public class ProjectDialogViewModel : ViewModel
         }
     }
 
-    public int[] CHRSizes
+    public int[]? CHRSizes
     {
         get => _chrSizes;
         set
@@ -96,7 +98,7 @@ public class ProjectDialogViewModel : ViewModel
         }
     }
 
-    public int[] PRGSizes
+    public int[]? PRGSizes
     {
         get => _prgSizes;
         set
@@ -117,13 +119,13 @@ public class ProjectDialogViewModel : ViewModel
     }
     #endregion
 
-    private string _previousValidName;
-    private string _projectName;
-    private string _folderPath;
-    private int[] _chrSizes;
-    private int[] _prgSizes;
-    private MirroringType[] _mirrorings;
-    private MapperModel[] _mappers;
+    private string _previousValidName = string.Empty;
+    private string _projectName = string.Empty;
+    private string _folderPath = string.Empty;
+    private int[]? _chrSizes;
+    private int[]? _prgSizes;
+    private MirroringType[]? _mirrorings;
+    private List<MapperModel> _mappers = [];
     private int _selectedMapper;
     private int _selectedCHRSize;
     private int _selectedPRGSize;
@@ -133,12 +135,17 @@ public class ProjectDialogViewModel : ViewModel
         MappersModel mappers = ModelManager.Get<MappersModel>();
 
         Mappers = mappers.Mappers;
-        SelectedMapper = mappers.Mappers[0].Id;
-        CHRSizes = mappers.Mappers[0].CHR;
-        Mirrorings = mappers.Mappers[0].Mirroring;
-        SelectedCHRSize = 0;
-        PRGSizes = mappers.Mappers[0].PRG;
+
+        if (mappers.Mappers.Count > 0)
+        {
+            SelectedMapper = mappers.Mappers[0].Id;
+            CHRSizes = mappers.Mappers[0].CHR;
+            Mirrorings = mappers.Mappers[0].Mirroring;
+            PRGSizes = mappers.Mappers[0].PRG;
+        }
+
         SelectedPRGSize = 0;
+        SelectedCHRSize = 0;
 
         SignalManager.Get<BrowseFolderSuccessSignal>().Listener += BrowseFolderSuccess;
         SignalManager.Get<CloseDialogSignal>().Listener += OnCloseDialog;
@@ -150,5 +157,5 @@ public class ProjectDialogViewModel : ViewModel
         SignalManager.Get<CloseDialogSignal>().Listener -= OnCloseDialog;
     }
 
-    private void BrowseFolderSuccess(string folderPath) => FolderPath = folderPath;
+    private void BrowseFolderSuccess(Control owner, string folderPath) => FolderPath = folderPath;
 }

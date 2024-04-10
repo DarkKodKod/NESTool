@@ -10,12 +10,12 @@ namespace NESTool.ViewModels;
 public class ActionTabItem : ViewModel
 {
     private bool _isInEditMode;
-    private string _header;
-    private UserControl _content;
+    private string _header = string.Empty;
+    private UserControl? _content;
 
-    public string ID { get; set; }
-    public UserControl FramesView { get; set; }
-    public UserControl PixelsView { get; set; }
+    public string ID { get; set; } = string.Empty;
+    public UserControl? FramesView { get; set; }
+    public UserControl? PixelsView { get; set; }
 
     public string Header
     {
@@ -38,7 +38,7 @@ public class ActionTabItem : ViewModel
         }
     }
 
-    public UserControl Content
+    public UserControl? Content
     {
         get => _content;
         set
@@ -57,9 +57,9 @@ public class ActionTabItem : ViewModel
         {
             if (Content is CharacterFrameEditorView characterView)
             {
-                CharacterFrameEditorViewModel currentFrameViewModel = characterView.DataContext as CharacterFrameEditorViewModel;
+                CharacterFrameEditorViewModel? currentFrameViewModel = characterView.DataContext as CharacterFrameEditorViewModel;
 
-                currentFrameViewModel.OnDeactivate();
+                currentFrameViewModel?.OnDeactivate();
             }
 
             Content = FramesView;
@@ -68,8 +68,8 @@ public class ActionTabItem : ViewModel
             {
                 animationView.OnActivate();
 
-                CharacterAnimationViewModel viewModel = animationView.DataContext as CharacterAnimationViewModel;
-                viewModel.OnActivate();
+                CharacterAnimationViewModel? viewModel = animationView.DataContext as CharacterAnimationViewModel;
+                viewModel?.OnActivate();
             }
         }
         else
@@ -78,20 +78,23 @@ public class ActionTabItem : ViewModel
             {
                 animationView.OnDeactivate();
 
-                CharacterAnimationViewModel viewModel = animationView.DataContext as CharacterAnimationViewModel;
-                viewModel.OnDeactivate();
+                CharacterAnimationViewModel? viewModel = animationView.DataContext as CharacterAnimationViewModel;
+                viewModel?.OnDeactivate();
             }
 
             Content = PixelsView;
 
             if (Content is CharacterFrameEditorView characterView)
             {
-                CharacterFrameEditorViewModel currentFrameViewModel = characterView.DataContext as CharacterFrameEditorViewModel;
+                CharacterFrameEditorViewModel? currentFrameViewModel = characterView.DataContext as CharacterFrameEditorViewModel;
 
-                currentFrameViewModel.TabID = tabId;
-                currentFrameViewModel.FrameIndex = frameIndex;
+                if (currentFrameViewModel != null)
+                {
+                    currentFrameViewModel.TabID = tabId;
+                    currentFrameViewModel.FrameIndex = frameIndex;
 
-                currentFrameViewModel.OnActivate();
+                    currentFrameViewModel.OnActivate();
+                }
             }
         }
     }

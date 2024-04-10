@@ -6,7 +6,7 @@ namespace NESTool.Commands;
 
 public class AddPropertyCommand : Command
 {
-    public override bool CanExecute(object parameter)
+    public override bool CanExecute(object? parameter)
     {
         if (parameter == null)
         {
@@ -23,8 +23,11 @@ public class AddPropertyCommand : Command
         return true;
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
+        if (parameter == null)
+            return;
+
         string property = (string)parameter;
 
         SignalManager.Get<AddPropertySignal>().Dispatch(property);

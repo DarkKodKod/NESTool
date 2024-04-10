@@ -6,9 +6,15 @@ namespace NESTool.Commands;
 
 public class SelectTileSetCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
-        string id = parameter as string;
+        if (parameter == null)
+            return;
+
+        string? id = parameter as string;
+
+        if (id == null)
+            return;
 
         SignalManager.Get<SelectTileSetSignal>().Dispatch(id);
     }

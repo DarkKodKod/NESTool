@@ -8,7 +8,7 @@
              xmlns:behaviors="clr-namespace:NESTool.Utils.Behaviors"
              xmlns:local="clr-namespace:NESTool.Views"
              xmlns:uc="clr-namespace:NESTool.UserControls.Views"
-             xmlns:cv="clr-namespace:NESTool.Utils.Converters"
+             xmlns:cv="clr-namespace:ArchitectureLibrary.WPF.Converters;assembly=ArchitectureLibrary"
 			 xmlns:vm="clr-namespace:NESTool.ViewModels"
              Name="MapView"
              mc:Ignorable="d" 

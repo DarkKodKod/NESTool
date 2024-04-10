@@ -41,9 +41,9 @@ namespace NESTool.Views
 
         private void EditableTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            TextBox tb = sender as TextBox;
+            TextBox? tb = sender as TextBox;
 
-            if (tb.DataContext is ActionTabItem item)
+            if (tb?.DataContext is ActionTabItem item)
             {
                 tb.Text = item.OldCaptionValue;
 
@@ -53,32 +53,35 @@ namespace NESTool.Views
 
         private void EditableTextBox_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            TextBox tb = sender as TextBox;
+            TextBox? tb = sender as TextBox;
 
-            if (tb.IsVisible)
+            if (tb != null)
             {
-                // the method to set the focus to the TextBox
-                _ = Dispatcher.BeginInvoke(
-                    DispatcherPriority.ContextIdle,
-                    new Action(delegate ()
-                    {
-                        _ = tb.Focus();
-                        tb.SelectAll();
-                    }));
-
-                if (tb.DataContext is ActionTabItem item)
+                if (tb.IsVisible)
                 {
-                    // back up - for possible cancelling
-                    item.OldCaptionValue = tb.Text;
+                    // the method to set the focus to the TextBox
+                    _ = Dispatcher.BeginInvoke(
+                        DispatcherPriority.ContextIdle,
+                        new Action(delegate ()
+                        {
+                            _ = tb.Focus();
+                            tb.SelectAll();
+                        }));
+
+                    if (tb.DataContext is ActionTabItem item)
+                    {
+                        // back up - for possible cancelling
+                        item.OldCaptionValue = tb.Text;
+                    }
                 }
             }
         }
 
         private void EditableTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            TextBox tb = sender as TextBox;
+            TextBox? tb = sender as TextBox;
 
-            if (tb.DataContext is ActionTabItem item)
+            if (tb?.DataContext is ActionTabItem item)
             {
                 if (e.Key == Key.Enter)
                 {
@@ -103,9 +106,9 @@ namespace NESTool.Views
 
         private void ContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ContentControl tb = sender as ContentControl;
+            ContentControl? tb = sender as ContentControl;
 
-            if (tb.DataContext is ActionTabItem item)
+            if (tb?.DataContext is ActionTabItem item)
             {
                 item.IsInEditMode = true;
             }
@@ -121,12 +124,12 @@ namespace NESTool.Views
                 }
             }
 
-            SolidColorBrush scb = new SolidColorBrush
+            SolidColorBrush scb = new()
             {
                 Color = color
             };
 
-            PaletteView palette = null;
+            PaletteView? palette = null;
 
             switch (paletteIndex)
             {
@@ -136,12 +139,15 @@ namespace NESTool.Views
                 case PaletteIndex.Palette3: palette = palette3; break;
             }
 
-            switch (colorPosition)
+            if (palette != null)
             {
-                case 0: palette.cvsColor0.Background = scb; break;
-                case 1: palette.cvsColor1.Background = scb; break;
-                case 2: palette.cvsColor2.Background = scb; break;
-                case 3: palette.cvsColor3.Background = scb; break;
+                switch (colorPosition)
+                {
+                    case 0: palette.cvsColor0.Background = scb; break;
+                    case 1: palette.cvsColor1.Background = scb; break;
+                    case 2: palette.cvsColor2.Background = scb; break;
+                    case 3: palette.cvsColor3.Background = scb; break;
+                }
             }
         }
 

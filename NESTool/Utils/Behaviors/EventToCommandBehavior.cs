@@ -14,8 +14,8 @@ namespace NESTool.Utils.Behaviors;
 [SupportedOSPlatform("windows")]
 public class EventToCommandBehavior : Behavior<FrameworkElement>
 {
-    private Delegate _handler;
-    private EventInfo _oldEvent;
+    private Delegate? _handler;
+    private EventInfo? _oldEvent;
 
     // Event
     public string Event { get => (string)GetValue(EventProperty); set { SetValue(EventProperty, value); } }
@@ -58,13 +58,14 @@ public class EventToCommandBehavior : Behavior<FrameworkElement>
         // attach new event
         if (!string.IsNullOrEmpty(eventName))
         {
-            EventInfo ei = AssociatedObject.GetType().GetEvent(eventName);
+            EventInfo? ei = AssociatedObject.GetType().GetEvent(eventName);
 
-            if (ei != null)
+            if (ei != null && ei.EventHandlerType != null)
             {
-                MethodInfo mi = GetType().GetMethod("ExecuteCommand", BindingFlags.Instance | BindingFlags.NonPublic);
+                MethodInfo? mi = GetType().GetMethod("ExecuteCommand", BindingFlags.Instance | BindingFlags.NonPublic);
 
-                _handler = Delegate.CreateDelegate(ei.EventHandlerType, this, mi);
+                if (mi != null)
+                    _handler = Delegate.CreateDelegate(ei.EventHandlerType, this, mi);
 
                 ei.AddEventHandler(AssociatedObject, _handler);
 
@@ -82,7 +83,7 @@ public class EventToCommandBehavior : Behavior<FrameworkElement>
     /// </summary>
     private void ExecuteCommand(object sender, EventArgs e)
     {
-        object parameter = PassArguments ? e : null;
+        object? parameter = PassArguments ? e : null;
 
         if (Command != null)
         {

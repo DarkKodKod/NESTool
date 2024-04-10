@@ -2,9 +2,9 @@
 
 namespace NESTool.VOs;
 
-public class ImageVO
+public record ImageVO
 {
-    public WriteableBitmap Image { get; set; }
-    public int Width { get; set; }
-    public int Height { get; set; }
+    public WriteableBitmap? Image { get; init; }
+    public int Width { get; init; }
+    public int Height { get; init; }
 }

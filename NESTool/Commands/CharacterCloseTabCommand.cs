@@ -9,18 +9,21 @@ namespace NESTool.Commands;
 
 public class CharacterCloseTabCommand : Command
 {
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
+        if (parameter == null)
+            return;
+
         MessageBoxResult result = MessageBox.Show("Are you sure you want to delete the animation tab?", "Delete", MessageBoxButton.YesNo);
 
         if (result == MessageBoxResult.Yes)
         {
-            MouseButtonEventArgs args = parameter as MouseButtonEventArgs;
+            MouseButtonEventArgs? args = parameter as MouseButtonEventArgs;
 
-            FrameworkElement source = (FrameworkElement)args.OriginalSource;
-            ActionTabItem tabItem = source.DataContext as ActionTabItem;
+            FrameworkElement? source = (FrameworkElement?)args?.OriginalSource;
 
-            SignalManager.Get<AnimationTabDeletedSignal>().Dispatch(tabItem);
+            if (source?.DataContext is ActionTabItem tabItem)
+                SignalManager.Get<AnimationTabDeletedSignal>().Dispatch(tabItem);
         }
     }
 }

@@ -22,7 +22,7 @@ public class CreateElementCommand : Command
         _newFileName = (string)Application.Current.FindResource(_fileNameKey);
     }
 
-    public override void Execute(object parameter)
+    public override void Execute(object? parameter)
     {
         if (!(parameter is ElementTypeModel element))
         {
