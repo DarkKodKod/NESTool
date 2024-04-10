@@ -570,14 +570,9 @@ public class CharacterViewModel : ItemViewModel
                 if (viewModel != null)
                     model.Animations[index].Speed = viewModel.Speed;
 
-                if (model.Animations[index].CollisionInfo == null)
-                {
-                    model.Animations[index].CollisionInfo = new CollisionInfo();
-                }
+                CollisionInfo collInfo = model.Animations[index].CollisionInfo;
 
-                CollisionInfo? collInfo = model.Animations[index].CollisionInfo;
-
-                if (collInfo != null && viewModel != null)
+                if (viewModel != null)
                 {
                     collInfo.Width = viewModel.CollisionWidth;
                     collInfo.Height = viewModel.CollisionHeight;

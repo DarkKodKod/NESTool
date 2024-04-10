@@ -135,7 +135,7 @@ public class OpenProjectCommand : Command
 
         DirectoryInfo[] directories = d.GetDirectories();
 
-        List<ProjectItem> projectItems = new List<ProjectItem>();
+        List<ProjectItem> projectItems = [];
 
         ScanDirectories(directories, ref projectItems);
 
@@ -163,7 +163,7 @@ public class OpenProjectCommand : Command
                 continue;
             }
 
-            ProjectItem item = new ProjectItem()
+            ProjectItem item = new()
             {
                 DisplayName = directory.Name,
                 IsLoaded = true
@@ -200,7 +200,7 @@ public class OpenProjectCommand : Command
             DirectoryInfo[] subFolders = directory.GetDirectories();
             if (subFolders.Length > 0)
             {
-                List<ProjectItem> subItems = new List<ProjectItem>();
+                List<ProjectItem> subItems = [];
 
                 ScanDirectories(subFolders, ref subItems, item, ext);
 

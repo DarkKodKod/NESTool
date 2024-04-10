@@ -189,15 +189,9 @@ public class CharacterAnimationViewModel : ViewModel
 
                 if (model != null)
                 {
-                    if (model.Animations[_animationIndex].CollisionInfo == null)
-                    {
-                        model.Animations[_animationIndex].CollisionInfo = new CollisionInfo();
-                    }
+                    CollisionInfo colInfo = model.Animations[_animationIndex].CollisionInfo;
 
-                    CollisionInfo? colInfo = model.Animations[_animationIndex].CollisionInfo;
-
-                    if (colInfo != null)
-                        colInfo.Width = value;
+                    colInfo.Width = value;
 
                     RectangleWidth = value;
 
@@ -225,15 +219,9 @@ public class CharacterAnimationViewModel : ViewModel
 
                 if (model != null)
                 {
-                    if (model.Animations[_animationIndex].CollisionInfo == null)
-                    {
-                        model.Animations[_animationIndex].CollisionInfo = new CollisionInfo();
-                    }
+                    CollisionInfo colInfo = model.Animations[_animationIndex].CollisionInfo;
 
-                    CollisionInfo? colInfo = model.Animations[_animationIndex].CollisionInfo;
-
-                    if (colInfo != null)
-                        colInfo.Height = value;
+                    colInfo.Height = value;
 
                     RectangleHeight = value;
 
@@ -259,15 +247,9 @@ public class CharacterAnimationViewModel : ViewModel
             {
                 if (CharacterModel != null)
                 {
-                    if (CharacterModel.Animations[_animationIndex].CollisionInfo == null)
-                    {
-                        CharacterModel.Animations[_animationIndex].CollisionInfo = new CollisionInfo();
-                    }
+                    CollisionInfo colInfo = CharacterModel.Animations[_animationIndex].CollisionInfo;
 
-                    CollisionInfo? colInfo = CharacterModel.Animations[_animationIndex].CollisionInfo;
-
-                    if (colInfo != null)
-                        colInfo.OffsetX = value;
+                    colInfo.OffsetX = value;
                 }
 
                 RectangleLeft = value;
@@ -293,15 +275,9 @@ public class CharacterAnimationViewModel : ViewModel
             {
                 if (CharacterModel != null)
                 {
-                    if (CharacterModel.Animations[_animationIndex].CollisionInfo == null)
-                    {
-                        CharacterModel.Animations[_animationIndex].CollisionInfo = new CollisionInfo();
-                    }
+                    CollisionInfo colInfo = CharacterModel.Animations[_animationIndex].CollisionInfo;
 
-                    CollisionInfo? colInfo = CharacterModel.Animations[_animationIndex].CollisionInfo;
-
-                    if (colInfo != null)
-                        colInfo.OffsetY = value;
+                    colInfo.OffsetY = value;
                 }
 
                 RectangleTop = value;
@@ -422,12 +398,12 @@ public class CharacterAnimationViewModel : ViewModel
 
                 Speed = CharacterModel.Animations[_animationIndex].Speed;
 
-                CollisionInfo? cInfo = CharacterModel.Animations[_animationIndex].CollisionInfo;
+                CollisionInfo cInfo = CharacterModel.Animations[_animationIndex].CollisionInfo;
 
-                CollisionWidth = cInfo == null ? 0 : cInfo.Width;
-                CollisionHeight = cInfo == null ? 0 : cInfo.Height;
-                CollisionOffsetX = cInfo == null ? 0 : cInfo.OffsetX;
-                CollisionOffsetY = cInfo == null ? 0 : cInfo.OffsetY;
+                CollisionWidth = cInfo.Width;
+                CollisionHeight = cInfo.Height;
+                CollisionOffsetX = cInfo.OffsetX;
+                CollisionOffsetY = cInfo.OffsetY;
 
                 break;
             }

@@ -4,8 +4,16 @@ using System.Windows;
 
 namespace NESTool.Models;
 
-public class CollisionInfo
+public struct CollisionInfo
 {
+    public CollisionInfo()
+    {
+        Width = 0;
+        Height = 0;
+        OffsetX = 0;
+        OffsetY = 0;
+    }
+
     public int Width { get; set; }
     public int Height { get; set; }
     public int OffsetX { get; set; }
@@ -18,7 +26,7 @@ public class CharacterAnimation
     public string Name { get; set; } = string.Empty;
     public float Speed { get; set; }
     public List<FrameModel> Frames { get; set; } = [];
-    public CollisionInfo? CollisionInfo { get; set; }
+    public CollisionInfo CollisionInfo { get; set; }
 }
 
 public class CharacterModel : AFileModel

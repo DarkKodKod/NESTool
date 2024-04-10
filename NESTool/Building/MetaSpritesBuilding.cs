@@ -145,10 +145,10 @@ namespace NESTool.Building
 
                 int frameDuration = (int)(nesFPS * animation.Speed);
 
-                int colBoxAx = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetX;
-                int colBoxAy = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetY;
-                int colBoxBx = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetX + animation.CollisionInfo.Width;
-                int colBoxCy = animation.CollisionInfo == null ? 0 : animation.CollisionInfo.OffsetY + animation.CollisionInfo.Height;
+                int colBoxAx = animation.CollisionInfo.OffsetX;
+                int colBoxAy = animation.CollisionInfo.OffsetY;
+                int colBoxBx = animation.CollisionInfo.OffsetX + animation.CollisionInfo.Width;
+                int colBoxCy = animation.CollisionInfo.OffsetY + animation.CollisionInfo.Height;
 
                 outputFile.WriteLine($"    ; number of frames");
                 outputFile.WriteLine($"    .byte ${frameNames.Count:X2} ; decimal {frameNames.Count}");
