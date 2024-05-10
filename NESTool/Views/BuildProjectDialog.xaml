@@ -45,9 +45,16 @@
                 <Label Grid.Row="0" Grid.Column="1" Content="Output directory" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <DockPanel Grid.Row="1" Grid.Column="1" LastChildFill="True">
                     <Button DockPanel.Dock="Right" HorizontalAlignment="Right" 
-					VerticalAlignment="Center" Width="30" Content="..." 
-					Command="{Binding BrowseFolderCommand}" CommandParameter="{Binding ElementName=tbPath, Path=Text}"/>
-                    <TextBox Name="tbPath" Height="23" Text="{Binding FolderPath, UpdateSourceTrigger=PropertyChanged}" 
+					        VerticalAlignment="Center" Width="30" Content="..." 
+					        Command="{Binding BrowseFolderCommand}" x:Name="btnSourcePath">
+                        <Button.CommandParameter>
+                            <MultiBinding Converter="{StaticResource parametersConverter}">
+                                <Binding RelativeSource="{RelativeSource Self}"/>
+                                <Binding Path="Text" ElementName="tbSourcePath"/>
+                            </MultiBinding>
+                        </Button.CommandParameter>
+                    </Button>
+                    <TextBox Name="tbSourcePath" Height="23" Text="{Binding FolderPath, UpdateSourceTrigger=PropertyChanged}" 
 					 TextWrapping="NoWrap" VerticalAlignment="Center" Width="auto"/>
                 </DockPanel>
                 <CheckBox Grid.Row="2" Margin="0,20,0,0" Content="Use RLE on maps" IsChecked="{Binding UseRLEOnMaps, Mode=TwoWay}"/>

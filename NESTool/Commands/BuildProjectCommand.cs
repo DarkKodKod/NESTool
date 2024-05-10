@@ -22,9 +22,6 @@ public class BuildProjectCommand : Command
 
     public override async void Execute(object? parameter)
     {
-        if (parameter == null)
-            return;
-
         if (_building)
         {
             return;
@@ -42,7 +39,7 @@ public class BuildProjectCommand : Command
 
         OutputInfo("Build started");
 
-        List<Task> tasks = new List<Task>();
+        List<Task> tasks = [];
 
         OutputInfo("Building banks...");
         Task task = Task.Factory.StartNew(() => { BanksBuilding.Execute(); });

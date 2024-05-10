@@ -45,10 +45,17 @@
 		</DockPanel>
 		<Label Grid.Row="3" Grid.Column="1" Content="Location" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 		<DockPanel Grid.Row="4" Grid.Column="1" LastChildFill="True">
-			<Button DockPanel.Dock="Right" HorizontalAlignment="Right" 
+            <Button DockPanel.Dock="Right" HorizontalAlignment="Right" 
 					VerticalAlignment="Center" Width="30" Content="..." 
-					Command="{Binding BrowseFolderCommand}" CommandParameter="{Binding ElementName=tbPath, Path=Text}"/>
-			<TextBox Name="tbPath" Height="23" Text="{Binding FolderPath, UpdateSourceTrigger=PropertyChanged}" 
+					Command="{Binding BrowseFolderCommand}" x:Name="btnSourcePath">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource parametersConverter}">
+                        <Binding RelativeSource="{RelativeSource Self}"/>
+                        <Binding Path="Text" ElementName="tbSourcePath"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+            <TextBox Name="tbSourcePath" Height="23" Text="{Binding FolderPath, UpdateSourceTrigger=PropertyChanged}" 
 					 TextWrapping="NoWrap" VerticalAlignment="Center" Width="auto"/>
 		</DockPanel>
         <Grid Grid.Row="5" Grid.Column="1">
