@@ -3,6 +3,7 @@ using NESTool.Signals;
 using NESTool.Utils;
 using Nett;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -10,6 +11,7 @@ namespace NESTool.Models;
 
 public class TileSetModel : AFileModel
 {
+    private const int MaxPseudonyms = 1024;
     private const string _extensionKey = "extensionTileSets";
 
     [TomlIgnore]
@@ -29,7 +31,7 @@ public class TileSetModel : AFileModel
     public string ImagePath { get; set; } = string.Empty;
     public int ImageWidth { get; set; }
     public int ImageHeight { get; set; }
-    public List<string> TilePseudonyms { get; set; } = [];
+    public string[] TilePseudonyms { get; set; } = Enumerable.Repeat(string.Empty, MaxPseudonyms).ToArray();
 
     public static readonly Dictionary<string, WriteableBitmap?> BitmapCache = [];
 
