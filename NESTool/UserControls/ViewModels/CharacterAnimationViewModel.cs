@@ -193,6 +193,8 @@ public class CharacterAnimationViewModel : ViewModel
 
                     colInfo.Width = value;
 
+                    model.Animations[_animationIndex].CollisionInfo = colInfo;
+
                     RectangleWidth = value;
 
                     if (!_dontSave)
@@ -223,6 +225,8 @@ public class CharacterAnimationViewModel : ViewModel
 
                     colInfo.Height = value;
 
+                    model.Animations[_animationIndex].CollisionInfo = colInfo;
+
                     RectangleHeight = value;
 
                     if (!_dontSave)
@@ -250,6 +254,8 @@ public class CharacterAnimationViewModel : ViewModel
                     CollisionInfo colInfo = CharacterModel.Animations[_animationIndex].CollisionInfo;
 
                     colInfo.OffsetX = value;
+
+                    CharacterModel.Animations[_animationIndex].CollisionInfo = colInfo;
                 }
 
                 RectangleLeft = value;
@@ -278,6 +284,8 @@ public class CharacterAnimationViewModel : ViewModel
                     CollisionInfo colInfo = CharacterModel.Animations[_animationIndex].CollisionInfo;
 
                     colInfo.OffsetY = value;
+
+                    CharacterModel.Animations[_animationIndex].CollisionInfo = colInfo;
                 }
 
                 RectangleTop = value;

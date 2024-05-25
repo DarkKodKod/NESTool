@@ -49,6 +49,10 @@ public class BuildProjectCommand : Command
         task = Task.Factory.StartNew(() => { TilesDefinitionsBuilding.Execute(); });
         tasks.Add(task);
 
+        OutputInfo("Building entities...");
+        task = Task.Factory.StartNew(() => { EntitiesBuilding.Execute(); });
+        tasks.Add(task);
+
         OutputInfo("Building backgrounds...");
         task = Task.Factory.StartNew(() => { BackgroundsBuilding.Execute(); });
         tasks.Add(task);

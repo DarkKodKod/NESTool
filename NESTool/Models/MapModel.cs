@@ -143,7 +143,7 @@ public class MapModel : AFileModel
         return ref AttributeTable[attributeTableIndex].MapTile[tileIndex];
     }
 
-    public string GetPropertyValue(Entity entity, string propertyKey)
+    public static string GetPropertyValue(Entity entity, string propertyKey)
     {
         if (entity.Properties.TryGetValue(propertyKey, out string? value))
         {

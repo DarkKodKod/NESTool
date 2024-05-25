@@ -11,29 +11,6 @@ namespace NESTool.Building;
 
 public static class BackgroundsBuilding
 {
-    private enum MetaType : int
-    {
-        Snake = 1,
-        Spider = 2,
-        Skull = 3,
-        JumpingSkull = 4,
-        WhiteKey = 5,
-        BlueKey = 6,
-        RedKey = 7,
-        Talisman = 9,
-        Sword = 10,
-        Crystal = 11,
-        DoorWhiteElement = 14,
-        DoorBlueElement = 15,
-        DoorRedElement = 16,
-        AddBrick = 17,
-        AddChain = 19,
-        AddLadderLeft = 20,
-        AddLadderRight = 21,
-        AddTopLadderLeft = 22,
-        AddTopLadderRight = 23
-    }
-
     public static void Execute()
     {
         ProjectModel projectModel = ModelManager.Get<ProjectModel>();
@@ -118,107 +95,15 @@ public static class BackgroundsBuilding
 
     private static void PrintMapEntities(MapModel model, FileModelVO item, StreamWriter outputFile)
     {
-        void WriteData(string type, int x, int y, int palette, int lowLevel, int upperLevel, bool isItem, bool isMapElement)
+        void WriteEntityData(string entityName, int x, int y, Dictionary<string, string> properties)
         {
-            // name
-            outputFile.Write(type);
-            outputFile.Write(", ");
-
-            // write PPU name table addresses
-            int dec = /*PPU address = $2000*/8192 + (32 * y) + x;
-            string str = $"{dec:X4}";
-
-            string strLow = str.Substring(2, 2);
-            string strHigh = str[..2];
-
-            outputFile.Write($"${strLow}, ${strHigh}, ");
-
-            // write PPU attribute table addresses
-            int bigCellPosX = (int)Math.Floor(x / 32.0f * 8.0f);
-            int bigCellPosY = (int)Math.Floor(y / 32.0f * 8.0f);
-
-            if (!isMapElement)
-            {
-                dec = /*PPU address = $23C0*/9152 + (8 * bigCellPosY) + bigCellPosX;
-                str = $"{dec:X4}";
-
-                strLow = str.Substring(2, 2);
-                strHigh = str[..2];
-
-                outputFile.Write($"${strLow}, ${strHigh}, ");
-            }
-
-            // write x, y coordinates
-            outputFile.Write($"${x:X2}, ${y:X2}, ");
-
-            // check if is left or right and bottom or top
-            int middleX = (4 * bigCellPosX) + 2;
-            int middleY = (4 * bigCellPosY) + 2;
-
-            if (isItem)
-            {
-                int paletteIndex;
-
-                // to the right
-                if (x >= middleX)
-                {
-                    // to the top
-                    if (y < middleY)
-                    {
-                        paletteIndex = palette << 2;
-                    }
-                    else
-                    // to the bottom
-                    {
-                        paletteIndex = palette << 6;
-                    }
-                }
-                // to the left
-                else
-                {
-                    // to the top
-                    if (y < middleY)
-                    {
-                        paletteIndex = palette;
-                    }
-                    else
-                    // to the bottom
-                    {
-                        paletteIndex = palette << 4;
-                    }
-                }
-
-                outputFile.Write($"${paletteIndex:X2}, ");
-            }
-
-            // Levels
-            outputFile.Write("(");
-            outputFile.Write($"${lowLevel:X2}");
-            outputFile.Write(" | ");
-            outputFile.Write($"${upperLevel:X2}");
-            outputFile.Write("<<4)");
-        }
-
-        void WriteEnemyData(string type, int x, int y, int att, int lowLevel, int upperLevel)
-        {
-            // name
-            outputFile.Write(type);
-            outputFile.Write(", ");
+            // Entity ID
+            outputFile.Write($"Entity_{entityName}, ");
             // X
             outputFile.Write($"${x:X2}");
             outputFile.Write(", ");
             // Y
             outputFile.Write($"${y:X2}");
-            outputFile.Write(", ");
-            // Attributes
-            outputFile.Write($"${att:X2}");
-            outputFile.Write(", ");
-            // Levels
-            outputFile.Write("(");
-            outputFile.Write($"${lowLevel:X2}");
-            outputFile.Write(" | ");
-            outputFile.Write($"${upperLevel:X2}");
-            outputFile.Write("<<4)");
         }
 
         if (model.Entities.Count == 0)
@@ -228,68 +113,21 @@ public static class BackgroundsBuilding
 
         outputFile.WriteLine($"metadata_{item.Name}:");
 
-        foreach (Entity entity in model.Entities)
+        foreach (Models.Entity entity in model.Entities)
         {
             EntityModel? entityModel = ProjectFiles.GetModel<EntityModel>(entity.EntityID);
 
             if (entityModel == null)
-            {
                 continue;
-            }
 
             outputFile.Write("    .byte ");
 
-            string? typeName = Enum.GetName(typeof(MetaType), entityModel.EntityId);
+            FileModelVO? fileModel = ProjectFiles.GetFileModel(entity.EntityID);
 
-            int minLevel = int.Parse(model.GetPropertyValue(entity, "MinLevel"));
-            int maxLevel = int.Parse(model.GetPropertyValue(entity, "MaxLevel"));
+            if (fileModel == null)
+                continue;
 
-            switch ((MetaType)entityModel.EntityId)
-            {
-                case MetaType.Snake:
-                case MetaType.Spider:
-                case MetaType.Skull:
-                case MetaType.JumpingSkull:
-                    {
-                        string attributes = model.GetPropertyValue(entity, "Attributes");
-
-                        if (typeName != null)
-                            WriteEnemyData(typeName, entity.X, entity.Y, int.Parse(attributes), minLevel, maxLevel);
-                    }
-                    break;
-                case MetaType.WhiteKey:
-                case MetaType.BlueKey:
-                case MetaType.RedKey:
-                case MetaType.Talisman:
-                case MetaType.Sword:
-                case MetaType.Crystal:
-                    {
-                        string paletteIndex = model.GetPropertyValue(entity, "PaletteIndex");
-
-                        if (typeName != null)
-                            WriteData(typeName, entity.X, entity.Y, int.Parse(paletteIndex), minLevel, maxLevel, isItem: true, isMapElement: false);
-                    }
-                    break;
-                case MetaType.DoorWhiteElement:
-                case MetaType.DoorBlueElement:
-                case MetaType.DoorRedElement:
-                    {
-                        if (typeName != null)
-                            WriteData(typeName, entity.X, entity.Y, 0, minLevel, maxLevel, isItem: false, isMapElement: false);
-                    }
-                    break;
-                case MetaType.AddBrick:
-                case MetaType.AddChain:
-                case MetaType.AddLadderLeft:
-                case MetaType.AddLadderRight:
-                case MetaType.AddTopLadderLeft:
-                case MetaType.AddTopLadderRight:
-                    {
-                        if (typeName != null)
-                            WriteData(typeName, entity.X, entity.Y, 0, minLevel, maxLevel, isItem: false, isMapElement: true);
-                    }
-                    break;
-            }
+            WriteEntityData(fileModel.Name, entity.X, entity.Y, entity.Properties);
 
             outputFile.Write(Environment.NewLine);
         }
