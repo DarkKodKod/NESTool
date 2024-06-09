@@ -5,6 +5,7 @@ using NESTool.VOs;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace NESTool.Building;
 
@@ -22,6 +23,8 @@ public static class EntitiesBuilding
 
         outputFile.WriteLine("; This file is auto-generated!");
         outputFile.WriteLine("");
+
+        IOrderedEnumerable<FileModelVO> sortedList = entitiesVOs.OrderBy(modelVo => modelVo.Name);
 
         foreach (FileModelVO entityVO in entitiesVOs)
         {

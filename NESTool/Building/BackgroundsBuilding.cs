@@ -113,7 +113,7 @@ public static class BackgroundsBuilding
 
         outputFile.WriteLine($"metadata_{item.Name}:");
 
-        foreach (Models.Entity entity in model.Entities)
+        foreach (Entity entity in model.Entities)
         {
             EntityModel? entityModel = ProjectFiles.GetModel<EntityModel>(entity.EntityID);
 
@@ -169,7 +169,7 @@ public static class BackgroundsBuilding
             }
         }
 
-        void SerializeMapTile(ref List<byte> serialized, MapTile mapTile)
+        static void SerializeMapTile(ref List<byte> serialized, MapTile mapTile)
         {
             BankModel? bank = ProjectFiles.GetModel<BankModel>(mapTile.BankID);
 
