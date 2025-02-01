@@ -42,6 +42,7 @@ namespace NESTool.Views
             SignalManager.Get<AddImageToMapSignal>().Listener += OnAddImageToMap;
             SignalManager.Get<RemoveImageToMapSignal>().Listener += OnRemoveImageToMap;
             SignalManager.Get<SetMapElementImagePosSignal>().Listener += OnSetMapElementImagePos;
+            SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener += OnFileModelVOSelectionChanged;
             #endregion
 
             LoadBankImage();
@@ -87,9 +88,7 @@ namespace NESTool.Views
         {
             if (_draggingSprite == null)
             {
-                Image? image = sender as Image;
-
-                if (image == null)
+                if (sender is not Image image)
                     return;
 
                 _draggingSprite = image;
@@ -110,9 +109,7 @@ namespace NESTool.Views
 
         private void Sprite_MouseLeave(object sender, MouseEventArgs e)
         {
-            Image? image = sender as Image;
-
-            if (image == null)
+            if (sender is not Image image)
                 return;
 
             if (image == _draggingSprite)
@@ -125,9 +122,7 @@ namespace NESTool.Views
 
         private void Sprite_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Image? image = sender as Image;
-
-            if (image == null)
+            if (sender is not Image image)
                 return;
 
             if (image == _draggingSprite)
@@ -140,9 +135,7 @@ namespace NESTool.Views
 
         private void Sprite_MouseEnter(object sender, MouseEventArgs e)
         {
-            Image? image = sender as Image;
-
-            if (image != null)
+            if (sender is Image image)
             {
                 int imageLeft = Convert.ToInt32(Canvas.GetLeft(image) / CellSize);
                 int imageTop = Convert.ToInt32(Canvas.GetTop(image) / CellSize);
@@ -220,9 +213,8 @@ namespace NESTool.Views
             int x = entity.X;
             int y = entity.Y;
 
-            EntityModel? entityModel = fileModelVO.Model as EntityModel;
 
-            if (entityModel == null)
+            if (fileModelVO.Model is not EntityModel entityModel)
                 return;
 
             Image? sprite = GetImageFromFileModel(entityModel);
@@ -271,11 +263,11 @@ namespace NESTool.Views
             }
         }
 
-        private Image? GetImageFromFileModel(EntityModel entityModel)
+        private static Image? GetImageFromFileModel(EntityModel entityModel)
         {
             if (entityModel.Source == EntitySource.Character)
             {
-                GroupedPalettes? GroupedPalettes = new();
+                GroupedPalettes? GroupedPalettes = [];
 
                 if (string.IsNullOrEmpty(entityModel.CharacterId))
                 {
@@ -297,7 +289,7 @@ namespace NESTool.Views
 
                     if (vo != null && vo.Image != null)
                     {
-                        Image image = new Image
+                        Image image = new()
                         {
                             Source = vo.Image,
                             Width = vo.Width,
@@ -315,7 +307,7 @@ namespace NESTool.Views
 
                 if (vo != null && vo.Image != null)
                 {
-                    Image image = new Image
+                    Image image = new()
                     {
                         Source = vo.Image,
                         Width = vo.Width,
@@ -370,7 +362,7 @@ namespace NESTool.Views
         private void ColorPaletteCleanup()
         {
             Color color = Color.FromRgb(0, 0, 0);
-            SolidColorBrush brush = new SolidColorBrush(color);
+            SolidColorBrush brush = new(color);
 
             void SetColorBack(PaletteView palette)
             {
@@ -398,7 +390,13 @@ namespace NESTool.Views
             SignalManager.Get<AddImageToMapSignal>().Listener -= OnAddImageToMap;
             SignalManager.Get<RemoveImageToMapSignal>().Listener -= OnRemoveImageToMap;
             SignalManager.Get<SetMapElementImagePosSignal>().Listener -= OnSetMapElementImagePos;
+            SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener -= OnFileModelVOSelectionChanged;
             #endregion
+        }
+
+        private void OnFileModelVOSelectionChanged(FileModelVO vO)
+        {
+            LoadBankImage();
         }
 
         private void ImgFrame_MouseUp(object sender, MouseButtonEventArgs e)
@@ -521,7 +519,7 @@ namespace NESTool.Views
             }
         }
 
-        private void SelectTile(MapViewModel viewModel)
+        private static void SelectTile(MapViewModel viewModel)
         {
             if (viewModel.SelectedAttributeTile == -1)
             {
@@ -544,9 +542,7 @@ namespace NESTool.Views
                 Y = viewModel.RectangleTop
             };
 
-            BankModel? model = viewModel.Banks?[viewModel.SelectedBank].Model as BankModel;
-
-            if (model != null)
+            if (viewModel.Banks?[viewModel.SelectedBank].Model is BankModel model)
             {
                 string guid = model.PTTiles[bankViewer.SelectedBankTile].GUID;
 

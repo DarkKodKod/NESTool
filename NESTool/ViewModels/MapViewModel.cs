@@ -172,42 +172,7 @@ public class MapViewModel : ItemViewModel
 
             OnPropertyChanged("SelectedMapElement");
 
-            EditableSelectedProperty = "";
-
-            SelectedProperty = new KeyValuePair<string, string>();
-
-            if (SelectedMapElement != -1)
-            {
-                MapModel? mapModel = GetModel();
-
-                if (mapModel != null)
-                {
-                    for (int i = 0; i < mapModel.Entities.Count; i++)
-                    {
-                        Entity entity = mapModel.Entities[i];
-
-                        if (entity.SortIndex == SelectedMapElement)
-                        {
-                            Dictionary<string, string> list = new Dictionary<string, string>
-                        {
-                            { "X", entity.X.ToString() },
-                            { "Y", entity.Y.ToString() }
-                        };
-
-                            mapModel.Entities[i].Properties.ToList().ForEach(x => list.Add(x.Key, x.Value));
-
-                            Properties = new ObservableCollection<KeyValuePair<string, string>>(list);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if (Properties.Count > 0)
-                {
-                    Properties.Clear();
-                }
-            }
+            MapElementSelected();
         }
     }
 
@@ -448,7 +413,7 @@ public class MapViewModel : ItemViewModel
             FlagMapBitmapChanges[i] = TileUpdate.None;
         }
 
-        GroupedPalettes = new Dictionary<Tuple<int, PaletteIndex>, Dictionary<Color, Color>>();
+        GroupedPalettes = [];
 
         #region Signals
         SignalManager.Get<ColorPaletteControlSelectedSignal>().Listener += OnColorPaletteControlSelected;
@@ -456,7 +421,6 @@ public class MapViewModel : ItemViewModel
         SignalManager.Get<SelectPaletteIndexSignal>().Listener += OnSelectPaletteIndex;
         SignalManager.Get<MapPaintToolSignal>().Listener += OnMapPaintTool;
         SignalManager.Get<MapEraseToolSignal>().Listener += OnMapEraseTool;
-        SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener += OnFileModelVOSelectionChanged;
         SignalManager.Get<ShowGridSignal>().Listener += OnShowGrid;
         SignalManager.Get<HideGridSignal>().Listener += OnHideGrid;
         SignalManager.Get<DeleteSelectedMapElementSignal>().Listener += OnDeleteSelectedMapElement;
@@ -505,7 +469,6 @@ public class MapViewModel : ItemViewModel
         SignalManager.Get<MapEraseToolSignal>().Listener -= OnMapEraseTool;
         SignalManager.Get<ShowGridSignal>().Listener -= OnShowGrid;
         SignalManager.Get<HideGridSignal>().Listener -= OnHideGrid;
-        SignalManager.Get<FileModelVOSelectionChangedSignal>().Listener -= OnFileModelVOSelectionChanged;
         SignalManager.Get<DeleteSelectedMapElementSignal>().Listener -= OnDeleteSelectedMapElement;
         SignalManager.Get<MoveUpSelectedMapElementSignal>().Listener -= OnMoveUpSelectedMapElement;
         SignalManager.Get<MoveDownSelectedMapElementSignal>().Listener -= OnMoveDownSelectedMapElement;
@@ -518,7 +481,7 @@ public class MapViewModel : ItemViewModel
         #endregion
     }
 
-    private void SetPaletteEmpty(PaletteIndex index)
+    private static void SetPaletteEmpty(PaletteIndex index)
     {
         SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 0);
         SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 1);
@@ -526,7 +489,7 @@ public class MapViewModel : ItemViewModel
         SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Color.FromRgb(0, 0, 0), index, 3);
     }
 
-    private void SetPalleteWithColors(PaletteModel paletteModel, PaletteIndex index)
+    private static void SetPalleteWithColors(PaletteModel paletteModel, PaletteIndex index)
     {
         SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(paletteModel.Color0), index, 0);
         SignalManager.Get<ColorPaletteControlSelectedSignal>().Dispatch(Util.GetColorFromInt(paletteModel.Color1), index, 1);
@@ -572,8 +535,7 @@ public class MapViewModel : ItemViewModel
 
                 mapModel.Entities[SelectedMapElement - 1] = entity;
 
-                // setting the same value to trigger the population of the properties in the view again.
-                SelectedMapElement = SelectedMapElement;
+                MapElementSelected();
 
                 ProjectItem?.FileHandler.Save();
 
@@ -665,23 +627,6 @@ public class MapViewModel : ItemViewModel
         {
             SpritePaletteIndices[i] = (PaletteIndex)mapModel.AttributeTable[i].PaletteIndex;
         }
-    }
-
-    private void OnFileModelVOSelectionChanged(FileModelVO fileModel)
-    {
-        if (!IsActive)
-        {
-            return;
-        }
-
-        if (_doNotSave)
-        {
-            return;
-        }
-
-        GroupedPalettes?.Clear();
-
-        LoadFrameImage(false);
     }
 
     private void OnSelectPaletteIndex(PaletteIndex paletteIndex)
@@ -1178,6 +1123,46 @@ public class MapViewModel : ItemViewModel
                 FlagMapBitmapChanges[SelectedAttributeTile] = TileUpdate.Normal;
 
             LoadFrameImage(true);
+        }
+    }
+
+    private void MapElementSelected()
+    {
+        EditableSelectedProperty = "";
+
+        SelectedProperty = new KeyValuePair<string, string>();
+
+        if (SelectedMapElement != -1)
+        {
+            MapModel? mapModel = GetModel();
+
+            if (mapModel != null)
+            {
+                for (int i = 0; i < mapModel.Entities.Count; i++)
+                {
+                    Entity entity = mapModel.Entities[i];
+
+                    if (entity.SortIndex == SelectedMapElement)
+                    {
+                        Dictionary<string, string> list = new()
+                        {
+                            { "X", entity.X.ToString() },
+                            { "Y", entity.Y.ToString() }
+                        };
+
+                        mapModel.Entities[i].Properties.ToList().ForEach(x => list.Add(x.Key, x.Value));
+
+                        Properties = new ObservableCollection<KeyValuePair<string, string>>(list);
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (Properties.Count > 0)
+            {
+                Properties.Clear();
+            }
         }
     }
 }

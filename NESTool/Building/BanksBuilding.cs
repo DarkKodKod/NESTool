@@ -22,13 +22,11 @@ public static class BanksBuilding
 
         List<FileModelVO> bankModelVOs = ProjectFiles.GetModels<BankModel>();
 
-        const int cellSizeInBytes = 128; // 16 bytes each cell
+        const int cellSizeInBytes = 64/* bit plane size = 8x8 */ * 2/* number of bit planes*/;
 
         foreach (FileModelVO vo in bankModelVOs)
         {
-            BankModel? bank = vo.Model as BankModel;
-
-            if (bank == null)
+            if (vo.Model is not BankModel bank)
                 continue;
 
             int cellsCount = 0;
@@ -40,7 +38,7 @@ public static class BanksBuilding
                 case BankSize.Size1Kb: cellsCount = 16 * 4; break;
             }
 
-            Dictionary<string, WriteableBitmap> bitmapCache = new();
+            Dictionary<string, WriteableBitmap> bitmapCache = [];
 
             BitArray outputBits = new(cellSizeInBytes * cellsCount);
             outputBits.SetAll(false);
