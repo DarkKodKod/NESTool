@@ -12,7 +12,8 @@
 			 xmlns:vm="clr-namespace:NESTool.ViewModels"
              Name="MapView"
              mc:Ignorable="d" 
-             d:DesignHeight="890" d:DesignWidth="1300">
+             d:DesignHeight="890" d:DesignWidth="1300"
+             Loaded="MapView_Loaded">
     <UserControl.DataContext>
         <vm:MapViewModel />
     </UserControl.DataContext>
@@ -96,6 +97,8 @@
                         RenderOptions.BitmapScalingMode="NearestNeighbor"
                         Visibility="{Binding SpriteLayerVisibility}"
                         x:Name="cOverlay"
+                        Focusable="True"
+                        KeyDown="Overlay_KeyDown"
                         VerticalAlignment="Top">
                     <Canvas.RenderTransform>
                         <ScaleTransform ScaleX="3" ScaleY="3"/>

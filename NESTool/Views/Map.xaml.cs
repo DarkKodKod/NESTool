@@ -57,7 +57,7 @@ namespace NESTool.Views
                     return;
                 }
 
-                if (!(viewModel.Banks?[viewModel.SelectedBank].Model is BankModel model))
+                if (viewModel.Banks?[viewModel.SelectedBank].Model is not BankModel model)
                 {
                     return;
                 }
@@ -566,7 +566,7 @@ namespace NESTool.Views
             }
         }
 
-        private void EraseTile(int index, MapViewModel viewModel)
+        private static void EraseTile(int index, MapViewModel viewModel)
         {
             if (MapViewModel.FlagMapBitmapChanges != null)
                 MapViewModel.FlagMapBitmapChanges[viewModel.SelectedAttributeTile] = TileUpdate.Erased;
@@ -609,6 +609,41 @@ namespace NESTool.Views
 
                 Dispatcher.BeginInvoke(myDel, null);
             }
+        }
+
+        private void Overlay_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (MainWindow.ToolBarMapTool != EditFrameTools.Select)
+                return;
+
+            if (DataContext is not MapViewModel viewModel)
+                return;
+
+            if (!viewModel.IsActive)
+                return;
+
+            MapModel? mapModel = viewModel.GetModel();
+
+            if (mapModel == null)
+                return;
+
+            if (viewModel.SelectedAttributeTile == -1)
+            {
+                return;
+            }
+
+            switch (e.Key)
+            {
+                case Key.D1: viewModel.PaletteIndex = PaletteIndex.Palette0; break;
+                case Key.D2: viewModel.PaletteIndex = PaletteIndex.Palette1; break;
+                case Key.D3: viewModel.PaletteIndex = PaletteIndex.Palette2; break;
+                case Key.D4: viewModel.PaletteIndex = PaletteIndex.Palette3; break;
+            }
+        }
+
+        private void MapView_Loaded(object sender, RoutedEventArgs e)
+        {
+            Keyboard.Focus(cOverlay);
         }
     }
 }
